@@ -20,4 +20,23 @@ class OrganizationTest < Test::Unit::TestCase
 
     assert_equal(count + 1, Organization.count)
   end
+
+  def test_cnpj_format
+    org = Organization.find(1)
+    org.cnpj = 'bli'
+    assert(!org.save)
+    org.cnpj = '12121212121212'
+    assert(!org.save)
+    org.cnpj = '66145476000129'
+    assert(org.save)
+  end
+
+  def test_nickname_format
+    org = Organization.find(1)
+    org.nickname = 'invalid nickname'
+    assert(!org.save)
+    org.nickname = 'valid_nickname'
+    assert(org.save)
+  end
+
 end

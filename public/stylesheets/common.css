@@ -71,3 +71,69 @@ th {
   background: #666;
   color: white;
 }
+
+.button_bar {
+  padding-top: 5px;
+  margin-top: 2px;
+}
+
+.button {
+  background-color: #ffb;
+  background-repeat: no-repeat;
+  background-position: 1px 1px;
+  color: #000 !important;
+  border: 1px solid #666;
+  padding: 1px 6px 1px 20px;
+  text-decoration: none;
+  cursor: default;
+  font-weight: bold;
+}
+.button:hover {
+  color: #fff !important;
+  border-color: #000;
+  background-color: #f33;
+}
+
+.button_add, .button_new {
+  background-image: url(../images/add.png);
+}
+.button_remove {
+  background-image: url(../images/remove.png);
+}
+.button_edit {
+  background-image: url(../images/edit.png);
+}
+.button_close {
+  background-image: url(../images/cancel.png);
+  float: right;
+  padding: 8px;
+  margin-top: 5px;
+  margin-right: 2px;
+}
+.button_cancel {
+  background-image: url(../images/cancel.png);
+}
+.button_save {
+  background-image: url(../images/filesave.png);
+}
+.button_find, .button_search {
+  background-image: url(../images/find.png);
+}
+.button_back, .button_previous {
+  background-image: url(../images/back.png);
+}
+.button_forward, .button_next {
+  background-image: url(../images/forward.png);
+}
+.button_up {
+  background-image: url(../images/up.png);
+}
+.button_ok {
+  background-image: url(../images/ok.png);
+}
+.button_help {
+  background-image: url(../images/help.png);
+}
+.button_login {
+  background-image: url(../images/password.png);
+}

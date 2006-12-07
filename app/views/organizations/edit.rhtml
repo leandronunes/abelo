@@ -2,8 +2,9 @@
 
 <%= start_form_tag :action => 'update', :id => @organization %>
   <%= render :partial => 'form' %>
-  <%= submit_tag 'Edit' %>
+  <div class='button_bar'>
+    <%= button "Create", :save %>
+    <%= button 'Back', :cancel, :action => 'list' %>
+  </div>
 <%= end_form_tag %>
 
-<%= link_to 'Show', :action => 'show', :id => @organization %> |
-<%= link_to 'Back', :action => 'list' %>

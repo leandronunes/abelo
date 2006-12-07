@@ -88,4 +88,50 @@ class OrganizationsControllerTest < Test::Unit::TestCase
     }
   end
 
+  def test_uniqueness_of_fields
+    num_organizations = Organization.count
+    post :create, :organization => {
+      :name => 'Organization for testing duplicated fields',
+      :nickname => 'testing_duplicated_fields',
+      :cnpj => '20419721000148',
+    }
+    assert_response :redirect
+    assert_redirected_to :action => 'list'
+    assert_equal num_organizations + 1, Organization.count
+
+    num_organizations = Organization.count
+
+    # testing duplicated name
+    post :create, :organization => {
+      :name => 'Organization for testing duplicated fields',
+      :nickname => 'testing_duplicated_fields_different',
+      :cnpj => '54341741000165',
+    }
+    assert_response :success
+    assert_template 'new'
+    assert_equal num_organizations, Organization.count
+
+    # testing duplicated nickname
+    post :create, :organization => {
+      :name => 'Organization for testing duplicated fields, repeated nickname',
+      :nickname => 'testing_duplicated_fields',
+      :cnpj => '54341741000165',
+    }
+    assert_response :success
+    assert_template 'new'
+    assert_equal num_organizations, Organization.count
+
+    # testing duplicated cnpj
+    post :create, :organization => {
+      :name => 'Organization for testing duplicated fields, repeated cnpj',
+      :nickname => 'testing_duplicated_fields_different',
+      :cnpj => '20419721000148',
+    }
+    assert_response :success
+    assert_template 'new'
+    assert_equal num_organizations, Organization.count
+
+
+  end
+
 end

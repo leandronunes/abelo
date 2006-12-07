@@ -1,0 +1,9 @@
+<h1>New product</h1>
+
+<%= start_form_tag :action => 'create' %>
+  <%= render :partial => 'form' %>
+  <div class='button_bar'>
+  <%= button "Create", :save %>
+  <%= button 'Cancel', :cancel, :action => 'list' %>
+<%= end_form_tag %>
+

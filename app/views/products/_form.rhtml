@@ -1,0 +1,19 @@
+<%= error_messages_for 'product' %>
+
+<!--[form:product]-->
+<p><label for="product_description">Description</label><br/>
+<%= text_field 'product', 'description'  %></p>
+
+<p><label for="product_size">Size</label><br/>
+<%= text_field 'product', 'size'  %></p>
+
+<p><label for="product_color">Color</label><br/>
+<%= text_field 'product', 'color'  %></p>
+
+<p><label for="product_sell_price">Sell price</label><br/>
+<%= text_field 'product', 'sell_price'  %></p>
+
+<p><label for="product_unit">Unit</label><br/>
+<%= select_unit 'product', 'unit'  %></p>
+<!--[eoform:product]-->
+

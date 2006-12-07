@@ -26,16 +26,6 @@ class OrganizationsControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:organizations)
   end
 
-  def test_show
-    get :show, :id => 1
-
-    assert_response :success
-    assert_template 'show'
-
-    assert_not_nil assigns(:organization)
-    assert assigns(:organization).valid?
-  end
-
   def test_new
     get :new
 

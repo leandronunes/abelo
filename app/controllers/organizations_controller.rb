@@ -12,10 +12,6 @@ class OrganizationsController < ApplicationController
     @organization_pages, @organizations = paginate :organizations, :per_page => 10
   end
 
-  def show
-    @organization = Organization.find(params[:id])
-  end
-
   def new
     @organization = Organization.new
   end

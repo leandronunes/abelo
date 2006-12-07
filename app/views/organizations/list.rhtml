@@ -3,11 +3,15 @@
 <table>
 <tr>
   <th><%= _('Name') %></th>
+  <th><%= _('Nickname') %></th>
+  <th><%= _('CNPJ') %></th>
   <th colspan='2'></th>
 </tr>
 <% for org in @organizations %>
   <tr>
     <td><%= link_to_organization org.name, org %></td>
+    <td><%= org.nickname %></td>
+    <td><%= org.cnpj %></td>
     <td>
       <%= button _('Edit'), :edit, { :action => 'edit', :id => org } %>
       <%= button _('Remove'), :remove , { :action => 'destroy', :id => org }, { :post => true, :confirm => _('Are you sure?') } %>

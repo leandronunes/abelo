@@ -18,6 +18,8 @@ class MainControllerTest < Test::Unit::TestCase
   # Replace this with your real tests.
   def test_got_organization
     get :index
+    assert_response :success
+    assert_template 'index'
     assert_not_nil assigns(:organization)
   end
 end

@@ -1,0 +1,9 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+first:
+  id: 1
+  description: 'first image'
+  picture: 'add.png'
+another:
+  id: 2
+  description: 'second image'
+  picture: 'remove.png'

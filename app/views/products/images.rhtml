@@ -1,0 +1,24 @@
+<h2><%= _('Managing images for %s') % @product.description %> <h2>
+
+<h3><%= _('Add Image')%></h3>
+
+<%= form_tag({:action => 'add_image', :id => @product}, :multipart => true) %>
+  <p>
+    <label for='image_description'><%= _('Description') %></label>
+    <%= text_field 'image', 'description' %>
+  </p>
+  <P>
+    <label for='image_picture'><%= _('Image file') %></label>
+  <%= file_column_field 'image', 'picture' %>
+  </p>
+  <div class='button_bar'>
+    <%= button _('Add'), :save %>
+    <%= button _('Back'), :back, :action => 'list' %>
+  </div>
+<%= end_form_tag %>
+
+<h3><%= _('Current images')  %></h3>
+
+<% for @each_image in @product.images %>
+  <%= show_image @each_image %>
+<% end %>

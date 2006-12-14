@@ -15,6 +15,7 @@ class ProductsControllerTest < Test::Unit::TestCase
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     @organization_nickname = 'one'
+    @organization = Organization.find_by_nickname 'one'
   end
 
   def test_index
@@ -89,4 +90,23 @@ class ProductsControllerTest < Test::Unit::TestCase
       Product.find(1)
     }
   end
+
+
+  def test_images
+    post :images, :id => 1
+    assert_template 'images'
+    assert_not_nil assigns(:product)
+    assert_not_nil assigns(:image)
+    assert_equal 1, assigns(:product).id
+  end
+
+  def test_add_images
+    images = @organization.products.find(1).images.size
+
+    post :add_image, :id => 1, :image => { :description => 'a test image', :picture => File.open(File.join(RAILS_ROOT,'public/images/rails.png')) }
+
+    assert_redirected_to :action => 'images'
+    assert_equal images + 1, @organization.products.find(1).images.size
+  end
+
 end

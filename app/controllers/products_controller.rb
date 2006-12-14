@@ -52,4 +52,21 @@ class ProductsController < ApplicationController
     @organization.products.find(params[:id]).destroy
     redirect_to :action => 'list'
   end
+
+  def images
+    @product = @organization.products.find(params[:id])
+    @image = Image.new
+  end
+
+  def add_image
+    @product = @organization.products.find(params[:id])
+    image = Image.new(params[:image])
+    @product.images.push(image)
+    if  @product.save
+      redirect_to :action => 'images', :id => @product
+    else
+      render :action => 'images'
+    end
+  end
+
 end

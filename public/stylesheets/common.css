@@ -137,3 +137,22 @@ th {
 .button_login {
   background-image: url(../images/password.png);
 }
+
+.product_image {
+  display: table-cell;
+  padding: 5px;
+}
+.product_image * {
+  margin: 3px;
+  text-align: center;
+  vertical-align: middle;
+}
+a.product_image:hover {
+  background-color: #ffb;
+  color: black;
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+a.product_image img {
+  border: none;
+}

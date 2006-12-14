@@ -1,4 +1,4 @@
-<h1>Listing products</h1>
+<h2>Listing products</h2>
 
 <table>
   <tr>
@@ -12,9 +12,10 @@
   <% for column in Product.content_columns %>
     <td><%=h product.send(column.name) %></td>
   <% end %>
-    <td><%= link_to 'Show', :action => 'show', :id => product %></td>
-    <td><%= link_to 'Edit', :action => 'edit', :id => product %></td>
-    <td><%= link_to 'Destroy', { :action => 'destroy', :id => product }, :confirm => 'Are you sure?', :post => true %></td>
+    <td><%= link_to _('Images'), :action => 'images', :id => product %></td>
+    <td><%= link_to _('Show'), :action => 'show', :id => product %></td>
+    <td><%= link_to _('Edit'), :action => 'edit', :id => product %></td>
+    <td><%= link_to _('Destroy'), { :action => 'destroy', :id => product }, :confirm => _('Are you sure?'), :post => true %></td>
   </tr>
 <% end %>
 </table>

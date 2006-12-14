@@ -2,12 +2,14 @@
    "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-  <title>abelo &rarr; [admin] &rarr; <%= @controller.controller_name  %> </title>
+  <title>abelo &rarr; <%= @organization.name %> &rarr; <%= @controller.controller_name  %> </title>
   <%= stylesheet_link_tag 'common' %>
 </head>
 <body>
 
 <p style="color: green"><%= flash[:notice] if flash[:notice] %></p>
+
+<h1><%= @organization.name %></h1>
 
 <%= yield %>
 

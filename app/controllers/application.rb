@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
 
   def self.needs_organization
     before_filter :load_organization
+    layout 'organization'
   end
   def load_organization
     @organization = Organization.find_by_nickname(params[:organization_nickname])

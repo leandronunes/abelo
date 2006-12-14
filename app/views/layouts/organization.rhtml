@@ -11,6 +11,12 @@
 
 <h1><%= @organization.name %></h1>
 
+<div class='navigation_bar'>
+<%= link_to @organization.name, :controller => 'main' %>
+&rarr;
+<%= link_to @controller.controller_name, :controller => @controller.controller_name  %>
+</div>
+
 <%= yield %>
 
 </body>

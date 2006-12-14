@@ -19,6 +19,15 @@
 
 <h3><%= _('Current images')  %></h3>
 
-<% for @each_image in @product.images %>
-  <%= show_image @each_image %>
+<table>
+<tr>
+<% for image in @product.images %>  
+  <td align='center'><%= show_image image %></td>
 <% end %>
+</tr>
+<tr>
+<% for image in @product.images %>  
+  <td><%= button  _('Remove image'), :remove, { :action => 'remove_image', :image_id => image.id }, { :confirm => _('Are you sure?') } %></td>
+<% end %>
+</tr>
+</table>

@@ -141,11 +141,18 @@ th {
 .product_image {
   display: table-cell;
   padding: 5px;
+  text-decoration: none;
 }
 .product_image * {
   margin: 3px;
   text-align: center;
   vertical-align: middle;
+}
+.product_image span {
+  display: block;
+}
+.product_image  a {
+  display: inline;
 }
 a.product_image:hover {
   background-color: #ffb;
@@ -155,4 +162,19 @@ a.product_image:hover {
 }
 a.product_image img {
   border: none;
+}
+
+.navigation_bar {
+  background: #333;
+  color: white;
+  padding: 3px;
+  border: 1px solid black;
+}
+.navigation_bar a:link, .navigation_bar a:visited {
+  color: white;
+  font-weight: bold;
+}
+.navigation_bar a:hover {
+  background: transparent;
+  color: #ff3;
 }

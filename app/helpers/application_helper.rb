@@ -16,6 +16,8 @@ module ApplicationHelper
   # Slightly based on http://www.bigbold.com/snippets/posts/show/2084
   def color_select(object, method)
     colors = []
+    # TODO: choose a better (and smaller) color set, or provide a way to pass
+    # it into the method
     (0..15).step(3) do |r|
       (0..15).step(3) do |g|
         (0..15).step(3) do |b|
@@ -23,6 +25,7 @@ module ApplicationHelper
         end
       end
     end
+
     value = self.instance_variable_get("@#{object}").send(method)
     select_tag(
       "#{object}[#{method}]",

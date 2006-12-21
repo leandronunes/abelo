@@ -11,6 +11,9 @@ module ApplicationHelper
     end
   end
 
+  # Creates a color picker field.
+  #
+  # Slightly based on http://www.bigbold.com/snippets/posts/show/2084
   def color_select(object, method)
     colors = []
     (0..15).step(3) do |r|

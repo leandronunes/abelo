@@ -1,0 +1,14 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+categoryA:
+  id: 1
+  name: 'Category A'
+  organization_id: 1
+categoryB:
+  id: 2
+  name: 'Category A'
+  parent_id: 1
+  organization_id: 1
+categoryC:
+  id: 3
+  name: 'Category C'
+  organization_id: 1

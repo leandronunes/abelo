@@ -5,9 +5,11 @@ first:
   sell_price: 10.00
   unit: 'kg'
   organization_id: 1
+  category_id: 1
 another:
   id: 2
   description: 'Diapers'
   sell_price: 3.00
   unit: 'un'
   organization_id: 2
+  category_id: 2

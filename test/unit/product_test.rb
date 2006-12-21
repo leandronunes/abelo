@@ -3,6 +3,11 @@ require File.dirname(__FILE__) + '/../test_helper'
 class ProductTest < Test::Unit::TestCase
   fixtures :products
   fixtures :organizations
+  fixtures :product_categories
+
+  def setup
+    @organization = Organization.find(1)
+  end
 
   def test_mandatory_fields
     count = Product.count
@@ -16,7 +21,12 @@ class ProductTest < Test::Unit::TestCase
     p.sell_price = 10.50
     assert(!p.save)
 
-    p.organization = Organization.find(1)
+    p.organization = @organization
+    assert(!p.save)
+
+    category = @organization.product_categories.find(1)
+    p.category_id = category.id
+
     assert(p.save)
 
     assert_equal(count + 1, Product.count)

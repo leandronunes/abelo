@@ -21,6 +21,7 @@ class ProductsController < ApplicationController
 
   def new
     @product = Product.new
+    @product.organization = @organization
   end
 
   def create

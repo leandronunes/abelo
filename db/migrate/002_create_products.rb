@@ -7,6 +7,7 @@ class CreateProducts < ActiveRecord::Migration
       t.column :sell_price, :string
       t.column :unit, :string
       t.column :organization_id, :integer
+      t.column :category_id, :integer
     end
   end
 

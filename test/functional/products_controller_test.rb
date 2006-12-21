@@ -55,7 +55,7 @@ class ProductsControllerTest < Test::Unit::TestCase
   def test_create
     num_products = Product.count
 
-    post :create, :product => { :description => 'Testing adding a product through controller', :sell_price => 99.99 }
+    post :create, :product => { :description => 'Testing adding a product through controller', :sell_price => 99.99, :organization_id => 1, :category_id => 1 }
 
     assert_response :redirect
     assert_redirected_to :action => 'list'

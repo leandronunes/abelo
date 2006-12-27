@@ -2,6 +2,10 @@
 tshirt_supplier:
   id: 1
   name: 'T-shirt supplier'
+  cnpj: '66800937000150'
+  organization_id: 1
 food_supplier:
   id: 2
   name: 'Food supplier'
+  cnpj: '01075132000145'
+  organization_id: 1

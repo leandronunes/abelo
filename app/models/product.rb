@@ -3,6 +3,7 @@ class Product < ActiveRecord::Base
   belongs_to :organization
   belongs_to :category, :class_name => 'ProductCategory'
   has_many :images
+  has_and_belongs_to_many :suppliers
 
   validates_presence_of :description, :sell_price
 

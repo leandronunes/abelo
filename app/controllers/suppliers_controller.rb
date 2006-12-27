@@ -1,4 +1,7 @@
 class SuppliersController < ApplicationController
+
+  needs_organization
+
   def index
     list
     render :action => 'list'
@@ -9,19 +12,21 @@ class SuppliersController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @supplier_pages, @suppliers = paginate :suppliers, :per_page => 10
+    @suppliers = @organization.suppliers.find(:all)
   end
 
   def show
-    @supplier = Supplier.find(params[:id])
+    @supplier = @organization.suppliers.find(params[:id])
   end
 
   def new
     @supplier = Supplier.new
+    @supplier.organization = @organization
   end
 
   def create
     @supplier = Supplier.new(params[:supplier])
+    @supplier.organization = @organization
     if @supplier.save
       flash[:notice] = 'Supplier was successfully created.'
       redirect_to :action => 'list'
@@ -31,11 +36,11 @@ class SuppliersController < ApplicationController
   end
 
   def edit
-    @supplier = Supplier.find(params[:id])
+    @supplier = @organization.suppliers.find(params[:id])
   end
 
   def update
-    @supplier = Supplier.find(params[:id])
+    @supplier = @organization.suppliers.find(params[:id])
     if @supplier.update_attributes(params[:supplier])
       flash[:notice] = 'Supplier was successfully updated.'
       redirect_to :action => 'show', :id => @supplier
@@ -45,7 +50,7 @@ class SuppliersController < ApplicationController
   end
 
   def destroy
-    Supplier.find(params[:id]).destroy
+    @organization.suppliers.find(params[:id]).destroy
     redirect_to :action => 'list'
   end
 end

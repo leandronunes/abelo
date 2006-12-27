@@ -2,6 +2,7 @@ class Organization < ActiveRecord::Base
 
   has_many :products
   has_many :product_categories
+  has_many :suppliers
 
   validates_presence_of :name, :cnpj, :nickname
   validates_uniqueness_of :name, :cnpj, :nickname

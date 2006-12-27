@@ -12,10 +12,10 @@
   <% for column in Product.content_columns %>
     <td><%=h product.send(column.name) %></td>
   <% end %>
-    <td><%= link_to _('Images'), :action => 'images', :id => product %></td>
-    <td><%= link_to _('Show'), :action => 'show', :id => product %></td>
-    <td><%= link_to _('Edit'), :action => 'edit', :id => product %></td>
-    <td><%= link_to _('Destroy'), { :action => 'destroy', :id => product }, :confirm => _('Are you sure?'), :post => true %></td>
+    <td><%= button _('Images'), :images, :action => 'images', :id => product %></td>
+    <td><%= button _('Show'), :find, :action => 'show', :id => product %></td>
+    <td><%= button _('Edit'), :edit, :action => 'edit', :id => product %></td>
+    <td><%= button _('Destroy'), :remove, { :action => 'destroy', :id => product }, :confirm => _('Are you sure?'), :post => true %></td>
   </tr>
 <% end %>
 </table>

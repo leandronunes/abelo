@@ -1,8 +1,8 @@
   <tr>
     <td><%= '&nbsp;&nbsp;' * product_category.level  %><%=  product_category.name %></td>
-    <td><%= link_to 'New subcategory', :action => 'new', :parent_id => product_category %></td>
-    <td><%= link_to 'Edit', :action => 'edit', :id => product_category %></td>
-    <td><%= link_to 'Destroy', { :action => 'destroy', :id => product_category }, :confirm => 'Are you sure?', :post => true %></td>
+    <td><%= button _('New subcategory'), :add, :action => 'new', :parent_id => product_category %></td>
+    <td><%= button _('Edit'), :edit, :action => 'edit', :id => product_category %></td>
+    <td><%= button _('Destroy'), :remove, { :action => 'destroy', :id => product_category }, :confirm => _('Are you sure?'), :post => true %></td>
   </tr>
   <% for child in product_category.children %>
     <%= render :partial => 'list', :locals => { :product_category => child } %>

@@ -7,6 +7,10 @@
 <p><label for="product_category">Category</label><br/>
 <%= select_category 'product', 'category_id'  %></p>
 
+<p><label for='product_suppliers'>Suppliers</label><br/>
+<%= select_suppliers @product %>
+</p>
+
 <p><label for="product_size">Size</label><br/>
 <%= text_field 'product', 'size'  %></p>
 

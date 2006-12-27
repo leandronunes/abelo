@@ -22,4 +22,13 @@ module ProductsHelper
     select(object, method, categories.map { |c| [ c.full_name, c.id ] })
   end
 
+  def select_suppliers(product)
+    product.organization.suppliers.map { |s|
+      content_tag(
+        'div',
+        check_box_tag("suppliers[#{s.id}]", 1, product.suppliers.include?(s)) + s.name
+      )
+    }.join("\n")
+  end
+
 end

@@ -27,6 +27,7 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(params[:product])
     @product.organization = @organization
+    @product.supplier_ids = params[:suppliers].keys if params[:suppliers]
     if @product.save
       flash[:notice] = 'Product was successfully created.'
       redirect_to :action => 'list'
@@ -41,9 +42,10 @@ class ProductsController < ApplicationController
 
   def update
     @product = @organization.products.find(params[:id])
+    @product.supplier_ids = params[:suppliers].keys if params[:suppliers]
     if @product.update_attributes(params[:product])
       flash[:notice] = 'Product was successfully updated.'
-      redirect_to :action => 'show', :id => @product
+      redirect_to :action => 'list'
     else
       render :action => 'edit'
     end

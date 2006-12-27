@@ -33,16 +33,6 @@ class SuppliersControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:suppliers)
   end
 
-  def test_show
-    get :show, :id => 1
-
-    assert_response :success
-    assert_template 'show'
-
-    assert_not_nil assigns(:supplier)
-    assert assigns(:supplier).valid?
-  end
-
   def test_new
     get :new
 

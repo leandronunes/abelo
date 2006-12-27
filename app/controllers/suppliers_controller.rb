@@ -15,10 +15,6 @@ class SuppliersController < ApplicationController
     @suppliers = @organization.suppliers.find(:all)
   end
 
-  def show
-    @supplier = @organization.suppliers.find(params[:id])
-  end
-
   def new
     @supplier = Supplier.new
     @supplier.organization = @organization

@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class ProductCategoryTest < Test::Unit::TestCase
-  fixtures :product_categories
+  fixtures :product_categories, :organizations
 
   # Replace this with your real tests.
   def test_mandatory_fields
@@ -11,6 +11,9 @@ class ProductCategoryTest < Test::Unit::TestCase
     assert !cat.save
 
     cat.name = 'A category for testing mandatory fields'
+    assert !cat.save
+
+    cat.organization = Organization.find(1)
     assert cat.save
 
     assert_equal count + 1, ProductCategory.count

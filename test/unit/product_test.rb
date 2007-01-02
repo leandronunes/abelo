@@ -24,6 +24,9 @@ class ProductTest < Test::Unit::TestCase
     p.organization = @organization
     assert(!p.save)
 
+    p.unit = 'un'
+    assert(!p.save)
+
     category = @organization.product_categories.find(1)
     p.category_id = category.id
 

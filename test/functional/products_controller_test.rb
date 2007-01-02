@@ -60,7 +60,7 @@ class ProductsControllerTest < Test::Unit::TestCase
     supplier2 = Supplier.find(2)
     supplier2_product_count = supplier2.products.count
 
-    post :create, :product => { :description => 'Testing adding a product through controller', :sell_price => 99.99, :organization_id => 1, :category_id => 1 }, :suppliers => { 1 => 1, 2 => 1 }
+    post :create, :product => { :description => 'Testing adding a product through controller', :sell_price => 99.99, :organization_id => 1, :category_id => 1, :unit => 'un' }, :suppliers => { 1 => 1, 2 => 1 }
 
     assert_response :redirect
     assert_redirected_to :action => 'list'

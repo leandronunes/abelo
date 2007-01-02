@@ -1,6 +1,6 @@
 class ProductCategory < ActiveRecord::Base
 
-  validates_presence_of :name
+  validates_presence_of :name, :organization_id
   belongs_to :organization
   acts_as_tree
 

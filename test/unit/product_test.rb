@@ -31,4 +31,14 @@ class ProductTest < Test::Unit::TestCase
 
     assert_equal(count + 1, Product.count)
   end
+
+  def test_suppliers
+    p = Product.find(1)
+    assert_not_nil p.suppliers
+    assert_equal Array, p.suppliers.class
+    p.suppliers.each { |s|
+      assert_equal Supplier, s.class
+    }
+  end
+
 end

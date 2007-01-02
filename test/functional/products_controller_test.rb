@@ -8,7 +8,7 @@ class ProductsControllerTest < Test::Unit::TestCase
 
   include TestingUnderOrganization
 
-  fixtures :products
+  fixtures :products, :products_suppliers
 
   def setup
     @controller = ProductsController.new
@@ -55,12 +55,22 @@ class ProductsControllerTest < Test::Unit::TestCase
   def test_create
     num_products = Product.count
 
-    post :create, :product => { :description => 'Testing adding a product through controller', :sell_price => 99.99, :organization_id => 1, :category_id => 1 }
+    supplier1 = Supplier.find(1)
+    supplier1_product_count = supplier1.products.count
+    supplier2 = Supplier.find(2)
+    supplier2_product_count = supplier2.products.count
+
+    post :create, :product => { :description => 'Testing adding a product through controller', :sell_price => 99.99, :organization_id => 1, :category_id => 1 }, :suppliers => { 1 => 1, 2 => 1 }
 
     assert_response :redirect
     assert_redirected_to :action => 'list'
 
     assert_equal num_products + 1, Product.count
+
+    supplier1 = Supplier.find(1)
+    assert_equal supplier1_product_count + 1, supplier1.products.count
+    supplier2 = Supplier.find(2)
+    assert_equal supplier2_product_count +1,  supplier2.products.count
   end
 
   def test_edit
@@ -76,7 +86,18 @@ class ProductsControllerTest < Test::Unit::TestCase
   def test_update
     post :update, :id => 1
     assert_response :redirect
-    assert_redirected_to :action => 'show', :id => 1
+    assert_redirected_to :action => 'list'
+  end
+
+  def test_remove_supplier
+    supplier = Product.find(1).suppliers.find(:first)
+    product_count = supplier.products.count
+
+    post :update, :id => 1, :suppliers => { }
+    assert_response :redirect
+    assert_redirected_to :action => 'list'
+
+    assert_equal product_count - 1, supplier.products.count
   end
 
   def test_destroy

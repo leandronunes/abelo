@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class ImageTest < Test::Unit::TestCase
-  fixtures :images
+  fixtures :images, :products
 
   def test_mandatory_fields
     img = Image.new
@@ -17,6 +17,8 @@ class ImageTest < Test::Unit::TestCase
     def stream.content_type
       'image/png'
     end
+
+    img.product = Product.find(1)
 
     img.picture = stream
     assert(img.save)

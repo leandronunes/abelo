@@ -1,0 +1,35 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+in1:
+  id: 1
+  type: 'StockIn'
+  product_id: 1
+  ammount: 5
+  supplier_id: 1
+  purpose: 'sell'
+  price: 1.99
+  date: '2006-01-01'
+in2:
+  id: 2
+  type: 'StockIn'
+  product_id: 1
+  ammount: 10
+  supplier_id: 1
+  purpose: 'sell'
+  price: 2.05
+  date: '2006-02-01'
+in3:
+  id: 3
+  type: 'StockIn'
+  product_id: 1
+  ammount: 12
+  supplier_id: 1
+  purpose: 'sell'
+  price: 1.97
+  date: '2006-03-01'
+out1:
+  id: 4
+  type: 'StockOut'
+  product_id: 1
+  ammount: -10
+  date: '2006-04-01'
+  purpose: 'sell'

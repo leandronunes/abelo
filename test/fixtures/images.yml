@@ -3,7 +3,9 @@ first:
   id: 1
   description: 'first image'
   picture: 'add.png'
+  product_id: 1
 another:
   id: 2
   description: 'second image'
   picture: 'remove.png'
+  product_id: 1

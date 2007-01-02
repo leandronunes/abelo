@@ -1,8 +1,8 @@
 class ProductsSuppliers < ActiveRecord::Migration
   def self.up
     create_table :products_suppliers, :id => false do |t|
-      t.column :product_id, :integer
-      t.column :supplier_id, :integer
+      t.column :product_id, :integer, :null => false
+      t.column :supplier_id, :integer, :null => false
     end
   end
 

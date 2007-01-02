@@ -1,9 +1,9 @@
 class CreateImages < ActiveRecord::Migration
   def self.up
     create_table :images do |t|
-      t.column :description, :string
-      t.column :picture, :string
-      t.column :product_id, :integer
+      t.column :description, :string, :null => false
+      t.column :picture, :string, :null => false
+      t.column :product_id, :integer, :null => false
     end
   end
 

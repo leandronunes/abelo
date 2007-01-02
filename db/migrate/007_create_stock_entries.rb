@@ -8,22 +8,22 @@ class CreateStockEntries < ActiveRecord::Migration
       ### Single-table inheritance infrastructure
       ###########################################
       # the type of entry
-      t.column :type, :string
+      t.column :type, :string, :null => false
 
       ###############################################
       ### Fields common for both StockIn and StockOut
       ###############################################
       # the product that is entering/exiting the stock
-      t.column :product_id, :integer
+      t.column :product_id, :integer, :null => false
       # how much of it
-      t.column :ammount, :float
+      t.column :ammount, :float, :null => false
       # the purpose of this entry. Can be 'sell' (indicating the products are
       # entering/leaving the stock for being sold), or 'production' (meaning
       # that the item are getting into the stock to be used in a production
       # process.
-      t.column :purpose, :string
+      t.column :purpose, :string, :null => false
       # the date when the entry is created
-      t.column :date, :date
+      t.column :date, :date, :null => false
 
       ###############################
       ### fields used only by StockIn

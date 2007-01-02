@@ -80,6 +80,7 @@ class ProductTest < Test::Unit::TestCase
 
     out_ammount = 15
 
+    # one stock out
     out = StockOut.new
     out.product = p
     out.purpose = 'sell'
@@ -89,6 +90,7 @@ class ProductTest < Test::Unit::TestCase
 
     assert_equal (total - out_ammount), p.ammount_in_stock
 
+    # one stock out of the allowed range
     overflow = StockOut.new
     overflow.product = p
     overflow.purpose = 'sell'
@@ -96,6 +98,7 @@ class ProductTest < Test::Unit::TestCase
     overflow.ammount = -1000
     assert !overflow.save
 
+    # we must still a non-negative ammount
     assert(p.ammount_in_stock >= 0)
 
   end

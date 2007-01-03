@@ -39,7 +39,7 @@ class ProductCategoriesController < ApplicationController
     @product_category = @organization.product_categories.find(params[:id])
     if @product_category.update_attributes(params[:product_category])
       flash[:notice] = 'ProductCategory was successfully updated.'
-      redirect_to :action => 'show', :id => @product_category
+      redirect_to :action => 'list'
     else
       render :action => 'edit'
     end

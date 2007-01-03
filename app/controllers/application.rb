@@ -2,6 +2,11 @@
 # Likewise, all the methods added will be available for all controllers.
 class ApplicationController < ActionController::Base
 
+  before_filter :i18n_settings
+  def i18n_settings
+    headers['Content-Type'] = 'text/html; charset=utf-8'
+  end
+
   layout 'admin'
 
   def self.needs_organization

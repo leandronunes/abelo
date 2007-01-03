@@ -19,7 +19,7 @@ module ProductsHelper
   def select_category(object, method)
     product = self.instance_variable_get("@#{object}")
     categories = product.organization.product_categories
-    select(object, method, categories.map { |c| [ c.full_name, c.id ] })
+    select(object, method, categories.map { |c| [ c.full_name, c.id ] }.sort { |a,b| a[0] <=> b[0] })
   end
 
   def select_suppliers(product)

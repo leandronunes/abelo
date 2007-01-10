@@ -15,4 +15,22 @@ class StockController < ApplicationController
 
   end
 
+  def new_entry
+    @product = @organization.products.find(params[:id])
+    @entry = StockIn.new
+    @entry.product = @product
+  end
+
+  def add_entry
+    @product = @organization.products.find(params[:id])
+    @entry = StockIn.new(params[:entry])
+    @entry.product = @product
+    if @entry.save
+      redirect_to :action => 'history', :id => @product
+    else
+      render :action => 'new_entry'
+    end
+
+  end
+
 end

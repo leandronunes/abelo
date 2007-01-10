@@ -2,7 +2,16 @@ class StockEntry < ActiveRecord::Base
 
   belongs_to :product
   validates_presence_of :product_id, :purpose, :date, :ammount
-  validates_inclusion_of  :purpose, :in => %w( sell production )
+  validates_numericality_of :ammount
+
+  @valid_purposes = {
+    'sell' => _('Sell'),
+    'production' => _('Production')
+  }
+  def self.valid_purposes
+    @valid_purposes
+  end
+  validates_inclusion_of  :purpose, :in => self.valid_purposes.keys
 
   def validate
     if self.validity && (self.validity < self.date)

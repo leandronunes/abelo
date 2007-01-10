@@ -22,9 +22,24 @@ a { color: #000; }
 a:visited { color: #666; }
 a:hover { color: #fff; background-color:#000; }
 
+/******** forms stuff *************************************/
+
+form p { display: table-row; padding-bottom: 1em; }
+form p label { display: table-cell; text-align: right; padding-right: 1em; padding-bottom: 1em; font-weight: bold; width: 150px;  }
+form p span { display: table-cell; }
+
+.fieldWithErrors {
+  display: inline;
+}
+
+input, select, textarea {
+  border: 1px solid black;
+  margin-right: 0.25em;
+}
+
 .fieldWithErrors input, .fieldWithErrors select, .fieldWithErrors textarea {
-  background-color: #fee;
-  border: 2px solid red;
+  background-color: #fee; 
+  border: 1px solid red;
 }
 
 #errorExplanation {
@@ -56,6 +71,9 @@ a:hover { color: #fff; background-color:#000; }
   font-size: 12px;
   list-style: square;
 }
+
+
+/******** tables *************************************/
 
 table {
   border-collapse: collapse;

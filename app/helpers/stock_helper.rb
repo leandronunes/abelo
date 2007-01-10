@@ -10,10 +10,11 @@ module StockHelper
   end
 
   def show_purpose(purpose)
-    {
-      'sell' => _('Sell'),
-      'production' => _('Production')
-    }[purpose]
+    StockEntry.valid_purposes[purpose]
+  end
+
+  def select_purpose(object, method)
+    select(object, method, StockEntry.valid_purposes.map { |k,v| [v, k] })
   end
 
 end

@@ -1,0 +1,42 @@
+<h2><%= _('New stock entry for %s') % @product.description %></h2>
+
+<%= error_messages_for :entry %>
+
+<%= form_tag :action => 'add_entry', :id => @product %>
+
+<p>
+<label for='entry_suplier_id'><%= _('Supplier') %></label>
+<span><%= select 'entry', 'supplier_id', @product.suppliers.map { |s| [ s.name, s.id] } %></span>
+</p>
+
+<p>
+<label for='entry_ammount'><%= _('Ammount') %></label>
+<span><%= text_field 'entry', 'ammount' %></span>
+</p>
+
+<p>
+<label for='entry_price'><%= _('Buy Price') %></label>
+<span><%= text_field 'entry', 'price' %></span>
+</p>
+
+<p>
+<label for='entry_purpose'><%= _('Purpose') %></label>
+<span><%= select_purpose 'entry', 'purpose' %></span>
+</p>
+
+<p>
+<label for='entry_date'><%= _('Date') %></label>
+<span><%= date_select 'entry', 'date' %></span>
+</p>
+
+<p>
+<label for='entry_validity'><%= _('Validity') %></label>
+<span><%= date_select 'entry', 'validity', :include_blank => true %></span>
+</p>
+
+<div class='button_bar'>
+<%= button _('Save'), :save %>
+<%= button _('Cancel'), :cancel, :action => 'history', :id => @product %>
+</div>
+
+<%= end_form_tag %>

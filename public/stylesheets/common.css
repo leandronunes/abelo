@@ -45,7 +45,9 @@ input, select, textarea {
 #errorExplanation {
   width: 400px;
   border: 2px solid red;
-  padding: 7px;
+  padding-top: 7px;
+  padding-left: 7px;
+  padding-right: 7px;
   padding-bottom: 12px;
   margin-bottom: 20px;
   background-color: #f0f0f0;
@@ -56,7 +58,9 @@ input, select, textarea {
   font-weight: bold;
   padding: 5px 5px 5px 15px;
   font-size: 12px;
-  margin: -7px;
+  margin-top: -7px;
+  margin-left: -7px;
+  margin-right: -7px;
   background-color: #c00;
   color: #fff;
 }

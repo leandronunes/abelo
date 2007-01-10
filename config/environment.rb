@@ -51,6 +51,6 @@ end
 # end
 
 # Include your application configuration below
+require 'jcode'
+$KCODE = 'u'
 require 'gettext/rails'
-#require 'jcode'
-#$KCODE = 'u'

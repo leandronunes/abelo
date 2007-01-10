@@ -59,4 +59,29 @@ class SupplierTest < Test::Unit::TestCase
 
   end
 
+  def test_cnpj_uniq
+    count = Supplier.count
+    s1 = Supplier.new(:name => 'Testing unique CNPJ (first)', :organization_id => 1)
+    s1.cnpj = '22071350000181'
+    assert s1.save
+    assert_equal count + 1, Supplier.count
+
+    # the same organization cannot have the same supplier registered twice
+    count = Supplier.count
+    s2 = Supplier.new(:name => 'Testing unique CNPJ (second)', :organization_id => 1)
+    s2.cnpj = '22071350000181'
+    assert !s2.save
+    assert_equal count, Supplier.count
+
+    # another organization can have the same supplier registered
+    count = Supplier.count
+    s3 = Supplier.new(:name => 'Testing unique CNPJ (another organization)', :organization_id => 2)
+    s3.cnpj = '22071350000181'
+    assert s3.save
+    assert_equal count + 1, Supplier.count
+  end
+
+  def test_cpf_uniq
+  end
+
 end

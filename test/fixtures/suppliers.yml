@@ -9,3 +9,12 @@ food_supplier:
   name: 'Food supplier'
   cnpj: '01075132000145'
   organization_id: 1
+person_supplier:
+  id: 3
+  name: 'Person that is a supplier'
+  cpf: '75815663905'
+  organization_id: 1
+  address: 'the address of the supplier'
+  rg: '21381293721'
+  birthday: '1980-11-21'
+  description: 'bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla'

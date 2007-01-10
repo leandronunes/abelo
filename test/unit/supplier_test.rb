@@ -43,4 +43,20 @@ class SupplierTest < Test::Unit::TestCase
     }
   end
 
+  def test_cnpj_or_cpf
+
+    s = Supplier.find(1)
+    s.cpf = '27774667857'
+    assert !s.save
+    s.cnpj = nil
+    assert s.save
+
+    s = Supplier.find(3)
+    s.cnpj = '28695988000170'
+    assert !s.save
+    s.cnpj = nil
+    assert s.save
+
+  end
+
 end

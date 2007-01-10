@@ -8,6 +8,7 @@ class Supplier < ActiveRecord::Base
   validates_as_cpf :cpf
 
   validates_uniqueness_of :cnpj, :scope => :organization_id, :if => lambda { |user| ! user.cnpj.blank? }
+  validates_uniqueness_of :cpf, :scope => :organization_id, :if => lambda { |user| ! user.cpf.blank? }
 
   def validate
     

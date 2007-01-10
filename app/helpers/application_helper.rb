@@ -181,4 +181,8 @@ module ApplicationHelper
     ) + observe_field("#{object}_#{method}", :function => "element.style.background = value" )
   end
 
+  def show_date(date)
+    _('%{year}/%{month}/%{day}') % {:day => '%02d' % date.day, :month => '%02d' % date.month, :year => '%04d' % date.year}
+  end
+
 end

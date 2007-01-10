@@ -57,7 +57,8 @@ class ProductTest < Test::Unit::TestCase
 
 
     # generate 10 stock ins
-    total = 0.0
+    total_ammount = 0.0
+    total_cost = 0.0
     (1..10).each { |n|
       entry = StockIn.new
       entry.ammount = n
@@ -73,10 +74,14 @@ class ProductTest < Test::Unit::TestCase
       
       assert entry.save
 
-      total += n
+      total_ammount += n
+      total_cost += entry.price * entry.ammount
     }
 
-    assert_equal total, p.ammount_in_stock # 55 = 1 + 2 + ... + 10
+    # 55 = 1 + 2 + ... + 10
+    assert_in_delta total_ammount, p.ammount_in_stock, 0.001 
+    # 1.99 * 55
+    assert_in_delta total_cost, p.total_cost, 0.001
 
     out_ammount = 15
 
@@ -88,7 +93,7 @@ class ProductTest < Test::Unit::TestCase
     out.ammount = - out_ammount
     assert out.save
 
-    assert_equal (total - out_ammount), p.ammount_in_stock
+    assert_equal (total_ammount - out_ammount), p.ammount_in_stock
 
     # one stock out of the allowed range
     overflow = StockOut.new

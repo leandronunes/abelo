@@ -1,0 +1,958 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: abelo 0.1.0\n"
+"POT-Creation-Date: 2007-01-06 09:58-0300\n"
+"PO-Revision-Date: 2007-01-06 09:58-0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: app/controllers/application.rb:18
+msgid "There is no organization with nickname %s"
+msgstr ""
+
+#: app/helpers/application_helper.rb:22 app/helpers/products_helper.rb:36
+msgid "N/A"
+msgstr ""
+
+#: app/helpers/application_helper.rb:23
+msgid "Alice Blue"
+msgstr ""
+
+#: app/helpers/application_helper.rb:24
+msgid "Antique White"
+msgstr ""
+
+#: app/helpers/application_helper.rb:25
+msgid "Aqua"
+msgstr ""
+
+#: app/helpers/application_helper.rb:26
+msgid "Aquamarine"
+msgstr ""
+
+#: app/helpers/application_helper.rb:27
+msgid "Azure"
+msgstr ""
+
+#: app/helpers/application_helper.rb:28
+msgid "Beige"
+msgstr ""
+
+#: app/helpers/application_helper.rb:29
+msgid "Bisque"
+msgstr ""
+
+#: app/helpers/application_helper.rb:30
+msgid "Black"
+msgstr ""
+
+#: app/helpers/application_helper.rb:31
+msgid "Blanched Almond"
+msgstr ""
+
+#: app/helpers/application_helper.rb:32
+msgid "Blue"
+msgstr ""
+
+#: app/helpers/application_helper.rb:33
+msgid "Blue Violet"
+msgstr ""
+
+#: app/helpers/application_helper.rb:34
+msgid "Brown"
+msgstr ""
+
+#: app/helpers/application_helper.rb:35
+msgid "Burly Wood"
+msgstr ""
+
+#: app/helpers/application_helper.rb:36
+msgid "Cadet Blue"
+msgstr ""
+
+#: app/helpers/application_helper.rb:37
+msgid "Chartreuse"
+msgstr ""
+
+#: app/helpers/application_helper.rb:38
+msgid "Chocolate"
+msgstr ""
+
+#: app/helpers/application_helper.rb:39
+msgid "Coral"
+msgstr ""
+
+#: app/helpers/application_helper.rb:40
+msgid "Cornflower Blue"
+msgstr ""
+
+#: app/helpers/application_helper.rb:41
+msgid "Cornsilk"
+msgstr ""
+
+#: app/helpers/application_helper.rb:42
+msgid "Crimson"
+msgstr ""
+
+#: app/helpers/application_helper.rb:43
+msgid "Cyan"
+msgstr ""
+
+#: app/helpers/application_helper.rb:44
+msgid "Dark Blue"
+msgstr ""
+
+#: app/helpers/application_helper.rb:45
+msgid "Dark Cyan"
+msgstr ""
+
+#: app/helpers/application_helper.rb:46
+msgid "Dark Golden Rod"
+msgstr ""
+
+#: app/helpers/application_helper.rb:47
+msgid "Dark Gray"
+msgstr ""
+
+#: app/helpers/application_helper.rb:48
+msgid "Dark Grey"
+msgstr ""
+
+#: app/helpers/application_helper.rb:49
+msgid "Dark Green"
+msgstr ""
+
+#: app/helpers/application_helper.rb:50
+msgid "Dark Khaki"
+msgstr ""
+
+#: app/helpers/application_helper.rb:51
+msgid "Dark Magenta"
+msgstr ""
+
+#: app/helpers/application_helper.rb:52
+msgid "Dark Olive Green"
+msgstr ""
+
+#: app/helpers/application_helper.rb:53
+msgid "Darkorange"
+msgstr ""
+
+#: app/helpers/application_helper.rb:54
+msgid "Dark Orchid"
+msgstr ""
+
+#: app/helpers/application_helper.rb:55
+msgid "Dark Red"
+msgstr ""
+
+#: app/helpers/application_helper.rb:56
+msgid "Dark Salmon"
+msgstr ""
+
+#: app/helpers/application_helper.rb:57
+msgid "Dark Sea Green"
+msgstr ""
+
+#: app/helpers/application_helper.rb:58
+msgid "Dark Slate Blue"
+msgstr ""
+
+#: app/helpers/application_helper.rb:59
+msgid "Dark Slate Gray"
+msgstr ""
+
+#: app/helpers/application_helper.rb:60
+msgid "Dark Slate Grey"
+msgstr ""
+
+#: app/helpers/application_helper.rb:61
+msgid "Dark Turquoise"
+msgstr ""
+
+#: app/helpers/application_helper.rb:62
+msgid "Dark Violet"
+msgstr ""
+
+#: app/helpers/application_helper.rb:63
+msgid "Deep Pink"
+msgstr ""
+
+#: app/helpers/application_helper.rb:64
+msgid "Deep Sky Blue"
+msgstr ""
+
+#: app/helpers/application_helper.rb:65
+msgid "Dim Gray"
+msgstr ""
+
+#: app/helpers/application_helper.rb:66
+msgid "Dim Grey"
+msgstr ""
+
+#: app/helpers/application_helper.rb:67
+msgid "Dodger Blue"
+msgstr ""
+
+#: app/helpers/application_helper.rb:68
+msgid "Fire Brick"
+msgstr ""
+
+#: app/helpers/application_helper.rb:69
+msgid "Floral White"
+msgstr ""
+
+#: app/helpers/application_helper.rb:70
+msgid "Forest Green"
+msgstr ""
+
+#: app/helpers/application_helper.rb:71
+msgid "Fuchsia"
+msgstr ""
+
+#: app/helpers/application_helper.rb:72
+msgid "Gainsboro"
+msgstr ""
+
+#: app/helpers/application_helper.rb:73
+msgid "Ghost White"
+msgstr ""
+
+#: app/helpers/application_helper.rb:74
+msgid "Gold"
+msgstr ""
+
+#: app/helpers/application_helper.rb:75
+msgid "Golden Rod"
+msgstr ""
+
+#: app/helpers/application_helper.rb:76
+msgid "Gray"
+msgstr ""
+
+#: app/helpers/application_helper.rb:77
+msgid "Grey"
+msgstr ""
+
+#: app/helpers/application_helper.rb:78
+msgid "Green"
+msgstr ""
+
+#: app/helpers/application_helper.rb:79
+msgid "Green Yellow"
+msgstr ""
+
+#: app/helpers/application_helper.rb:80
+msgid "Honey Dew"
+msgstr ""
+
+#: app/helpers/application_helper.rb:81
+msgid "Hot Pink"
+msgstr ""
+
+#: app/helpers/application_helper.rb:82
+msgid "Indian Red"
+msgstr ""
+
+#: app/helpers/application_helper.rb:83
+msgid "Indigo"
+msgstr ""
+
+#: app/helpers/application_helper.rb:84
+msgid "Ivory"
+msgstr ""
+
+#: app/helpers/application_helper.rb:85
+msgid "Khaki"
+msgstr ""
+
+#: app/helpers/application_helper.rb:86
+msgid "Lavender"
+msgstr ""
+
+#: app/helpers/application_helper.rb:87
+msgid "Lavender Blush"
+msgstr ""
+
+#: app/helpers/application_helper.rb:88
+msgid "Lawn Green"
+msgstr ""
+
+#: app/helpers/application_helper.rb:89
+msgid "Lemon Chiffon"
+msgstr ""
+
+#: app/helpers/application_helper.rb:90
+msgid "Light Blue"
+msgstr ""
+
+#: app/helpers/application_helper.rb:91
+msgid "Light Coral"
+msgstr ""
+
+#: app/helpers/application_helper.rb:92
+msgid "Light Cyan"
+msgstr ""
+
+#: app/helpers/application_helper.rb:93
+msgid "Light Golden Rod Yellow"
+msgstr ""
+
+#: app/helpers/application_helper.rb:94
+msgid "Light Gray"
+msgstr ""
+
+#: app/helpers/application_helper.rb:95
+msgid "Light Grey"
+msgstr ""
+
+#: app/helpers/application_helper.rb:96
+msgid "Light Green"
+msgstr ""
+
+#: app/helpers/application_helper.rb:97
+msgid "Light Pink"
+msgstr ""
+
+#: app/helpers/application_helper.rb:98
+msgid "Light Salmon"
+msgstr ""
+
+#: app/helpers/application_helper.rb:99
+msgid "Light Sea Green"
+msgstr ""
+
+#: app/helpers/application_helper.rb:100
+msgid "Light Sky Blue"
+msgstr ""
+
+#: app/helpers/application_helper.rb:101
+msgid "Light Slate Gray"
+msgstr ""
+
+#: app/helpers/application_helper.rb:102
+msgid "Light Slate Grey"
+msgstr ""
+
+#: app/helpers/application_helper.rb:103
+msgid "Light Steel Blue"
+msgstr ""
+
+#: app/helpers/application_helper.rb:104
+msgid "Light Yellow"
+msgstr ""
+
+#: app/helpers/application_helper.rb:105
+msgid "Lime"
+msgstr ""
+
+#: app/helpers/application_helper.rb:106
+msgid "Lime Green"
+msgstr ""
+
+#: app/helpers/application_helper.rb:107
+msgid "Linen"
+msgstr ""
+
+#: app/helpers/application_helper.rb:108
+msgid "Magenta"
+msgstr ""
+
+#: app/helpers/application_helper.rb:109
+msgid "Maroon"
+msgstr ""
+
+#: app/helpers/application_helper.rb:110
+msgid "Medium Aqua Marine"
+msgstr ""
+
+#: app/helpers/application_helper.rb:111
+msgid "Medium Blue"
+msgstr ""
+
+#: app/helpers/application_helper.rb:112
+msgid "Medium Orchid"
+msgstr ""
+
+#: app/helpers/application_helper.rb:113
+msgid "Medium Purple"
+msgstr ""
+
+#: app/helpers/application_helper.rb:114
+msgid "Medium Sea Green"
+msgstr ""
+
+#: app/helpers/application_helper.rb:115
+msgid "Medium Slate Blue"
+msgstr ""
+
+#: app/helpers/application_helper.rb:116
+msgid "Medium Spring Green"
+msgstr ""
+
+#: app/helpers/application_helper.rb:117
+msgid "Medium Turquoise"
+msgstr ""
+
+#: app/helpers/application_helper.rb:118
+msgid "Medium Violet Red"
+msgstr ""
+
+#: app/helpers/application_helper.rb:119
+msgid "Midnight Blue"
+msgstr ""
+
+#: app/helpers/application_helper.rb:120
+msgid "Mint Cream"
+msgstr ""
+
+#: app/helpers/application_helper.rb:121
+msgid "Misty Rose"
+msgstr ""
+
+#: app/helpers/application_helper.rb:122
+msgid "Moccasin"
+msgstr ""
+
+#: app/helpers/application_helper.rb:123
+msgid "Navajo White"
+msgstr ""
+
+#: app/helpers/application_helper.rb:124
+msgid "Navy"
+msgstr ""
+
+#: app/helpers/application_helper.rb:125
+msgid "Old Lace"
+msgstr ""
+
+#: app/helpers/application_helper.rb:126
+msgid "Olive"
+msgstr ""
+
+#: app/helpers/application_helper.rb:127
+msgid "Olive Drab"
+msgstr ""
+
+#: app/helpers/application_helper.rb:128
+msgid "Orange"
+msgstr ""
+
+#: app/helpers/application_helper.rb:129
+msgid "Orange Red"
+msgstr ""
+
+#: app/helpers/application_helper.rb:130
+msgid "Orchid"
+msgstr ""
+
+#: app/helpers/application_helper.rb:131
+msgid "Pale Golden Rod"
+msgstr ""
+
+#: app/helpers/application_helper.rb:132
+msgid "Pale Green"
+msgstr ""
+
+#: app/helpers/application_helper.rb:133
+msgid "Pale Turquoise"
+msgstr ""
+
+#: app/helpers/application_helper.rb:134
+msgid "Pale Violet Red"
+msgstr ""
+
+#: app/helpers/application_helper.rb:135
+msgid "Papaya Whip"
+msgstr ""
+
+#: app/helpers/application_helper.rb:136
+msgid "Peach Puff"
+msgstr ""
+
+#: app/helpers/application_helper.rb:137
+msgid "Peru"
+msgstr ""
+
+#: app/helpers/application_helper.rb:138
+msgid "Pink"
+msgstr ""
+
+#: app/helpers/application_helper.rb:139
+msgid "Plum"
+msgstr ""
+
+#: app/helpers/application_helper.rb:140
+msgid "Powder Blue"
+msgstr ""
+
+#: app/helpers/application_helper.rb:141
+msgid "Purple"
+msgstr ""
+
+#: app/helpers/application_helper.rb:142
+msgid "Red"
+msgstr ""
+
+#: app/helpers/application_helper.rb:143
+msgid "Rosy Brown"
+msgstr ""
+
+#: app/helpers/application_helper.rb:144
+msgid "Royal Blue"
+msgstr ""
+
+#: app/helpers/application_helper.rb:145
+msgid "Saddle Brown"
+msgstr ""
+
+#: app/helpers/application_helper.rb:146
+msgid "Salmon"
+msgstr ""
+
+#: app/helpers/application_helper.rb:147
+msgid "Sandy Brown"
+msgstr ""
+
+#: app/helpers/application_helper.rb:148
+msgid "Sea Green"
+msgstr ""
+
+#: app/helpers/application_helper.rb:149
+msgid "Sea Shell"
+msgstr ""
+
+#: app/helpers/application_helper.rb:150
+msgid "Sienna"
+msgstr ""
+
+#: app/helpers/application_helper.rb:151
+msgid "Silver"
+msgstr ""
+
+#: app/helpers/application_helper.rb:152
+msgid "Sky Blue"
+msgstr ""
+
+#: app/helpers/application_helper.rb:153
+msgid "Slate Blue"
+msgstr ""
+
+#: app/helpers/application_helper.rb:154
+msgid "Slate Gray"
+msgstr ""
+
+#: app/helpers/application_helper.rb:155
+msgid "Slate Grey"
+msgstr ""
+
+#: app/helpers/application_helper.rb:156
+msgid "Snow"
+msgstr ""
+
+#: app/helpers/application_helper.rb:157
+msgid "Spring Green"
+msgstr ""
+
+#: app/helpers/application_helper.rb:158
+msgid "Steel Blue"
+msgstr ""
+
+#: app/helpers/application_helper.rb:159
+msgid "Tan"
+msgstr ""
+
+#: app/helpers/application_helper.rb:160
+msgid "Teal"
+msgstr ""
+
+#: app/helpers/application_helper.rb:161
+msgid "Thistle"
+msgstr ""
+
+#: app/helpers/application_helper.rb:162
+msgid "Tomato"
+msgstr ""
+
+#: app/helpers/application_helper.rb:163
+msgid "Turquoise"
+msgstr ""
+
+#: app/helpers/application_helper.rb:164
+msgid "Violet"
+msgstr ""
+
+#: app/helpers/application_helper.rb:165
+msgid "Wheat"
+msgstr ""
+
+#: app/helpers/application_helper.rb:166
+msgid "White"
+msgstr ""
+
+#: app/helpers/application_helper.rb:167
+msgid "White Smoke"
+msgstr ""
+
+#: app/helpers/application_helper.rb:168
+msgid "Yellow"
+msgstr ""
+
+#: app/helpers/application_helper.rb:169
+msgid "Yellow Green"
+msgstr ""
+
+#: app/helpers/application_helper.rb:185
+msgid "%{year}/%{month}/%{day}"
+msgstr ""
+
+#: app/helpers/products_helper.rb:5
+msgid "Units"
+msgstr ""
+
+#: app/helpers/products_helper.rb:6
+msgid "Kilograms"
+msgstr ""
+
+#: app/helpers/products_helper.rb:37
+msgid "Small"
+msgstr ""
+
+#: app/helpers/products_helper.rb:38
+msgid "Medium"
+msgstr ""
+
+#: app/helpers/products_helper.rb:39
+msgid "Large"
+msgstr ""
+
+#: app/helpers/products_helper.rb:40
+msgid "Extra Large"
+msgstr ""
+
+#: app/helpers/stock_helper.rb:14
+msgid "Sell"
+msgstr ""
+
+#: app/helpers/stock_helper.rb:15
+msgid "Production"
+msgstr ""
+
+#: app/models/organization.rb:-
+msgid "organization"
+msgstr ""
+
+#: app/models/organization.rb:-
+msgid "Organization|Name"
+msgstr ""
+
+#: app/models/organization.rb:-
+msgid "Organization|Cnpj"
+msgstr ""
+
+#: app/models/organization.rb:-
+msgid "Organization|Nickname"
+msgstr ""
+
+#: app/models/product.rb:-
+msgid "product"
+msgstr ""
+
+#: app/models/product.rb:-
+msgid "Product|Description"
+msgstr ""
+
+#: app/models/product.rb:-
+msgid "Product|Size"
+msgstr ""
+
+#: app/models/product.rb:-
+msgid "Product|Color"
+msgstr ""
+
+#: app/models/product.rb:-
+msgid "Product|Sell price"
+msgstr ""
+
+#: app/models/product.rb:-
+msgid "Product|Unit"
+msgstr ""
+
+#: app/models/product.rb:-
+msgid "Product|Organization"
+msgstr ""
+
+#: app/models/product.rb:-
+msgid "Product|Category"
+msgstr ""
+
+#: app/models/image.rb:-
+msgid "image"
+msgstr ""
+
+#: app/models/image.rb:-
+msgid "Image|Description"
+msgstr ""
+
+#: app/models/image.rb:-
+msgid "Image|Picture"
+msgstr ""
+
+#: app/models/image.rb:-
+msgid "Image|Product"
+msgstr ""
+
+#: app/models/product_category.rb:-
+msgid "product category"
+msgstr ""
+
+#: app/models/product_category.rb:-
+msgid "ProductCategory|Name"
+msgstr ""
+
+#: app/models/product_category.rb:-
+msgid "ProductCategory|Parent"
+msgstr ""
+
+#: app/models/product_category.rb:-
+msgid "ProductCategory|Organization"
+msgstr ""
+
+#: app/models/supplier.rb:-
+msgid "supplier"
+msgstr ""
+
+#: app/models/supplier.rb:-
+msgid "Supplier|Name"
+msgstr ""
+
+#: app/models/supplier.rb:-
+msgid "Supplier|Cnpj"
+msgstr ""
+
+#: app/models/supplier.rb:-
+msgid "Supplier|Organization"
+msgstr ""
+
+#: app/models/stock_entry.rb:-
+msgid "stock entry"
+msgstr ""
+
+#: app/models/stock_entry.rb:-
+msgid "StockEntry|Type"
+msgstr ""
+
+#: app/models/stock_entry.rb:-
+msgid "StockEntry|Product"
+msgstr ""
+
+#: app/models/stock_entry.rb:-
+msgid "StockEntry|Ammount"
+msgstr ""
+
+#: app/models/stock_entry.rb:-
+msgid "StockEntry|Purpose"
+msgstr ""
+
+#: app/models/stock_entry.rb:-
+msgid "StockEntry|Date"
+msgstr ""
+
+#: app/models/stock_entry.rb:-
+msgid "StockEntry|Supplier"
+msgstr ""
+
+#: app/models/stock_entry.rb:-
+msgid "StockEntry|Price"
+msgstr ""
+
+#: app/models/stock_entry.rb:-
+msgid "StockEntry|Validity"
+msgstr ""
+
+#: app/models/stock_entry.rb:-
+msgid "StockEntry|Sell"
+msgstr ""
+
+#: app/views/organizations/list.rhtml:1
+msgid "Managing organizations"
+msgstr ""
+
+#: app/views/organizations/list.rhtml:5 app/views/product_categories/list.rhtml:5
+msgid "Name"
+msgstr ""
+
+#: app/views/organizations/list.rhtml:6
+msgid "Nickname"
+msgstr ""
+
+#: app/views/organizations/list.rhtml:7
+msgid "CNPJ"
+msgstr ""
+
+#: app/views/organizations/list.rhtml:16 app/views/products/list.rhtml:17
+#: app/views/product_categories/_list.rhtml:4 app/views/suppliers/list.rhtml:15
+msgid "Edit"
+msgstr ""
+
+#: app/views/organizations/list.rhtml:17
+msgid "Remove"
+msgstr ""
+
+#: app/views/organizations/list.rhtml:17 app/views/products/list.rhtml:18 app/views/products/images.rhtml:30
+#: app/views/product_categories/_list.rhtml:5 app/views/suppliers/list.rhtml:16
+msgid "Are you sure?"
+msgstr ""
+
+#: app/views/organizations/list.rhtml:24
+msgid "New Organization"
+msgstr ""
+
+#: app/views/products/list.rhtml:15
+msgid "Images"
+msgstr ""
+
+#: app/views/products/list.rhtml:16
+msgid "Show"
+msgstr ""
+
+#: app/views/products/list.rhtml:18 app/views/product_categories/_list.rhtml:5
+#: app/views/suppliers/list.rhtml:16
+msgid "Destroy"
+msgstr ""
+
+#: app/views/products/show.rhtml:4 app/views/stock/history.rhtml:7
+msgid "Price"
+msgstr ""
+
+#: app/views/products/show.rhtml:8
+msgid ""
+msgstr ""
+
+#: app/views/products/edit.rhtml:6 app/views/product_categories/edit.rhtml:6
+#: app/views/suppliers/edit.rhtml:6
+msgid "Save"
+msgstr ""
+
+#: app/views/products/edit.rhtml:7 app/views/product_categories/new.rhtml:7
+#: app/views/product_categories/edit.rhtml:7 app/views/suppliers/new.rhtml:7 app/views/suppliers/edit.rhtml:7
+msgid "Cancel"
+msgstr ""
+
+#: app/views/products/images.rhtml:1
+msgid "Managing images for %s"
+msgstr ""
+
+#: app/views/products/images.rhtml:3
+msgid "Add Image"
+msgstr ""
+
+#: app/views/products/images.rhtml:7
+msgid "Description"
+msgstr ""
+
+#: app/views/products/images.rhtml:11
+msgid "Image file"
+msgstr ""
+
+#: app/views/products/images.rhtml:15
+msgid "Add"
+msgstr ""
+
+#: app/views/products/images.rhtml:16
+msgid "Back"
+msgstr ""
+
+#: app/views/products/images.rhtml:20
+msgid "Current images"
+msgstr ""
+
+#: app/views/products/images.rhtml:30
+msgid "Remove image"
+msgstr ""
+
+#: app/views/main/index.rhtml:2
+msgid "Product Categories"
+msgstr ""
+
+#: app/views/main/index.rhtml:3
+msgid "Products"
+msgstr ""
+
+#: app/views/main/index.rhtml:4
+msgid "Suppliers"
+msgstr ""
+
+#: app/views/main/index.rhtml:5
+msgid "Stock"
+msgstr ""
+
+#: app/views/product_categories/_list.rhtml:3
+msgid "New subcategory"
+msgstr ""
+
+#: app/views/product_categories/new.rhtml:6 app/views/suppliers/new.rhtml:6
+msgid "Create"
+msgstr ""
+
+#: app/views/suppliers/list.rhtml:24
+msgid "New supplier"
+msgstr ""
+
+#: app/views/stock/history.rhtml:1
+msgid "Stock history for %s"
+msgstr ""
+
+#: app/views/stock/history.rhtml:5
+msgid "Date"
+msgstr ""
+
+#: app/views/stock/history.rhtml:6
+msgid "Ammount"
+msgstr ""
+
+#: app/views/stock/history.rhtml:8
+msgid "Total cost"
+msgstr ""
+
+#: app/views/stock/history.rhtml:9
+msgid "Supplier"
+msgstr ""
+
+#: app/views/stock/history.rhtml:10
+msgid "Purpose"
+msgstr ""
+
+#: app/views/stock/history.rhtml:11
+msgid "Validity"
+msgstr ""
+
+#: app/views/stock/history.rhtml:28
+msgid "Totals"
+msgstr ""
+
+#: app/views/stock/index.rhtml:1
+msgid "Stock control"
+msgstr ""
+
+#: app/views/stock/index.rhtml:5
+msgid "Product"
+msgstr ""
+
+#: app/views/stock/index.rhtml:6
+msgid "Ammount in stock"
+msgstr ""
+
+#: app/views/stock/index.rhtml:13
+msgid "Manage stock"
+msgstr ""

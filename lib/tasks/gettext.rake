@@ -13,7 +13,7 @@ end
 desc "Update pot/po files to match new version."
 task :updatepo do
   GetText.update_pofiles('abelo', Dir.glob("{app,lib}/**/*.{rb,rhtml}"),
-                         "abelo #{Abelo.version}")
+                         "abelo #{Abelo::VERSION}")
 end
 
 # vim: ft=ruby

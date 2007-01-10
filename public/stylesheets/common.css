@@ -178,3 +178,8 @@ a.product_image img {
   background: transparent;
   color: #ff3;
 }
+
+span.positive { color: green; }
+span.negative { color: red; }
+td.number { text-align: right; }
+td.text { text-align: center; }

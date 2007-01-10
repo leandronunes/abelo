@@ -1,0 +1,36 @@
+<h2><%= _('Stock history for %s') % @product.description %></h2>
+
+<table>
+  <tr>
+    <th><%= _('Date') %></th>
+    <th><%= _('Ammount') %></th>
+    <th><%= _('Price') %></th>
+    <th><%= _('Total cost') %></th>
+    <th><%= _('Supplier') %></th>
+    <th><%= _('Purpose') %></th>
+    <th><%= _('Validity') %></th>
+  </tr>
+  <% total_ammount = 0.0 %>
+  <% total_cost = 0.0 %>
+  <% for entry in @entries %>
+    <% total_ammount += entry.ammount %>
+    <% total_cost += entry.total_cost %>
+    <tr>
+      <td class='date'><%= show_date entry.date  %></td>
+      <td class='number'><%= show_ammount entry.ammount %></td>
+      <td class='number'><%= entry.price %></td>
+      <td class='number'><%= entry.total_cost %></td>
+      <td class='text'><%= show_supplier entry %></td>
+      <td class='text'><%= show_purpose entry.purpose %></td>
+      <td class='date'><%= entry.validity  %></td>
+    </tr>
+  <% end %>
+  <tr><th colspan='7'><%= _('Totals') %></th></tr>
+  <tr>
+    <th></th>
+    <td class='number'><%= show_ammount total_ammount %></td>
+    <td></td>
+    <td class='number'><%= show_ammount total_cost%></td>
+    <td colspan='3'></td>
+  </tr>
+</table>

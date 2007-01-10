@@ -1,10 +1,32 @@
 <%= error_messages_for 'supplier' %>
 
 <!--[form:supplier]-->
-<p><label for="supplier_name">Name</label><br/>
-<%= text_field 'supplier', 'name'  %></p>
+<p><label for="supplier_name">Name</label>
+<span><%= text_field 'supplier', 'name'  %></span>
+</p>
 
-<p><label for="supplier_cnpj">Cnpj</label><br/>
-<%= text_field 'supplier', 'cnpj'  %></p>
+<p><label for="supplier_cnpj">Cnpj</label>
+<span><%= text_field 'supplier', 'cnpj'  %></span>
+</p>
+
+<p><label for='supplier_address'><%= _('Address') %></label>
+<span><%= text_field 'supplier', 'address' %></span>
+</p>
+
+<p><label for='supplier_birthday'><%= _('Birthday') %></label>
+<span><%= date_select 'supplier', 'birthday' %></span>
+</p>
+
+<p><label for='supplier_cpf'><%= _('CPF') %></label>
+<span><%= text_field 'supplier', 'cpf' %></span>
+</p>
+
+<p><label for='supplier_rg'><%= _('RG') %></label>
+<span><%= text_field 'supplier', 'rg' %></span>
+</p>
+
+<p><label for='supplier_description'><%= _('Description') %></label>
+<span><%= text_field 'supplier', 'description' %></span>
+</p>
+
 <!--[eoform:supplier]-->
-

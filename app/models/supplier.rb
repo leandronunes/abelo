@@ -8,7 +8,8 @@ class Supplier < ActiveRecord::Base
   validates_as_cpf :cpf
 
   def validate
-    if (! self.cpf.nil?) && (! self.cnpj.nil?)
+    
+    if ((! self.cpf.blank?) && (! self.cnpj.blank?)) || (self.cpf.blank? && self.cnpj.blank?)
       errors.add('cnpj', 'Either %{fn} or CPF must be filled, and they cannot be filled at the same time.')
     end
   end

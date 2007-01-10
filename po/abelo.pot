@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: abelo 0.1.0\n"
-"POT-Creation-Date: 2007-01-06 09:58-0300\n"
-"PO-Revision-Date: 2007-01-06 09:58-0300\n"
+"POT-Creation-Date: 2007-01-06 10:39-0300\n"
+"PO-Revision-Date: 2007-01-06 10:39-0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -833,10 +833,6 @@ msgstr ""
 
 #: app/views/products/show.rhtml:4 app/views/stock/history.rhtml:7
 msgid "Price"
-msgstr ""
-
-#: app/views/products/show.rhtml:8
-msgid ""
 msgstr ""
 
 #: app/views/products/edit.rhtml:6 app/views/product_categories/edit.rhtml:6

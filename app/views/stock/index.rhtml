@@ -1,0 +1,15 @@
+<h2> <%= _('Stock control') %></h2>
+
+<table>
+  <tr>
+    <th><%= _('Product') %></th>
+    <th><%= _('Ammount in stock') %></th>
+  </tr>
+  <% for product in @products %>
+    <tr>
+      <td><%= product.description %></td>
+      <td><%= product.ammount_in_stock %></td>
+    </tr>
+  <% end %>
+</table>
+

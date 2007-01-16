@@ -34,7 +34,7 @@ class OrganizationsController < ApplicationController
     @organization = Organization.find(params[:id])
     if @organization.update_attributes(params[:organization])
       flash[:notice] = 'Organization was successfully updated.'
-      redirect_to :action => 'list', :id => @organization
+      redirect_to :action => 'list'
     else
       render :action => 'edit'
     end

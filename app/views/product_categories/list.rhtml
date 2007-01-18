@@ -1,8 +1,8 @@
-<h1>Listing product_categories</h1>
+<h1><%= _('Listing product_categories') %></h1>
 
 <table>
   <tr>
-    <th><%= _('Name')%></th>
+    <th><%= _('Name') %></th>
   </tr>
   
 <% for product_category in @product_categories.select { |c| c.top_level? } %>

@@ -1,0 +1,8 @@
+<ul>
+  <% @products.each do |p| %>
+    <li>
+      <%= image_link p.image %>
+      <%= p.description %>
+    </li>
+  <% end %>
+</ul>

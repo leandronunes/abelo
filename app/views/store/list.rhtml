@@ -1,7 +1,11 @@
 <ul id="list_categories">
   <% @product_categories.each do |pc| %>
     <li>
-      <%= image_link pc.products.find(:first).images.find(:first) %>
+      <% if pc.has_children? %>
+        <%= image_link pc.image, { :action => 'list', :product_category => pc.id} %>
+      <% else %>
+        <%= image_link pc.image, { :action => 'list_products', :product_category => pc.id  } %>
+      <% end %>
       <p> <%= pc.name %> </p>
     </li>
   <% end %>

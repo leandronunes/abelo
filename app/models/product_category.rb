@@ -3,6 +3,7 @@ class ProductCategory < ActiveRecord::Base
   validates_presence_of :name, :organization_id
   belongs_to :organization
   has_many :products, :foreign_key => 'category_id'
+  has_many :images, :through => :products
   acts_as_tree :order => 'name'
 
   def full_name(sep = '/')
@@ -13,6 +14,10 @@ class ProductCategory < ActiveRecord::Base
   end
   def top_level?
     self.parent.nil?
+  end
+  
+  def image
+    self.images.find(:first)
   end
 
 end

@@ -20,4 +20,8 @@ class Product < ActiveRecord::Base
     self.connection.select_value('select sum(ammount * price) from stock_entries where product_id = %d' % self.id).to_f
   end
 
+  def image
+    self.images.find(:first)
+  end
+
 end

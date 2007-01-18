@@ -7,7 +7,16 @@ class StoreController < ApplicationController
   end
 
   def list
-    @product_categories =  @organization.product_categories
+    if params[:product_category]
+      @product_categories = ProductCategory.find(params[:product_category]).children
+    else
+      @product_categories = @organization.product_categories
+    end
+  end
+
+  def list_products 
+    pc = ProductCategory.find(params[:product_category]) 
+    @products = pc.products
   end
 
 end

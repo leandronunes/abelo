@@ -98,7 +98,7 @@ th {
   padding-top: 5px;
   margin-top: 2px;
 }
-
+/**************** buttons ******************/
 .button {
   background-color: #ffb;
   background-repeat: no-repeat;
@@ -159,7 +159,7 @@ th {
 .button_login {
   background-image: url(../images/password.png);
 }
-
+/******************************* images *************************/
 .product_image {
   display: table-cell;
   padding: 5px;
@@ -205,3 +205,21 @@ span.positive { color: green; }
 span.negative { color: red; }
 td.number { text-align: right; }
 td.text { text-align: center; }
+/************************* product categories ********************/
+#list_categories {
+  background: red;
+  width: 500px;
+  text-align: center;
+}
+
+#list_categories li {
+  background-color: yellow;
+  border: 1px solid black;
+  list-style: none;
+  width: 150px;
+  height: 200px;
+  float: left;
+  text-align: center;
+  margin: 5px;
+}
+

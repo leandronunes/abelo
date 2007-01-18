@@ -5,7 +5,7 @@ class Image < ActiveRecord::Base
   belongs_to :product
 
   file_column :picture, :magick => {
-    :versions => { 'thumb' => '50x50', :medium => '320x240' }
+    :versions => { :thumb => '120x120', :medium => '320x240' }
   }
 
 end

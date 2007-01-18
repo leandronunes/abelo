@@ -1,12 +1,12 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'public_controller'
+require 'store_controller'
 
 # Re-raise errors caught by the controller.
-class PublicController; def rescue_action(e) raise e end; end
+class StoreController; def rescue_action(e) raise e end; end
 
-class PublicControllerTest < Test::Unit::TestCase
+class StoreControllerTest < Test::Unit::TestCase
   def setup
-    @controller = PublicController.new
+    @controller = StoreController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
   end

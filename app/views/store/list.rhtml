@@ -1,0 +1,8 @@
+<ul id="list_categories">
+  <% @product_categories.each do |pc| %>
+    <li>
+      <%= image_link pc.products.find(:first).images.find(:first) %>
+      <p> <%= pc.name %> </p>
+    </li>
+  <% end %>
+</ul>

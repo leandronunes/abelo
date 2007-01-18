@@ -1,7 +1,7 @@
 class Product < ActiveRecord::Base
 
   belongs_to :organization
-  belongs_to :category, :class_name => 'ProductCategory'
+  belongs_to :category, :class_name => 'ProductCategory', :foreign_key => 'category_id'
   has_many :images
   has_and_belongs_to_many :suppliers
   has_many :stock_entries

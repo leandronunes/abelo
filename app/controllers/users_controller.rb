@@ -16,7 +16,7 @@ class UsersController < ApplicationController
   end
 
   #Sets the layout used by the system
-  layout :login
+  layout 'login'
 
   def login
     return unless request.post?

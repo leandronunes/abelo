@@ -1,5 +1,7 @@
 <div>
-<% for image in @product.images %>
-  <%= show_image image %>
-<% end %>
+  <% if @product.images.blank? %>
+    <% for image in @product.images %>
+      <%= show_image image %>
+    <% end %>
+  <% end %>
 </div>

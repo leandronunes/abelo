@@ -16,9 +16,7 @@ class UsersController < ApplicationController
   end
 
   #Sets the layout used by the system
-  def set_user_layout
-    logged_in? ? "organization" : "login"
-  end 
+  layout :login
 
   def login
     return unless request.post?

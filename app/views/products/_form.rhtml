@@ -1,26 +1,26 @@
 <%= error_messages_for 'product' %>
 
 <!--[form:product]-->
-<p><label for="product_description">Description</label><br/>
+<p><label for="product_description">Description</label>
 <%= text_field 'product', 'description'  %></p>
 
-<p><label for="product_category">Category</label><br/>
+<p><label for="product_category">Category</label>
 <%= select_category 'product', 'category_id'  %></p>
 
-<p><label for='product_suppliers'>Suppliers</label><br/>
+<p><label for='product_suppliers'>Suppliers</label>
 <%= select_suppliers @product %>
 </p>
 
-<p><label for="product_size">Size</label><br/>
+<p><label for="product_size">Size</label>
 <%= select_size 'product', 'size'  %></p>
 
-<p><label for="product_color">Color</label><br/>
+<p><label for="product_color">Color</label>
 <%= color_select 'product', 'color'  %></p>
 
-<p><label for="product_sell_price">Sell price</label><br/>
+<p><label for="product_sell_price">Sell price</label>
 <%= text_field 'product', 'sell_price'  %></p>
 
-<p><label for="product_unit">Unit</label><br/>
+<p><label for="product_unit">Unit</label>
 <%= select_unit 'product', 'unit'  %></p>
 <!--[eoform:product]-->
 

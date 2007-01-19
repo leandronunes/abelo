@@ -122,12 +122,12 @@ class ProductsControllerTest < Test::Unit::TestCase
   end
 
   def test_add_images
-    images = @organization.products.find(1).images.size
+    images_count = @organization.products.find(1).images.size
 
     post :add_image, :id => 1, :image => { :description => 'a test image', :picture => File.open(File.join(RAILS_ROOT,'public/images/rails.png')) }
 
     assert_redirected_to :action => 'images'
-    assert_equal images + 1, @organization.products.find(1).images.size
+    assert_equal images_count + 1, @organization.products.find(1).images.size
   end
 
 end

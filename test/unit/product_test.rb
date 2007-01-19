@@ -103,7 +103,7 @@ class ProductTest < Test::Unit::TestCase
     overflow.ammount = -1000
     assert !overflow.save
 
-    # we must still a non-negative ammount
+    # we must still have a non-negative ammount
     assert(p.ammount_in_stock >= 0)
 
   end

@@ -20,4 +20,8 @@ class ProductCategory < ActiveRecord::Base
     self.images.find(:first)
   end
 
+  def self.top_level_for(organization)
+    self.find(:all, :conditions => ['parent_id is null and organization_id = ?', organization.id ])
+  end
+
 end

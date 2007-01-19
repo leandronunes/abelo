@@ -10,4 +10,8 @@ class Organization < ActiveRecord::Base
   validates_as_cnpj :cnpj
   validates_format_of :nickname, :with => /^[a-z0-9_]*$/, :message => '%{fn} can only contain downcase letters, numbers and "_"'
 
+  def top_level_product_categories
+    ProductCategory.top_level_for(self)
+  end
+
 end

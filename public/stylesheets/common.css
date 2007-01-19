@@ -206,13 +206,13 @@ span.negative { color: red; }
 td.number { text-align: right; }
 td.text { text-align: center; }
 /************************* product categories ********************/
-#list_categories {
+#store_list{
   background: red;
   width: 500px;
   text-align: center;
 }
 
-#list_categories li {
+#store_list li {
   background-color: yellow;
   border: 1px solid black;
   list-style: none;

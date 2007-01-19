@@ -1,7 +1,7 @@
-<ul>
+<ul id="store_list">
   <% @products.each do |p| %>
     <li>
-      <%= image_link p.image %>
+      <%= image_link p.image, { :action => 'show_product', :product => p.id}%>
       <%= p.description %>
     </li>
   <% end %>

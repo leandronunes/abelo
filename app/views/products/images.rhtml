@@ -21,8 +21,10 @@
 
 <table>
 <tr>
-<% for image in @product.images %>  
-  <td align='center'><%= show_image image %></td>
+<% if @product.images.blank? %>
+  <% for image in @product.images %>  
+    <td align='center'><%= show_image image %></td>
+  <% end %>
 <% end %>
 </tr>
 <tr>

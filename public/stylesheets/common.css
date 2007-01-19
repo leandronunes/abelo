@@ -25,7 +25,7 @@ a:hover { color: #fff; background-color:#000; }
 /******** forms stuff *************************************/
 
 form p { display: table-row; padding-bottom: 1em; }
-form p label { display: table-cell; text-align: right; padding-right: 1em; padding-bottom: 1em; font-weight: bold; width: 150px;  }
+form p label { display: table-cell; text-align: right; padding-right: 1em; padding-bottom: 1em; font-weight: bold; width: 150px; vertical-align: top; }
 form p span { display: table-cell; }
 
 .fieldWithErrors {

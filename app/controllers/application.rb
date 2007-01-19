@@ -2,6 +2,9 @@
 # Likewise, all the methods added will be available for all controllers.
 class ApplicationController < ActionController::Base
 
+  include AuthenticatedSystem
+  before_filter :login_required
+
   before_filter :i18n_settings
   def i18n_settings
     headers['Content-Type'] = 'text/html; charset=utf-8'

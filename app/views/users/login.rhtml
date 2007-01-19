@@ -1,0 +1,19 @@
+<div id='login'>
+
+<%= start_form_tag %>
+<p><label for="login"> <%= _("Login") %> </label><br/>
+<span><%= text_field_tag 'login' %></span>
+</p>
+
+<p><label for="password"><%= _("Password") %> </label><br/>
+<span><%= password_field_tag 'password' %></span>
+</p>
+
+<div class='button_bar'>
+<%= submit_tag _('Log in'), { :class => 'button button_login' } %>
+<%= link_to _('Sign up'), { :action => 'signup' }, { :class => 'button button_new' } %>
+</div>
+
+<%= end_form_tag %>
+
+</div>

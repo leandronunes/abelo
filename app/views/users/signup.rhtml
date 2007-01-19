@@ -1,0 +1,27 @@
+<div id='login'>
+
+<%= error_messages_for :user %>
+<% form_for :user do |f| %>
+<p><label for="login">Login</label>
+<span><%= f.text_field :login %></span>
+</p>
+
+<p><label for="email">Email</label>
+<span><%= f.text_field :email %></span>
+</p>
+
+<p><label for="password">Password</label>
+<span><%= f.password_field :password %></span>
+</p>
+
+<p><label for="password_confirmation">Confirm Password</label>
+<span><%= f.password_field :password_confirmation %></span>
+</p>
+
+<div class='button_bar'>
+<%= submit_tag 'Sign up', { :class => 'button button_save' } %>
+</div>
+
+<% end %>
+
+</div>

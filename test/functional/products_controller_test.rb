@@ -16,6 +16,7 @@ class ProductsControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
     @organization_nickname = 'one'
     @organization = Organization.find_by_nickname 'one'
+    login_as("quentin")
   end
 
   def test_index

@@ -13,6 +13,7 @@ class StockControllerTest < Test::Unit::TestCase
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     @organization_nickname = 'one'
+    login_as("quentin")
   end
 
   def test_index

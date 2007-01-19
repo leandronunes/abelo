@@ -9,6 +9,7 @@ class StoreControllerTest < Test::Unit::TestCase
     @controller = StoreController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
+    login_as("quentin")
   end
 
   # Replace this with your real tests.

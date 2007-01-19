@@ -23,7 +23,6 @@ a:visited { color: #666; }
 a:hover { color: #fff; background-color:#000; }
 
 /******** forms stuff *************************************/
-
 form p { display: table-row; padding-bottom: 1em; }
 form p label { display: table-cell; text-align: right; padding-right: 1em; padding-bottom: 1em; font-weight: bold; width: 150px; vertical-align: top; }
 form p span { display: table-cell; }
@@ -223,3 +222,19 @@ td.text { text-align: center; }
   margin: 5px;
 }
 
+/********************************************************/
+div#login {
+  width: 400px;
+  position: absolute;
+  left: 50%;
+  margin-left: -200px;
+
+  border: 1px solid blue;
+  background: #ccf;
+  padding: 1em;
+  
+}
+
+div#login div.button_bar {
+  text-align: center;
+}

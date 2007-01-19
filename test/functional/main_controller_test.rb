@@ -13,6 +13,7 @@ class MainControllerTest < Test::Unit::TestCase
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     @organization_nickname = 'one'
+    login_as("quentin")
   end
 
   # Replace this with your real tests.

@@ -5,10 +5,12 @@ require 'organizations_controller'
 class OrganizationsController; def rescue_action(e) raise e end; end
 
 class OrganizationsControllerTest < Test::Unit::TestCase
+
   def setup
     @controller = OrganizationsController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
+    login_as("quentin")
   end
 
   def test_index

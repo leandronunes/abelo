@@ -20,4 +20,7 @@ ActionController::Routing::Routes.draw do |map|
   # instead of a file named 'wsdl'
   map.connect ':organization_nickname/:controller/service.wsdl', :action => 'wsdl'
 
+  # non-organization-based controllers
+  map.connect 'users/:action/:id', :controller => 'users'
+
 end

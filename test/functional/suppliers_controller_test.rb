@@ -31,6 +31,7 @@ class SuppliersControllerTest < Test::Unit::TestCase
     assert_template 'list'
 
     assert_not_nil assigns(:suppliers)
+    assert_kind_of Array, assigns(:suppliers)
   end
 
   def test_new
@@ -40,6 +41,8 @@ class SuppliersControllerTest < Test::Unit::TestCase
     assert_template 'new'
 
     assert_not_nil assigns(:supplier)
+    assert_kind_of Supplier, assigns(:supplier)
+    assert_equal @organization, assigns(:supplier).organization
   end
 
   def test_create

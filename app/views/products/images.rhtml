@@ -29,7 +29,7 @@
 </tr>
 <tr>
 <% for image in @product.images %>  
-  <td><%= button  _('Remove image'), :remove, { :action => 'remove_image', :image_id => image.id }, { :confirm => _('Are you sure?') } %></td>
+  <td><%= button  _('Remove image'), :remove, { :action => 'remove_image', :image_id => image.id, :product_id => @product }, { :confirm => _('Are you sure?') } %></td>
 <% end %>
 </tr>
 </table>

@@ -72,4 +72,9 @@ class ProductsController < ApplicationController
     end
   end
 
+  def remove_image
+    Image.find(params[:image_id]).destroy
+    redirect_to :action => 'images', :id => params[:product_id]
+  end
+
 end

@@ -33,3 +33,37 @@ out1:
   ammount: -10
   date: '2006-04-01'
   purpose: 'sell'
+in4:
+  id: 5
+  type: 'StockIn'
+  product_id: 2
+  ammount: 5
+  supplier_id: 2
+  purpose: 'production'
+  price: 1.99
+  date: '2006-05-01'
+in5:
+  id: 6
+  type: 'StockIn'
+  product_id: 3
+  ammount: 10
+  supplier_id: 2
+  purpose: 'production'
+  price: 2.05
+  date: '2006-06-01'
+in6:
+  id: 7
+  type: 'StockIn'
+  product_id: 4
+  ammount: 12
+  supplier_id: 3
+  purpose: 'production'
+  price: 1.97
+  date: '2006-07-01'
+out2:
+  id: 8
+  type: 'StockOut'
+  product_id: 4
+  ammount: -10
+  date: '2006-08-01'
+  purpose: 'production'

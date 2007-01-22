@@ -15,6 +15,7 @@ categoryC:
 categoryD:
   id: 4
   name: 'Category AB'
+  parent_id: 1
   organization_id: 1
 categoryE:
   id: 5

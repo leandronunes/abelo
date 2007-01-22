@@ -8,7 +8,7 @@ class ProductsControllerTest < Test::Unit::TestCase
 
   include TestingUnderOrganization
 
-  fixtures :products, :products_suppliers
+  fixtures :products, :suppliers, :products_suppliers, :product_categories
 
   def setup
     @controller = ProductsController.new

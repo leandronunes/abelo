@@ -7,18 +7,18 @@ second:
 third:
   product_id: 3
   supplier_id: 1
-second:
+fourth:
   product_id: 4
   supplier_id: 1 
-fourth:
+fifth:
   product_id: 5
   supplier_id: 1
-second:
+sixth:
   product_id: 6
   supplier_id: 2
-first:
+seventh:
   product_id: 7
   supplier_id: 3 
-second:
+eighth:
   product_id: 8
   supplier_id: 3

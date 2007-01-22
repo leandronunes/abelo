@@ -5,10 +5,36 @@ categoryA:
   organization_id: 1
 categoryB:
   id: 2
-  name: 'Category A'
-  parent_id: 1
+  name: 'Category B'
   organization_id: 1
 categoryC:
   id: 3
-  name: 'Category C'
+  name: 'Category AA'
+  parent_id: 1
   organization_id: 1
+categoryD:
+  id: 4
+  name: 'Category AB'
+  organization_id: 1
+categoryE:
+  id: 5
+  name: 'Category ABC'
+  parent_id: 4
+  organization_id: 1
+categoryF:
+  id: 6
+  name: 'Category A'
+  organization_id: 2
+categoryG:
+  id: 7
+  name: 'Category A'
+  organization_id: 3
+categoryH:
+  id: 8
+  name: 'Category A'
+  organization_id: 4
+categoryI:
+  id: 9
+  name: 'Category AA'
+  parent_id: 8
+  organization_id: 4

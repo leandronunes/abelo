@@ -6,8 +6,23 @@ first:
   name: 'Organization number one'
   cnpj: '76523341000103'
   nickname: 'one'
-another:
+second:
   id: 2
   name: 'Organization number two'
   cnpj: '10264272000152'
   nickname: 'two'
+third:
+  id: 3 
+  name: 'Organization number three'
+  cnpj: '14640857000180'
+  nickname: 'three'
+fourth:
+  id: 4
+  name: 'Organization number four'
+  cnpj: '30581040000135'
+  nickname: 'four'
+fifth:
+  id: 5
+  name: 'Organization number five'
+  cnpj: '56846691000101'
+  nickname: 'five'

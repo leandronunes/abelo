@@ -6,10 +6,53 @@ first:
   unit: 'kg'
   organization_id: 1
   category_id: 1
-another:
+second:
   id: 2
   description: 'Diapers'
   sell_price: 3.00
   unit: 'un'
   organization_id: 2
   category_id: 2
+third:
+  id: 3
+  description: 'Water'
+  sell_price: 2.00
+  unit: 'un'
+  organization_id: 1
+  category_id: 5
+fourth:
+  id: 4
+  description: 'Juice'
+  sell_price: 2.50
+  unit: 'un'
+  organization_id: 1
+  category_id: 5
+fifth:
+  id: 5
+  description: 'Bean'
+  sell_price: 1.50
+  unit: 'kg'
+  organization_id: 1
+  category_id: 3
+sixth:
+  id: 6
+  description: 'TV'
+  sell_price: 400.50
+  unit: 'un'
+  organization_id: 1
+  category_id: 2
+seventh:
+  id: 7
+  description: 'Car'
+  sell_price: 30240.00
+  unit: 'un'
+  organization_id: 2
+  category_id: 6
+eighth:
+  id: 8
+  description: 'Bike'
+  sell_price: 130.50
+  unit: 'un'
+  organization_id:4 
+  category_id: 9
+

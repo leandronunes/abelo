@@ -5,8 +5,12 @@
         <%= image_link pc.image, { :action => 'list', :product_category => pc.id} if pc.image %> 
 	<p><%= link_to "#{pc.name}", { :action => 'list', :product_category => pc.id} %></p>
       <% else %>
-        <%= image_link pc.image, { :action => 'list_products', :product_category => pc.id } if pc.image %>
-	<p><%= link_to "#{pc.name}", { :action => 'list_products', :product_category => pc.id } %></p>
+        <%= image_link pc.image, { :action => 'list_products', :product_category => pc.id } if pc.image %> 
+	<% if pc.products_count != 0 %>
+	  <p><%= link_to "#{pc.name}", { :action => 'list_products', :product_category => pc.id } %></p>
+	<% else %>
+	  <p><%= pc.name %></p>
+	<% end %>
       <% end %>
     </li>
   <% end %>

@@ -89,6 +89,64 @@ class UsersControllerTest < Test::Unit::TestCase
     assert_equal @response.cookies["auth_token"], []
   end
 
+  # an administrator must be granted access to the user listing
+  def test_index_form_administrator
+    login_as :quentin
+    get :index
+    assert_response :redirect
+    assert_redirected_to :action => 'list'
+  end
+
+  # regular users must stay at the index
+  def test_index_for_regular_user
+    login_as :aaron
+    get :index
+    assert_template 'index'
+  end
+
+  def test_list
+    login_as :quentin
+    get :list
+    assert_response :success
+    assert_template 'list'
+    assert_not_nil assigns(:users)
+    assert_kind_of Array, assigns(:users)
+  end
+
+  def test_new
+    login_as :quentin
+    get :new
+    assert_response :success
+    assert_template 'new'
+    assert_not_nil assigns(:user)
+    assert_kind_of User, assigns(:user)
+  end
+
+  def test_create
+    count = User.count
+    login_as :quentin
+    post :create, :user => { :login => 'testing_create', :password => 'test', :password_confirmation => 'test', :email => 'testing_create@example.com' }
+    assert_response :redirect
+    assert_redirected_to :action => 'list'
+    assert_equal count + 1, User.count
+  end
+
+  def test_edit
+    login_as :quentin
+    get :edit, :id => 1
+    assert_response :success
+    assert_template 'edit'
+    assert_not_nil assigns(:user)
+    assert_kind_of User, assigns(:user)
+  end
+
+  def test_update
+    login_as :quentin
+    post :update, :id => 5, :user => { :login => 'larissa_updated'  } # larissa
+    assert_response :redirect
+    assert_redirected_to :action => 'list'
+  end
+
   # only uncomment if your ApplicationController has login_from_cookie as a
   # before_filter
   # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

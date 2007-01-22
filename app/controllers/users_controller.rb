@@ -10,9 +10,10 @@ class UsersController < ApplicationController
     else
       unless logged_in?
         redirect_to(:action => 'login')
+      else
+        redirect_to :action => 'list' if self.current_user.administrator
       end
     end
-    @session_name = _("&nbsp;")
   end
 
   #Sets the layout used by the system
@@ -50,51 +51,34 @@ class UsersController < ApplicationController
     redirect_back_or_default(:controller => '/users', :action => 'index')
   end
 
-  def create_user
+  def create
     @user = User.new(params[:user])
- 
     if @user.save
       flash[:notice] = _('User was successfully created.')
-      @users = eval(params[:source_obj].capitalize).find(params[:source_obj_id]).users
-      @source_obj = params[:source_obj]
-      @source_obj_id = params[:source_obj_id]
-      render :partial => 'shared/list_users'
+      redirect_to :action => 'list'
     else
-      redirect_to :action => 'new_user'
+      render :action => 'new'
     end
     
   end
 
-  def new_user
-    @user = User.new()
-    @source_obj = params[:source_obj]
-    @source_obj_id = params[:source_obj_id]
-    render :partial => 'new_user'
+  def list
+    @user_pages, @users = paginate :users, :per_page => 10
   end
 
-  def empty
-    render :text => ""
-  end
-
-  def show
-    @user = User.find(params[:id])
+  def new
+    @user = User.new
   end
 
   def edit
     @user = User.find(params[:id])
-    @source_obj = params[:source_obj]
-    @source_obj_id = params[:source_obj_id]
-    render :partial => 'edit'    
   end 
 
   def update
     @user = User.find(params[:id])
     if @user.update_attributes(params[:user])
       flash[:notice] = _('User was successfully updated.')
-      @users = eval(params[:source_obj].capitalize).find(params[:source_obj_id]).users
-      @source_obj = params[:source_obj]
-      @source_obj_id = params[:source_obj_id]
-      render :partial => 'shared/list_users'
+      redirect_to :action => 'list'
     else
       render :action => 'edit'
     end

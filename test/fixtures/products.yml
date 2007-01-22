@@ -53,6 +53,5 @@ eighth:
   description: 'Bike'
   sell_price: 130.50
   unit: 'un'
-  organization_id:4 
+  organization_id: 4 
   category_id: 9
-

@@ -4,3 +4,21 @@ first:
 second:
   product_id: 2
   supplier_id: 2
+third:
+  product_id: 3
+  supplier_id: 1
+second:
+  product_id: 4
+  supplier_id: 1 
+fourth:
+  product_id: 5
+  supplier_id: 1
+second:
+  product_id: 6
+  supplier_id: 2
+first:
+  product_id: 7
+  supplier_id: 3 
+second:
+  product_id: 8
+  supplier_id: 3

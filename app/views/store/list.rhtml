@@ -2,11 +2,12 @@
   <% @product_categories.each do |pc| %>
     <li>
       <% if pc.has_children? %>
-        <%= image_link pc.image, { :action => 'list', :product_category => pc.id} %>
+        <%= image_link pc.image, { :action => 'list', :product_category => pc.id} if pc.image %> 
+	<p><%= link_to "#{pc.name}", { :action => 'list', :product_category => pc.id} %></p>
       <% else %>
-        <%= image_link pc.image, { :action => 'list_products', :product_category => pc.id  } %>
+        <%= image_link pc.image, { :action => 'list_products', :product_category => pc.id } if pc.image %>
+	<p><%= link_to "#{pc.name}", { :action => 'list_products', :product_category => pc.id } %></p>
       <% end %>
-      <p> <%= pc.name %> </p>
     </li>
   <% end %>
 </ul>

@@ -1,3 +1,5 @@
+<%= category_hierarchy @product.category %> &rarr; <%= @product.description %>
+
 <h2><%= @product.description %></h2>
 <% @product.images.each do |i|%>
 <%= show_image i %>

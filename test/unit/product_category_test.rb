@@ -18,4 +18,14 @@ class ProductCategoryTest < Test::Unit::TestCase
 
     assert_equal count + 1, ProductCategory.count
   end
+
+  def test_full_name
+    c = ProductCategory.find(1)
+    assert_equal 'Category A', c.full_name
+    c = ProductCategory.find(3)
+    assert_equal 'Category A/Category AA', c.full_name
+    assert_equal 'Category A--Category AA', c.full_name('--')
+  end
+
+
 end

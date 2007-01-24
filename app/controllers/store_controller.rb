@@ -1,6 +1,7 @@
 class StoreController < ApplicationController
   
-  needs_organization 
+  needs_organization
+  layout 'store'
 
   def index
     redirect_to :action => 'list'
@@ -15,8 +16,8 @@ class StoreController < ApplicationController
   end
 
   def list_products 
-    pc = ProductCategory.find(params[:product_category]) 
-    @products = pc.products
+    @category = ProductCategory.find(params[:product_category]) 
+    @products = @category.products
   end
 
   def show_product

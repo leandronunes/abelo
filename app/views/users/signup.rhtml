@@ -1,7 +1,9 @@
 <div id='login'>
 <%= error_messages_for :user %>
+<%= start_form_tag :action => 'signup' %>
 <%= render :partial => 'form' %>
 <div class='button_bar'>
 <%= button _('Sign up'), :save %>
 </div>
+<%= end_form_tag %>
 </div>

@@ -27,5 +27,13 @@ class ProductCategoryTest < Test::Unit::TestCase
     assert_equal 'Category A--Category AA', c.full_name('--')
   end
 
+  def test_leaf
+    c1 = ProductCategory.find(1)
+    assert !c1.leaf?
+
+    c2 = ProductCategory.find(2)
+    assert c2.leaf?
+  end
+
 
 end

@@ -15,6 +15,9 @@ class ProductCategory < ActiveRecord::Base
   def top_level?
     self.parent.nil?
   end
+  def leaf?
+    self.children.empty?
+  end
   
   def image
     self.images.find(:first)

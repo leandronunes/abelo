@@ -4,24 +4,17 @@ class StoreController < ApplicationController
   layout 'store'
 
   def index
-    redirect_to :action => 'list'
+    @categories = @organization.top_level_product_categories
   end
 
-  def list
-    if params[:product_category]
-      @product_categories = ProductCategory.find(params[:product_category]).children
-    else
-      @product_categories = @organization.top_level_product_categories
-    end
+  def category
+    @category = ProductCategory.find(params[:id])
+    @sub_categories = @category.children
   end
 
-  def list_products 
-    @category = ProductCategory.find(params[:product_category]) 
-    @products = @category.products
-  end
-
-  def show_product
-    @product = Product.find(params[:product])
+  def product
+    @product = Product.find(params[:id])
+    @category = @product.category
   end
 
 end

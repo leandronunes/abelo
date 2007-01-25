@@ -212,14 +212,18 @@ td.text { text-align: center; }
 }
 
 #store_list li {
-  background-color: yellow;
-  border: 1px solid black;
+  border: none;
   list-style: none;
   width: 150px;
   height: 200px;
   float: left;
   text-align: center;
   margin: 5px;
+}
+
+#store_list a:link img,
+#store_list a:visited img {
+  border: none;
 }
 
 /********************************************************/

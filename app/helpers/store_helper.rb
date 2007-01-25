@@ -16,4 +16,16 @@ module StoreHelper
     result = link_to_unless_current(_('Start'), { :action => '' }) + result
   end
 
+  def category_images(category)
+    categories = [category]
+    images = []
+    i = 0
+    while categories.at(i)
+      categories += categories.at(i).children
+      images += category.at(i).images
+      i+=1
+    end
+    images
+  end
+
 end

@@ -39,7 +39,7 @@ class StoreControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:category)
     assert_kind_of ProductCategory, assigns(:category)
     assert_not_nil assigns(:products)
-    assert_kind_of Product, assigns(:product)
+    assert_kind_of Array, assigns(:products)
   end
 
   def test_product

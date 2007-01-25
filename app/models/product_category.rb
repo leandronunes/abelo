@@ -20,7 +20,7 @@ class ProductCategory < ActiveRecord::Base
   end
   
   def image
-    self.images.find(:first)
+    self.images.size > 0 ? (self.images.find(rand(self.images.size) + 1)) : nil
   end
 
   def self.top_level_for(organization)

@@ -73,6 +73,14 @@ class UserTest < Test::Unit::TestCase
     }
   end
 
+  def test_allowed_actions
+    user1 = people(:quentin)
+    assert(user1.allowed_to?(:organization_nickname => 'one', :controller => 'main', :action => 'index'))
+
+    user2 = people(:aaron)
+    assert(!user2.allowed_to?(:organization_nickname => 'one', :controller => 'main', :action => 'index'))
+  end
+
   protected
     def create_user(options = {})
       User.create({ :login => 'quire', :email => 'quire@example.com', :password => 'quire', :password_confirmation => 'quire' }.merge(options))

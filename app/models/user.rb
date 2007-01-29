@@ -2,6 +2,19 @@ class User < Person
 
   has_many :profiles, :class_name => 'UserProfile'
 
+  # Tells if this user has access to the <tt>location</tt> passed as parameter
+  # (as a URL hash, just like everywhere in Rails).
+  #
+  # Works by checking if any of the user's profiles gives her the needed
+  # permission.
+  def allowed_to?(location)
+    self.profiles.any? do |profile|
+      profile.allows(location)
+    end
+  end
+
+
+
   # Virtual attribute for the unencrypted password
   attr_accessor :password
 

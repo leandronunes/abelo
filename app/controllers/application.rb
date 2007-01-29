@@ -25,7 +25,9 @@ class ApplicationController < ActionController::Base
     if self.current_user.nil?
       false
     else
-      self.current_user.allowed_to?(:controller => self.controller_name, :action => action.to_s)
+      location = { :controller => self.controller_name, :action => action.to_s }
+      location[:organization_nickname] = @organization.nickname if @organization
+      self.current_user.allowed_to?()
     end
   end
 

@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class UserTest < Test::Unit::TestCase
-  fixtures :people
+  fixtures :people, :user_profiles
 
   def test_should_create_user
     assert_difference User, :count do
@@ -73,12 +73,13 @@ class UserTest < Test::Unit::TestCase
     }
   end
 
-  def test_allowed_actions
-    user1 = people(:quentin)
-    assert(user1.allowed_to?(:organization_nickname => 'one', :controller => 'main', :action => 'index'))
-
-    user2 = people(:aaron)
-    assert(!user2.allowed_to?(:organization_nickname => 'one', :controller => 'main', :action => 'index'))
+  def test_should_have_organizations
+    user = people(:quentin)
+    assert_not_nil user.organizations
+    assert_kind_of Array, user.organizations
+    user.organizations.each { |o|
+      assert_kind_of Organization, o
+    }
   end
 
   protected

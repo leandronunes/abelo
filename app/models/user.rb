@@ -1,6 +1,7 @@
 class User < Person
 
   has_many :profiles, :class_name => 'UserProfile'
+  has_many :organizations, :through => :profiles
 
   # Tells if this user has access to the <tt>location</tt> passed as parameter
   # (as a URL hash, just like everywhere in Rails).
@@ -9,7 +10,7 @@ class User < Person
   # permission.
   def allowed_to?(location)
     self.profiles.any? do |profile|
-      profile.allows(location)
+      profile.allows?(location)
     end
   end
 

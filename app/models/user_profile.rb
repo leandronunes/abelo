@@ -22,7 +22,7 @@ class UserProfile < ActiveRecord::Base
   #
   #   profile.allows(:controller => 'main', :action => 'index')   => true
   #   profile.allows(:controller => 'main', :action => 'edit')    => false
-  def allows(location)
+  def allows?(location)
     return false unless location[:organization_nickname] = self.organization.nickname
     test = location.reject { |key,value| key == :organization_nickname }
     self.permissions.any? do |permission|

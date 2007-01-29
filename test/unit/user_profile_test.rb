@@ -39,10 +39,18 @@ class UserProfileTest < Test::Unit::TestCase
 
   def test_allowed_actions_in_organization
     profile1 = UserProfile.find(1)
-    assert(profile1.allows(:organization_nickname => 'one', :controller => 'main', :action => 'index'))
+    assert(profile1.allows?(:organization_nickname => 'one', :controller => 'main', :action => 'index'))
 
     profile2 = UserProfile.find(2)
-    assert(!profile2.allows(:organization_nickname => 'one', :controller => 'main', :action =>  'index'))
+    assert(!profile2.allows?(:organization_nickname => 'one', :controller => 'main', :action =>  'index'))
+  end
+
+  def test_allowed_actions_per_user
+    user1 = people(:quentin)
+    assert(user1.allowed_to?(:organization_nickname => 'one', :controller => 'main', :action => 'index'))
+
+    user2 = people(:aaron)
+    assert(!user2.allowed_to?(:organization_nickname => 'one', :controller => 'main', :action => 'index'))
   end
 
 end

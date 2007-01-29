@@ -207,4 +207,8 @@ module ApplicationHelper
     end
   end
 
+  def link_to_organization(org, html_options = {})
+    link_to org.name, { :organization_nickname => org.nickname, :controller => 'main', :action => 'index' }, html_options
+  end
+
 end

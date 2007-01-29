@@ -2,15 +2,5 @@
 <h2><%= _('Hello, %s!') % @current_user.login %></h2>
 </p>
 
-<h3><%= _('Organizations') %></h3>
-<ul>
-  <% for organization in @organizations %>
-  <% end %>
-</ul>
-
-
-
+<%= render :partial => 'organizations' %>
 <%= render :partial => 'admin' %>
-
-
-

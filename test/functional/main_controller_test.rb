@@ -22,5 +22,6 @@ class MainControllerTest < Test::Unit::TestCase
     assert_response :success
     assert_template 'index'
     assert_not_nil assigns(:organization)
+    assert_kind_of Array, assigns(:organization)
   end
 end

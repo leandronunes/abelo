@@ -131,6 +131,13 @@ class UsersControllerTest < Test::Unit::TestCase
     assert_equal count + 1, User.count
   end
 
+  def test_create_fail
+    login_as :quentin
+    post :create, :user => {  }
+    assert_response :success
+    assert_template 'new'
+  end
+
   def test_edit
     login_as :quentin
     get :edit, :id => 1
@@ -145,6 +152,13 @@ class UsersControllerTest < Test::Unit::TestCase
     post :update, :id => 5, :user => { :login => 'larissa_updated'  } # larissa
     assert_response :redirect
     assert_redirected_to :action => 'list'
+  end
+
+  def test_update_fail
+    login_as :quentin
+    post :update, :id => 5, :user => { :login => '' } # larissa
+    assert_response :success
+    assert_template 'edit'
   end
 
   # only uncomment if your ApplicationController has login_from_cookie as a

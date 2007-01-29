@@ -6,6 +6,8 @@ class OrganizationsController; def rescue_action(e) raise e end; end
 
 class OrganizationsControllerTest < Test::Unit::TestCase
 
+  fixtures :organizations
+  
   def setup
     @controller = OrganizationsController.new
     @request    = ActionController::TestRequest.new

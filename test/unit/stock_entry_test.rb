@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class StockEntryTest < Test::Unit::TestCase
-  fixtures :stock_entries
+  fixtures :stock_entries, :products
 
   def test_relation_with_product
     entry = StockEntry.find(1)

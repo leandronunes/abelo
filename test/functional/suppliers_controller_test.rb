@@ -8,7 +8,7 @@ class SuppliersControllerTest < Test::Unit::TestCase
 
   include TestingUnderOrganization
 
-  fixtures :suppliers
+  fixtures :suppliers, :organizations
 
   def setup
     @controller = SuppliersController.new

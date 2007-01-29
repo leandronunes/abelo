@@ -8,6 +8,8 @@ class StockControllerTest < Test::Unit::TestCase
 
   include TestingUnderOrganization
 
+  fixtures :organizations, :products, :stock_entries, :suppliers
+
   def setup
     @controller = StockController.new
     @request    = ActionController::TestRequest.new

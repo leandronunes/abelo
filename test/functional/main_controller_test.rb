@@ -6,6 +6,8 @@ class MainController; def rescue_action(e) raise e end; end
 
 class MainControllerTest < Test::Unit::TestCase
 
+  fixtures :organizations
+
   include TestingUnderOrganization
 
   def setup

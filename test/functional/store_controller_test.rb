@@ -8,6 +8,8 @@ class StoreControllerTest < Test::Unit::TestCase
 
   include TestingUnderOrganization
 
+  fixtures :organizations, :product_categories, :products
+
   def setup
     @controller = StoreController.new
     @request    = ActionController::TestRequest.new

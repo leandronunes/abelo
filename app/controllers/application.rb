@@ -21,4 +21,12 @@ class ApplicationController < ActionController::Base
     render :text => _('There is no organization with nickname %s') % params[:organization_nickname] unless @organization
   end
 
+  def can(action)
+    if self.current_user.nil?
+      false
+    else
+      self.current_user.allowed_to?(:controller => self.controller_name, :action => action.to_s)
+    end
+  end
+
 end

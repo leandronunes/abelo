@@ -2,6 +2,7 @@ class StoreController < ApplicationController
   
   needs_organization
   layout 'store'
+  skip_before_filter :login_required
 
   def index
     @categories = @organization.top_level_product_categories

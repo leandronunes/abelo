@@ -7,13 +7,15 @@ class UsersController < ApplicationController
   def index
     if User.count == 0
       redirect_to(:action => 'signup')
+      return
     else
       unless logged_in?
         redirect_to(:action => 'login')
-      else
-        redirect_to :action => 'list' if self.current_user.administrator
+        return
       end
     end
+
+    @organizations = current_user.organizations
   end
 
   #Sets the layout used by the system

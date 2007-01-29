@@ -195,7 +195,16 @@ module ApplicationHelper
   end
 
   def user_bar
-    content_tag('div', link_to(_('Logout'), :controller => 'users', :action => 'logout'), :class => 'user_bar') if self.current_user
+    if self.current_user
+      content_tag(
+        'div',
+        link_to(_('Logout'), :controller => 'users', :action => 'logout') +
+        '&nbsp;' +
+        link_to(_('Start'), :controller => 'users', :action => 'index'),
+        :class => 'user_bar') if self.current_user
+    else
+      ''
+    end
   end
 
 end

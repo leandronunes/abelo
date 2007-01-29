@@ -90,18 +90,16 @@ class UsersControllerTest < Test::Unit::TestCase
   end
 
   # an administrator must be granted access to the user listing
-  def test_index_form_administrator
+  def test_index
     login_as :quentin
     get :index
-    assert_response :redirect
-    assert_redirected_to :action => 'list'
-  end
-
-  # regular users must stay at the index
-  def test_index_for_regular_user
-    login_as :aaron
-    get :index
+    assert_response :success
     assert_template 'index'
+    assert_not_nil assigns(:organizations)
+    assert_kind_of Array, assigns(:organizations)
+    assigns(:organizations).each { |o|
+      assert_kind_of Organization, o
+    }
   end
 
   def test_list

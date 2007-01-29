@@ -1,10 +1,16 @@
 <p>
-<h2><%= @current_user.login %></h2>
+<h2><%= _('Hello, %s!') % @current_user.login %></h2>
 </p>
 
+<h3><%= _('Organizations') %></h3>
 <ul>
-<li><%= link_to _('Organizations'), { :controller => 'organizations' } %> </li>
+  <% for organization in @organizations %>
+  <% end %>
 </ul>
+
+
+
+<%= render :partial => 'admin' %>
 
 
 

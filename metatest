@@ -1,0 +1,53 @@
+#!/bin/sh
+
+LOG=log/metatest.log
+FAILED=''
+
+init() {
+  rm -f $LOG
+}
+
+prepare() {
+  rm -f tmp/abelo_test.db
+  RAILS_ENV='test' rake migrate >> $LOG
+}
+
+do_test() {
+  prepare
+  if ruby $1 >> $LOG 2>&1; then
+    echo "Test $1 passed OK." >> $LOG
+    echo -n '.'
+  else
+    FAILED="$FAILED$test\n"
+    echo -n 'F'
+  fi
+}
+
+report() {
+  if [ ! -z $FAILED ]; then
+    echo ''
+    echo "The following tests didn't run correctly:"
+    echo -e $FAILED
+    echo ''
+    echo "Please check $LOG for details"
+    return 1
+  else
+    return 0
+  fi
+}
+
+main() {
+  if [ -z $@ ]; then
+    TESTS=$(find test/*/ -name '*.rb')
+  else
+    TESTS=$1
+  fi
+  for test in $TESTS; do
+    do_test $test
+  done
+  echo ''
+}
+
+init
+main $@
+report

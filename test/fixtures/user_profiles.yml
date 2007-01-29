@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+first:
+  id: 1
+  user_id: 1
+  organization_id: 1
+  permissions:
+    - :controller: '*'
+      :action: '*'
+another:
+  id: 2
+  user_id: 2
+  organization_id: 1
+  permissions: [ ]

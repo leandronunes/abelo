@@ -1,5 +1,7 @@
 class User < Person
 
+  has_many :profiles, :class_name => 'UserProfile'
+
   # Virtual attribute for the unencrypted password
   attr_accessor :password
 

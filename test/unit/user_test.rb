@@ -65,6 +65,14 @@ class UserTest < Test::Unit::TestCase
     assert_nil people(:quentin).remember_token
   end
 
+  def test_should_have_profiles
+    assert_not_nil people(:quentin).profiles
+    assert_kind_of Array, people(:quentin).profiles
+    people(:quentin).profiles.each { |profile|
+      assert_kind_of UserProfile, profile
+    }
+  end
+
   protected
     def create_user(options = {})
       User.create({ :login => 'quire', :email => 'quire@example.com', :password => 'quire', :password_confirmation => 'quire' }.merge(options))

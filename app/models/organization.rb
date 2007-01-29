@@ -4,6 +4,9 @@ class Organization < ActiveRecord::Base
   has_many :product_categories
   has_many :suppliers
 
+  has_many :user_profiles
+  has_many :users, :through => :user_profiles
+
   validates_presence_of :name, :cnpj, :nickname
   validates_uniqueness_of :name, :cnpj, :nickname
 

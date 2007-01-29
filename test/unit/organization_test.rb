@@ -39,4 +39,14 @@ class OrganizationTest < Test::Unit::TestCase
     assert(org.save)
   end
 
+  def test_should_have_users
+    org = Organization.find(1)
+    assert_not_nil org.users
+    assert_kind_of Array, org.users
+    assert_equal 2, org.users.size
+    org.users.each do |user|
+      assert_kind_of User, user
+    end
+  end
+
 end

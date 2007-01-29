@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class OrganizationTest < Test::Unit::TestCase
-  fixtures :organizations
+  fixtures :organizations, :people, :user_profiles
 
   def test_mandatory_fields
     count = Organization.count

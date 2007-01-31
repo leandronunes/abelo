@@ -7,7 +7,12 @@ class ApplicationController < ActionController::Base
   before_filter :check_access_control
   def check_access_control
     unless can(params[:action])
-      render :template => 'users/access_denied'
+      render :template => 'users/access_denied', :status => 403
+    end
+  end
+  def check_admin_rights
+    unless current_user.administrator
+      render :template => 'users/access_denied', :status => 403
     end
   end
 

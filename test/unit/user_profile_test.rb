@@ -32,25 +32,47 @@ class UserProfileTest < Test::Unit::TestCase
     assert_kind_of Array, profile.permissions
   end
 
-  def test_no_permissions
+  def test_read_only
     profile = UserProfile.find(2)
-    assert_equal [], profile.permissions
+    assert_equal UserProfile::TEMPLATES['read_only'], profile.permissions
   end
 
   def test_allowed_actions_in_organization
     profile1 = UserProfile.find(1)
-    assert(profile1.allows?(:organization_nickname => 'one', :controller => 'main', :action => 'index'))
+    assert(profile1.allows?(:organization_nickname => 'one', :controller => 'main', :action => 'edit'))
 
     profile2 = UserProfile.find(2)
-    assert(!profile2.allows?(:organization_nickname => 'one', :controller => 'main', :action =>  'index'))
+    assert(!profile2.allows?(:organization_nickname => 'one', :controller => 'main', :action =>  'edit'))
   end
 
   def test_allowed_actions_per_user
     user1 = people(:quentin)
-    assert(user1.allowed_to?(:organization_nickname => 'one', :controller => 'main', :action => 'index'))
+    assert(user1.allowed_to?(:organization_nickname => 'one', :controller => 'main', :action => 'edit'))
 
     user2 = people(:aaron)
-    assert(!user2.allowed_to?(:organization_nickname => 'one', :controller => 'main', :action => 'index'))
+    assert(!user2.allowed_to?(:organization_nickname => 'one', :controller => 'main', :action => 'edit'))
+  end
+
+  def test_assign_template
+    profile = UserProfile.new
+    profile.user = people(:aaron)
+    profile.organization = organizations(:one)
+    profile.template = 'full_access'
+    assert(profile.save)
+    profile.template = 'read_only'
+    assert(profile.save)
+    assert_raise(ArgumentError) do
+      profile.template = 'asdgsagdkjasgdajk'
+    end
+  end
+
+  def test_read_template
+    profile = UserProfile.find(1)
+    assert_equal 'full_access', profile.template
+    profile = UserProfile.find(2)
+    assert_equal 'read_only', profile.template
+    profile = UserProfile.find(3)
+    assert_equal 'full_access', profile.template
   end
 
 end

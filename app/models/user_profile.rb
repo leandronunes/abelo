@@ -1,5 +1,3 @@
-#
-
 class UserProfile < ActiveRecord::Base
 
   validates_presence_of :user_id, :organization_id
@@ -30,6 +28,50 @@ class UserProfile < ActiveRecord::Base
         (value == permission[key]) || (permission[key] == '*')
       end
     end
+  end
+
+
+  # defined permission templates
+  TEMPLATES = {
+    'full_access' => [
+      { :controller => '*', :action => '*' }
+    ],
+    'read_only' => [
+      { :controller => '*', :action => 'index'},
+      { :controller => '*', :action => 'list'},
+      { :controller => '*', :action => 'show'}
+    ]
+  }
+
+  # detects the template used for this UserProfile, if any. Returns 'other'
+  # if no template matches
+  def template
+    templates = TEMPLATES.select do |key, value|
+      value == self.permissions
+    end
+    templates.first ? templates.first.first : 'other'
+  end
+
+  # assings the permission template to this instance of UserProfile.
+  # * <tt>template</tt>: a string. Must be a key in the TEMPLATES hash.
+  def template=(template)
+    raise ArgumentError.new('%s is not a valid template' % template) unless TEMPLATES[template]
+    self.permissions = TEMPLATES[template]
+  end
+
+  # Describes the permissions granted comparing them with the templates in this
+  # class.
+  def description
+    self.class.describe[self.template]
+  end
+
+  # maps a template code (a key in TEMPLATES) to an human-readable string
+  def self.describe(template)
+    return {
+      'full_access' => _('Full access'),
+      'read_only' => _('Read-only'), 
+      'other' => _('Other')
+    }[template]
   end
 
 end

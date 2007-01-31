@@ -3,7 +3,7 @@
 <ul id="store_list">
   <% @categories.each do |pc| %>
     <li>
-       <%= image_link pc.image, { :action => 'category', :id => pc } %> 
+       <%= image_link randon(pc.category_images), { :action => 'category', :id => pc } %> 
        <%= link_to pc.name, { :action => 'category', :id => pc } %> 
     </li>
   <% end %>

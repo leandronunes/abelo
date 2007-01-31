@@ -19,12 +19,19 @@ class ProductCategory < ActiveRecord::Base
     self.children.empty?
   end
   
-  def image
-    self.images.size > 0 ? (self.images.find(rand(self.images.size) + 1)) : nil
-  end
-
   def self.top_level_for(organization)
     self.find(:all, :conditions => ['parent_id is null and organization_id = ?', organization.id ])
+  end
+
+  def category_images(images = [])
+    if self.leaf?
+      images += self.images
+    else
+      self.children.each do |c|
+        images += c.category_images(images)
+      end
+    end
+    images
   end
 
 end

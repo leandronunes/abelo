@@ -11,6 +11,7 @@
       <td><%= user_profile.description %></td>
       <td>
         <%= button  _('Select template'), :edit, :action => 'select_template', :id => user_profile %>
+        <%= button  _('Remove'), :remove, { :action => 'destroy', :id => user_profile }, :post => true, :confirm => _('Are you sure you want to remove this userprofile ? He(she) will not be able to access the system anymore, unless he(she) has another profile.') %>
       </td>
     </tr>
   <% end %>

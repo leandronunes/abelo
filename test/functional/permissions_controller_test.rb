@@ -65,4 +65,14 @@ class PermissionsControllerTest < Test::Unit::TestCase
     assert_equal count + 1, UserProfile.count
   end
 
+  def test_destroy
+    count = UserProfile.count
+    assert count > 0
+    post :destroy, :id => 3
+    assert_raise(ActiveRecord::RecordNotFound) do
+      UserProfile.find(3)
+    end
+    assert_equal count - 1, UserProfile.count
+  end
+
 end

@@ -2,6 +2,8 @@ class PermissionsController < ApplicationController
 
   needs_organization
 
+  verify :method => :post, :only => [ :destroy, :create_with_template, :update_template ], :redirect_to => { :action => :index }
+
   def index
     @user_profiles = @organization.user_profiles
   end
@@ -33,6 +35,11 @@ class PermissionsController < ApplicationController
     else
       render :action => 'new_with_template'
     end
+  end
+
+  def destroy
+    @organization.user_profiles.find(params[:id]).destroy
+    redirect_to :action => 'index'
   end
 
 end

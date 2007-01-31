@@ -62,7 +62,7 @@ class UserProfile < ActiveRecord::Base
   # Describes the permissions granted comparing them with the templates in this
   # class.
   def description
-    self.class.describe[self.template]
+    self.class.describe(self.template)
   end
 
   # maps a template code (a key in TEMPLATES) to an human-readable string

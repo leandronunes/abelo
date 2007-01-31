@@ -1,0 +1,21 @@
+<h2><%= _('Users and permissions') %></h2>
+
+<table>
+  <tr>
+    <th><%= _('User') %></th>
+    <th><%= _('Profile type') %></th>
+  </tr>
+  <% for user_profile in @user_profiles %>
+    <tr>
+      <td><%= user_profile.user.login %></td>
+      <td><%= user_profile.description %></td>
+      <td>
+        <%= button  _('Select template'), :edit, :action => 'select_template', :id => user_profile %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<div class='button_bar'>
+  <%= button _('New'), :new, :action => 'new_with_template' %>
+</div>

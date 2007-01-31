@@ -4,10 +4,23 @@ first:
   user_id: 1
   organization_id: 1
   permissions:
-    - :controller: '*'
-      :action: '*'
+  - :controller: '*'
+    :action: '*'
 another:
   id: 2
   user_id: 2
   organization_id: 1
-  permissions: [ ]
+  permissions:
+  - :controller: '*'
+    :action: 'index'
+  - :controller: '*'
+    :action: 'list'
+  - :controller: '*'
+    :action: 'show'
+yet_another:
+  id: 3
+  user_id: 3
+  organization_id: 1
+  permissions:
+  - :controller: '*'
+    :action: '*'

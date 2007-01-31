@@ -43,7 +43,7 @@ class OrganizationTest < Test::Unit::TestCase
     org = Organization.find(1)
     assert_not_nil org.users
     assert_kind_of Array, org.users
-    assert_equal 2, org.users.size
+    assert_equal 3, org.users.size
     org.users.each do |user|
       assert_kind_of User, user
     end

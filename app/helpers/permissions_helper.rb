@@ -10,4 +10,14 @@ module PermissionsHelper
     )
   end
 
+  def select_user(object, method)
+    select(
+      object,
+      method,
+      User.find(:all).map do |user|
+        [ user.login, user.id ]
+      end
+    )
+  end
+
 end

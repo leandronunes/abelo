@@ -197,9 +197,10 @@ module ApplicationHelper
     if self.current_user
       content_tag(
         'div',
-        link_to(_('Logout'), :controller => 'users', :action => 'logout') +
-        '&nbsp;' +
-        link_to(_('Start'), :controller => 'users', :action => 'index'),
+        [ link_to(_('Logout'), :controller => 'users', :action => 'logout'),
+          link_to(_('Edit personal information'), :controller => 'users', :action => 'edit', :id => self.current_user),
+          link_to(_('Start'), :controller => 'users', :action => 'index'),
+        ].join('&nbsp;'),
         :class => 'user_bar') if self.current_user
     else
       ''

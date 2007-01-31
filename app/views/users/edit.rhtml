@@ -3,6 +3,10 @@
 <%= render :partial => 'form' %>
 <div class='button_bar'>
 <%= button _('Save'), :save %>
-<%= button _('Cancel'), :cancel, :action => 'list' %>
+<% if current_user.administrator %>
+  <%= button _('Cancel'), :cancel, :action => 'list' %>
+<% else %>
+  <%= button _('Cancel'), :cancel, :action => 'index' %>
+<% end %>
 </div>
 <%= end_form_tag %>

@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   layout :set_user_layout
   # the user is not expected to be logged for logging in. :-)
   skip_before_filter :login_required
+  skip_before_filter :check_access_control
 
   # say something nice, you goof!  something sweet.
   def index

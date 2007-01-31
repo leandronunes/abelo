@@ -1,8 +1,15 @@
 class UsersController < ApplicationController
-  layout :set_user_layout
   # the user is not expected to be logged for logging in. :-)
   skip_before_filter :login_required
   skip_before_filter :check_access_control
+  before_filter :check_admin_rights, :only => [ :create, :list, :new ]
+  before_filter :extra_access_control , :only => [ :edit, :update ]
+
+  def extra_access_control
+    unless current_user.administrator || current_user.id == params[:id].to_i
+      render :action => 'access_denied', :status => 403, :layout => false
+    end
+  end
 
   # say something nice, you goof!  something sweet.
   def index

@@ -3,6 +3,8 @@
 class ApplicationController < ActionController::Base
 
   include AuthenticatedSystem
+  include AccessControl
+  helper AccessControl
   before_filter :login_required
   before_filter :check_access_control
   def check_access_control
@@ -30,16 +32,6 @@ class ApplicationController < ActionController::Base
   def load_organization
     @organization = Organization.find_by_nickname(params[:organization_nickname])
     render :text => _('There is no organization with nickname %s') % params[:organization_nickname] unless @organization
-  end
-
-  def can(action)
-    if self.current_user.nil?
-      false
-    else
-      location = { :controller => self.controller_name, :action => action.to_s }
-      location[:organization_nickname] = @organization.nickname if @organization
-      self.current_user.allowed_to?(location)
-    end
   end
 
 end

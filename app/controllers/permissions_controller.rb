@@ -1,6 +1,7 @@
 class PermissionsController < ApplicationController
 
   needs_organization
+  # before_filter :check_admin_rights
 
   verify :method => :post, :only => [ :destroy, :create_with_template, :update_template ], :redirect_to => { :action => :index }
 

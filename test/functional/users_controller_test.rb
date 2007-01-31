@@ -12,7 +12,7 @@ class UsersControllerTest < Test::Unit::TestCase
     @controller = UsersController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-    login_as("quentin")
+    login_as("admin")
   end
 
   def test_should_login_and_redirect
@@ -103,7 +103,7 @@ class UsersControllerTest < Test::Unit::TestCase
   end
 
   def test_list
-    login_as :quentin
+    login_as :admin
     get :list
     assert_response :success
     assert_template 'list'
@@ -112,7 +112,7 @@ class UsersControllerTest < Test::Unit::TestCase
   end
 
   def test_new
-    login_as :quentin
+    login_as :admin
     get :new
     assert_response :success
     assert_template 'new'
@@ -122,7 +122,7 @@ class UsersControllerTest < Test::Unit::TestCase
 
   def test_create
     count = User.count
-    login_as :quentin
+    login_as :admin
     post :create, :user => { :login => 'testing_create', :password => 'test', :password_confirmation => 'test', :email => 'testing_create@example.com' }
     assert_response :redirect
     assert_redirected_to :action => 'list'
@@ -130,14 +130,14 @@ class UsersControllerTest < Test::Unit::TestCase
   end
 
   def test_create_fail
-    login_as :quentin
+    login_as :admin
     post :create, :user => {  }
     assert_response :success
     assert_template 'new'
   end
 
   def test_edit
-    login_as :quentin
+    login_as :admin
     get :edit, :id => 1
     assert_response :success
     assert_template 'edit'
@@ -146,14 +146,14 @@ class UsersControllerTest < Test::Unit::TestCase
   end
 
   def test_update
-    login_as :quentin
+    login_as :admin
     post :update, :id => 5, :user => { :login => 'larissa_updated'  } # larissa
     assert_response :redirect
     assert_redirected_to :action => 'list'
   end
 
   def test_update_fail
-    login_as :quentin
+    login_as :admin
     post :update, :id => 5, :user => { :login => '' } # larissa
     assert_response :success
     assert_template 'edit'

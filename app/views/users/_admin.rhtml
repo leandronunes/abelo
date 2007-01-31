@@ -1,8 +1,10 @@
+<% if current_user.administrator %>
+
 <h3><%= _('Administrative tasks') %></h3>
 
 <ul>
-<% if current_user.administrator %>
   <li><%= link_to _('Organizations'), { :controller => 'organizations' } %> </li>
   <li><%= link_to _('Users administration'), { :controller => 'users', :action => 'list' } %> </li>
-<% end %>
 </ul>
+
+<% end %>

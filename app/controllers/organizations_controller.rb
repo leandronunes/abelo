@@ -1,4 +1,8 @@
 class OrganizationsController < ApplicationController
+
+  skip_before_filter :check_access_control
+  before_filter :check_admin_rights
+
   def index
     list
     render :action => 'list'

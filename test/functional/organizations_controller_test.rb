@@ -12,7 +12,23 @@ class OrganizationsControllerTest < Test::Unit::TestCase
     @controller = OrganizationsController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-    login_as("quentin")
+    login_as('admin')
+  end
+
+  def test_only_admin_has_access
+    login_as('aaron')
+    get :index
+    assert_response 403
+    get :list
+    assert_response 403
+    get :new
+    assert_response 403
+    get :edit
+    assert_response 403
+    get :create
+    assert_response 403
+    get :update
+    assert_response 403
   end
 
   def test_index

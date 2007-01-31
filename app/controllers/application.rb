@@ -4,6 +4,12 @@ class ApplicationController < ActionController::Base
 
   include AuthenticatedSystem
   before_filter :login_required
+  before_filter :check_access_control
+  def check_access_control
+    unless can(params[:action])
+      render :template => 'users/access_denied'
+    end
+  end
 
   before_filter :i18n_settings
   def i18n_settings
@@ -27,7 +33,7 @@ class ApplicationController < ActionController::Base
     else
       location = { :controller => self.controller_name, :action => action.to_s }
       location[:organization_nickname] = @organization.nickname if @organization
-      self.current_user.allowed_to?()
+      self.current_user.allowed_to?(location)
     end
   end
 

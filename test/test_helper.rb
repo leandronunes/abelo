@@ -26,5 +26,5 @@ class Test::Unit::TestCase
 
   # Add more helper methods to be used by all tests here...
   include AuthenticatedTestHelper
-  fixtures :people
+  fixtures :people, :user_profiles, :organizations
 end

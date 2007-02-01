@@ -7,6 +7,8 @@ class Organization < ActiveRecord::Base
   has_many :user_profiles
   has_many :users, :through => :user_profiles
 
+  has_many :customers
+
   validates_presence_of :name, :cnpj, :nickname
   validates_uniqueness_of :name, :cnpj, :nickname
 

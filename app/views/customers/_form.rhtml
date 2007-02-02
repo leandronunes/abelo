@@ -1,5 +1,25 @@
 <%= error_messages_for 'customer' %>
 
 <!--[form:customer]-->
+<p><label for='customer_name'>Name</label>
+<%= text_field 'customer', 'name'  %></p>
+
+<p><label for='customer_birthday'><%= _('Birthday') %></label>
+<span><%= date_select 'customer', 'birthday' %></span></p>
+
+<p><label for='customer_rg'><%= _('RG') %></label>
+<span><%= text_field 'customer', 'rg' %></span></p>
+
+<p><label for='customer_cpf'><%= _('CPF') %></label>
+<span><%= text_field 'customer', 'cpf' %></span></p>
+
+<p><label for="customer_cnpj">CNPJ</label>
+<span><%= text_field 'customer', 'cnpj'  %></span></p>
+
+<p><label for='customer_address'>Address</label>
+<%= text_field 'customer', 'address'  %></p>
+
+<p><label for='customer_description'>Description</label>
+<%= text_area 'customer', 'description' %></p>
 <!--[eoform:customer]-->
 

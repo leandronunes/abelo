@@ -1,0 +1,13 @@
+Validacao de CPF
+================
+
+Este plugin valida o formato e os digitos vericadores de um CPF.
+
+Uso:
+  Adicione no modelo:
+  validates_as_cpf :nome_do_campo
+
+Exemplo:
+  class Pessoa < ActiveRecord::Base
+    validates_as_cpf :numero_cpf
+  end

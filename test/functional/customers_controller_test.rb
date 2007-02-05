@@ -56,7 +56,7 @@ class CustomersControllerTest < Test::Unit::TestCase
   def test_create
     num_customers = Customer.count
 
-    post :create, :customer => {:name => 'Luluzinha', :organization_id => 1}
+    post :create, :customer => {:name => 'Luluzinha',:cnpj => '32284871000170' ,:organization_id => 1}
 
     assert_response :redirect
     assert_redirected_to :action => 'list'

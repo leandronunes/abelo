@@ -5,12 +5,18 @@ require 'customers_controller'
 class CustomersController; def rescue_action(e) raise e end; end
 
 class CustomersControllerTest < Test::Unit::TestCase
+
+  include TestingUnderOrganization
+
   fixtures :customers
 
   def setup
     @controller = CustomersController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
+    @organization_nickname = 'one'
+    @organization = Organization.find_by_nickname 'one'
+    login_as("quentin")
   end
 
   def test_index
@@ -50,7 +56,7 @@ class CustomersControllerTest < Test::Unit::TestCase
   def test_create
     num_customers = Customer.count
 
-    post :create, :customer => {}
+    post :create, :customer => {:name => 'Luluzinha', :organization_id => 1}
 
     assert_response :redirect
     assert_redirected_to :action => 'list'
@@ -71,7 +77,7 @@ class CustomersControllerTest < Test::Unit::TestCase
   def test_update
     post :update, :id => 1
     assert_response :redirect
-    assert_redirected_to :action => 'show', :id => 1
+    assert_redirected_to :action => 'list'
   end
 
   def test_destroy

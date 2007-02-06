@@ -2,6 +2,7 @@ class Organization < ActiveRecord::Base
 
   has_many :products
   has_many :product_categories
+  has_many :customer_categories
   has_many :suppliers
 
   has_many :user_profiles

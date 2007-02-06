@@ -1,0 +1,27 @@
+<h1>Listing customer_categories</h1>
+
+<table>
+  <tr>
+  <% for column in CustomerCategory.content_columns %>
+    <th><%= column.human_name %></th>
+  <% end %>
+  </tr>
+  
+<% for customer_category in @customer_categories %>
+  <tr>
+  <% for column in CustomerCategory.content_columns %>
+    <td><%=h customer_category.send(column.name) %></td>
+  <% end %>
+    <td><%= link_to 'Show', :action => 'show', :id => customer_category %></td>
+    <td><%= link_to 'Edit', :action => 'edit', :id => customer_category %></td>
+    <td><%= link_to 'Destroy', { :action => 'destroy', :id => customer_category }, :confirm => 'Are you sure?', :post => true %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Previous page', { :page => @customer_category_pages.current.previous } if @customer_category_pages.current.previous %>
+<%= link_to 'Next page', { :page => @customer_category_pages.current.next } if @customer_category_pages.current.next %> 
+
+<br />
+
+<%= link_to 'New customer_category', :action => 'new' %>

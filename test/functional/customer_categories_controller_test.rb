@@ -5,12 +5,18 @@ require 'customer_categories_controller'
 class CustomerCategoriesController; def rescue_action(e) raise e end; end
 
 class CustomerCategoriesControllerTest < Test::Unit::TestCase
-  fixtures :customer_categories
+  
+  include TestingUnderOrganization
+  
+  fixtures :customer_categories, :organizations
 
   def setup
     @controller = CustomerCategoriesController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
+    @organization_nickname = 'one'
+    @organization = Organization.find_by_nickname 'one'
+    login_as("quentin")
   end
 
   def test_index
@@ -28,16 +34,6 @@ class CustomerCategoriesControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:customer_categories)
   end
 
-  def test_show
-    get :show, :id => 1
-
-    assert_response :success
-    assert_template 'show'
-
-    assert_not_nil assigns(:customer_category)
-    assert assigns(:customer_category).valid?
-  end
-
   def test_new
     get :new
 
@@ -47,15 +43,26 @@ class CustomerCategoriesControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:customer_category)
   end
 
-  def test_create
-    num_customer_categories = CustomerCategory.count
+  def test_create_top_level
+    num_customer_categories = @organization.customer_categories.count
 
-    post :create, :customer_category => {}
+    post :create, :customer_category => { :name => 'Top level test category' }
 
     assert_response :redirect
     assert_redirected_to :action => 'list'
 
-    assert_equal num_customer_categories + 1, CustomerCategory.count
+    assert_equal num_customer_categories + 1, @organization.customer_categories.count
+  end
+
+  def test_create_child
+    num_customer_categories = @organization.customer_categories.count
+
+    post :create, :customer_category => { :name => 'Top level test category', :parent_id => 1 }
+
+    assert_response :redirect
+    assert_redirected_to :action => 'list'
+
+    assert_equal num_customer_categories + 1, @organization.customer_categories.count
   end
 
   def test_edit
@@ -71,18 +78,18 @@ class CustomerCategoriesControllerTest < Test::Unit::TestCase
   def test_update
     post :update, :id => 1
     assert_response :redirect
-    assert_redirected_to :action => 'show', :id => 1
+    assert_redirected_to :action => 'list'
   end
 
   def test_destroy
-    assert_not_nil CustomerCategory.find(1)
+    assert_not_nil @organization.customer_categories.find(1)
 
     post :destroy, :id => 1
     assert_response :redirect
     assert_redirected_to :action => 'list'
 
     assert_raise(ActiveRecord::RecordNotFound) {
-      CustomerCategory.find(1)
+      @organization.customer_categories.find(1)
     }
   end
 end

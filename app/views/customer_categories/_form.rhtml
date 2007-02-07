@@ -1,5 +1,11 @@
 <%= error_messages_for 'customer_category' %>
 
 <!--[form:customer_category]-->
+
+<p><label for="customer_category_name">Name</label>
+<%= text_field 'customer_category', 'name'  %></p>
+
+<%= hidden_field 'customer_category', 'parent_id' %>
+
 <!--[eoform:customer_category]-->
 

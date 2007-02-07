@@ -1,4 +1,7 @@
 class CustomerCategoriesController < ApplicationController
+
+  needs_organization
+
   def index
     list
     render :action => 'list'
@@ -9,19 +12,17 @@ class CustomerCategoriesController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @customer_category_pages, @customer_categories = paginate :customer_categories, :per_page => 10
-  end
-
-  def show
-    @customer_category = CustomerCategory.find(params[:id])
+    @customer_categories = @organization.customer_categories
   end
 
   def new
     @customer_category = CustomerCategory.new
+    @customer_category = @organization.product_categories.find(params[:parent_id]) if params[:parent_id]
   end
 
   def create
     @customer_category = CustomerCategory.new(params[:customer_category])
+    @product_category.organization = @organization
     if @customer_category.save
       flash[:notice] = 'CustomerCategory was successfully created.'
       redirect_to :action => 'list'
@@ -31,21 +32,21 @@ class CustomerCategoriesController < ApplicationController
   end
 
   def edit
-    @customer_category = CustomerCategory.find(params[:id])
+    @customer_category = @organization.customer_categories.find(params[:id])
   end
 
   def update
-    @customer_category = CustomerCategory.find(params[:id])
+    @customer_category = @organization.customer_categories.find(params[:id])
     if @customer_category.update_attributes(params[:customer_category])
       flash[:notice] = 'CustomerCategory was successfully updated.'
-      redirect_to :action => 'show', :id => @customer_category
+      redirect_to :action => 'list'
     else
       render :action => 'edit'
     end
   end
 
   def destroy
-    CustomerCategory.find(params[:id]).destroy
+    @organization.customer_categories.find(params[:id]).destroy
     redirect_to :action => 'list'
   end
 end

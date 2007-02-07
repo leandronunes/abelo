@@ -22,7 +22,7 @@ class CustomerCategoriesController < ApplicationController
 
   def create
     @customer_category = CustomerCategory.new(params[:customer_category])
-    @product_category.organization = @organization
+    @customer_category.organization = @organization
     if @customer_category.save
       flash[:notice] = 'CustomerCategory was successfully created.'
       redirect_to :action => 'list'

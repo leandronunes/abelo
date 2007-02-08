@@ -1,5 +1,30 @@
-<% for column in Customer.content_columns %>
+<h2><%= @customer.name %></h2>
 <p>
-  <b><%= column.human_name %>:</b> <%=h @customer.send(column.name) %>
+<label><%= _('Birthday:') %></label>
+<%= @customer.birthday %>
 </p>
-<% end %>
+
+<p>
+<label><%= _('Address:') %></label>
+<%= @customer.address %>
+</p>
+
+<p>
+<label><%= _('CNPJ:') %></label>
+<%= @customer.cnpj %>
+</p>
+
+<p>
+<label><%= _('CPF:') %></label>
+<%= @customer.cpf %>
+</p>
+
+<p>
+<label><%= _('RG:') %></label>
+<%= @customer.rg %>
+</p>
+
+<p>
+<label><%= _('Description:') %></label>
+<%= @customer.description %>
+</p>

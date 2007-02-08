@@ -17,7 +17,7 @@ class CustomerCategoriesController < ApplicationController
 
   def new
     @customer_category = CustomerCategory.new
-    @customer_category = @organization.product_categories.find(params[:parent_id]) if params[:parent_id]
+    @customer_category.parent = @organization.customer_categories.find(params[:parent_id]) if params[:parent_id]
   end
 
   def create

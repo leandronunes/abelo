@@ -19,8 +19,8 @@
 <p><label for='customer_address'>Address</label>
 <%= text_field 'customer', 'address'  %></p>
 
-<p><label for="customer_category">Category</label>
-<%= select_category 'customer', 'category_id'  %></p>
+<p><label for="customer_customer_categories">Categories</label>
+<%= select_categories @customer  %></p>
 
 <p><label for='customer_description'>Description</label>
 <%= text_area 'customer', 'description' %></p>

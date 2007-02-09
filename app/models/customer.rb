@@ -1,13 +1,11 @@
 class Customer < ActiveRecord::Base
 
   belongs_to :organization
-  belongs_to :category, :class_name => 'CustomerCategory', :foreign_key => 'category_id'
+  has_and_belongs_to_many :customer_categories, :join_table => 'customers_customer_categories'
   validates_presence_of :name
   
   validates_presence_of :organization_id, :message => 'Customers must be associated to an organization'
 
-  validates_presence_of :category_id, :message => 'Every customer must belong to a category'
-  
   validates_as_cnpj :cnpj
   
   validates_as_cpf :cpf

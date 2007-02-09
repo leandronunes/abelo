@@ -3,35 +3,29 @@ first:
   id: 1
   name: 'Daniela'
   cnpj: '26827283000133'
-  category_id: 1
   organization_id: 1
 second:
   id: 2
   name: 'Helder'
   cnpj: '25632601000148' 
-  category_id: 1
   organization_id: 1
 third:
   id: 3
   name: 'Keilla'
   cnpj: '73371553000124'
-  category_id: 1
   organization_id: 1
 fourth:
   id: 4
   name: 'Leandro'
   cnpj: '18347614000100'
-  category_id: 1
   organization_id: 1
 fifth:
   id: 5
   name: 'Raquel'
   cnpj: '90721441000175'
-  category_id: 1
   organization_id: 1
 sixth:
   id: 6
   name: 'Tongo'
   cnpj: '34866694000166'
-  category_id: 1
   organization_id: 1

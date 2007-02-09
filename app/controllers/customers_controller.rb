@@ -41,6 +41,7 @@ class CustomersController < ApplicationController
 
   def update
     @customer = @organization.customers.find(params[:id])
+    @customer.customer_category_ids = params[:customer_categories].keys if params[:customer_categories]
     if @customer.update_attributes(params[:customer])
       flash[:notice] = 'Customer was successfully updated.'
       redirect_to :action => 'list', :id => @customer

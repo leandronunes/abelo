@@ -2,7 +2,7 @@ class CustomerCategory < ActiveRecord::Base
 
  validates_presence_of :name, :organization_id
  belongs_to :organization
- has_many :customers, :foreign_key => 'category_id'
+ has_and_belongs_to_many :customers, :join_table => 'customers_customer_categories'
  acts_as_tree :order => 'name'
 
   def full_name(sep = '/')

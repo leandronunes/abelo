@@ -8,7 +8,6 @@ class CreateCustomers < ActiveRecord::Migration
       t.column :cpf, :string, :limit =>11
       t.column :rg, :string
       t.column :description, :text
-      t.column :category_id, :integer, :null => false
       t.column :organization_id, :integer, :null => false
     end
   end

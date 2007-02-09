@@ -1,7 +1,12 @@
 module CustomersHelper
-  def select_category(object, method)
-    customer = self.instance_variable_get("@#{object}")
-    categories = customer.organization.customer_categories
-    select(object, method, categories.map { |c| [ c.full_name, c.id ] }.sort { |a,b| a[0] <=> b[0] })
+  
+  def select_categories(customer)
+    customer.organization.customer_categories.map { |s|
+      content_tag(
+        'div',
+        check_box_tag("customer_categories[#{s.id}]", 1, customer.customer_categories.include?(s)) + s.name
+      )
+    }.join("\n")
   end
+
 end

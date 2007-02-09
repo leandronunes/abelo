@@ -1,0 +1,63 @@
+#!/usr/bin/ruby
+
+def ask(question, default, options = nil)
+  input = nil
+  options_str = options.nil? ? '' : "[#{options.join(',')}] "
+  while input.nil?
+    puts("#{question} #{options_str} (default: #{default})")
+    printf('> ')
+    input = gets.strip
+    if input.nil? || input == ''
+      input = default
+    else
+      if options && (!options.include?(input))
+        puts "Options must be one of #{options_str}."
+        input = nil
+      end
+    end
+  end
+  input
+end
+
+def confirm(question, default = 'yes')
+  raise "invalid default choice #{default}" unless [ 'yes', 'no' ].include?(default)
+  input = ask(question, default, [ 'yes', 'no' ])
+  input == 'yes'
+end
+
+def check_rails_path(path)
+  %w(
+    actionmailer
+    actionpack
+    actionwebservice
+    activerecord
+    activesupport
+    railties
+  ).map do |child|
+    File.join(path, child)
+  end.all? do |dir|
+    File.exists?(dir) && File.directory?(dir)
+  end
+end
+
+def install_symlinks
+  default_rails_path = '/usr/share/rails'
+  rails_path = nil
+  while rails_path.nil?
+    rails_path = ask('Enter the path for the rails installation', default_rails_path)
+    unless check_rails_path(rails_path)
+      puts "#{rails_path} is not a valid rails installation directory. Please enter a valid one."
+      rails_path = nil
+    end
+  end
+  system("cd vendor; ln -s #{rails_path}/* .; ln -s . rails")
+end
+
+
+unless confirm("Did you install Rails through Ruby's gem?")
+  install_symlinks
+end
+system('rake migrate')
+puts 'instalation complete'
+
+# vim: ft=ruby

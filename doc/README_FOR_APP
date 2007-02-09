@@ -6,3 +6,16 @@ Run "rake appdoc" to generate API documentation for your models and controllers.
 [RMagick]  librmagick-ruby (Debian)
 [Ruby-GetText] libgettext-ruby (Debian)
 
+== Installation
+
+* Download abelo from http://wiki.colibre.com.br/Abelo.
+* unpack the distribution inside a directory:
+   $ tar xzf abelo-x.y.z.tar.gz
+  This will create a directory called abelo-x.y.z (where _x_, _y_ and _z_ are
+  version number components).
+* Enter the abelo-x.y.z directory
+* create a new database configuration file:
+   cp config/database.yml.dist config/database.yml
+* edit config/database.yml and fill your database information
+* run the configuration script:
+   ./script/configure

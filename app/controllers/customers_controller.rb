@@ -65,39 +65,39 @@ class CustomersController < ApplicationController
   end
 
   def new_contact
-    @customer = Customer.new
-    @customer.organization = @organization
+    @contact = Contact.new
+    @contact.customer_id = params[:id]
   end
 
-  def create
-    @customer = Customer.new(params[:customer])
-    @customer.organization = @organization
-    if @customer.save
-      flash[:notice] = 'Customer was successfully created.'
-      redirect_to :action => 'list'
+  def create_contact
+    @contact = Contact.new(params[:contact])
+    @contact.customer_id = params[:id] 
+    if @contact.save
+      flash[:notice] = 'Contact was successfully created.'
+      redirect_to :action => 'list_contacts', :id => @contact.customer_id
     else
-      render :action => 'new'
+      render :action => 'new_contact'
     end
   end
 
-  def edit
-    @customer = @organization.customers.find(params[:id])
+  def edit_contact
+    @contact = Contact.find(params[:id])
   end
 
-  def update
-    @customer = @organization.customers.find(params[:id])
-    @customer.customer_category_ids = params[:customer_categories].keys if params[:customer_categories]
-    if @customer.update_attributes(params[:customer])
-      flash[:notice] = 'Customer was successfully updated.'
-      redirect_to :action => 'list', :id => @customer
+  def update_contact
+    @contact = Contact.find(params[:id])
+    if @contact.update_attributes(params[:contact])
+      flash[:notice] = 'Contact was successfully updated.'
+      redirect_to :action => 'list_contacts', :id => @contact.customer_id
     else
-      render :action => 'edit'
+      render :action => 'edit_contact'
     end
   end
 
-  def destroy
-    @organization.customers.find(params[:id]).destroy
-    redirect_to :action => 'list'
+  def destroy_contact
+    @customer_id = Contact.find(params[:id]).customer_id
+    Contact.find(params[:id]).destroy
+    redirect_to :action => 'list_contacts', :id => @customer_id
   end
 
 end

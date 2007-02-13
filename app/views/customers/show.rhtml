@@ -28,3 +28,5 @@
 <label><%= _('Description:') %></label>
 <%= @customer.description %>
 </p>
+
+<li><%= link_to _('Contacts'), :action => 'list_contacts', :id => @customer.id %></li>

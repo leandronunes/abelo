@@ -1,0 +1,18 @@
+first:
+  customer_id: 1
+  customer_category_id: 5
+second:
+  customer_id: 2
+  customer_category_id: 2
+third:
+  customer_id: 3
+  customer_category_id: 2
+fourth:
+  customer_id: 4
+  customer_category_id: 3 
+fifth:
+  customer_id: 5
+  customer_category_id: 5
+sixth:
+  customer_id: 6
+  customer_category_id: 3

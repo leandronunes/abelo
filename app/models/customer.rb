@@ -1,6 +1,7 @@
 class Customer < ActiveRecord::Base
 
   belongs_to :organization
+  has_many :contacts
   has_and_belongs_to_many :customer_categories, :join_table => 'customers_customer_categories'
   validates_presence_of :name
   

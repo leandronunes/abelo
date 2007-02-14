@@ -12,7 +12,7 @@ second:
 third:
   id: 3
   name: 'Keilla'
-  cnpj: '73371553000124'
+  cpf: '34134613469'
   organization_id: 1
 fourth:
   id: 4

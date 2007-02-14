@@ -9,6 +9,7 @@ class CustomersControllerTest < Test::Unit::TestCase
   include TestingUnderOrganization
 
   fixtures :customers
+  fixtures :contacts
 
   def setup
     @controller = CustomersController.new
@@ -89,6 +90,72 @@ class CustomersControllerTest < Test::Unit::TestCase
 
     assert_raise(ActiveRecord::RecordNotFound) {
       Customer.find(1)
+    }
+  end
+
+  def test_list_contacts
+    get :list_contacts, :id => 1
+
+    assert_response :success
+    assert_template 'list_contacts'
+
+    assert_not_nil assigns(:contacts)
+  end
+
+  def test_show_contact
+    get :show_contact, :id => 1
+
+    assert_response :success
+    assert_template 'show_contact'
+
+    assert_not_nil assigns(:contact)
+    assert assigns(:contact).valid?
+  end
+
+  def test_new_contact
+    get :new_contact, :id => 1
+
+    assert_response :success
+    assert_template 'new_contact'
+
+    assert_not_nil assigns(:contact)
+  end
+
+  def test_create_contact
+    num_contacts = Contact.count
+
+    post :create_contact, :id => 1, :contact => { :name => 'Test' }
+    assert_response :redirect
+    assert_redirected_to :action => 'list_contacts', :id => 1
+
+    assert_equal num_contacts + 1, Contact.count
+  end
+
+  def test_edit_contact
+    get :edit_contact, :id => 1
+
+    assert_response :success
+    assert_template 'edit_contact'
+
+    assert_not_nil assigns(:contact)
+    assert assigns(:contact).valid?
+  end
+
+  def test_update_contact
+    post :update_contact, :id => 1
+    assert_response :redirect
+    assert_redirected_to :action => 'list_contacts', :id => 1
+  end
+
+  def test_destroy_contact
+    assert_not_nil Contact.find(1)
+
+    post :destroy_contact, :id => 1
+    assert_response :redirect
+    assert_redirected_to :action => 'list_contacts', :id => 1
+
+    assert_raise(ActiveRecord::RecordNotFound) {
+      Contact.find(1)
     }
   end
 end

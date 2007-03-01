@@ -24,7 +24,7 @@ class ProductCategoriesController < ApplicationController
     @product_category = ProductCategory.new(params[:product_category])
     @product_category.organization = @organization
     if @product_category.save
-      flash[:notice] = 'ProductCategory was successfully created.'
+      flash[:notice] = _('ProductCategory was successfully created.')
       redirect_to :action => 'list'
     else
       render :action => 'new'
@@ -41,7 +41,7 @@ class ProductCategoriesController < ApplicationController
       flash[:notice] = 'ProductCategory was successfully updated.'
       redirect_to :action => 'list'
     else
-      render :action => 'edit'
+      render :action => 'edit', :id => @product_category
     end
   end
 

@@ -1,0 +1,24 @@
+<h2>Listing contact_positions</h2>
+
+<table>
+  <tr>
+  <% for column in ContactPosition.content_columns %>
+    <th><%= column.human_name %></th>
+  <% end %>
+  </tr>
+  
+<% for contact_position in @contact_positions %>
+  <tr>
+  <% for column in ContactPosition.content_columns %>
+    <td><%=h contact_position.send(column.name) %></td>
+  <% end %>
+    <td><%= button _('Edit'), :edit, :action => 'edit', :id => contact_position %></td>
+    <td><%= button _('Destroy'), :remove, { :action => 'destroy', :id => contact_position }, :confirm => _('Are you sure?'), :post => true %></td>
+  </tr>
+<% end %>
+</table>
+
+
+<br />
+
+<%= button _('New contact_position'), :add, :action => 'new' %>

@@ -5,6 +5,7 @@ class CreateContacts < ActiveRecord::Migration
       t.column :phone, :string
       t.column :email, :string
       t.column :customer_id, :integer, :null => false
+      t.column :position_id, :integer, :null => false
     end
   end
 

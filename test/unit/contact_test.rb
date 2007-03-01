@@ -6,6 +6,7 @@ class ContactTest < Test::Unit::TestCase
 
   def setup
     @customer = Customer.find(1)
+    @position = ContactPosition.find(1)
   end
 
   def test_mandatory_fields
@@ -24,6 +25,9 @@ class ContactTest < Test::Unit::TestCase
     assert(!c.save)
 
     c.customer_id = @customer.id
+    assert(!c.save)
+
+    c.position_id = @position.id
     assert(c.save)
 
     assert_equal count + 1, Contact.count

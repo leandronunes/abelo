@@ -124,7 +124,7 @@ class CustomersControllerTest < Test::Unit::TestCase
   def test_create_contact
     num_contacts = Contact.count
 
-    post :create_contact, :id => 1, :contact => { :name => 'Test' }
+    post :create_contact, :id => 1, :contact => { :name => 'Test', :position_id => 1 }
     assert_response :redirect
     assert_redirected_to :action => 'list_contacts', :id => 1
 

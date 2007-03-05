@@ -1,8 +1,8 @@
-class SellItem < ActiveRecord::Base
+class SaleItem < ActiveRecord::Base
 
-  validates_presence_of :sell_id, :product_id, :ammount
+  validates_presence_of :sale_id, :product_id, :ammount
 
-  belongs_to :sell
+  belongs_to :sale
   belongs_to :product
   
 end

@@ -6,7 +6,7 @@ class PaymentWithCashTest < Test::Unit::TestCase
   def test_mandatory_fields
     p = PaymentWithCash.new
     assert(!p.save)
-    p.sell_id = 1
+    p.sale_id = 1
     assert(!p.save)
     p.value = 10.0
     assert(!p.save)

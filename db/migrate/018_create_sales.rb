@@ -1,6 +1,6 @@
-class CreateSells < ActiveRecord::Migration
+class CreateSales < ActiveRecord::Migration
   def self.up
-    create_table :sells do |t|
+    create_table :sales do |t|
       t.column :organization_id, :integer, :null => false
       t.column :customer_id,     :integer
       t.column :date,            :date,    :null => false
@@ -8,6 +8,6 @@ class CreateSells < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :sells
+    drop_table :sales
   end
 end

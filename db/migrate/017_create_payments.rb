@@ -1,7 +1,7 @@
 class CreatePayments < ActiveRecord::Migration
   def self.up
     create_table :payments do |t|
-      t.column :sell_id,                    :integer, :null => false
+      t.column :sale_id,                    :integer, :null => false
       t.column :type,                       :string,  :null => false
       t.column :value,                      :float,   :null => false
       t.column :date,                       :date,    :null => false

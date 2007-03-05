@@ -1,11 +1,11 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 first:
   id: 1
-  sell_id: 1
+  sale_id: 1
   product_id: 1
   ammount: 2
 another:
   id: 2
-  sell_id: 1
+  sale_id: 1
   product_id: 2
   ammount: 5

@@ -17,6 +17,7 @@ class CustomersController < ApplicationController
 
   def show
     @customer = @organization.customers.find(params[:id])
+    @contacts = @customer.contacts
   end
 
   def new
@@ -55,11 +56,6 @@ class CustomersController < ApplicationController
     redirect_to :action => 'list'
   end
 
-  def list_contacts
-    @customer = @organization.customers.find(params[:id])
-    @contacts = @customer.contacts
-  end  
-  
   def show_contact
     @contact = Contact.find(params[:id])
   end
@@ -74,7 +70,7 @@ class CustomersController < ApplicationController
     @contact.customer_id = params[:id] 
     if @contact.save
       flash[:notice] = 'Contact was successfully created.'
-      redirect_to :action => 'list_contacts', :id => @contact.customer_id
+      redirect_to :action => 'show', :id => @contact.customer_id
     else
       render :action => 'new_contact'
     end
@@ -88,7 +84,7 @@ class CustomersController < ApplicationController
     @contact = Contact.find(params[:id])
     if @contact.update_attributes(params[:contact])
       flash[:notice] = 'Contact was successfully updated.'
-      redirect_to :action => 'list_contacts', :id => @contact.customer_id
+      redirect_to :action => 'show', :id => @contact.customer_id
     else
       render :action => 'edit_contact'
     end
@@ -97,7 +93,7 @@ class CustomersController < ApplicationController
   def destroy_contact
     @customer_id = Contact.find(params[:id]).customer_id
     Contact.find(params[:id]).destroy
-    redirect_to :action => 'list_contacts', :id => @customer_id
+    redirect_to :action => 'show', :id => @customer_id
   end
 
 end

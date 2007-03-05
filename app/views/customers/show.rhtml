@@ -29,4 +29,25 @@
 <%= @customer.description %>
 </p>
 
-<li><%= link_to _('Contacts'), :action => 'list_contacts', :id => @customer.id %></li>
+<table>
+  <tr>
+  <% for column in Contact.content_columns %>
+    <th><%= column.human_name %></th>
+  <% end %>
+  </tr>
+
+<% for contact in @contacts %>
+  <tr>
+  <% for column in Contact.content_columns %>
+    <td><%=h contact.send(column.name) %></td>
+  <% end %>
+    <td><%= button _('Show'), :find, :action => 'show_contact', :id => contact %></td>
+    <td><%= button _('Edit'), :edit, :action => 'edit_contact', :id => contact %></td>
+    <td><%= button _('Destroy'), :remove, { :action => 'destroy_contact', :id => contact }, :confirm => _('Are you sure?'), :post => true %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= button _('New contact'), :new, :action => 'new_contact', :id => @customer.id %>

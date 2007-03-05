@@ -7,6 +7,7 @@ a_cash_payment:
   value: 1.5
   date: '2007-01-01'
   received: true
+  cash: 2.0
 a_credit_card_payment:
   id: 2
   type: PaymentWithCreditCard

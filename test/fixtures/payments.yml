@@ -8,24 +8,24 @@ a_cash_payment:
   date: '2007-01-01'
   received: true
   cash: 2.0
-a_credit_card_payment:
-  id: 2
-  type: PaymentWithCreditCard
-  sell_id: 1
-  value: 2.5
-  date: '2007-01-01'
-  received: true
-a_check_payment:
-  id: 3
-  type: PaymentWithCheck
-  sell_id: 1
-  value: 3.5
-  date: '2007-01-01'
-  received: true
-a_automatic_debit_payment:
-  id: 4
-  type: PaymentWithAutomaticDebit
-  sell_id: 1
-  value: 4.5
-  date: '2007-01-01'
-  received: true
+# a_credit_card_payment:
+#   id: 2
+#   type: PaymentWithCreditCard
+#   sell_id: 1
+#   value: 2.5
+#   date: '2007-01-01'
+#   received: true
+# a_check_payment:
+#   id: 3
+#   type: PaymentWithCheck
+#   sell_id: 1
+#   value: 3.5
+#   date: '2007-01-01'
+#   received: true
+# a_automatic_debit_payment:
+#   id: 4
+#   type: PaymentWithAutomaticDebit
+#   sell_id: 1
+#   value: 4.5
+#   date: '2007-01-01'
+#   received: true

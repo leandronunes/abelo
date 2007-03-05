@@ -7,10 +7,14 @@ class WorkersController; def rescue_action(e) raise e end; end
 class WorkersControllerTest < Test::Unit::TestCase
   fixtures :workers
 
+  include TestingUnderOrganization
+
   def setup
     @controller = WorkersController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
+    @organization_nickname = 'one'
+    login_as('quentin')
   end
 
   def test_index

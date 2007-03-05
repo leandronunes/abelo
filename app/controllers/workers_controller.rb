@@ -1,4 +1,7 @@
 class WorkersController < ApplicationController
+
+  needs_organization
+
   def index
     list
     render :action => 'list'
@@ -9,19 +12,21 @@ class WorkersController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @worker_pages, @workers = paginate :workers, :per_page => 10
+    @workers = @organization.workers
   end
 
   def show
-    @worker = Worker.find(params[:id])
+    @worker = @organization.workers.find(params[:id])
   end
 
   def new
     @worker = Worker.new
+    @worker.organization = @organization
   end
 
   def create
     @worker = Worker.new(params[:worker])
+    @worker.organization = @organization
     if @worker.save
       flash[:notice] = 'Worker was successfully created.'
       redirect_to :action => 'list'
@@ -31,14 +36,14 @@ class WorkersController < ApplicationController
   end
 
   def edit
-    @worker = Worker.find(params[:id])
+    @worker = @organization.workers.find(params[:id])
   end
 
   def update
     @worker = Worker.find(params[:id])
     if @worker.update_attributes(params[:worker])
       flash[:notice] = 'Worker was successfully updated.'
-      redirect_to :action => 'show', :id => @worker
+      redirect_to :action => 'list', :id => @worker
     else
       render :action => 'edit'
     end

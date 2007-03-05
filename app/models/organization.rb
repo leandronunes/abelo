@@ -13,6 +13,8 @@ class Organization < ActiveRecord::Base
 
   has_many :contact_positions
 
+  has_many :workers
+
   validates_presence_of :name, :cnpj, :nickname
   validates_uniqueness_of :name, :cnpj, :nickname
 

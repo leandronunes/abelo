@@ -8,6 +8,7 @@ class CreateWorkers < ActiveRecord::Migration
       t.column :birthday, :date
       t.column :description, :text
       t.column :function, :string
+      t.column :organization_id, :integer, :null => false
     end
   end
 

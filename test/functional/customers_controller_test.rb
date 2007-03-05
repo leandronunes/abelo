@@ -93,15 +93,6 @@ class CustomersControllerTest < Test::Unit::TestCase
     }
   end
 
-  def test_list_contacts
-    get :list_contacts, :id => 1
-
-    assert_response :success
-    assert_template 'list_contacts'
-
-    assert_not_nil assigns(:contacts)
-  end
-
   def test_show_contact
     get :show_contact, :id => 1
 
@@ -126,7 +117,7 @@ class CustomersControllerTest < Test::Unit::TestCase
 
     post :create_contact, :id => 1, :contact => { :name => 'Test', :position_id => 1 }
     assert_response :redirect
-    assert_redirected_to :action => 'list_contacts', :id => 1
+    assert_redirected_to :action => 'show', :id => 1
 
     assert_equal num_contacts + 1, Contact.count
   end
@@ -144,7 +135,7 @@ class CustomersControllerTest < Test::Unit::TestCase
   def test_update_contact
     post :update_contact, :id => 1
     assert_response :redirect
-    assert_redirected_to :action => 'list_contacts', :id => 1
+    assert_redirected_to :action => 'show', :id => 1
   end
 
   def test_destroy_contact
@@ -152,7 +143,7 @@ class CustomersControllerTest < Test::Unit::TestCase
 
     post :destroy_contact, :id => 1
     assert_response :redirect
-    assert_redirected_to :action => 'list_contacts', :id => 1
+    assert_redirected_to :action => 'show', :id => 1
 
     assert_raise(ActiveRecord::RecordNotFound) {
       Contact.find(1)

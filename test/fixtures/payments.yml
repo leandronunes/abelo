@@ -1,0 +1,30 @@
+# Readi about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+# total = 12.0
+a_cash_payment:
+  id: 1
+  type: PaymentWithCash
+  sell_id: 1
+  value: 1.5
+  date: '2007-01-01'
+  received: true
+a_credit_card_payment:
+  id: 2
+  type: PaymentWithCreditCard
+  sell_id: 1
+  value: 2.5
+  date: '2007-01-01'
+  received: true
+a_check_payment:
+  id: 3
+  type: PaymentWithCheck
+  sell_id: 1
+  value: 3.5
+  date: '2007-01-01'
+  received: true
+a_automatic_debit_payment:
+  id: 4
+  type: PaymentWithAutomaticDebit
+  sell_id: 1
+  value: 4.5
+  date: '2007-01-01'
+  received: true

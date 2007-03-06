@@ -5,15 +5,17 @@ require 'workers_controller'
 class WorkersController; def rescue_action(e) raise e end; end
 
 class WorkersControllerTest < Test::Unit::TestCase
-  fixtures :workers
 
   include TestingUnderOrganization
+
+  fixtures :workers, :organizations
 
   def setup
     @controller = WorkersController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     @organization_nickname = 'one'
+    @organization = Organization.find_by_nickname 'one'
     login_as('quentin')
   end
 
@@ -30,6 +32,7 @@ class WorkersControllerTest < Test::Unit::TestCase
     assert_template 'list'
 
     assert_not_nil assigns(:workers)
+    assert_kind_of Array, assigns(:workers)
   end
 
   def test_show
@@ -49,12 +52,14 @@ class WorkersControllerTest < Test::Unit::TestCase
     assert_template 'new'
 
     assert_not_nil assigns(:worker)
+    assert_kind_of Worker, assigns(:worker)
+    assert_equal @organization, assigns(:worker).organization
   end
 
   def test_create
     num_workers = Worker.count
 
-    post :create, :worker => {}
+    post :create, :worker => { :name => 'Livia', :organization_id => 1, :cpf => '27284576200'}
 
     assert_response :redirect
     assert_redirected_to :action => 'list'
@@ -75,7 +80,7 @@ class WorkersControllerTest < Test::Unit::TestCase
   def test_update
     post :update, :id => 1
     assert_response :redirect
-    assert_redirected_to :action => 'show', :id => 1
+    assert_redirected_to :action => 'list'
   end
 
   def test_destroy

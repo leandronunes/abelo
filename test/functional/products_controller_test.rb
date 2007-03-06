@@ -32,6 +32,7 @@ class ProductsControllerTest < Test::Unit::TestCase
     assert_template 'list'
 
     assert_not_nil assigns(:products)
+    assert_kind_of Array, assigns(:products)
   end
 
   def test_show
@@ -51,6 +52,8 @@ class ProductsControllerTest < Test::Unit::TestCase
     assert_template 'new'
 
     assert_not_nil assigns(:product)
+    assert_kind_of Product, assigns(:product)
+    assert_equal @organization, assigns(:product).organization
   end
 
   def test_create
@@ -71,7 +74,7 @@ class ProductsControllerTest < Test::Unit::TestCase
     supplier1 = Supplier.find(1)
     assert_equal supplier1_product_count + 1, supplier1.products.count
     supplier2 = Supplier.find(2)
-    assert_equal supplier2_product_count +1,  supplier2.products.count
+    assert_equal supplier2_product_count + 1,  supplier2.products.count
   end
 
   def test_edit

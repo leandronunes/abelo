@@ -29,6 +29,8 @@
 <%= @customer.description %>
 </p>
 
+<p>
+<label><%= _('Contacts:') %></label>
 <table>
   <tr>
   <% for column in Contact.content_columns %>
@@ -47,7 +49,7 @@
   </tr>
 <% end %>
 </table>
-
+</p>
 <br />
 
 <%= button _('New contact'), :new, :action => 'new_contact', :id => @customer.id %>

@@ -15,13 +15,13 @@ class CustomerTest < Test::Unit::TestCase
     c = Customer.new
     assert(!c.save)
 
-    c.name = 'Helder'
+    c.name = 'A test customer'
     assert(!c.save)
 
     c.birthday = '1982-03-10'
     assert(!c.save)
 
-    c.address = 'Silveira Martins Street, Cabula.'
+    c.address = 'A test address'
     assert(!c.save)
 
     c.cnpj = '47635123000162'
@@ -29,6 +29,8 @@ class CustomerTest < Test::Unit::TestCase
 
     c.organization_id = 1
     assert(c.save)
+
+    assert_equal count + 1, Customer.count
   end
 
   def test_cnpj_format

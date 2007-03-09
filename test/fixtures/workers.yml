@@ -8,4 +8,5 @@ another:
   id: 2
   name: 'Daniela'
   cpf: '35674244081'
+  birthday: '2003-01-01'
   organization_id: 1

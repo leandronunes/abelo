@@ -44,7 +44,7 @@ class ProductsController < ApplicationController
     @product = @organization.products.find(params[:id])
     @product.supplier_ids = params[:suppliers].keys if params[:suppliers]
     if @product.update_attributes(params[:product])
-      flash[:notice] = 'Product was successfully updated.'
+      flash[:notice] = _('Product was successfully updated.')
       redirect_to :action => 'list'
     else
       render :action => 'edit'
@@ -63,12 +63,14 @@ class ProductsController < ApplicationController
 
   def add_image
     @product = @organization.products.find(params[:id])
-    image = Image.new(params[:image])
-    @product.images.push(image)
-    if  @product.save
+    @image = Image.new(params[:image])
+    @image.product_id = params[:id]
+    if @image.save
+      @product.images.push(@image)
+      flash[:notice] = _('Image was successfully added.')
       redirect_to :action => 'images', :id => @product
     else
-      render :action => 'images'
+      render :action => 'images', :id => @product
     end
   end
 

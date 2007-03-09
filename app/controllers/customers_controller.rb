@@ -69,7 +69,7 @@ class CustomersController < ApplicationController
     @contact = Contact.new(params[:contact])
     @contact.customer_id = params[:id] 
     if @contact.save
-      flash[:notice] = 'Contact was successfully created.'
+      flash[:notice] = _('Contact was successfully created.')
       redirect_to :action => 'show', :id => @contact.customer_id
     else
       render :action => 'new_contact'

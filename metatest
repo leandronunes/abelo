@@ -37,10 +37,10 @@ report() {
 }
 
 main() {
-  if [ -z $@ ]; then
+  if [ -z "$1" ]; then
     TESTS=$(find test/*/ -name '*.rb')
   else
-    TESTS=$1
+    TESTS="$@"
   fi
   for test in $TESTS; do
     do_test $test

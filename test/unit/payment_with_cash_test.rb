@@ -23,6 +23,11 @@ class PaymentWithCashTest < Test::Unit::TestCase
     assert_in_delta 1.5, p.value, 0.001
     assert_in_delta 2.0, p.cash, 0.001
     assert_in_delta 0.5, p.change, 0.001
+
+    p = PaymentWithCash.new
+    p.value = 10.0
+    p.cash = 7.0
+    assert_in_delta 0.0, p.change, 0.001
   end
 
 end

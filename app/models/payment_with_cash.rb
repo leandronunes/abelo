@@ -5,7 +5,7 @@ class PaymentWithCash < Payment
 
   # calculates the change needed
   def change
-    (cash - value)
+    (cash > value) ? (cash - value) : 0.0
   end
 
 end

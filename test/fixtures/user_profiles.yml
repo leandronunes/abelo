@@ -24,3 +24,10 @@ yet_another:
   permissions:
   - :controller: '*'
     :action: '*'
+for_sales_person:
+  id: 4
+  user_id: 7 # seu_ze
+  organization_id: 1
+  permissions:
+  - :controller: 'point_of_sale'
+    :action: '*'

@@ -61,6 +61,8 @@ class UserProfileTest < Test::Unit::TestCase
     assert(profile.save)
     profile.template = 'read_only'
     assert(profile.save)
+    profile.template = 'sales_person'
+    assert(profile.save)
     assert_raise(ArgumentError) do
       profile.template = 'asdgsagdkjasgdajk'
     end
@@ -73,6 +75,8 @@ class UserProfileTest < Test::Unit::TestCase
     assert_equal 'read_only', profile.template
     profile = UserProfile.find(3)
     assert_equal 'full_access', profile.template
+    profile = UserProfile.find(4)
+    assert_equal 'sales_person', profile.template
   end
 
 end

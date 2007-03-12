@@ -40,6 +40,9 @@ class UserProfile < ActiveRecord::Base
       { :controller => '*', :action => 'index'},
       { :controller => '*', :action => 'list'},
       { :controller => '*', :action => 'show'}
+    ],
+    'sales_person' => [
+      { :controller => 'point_of_sale', :action => '*' }
     ]
   }
 
@@ -70,6 +73,7 @@ class UserProfile < ActiveRecord::Base
     return {
       'full_access' => _('Full access'),
       'read_only' => _('Read-only'), 
+      'sales_person' => _('Sales person'), 
       'other' => _('Other')
     }[template]
   end

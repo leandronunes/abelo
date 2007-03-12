@@ -14,8 +14,6 @@ class User < Person
     end
   end
 
-
-
   # Virtual attribute for the unencrypted password
   attr_accessor :password
 

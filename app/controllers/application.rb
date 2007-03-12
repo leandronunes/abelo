@@ -9,12 +9,12 @@ class ApplicationController < ActionController::Base
   before_filter :check_access_control
   def check_access_control
     unless can(params[:action])
-      render :template => 'users/access_denied', :status => 403, :layout => false
+      render_access_denied_screen
     end
   end
   def check_admin_rights
     unless current_user.administrator
-      render :template => 'users/access_denied', :status => 403, :layout => false
+      render_access_denied_screen
     end
   end
 
@@ -32,6 +32,10 @@ class ApplicationController < ActionController::Base
   def load_organization
     @organization = Organization.find_by_nickname(params[:organization_nickname])
     render :text => _('There is no organization with nickname %s') % params[:organization_nickname] unless @organization
+  end
+
+  def render_access_denied_screen
+      render :template => 'users/access_denied', :status => 403, :layout => false
   end
 
 end

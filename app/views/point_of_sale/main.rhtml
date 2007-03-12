@@ -1,0 +1,6 @@
+<h2><%= _('Sale') %></h2>
+
+<div class='button_bar'>
+  <%= button _('Close sale'), :ok  %>
+  <%= button _('Cancel sale'), :cancel, { :action => 'cancel', :id => @sale }, { :post => true, :confirm => _('Are you sure you want to cancel this sale?') } %>
+</div>

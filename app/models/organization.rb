@@ -15,6 +15,8 @@ class Organization < ActiveRecord::Base
 
   has_many :workers
 
+  has_many :sales
+
   validates_presence_of :name, :cnpj, :nickname
   validates_uniqueness_of :name, :cnpj, :nickname
 
@@ -23,6 +25,10 @@ class Organization < ActiveRecord::Base
 
   def top_level_product_categories
     ProductCategory.top_level_for(self)
+  end
+
+  def pending_sales(user)
+    Sale.pending(self, user)
   end
 
 end

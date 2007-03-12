@@ -9,6 +9,8 @@ class SaleTest < Test::Unit::TestCase
     s.date = Date.today
     assert(!s.save)
     s.organization = Organization.find(1)
+    assert(!s.save)
+    s.user = User.find(7)
     assert(s.save)
   end
 

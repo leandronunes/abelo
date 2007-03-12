@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class OrganizationTest < Test::Unit::TestCase
-  fixtures :organizations, :people, :user_profiles
+  fixtures :organizations, :people, :user_profiles, :sales
 
   def test_mandatory_fields
     count = Organization.count
@@ -47,6 +47,26 @@ class OrganizationTest < Test::Unit::TestCase
     org.users.each do |user|
       assert_kind_of User, user
     end
+  end
+
+  def test_should_have_sales
+    org = Organization.find(1)
+    assert_not_nil org.sales
+    assert_kind_of Array, org.sales
+    assert ! org.sales.empty?
+    assert(org.sales.all? do |sale|
+      sale.kind_of? Sale
+    end)
+  end
+
+  def test_should_have_pending_sales
+    org = Organization.find(1)
+    user = org.users.find(7)
+    sales = org.pending_sales(user)
+    assert_not_nil sales
+    assert_kind_of Array, org.pending_sales(user)
+    assert ! sales.empty?
+    assert (sales.all? { |sale| sale.kind_of?(Sale) })
   end
 
 end

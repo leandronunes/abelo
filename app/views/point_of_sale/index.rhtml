@@ -1,1 +1,12 @@
 <h2><%= _("Point of sale") %></h2>
+
+<p><%= _('Pending sales:') %>
+<ul>
+<% @pending_sales.each do |sale| %>
+  <li><%= sale.id %></li>
+<% end %>
+</ul>
+
+<div class='button_bar'>
+  <%= button _('New sale'), :add, { :action => 'new' }, { :post => true } %>
+</div>

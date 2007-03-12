@@ -242,3 +242,34 @@ div#login {
 div#login div.button_bar {
   text-align: center;
 }
+
+ul.tabs {
+  border-bottom: 1px solid #ccc;
+}
+
+ul.tabs li {
+  list-style: none;
+  display: inline;
+  border-top: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  padding-left: 2px;
+  padding-right: 2px;
+  border-bottom: 1px solid white;
+}
+
+ul.tabs li a:link, ul.tabs li a:visited {
+  border-bottom: 1px solid #ccc;
+  text-decoration: none;
+  margin-left: -2px;
+  margin-right: -2px;
+  padding-left: 2px;
+  padding-right: 2px;
+  background: #eee;
+  color: #888;
+}
+
+ul.tabs li a:hover {
+  color: red;
+  background: #ffd;
+}

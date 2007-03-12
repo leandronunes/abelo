@@ -4,8 +4,19 @@ first:
   date: '2007-01-01'
   organization_id: 1
   customer_id: 1
+  user_id: 7 # seu_ze
+  cancelled: false
 another:
   id: 2
   date: '2007-01-01'
   organization_id: 1
+  user_id: 7 # seu_ze
+  cancelled: false
   # no customer
+cancelled:
+  id: 3
+  date: '2007-01-01'
+  organization_id: 1
+  user_id: 7 # seu_ze
+  cancelled: true
+  customer_id: 1

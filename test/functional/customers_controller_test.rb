@@ -8,7 +8,7 @@ class CustomersControllerTest < Test::Unit::TestCase
 
   include TestingUnderOrganization
 
-  fixtures :customers, :contacts, :positions
+  fixtures :customers, :contacts, :contact_positions
 
   def setup
     @controller = CustomersController.new

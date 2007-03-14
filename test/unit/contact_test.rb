@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class ContactTest < Test::Unit::TestCase
-  fixtures :contacts, :customers, :positions
+  fixtures :contacts, :customers, :contact_positions
 
   def setup
     @customer = Customer.find(1)

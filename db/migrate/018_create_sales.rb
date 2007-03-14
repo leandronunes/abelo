@@ -4,7 +4,7 @@ class CreateSales < ActiveRecord::Migration
       t.column :organization_id, :integer, :null => false
       t.column :customer_id,     :integer
       t.column :date,            :date,    :null => false
-      t.column :cancelled,       :boolean, :null => false, :default => false
+      t.column :status,          :integer,  :null => false, :default => 0
       t.column :user_id,         :integer, :null => false
     end
   end

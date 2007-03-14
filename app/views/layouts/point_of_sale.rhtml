@@ -4,9 +4,10 @@
 <head>
   <title>abelo &rarr; <%= @organization.name %> &rarr; <%= @controller.controller_name  %> </title>
   <%= stylesheet_link_tag 'common' %>
+  <%= stylesheet_link_tag 'point_of_sale' %>
   <%= javascript_include_tag :defaults %>
 </head>
-<body>
+<body onload='if (document.forms[0] != null) { document.forms[0].elements[0].focus(); }'>
 
 <p style="color: green"><%= flash[:notice] if flash[:notice] %></p>
 

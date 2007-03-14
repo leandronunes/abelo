@@ -15,13 +15,13 @@ class SaleTest < Test::Unit::TestCase
   end
 
 
-  def test_customer
+  def test_should_have_a_customer
     s = Sale.find(1)
     assert_not_nil s.customer
     assert_kind_of Customer, s.customer
   end
 
-  def test_payments
+  def test_should_have_payments
     s = Sale.find(1)
     assert_not_nil s.payments
     assert_kind_of Array, s.payments
@@ -31,7 +31,7 @@ class SaleTest < Test::Unit::TestCase
     end)
   end
 
-  def test_items
+  def test_should_have_items
     s = Sale.find(1)
     assert_not_nil s.items
     assert_kind_of Array, s.items
@@ -39,6 +39,29 @@ class SaleTest < Test::Unit::TestCase
     assert(s.items.all? do |item|
       item.kind_of? SaleItem
     end)
+  end
+
+  def test_should_have_user
+    s = Sale.find(1)
+    assert_not_nil s.user
+    assert_kind_of User, s.user
+  end
+
+  def test_default_status
+    s = Sale.new
+    assert(s.open?)
+  end
+
+  def test_close
+    s = Sale.find(1)
+    s.close!
+    assert(s.closed?)
+  end
+
+  def test_cancel
+    s = Sale.find(1)
+    s.cancel!
+    assert(s.cancelled?)
   end
 
 end

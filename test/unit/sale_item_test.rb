@@ -26,4 +26,17 @@ class SaleItemTest < Test::Unit::TestCase
     assert_not_nil item.product
     assert_kind_of Product, item.product
   end
+
+  def test_description
+    item = SaleItem.find(1)
+    assert_equal(item.product.description, item.description)
+  end
+
+  def test_unitary_price
+    item = SaleItem.new
+    product = Product.find(:first)
+    item.product = product
+    assert_equal(product.sell_price, item.unitary_price)
+  end
+
 end

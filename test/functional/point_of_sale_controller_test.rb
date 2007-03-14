@@ -64,7 +64,7 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
 
   def test_add_item
     count = SaleItem.count
-    post :add_item, :id => 1, :item => { :product_id => 1, :ammount => 5 }
+    post :add_item, :id => 1, :product_id => 1, :ammount => 5
     assert_response :success
     assert_equal count + 1, SaleItem.count
   end

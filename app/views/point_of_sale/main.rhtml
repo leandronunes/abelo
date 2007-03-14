@@ -1,6 +1,46 @@
-<h2><%= _('Sale') %></h2>
-
 <div class='button_bar'>
-  <%= button _('Close sale'), :ok  %>
+  <%= button _('Close sale'), :ok, { :action => 'close', :id => @sale }  %>
   <%= button _('Cancel sale'), :cancel, { :action => 'cancel', :id => @sale }, { :post => true, :confirm => _('Are you sure you want to cancel this sale?') } %>
+</div>
+
+<div class='sale_details'>
+  <div class='add_item_panel'>
+    <h2><%= _('Add items') %></h2>
+      <%= form_remote_tag :url => { :controller => 'point_of_sale', :action => 'add_item', :id => @sale },
+           :update => { :success => 'items_table' },
+           :position => 'bottom',
+           :success => 'document.forms["add_item_form"].reset(); document.forms["add_item_form"].elements[0].focus()',
+           :failure => ("alert('%s' + \"\\n\\n\"  + request.responseText);" % _('An error occurred when adding the item to this sale:')),
+           :html => { :name => 'add_item_form' }
+      %>
+      <h3><%= _('Product') %></h3>
+      <%= text_field_tag('product_id') %>
+      <h3><%= _('Ammount') %></h3>
+      <%= text_field_tag('ammount') %>
+      <div>
+        <%= submit_tag _('Add item'), :class => 'button button_add' %>
+      </div>
+    <%= end_form_tag %>
+  </div>
+  <div>
+    <h2><%= _('Customer') %></h2>
+    <div>
+      <span id='customer_identification'>
+        <%= @sale.customer.nil? ? _('Unidentified customer') : @sale.customer.name %>
+      </span>
+      <%= button _('Select customer'), :search %>
+    </div>
+    <h2><%= _('Items') %></h2>
+    <table id='items_table'>
+      <tr>
+        <th><%= _('Description') %></th>
+        <th><%= _('Amount') %></th>
+        <th><%= _('Unitary price') %></th>
+        <th><%= _('Price') %></th>
+      <tr>
+      <% @sale.items.each do |item| %>
+        <%= render :partial => 'item', :locals => { :item => item } %>
+      <% end %>
+    </table>
+  </div>
 </div>

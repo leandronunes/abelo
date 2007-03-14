@@ -23,10 +23,16 @@ class PointOfSaleController < ApplicationController
   end
 
   def add_item
-    sale = @organization.sales.find(params[:id])
-    item = SaleItem.new(params[:item])
-    sale.items << item
-    render :nothing => true
+    begin
+      sale = @organization.sales.find(params[:id])
+      item = SaleItem.new
+      item.product = @organization.products.find(params[:product_id])
+      item.ammount = params[:ammount]
+      sale.items << item
+      render :partial => 'item', :locals => { :item => item }
+    rescue StandardError
+      render :text => $!.to_s, :status => 500, :layout => false
+    end
   end
 
   def set_customer
@@ -38,7 +44,7 @@ class PointOfSaleController < ApplicationController
 
   def cancel
     sale = @organization.sales.find(params[:id])
-    sale.cancel
+    sale.cancel!
     redirect_to :action => 'index'
   end
 

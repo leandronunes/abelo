@@ -4,7 +4,7 @@ class CreateProducts < ActiveRecord::Migration
       t.column :description, :string, :null => false
       t.column :size, :string
       t.column :color, :string
-      t.column :sell_price, :string, :null => false
+      t.column :sell_price, :float, :null => false
       t.column :unit, :string, :null => false
       t.column :organization_id, :integer, :null => false
       t.column :category_id, :integer, :null => false

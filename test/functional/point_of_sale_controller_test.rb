@@ -6,7 +6,7 @@ class PointOfSaleController; def rescue_action(e) raise e end; end
 
 class PointOfSaleControllerTest < Test::Unit::TestCase
 
-  fixtures :sales, :organizations, :sale_items, :customers, :people
+  fixtures :sales, :organizations, :sale_items, :customers, :people, :products
 
   include TestingUnderOrganization
 

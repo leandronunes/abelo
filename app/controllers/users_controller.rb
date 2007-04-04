@@ -49,7 +49,8 @@ class UsersController < ApplicationController
     self.current_user = @user
     redirect_back_or_default(:controller => '/users', :action => 'index')
     flash[:notice] = _("Thanks for signing up!")
-  rescue ActiveRecord::RecordInvalid
+    Notifier::deliver_signup_thanks(@user)
+    rescue ActiveRecord::RecordInvalid
     render :action => 'signup'
   end
   

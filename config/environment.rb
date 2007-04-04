@@ -39,6 +39,7 @@ Rails::Initializer.run do |config|
   # config.active_record.default_timezone = :utc
   
   # See Rails::Configuration for more options
+  
 end
 
 # Add new inflection rules using the following format 
@@ -54,3 +55,16 @@ end
 require 'jcode'
 $KCODE = 'u'
 require 'gettext/rails'
+  
+ActionMailer::Base.delivery_method = :sendmail
+
+#  # Configuration for ActionMailer
+#
+#  ActionMailer::Base.server_settings = {
+#    :address  => "teste.colibre.com.br",
+#    :port  => 25,
+#    :domain  => "www.colibre.com.br",
+#    :user_name  => "pessoa",
+#    :password  => "teste",
+#    :authentication  => :login
+#  }

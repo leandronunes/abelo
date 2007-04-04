@@ -16,6 +16,14 @@ class NotifierTest < Test::Unit::TestCase
     @expected.set_content_type "text", "plain", { "charset" => CHARSET }
   end
 
+  def test_signup
+    user = User.find(:first)
+    mail = Notifier.deliver_signup_thanks(user)
+    assert_equal 'Thanks you for registering with our website', mail.subject
+    assert_match /Dear #{user.login},/, mail.body
+    assert_equal user.email, mail.to[0]
+  end
+
   private
     def read_fixture(action)
       IO.readlines("#{FIXTURES_PATH}/notifier/#{action}")

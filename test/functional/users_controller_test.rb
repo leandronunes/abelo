@@ -13,6 +13,10 @@ class UsersControllerTest < Test::Unit::TestCase
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     login_as("admin")
+
+    ActionMailer::Base.delivery_method = :test
+    ActionMailer::Base.perform_deliveries = true
+    ActionMailer::Base.deliveries = []
   end
 
   def test_should_login_and_redirect
@@ -182,6 +186,12 @@ class UsersControllerTest < Test::Unit::TestCase
   #   get :index
   #   assert !@controller.send(:logged_in?)
   # end
+
+  def test_signup_notifier
+    num_deliveries = ActionMailer::Base.deliveries.size
+    post :signup, :user => { :login => 'quire', :email => 'heldersj@localhost', :password => 'quire', :password_confirmation => 'quire' }
+    assert_equal num_deliveries+1, ActionMailer::Base.deliveries.size
+  end
 
   protected
     def create_user(options = {})

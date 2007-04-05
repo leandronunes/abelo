@@ -1,0 +1,12 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+first:
+  id: 1
+  body: 'A example body 1'
+  subject: 'A example subject 1'
+  organization_id: 1
+
+another:
+  id: 2
+  body: 'A example body 2'
+  subject: 'A example subject 2'
+  organization_id: 1

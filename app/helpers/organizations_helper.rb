@@ -16,7 +16,8 @@ module OrganizationsHelper
       'customer_categories' => _('Customer Categories'),  
       'contact_positions'   => _('Contact Positions'),    
       'workers'             => _('Workers'),
-      'point_of_sale'       => _('Point of sale')
+      'point_of_sale'       => _('Point of sale'),
+      'mass_mails'          => _('Mass Mails')
     }
     content_tag('ul', 
                 menu_items.keys.select do |controller|

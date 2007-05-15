@@ -3,7 +3,7 @@ class Customer < ActiveRecord::Base
   belongs_to :organization
   has_many :contacts
   has_and_belongs_to_many :customer_categories, :join_table => 'customers_customer_categories'
-  validates_presence_of :name
+  validates_presence_of :name, :email
   
   validates_presence_of :organization_id, :message => 'Customers must be associated to an organization'
 
@@ -19,6 +19,10 @@ class Customer < ActiveRecord::Base
     if ((! self.cpf.blank?) && (! self.cnpj.blank?)) || (self.cpf.blank? && self.cnpj.blank?)
       errors.add('cnpj', 'Either %{fn} or CPF must be filled, and they cannot be filled at the same time.')
     end
+  end
+
+  def list_by_categories()
+
   end
 
 end

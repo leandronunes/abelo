@@ -43,7 +43,7 @@ class MassMailsController < ApplicationController
     @mass_mail = MassMail.find(params[:id])
     if @mass_mail.update_attributes(params[:mass_mail])
       flash[:notice] = 'MassMail was successfully updated.'
-      redirect_to :action => 'show', :id => @mass_mail
+      redirect_to :action => 'list'
     else
       render :action => 'edit'
     end
@@ -53,4 +53,34 @@ class MassMailsController < ApplicationController
     @organization.mass_mails.find(params[:id]).destroy
     redirect_to :action => 'list'
   end
+
+  def filter_categories
+    @mass_mail = @organization.mass_mails.find(params[:id])
+  end
+
+  def filter_customers
+    @mass_mail_id = params[:id]
+    @customers = []
+    lista = params[:categories]
+    if lista
+      lista.keys.each { |k|
+        @customers.concat(@organization.customer_categories.find(k).customers)
+      }
+    end
+  end
+
+  def send_emails
+    @mass_mail = @organization.mass_mails.find(params[:id])
+    @emails = []
+    lista = params[:customers]
+    if lista
+      lista.keys.each { |k|
+        @emails.push(@organization.customers.find(k).email)
+      }
+      DirectMail::deliver_mail_to(@emails, @mass_mail)
+      render :partial => "message", :layout => true
+    end
+  end
+
+
 end

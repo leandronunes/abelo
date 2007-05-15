@@ -5,8 +5,14 @@ first:
   subject: 'A example subject 1'
   organization_id: 1
 
-another:
+second:
   id: 2
   body: 'A example body 2'
   subject: 'A example subject 2'
   organization_id: 1
+
+another:
+  id: 3
+  body: 'A example body 3'
+  subject: 'A example subject 3'
+  organization_id: 2

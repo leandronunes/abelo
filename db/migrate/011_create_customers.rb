@@ -2,6 +2,7 @@ class CreateCustomers < ActiveRecord::Migration
   def self.up
     create_table :customers do |t|
       t.column :name, :string, :null => false
+      t.column :email, :string, :null => false
       t.column :birthday, :date
       t.column :address, :string
       t.column :cnpj, :string, :limit => 14

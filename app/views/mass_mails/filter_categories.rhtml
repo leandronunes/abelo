@@ -1,0 +1,7 @@
+
+<%= start_form_tag :action => 'filter_customers', :id => @mass_mail.id %>
+<br><p><label for="categories"><%= _("Categories") %></label>
+<%= select_categories @mass_mail  %></p>
+<%= button "Filter", :save %>
+<%= button "Back", :cancel, :action => "show", :id => @mass_mail.id %>
+<%= end_form_tag %>

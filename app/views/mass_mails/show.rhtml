@@ -3,3 +3,10 @@
 <label><%= _('Body:') %></label>
 <%= @mass_mail.body %>
 </p>
+
+<%= _("Send to: ") %>
+<%= link_to "Filter", :action => "filter_categories", :id => @mass_mail.id %>
+
+
+
+

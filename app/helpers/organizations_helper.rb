@@ -17,7 +17,8 @@ module OrganizationsHelper
       'contact_positions'   => _('Contact Positions'),    
       'workers'             => _('Workers'),
       'point_of_sale'       => _('Point of sale'),
-      'mass_mails'          => _('Mass Mails')
+      'mass_mails'          => _('Mass Mails'),
+      'cash_flows'          => _('Cash Flow'),
     }
     content_tag('ul', 
                 menu_items.keys.select do |controller|

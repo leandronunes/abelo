@@ -213,7 +213,10 @@ module ApplicationHelper
 
   def model_name(m)
     {
-      'cash_flow' => _('Cash Flow')
+      #Cash Flow
+      'cash_flow' => _('Cash Flow'),
+      'historical' => _('Historical'),
+      'specification' => _('Specification'),
     } [m] || m
   end
 

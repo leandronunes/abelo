@@ -2,8 +2,8 @@
 first:
   id: 1
   name: 'venda a vista'
-  type: 'C'
+  type_of: 'C'
 another:
   id: 2
   name: 'pagamento'
-  type: 'D'
+  type_of: 'D'

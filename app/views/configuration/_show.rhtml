@@ -1,0 +1,8 @@
+<% for column in @the_model.content_columns %>
+<p>
+  <b><%= column.human_name %>:</b> <%=h @object.send(column.name) %>
+</p>
+<% end %>
+
+<%= link_to _("Edit"), {:action => 'edit', :id => @object, :model_name => @model_name,} , { :class => 'button button_edit' } %>
+<%= link_to _("Back"), {:action => 'list', :model_name => @model_name} , { :class => 'button button_back' } %>

@@ -1,0 +1,23 @@
+<h2><%= _('Listing %s') % model_name(@the_model.name.underscore) %></h2>
+
+<table>
+  <tr>
+  <% for column in @the_model.content_columns %>
+    <th><%= column.human_name %></th>
+  <% end %>
+    <th colspan=3><%= _('Manage %s') %  @the_model.name.tableize.humanize %></th>
+  </tr>
+  
+<% for object in @objects %>
+  <tr>
+  <% for column in @the_model.content_columns %>
+    <td><%=h object.send(column.name) %></td>
+  <% end %>
+    <td> <%= link_to _("Show"), {:model_name => @model_name, :action => 'show', :id => object} , { :class => 'button button_show' } %></td>
+    <td> <%= link_to _("Edit"), {:model_name => @model_name, :action => 'edit',:id => object} , { :class => 'button button_edit' } %></td>
+    <td> <%= link_to _("Destroy"), {:model_name => @model_name, :action => 'destroy', :id => object, :confirm => 'Are you sure?', :post => true }, { :class => 'button button_remove'} %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to _('New %s') % model_name(@the_model.name.underscore), :action => 'new', :model_name => @model_name %>

@@ -11,6 +11,6 @@
 <%= date_select 'cash_flow', 'date'  %></p>
 
 <p><label for="cash_flow_specification"><%= _('Specification') %></label><br/>
-<%= select('cash_flow', 'specification', Specification.find_all.collect { |s| [ s.name, s.id] } ) %></p>
+<%= select('cash_flow', 'specification_id', Specification.find_all.collect { |s| [ s.name, s.id] } ) %></p>
 <!--[eoform:cash_flow]-->
 

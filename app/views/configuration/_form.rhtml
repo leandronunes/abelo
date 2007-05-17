@@ -1,0 +1,7 @@
+<!--[form:target]-->
+
+  <% for column in eval(@model_name.camelize).content_columns%>
+    <p> <label for="<%= @model_name +"_"+column.name %>"> <%= column.human_name %> </label><%= text_field @model_name, column.name %> </p>
+  <% end %>
+
+<!--[eoform:target]-->

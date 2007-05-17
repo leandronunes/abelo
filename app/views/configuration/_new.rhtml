@@ -1,0 +1,8 @@
+<h2><%= _('New %s') % model_name(@the_model.name.underscore) %></h2>
+
+<%= start_form_tag :action => 'create', :model_name => @model_name %>
+  <%= render :partial => 'form' %>
+  <%= submit_tag "Create" %>
+<%= end_form_tag %>
+
+<%= link_to 'Back', :action => 'list', :model_name => @model_name %>

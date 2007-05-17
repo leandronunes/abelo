@@ -1,4 +1,4 @@
-<h2><%= _('Editing "%s"') % model_name(@object.name.underscore) %></h2>
+<h1><%= _('Editing "%s"') % model_name(@object.name.underscore) %></h1>
 
 <%= start_form_tag :action => 'update', :model_name => @model_name, :id => @object.id %>
   <%= render :partial => 'form' %>

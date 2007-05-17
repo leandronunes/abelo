@@ -121,4 +121,16 @@ class ConfigurationController < ApplicationController
 
   end
 
+  def destroy
+
+    @model_name  = params[:model_name]
+
+    if (MODELS.include?(@model_name))
+      @the_model = eval(@model_name.camelize)
+      object = @the_model.find(params[:id]).destroy
+    end
+
+    redirect_to :action => 'list', :model_name => @model_name, :layout => true
+
+  end
 end

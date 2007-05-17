@@ -1,5 +1,12 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 first:
   id: 1
+  date: '11-05-2007'
+  value: 15.5
+  historical_id: 1
+  specification_id: 1
 another:
   id: 2
+  date: '11-05-2007'
+  value: 20
+  historical_id: 1

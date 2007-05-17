@@ -1,8 +1,8 @@
 class CreateHistoricals < ActiveRecord::Migration
   def self.up
     create_table :historicals do |t|
-      t.column :name, :string
-      t.column :type, :char
+      t.column :name, :string, :null => false
+      t.column :type, :char, :null => false
     end
   end
 

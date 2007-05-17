@@ -211,4 +211,10 @@ module ApplicationHelper
     link_to org.name, { :organization_nickname => org.nickname, :controller => 'main', :action => 'index' }, html_options
   end
 
+  def model_name(m)
+    {
+      'cash_flow' => _('Cash Flow')
+    } [m] || m
+  end
+
 end

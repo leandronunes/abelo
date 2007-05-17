@@ -1,4 +1,7 @@
 class CashFlowsController < ApplicationController
+
+  needs_organization
+  
   def index
     list
     render :action => 'list'

@@ -19,6 +19,7 @@ module OrganizationsHelper
       'point_of_sale'       => _('Point of sale'),
       'mass_mails'          => _('Mass Mails'),
       'cash_flows'          => _('Cash Flow'),
+      'configuration'       => _('Configurations')
     }
     content_tag('ul', 
                 menu_items.keys.select do |controller|

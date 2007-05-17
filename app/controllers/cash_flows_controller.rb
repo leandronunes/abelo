@@ -51,4 +51,10 @@ class CashFlowsController < ApplicationController
     CashFlow.find(params[:id]).destroy
     redirect_to :action => 'list'
   end
+
+  def simplified_extract
+  end
+
+  def full_extract
+  end
 end

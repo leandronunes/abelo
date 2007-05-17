@@ -1,4 +1,4 @@
-<h1>Listing cash_flows</h1>
+<h1><%= _('Listing cash_flows') %></h1>
 
 <table>
   <tr>
@@ -24,4 +24,10 @@
 
 <br />
 
-<%= link_to 'New cash_flow', :action => 'new' %>
+<p><%= link_to 'New cash_flow', :action => 'new' %></p>
+
+<p><b><%= _('Extract: ') %></b>
+<%= radio_button ('extract', 'simplified', checked = false ) %><%= _('Simplified extract') %>
+<%= radio_button ('extract', 'full', cheked = false ) %><%= _('Full extract')%>
+<%= submit_tag _('Generate extract')%>
+</p>

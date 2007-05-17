@@ -2,12 +2,12 @@ class ConfigurationController < ApplicationController
 
   needs_organization
 
-  CASH_FLOWS_MODELS = %w[
+  CASH_FLOW_MODELS = %w[
     historical
     specification
   ]
 
-  MODELS = CASH_FLOWS_MODELS
+  MODELS = CASH_FLOW_MODELS
 
   def index
     @objects = Array.new
@@ -15,7 +15,7 @@ class ConfigurationController < ApplicationController
   end
 
   def cash_flow
-    @models = CASH_FLOWS_MODELS
+    @models = CASH_FLOW_MODELS
     @title = _('Cash flow related configurations')
     render :partial => 'models', :layout => true
   end

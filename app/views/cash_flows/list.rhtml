@@ -26,8 +26,31 @@
 
 <p><%= link_to 'New cash_flow', :action => 'new' %></p>
 
-<p><b><%= _('Extract: ') %></b>
-<%= radio_button ('extract', 'simplified', checked = false ) %><%= _('Simplified extract') %>
-<%= radio_button ('extract', 'full', cheked = false ) %><%= _('Full extract')%>
-<%= submit_tag _('Generate extract')%>
-</p>
+<%= start_form_tag :action => 'generate_extract' %>
+  <p>
+    <b><%= _('Extract: ') %></b>
+    <%= radio_button_tag ('extract', 'simplified', checked = false ) %><%= _('Simplified extract') %>
+    <%= radio_button_tag ('extract', 'full', cheked = false ) %><%= _('Full extract')%>
+  </p>
+
+  <div id="options">
+    <p><b><%= _('Options: ') %></b>
+    <%= radio_button_tag ("option", 'day', checked = false ) %><%= _('Day') %>
+    <%= radio_button_tag ("option", 'month', checked = false ) %><%= _('Month') %>
+    <%= radio_button_tag ("option", 'year', checked = false ) %><%= _('Year') %>
+    </p>
+  </div>
+
+  <%= observe_field('option',
+      :update => 'period',
+      :url => {:action => 'extract_period'},
+      :with => "'option'=' + escape(value)"
+      )
+  %>
+
+  <div id="period">
+    <%= render :partial => 'extract_period' %>
+  </div>
+
+  <%= submit_tag _('Generate extract')%>
+<%= end_form_tag %>

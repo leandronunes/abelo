@@ -52,9 +52,14 @@ class CashFlowsController < ApplicationController
     redirect_to :action => 'list'
   end
 
-  def simplified_extract
+  def extract_period
+    @option = parms[:option]
+    render :partial => 'extract_period'
   end
 
-  def full_extract
+  def generate_extract
+   render :text => params[:option]
   end
+
+
 end

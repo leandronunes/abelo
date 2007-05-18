@@ -1,0 +1,7 @@
+<% if @option == 'day' %>
+  <p><b><%= _('Period: ') %></b><%= select_day(date = Date.today) %></p>
+<% elsif @option == 'month' %>
+  <p><b><%= _('Period: ') %></b><%= select_month(date = Date.today) %></p>
+<% elsif @option == 'year' %>
+  <p><b><%= _('Period: ') %></b><%= select_year(date = Date.today) %></p>
+<% end %>

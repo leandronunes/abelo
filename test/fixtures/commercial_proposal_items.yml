@@ -2,17 +2,18 @@
 proposal_item_of_proposal_1_order_1:
   id: 1
   name: 'Description'
-  order: 1
+  item_order: 1
   size: 'B'
   commercial_proposal_id: 1
 proposal_item_of_proposal_1_order_2:
   id: 2
   name: 'Target Audience'
-  order: 2
+  item_order: 2
   size: 'M'
   commercial_proposal_id: 1
 proposal_item_of_proposal_2_order_1_without_size:
   id: 3
   name: 'Description'
-  order: 1
-  commercial_proposal_id: 1
+  item_order: 1
+  size: 'S'
+  commercial_proposal_id: 2

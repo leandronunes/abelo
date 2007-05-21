@@ -21,6 +21,7 @@ module OrganizationsHelper
       'cash_flows'          => _('Cash Flow'),
       'configuration'       => _('Configurations'),
       'departments'       => _('Departments')
+      'commercial_proposals'       => _('Commercial Proposals')
     }
     content_tag('ul', 
                 menu_items.keys.select do |controller|

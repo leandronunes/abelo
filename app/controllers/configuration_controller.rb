@@ -17,7 +17,7 @@ class ConfigurationController < ApplicationController
   def cash_flow
     @models = CASH_FLOW_MODELS
     @title = _('Cash flow related configurations')
-    render :partial => 'models', :layout => true
+    render :action => 'models'
   end
 
   def list

@@ -27,4 +27,21 @@ class Test::Unit::TestCase
   # Add more helper methods to be used by all tests here...
   include AuthenticatedTestHelper
   fixtures :people, :user_profiles, :organizations
+
+  def self.extra_parameters
+    @extra_parameters
+  end
+
+  def self.add_extra_parameter(name, value)
+    @extra_parameters ||= {}
+    @extra_parameters[name] = value.to_s
+    self.send(:include, AbeloTest)  unless self.include?(AbeloTest)
+  end
+
+  def self.under_organization(organization_nickname)
+    add_extra_parameter(:organization_nickname, organization_nickname)
+    raise "organization_nickname must be set!" unless extra_parameters[:organization_nickname]
+  end
+ 
+
 end

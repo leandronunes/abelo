@@ -1,0 +1,7 @@
+<h1><%= @title %></h1>
+
+<% @models.each do |m|%>
+<ul>
+  <li><%= link_to model_name(m), :action => 'list', :model_name => "#{m}" %></li>
+</ul>
+<% end %>

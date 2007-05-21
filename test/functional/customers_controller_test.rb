@@ -6,16 +6,13 @@ class CustomersController; def rescue_action(e) raise e end; end
 
 class CustomersControllerTest < Test::Unit::TestCase
 
-  include TestingUnderOrganization
-
   fixtures :customers, :contacts, :contact_positions
+  under_organization :one
 
   def setup
     @controller = CustomersController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-    @organization_nickname = 'one'
-    @organization = Organization.find_by_nickname 'one'
     login_as("quentin")
   end
 

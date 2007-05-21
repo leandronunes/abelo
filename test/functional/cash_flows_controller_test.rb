@@ -5,12 +5,17 @@ require 'cash_flows_controller'
 class CashFlowsController; def rescue_action(e) raise e end; end
 
 class CashFlowsControllerTest < Test::Unit::TestCase
+  include TestingUnderOrganization
+
   fixtures :cash_flows
 
   def setup
     @controller = CashFlowsController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
+    @organization_nickname = 'one'
+    @organization = Organization.find_by_nickname 'one'
+    login_as("quentin")
   end
 
   def test_index

@@ -1,10 +1,13 @@
 <!--[form:target]-->
 
-  <p><label for="historical_name"><%= _('Name')%></label><br/>
+  <p><label for="historical_name"><%= _('Name')%></label>
   <%= text_field 'historical', 'name' %></p>
 
-  <p><label for="historical_type_of"><%= _('Type')%></label><br/>
+  <p><label for="historical_type_of"><%= _('Type')%></label>
   <%= select('historical', 'type_of', ['C', 'D']) %></p>
+
+  <p><label for="historical_operational"><%= _('Operational')%></label>
+  <%= check_box('historical', 'operational') %></p>
 
 <p><b><%= _('Subtitle') %></b></p>
 <p>C = <%= _('credit') %></p>

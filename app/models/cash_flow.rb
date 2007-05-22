@@ -1,3 +1,4 @@
 class CashFlow < ActiveRecord::Base
-  has_one :transaction
+  belongs_to :historical
+  belongs_to :organization
 end

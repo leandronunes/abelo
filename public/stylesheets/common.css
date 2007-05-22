@@ -81,6 +81,7 @@ input, select, textarea {
 table {
   border-collapse: collapse;
   border: 1px solid #333;
+  margin: 10px
 }
 
 th, td {

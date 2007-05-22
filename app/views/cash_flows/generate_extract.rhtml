@@ -1,0 +1,54 @@
+<% if @notice %>
+  <%= @notice %>
+<% else %>
+  <h1><%= _('%s Extract') % @extract.capitalize %></h1>
+
+  <table>
+    <th colspan=2><%= _('Operational Entrances') %></caption></th>
+    <tr><th><%= _('Historical') %></th>
+    <th><%= _('value') %></th></tr>
+    <% for operational_entrance in @operational_entrances %>
+      <tr>
+        <td><%= operational_entrance %></td>
+        <td><%= @organization.historical_total_value(operational_entrance) %></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <table>
+    <th colspan=2><%= _('Operational Exits') %></caption></th>
+    <tr><th><%= _('Historical') %></th>
+    <th><%= _('value') %></th></tr>
+    <% for operational_exit in @operational_exits %>
+      <tr>
+        <td><%= operational_exit %></td>
+        <td><%= @organization.historical_total_value(operational_exit) %></td>
+      </tr>
+    <% end %>
+  </table></br>
+
+  <table>
+    <th colspan=2><%= _('Not Operational Entrances') %></caption></th>
+    <tr><th><%= _('Historical') %></th>
+    <th><%= _('value') %></th></tr>
+    <% for not_operational_entrance in @not_operational_entrances %>
+      <tr>
+        <td><%= not_operational_entrance %></td>
+        <td><%= @organization.historical_total_value(not_operational_entrance) %></td>
+      </tr>
+    <% end %>
+  </table></br>
+  
+  <table>
+    <th colspan=2><%= _('Not Operational Exits') %></caption></th>
+    <tr><th><%= _('Historical') %></th>
+    <th><%= _('value') %></th></tr>
+    <% for not_operational_exit in @not_operational_exits %>
+      <tr>
+        <td><%= not_operational_exit %></td>
+        <td><%= @organization.historical_total_value(not_operational_exit) %></td>
+      </tr>
+    <% end %>
+  </table>
+
+<% end %> 

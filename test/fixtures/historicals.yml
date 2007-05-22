@@ -1,9 +1,21 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-first:
+entrance:
   id: 1
   name: 'venda a vista'
   type_of: 'C'
-another:
+  operational: true
+exit:
   id: 2
   name: 'pagamento'
   type_of: 'D'
+  operational: true
+entrance 2:
+  id: 3
+  name: 'emprestimo'
+  type_of: 'C'
+  operational: false
+exit 2:
+  id: 4
+  name: 'compra de carro'
+  type_of: 'D'
+  operational: false

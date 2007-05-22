@@ -16,6 +16,7 @@ class CreatePayments < ActiveRecord::Migration
       t.column :credit_card_secutiry_code,  :string
       t.column :credit_card_owner_name,     :string
       t.column :credit_card_cpf,            :string
+      t.column :interests_id,               :int
 
       # payment with check
       t.column :check_bank_id,              :integer
@@ -31,6 +32,12 @@ class CreatePayments < ActiveRecord::Migration
       t.column :automatic_debit_owner_name, :string
       t.column :automatic_debit_account_agency, :string
       t.column :automatic_debit_account_number, :string
+
+      #for credit card and check
+      t.column :parcels_number,             :int  
+
+      #foreseen days for payment 
+      t.column :days,                       :int     
 
     end
   end

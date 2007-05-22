@@ -18,7 +18,7 @@ class Organization < ActiveRecord::Base
   has_many :workers
   has_many :sales
   has_many :mass_mails
-  
+  has_many :cash_flows
 
   def top_level_product_categories
     ProductCategory.top_level_for(self)
@@ -27,5 +27,23 @@ class Organization < ActiveRecord::Base
   def pending_sales(user)
     Sale.pending(self, user)
   end
+
+  def historicals
+    h = Array.new
+    self.cash_flows.each { |c|
+      h.push(c.historical)
+    }
+    return h
+  end
+
+  def historical_total_value(name)
+    value = 0.0
+    self.cash_flows.each { |c|
+      if c.historical.name == name
+        value = value + c.value
+      end
+    }
+    return value
+  end 
 
 end

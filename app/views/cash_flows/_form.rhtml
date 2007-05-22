@@ -1,16 +1,16 @@
 <%= error_messages_for 'cash_flow' %>
 
 <!--[form:cash_flow]-->
-<p><label for="cash_flow_value"><%= _('Value')%></label><br/>
+<p><label for="cash_flow_value"><%= _('Value')%></label>
 <%= text_field 'cash_flow', 'value'  %></p>
 
-<p><label for="cash_flow_historical"><%= _('Historical') %></label><br/>
+<p><label for="cash_flow_historical"><%= _('Historical') %></label>
 <%= select('cash_flow', 'historical_id', Historical.find_all.collect { |h| [h.name, h.id] } ) %></p>
 
-<p><label for="cash_flow_date"><%= _('Date') %></label><br/>
+<p><label for="cash_flow_date"><%= _('Date') %></label>
 <%= date_select 'cash_flow', 'date'  %></p>
 
-<p><label for="cash_flow_specification"><%= _('Specification') %></label><br/>
+<p><label for="cash_flow_specification"><%= _('Specification') %></label>
 <%= select('cash_flow', 'specification_id', Specification.find_all.collect { |s| [ s.name, s.id] } ) %></p>
 <!--[eoform:cash_flow]-->
 

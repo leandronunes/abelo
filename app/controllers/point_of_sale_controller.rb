@@ -43,9 +43,20 @@ class PointOfSaleController < ApplicationController
   end
 
   def cancel
-    sale = @organization.sales.find(params[:id])
-    sale.cancel!
-    redirect_to :action => 'index'
+    @sale = @organization.sales.find(params[:id])
+    if @sale.cancel!
+      redirect_to :action => 'index'
+    else
+      render :action => 'main'
+    end
   end
 
+  def close
+    @sale = @organization.sales.find(params[:id])
+    if @sale.close!
+      redirect_to :action => 'index'
+    else
+      render :action => 'main'
+    end
+  end
 end

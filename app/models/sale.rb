@@ -14,6 +14,17 @@ class Sale < ActiveRecord::Base
   STATUS_PAID = 3
 
   # gives all pending (open) sales for a given organization and user.
+
+  def validate
+    if (((self.status == STATUS_CLOSED) && (self.items.empty?)) || ((self.status == STATUS_CANCELLED) && (self.items.empty?)))
+      if (self.status == STATUS_CANCELLED)
+        errors.add('sales', 'Only open and not nil %{fn} can be cancelled.')
+      else 
+        errors.add('sales', 'Only open and not nil %{fn} can be closed.')
+      end
+    end
+  end
+
   def self.pending(org, user)
     self.find(:all, :conditions => [ 'organization_id = ? AND user_id = ? AND status = ?', org.id, user.id, STATUS_OPEN ])
   end

@@ -35,16 +35,14 @@
 
   <div id="options">
     <p><b><%= _('Options: ') %></b>
-    <%= radio_button_tag ("option", 'day', checked = false ) %><%= _('Day') %>
-    <%= radio_button_tag ("option", 'month', checked = false ) %><%= _('Month') %>
-    <%= radio_button_tag ("option", 'year', checked = false ) %><%= _('Year') %>
+    <%= select_tag ("option", options_for_select(['day','month','year'].map)) %>
     </p>
   </div>
 
   <%= observe_field('option',
       :update => 'period',
       :url => {:action => 'extract_period'},
-      :with => "'option'=' + escape(value)"
+      :with => "'option=' + escape(value)"
       )
   %>
 

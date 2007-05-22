@@ -20,7 +20,7 @@ module OrganizationsHelper
       'mass_mails'          => _('Mass Mails'),
       'cash_flows'          => _('Cash Flow'),
       'configuration'       => _('Configurations'),
-      'departments'       => _('Departments')
+      'departments'       => _('Departments'),
       'commercial_proposals'       => _('Commercial Proposals')
     }
     content_tag('ul', 

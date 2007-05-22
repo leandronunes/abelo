@@ -53,7 +53,7 @@ class CashFlowsController < ApplicationController
   end
 
   def extract_period
-    @option = parms[:option]
+    @option = params[:option]
     render :partial => 'extract_period'
   end
 

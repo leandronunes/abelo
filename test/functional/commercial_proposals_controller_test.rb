@@ -6,17 +6,19 @@ class CommercialProposalsController; def rescue_action(e) raise e end; end
 
 class CommercialProposalsControllerTest < Test::Unit::TestCase
   fixtures :commercial_proposals
-
+  under_organization :one
+  
   def setup
     @controller = CommercialProposalsController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
+    login_as("quentin")
   end
 
   def test_index
     get :index
-    assert_response :success
-    assert_template 'list'
+    assert_response :redirect
+    assert_redirected_to :action => 'list'
   end
 
   def test_list
@@ -50,7 +52,7 @@ class CommercialProposalsControllerTest < Test::Unit::TestCase
   def test_create
     num_commercial_proposals = CommercialProposal.count
 
-    post :create, :commercial_proposal => {}
+    post :create, :commercial_proposal => {:organization_id => 1, :name => 'Any Name' }
 
     assert_response :redirect
     assert_redirected_to :action => 'list'

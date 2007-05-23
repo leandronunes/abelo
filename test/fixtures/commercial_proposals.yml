@@ -1,17 +1,21 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 proposal_template_of_department:
   id: 1
-  template_name: 'Proposal One'
+  name: 'Proposal One'
   is_template: true
-  department_id: 1
+  organization_id: 1
 proposal_template_of_organization:
   id: 2
-  template_name: 'Proposal Two'
+  name: 'Proposal Two'
   is_template: true
   organization_id: 1
 proposal_of_organization:
   id: 3
+  name: 'Proposal Three'
+  is_template: false
   organization_id: 1
 proposal_of_department:
   id: 4
-  department_id: 1
+  name: 'Proposal Four'
+  is_template: false
+  organization_id: 1

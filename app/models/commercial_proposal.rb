@@ -1,11 +1,15 @@
 class CommercialProposal < ActiveRecord::Base
 
-  validates_presence_of :department_id, :if => lambda { |proposal| proposal.organization_id.nil? }
-  validates_presence_of :organization_id, :if => lambda { |proposal| proposal.department_id.nil? }
-  validates_presence_of :template_name, :if => lambda { |proposal| proposal.is_template? }
-  validates_uniqueness_of :template_name, :scope => :organization_id, :if => lambda { |proposal| proposal.is_template? }
-  validates_uniqueness_of :template_name, :scope => :department_id, :if => lambda { |proposal| proposal.is_template? }
+  validates_presence_of :organization_id
+  validates_presence_of :name
+  validates_uniqueness_of :name, :scope => :organization_id
+
+  def validate
+    self.errors.add('is_template', _('You have to choose an option to the template')) if self.is_template.nil?
+  end
 
   has_many :commercial_proposal_items
+
+  has_and_belongs_to_many :departments
 
 end

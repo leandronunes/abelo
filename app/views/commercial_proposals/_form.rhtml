@@ -1,10 +1,12 @@
 <%= error_messages_for 'commercial_proposal' %>
 
 <!--[form:commercial_proposal]-->
-<p><label for="commercial_proposal_template_name">Template name</label><br/>
-<%= text_field 'commercial_proposal', 'template_name'  %></p>
+<%= department_select(@organization, 'commercial_proposal') %>
 
-<p><label for="commercial_proposal_is_template">Is template</label><br/>
-<select id="commercial_proposal_is_template" name="commercial_proposal[is_template]"><option value="false">False</option><option value="true">True</option></select></p>
+<p><label for="commercial_proposal_name"> <%= _('Name') %> </label>
+<%= text_field 'commercial_proposal', 'name'  %></p>
+
+<p><label for="commercial_proposal_is_template"> <%= _('Is template') %> </label>
+<%= select 'commercial_proposal', 'is_template', [[_('False'), false],[_('True'), true]] %>
+</p>
 <!--[eoform:commercial_proposal]-->
-

@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class DepartmentTest < Test::Unit::TestCase
-  fixtures :departments, :organizations
+  fixtures :departments, :organizations, :people
 
   def test_mandatory_fields
     d = Department.new
@@ -36,7 +36,7 @@ class DepartmentTest < Test::Unit::TestCase
     count = Department.count
     d = Department.new
     d.name = 'Department'
-    d.organization_id = 1
+    d.organization = Organization.find(1)
     assert d.save
     assert_equal count + 1, Department.count
   end

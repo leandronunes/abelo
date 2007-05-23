@@ -69,4 +69,14 @@ class OrganizationTest < Test::Unit::TestCase
     assert (sales.all? { |sale| sale.kind_of?(Sale) })
   end
 
+  def test_has_many_departaments
+    o = Organization.find(1)
+    assert o.valid?
+    d = Department.new
+    d.name = "Department New"
+    o.add_departments(d)
+    assert d.valid?
+    assert o.departments.include? d
+  end
+
 end

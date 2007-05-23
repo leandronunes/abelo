@@ -1,7 +1,9 @@
 class CommercialProposalsController < ApplicationController
+
+  needs_organization
+
   def index
-    list
-    render :action => 'list'
+    redirect_to :action => 'list'
   end
 
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
@@ -9,7 +11,8 @@ class CommercialProposalsController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @commercial_proposal_pages, @commercial_proposals = paginate :commercial_proposals, :per_page => 10
+    @commercial_proposals_templates = @organization.commercial_proposals_templates
+    @commercial_proposals = @organization.commercial_proposals_not_templates
   end
 
   def show

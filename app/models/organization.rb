@@ -18,6 +18,7 @@ class Organization < ActiveRecord::Base
   has_many :workers
   has_many :sales
   has_many :mass_mails
+  has_many :commercial_proposals
   has_many :cash_flows
 
   def top_level_product_categories
@@ -25,7 +26,15 @@ class Organization < ActiveRecord::Base
   end
 
   def pending_sales(user)
-    Sale.pending(self, user)
+    return Sale.pending(self, user)
+  end
+
+  def commercial_proposals_templates
+    return self.commercial_proposals.select{ |c| c.is_template? }
+  end
+
+  def commercial_proposals_not_templates
+    return self.commercial_proposals.select{ |c| !c.is_template? }
   end
 
   def historicals

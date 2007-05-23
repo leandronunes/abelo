@@ -5,58 +5,48 @@ class CommercialProposalTest < Test::Unit::TestCase
 
   def test_mandatory_fields
     count = CommercialProposal.count
-    cp = CommercialProposal.new
-    assert !cp.save
-    cp.department_id = 1
-    assert cp.save
 
     cp = CommercialProposal.new
+    assert !cp.save
+    cp.name = 'Proposal Test 2'
+    assert !cp.save
+    cp.is_template = false
     assert !cp.save
     cp.organization_id = 1
     assert cp.save
 
     cp = CommercialProposal.new
+    assert !cp.save
+    cp.name = 'Proposal Test 3'
     assert !cp.save
     cp.organization_id = 1
     cp.is_template = true
-    assert !cp.save
-    cp.template_name = 'Curses Proposal'
     assert cp.save
 
-    assert_equal count + 3, CommercialProposal.count
+    assert_equal count + 2, CommercialProposal.count
   end
 
-  def test_uniqueness_template_name
-    cp1 = CommercialProposal.new
-    cp1.department_id = 1
-    cp1.template_name = 'One CommercialProposal'
-    cp1.is_template = true
-    assert cp1.save
-
-    cp2 = CommercialProposal.new
-    cp2.department_id = 1
-    cp2.template_name = 'One CommercialProposal'
-    cp2.is_template = true
-    assert !cp2.save
-
+  def test_uniqueness_name
     cp1 = CommercialProposal.new
     cp1.organization_id = 1
-    cp1.template_name = 'One CommercialProposal'
+    cp1.name = 'One CommercialProposal'
     cp1.is_template = true
     assert cp1.save
 
     cp2 = CommercialProposal.new
     cp2.organization_id = 1
-    cp2.template_name = 'One CommercialProposal'
+    cp2.name = 'One CommercialProposal'
     cp2.is_template = true
     assert !cp2.save
   end
 
   def test_create
     count = CommercialProposal.count
+
     cp = CommercialProposal.new
-    cp.template_name = 'Another CommercialProposal'
-    cp.department_id = 1
+    cp.name = 'Another CommercialProposal'
+    cp.organization_id = 1
+    cp.is_template = true
     assert cp.save
 
     assert_equal count + 1, CommercialProposal.count

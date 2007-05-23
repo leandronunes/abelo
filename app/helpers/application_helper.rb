@@ -220,4 +220,17 @@ module ApplicationHelper
     } [m] || m
   end
 
+  def department_select(organization, object, options = {}, html_options = {})   
+    if organization.has_departments?
+      content_tag('p', 
+        content_tag('label', _('Department') ) +
+        select(object, 'department_id', organization.departments.collect{|d| [d.name, d.id]})
+      )
+    else
+      content_tag('p', 
+        hidden_field_tag("#{object}[organization_id]", organization.id) 
+      )
+    end
+  end
+
 end

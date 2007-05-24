@@ -3,6 +3,14 @@ require File.dirname(__FILE__) + '/../test_helper'
 class OrganizationTest < Test::Unit::TestCase
   fixtures :organizations, :people, :user_profiles, :sales
 
+  def setup
+    @organization = Organization.new
+    @organization.name = 'organization for testing'
+    @organization.cnpj = '19900000002462'
+    @organization.nickname = 'test_organization'
+    @organization.save
+  end
+
   def test_mandatory_fields
     count = Organization.count
 
@@ -76,7 +84,57 @@ class OrganizationTest < Test::Unit::TestCase
     d.name = "Department New"
     o.add_departments(d)
     assert d.valid?
-    assert o.departments.include? d
+    assert o.departments.include?(d)
+  end
+
+  def test_has_many_cash_flows
+    o = Organization.find(1)
+    assert_valid o
+    cf = CashFlow.new
+    cf.date = Date.today
+    cf.value = 10.0
+    cf.historical_id = Historical.find(1)
+    cf.specification_id = Specification.find(1)
+    o.add_cash_flows(cf)
+    assert_valid cf
+    assert o.cash_flows.include?(cf)
+  end
+
+  def test_has_many_historicals
+    o = Organization.find(1)
+    assert_valid o
+    h = Historical.new
+    h.name = 'hisotrical for testing'
+    h.type_of = 'C'
+    h.operational = true
+    o.add_historicals(h)
+    assert_valid h
+    assert o.historicals.include?(h)
+  end
+
+  def test_filter_historicals
+    h = Historical.find(1)
+    assert_valid h
+    @organization.add_historicals(h)
+    assert_equal true, h.operational
+    assert_equal 'C', h.type_of
+    historical_expected = @organization.filter_historicals('t', 'C')
+    assert_equal historical_expected.first, h
+    historical_expected = @organization.filter_historicals('t', 'Blih')
+    assert historical_expected.empty?
+  end
+
+  def test_historical_total_value
+    cf_1 = CashFlow.find(1)
+    assert_valid cf_1
+    @organization.add_cash_flows(cf_1)
+    cf_2 = CashFlow.find(2)
+    assert_valid cf_2
+    @organization.add_cash_flows(cf_2)
+    assert_equal 2, @organization.cash_flows.count
+    assert_equal cf_1.historical_id, cf_2.historical_id
+    total_value =  cf_1.value + cf_2.value
+    assert_equal total_value, @organization.historical_total_value(cf_1.historical_id)
   end
 
 end

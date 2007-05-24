@@ -20,6 +20,7 @@ class Organization < ActiveRecord::Base
   has_many :mass_mails
   has_many :commercial_proposals
   has_many :cash_flows
+  has_many :historicals
 
   def top_level_product_categories
     ProductCategory.top_level_for(self)
@@ -37,18 +38,14 @@ class Organization < ActiveRecord::Base
     return self.commercial_proposals.select{ |c| !c.is_template? }
   end
 
-  def historicals
-    h = Array.new
-    self.cash_flows.each { |c|
-      h.push(c.historical)
-    }
-    return h
+  def filter_historicals(operational, type_transaction)
+    return self.historicals.find(:all, :conditions => "operational = '#{operational}' AND type_of = '#{type_transaction}'" )
   end
 
-  def historical_total_value(name)
+  def historical_total_value(id)
     value = 0.0
     self.cash_flows.each { |c|
-      if c.historical.name == name
+      if c.historical_id == id
         value = value + c.value
       end
     }

@@ -38,8 +38,20 @@ class Organization < ActiveRecord::Base
     return self.commercial_proposals.select{ |c| !c.is_template? }
   end
 
-  def filter_historicals(operational, type_transaction)
-    return self.historicals.find(:all, :conditions => "operational = '#{operational}' AND type_of = '#{type_transaction}'" )
+  def operational_entrances
+    return filter_historicals('t', TypeTransaction::CREDIT)
+  end
+
+  def operational_exits
+    return filter_historicals('t', TypeTransaction::DEBIT)
+  end
+
+  def not_operational_entrances
+    return filter_historicals('f', TypeTransaction::CREDIT)
+  end
+
+  def not_operational_exits
+    return filter_historicals('f', TypeTransaction::DEBIT)
   end
 
   def historical_total_value(id)
@@ -51,5 +63,11 @@ class Organization < ActiveRecord::Base
     }
     return value
   end 
+
+  private
+
+  def filter_historicals(operational, type_transaction)
+    return self.historicals.find(:all, :conditions => "operational = '#{operational}' AND type_of = '#{type_transaction}'" )
+  end
 
 end

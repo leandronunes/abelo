@@ -55,7 +55,7 @@ class CashFlowsControllerTest < Test::Unit::TestCase
   def test_create
     num_cash_flows = CashFlow.count
 
-    post :create, :cash_flow => {}
+    post :create, :cash_flow => {:specification_id => 1, :date => '11-05-2007', :historical_id => 1, :value => 10.0, :organization_id => 1}
 
     assert_response :redirect
     assert_redirected_to :action => 'list'
@@ -90,4 +90,59 @@ class CashFlowsControllerTest < Test::Unit::TestCase
       CashFlow.find(1)
     }
   end
+
+  def test_extract_period
+    get :extract_period, :option => 'day'
+    assert_response :success
+    assert_template '_extract_period'
+    assert_not_nil assigns(:option)
+  end
+
+  def test_generate_extract_fails
+    get :generate_extract
+    assert_response :success
+    assert_template 'generate_extract'
+    assert_not_nil assigns(:notice)
+  end
+
+  def test_generate_extract_simplified
+    get :generate_extract, :extract => 'simplified'
+    assert_response :success
+    assert_template 'generate_extract'
+    assert_nil assigns(:notice)
+    assert_not_nil assigns(:extract)
+    
+    assert_not_nil assigns(:operational_entrances)
+    assert_kind_of Array, assigns(:operational_entrances)
+    assigns(:operational_entrances).each do |oe|
+      assert_kind_of Historical, oe
+      assert_equal true, oe.operational
+      assert_equal TypeTransaction::CREDIT, oe.type_of
+    end
+
+    assert_not_nil assigns(:operational_exits)
+    assert_kind_of Array, assigns(:operational_exits)
+    assigns(:operational_exits).each do |oe|
+      assert_kind_of Historical, oe
+      assert_equal true, oe.operational
+      assert_equal TypeTransaction::DEBIT, oe.type_of
+    end
+    
+    assert_not_nil assigns(:not_operational_entrances)
+    assert_kind_of Array, assigns(:not_operational_entrances)
+    assigns(:not_operational_entrances).each do |noe|
+      assert_kind_of Historical, noe
+      assert_equal false, noe.operational
+      assert_equal TypeTransaction::CREDIT, noe.type_of
+    end
+    
+    assert_not_nil assigns(:not_operational_exits)
+    assert_kind_of Array, assigns(:not_operational_exits)
+    assigns(:not_operational_exits).each do |noe|
+      assert_kind_of Historical, noe
+      assert_equal false, noe.operational
+      assert_equal TypeTransaction::DEBIT, noe.type_of
+    end
+  end
+
 end

@@ -29,13 +29,13 @@
 <%= start_form_tag :action => 'generate_extract' %>
   <p>
     <b><%= _('Extract: ') %></b>
-    <%= radio_button_tag ('extract', 'simplified', checked = false ) %><%= _('Simplified extract') %>
-    <%= radio_button_tag ('extract', 'full', cheked = false ) %><%= _('Full extract')%>
+    <%= radio_button_tag('extract', 'simplified', checked = false) %><%= _('Simplified extract') %>
+    <%= radio_button_tag('extract', 'full', cheked = false) %><%= _('Full extract')%>
   </p>
 
   <div id="options">
     <p><b><%= _('Options: ') %></b>
-    <%= select_tag ("option", options_for_select(['day','month','year'].map)) %>
+    <%= select_tag("option", options_for_select(['day','month','year'].map)) %>
     </p>
   </div>
 

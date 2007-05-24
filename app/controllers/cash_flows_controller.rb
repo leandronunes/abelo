@@ -63,30 +63,10 @@ class CashFlowsController < ApplicationController
       @notice = _('No type of extract was chosen.')
     else 
       @extract = params[:extract]     
-      historicals = @organization.historicals
-      @operational_entrances = Array.new
-      @operational_exits = Array.new
-      @not_operational_entrances = Array.new
-      @not_operational_exits = Array.new
-      historicals.each{ |h|
-        if h.operational
-	  if h.type_of == 'C'
-            @operational_entrances.push(h.name)
-	  else
-            @operational_exits.push(h.name)
-	  end
-	else
-	  if h.type_of == 'C'
-            @not_operational_entrances.push(h.name)
-	  else
-            @not_operational_exits.push(h.name)
-	  end
-        end
-      }        
-      @operational_entrances = @operational_entrances.uniq
-      @operational_exits = @operational_exits.uniq
-      @not_operational_entrances = @not_operational_entrances.uniq
-      @not_operational_exits = @not_operational_exits.uniq
+      @operational_entrances = @organization.operational_entrances
+      @operational_exits = @organization.operational_exits
+      @not_operational_entrances = @organization.not_operational_entrances
+      @not_operational_exits = @organization.not_operational_exits
     end
   end
 

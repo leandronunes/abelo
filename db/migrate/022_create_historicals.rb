@@ -1,9 +1,10 @@
 class CreateHistoricals < ActiveRecord::Migration
   def self.up
     create_table :historicals do |t|
-      t.column :name,         :string,              :null => false
-      t.column :type_of,      :string, :limit => 1, :null => false
-      t.column :operational,  :boolean,             :null => false
+      t.column :name,               :string,              :null => false
+      t.column :type_of,            :string, :limit => 1, :null => false
+      t.column :operational,        :boolean,             :null => false
+      t.column :organization_id,    :int,                 :null => false
     end
   end
 

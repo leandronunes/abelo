@@ -30,6 +30,10 @@ class Organization < ActiveRecord::Base
     return Sale.pending(self, user)
   end
 
+  def nil_open_sale(user)
+    return Sale.nil_open(self, user)
+  end
+
   def commercial_proposals_templates
     return self.commercial_proposals.select{ |c| c.is_template? }
   end

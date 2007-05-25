@@ -26,7 +26,11 @@ class Sale < ActiveRecord::Base
   end
 
   def self.pending(org, user)
-    self.find(:all, :conditions => [ 'organization_id = ? AND user_id = ? AND status = ?', org.id, user.id, STATUS_OPEN ])
+    self.find(:all, :conditions => [ 'organization_id = ? AND user_id = ? AND status = ?', org.id, user.id, STATUS_OPEN ]).find_all{|i| i.items.size > 0}
+  end
+
+  def self.nil_open(org,user)
+    self.find(:all, :conditions => [ 'organization_id = ? AND user_id = ? AND status = ?', org.id, user.id, STATUS_OPEN ]).find{|i| i.items.size == 0}
   end
 
   # is this sale open?

@@ -10,7 +10,11 @@ class PointOfSaleController < ApplicationController
   end
 
   def new
-    sale = Sale.new
+    sale = @organization.nil_open_sale(current_user)
+
+    if sale.nil?
+      sale = Sale.new
+    end
     sale.date = Date.today
     sale.organization = @organization
     sale.user = current_user

@@ -63,10 +63,40 @@ class CashFlowsController < ApplicationController
       @notice = _('No type of extract was chosen.')
     else 
       @extract = params[:extract]     
+      @period = params[:option]
       @operational_entrances = @organization.operational_entrances
+
+      if params[:option] == 'day'
+        option = Date.strptime("11-05-2007", "%d-%m-%Y")
+      else
+        option = "#{params[:date][params[:option]]}"
+      end
+
+
+      @operational_entrances = @organization.operational_entrances
+      @operational_entrances.each{ |oe|
+        cf = oe.send("cash_flows_for_day", option.to_s )
+	oe.cash_flows = cf
+      }
+
       @operational_exits = @organization.operational_exits
+      @operational_exits.each{ |oe|
+        cf = oe.send("cash_flows_for_#{params[:option]}", option.to_s )
+	oe.cash_flows = cf
+      }
+
       @not_operational_entrances = @organization.not_operational_entrances
+      @not_operational_entrances.each{ |noe|
+        cf = noe.send("cash_flows_for_#{params[:option]}", option.to_s )
+	noe.cash_flows = cf
+      }
+
       @not_operational_exits = @organization.not_operational_exits
+      @operational_entrances.each{ |noe|
+        cf = noe.send("cash_flows_for_#{params[:option]}", option.to_s )
+	noe.cash_flows = cf
+      }
+
     end
   end
 

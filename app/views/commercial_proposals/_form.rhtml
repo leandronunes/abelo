@@ -1,7 +1,7 @@
 <%= error_messages_for 'commercial_proposal' %>
 
 <!--[form:commercial_proposal]-->
-<%= department_select(@organization, 'commercial_proposal') %>
+<%= multiple_select('commercial_proposal', 'department_ids', @departments, _('Departments')) %>
 
 <p><label for="commercial_proposal_name"> <%= _('Name') %> </label>
 <%= text_field 'commercial_proposal', 'name'  %></p>

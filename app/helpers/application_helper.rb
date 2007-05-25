@@ -220,17 +220,22 @@ module ApplicationHelper
     } [m] || m
   end
 
-  def department_select(organization, object, options = {}, html_options = {})   
-    if organization.has_departments?
-      content_tag('p', 
-        content_tag('label', _('Department') ) +
-        select(object, 'department_id', organization.departments.collect{|d| [d.name, d.id]})
-      )
-    else
-      content_tag('p', 
-        hidden_field_tag("#{object}[organization_id]", organization.id) 
-      )
-    end
+  def multiple_select(object, method, collection=[], title="", value_method=:id, text_method=:name)
+    value_method = value_method.to_s
+    text_method = text_method.to_s
+    selected_options = params[object].nil? || params[object][method].nil? ? Array.new : params[object][method]
+    content_tag('p', 
+      {
+      content_tag('label', title),
+      collection.map do |c|
+        if selected_options.include? c.send(value_method).to_s
+          content_tag('input', c.send(text_method) , :name => "#{object}[#{method}][]", :type => 'checkbox', :value => c.send(value_method) , :checked => 'checked' )
+        else
+          content_tag('input', c.send(text_method) , :name => "#{object}[#{method}][]", :type => 'checkbox', :value => c.send(value_method) )
+        end
+      end
+      }
+    )
   end
 
 end

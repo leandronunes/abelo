@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class CommercialProposalTest < Test::Unit::TestCase
-  fixtures :commercial_proposals
+  fixtures :commercial_proposals, :commercial_proposals_departments
 
   def test_mandatory_fields
     count = CommercialProposal.count
@@ -12,29 +12,29 @@ class CommercialProposalTest < Test::Unit::TestCase
     assert !cp.save
     cp.is_template = false
     assert !cp.save
-    cp.organization_id = 1
+    cp.organization_id = 2
     assert cp.save
 
     cp = CommercialProposal.new
     assert !cp.save
     cp.name = 'Proposal Test 3'
     assert !cp.save
-    cp.organization_id = 1
+    cp.organization_id = 2
     cp.is_template = true
     assert cp.save
-
+    
     assert_equal count + 2, CommercialProposal.count
   end
 
   def test_uniqueness_name
     cp1 = CommercialProposal.new
-    cp1.organization_id = 1
+    cp1.organization_id = 2
     cp1.name = 'One CommercialProposal'
     cp1.is_template = true
     assert cp1.save
 
     cp2 = CommercialProposal.new
-    cp2.organization_id = 1
+    cp2.organization_id = 2
     cp2.name = 'One CommercialProposal'
     cp2.is_template = true
     assert !cp2.save
@@ -45,7 +45,7 @@ class CommercialProposalTest < Test::Unit::TestCase
 
     cp = CommercialProposal.new
     cp.name = 'Another CommercialProposal'
-    cp.organization_id = 1
+    cp.organization_id = 2
     cp.is_template = true
     assert cp.save
 

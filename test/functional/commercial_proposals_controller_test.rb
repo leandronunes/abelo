@@ -5,7 +5,7 @@ require 'commercial_proposals_controller'
 class CommercialProposalsController; def rescue_action(e) raise e end; end
 
 class CommercialProposalsControllerTest < Test::Unit::TestCase
-  fixtures :commercial_proposals
+  fixtures :commercial_proposals, :departments
   under_organization :one
   
   def setup
@@ -47,18 +47,41 @@ class CommercialProposalsControllerTest < Test::Unit::TestCase
     assert_template 'new'
 
     assert_not_nil assigns(:commercial_proposal)
+    assert_not_nil assigns(:departments)
+    assert_kind_of Array, assigns(:departments)
+    assigns(:departments).each do |d|
+      assert d.valid?
+    end
   end
 
-  def test_create
+  def test_create_correct_params
     num_commercial_proposals = CommercialProposal.count
 
-    post :create, :commercial_proposal => {:organization_id => 1, :name => 'Any Name' }
+    post :create, :commercial_proposal => {:organization_id => 1, :name => 'Any Name', :department_ids => [1,2] }
 
     assert_response :redirect
     assert_redirected_to :action => 'list'
 
     assert_equal num_commercial_proposals + 1, CommercialProposal.count
   end
+
+  def test_create_wrong_params
+    num_commercial_proposals = CommercialProposal.count
+
+    post :create, :commercial_proposal => {:organization_id => 1 }
+
+    assert_response :success
+    assert_template 'new'
+
+    assert_not_nil assigns(:departments)
+    assert_kind_of Array, assigns(:departments)
+    assigns(:departments).each do |d|
+      assert d.valid?
+    end
+
+    assert_equal num_commercial_proposals, CommercialProposal.count
+  end
+
 
   def test_edit
     get :edit, :id => 1
@@ -67,13 +90,37 @@ class CommercialProposalsControllerTest < Test::Unit::TestCase
     assert_template 'edit'
 
     assert_not_nil assigns(:commercial_proposal)
+    assert_not_nil assigns(:departments)
+    assert_kind_of Array, assigns(:departments)
+    assigns(:departments).each do |d|
+      assert d.valid?
+    end
     assert assigns(:commercial_proposal).valid?
   end
 
-  def test_update
+  def test_update_correct_params
     post :update, :id => 1
     assert_response :redirect
     assert_redirected_to :action => 'show', :id => 1
+  end
+
+  def test_update_wrong_params
+    count = CommercialProposal.count
+    cp = CommercialProposal.new
+    cp.name = "Any Name"
+    cp.organization_id=2
+    assert cp.save
+    assert_equal count + 1, CommercialProposal.count
+    post :update, :id => cp.id, :commercial_proposal => {:organization_id => 1}
+
+    assert_response :success
+    assert_template 'edit'
+    assert_not_nil assigns(:departments)
+    assert_kind_of Array, assigns(:departments)
+    assigns(:departments).each do |d|
+      assert d.valid?
+    end
+
   end
 
   def test_destroy

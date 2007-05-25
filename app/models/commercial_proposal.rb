@@ -6,10 +6,13 @@ class CommercialProposal < ActiveRecord::Base
 
   def validate
     self.errors.add('is_template', _('You have to choose an option to the template')) if self.is_template.nil?
+    self.errors.add( _('You have to choose almost an department to the commercial proposal')) if  (not self.organization.nil?) and (self.organization.has_departments?) and (not self.has_departments?)
   end
 
   has_many :commercial_proposal_items
 
   has_and_belongs_to_many :departments
+
+  belongs_to :organization
 
 end

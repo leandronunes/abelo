@@ -21,20 +21,24 @@ class CommercialProposalsController < ApplicationController
 
   def new
     @commercial_proposal = CommercialProposal.new
+    @departments = @organization.departments
   end
 
   def create
     @commercial_proposal = CommercialProposal.new(params[:commercial_proposal])
+    @commercial_proposal.organization = @organization
     if @commercial_proposal.save
-      flash[:notice] = 'CommercialProposal was successfully created.'
+      flash[:notice] = _('The commercial proposal was successfully created.')
       redirect_to :action => 'list'
     else
+      @departments = @organization.departments
       render :action => 'new'
     end
   end
 
   def edit
     @commercial_proposal = CommercialProposal.find(params[:id])
+    @departments = @organization.departments
   end
 
   def update
@@ -43,6 +47,7 @@ class CommercialProposalsController < ApplicationController
       flash[:notice] = 'CommercialProposal was successfully updated.'
       redirect_to :action => 'show', :id => @commercial_proposal
     else
+      @departments = @organization.departments
       render :action => 'edit'
     end
   end

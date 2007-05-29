@@ -64,36 +64,38 @@ class CashFlowsController < ApplicationController
     else 
       @extract = params[:extract]     
       @period = params[:option]
-      @operational_entrances = @organization.operational_entrances
 
       if params[:option] == 'day'
-        option = Date.strptime("11-05-2007", "%d-%m-%Y")
+        option = Date.strptime("#{params[:date]['day']}-#{params[:date]['month']}-#{params[:date]['year']}","%d-%m-%Y")
       else
         option = "#{params[:date][params[:option]]}"
       end
-
-
-      @operational_entrances = @organization.operational_entrances
-      @operational_entrances.each{ |oe|
-        cf = oe.send("cash_flows_for_day", option.to_s )
-	oe.cash_flows = cf
+      
+      @operational_entrances = Array.new
+      operational_entrances = @organization.operational_entrances
+      operational_entrances.each{ |oe|
+        cf = oe.send("cash_flows_for_#{params[:option]}", option )
+	@operational_entrances.push(cf)
       }
+      
+      render :text => @operational_entrances
+      
 
-      @operational_exits = @organization.operational_exits
-      @operational_exits.each{ |oe|
-        cf = oe.send("cash_flows_for_#{params[:option]}", option.to_s )
+      operational_exits = @organization.operational_exits
+      operational_exits.each{ |oe|
+        cf = oe.send("cash_flows_for_#{params[:option]}", option )
 	oe.cash_flows = cf
       }
 
       @not_operational_entrances = @organization.not_operational_entrances
       @not_operational_entrances.each{ |noe|
-        cf = noe.send("cash_flows_for_#{params[:option]}", option.to_s )
+        cf = noe.send("cash_flows_for_#{params[:option]}", option )
 	noe.cash_flows = cf
       }
 
       @not_operational_exits = @organization.not_operational_exits
       @operational_entrances.each{ |noe|
-        cf = noe.send("cash_flows_for_#{params[:option]}", option.to_s )
+        cf = noe.send("cash_flows_for_#{params[:option]}", option )
 	noe.cash_flows = cf
       }
 

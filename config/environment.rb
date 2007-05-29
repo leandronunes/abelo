@@ -42,6 +42,9 @@ Rails::Initializer.run do |config|
   
 end
 
+#Format of the date
+ActiveSupport::CoreExtensions::Date::Conversions::DATE_FORMATS[:default]='%d-%m-%Y'
+
 # Add new inflection rules using the following format 
 # (all these examples are active by default):
 # Inflector.inflections do |inflect|

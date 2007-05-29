@@ -66,39 +66,53 @@ class CashFlowsController < ApplicationController
       @period = params[:option]
 
       if params[:option] == 'day'
-        option = Date.strptime("#{params[:date]['day']}-#{params[:date]['month']}-#{params[:date]['year']}","%d-%m-%Y")
+        option = Date.strptime("#{params[:date]['year']}-#{params[:date]['month']}-#{params[:date]['day']}","%Y-%m-%d")
       else
         option = "#{params[:date][params[:option]]}"
+	option = option.to_i
       end
-      
-      @operational_entrances = Array.new
-      operational_entrances = @organization.operational_entrances
-      operational_entrances.each{ |oe|
-        cf = oe.send("cash_flows_for_#{params[:option]}", option )
-	@operational_entrances.push(cf)
-      }
-      
-      render :text => @operational_entrances
-      
 
-      operational_exits = @organization.operational_exits
-      operational_exits.each{ |oe|
+      @operational_entrances_details = Array.new
+      @operational_entrances = @organization.operational_entrances
+      @operational_entrances.each{ |oe|
         cf = oe.send("cash_flows_for_#{params[:option]}", option )
-	oe.cash_flows = cf
+	@operational_entrances_details.concat(cf)
+	if cf.empty?
+	  @operational_entrances.delete(oe)
+	end
       }
 
+
+      @operational_exits_details = Array.new
+      @operational_exits = @organization.operational_exits
+      @operational_exits.each{ |oe|
+        cf = oe.send("cash_flows_for_#{params[:option]}", option )
+	@operational_exits_details.concat(cf)
+	if cf.empty?
+	  @operational_exits.delete(oe)
+	end
+      }
+
+      @not_operational_entrances_details = Array.new
       @not_operational_entrances = @organization.not_operational_entrances
-      @not_operational_entrances.each{ |noe|
-        cf = noe.send("cash_flows_for_#{params[:option]}", option )
-	noe.cash_flows = cf
+      @not_operational_entrances.each{ |oe|
+        cf = oe.send("cash_flows_for_#{params[:option]}", option )
+	@not_operational_entrances_details.concat(cf)
+	if cf.empty?
+	  @not_operational_entrances.delete(oe)
+	end
       }
 
+
+      @not_operational_exits_details = Array.new
       @not_operational_exits = @organization.not_operational_exits
-      @operational_entrances.each{ |noe|
-        cf = noe.send("cash_flows_for_#{params[:option]}", option )
-	noe.cash_flows = cf
-      }
-
+      @not_operational_exits.each{ |oe|
+        cf = oe.send("cash_flows_for_#{params[:option]}", option )
+	@not_operational_exits_details.concat(cf)
+	if cf.empty?
+	  @not_operational_exits.delete(oe)
+	end
+      } 
     end
   end
 

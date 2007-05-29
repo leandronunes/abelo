@@ -1,32 +1,32 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 operational entrance:
   id: 1
-  date: '11-05-2007'
+  date: '2007-05-11'
   value: 15.5
   historical_id: 1
   specification_id: 1
   organization_id: 1
 operational entrance 2:
   id: 2
-  date: '11-05-2007'
+  date: '2007-05-11'
   value: 20
   historical_id: 1
   organization_id: 1
 operational exit:
   id: 3
-  date: '11-05-2007'
+  date: '2007-05-11'
   value: 40
   historical_id: 2
   organization_id: 1
 not operational entrance:
   id: 4
-  date: '11-05-2007'
+  date: '2007-05-11'
   value: 100
   historical_id: 3
   organization_id: 1
 not operational exit:
   id: 5
-  date: '11-05-2007'
+  date: '2007-05-11'
   value: 5000
   historical_id: 4
   organization_id: 1

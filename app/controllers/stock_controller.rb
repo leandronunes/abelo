@@ -31,7 +31,8 @@ class StockController < ApplicationController
       cf = CashFlow.new
       cf.add_stock_entry(@entry.id)
       # end of creation
-
+      
+      flash[:notice] = 'Stock entry was successfully created and was added to cash flow too.'
       redirect_to :action => 'history', :id => @product
     else
       render :action => 'new_entry'

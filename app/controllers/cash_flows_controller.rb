@@ -72,43 +72,43 @@ class CashFlowsController < ApplicationController
 	option = option.to_i
       end
 
-      @operational_entrances_details = Array.new
+      @operational_entrances_detailed = Array.new
       @operational_entrances = @organization.operational_entrances
       @operational_entrances.each{ |oe|
         cf = oe.send("cash_flows_for_#{params[:option]}", option )
-	@operational_entrances_details.concat(cf)
+	@operational_entrances_detailed.concat(cf)
 	if cf.empty?
 	  @operational_entrances.delete(oe)
 	end
       }
 
 
-      @operational_exits_details = Array.new
+      @operational_exits_detailed = Array.new
       @operational_exits = @organization.operational_exits
       @operational_exits.each{ |oe|
         cf = oe.send("cash_flows_for_#{params[:option]}", option )
-	@operational_exits_details.concat(cf)
+	@operational_exits_detailed.concat(cf)
 	if cf.empty?
 	  @operational_exits.delete(oe)
 	end
       }
 
-      @not_operational_entrances_details = Array.new
+      @not_operational_entrances_detailed = Array.new
       @not_operational_entrances = @organization.not_operational_entrances
       @not_operational_entrances.each{ |oe|
         cf = oe.send("cash_flows_for_#{params[:option]}", option )
-	@not_operational_entrances_details.concat(cf)
+	@not_operational_entrances_detailed.concat(cf)
 	if cf.empty?
 	  @not_operational_entrances.delete(oe)
 	end
       }
 
 
-      @not_operational_exits_details = Array.new
+      @not_operational_exits_detailed = Array.new
       @not_operational_exits = @organization.not_operational_exits
       @not_operational_exits.each{ |oe|
         cf = oe.send("cash_flows_for_#{params[:option]}", option )
-	@not_operational_exits_details.concat(cf)
+	@not_operational_exits_detailed.concat(cf)
 	if cf.empty?
 	  @not_operational_exits.delete(oe)
 	end

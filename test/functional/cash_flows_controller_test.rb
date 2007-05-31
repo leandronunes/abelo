@@ -105,43 +105,183 @@ class CashFlowsControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:notice)
   end
 
-  def test_generate_extract_simplified
-    get :generate_extract, :extract => 'simplified'
+  def test_generate_extract_simplified_for_day
+    get :generate_extract, :extract => 'simplified', :option => 'day', :date => {:day => '11', :month => '5', :year => '2007'}
     assert_response :success
     assert_template 'generate_extract'
     assert_nil assigns(:notice)
     assert_not_nil assigns(:extract)
     
     assert_not_nil assigns(:operational_entrances)
+    assert_not_nil assigns(:operational_entrances_detailed)
     assert_kind_of Array, assigns(:operational_entrances)
     assigns(:operational_entrances).each do |oe|
       assert_kind_of Historical, oe
       assert_equal true, oe.operational
       assert_equal TypeTransaction::CREDIT, oe.type_of
     end
+    assigns(:operational_entrances_detailed).each do |oed|
+      assert_kind_of CashFlow, oed
+      assert_equal '2007-05-11', oed.date
+    end
 
     assert_not_nil assigns(:operational_exits)
+    assert_not_nil assigns(:operational_exits_detailed)
     assert_kind_of Array, assigns(:operational_exits)
     assigns(:operational_exits).each do |oe|
       assert_kind_of Historical, oe
       assert_equal true, oe.operational
       assert_equal TypeTransaction::DEBIT, oe.type_of
     end
+    assigns(:operational_exits_detailed).each do |oed|
+      assert_kind_of CashFlow, oed
+      assert_equal '2007-05-11', oed.date
+    end
     
     assert_not_nil assigns(:not_operational_entrances)
+    assert_not_nil assigns(:not_operational_entrances_detailed)
     assert_kind_of Array, assigns(:not_operational_entrances)
     assigns(:not_operational_entrances).each do |noe|
       assert_kind_of Historical, noe
       assert_equal false, noe.operational
       assert_equal TypeTransaction::CREDIT, noe.type_of
     end
+    assigns(:not_operational_entrances_detailed).each do |oed|
+      assert_kind_of CashFlow, oed
+      assert_equal '2007-05-11', oed.date
+    end
     
     assert_not_nil assigns(:not_operational_exits)
+    assert_not_nil assigns(:not_operational_exits_detailed)
     assert_kind_of Array, assigns(:not_operational_exits)
     assigns(:not_operational_exits).each do |noe|
       assert_kind_of Historical, noe
       assert_equal false, noe.operational
       assert_equal TypeTransaction::DEBIT, noe.type_of
+    end
+    assigns(:not_operational_exits_detailed).each do |oed|
+      assert_kind_of CashFlow, oed
+      assert_equal '2007-05-11', oed.date
+    end
+  end
+
+  def test_generate_extract_simplified_for_month
+    get :generate_extract, :extract => 'simplified', :option => 'month', :date => {:month => '5'}
+    assert_response :success
+    assert_template 'generate_extract'
+    assert_nil assigns(:notice)
+    assert_not_nil assigns(:extract)
+    
+    assert_not_nil assigns(:operational_entrances)
+    assert_not_nil assigns(:operational_entrances_detailed)
+    assert_kind_of Array, assigns(:operational_entrances)
+    assigns(:operational_entrances).each do |oe|
+      assert_kind_of Historical, oe
+      assert_equal true, oe.operational
+      assert_equal TypeTransaction::CREDIT, oe.type_of
+    end
+    assigns(:operational_entrances_detailed).each do |oed|
+      assert_kind_of CashFlow, oed
+      assert_equal '05', oed.date.month
+    end
+
+    assert_not_nil assigns(:operational_exits)
+    assert_not_nil assigns(:operational_exits_detailed)
+    assert_kind_of Array, assigns(:operational_exits)
+    assigns(:operational_exits).each do |oe|
+      assert_kind_of Historical, oe
+      assert_equal true, oe.operational
+      assert_equal TypeTransaction::DEBIT, oe.type_of
+    end
+    assigns(:operational_exits_detailed).each do |oed|
+      assert_kind_of CashFlow, oed
+      assert_equal '05', oed.date.month
+    end
+    
+    assert_not_nil assigns(:not_operational_entrances)
+    assert_not_nil assigns(:not_operational_entrances_detailed)
+    assert_kind_of Array, assigns(:not_operational_entrances)
+    assigns(:not_operational_entrances).each do |noe|
+      assert_kind_of Historical, noe
+      assert_equal false, noe.operational
+      assert_equal TypeTransaction::CREDIT, noe.type_of
+    end
+    assigns(:not_operational_entrances_detailed).each do |oed|
+      assert_kind_of CashFlow, oed
+      assert_equal '05', oed.date.month
+    end
+    
+    assert_not_nil assigns(:not_operational_exits)
+    assert_not_nil assigns(:not_operational_exits_detailed)
+    assert_kind_of Array, assigns(:not_operational_exits)
+    assigns(:not_operational_exits).each do |noe|
+      assert_kind_of Historical, noe
+      assert_equal false, noe.operational
+      assert_equal TypeTransaction::DEBIT, noe.type_of
+    end
+    assigns(:not_operational_exits_detailed).each do |oed|
+      assert_kind_of CashFlow, oed
+      assert_equal '05', oed.date.month
+    end
+  end
+
+  def test_generate_extract_simplified_for_year
+    get :generate_extract, :extract => 'simplified', :option => 'year', :date => {:year => '2007'}
+    assert_response :success
+    assert_template 'generate_extract'
+    assert_nil assigns(:notice)
+    assert_not_nil assigns(:extract)
+    
+    assert_not_nil assigns(:operational_entrances)
+    assert_not_nil assigns(:operational_entrances_detailed)
+    assert_kind_of Array, assigns(:operational_entrances)
+    assigns(:operational_entrances).each do |oe|
+      assert_kind_of Historical, oe
+      assert_equal true, oe.operational
+      assert_equal TypeTransaction::CREDIT, oe.type_of
+    end
+    assigns(:operational_entrances_detailed).each do |oed|
+      assert_kind_of CashFlow, oed
+      assert_equal '2007', oed.date.year
+    end
+
+    assert_not_nil assigns(:operational_exits)
+    assert_not_nil assigns(:operational_exits_detailed)
+    assert_kind_of Array, assigns(:operational_exits)
+    assigns(:operational_exits).each do |oe|
+      assert_kind_of Historical, oe
+      assert_equal true, oe.operational
+      assert_equal TypeTransaction::DEBIT, oe.type_of
+    end
+    assigns(:operational_exits_detailed).each do |oed|
+      assert_kind_of CashFlow, oed
+      assert_equal '2007', oed.date.year
+    end
+    
+    assert_not_nil assigns(:not_operational_entrances)
+    assert_not_nil assigns(:not_operational_entrances_detailed)
+    assert_kind_of Array, assigns(:not_operational_entrances)
+    assigns(:not_operational_entrances).each do |noe|
+      assert_kind_of Historical, noe
+      assert_equal false, noe.operational
+      assert_equal TypeTransaction::CREDIT, noe.type_of
+    end
+    assigns(:not_operational_entrances_detailed).each do |oed|
+      assert_kind_of CashFlow, oed
+      assert_equal '2007', oed.date.year
+    end
+    
+    assert_not_nil assigns(:not_operational_exits)
+    assert_not_nil assigns(:not_operational_exits_detailed)
+    assert_kind_of Array, assigns(:not_operational_exits)
+    assigns(:not_operational_exits).each do |noe|
+      assert_kind_of Historical, noe
+      assert_equal false, noe.operational
+      assert_equal TypeTransaction::DEBIT, noe.type_of
+    end
+    assigns(:not_operational_exits_detailed).each do |oed|
+      assert_kind_of CashFlow, oed
+      assert_equal '2007', oed.date.year
     end
   end
 

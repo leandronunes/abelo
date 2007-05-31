@@ -9,6 +9,7 @@
     <th><%= _('Supplier') %></th>
     <th><%= _('Purpose') %></th>
     <th><%= _('Validity') %></th>
+    <th><%= _('Payment status') %></th>
   </tr>
   <% total_ammount = 0.0 %>
   <% total_cost = 0.0 %>
@@ -23,6 +24,7 @@
       <td class='text'><%= show_supplier entry %></td>
       <td class='text'><%= show_purpose entry.purpose %></td>
       <td class='date'><%= entry.validity  %></td>
+      <td><%= entry.payment_status %></td>
     </tr>
   <% end %>
   <tr><th colspan='7'><%= _('Totals') %></th></tr>

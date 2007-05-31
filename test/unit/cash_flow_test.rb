@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class CashFlowTest < Test::Unit::TestCase
-  fixtures :cash_flows, :historicals, :stock_entries
+  fixtures :cash_flows, :historicals, :stock_entries, :organizations, :products, :suppliers, :specifications
 
   def test_belongs_to_historical
     cf = CashFlow.find(1)

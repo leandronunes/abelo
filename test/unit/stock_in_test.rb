@@ -24,6 +24,9 @@ class StockInTest < Test::Unit::TestCase
     entry.purpose = 'sell'
     assert !entry.save
 
+    entry.payment_status = true
+    assert !entry.save
+
     entry.date = Date.today
     assert entry.save
 

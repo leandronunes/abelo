@@ -112,16 +112,52 @@ class OrganizationTest < Test::Unit::TestCase
     assert o.historicals.include?(h)
   end
 
-  def test_filter_historicals
+  def test_operational_entrances
     h = Historical.find(1)
     assert_valid h
+    @organization.historicals.clear
     @organization.add_historicals(h)
     assert_equal true, h.operational
     assert_equal 'C', h.type_of
-    historical_expected = @organization.filter_historicals('t', 'C')
-    assert_equal historical_expected.first, h
-    historical_expected = @organization.filter_historicals('t', 'Blih')
-    assert historical_expected.empty?
+    historicals_expecteds = @organization.operational_entrances
+    assert historicals_expecteds.include?(h)
+    assert_equal 1, historicals_expecteds.size
+  end
+
+  def test_operational_exits
+    h = Historical.find(2)
+    assert_valid h
+    @organization.historicals.clear
+    @organization.add_historicals(h)
+    assert_equal true, h.operational
+    assert_equal 'D', h.type_of
+    historicals_expecteds = @organization.operational_exits
+    assert historicals_expecteds.include?(h)
+    assert_equal 1, historicals_expecteds.size
+  end
+
+  def test_not_operational_entrances
+    h = Historical.find(3)
+    assert_valid h
+    @organization.historicals.clear
+    @organization.add_historicals(h)
+    assert_equal false, h.operational
+    assert_equal 'C', h.type_of
+    historicals_expecteds = @organization.not_operational_entrances
+    assert historicals_expecteds.include?(h)
+    assert_equal 1, historicals_expecteds.size
+  end
+
+  def test_not_operational_exits
+    h = Historical.find(4)
+    assert_valid h
+    @organization.historicals.clear
+    @organization.add_historicals(h)
+    assert_equal false, h.operational
+    assert_equal 'D', h.type_of
+    historicals_expecteds = @organization.not_operational_exits
+    assert historicals_expecteds.include?(h)
+    assert_equal 1, historicals_expecteds.size
   end
 
   def test_historical_total_value

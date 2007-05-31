@@ -34,6 +34,8 @@ class CreateStockEntries < ActiveRecord::Migration
       t.column :price, :float
       # the validity of the product
       t.column :validity, :date
+      #field to know if payment was accomplished or not
+      t.column :payment_status, :boolean
 
       ################################
       ### fields used only by StockOut

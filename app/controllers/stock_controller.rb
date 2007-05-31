@@ -26,6 +26,12 @@ class StockController < ApplicationController
     @entry = StockIn.new(params[:entry])
     @entry.product = @product
     if @entry.save
+      
+      # Create a new item in cash flow
+      cf = CashFlow.new
+      cf.add_stock_entry(@entry.id)
+      # end of creation
+
       redirect_to :action => 'history', :id => @product
     else
       render :action => 'new_entry'

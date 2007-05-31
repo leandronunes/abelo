@@ -8,6 +8,7 @@ in1:
   purpose: 'sell'
   price: 1.99
   date: '2006-01-01'
+  payment_status: true
 in2:
   id: 2
   type: 'StockIn'
@@ -17,6 +18,7 @@ in2:
   purpose: 'sell'
   price: 2.05
   date: '2006-02-01'
+  payment_status: false
 in3:
   id: 3
   type: 'StockIn'
@@ -26,6 +28,7 @@ in3:
   purpose: 'sell'
   price: 1.97
   date: '2006-03-01'
+  payment_status: true
 out1:
   id: 4
   type: 'StockOut'
@@ -42,6 +45,7 @@ in4:
   purpose: 'production'
   price: 1.99
   date: '2006-05-01'
+  payment_status: true
 in5:
   id: 6
   type: 'StockIn'
@@ -51,6 +55,7 @@ in5:
   purpose: 'production'
   price: 2.05
   date: '2006-06-01'
+  payment_status: true
 in6:
   id: 7
   type: 'StockIn'
@@ -60,6 +65,7 @@ in6:
   purpose: 'production'
   price: 1.97
   date: '2006-07-01'
+  payment_status: true
 out2:
   id: 8
   type: 'StockOut'

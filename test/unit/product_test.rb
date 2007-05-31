@@ -71,6 +71,7 @@ class ProductTest < Test::Unit::TestCase
       entry.price = 1.99
       entry.purpose = 'sell'
       entry.date = Date.today
+      entry.payment_status = true
       
       assert entry.save
 

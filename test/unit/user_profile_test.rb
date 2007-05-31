@@ -56,7 +56,7 @@ class UserProfileTest < Test::Unit::TestCase
   def test_assign_template
     profile = UserProfile.new
     profile.user = people(:aaron)
-    profile.organization = organizations(:one)
+    profile.organization = organizations(:organization_with_department)
     profile.template = 'full_access'
     assert(profile.save)
     profile.template = 'read_only'

@@ -9,6 +9,12 @@ class StockEntryTest < Test::Unit::TestCase
     assert_equal Product, entry.product.class
   end
 
+  def test_belongs_organization
+    entry = StockEntry.find(1)
+    assert_not_nil entry.product
+    assert_not_nil entry.organization
+  end
+
   def test_purpose
     count = StockEntry.count
 
@@ -19,6 +25,7 @@ class StockEntryTest < Test::Unit::TestCase
       :price => 1.99,
       :purpose => 'blabalble', # invalid purpose
       :date =>  '2007-01-01',
+      :payment_status => true,
     })
 
     assert !entry.save

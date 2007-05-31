@@ -1,5 +1,6 @@
 class Historical < ActiveRecord::Base
   has_many :cash_flows
+  belongs_to :organization
 
   def cash_flows_for_day(date)
     return self.cash_flows.find(:all, :conditions => "date = '#{date}'" )
@@ -12,8 +13,7 @@ class Historical < ActiveRecord::Base
   def cash_flows_for_year(year)
     cash_flows_for_period('year', year)
   end
-
-  
+ 
   private
 
   def cash_flows_for_period(period, value)

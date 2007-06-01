@@ -76,9 +76,10 @@ class CashFlowsController < ApplicationController
       @operational_entrances = @organization.operational_entrances
       @operational_entrances.each{ |oe|
         cf = oe.send("cash_flows_for_#{params[:option]}", option )
-	@operational_entrances_detailed.concat(cf)
 	if cf.empty?
 	  @operational_entrances.delete(oe)
+	else
+	  @operational_entrances_detailed.concat(cf)
 	end
       }
 
@@ -87,9 +88,10 @@ class CashFlowsController < ApplicationController
       @operational_exits = @organization.operational_exits
       @operational_exits.each{ |oe|
         cf = oe.send("cash_flows_for_#{params[:option]}", option )
-	@operational_exits_detailed.concat(cf)
 	if cf.empty?
 	  @operational_exits.delete(oe)
+	else
+          @operational_exits_detailed.concat(cf)
 	end
       }
 
@@ -97,9 +99,10 @@ class CashFlowsController < ApplicationController
       @not_operational_entrances = @organization.not_operational_entrances
       @not_operational_entrances.each{ |oe|
         cf = oe.send("cash_flows_for_#{params[:option]}", option )
-	@not_operational_entrances_detailed.concat(cf)
 	if cf.empty?
 	  @not_operational_entrances.delete(oe)
+	else
+	  @not_operational_entrances_detailed.concat(cf)
 	end
       }
 
@@ -108,9 +111,10 @@ class CashFlowsController < ApplicationController
       @not_operational_exits = @organization.not_operational_exits
       @not_operational_exits.each{ |oe|
         cf = oe.send("cash_flows_for_#{params[:option]}", option )
-	@not_operational_exits_detailed.concat(cf)
 	if cf.empty?
 	  @not_operational_exits.delete(oe)
+	else
+	  @not_operational_exits_detailed.concat(cf)
 	end
       } 
     end

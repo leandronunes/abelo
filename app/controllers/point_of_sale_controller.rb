@@ -1,6 +1,7 @@
 class PointOfSaleController < ApplicationController
 
   needs_organization
+  uses_popup_plugin
   layout 'point_of_sale'
 
   verify :method => :post, :only => [ :new, :add_item, :set_customer, :cancel ], :redirect_to => { :action => :index }
@@ -69,4 +70,13 @@ class PointOfSaleController < ApplicationController
       render :action => 'main'
     end
   end
+
+  def search_customer
+    @people = @organization.customers
+    @sale_id = params[:sale_id]
+    render :template => 'search_customer'
+  end
+
+
+
 end

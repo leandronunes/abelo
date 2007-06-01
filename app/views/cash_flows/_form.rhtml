@@ -12,5 +12,8 @@
 
 <p><label for="cash_flow_specification"><%= _('Specification') %></label>
 <%= select('cash_flow', 'specification_id', Specification.find_all.collect { |s| [ s.name, s.id] } ) %></p>
+
+<p><label for="cash_flow_foreseen"><%= _('Foreseen') %></label>
+<%= check_box('cash_flow', 'foreseen') %></p>
 <!--[eoform:cash_flow]-->
 

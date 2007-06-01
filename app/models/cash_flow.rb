@@ -23,6 +23,9 @@ class CashFlow < ActiveRecord::Base
     self.specification = s
 
     self.organization = entry.organization
+    if entry.payment_status == true
+      self.foreseen = true
+    end
     self.save
   end
 

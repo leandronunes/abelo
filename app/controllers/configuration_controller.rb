@@ -35,7 +35,6 @@ class ConfigurationController < ApplicationController
 
   def new
     @model_name  = params[:model_name]
-
     if (MODELS.include?(@model_name))
       @the_model = eval(@model_name.camelize)
       @object = @the_model.new()
@@ -90,18 +89,20 @@ class ConfigurationController < ApplicationController
   def create
 
     @model_name  = params[:model_name]
-
     if (MODELS.include?(@model_name))
       @the_model = eval(@model_name.camelize)
       @object = @the_model.new(params[@model_name])
-
+      @object.organization = @organization
       if @object.save
         flash[:notice] = _('Item was successfully created.')
         redirect_to :action => 'list', :model_name => @model_name
       else
-        render :partial => 'new', :layout => false
+        if params[:model_name] == 'historical'
+          render :partial => 'new_historical', :layout => true
+        else
+	  render :partial => 'new', :layout => 'true'
+	end
       end
-
 
     end
 

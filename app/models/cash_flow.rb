@@ -26,4 +26,32 @@ class CashFlow < ActiveRecord::Base
     self.save
   end
 
+  def add_sale(sale_id)
+    sale= Sale.find(sale_id)
+    self.date = sale.date
+    self.value = sale.total_value
+
+    h = Historical.new
+    h.name = "sale #{sale.id}"
+    h.type_of = TypeTransaction::CREDIT
+    h.operational = true
+    h.organization = sale.organization
+    h.save
+    self.historical = h
+   
+    s = Specification.new
+    if sale.customer.nil?
+      s.name = 'customer not identified'
+    else  
+      s.name = sale.customer.name
+    end
+    s.organization = sale.organization
+    s.save
+    self.specification = s
+
+    self.organization = sale.organization
+    self.save
+   
+  end
+
 end

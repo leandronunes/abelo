@@ -64,4 +64,17 @@ class SaleTest < Test::Unit::TestCase
     assert(s.cancelled?)
   end
 
+  def test_total_value
+    s = Sale.find(4)
+    item1 = SaleItem.find(3)
+    item2 = SaleItem.find(4)
+    assert_valid item1
+    assert_valid item2
+    s.add_items(item1)
+    s.add_items(item2)
+    assert_equal 2, s.items.size
+    value_expected = item1.price + item2.price
+    assert_equal value_expected, s.total_value
+  end
+
 end

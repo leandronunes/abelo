@@ -66,4 +66,12 @@ class Sale < ActiveRecord::Base
     self.status == STATUS_CLOSED
   end
 
+  def total_value
+    value = 0.0
+    self.items.each{ |i|
+      value = value + i.price
+    }
+    return value
+  end
+
 end

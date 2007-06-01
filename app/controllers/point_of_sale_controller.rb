@@ -58,6 +58,12 @@ class PointOfSaleController < ApplicationController
   def close
     @sale = @organization.sales.find(params[:id])
     if @sale.close!
+      
+      #Create a new exit in cash flow
+      cf = CashFlow.new
+      cf.add_sale(@sale.id)
+      #end of creation
+
       redirect_to :action => 'index'
     else
       render :action => 'main'

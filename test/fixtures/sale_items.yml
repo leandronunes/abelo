@@ -11,3 +11,15 @@ another:
   product_id: 2
   ammount: 5
   unitary_price: 7.0
+item1 for sale two:
+  id: 3
+  sale_id: 4
+  product_id: 1
+  ammount: 2
+  unitary_price: 5.0
+item2 for sale two:
+  id: 4
+  sale_id: 4
+  product_id: 1
+  ammount: 2
+  unitary_price: 5.0

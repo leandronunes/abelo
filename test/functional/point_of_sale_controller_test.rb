@@ -75,4 +75,11 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
     assert_redirected_to :action => 'index'
   end
 
+  def test_close
+    get :close, :id => 1
+    assert_response :redirect
+    assert_not_nil assigns(:sale) 
+    assert_redirected_to :action => 'index'
+  end
+
 end

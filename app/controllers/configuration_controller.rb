@@ -12,6 +12,7 @@ class ConfigurationController < ApplicationController
   def index
     @objects = Array.new
     @objects = ['cash_flow']
+    @title = _('Listing objects of configuration')
   end
 
   def cash_flow

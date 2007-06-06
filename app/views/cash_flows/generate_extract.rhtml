@@ -16,7 +16,8 @@
   <%= generate_extract(@extract, @period, @not_operational_exits, @not_operational_exits_detailed) %>
 
 
-  <p><b><%= _('Balance of the %s: %f') % [@period, @balance] %><b></p>
+  <p><b><%= _('Balance of the %s made: %f') % [@period, @balance] %><b></p>
+  <p><b><%= _('Balance of the %s foreseen: %f') % [@period, @balance_foreseen] %><b></p>
   <p><b><%= _('Total Balance: ')%><b></p>
 
 <% end %>

@@ -166,6 +166,9 @@ class CashFlowsControllerTest < Test::Unit::TestCase
 
     assert_not_nil assigns(:balance)
     assert_equal -4904.5, assigns(:balance)
+    
+    assert_not_nil assigns(:balance_foreseen)
+    assert_equal 20, assigns(:balance_foreseen)
   end
 
   def test_generate_extract_simplified_for_month
@@ -229,6 +232,9 @@ class CashFlowsControllerTest < Test::Unit::TestCase
 
     assert_not_nil assigns(:balance)
     assert_equal -4904.5, assigns(:balance)
+    
+    assert_not_nil assigns(:balance_foreseen)
+    assert_equal 20, assigns(:balance_foreseen)
   end
 
   def test_generate_extract_simplified_for_year
@@ -292,6 +298,9 @@ class CashFlowsControllerTest < Test::Unit::TestCase
 
     assert_not_nil assigns(:balance)
     assert_equal -4904.5, assigns(:balance)
+    
+    assert_not_nil assigns(:balance_foreseen)
+    assert_equal 20, assigns(:balance_foreseen)
   end
 
 end

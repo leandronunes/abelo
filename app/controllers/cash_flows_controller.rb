@@ -119,7 +119,9 @@ class CashFlowsController < ApplicationController
       } 
     end
 
-    @balance = CashFlow.total_value(@operational_entrances_detailed) + CashFlow.total_value(@not_operational_entrances_detailed) - CashFlow.total_value(@operational_exits_detailed) - CashFlow.total_value(@not_operational_exits_detailed)
+    @balance = CashFlow.total_value(@operational_entrances_detailed, false) + CashFlow.total_value(@not_operational_entrances_detailed, false) - CashFlow.total_value(@operational_exits_detailed, false) - CashFlow.total_value(@not_operational_exits_detailed, false)
+
+    @balance_foreseen = CashFlow.total_value(@operational_entrances_detailed, true) + CashFlow.total_value(@not_operational_entrances_detailed, true) - CashFlow.total_value(@operational_exits_detailed, true) - CashFlow.total_value(@not_operational_exits_detailed, true)
   end
 
 

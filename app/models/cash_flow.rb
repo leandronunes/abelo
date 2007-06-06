@@ -57,14 +57,28 @@ class CashFlow < ActiveRecord::Base
    
   end
 
-  def CashFlow.total_value(cash_flows)
+  def CashFlow.total_value(cash_flows, foreseen_value)
     value = 0.0
     if cash_flows
       cash_flows.each { |c|
-        value = value + c.value
+        if c.foreseen == foreseen_value
+          value = value + c.value
+	end
       }
     end
     return value
+  end
+
+  def CashFlow.month_total_value(month, cash_flows, foreseen_value)
+    total = 0.0
+    if cash_flows
+      cash_flows.each { |c|
+        if (c.date.month == month) and (c.foreseen == foreseen_value)
+          total += c.value
+        end
+      }
+    end
+    return total
   end
 
 

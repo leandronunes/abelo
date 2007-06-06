@@ -8,73 +8,84 @@ module CashFlowsHelper
       if extract == 'simplified'
         content_tag('table',
           {  
-            content_tag('tr', { content_tag('th', _('Historical') ), content_tag('th', _('Value') ) }),
+            content_tag('tr', [ content_tag('th', _('Historical') ), content_tag('th', _('Value') ), content_tag('th', 'Foreseen') ]),
             historicals.map do |h|
-              content_tag('tr',
-                { content_tag('td', h.name), content_tag('td', CashFlow.total_value(cash_flows) ) }
-              )
+              total_value = CashFlow.total_value(cash_flows, false)
+	      total_value_foreseen = CashFlow.total_value(cash_flows, true)
+	      if total_value > 0
+                [content_tag('tr', [ content_tag('td', h.name), content_tag('td', total_value ), content_tag('td', ' ') ] ),
+		if total_value_foreseen > 0
+                  content_tag('tr', [ content_tag('td', h.name), content_tag('td', total_value_foreseen ), content_tag('td', 'x', "align" => "center") ] )
+		end ]
+	      elsif total_value_foreseen > 0
+                  content_tag('tr', [ content_tag('td', h.name), content_tag('td', total_value_foreseen ), content_tag('td', 'x', "align" => "center") ] )
+	      end
             end
           }
         )
       else
         if period == "day"
           content_tag('table',
-            {  
-              content_tag('tr', { content_tag('th', _('Codigo') ), content_tag('th', _('Value') ) }),
+            [  
+              content_tag('tr', [ content_tag('th', _('Codigo') ), content_tag('th', _('Value') ), content_tag('th', _('Foreseen')) ]),
               historicals.map do |h|
-                {content_tag('tr', content_tag('th', h.name, "colspan" => "2")),
+                [content_tag('tr', content_tag('th', h.name, "colspan" => "3")),
                 cash_flows.map do |c|
-  	          if c.historical_id == h.id	  
+  	          if c.historical_id == h.id
+		      foreseen = ' '
+                      foreseen = 'x' if c.foreseen 
                       content_tag('tr',
-                        { content_tag('td', c.id, "align" => "center"), content_tag('td', c.value ) }
+                        [ content_tag('td', c.id, "align" => "center"), content_tag('td', c.value ), content_tag('td', foreseen, "align" => "center") ]
   		    )
   		  end
-  	        end}
+  	        end]
               end
-            }
+            ]
           )
 	elsif period == "month" 
           content_tag('table',
-            {  
-              content_tag('tr', { content_tag('th', _('Date') ), content_tag('th', _('Value') )}),
+            [  
+              content_tag('tr', [ content_tag('th', _('Date') ), content_tag('th', _('Value') ), content_tag('th', _('Foreseen'))]),
               historicals.map do |h|
-                {content_tag('tr', content_tag('th', h.name, "colspan" => "2")),
+                [content_tag('tr', content_tag('th', h.name, "colspan" => "3")),
                 cash_flows.map do |c|
   	          if c.historical_id == h.id	  
+		      foreseen = ' '
+                      foreseen = 'x' if c.foreseen 
                       content_tag('tr',
-                        { content_tag('td', c.date), content_tag('td', c.value ) }
+                        [ content_tag('td', c.date), content_tag('td', c.value ), content_tag('td', foreseen, "align" => "center") ]
   		    )
   		  end
-  	        end}
+  	        end]
               end
-            }
+            ]
           )
 	elsif period == "year"  
           content_tag('table',
-            {  
-              content_tag('tr', { content_tag('th', _('Mês') ), content_tag('th', _('Value') )}),
+            [  
+              content_tag('tr', [ content_tag('th', _('Mês') ), content_tag('th', _('Value') ), content_tag('th', _('Foreseen'))]),
               historicals.map do |h|
-                {content_tag('tr', content_tag('th', h.name, "colspan" => "2")),
+		month = -1
+                [content_tag('tr', content_tag('th', h.name, "colspan" => "3")),
                 cash_flows.map do |c|
-		  month = c.date.month
-		  month_value = 0.0
-		  i = 0
-		  while i <= cash_flows.length-1
-		    if (month == cash_flows[i].date.month)
-		      month_value += cash_flows[i].value
-		      cash_flows.delete_at(i)
-		      i = i - 1
-		    end
-		    i = i + 1
-		  end
-  	          if c.historical_id == h.id	  
-                      content_tag('tr',
-                        { content_tag('td', month), content_tag('td', month_value ) }
-  		    )
-  		  end
-  	        end}
+		  if c.date.month != month
+  		    month = c.date.month
+		    month_value = CashFlow.month_total_value(month, cash_flows, false)
+		    month_value_foreseen = CashFlow.month_total_value(month, cash_flows, true)
+  	            if c.historical_id == h.id
+		      if month_value > 0
+                        [content_tag('tr', [ content_tag('td', month, "align" => "center"), content_tag('td', month_value ), content_tag('td', ' ') ] ),			
+                        if month_value_foreseen > 0
+                          content_tag('tr', [ content_tag('td', month, "align" => "center"), content_tag('td', month_value_foreseen ), content_tag('td', 'x', "align" => "center") ] ) 
+    		        end ]
+		      elsif month_value_foreseen > 0
+                        content_tag('tr', [ content_tag('td', month, "align" => "center"), content_tag('td', month_value_foreseen ), content_tag('td', 'x', "align" => "center") ] ) 
+		      end
+  		    end 
+  	          end
+		end]
               end
-            }
+            ]
           )
 	end
 

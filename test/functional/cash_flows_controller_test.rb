@@ -122,7 +122,7 @@ class CashFlowsControllerTest < Test::Unit::TestCase
     end
     assigns(:operational_entrances_detailed).each do |oed|
       assert_kind_of CashFlow, oed
-      assert_equal '2007-05-11', oed.date
+      assert_equal '2007-05-11', oed.date.to_s
     end
 
     assert_not_nil assigns(:operational_exits)
@@ -135,7 +135,7 @@ class CashFlowsControllerTest < Test::Unit::TestCase
     end
     assigns(:operational_exits_detailed).each do |oed|
       assert_kind_of CashFlow, oed
-      assert_equal '2007-05-11', oed.date
+      assert_equal '2007-05-11', oed.date.to_s
     end
     
     assert_not_nil assigns(:not_operational_entrances)
@@ -148,7 +148,7 @@ class CashFlowsControllerTest < Test::Unit::TestCase
     end
     assigns(:not_operational_entrances_detailed).each do |oed|
       assert_kind_of CashFlow, oed
-      assert_equal '2007-05-11', oed.date
+      assert_equal '2007-05-11', oed.date.to_s
     end
     
     assert_not_nil assigns(:not_operational_exits)
@@ -161,8 +161,11 @@ class CashFlowsControllerTest < Test::Unit::TestCase
     end
     assigns(:not_operational_exits_detailed).each do |oed|
       assert_kind_of CashFlow, oed
-      assert_equal '2007-05-11', oed.date
+      assert_equal '2007-05-11', oed.date.to_s
     end
+
+    assert_not_nil assigns(:balance)
+    assert_equal -4904.5, assigns(:balance)
   end
 
   def test_generate_extract_simplified_for_month
@@ -182,7 +185,7 @@ class CashFlowsControllerTest < Test::Unit::TestCase
     end
     assigns(:operational_entrances_detailed).each do |oed|
       assert_kind_of CashFlow, oed
-      assert_equal '05', oed.date.month
+      assert_equal '5', oed.date.month.to_s
     end
 
     assert_not_nil assigns(:operational_exits)
@@ -195,7 +198,7 @@ class CashFlowsControllerTest < Test::Unit::TestCase
     end
     assigns(:operational_exits_detailed).each do |oed|
       assert_kind_of CashFlow, oed
-      assert_equal '05', oed.date.month
+      assert_equal '5', oed.date.month.to_s
     end
     
     assert_not_nil assigns(:not_operational_entrances)
@@ -208,7 +211,7 @@ class CashFlowsControllerTest < Test::Unit::TestCase
     end
     assigns(:not_operational_entrances_detailed).each do |oed|
       assert_kind_of CashFlow, oed
-      assert_equal '05', oed.date.month
+      assert_equal '5', oed.date.month.to_s
     end
     
     assert_not_nil assigns(:not_operational_exits)
@@ -221,8 +224,11 @@ class CashFlowsControllerTest < Test::Unit::TestCase
     end
     assigns(:not_operational_exits_detailed).each do |oed|
       assert_kind_of CashFlow, oed
-      assert_equal '05', oed.date.month
+      assert_equal '5', oed.date.month.to_s
     end
+
+    assert_not_nil assigns(:balance)
+    assert_equal -4904.5, assigns(:balance)
   end
 
   def test_generate_extract_simplified_for_year
@@ -242,7 +248,7 @@ class CashFlowsControllerTest < Test::Unit::TestCase
     end
     assigns(:operational_entrances_detailed).each do |oed|
       assert_kind_of CashFlow, oed
-      assert_equal '2007', oed.date.year
+      assert_equal '2007', oed.date.year.to_s
     end
 
     assert_not_nil assigns(:operational_exits)
@@ -255,7 +261,7 @@ class CashFlowsControllerTest < Test::Unit::TestCase
     end
     assigns(:operational_exits_detailed).each do |oed|
       assert_kind_of CashFlow, oed
-      assert_equal '2007', oed.date.year
+      assert_equal '2007', oed.date.year.to_s
     end
     
     assert_not_nil assigns(:not_operational_entrances)
@@ -268,7 +274,7 @@ class CashFlowsControllerTest < Test::Unit::TestCase
     end
     assigns(:not_operational_entrances_detailed).each do |oed|
       assert_kind_of CashFlow, oed
-      assert_equal '2007', oed.date.year
+      assert_equal '2007', oed.date.year.to_s
     end
     
     assert_not_nil assigns(:not_operational_exits)
@@ -281,8 +287,11 @@ class CashFlowsControllerTest < Test::Unit::TestCase
     end
     assigns(:not_operational_exits_detailed).each do |oed|
       assert_kind_of CashFlow, oed
-      assert_equal '2007', oed.date.year
+      assert_equal '2007', oed.date.year.to_s
     end
+
+    assert_not_nil assigns(:balance)
+    assert_equal -4904.5, assigns(:balance)
   end
 
 end

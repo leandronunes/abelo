@@ -4,19 +4,19 @@
   <h1><%= _('%s Extract') % @extract.capitalize %></h1>
   
   <h3><%= _('Operational Entrances') %></h3>
-  <%= generate_extract(@extract, @operational_entrances, @operational_entrances_detailed) %>
+  <%= generate_extract(@extract, @period, @operational_entrances, @operational_entrances_detailed) %>
 
   <h3><%= _('Operational Exits') %></h3>
-  <%= generate_extract(@extract, @operational_exits, @operational_exits_detailed) %>
+  <%= generate_extract(@extract, @period, @operational_exits, @operational_exits_detailed) %>
 
   <h3><%= _('Not Operational Entrances') %></h3>
-  <%= generate_extract(@extract, @not_operational_entrances, @not_operational_entrances_detailed) %>
+  <%= generate_extract(@extract, @period, @not_operational_entrances, @not_operational_entrances_detailed) %>
 
   <h3><%= _('Not Operational Exits') %></h3>
-  <%= generate_extract(@extract, @not_operational_exits, @not_operational_exits_detailed) %>
+  <%= generate_extract(@extract, @period, @not_operational_exits, @not_operational_exits_detailed) %>
 
-  <p><b><%= _('Balance of the %s: ') % @period %><b></p>
+
+  <p><b><%= _('Balance of the %s: %f') % [@period, @balance] %><b></p>
   <p><b><%= _('Total Balance: ')%><b></p>
 
-  <p><%=@extract %></p>
 <% end %>

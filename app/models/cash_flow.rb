@@ -57,4 +57,15 @@ class CashFlow < ActiveRecord::Base
    
   end
 
+  def CashFlow.total_value(cash_flows)
+    value = 0.0
+    if cash_flows
+      cash_flows.each { |c|
+        value = value + c.value
+      }
+    end
+    return value
+  end
+
+
 end

@@ -48,4 +48,13 @@ class CashFlowTest < Test::Unit::TestCase
     assert_equal count+1, CashFlow.count
   end
 
+  def test_total_value
+    cash_flows = Array.new
+    cf1 =CashFlow.find(1)
+    cf2 = CashFlow.find(2)
+    cash_flows.push(cf1)
+    cash_flows.push(cf2)
+    assert_equal cf1.value + cf2.value, CashFlow.total_value(cash_flows)
+  end
+
 end

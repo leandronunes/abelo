@@ -118,6 +118,8 @@ class CashFlowsController < ApplicationController
 	end
       } 
     end
+
+    @balance = CashFlow.total_value(@operational_entrances_detailed) + CashFlow.total_value(@not_operational_entrances_detailed) - CashFlow.total_value(@operational_exits_detailed) - CashFlow.total_value(@not_operational_exits_detailed)
   end
 
 

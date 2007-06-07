@@ -98,4 +98,40 @@ class ConfigurationControllerTest < Test::Unit::TestCase
     assert_template '_edit_historical'
   end
 
+  def test_create
+    post :create, :model_name => 'historical'
+    assert_not_nil assigns(:model_name)
+    assert_not_nil assigns(:the_model)
+    assert_not_nil assigns(:object)
+    assert_response :redirect
+    assert_redirected_to :action => 'list'
+  end
+
+  def test_create_fails    
+    post :create, :model_name => 'historical', :historical => { :name => '' }
+    assert_not_nil assigns(:model_name)
+    assert_not_nil assigns(:the_model)
+    assert_not_nil assigns(:object)
+    assert_response :success
+    assert_template '_new_historical'
+  end
+
+  def test_show
+    get :show, :model_name => 'historical', :id => 1
+    assert_not_nil assigns(:model_name)
+    assert_not_nil assigns(:the_model)
+    assert_not_nil assigns(:object)
+    assert_not_nil assigns(:historical)
+    assert_response :success
+    assert_template '_show'
+  end
+
+  def test_destroy
+    get :destroy, :model_name => 'historical', :id => 1
+    assert_not_nil assigns(:model_name)
+    assert_not_nil assigns(:the_model)
+    assert_response :redirect
+    assert_redirected_to :action => 'list'   
+  end
+
 end

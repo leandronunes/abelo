@@ -8,7 +8,7 @@ class ConfigurationControllerTest < Test::Unit::TestCase
   
   include TestingUnderOrganization
 
-  fixtures :historicals
+  fixtures :historicals, :specifications
   
   def setup
     @controller = ConfigurationController.new
@@ -81,7 +81,7 @@ class ConfigurationControllerTest < Test::Unit::TestCase
   end
 
   def test_update
-    get :update, :model_name => 'historical', :id => 1
+    post :update, :model_name => 'historical', :id => 1
     assert_not_nil assigns(:model_name)
     assert_not_nil assigns(:the_model)
     assert_not_nil assigns(:object)
@@ -90,14 +90,12 @@ class ConfigurationControllerTest < Test::Unit::TestCase
   end
 
   def test_update_fails
-    get :update, :model_name => 'historical', :id => 1
-    h = Historical.find(1)
-    h.organization_id = nil
+    post :update, :model_name => 'historical', :id => 1, :historical => { :name => '' }
     assert_not_nil assigns(:model_name)
     assert_not_nil assigns(:the_model)
     assert_not_nil assigns(:object)
     assert_response :success
-    assert_template '_edit'
+    assert_template '_edit_historical'
   end
 
 end

@@ -80,7 +80,11 @@ class ConfigurationController < ApplicationController
         flash[:notice] = _('Item was successfully updated.')
         redirect_to :action => 'show', :model_name => @model_name, :id => @object
       else
-        render :partial => 'edit', :layout => false
+        if params[:model_name] == 'historical'
+          render :partial => 'edit_historical', :layout => true
+        else
+          render :partial => 'edit', :layout => true
+        end
       end 
 
     end

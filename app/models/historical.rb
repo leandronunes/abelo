@@ -1,6 +1,7 @@
 class Historical < ActiveRecord::Base
   has_many :cash_flows
   belongs_to :organization
+  validates_presence_of :name
   validates_uniqueness_of :name, :scope => :organization_id, :if => lambda { |historical| ! historical.name.blank? }, :message => 'There is another historical with this %{fn}'
 
   def cash_flows_for_day(date)

@@ -1,6 +1,6 @@
-class CreateCustomers < ActiveRecord::Migration
-  def self.up
-    create_table :customers do |t|
+  class CreateCustomers < ActiveRecord::Migration
+    def self.up
+      create_table :customers do |t|
       t.column :name, :string, :null => false
       t.column :email, :string, :null => false
       t.column :birthday, :date
@@ -10,10 +10,10 @@ class CreateCustomers < ActiveRecord::Migration
       t.column :rg, :string
       t.column :description, :text
       t.column :organization_id, :integer, :null => false
-    end
-  end
+      end
+   end
 
-  def self.down
-    drop_table :customers
-  end
+   def self.down
+     drop_table :customers
+   end
 end

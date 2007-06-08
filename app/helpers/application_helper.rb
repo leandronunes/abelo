@@ -237,5 +237,5 @@ module ApplicationHelper
       }
     )
   end
-
+  
 end

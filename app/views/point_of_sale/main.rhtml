@@ -29,9 +29,9 @@
       <%= _('Customer') %>
       <%= link_to_popup _('Select customer'), { :action => 'search_customer' , :sale_id => @sale }, {:class => 'button button_search' }, 'select_customer', 'customer_identification' %>
     </h2>
-      <span id='customer_identification'>
+      <div id='customer_identification'>
         <%= @sale.customer.nil? ? _('Unidentified customer') : @sale.customer.name %>
-      </span>
+      </div>
     <h2><%= _('Items') %></h2>
     <table id='items_table'>
       <tr>

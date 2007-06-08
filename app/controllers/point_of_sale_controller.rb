@@ -74,9 +74,15 @@ class PointOfSaleController < ApplicationController
   def search_customer
     @people = @organization.customers
     @sale_id = params[:sale_id]
-    render :template => 'search_customer'
+    render :template => 'point_of_sale/search_customer'
   end
 
-
+  def show_customers
+    existing_people_keys = params[:existing_people] ? params[:existing_people].keys.map { |k| k.to_i } : []
+    options = params[:options]
+    @people = Person.search(params[:search], existing_people_keys, options)
+    @type_select = params[:type_select]
+    render :action => 'people', :layout => false
+  end
 
 end

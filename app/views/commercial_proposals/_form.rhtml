@@ -6,6 +6,9 @@
 <p><label for="commercial_proposal_name"> <%= _('Name') %> </label>
 <%= text_field 'commercial_proposal', 'name'  %></p>
 
+<p><label for="commercial_proposal_body"> <%= _('Body') %></label></p>
+<%= fckeditor_textarea 'commercial_proposal', 'body', :width => '80%', :height => '300px' %>
+
 <p><label for="commercial_proposal_is_template"> <%= _('Is template') %> </label>
 <%= select 'commercial_proposal', 'is_template', [[_('False'), false],[_('True'), true]] %>
 </p>

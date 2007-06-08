@@ -23,11 +23,13 @@ module OrganizationsHelper
       'departments'         => _('Departments'),
       'commercial_proposals'=> _('Commercial Proposals'),
     }
+    x = 0
     content_tag('ul', 
                 menu_items.keys.select do |controller|
                   can(:controller => controller)
                 end.map do |controller|
-                  content_tag('li', (link_to menu_items[controller], { :controller => controller }))
+		  x = x+1
+                  content_tag('li', (link_to menu_items[controller], { :controller => controller }), :class => "button_main_#{x}")
                 end.join(''))
   end
 

@@ -2,18 +2,27 @@
    "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-  <title>abelo: login </title>
-  <%= stylesheet_link_tag 'common' %>
+  <title>Abelo : login </title>
+  <%= stylesheet_link_tag 'login' %>
   <%= javascript_include_tag :defaults %>
 </head>
 <body>
 
 <p style="color: green"><%= flash[:notice] if flash[:notice] %></p>
 
+<div id="banner_header"> </div>
+<div id="login_box">
+
 <%= user_bar %>
 
 <%= yield %>
 
+</div>
+<div id="footer">
+<b>Copyrigth © 2007 <a href="http://www.colivre.coop.br" alt="Cooperativa de Tecnologias Livres">Colivre</a> </b><br />
+Todo o conteúdo deste software pode ser reutilizado de acordo com os termos da licença <a href="http://www.gnu.org/licenses/licenses.html#GPL">GNU General Public License (GPL)</a>.
+
+</div>
 </body>
 
 </html>

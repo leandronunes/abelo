@@ -1,6 +1,7 @@
 class CommercialProposalsController < ApplicationController
 
   needs_organization
+  uses_popup_plugin
 
   def index
     redirect_to :action => 'list'
@@ -69,6 +70,10 @@ class CommercialProposalsController < ApplicationController
     @commercial_proposal.body = CommercialProposal.find(params[:id]).body
     @departments = @organization.departments
     render :action => 'new'
+  end
+
+  def add_section
+    render :template => 'commercial_proposals/add_section', :layout => false
   end
 
 end

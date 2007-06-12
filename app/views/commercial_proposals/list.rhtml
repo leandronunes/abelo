@@ -2,16 +2,13 @@
 
 <table>
   <tr>
-  <% for column in CommercialProposal.content_columns %>
-    <th><%= column.human_name %></th>
-  <% end %>
+    <th><%= _('Name') %></th>
+    <th colspan=3><%= _('Manage commercial proposal') %>
   </tr>
   
 <% for commercial_proposal in @commercial_proposals %>
   <tr>
-  <% for column in CommercialProposal.content_columns %>
-    <td><%=h commercial_proposal.send(column.name) %></td>
-  <% end %>
+    <td><%=h commercial_proposal.name %></td>
     <td><%= link_to 'Show', :action => 'show', :id => commercial_proposal %></td>
     <td><%= link_to 'Edit', :action => 'edit', :id => commercial_proposal %></td>
     <td><%= link_to 'Destroy', { :action => 'destroy', :id => commercial_proposal }, :confirm => 'Are you sure?', :post => true %></td>
@@ -24,16 +21,13 @@
 
 <table>
   <tr>
-  <% for column in CommercialProposal.content_columns %>
-    <th><%= column.human_name %></th>
-  <% end %>
+    <th><%= _('Name') %></th>
+    <th colspan=3><%= _('Manage commercial proposal') %>
   </tr>
   
 <% for commercial_proposal in @commercial_proposals_templates %>
   <tr>
-  <% for column in CommercialProposal.content_columns %>
-    <td><%=h commercial_proposal.send(column.name) %></td>
-  <% end %>
+    <td><%=h commercial_proposal.name %></td>
     <td><%= link_to 'Show', :action => 'show', :id => commercial_proposal %></td>
     <td><%= link_to 'Edit', :action => 'edit', :id => commercial_proposal %></td>
     <td><%= link_to 'Destroy', { :action => 'destroy', :id => commercial_proposal }, :confirm => 'Are you sure?', :post => true %></td>

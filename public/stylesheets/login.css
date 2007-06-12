@@ -102,3 +102,42 @@ color: #eeeeee;
 #footer a:hover {
 color: #545454;
 }
+
+#errorExplanation {
+  position:relative;
+  width:400px;
+  margin:0px 0px 0px -200px;
+  left: 50%;
+  border: 2px solid red;
+  padding-top: 7px;
+  padding-left: 7px;
+  padding-right: 7px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+
+#errorExplanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin-top: -7px;
+  margin-left: -7px;
+  margin-right: -7px;
+  background-color: #c00;
+  color: #fff;
+}
+
+#errorExplanation p {
+  color: #333;
+  margin-bottom: 0;
+  padding: 5px;
+}
+
+#errorExplanation ul li {
+  font-size: 12px;
+  list-style: square;
+}
+
+-->

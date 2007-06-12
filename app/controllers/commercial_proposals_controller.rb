@@ -58,15 +58,16 @@ class CommercialProposalsController < ApplicationController
   end
 
   def choose_template
-    @templates = CommercialProposal.find(:all, :conditions => ['is_template = ?', true])
+    @templates = @organization.commercial_proposals_templates
   end
 
   def new_from_template
     @commercial_proposal = CommercialProposal.find(params[:id]).clone
-  end
-
-  def create_from_template
-    
+    @commercial_proposal.name = ''
+    @commercial_proposal.departments.clear
+    @commercial_proposal.is_template = false
+    @departments = @organization.departments
+    render :action => 'new'
   end
 
 end

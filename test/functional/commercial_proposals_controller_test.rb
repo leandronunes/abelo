@@ -153,11 +153,17 @@ class CommercialProposalsControllerTest < Test::Unit::TestCase
     get :choose_template
     assert_response :success
     assert_template 'choose_template'
+    assert_not_nil assigns(:templates)
+    assert_equal 1, assigns(:templates).size
   end
 
   def test_new_from_template
     get :new_from_template, :id => 1
     assert_response :success
+    assert_template 'new'
+    assert_not_nil assigns(:commercial_proposal)
+    assert_not_equal assigns(:commercial_proposal).name, CommercialProposal.find(1).name
+    assert_equal assigns(:commercial_proposal).body, CommercialProposal.find(1).body
   end
 
 end

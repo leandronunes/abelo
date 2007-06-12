@@ -2,8 +2,8 @@
 first:
   id: 1
   name: "Section one"
-  organization_id: 1
+  commercial_proposal_id: 1
 another:
   id: 2
   name: "Section two"
-  organization_id: 1
+  commercial_proposal_id: 1

@@ -1,8 +1,14 @@
-<%= link_to_close_popup " ", {:class => 'button_close'}, 'add_section' %>
+<%= link_to_close_popup " ", {:class => 'button_close'}, 'add_section', 'proposal_sections' %>
 
 <h2><%= _('New section') %></h2>
+
+<%= popup_form_tag( {:action => 'add_section', :id => @commercial_proposal_id } ) %>
 
 <p><label for="section_name"><%= _('Name') %></label>
 <%= text_field 'commercial_proposal_section', 'name'%></p>
 
+<div class='button_bar'>
+<%= submit_tag _('Add section') %>
+</div>
 
+<%= end_form_tag %>

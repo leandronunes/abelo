@@ -40,6 +40,7 @@ class CommercialProposalsController < ApplicationController
   def edit
     @commercial_proposal = CommercialProposal.find(params[:id])
     @departments = @organization.departments
+    @sections = @commercial_proposal.commercial_proposal_sections
   end
 
   def update
@@ -72,8 +73,20 @@ class CommercialProposalsController < ApplicationController
     render :action => 'new'
   end
 
-  def add_section
+  def new_section
+    @commercial_proposal_section = CommercialProposalSection.new
+    @commercial_proposal_id = params[:id]
     render :template => 'commercial_proposals/add_section', :layout => false
+  end
+
+  def add_section
+    @section = CommercialProposalSection.new(params[:commercial_proposal_section])
+    @section.commercial_proposal = CommercialProposal.find(params[:id])
+    @section.save
+    @commercial_proposal = CommercialProposal.find(params[:id])
+    @departments = @organization.departments
+    @sections = @commercial_proposal.commercial_proposal_sections
+    render :partial => 'budget' 
   end
 
 end

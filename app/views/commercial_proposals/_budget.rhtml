@@ -1,2 +1,9 @@
 <p><label for="commercial_proposal_budget"><%= _('Budget') %></label>
-<%= link_to_popup _('Add a new section'), {:action => 'add_section', :id => @commercial_proposal.id}, {}, 'add_section', 'section_new' %></p>
+<%= link_to_popup _('Add a new section'), {:action => 'new_section', :id => @commercial_proposal.id}, {}, 'add_section', 'proposal_sections' %></p>
+<div id="proposal_sections">
+  <ul>
+  <% for section in @sections %>
+    <li><%= section.name %><%= link_to_popup _('Add a item') %></li>
+  <% end %>
+  </ul>
+</div>

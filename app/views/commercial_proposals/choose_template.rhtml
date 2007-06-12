@@ -1,0 +1,8 @@
+<h1><%= _('Choose a template for commercial proposal') %></h1>
+
+<ul>
+  <% for template in @templates %>
+    <li><%= link_to template.name, :action => 'new_from_template', :id => template %></li>
+<% end %>
+  <li><%= link_to _("No predefined template"), :action => 'new' %></li>
+</ul>

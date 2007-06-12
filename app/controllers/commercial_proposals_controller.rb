@@ -56,4 +56,17 @@ class CommercialProposalsController < ApplicationController
     CommercialProposal.find(params[:id]).destroy
     redirect_to :action => 'list'
   end
+
+  def choose_template
+    @templates = CommercialProposal.find(:all, :conditions => ['is_template = ?', true])
+  end
+
+  def new_from_template
+    @commercial_proposal = CommercialProposal.find(params[:id]).clone
+  end
+
+  def create_from_template
+    
+  end
+
 end

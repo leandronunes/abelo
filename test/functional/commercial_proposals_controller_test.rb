@@ -37,7 +37,21 @@ class CommercialProposalsControllerTest < Test::Unit::TestCase
     assert_template 'show'
 
     assert_not_nil assigns(:commercial_proposal)
-    assert assigns(:commercial_proposal).valid?
+    assert_valid assigns(:commercial_proposal)
+  end
+
+  def test_new
+    get :new
+
+    assert_response :success
+    assert_template 'new'
+
+    assert_not_nil assigns(:commercial_proposal)
+    assert_not_nil assigns(:departments)
+    assert_kind_of Array, assigns(:departments)
+    assigns(:departments).each do |d|
+      assert d.valid?
+    end
   end
 
   def test_new
@@ -93,9 +107,9 @@ class CommercialProposalsControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:departments)
     assert_kind_of Array, assigns(:departments)
     assigns(:departments).each do |d|
-      assert d.valid?
+      assert_valid d
     end
-    assert assigns(:commercial_proposal).valid?
+    assert_valid assigns(:commercial_proposal)
   end
 
   def test_update_correct_params
@@ -134,4 +148,16 @@ class CommercialProposalsControllerTest < Test::Unit::TestCase
       CommercialProposal.find(1)
     }
   end
+
+  def test_choose_template
+    get :choose_template
+    assert_response :success
+    assert_template 'choose_template'
+  end
+
+  def test_new_from_template
+    get :new_from_template, :id => 1
+    assert_response :success
+  end
+
 end

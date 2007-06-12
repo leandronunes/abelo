@@ -1,19 +1,19 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-proposal_item_of_proposal_1_order_1:
+proposal_item_1_of_section_1:
   id: 1
-  name: 'Description'
-  item_order: 1
-  size: 'B'
-  commercial_proposal_id: 1
-proposal_item_of_proposal_1_order_2:
+  name: 'Item one'
+  quantity: 10
+  unit: "g"
+  number: 5
+  unitary_value: 5.0
+  size: "5x5cm"
+  type_of: 'product'
+  commercial_proposal_section_id: 1
+proposal_item_2_of_section_1:
   id: 2
-  name: 'Target Audience'
-  item_order: 2
-  size: 'M'
-  commercial_proposal_id: 1
-proposal_item_of_proposal_2_order_1_without_size:
-  id: 3
-  name: 'Description'
-  item_order: 1
-  size: 'S'
-  commercial_proposal_id: 2
+  name: 'Item two'
+  quantity: 7
+  unit: 'l'
+  unitary_value: 12.0
+  type_of: 'product'
+  commercial_proposal_section_id: 1

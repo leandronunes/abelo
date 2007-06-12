@@ -66,6 +66,7 @@ class CommercialProposalsController < ApplicationController
     @commercial_proposal.name = ''
     @commercial_proposal.departments.clear
     @commercial_proposal.is_template = false
+    @commercial_proposal.body = CommercialProposal.find(params[:id]).body
     @departments = @organization.departments
     render :action => 'new'
   end

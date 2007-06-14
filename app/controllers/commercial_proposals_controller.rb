@@ -83,11 +83,31 @@ class CommercialProposalsController < ApplicationController
   def add_section
     @section = CommercialProposalSection.new(params[:commercial_proposal_section])
     @section.commercial_proposal = CommercialProposal.find(params[:id])
-    @section.save
-    @commercial_proposal = CommercialProposal.find(params[:id])
-    @departments = @organization.departments
-    @sections = @commercial_proposal.commercial_proposal_sections
-    render :partial => 'budget' 
+    if @section.save
+      @commercial_proposal = CommercialProposal.find(params[:id])
+      @sections = @commercial_proposal.commercial_proposal_sections
+      render :partial => 'sections' 
+    else
+      
+    end
+  end
+
+  def new_item
+    @commercial_section_item = CommercialProposalItem.new
+    @commercial_section_id = params[:id]
+    render :template => 'commercial_proposals/add_item', :layout => false
+  end
+
+  def add_item
+    @item = CommercialProposalItem.new(params[:commercial_section_item])
+    @item.commercial_proposal_section = CommercialProposalSection.find(params[:id])
+    if @item.save
+      @commercial_proposal_section = CommercialProposalSection.find(params[:id])
+      @items = @commercial_proposal.commercial_proposal_items
+      render :partial => 'items'
+    else
+
+    end
   end
 
 end

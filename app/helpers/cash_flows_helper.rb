@@ -10,8 +10,8 @@ module CashFlowsHelper
           {  
             content_tag('tr', [ content_tag('th', _('Historical') ), content_tag('th', _('Value') ), content_tag('th', 'Foreseen') ]),
             historicals.map do |h|
-              total_value = CashFlow.total_value(cash_flows, false)
-	      total_value_foreseen = CashFlow.total_value(cash_flows, true)
+              total_value = CashFlow.historical_total_value(cash_flows, false, h)
+	      total_value_foreseen = CashFlow.historical_total_value(cash_flows, true, h)
 	      if total_value > 0
                 [content_tag('tr', [ content_tag('td', h.name), content_tag('td', total_value ), content_tag('td', ' ') ] ),
 		if total_value_foreseen > 0
@@ -70,18 +70,16 @@ module CashFlowsHelper
                 cash_flows.map do |c|
 		  if c.date.month != month
   		    month = c.date.month
-		    month_value = CashFlow.month_total_value(month, cash_flows, false)
-		    month_value_foreseen = CashFlow.month_total_value(month, cash_flows, true)
-  	            if c.historical_id == h.id
-		      if month_value > 0
-                        [content_tag('tr', [ content_tag('td', month, "align" => "center"), content_tag('td', month_value ), content_tag('td', ' ') ] ),			
-                        if month_value_foreseen > 0
-                          content_tag('tr', [ content_tag('td', month, "align" => "center"), content_tag('td', month_value_foreseen ), content_tag('td', 'x', "align" => "center") ] ) 
-    		        end ]
-		      elsif month_value_foreseen > 0
+		    month_value = CashFlow.month_total_value(month, cash_flows, false, h)
+		    month_value_foreseen = CashFlow.month_total_value(month, cash_flows, true, h)
+		    if month_value > 0
+                      [content_tag('tr', [ content_tag('td', month, "align" => "center"), content_tag('td', month_value ), content_tag('td', ' ') ] ),			
+                      if month_value_foreseen > 0
                         content_tag('tr', [ content_tag('td', month, "align" => "center"), content_tag('td', month_value_foreseen ), content_tag('td', 'x', "align" => "center") ] ) 
-		      end
-  		    end 
+    		      end ]
+		    elsif month_value_foreseen > 0
+                      content_tag('tr', [ content_tag('td', month, "align" => "center"), content_tag('td', month_value_foreseen ), content_tag('td', 'x', "align" => "center") ] ) 
+		    end
   	          end
 		end]
               end

@@ -5,7 +5,7 @@ require 'commercial_proposals_controller'
 class CommercialProposalsController; def rescue_action(e) raise e end; end
 
 class CommercialProposalsControllerTest < Test::Unit::TestCase
-  fixtures :commercial_proposals, :departments
+  fixtures :commercial_proposals, :departments, :commercial_proposal_sections, :organizations, :commercial_proposals_departments
   under_organization :one
   
   def setup
@@ -37,21 +37,10 @@ class CommercialProposalsControllerTest < Test::Unit::TestCase
     assert_template 'show'
 
     assert_not_nil assigns(:commercial_proposal)
+    
+    cp = CommercialProposal.find(1)
+    cp.add_departments(Department.find(1))
     assert_valid assigns(:commercial_proposal)
-  end
-
-  def test_new
-    get :new
-
-    assert_response :success
-    assert_template 'new'
-
-    assert_not_nil assigns(:commercial_proposal)
-    assert_not_nil assigns(:departments)
-    assert_kind_of Array, assigns(:departments)
-    assigns(:departments).each do |d|
-      assert d.valid?
-    end
   end
 
   def test_new
@@ -73,6 +62,7 @@ class CommercialProposalsControllerTest < Test::Unit::TestCase
 
     post :create, :commercial_proposal => {:organization_id => 1, :name => 'Any Name', :department_ids => [1,2] }
 
+    assert_valid assigns(:commercial_proposal)
     assert_response :redirect
     assert_redirected_to :action => 'list'
 
@@ -109,11 +99,14 @@ class CommercialProposalsControllerTest < Test::Unit::TestCase
     assigns(:departments).each do |d|
       assert_valid d
     end
+    cp = CommercialProposal.find(1)
+    cp.add_departments(Department.find(1))
     assert_valid assigns(:commercial_proposal)
   end
 
   def test_update_correct_params
-    post :update, :id => 1
+    post :update, :id => 1, :commercial_proposal => {:organization_id => 1, :name => 'Any Name', :department_ids => [1,2] }
+
     assert_response :redirect
     assert_redirected_to :action => 'show', :id => 1
   end

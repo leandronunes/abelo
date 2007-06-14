@@ -50,6 +50,7 @@ class CommercialProposalsController < ApplicationController
       redirect_to :action => 'show', :id => @commercial_proposal
     else
       @departments = @organization.departments
+      @sections = @commercial_proposal.commercial_proposal_sections
       render :action => 'edit'
     end
   end

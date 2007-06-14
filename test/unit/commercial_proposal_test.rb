@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class CommercialProposalTest < Test::Unit::TestCase
-  fixtures :commercial_proposals, :commercial_proposals_departments
+  fixtures :commercial_proposals, :commercial_proposals_departments, :commercial_proposal_sections
 
   def test_mandatory_fields
     count = CommercialProposal.count
@@ -70,20 +70,14 @@ class CommercialProposalTest < Test::Unit::TestCase
     end
   end
 
-  def test_commercial_proposal_items
+  def test_commercial_proposal_sections
     cp = CommercialProposal.find(1)
-    count = cp.commercial_proposal_items.count
+    count = cp.commercial_proposal_sections.count
 
-    cpi1 = CommercialProposalItem.new
-    cpi1.name = 'Description 1'
-    invalid_item_order = 100
-    assert !(cp.commercial_proposal_items.detect{|c| c.item_order == invalid_item_order })
-    cpi1.item_order = invalid_item_order
-    cpi1.size = 'S'
-    
-    cp.add_commercial_proposal_items(cpi1)
-    assert count + 1, cp.commercial_proposal_items.count
-    assert cpi1.valid?
+    cps = CommercialProposalSection.find(1)
+    assert_valid cps
+    cp.add_commercial_proposal_sections(cps)
+    assert count + 1, cp.commercial_proposal_sections.count
   end
 
 end

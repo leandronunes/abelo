@@ -1,0 +1,21 @@
+<%= link_to_close_popup " ", {:class => 'button_close'}, 'add_item', 'proposal_sections' %>
+
+<h2><%= _('New item') %></h2>
+
+<%= popup_form_tag( {:action => 'add_item', :id => @commercial_section_id, :commercial_proposal_id => @commercial_proposal_id } ) %>
+
+<p><label for="item_name"><%= _('Name') %></label>
+<%= text_field 'commercial_proposal_item', 'name'%></p>
+
+<p><label for="item_quantity"><%= _('Quantity') %></label>
+<%= text_field 'commercial_proposal_item', 'quantity'%></p>
+
+<p><label for="item_unitary_value"><%= _('Unitary value') %></label>
+<%= text_field 'commercial_proposal_item', 'unitary_value'%></p>
+
+<p><label for="item_type_of"><%= _('Type') %></label>
+<%= text_field 'commercial_proposal_item', 'type_of'%></p>
+
+<%= submit_tag _('Add item') %>
+
+<%= end_form_tag %>

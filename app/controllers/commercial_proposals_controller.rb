@@ -81,9 +81,9 @@ class CommercialProposalsController < ApplicationController
   end
 
   def add_section
-    @section = CommercialProposalSection.new(params[:commercial_proposal_section])
-    @section.commercial_proposal = CommercialProposal.find(params[:id])
-    if @section.save
+    section = CommercialProposalSection.new(params[:commercial_proposal_section])
+    section.commercial_proposal = CommercialProposal.find(params[:id])
+    if section.save
       @commercial_proposal = CommercialProposal.find(params[:id])
       @sections = @commercial_proposal.commercial_proposal_sections
       render :partial => 'sections' 
@@ -93,21 +93,32 @@ class CommercialProposalsController < ApplicationController
   end
 
   def new_item
-    @commercial_section_item = CommercialProposalItem.new
+    @commercial_proposal_item = CommercialProposalItem.new
     @commercial_section_id = params[:id]
+    @commercial_proposal_id = params[:commercial_proposal_id]
+    @title = _('New item')
+    @button_name = _('Add item')
     render :template => 'commercial_proposals/add_item', :layout => false
   end
 
   def add_item
-    @item = CommercialProposalItem.new(params[:commercial_section_item])
-    @item.commercial_proposal_section = CommercialProposalSection.find(params[:id])
-    if @item.save
-      @commercial_proposal_section = CommercialProposalSection.find(params[:id])
-      @items = @commercial_proposal.commercial_proposal_items
-      render :partial => 'items'
+    item = CommercialProposalItem.new(params[:commercial_proposal_item])
+    item.commercial_proposal_section_id = params[:id]
+    if item.save
+      @commercial_proposal = CommercialProposal.find(params[:commercial_proposal_id])
+      @sections = @commercial_proposal.commercial_proposal_sections
+      render :partial => 'sections'
     else
-
+      render :text => 'nao salvou'
     end
+  end
+
+  def edit_section
+    @commercial_proposal_item = CommercialProposalItem.find(params[:id])
+    render :template => 'commercial_proposals/edit_section', :layout => false
+  end
+
+  def remove_section
   end
 
 end

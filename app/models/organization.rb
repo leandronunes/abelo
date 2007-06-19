@@ -66,7 +66,23 @@ class Organization < ActiveRecord::Base
       end
     }
     return value
-  end 
+  end
+
+  def customers_by_products(list_products)
+    customers = []
+    self.sales.each { |s|
+      customers = s.customers_products(list_products, self)
+    }
+    return customers
+  end
+
+  def customers_by_categories(list_categories)
+    customers = []
+    list_categories.keys.each { |k|
+      customers.concat(self.customer_categories.find(k).customers)
+    }
+    return customers
+  end
 
   private
 

@@ -74,4 +74,14 @@ class Sale < ActiveRecord::Base
     return value
   end
 
+  def customers_products(list_products, org)
+    customers = []
+    self.items.each { |i|
+      if list_products.include?(i.product_id.to_s)
+        customers.push(org.customers.find(self.customer_id))
+      end
+    }
+    return customers
+  end
+
 end

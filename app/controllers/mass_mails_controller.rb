@@ -61,12 +61,22 @@ class MassMailsController < ApplicationController
   def filter_customers
     @mass_mail_id = params[:id]
     @customers = []
-    lista = params[:categories]
-    if lista
-      lista.keys.each { |k|
-        @customers.concat(@organization.customer_categories.find(k).customers)
-      }
-    end
+    list_categories = params[:categories]
+    list_products = params[:products]
+    if list_categories and not list_products
+      @customers.concat(@organization.customers_by_categories(list_categories))
+      @customers = @customers.uniq
+    elsif list_products and not list_categories
+      list_products = list_products.keys
+      @customers.concat(@organization.customers_by_products(list_products))
+      @customers = @customers.uniq
+    elsif list_products and list_categories
+      customers_1 = []
+      customers_2 = []
+      customers_1.concat(@organization.customers_by_categories(list_categories))
+      customers_2.concat(@organization.customers_by_products(list_products))
+      @customers = customers_1 & customers_2
+    end  
   end
 
   def send_emails

@@ -21,8 +21,4 @@ class Customer < ActiveRecord::Base
     end
   end
 
-  def list_by_categories()
-
-  end
-
 end

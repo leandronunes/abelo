@@ -7,7 +7,7 @@ class CashFlowsController; def rescue_action(e) raise e end; end
 class CashFlowsControllerTest < Test::Unit::TestCase
   include TestingUnderOrganization
 
-  fixtures :cash_flows
+  fixtures :cash_flows, :historicals
 
   def setup
     @controller = CashFlowsController.new

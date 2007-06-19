@@ -51,8 +51,8 @@ class CommercialProposalSectionsControllerTest < Test::Unit::TestCase
 
   def test_destroy
     post :destroy, :id => 1, :commercial_proposal_id => 1
-    assert_response :success
-    assert_template '_list'
+    assert_response :redirect
+    assert_redirected_to :controller => 'commercial_proposals', :action => 'edit'
 
     assert_raise(ActiveRecord::RecordNotFound) {
       CommercialProposalSection.find(1)

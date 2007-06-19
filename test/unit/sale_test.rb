@@ -77,4 +77,15 @@ class SaleTest < Test::Unit::TestCase
     assert_equal value_expected, s.total_value
   end
 
+  def test_customers_products
+    list_products = []
+    customers_expected = []
+    org = Organization.find(1)
+    s = Sale.find(1)
+    list_products.push("1")
+    list_products.push("3")
+    customers_expected.push(Customer.find(1))
+    assert_equal customers_expected, s.customers_products(list_products, org)
+  end
+
 end

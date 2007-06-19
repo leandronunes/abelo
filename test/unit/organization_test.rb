@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class OrganizationTest < Test::Unit::TestCase
-  fixtures :organizations, :people, :user_profiles, :sales, :departments, :historicals, :specifications, :cash_flows
+  fixtures :organizations, :people, :user_profiles, :sales, :departments, :historicals, :specifications, :cash_flows, :customers, :customer_categories, :customers_customer_categories
 
   def setup
     @organization = Organization.new
@@ -80,9 +80,7 @@ class OrganizationTest < Test::Unit::TestCase
   def test_has_many_departaments
     o = Organization.find(1)
     assert o.valid?
-    d = Department.new
-    d.name = "Department New"
-    assert d.save
+    d = Department.find(1)
     o.add_departments(d)
     assert d.valid?
     assert o.departments.include?(d)
@@ -172,6 +170,23 @@ class OrganizationTest < Test::Unit::TestCase
     assert_equal cf_1.historical_id, cf_2.historical_id
     total_value =  cf_1.value + cf_2.value
     assert_equal total_value, @organization.historical_total_value(cf_1.historical_id)
+  end
+
+  def test_customers_by_products
+    customers_expected = []
+    list_products = ["1", "3"]
+    org = Organization.find(1)
+    customers_expected.push(Customer.find(1))
+    assert_equal customers_expected, org.customers_by_products(list_products).uniq
+  end
+
+  def test_customers_by_categories
+    customers_expected = []
+    list_categories = [1, 2]
+    org = Organization.find(1)
+    customers_expected.push(Customer.find(3))
+    customers_expected.push(Customer.find(2))
+    assert_equal customers_expected, org.customers_by_categories(list_categories).uniq
   end
 
 end

@@ -64,6 +64,7 @@ class MassMailsController < ApplicationController
     list_categories = params[:categories]
     list_products = params[:products]
     if list_categories and not list_products
+      list_categories = list_categories.keys
       @customers.concat(@organization.customers_by_categories(list_categories))
       @customers = @customers.uniq
     elsif list_products and not list_categories

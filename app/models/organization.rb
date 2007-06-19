@@ -78,8 +78,11 @@ class Organization < ActiveRecord::Base
 
   def customers_by_categories(list_categories)
     customers = []
-    list_categories.keys.each { |k|
-      customers.concat(self.customer_categories.find(k).customers)
+    list_categories.each { |k|
+      cat = self.customer_categories.find(k)
+      if cat
+        customers.concat(cat.customers)
+      end
     }
     return customers
   end

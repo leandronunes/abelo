@@ -4,7 +4,7 @@
 
 <h2><%= _('New section') %></h2>
 
-<%= popup_form_tag( {:action => 'add_section', :id => @commercial_proposal_id } ) %>
+<%= popup_form_tag( {:action => 'add', :id => @commercial_proposal_id } ) %>
 
 <p><label for="section_name"><%= _('Name') %></label>
 <%= text_field 'commercial_proposal_section', 'name'%></p>

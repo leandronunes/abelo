@@ -1,0 +1,11 @@
+<div id="proposal_sections">
+  <ul>
+  <% for section in @sections %>
+    <li><%= section.name %>
+    <%= link_to_popup _('Edit'), {:controller => 'commercial_proposal_sections', :action => 'edit', :id => section.id, :commercial_proposal_id => @commercial_proposal.id }, {}, 'edit_section', 'proposal_sections' %>
+    <%= link_to _('Remove'), { :action => 'destroy', :id => section.id, :commercial_proposal_id => @commercial_proposal.id } %></li>
+    <p><%= link_to_popup _('New item'), {:controller => 'commercial_proposal_items', :action => 'new', :id => section.id, :commercial_proposal_id => @commercial_proposal.id}, {}, 'add_item', 'proposal_sections' %></p>
+    <%= render :partial => 'commercial_proposal_items/list', :locals => {:items => section.commercial_proposal_items} %>
+  <% end %>
+  </ul>
+</div>

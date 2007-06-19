@@ -1,10 +1,10 @@
-<%= error_messages_for 'commercial_proposal' %>
+<%= error_messages_for 'commercial_proposal_section' %>
 
 <%= link_to_close_popup " ", {:class => 'button_close'}, 'edit_section', 'proposal_sections' %>
 
 <h2><%= _('Edit section') %></h2>
 
-<%= popup_form_tag( {:action => 'update_section', :id => @commercial_proposal_section.id, :commercial_proposal_id => @commercial_proposal_id  } ) %>
+<%= popup_form_tag( {:action => 'update', :id => @commercial_proposal_section.id, :commercial_proposal_id => @commercial_proposal_id  } ) %>
 
 <p><label for="section_name"><%= _('Name') %></label>
 <%= text_field 'commercial_proposal_section', 'name'%></p>

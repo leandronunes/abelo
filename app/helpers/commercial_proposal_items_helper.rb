@@ -1,0 +1,2 @@
+module CommercialProposalItemsHelper
+end

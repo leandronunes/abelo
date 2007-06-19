@@ -1,3 +1,3 @@
 <p><label for="commercial_proposal_budget"><%= _('Budget') %></label>
-<%= link_to_popup _('Add a section'), {:action => 'new_section', :id => @commercial_proposal.id}, {}, 'add_section', 'proposal_sections' %></p>
-<%= render :partial => 'sections' %>
+<%= link_to_popup _('Add a section'), {:controller => 'commercial_proposal_sections', :action => 'new', :id => @commercial_proposal.id}, {}, 'add_section', 'proposal_sections' %></p>
+<%= render :partial => 'commercial_proposal_sections/list' %>

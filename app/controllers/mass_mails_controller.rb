@@ -74,6 +74,8 @@ class MassMailsController < ApplicationController
     elsif list_products and list_categories
       customers_1 = []
       customers_2 = []
+      list_categories = list_categories.keys
+      list_products = list_products.keys
       customers_1.concat(@organization.customers_by_categories(list_categories))
       customers_2.concat(@organization.customers_by_products(list_products))
       @customers = customers_1 & customers_2

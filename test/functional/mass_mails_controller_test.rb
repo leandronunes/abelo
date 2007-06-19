@@ -8,7 +8,7 @@ class MassMailsControllerTest < Test::Unit::TestCase
 
   include TestingUnderOrganization
 
-  fixtures :mass_mails, :organizations
+  fixtures :mass_mails, :organizations, :customers, :customer_categories, :customers_customer_categories
 
   def setup
     @controller = MassMailsController.new
@@ -118,4 +118,45 @@ class MassMailsControllerTest < Test::Unit::TestCase
     assert_equal num_deliveries+1, ActionMailer::Base.deliveries.size
     assert_equal 2, assigns(:emails).length
   end
+
+  def test_filter_customer_by_categories
+    get :filter_customers, :id => 1, :categories => {1 => "1", 2 => "1"}
+
+    assert_response :success
+    assert_template 'filter_customers'
+
+    customers = []
+    customers.push(Customer.find(3))
+    customers.push(Customer.find(2))
+
+    assert_equal customers, assigns(:customers)
+
+  end
+
+  def test_filter_customer_by_products
+    get :filter_customers, :id => 1, :products => {"1" => "1", "3" => "1"}
+
+    assert_response :success
+    assert_template 'filter_customers'
+
+    customers = []
+    customers.push(Customer.find(1))
+
+    assert_equal customers, assigns(:customers)
+
+  end
+
+  def test_filter_customer_by_categories_and_products
+    get :filter_customers, :id => 1, :categories => {1 => "1", 5 => "1"}, :products => {"1" => "1", "3" => "1"}
+
+    assert_response :success
+    assert_template 'filter_customers'
+
+    customers = []
+    customers.push(Customer.find(1))
+
+    assert_equal customers, assigns(:customers)
+
+  end
+
 end

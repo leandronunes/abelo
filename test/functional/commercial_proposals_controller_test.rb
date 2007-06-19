@@ -184,11 +184,38 @@ class CommercialProposalsControllerTest < Test::Unit::TestCase
   end
 
   def test_add_item
-    get :add_item, :commercial_section_item => {:name => 'Name of section for testing', :quantity => 5, :unitary_value => 2.0, :type_of => 'type for testing', :commercial_proposal_section_id => 1}, :id => 1, :commercial_proposal_id => 1
+    get :add_item, :commercial_proposal_item => {:name => 'Name of section for testing', :quantity => 5, :unitary_value => 2.0, :type_of => 'type for testing', :commercial_proposal_section_id => 1}, :id => 1, :commercial_proposal_id => 1
     assert_not_nil assigns(:commercial_proposal)
     assert_not_nil assigns(:sections)
     assert_response :success
     assert_template '_sections'
+  end
+
+  def test_edit_section
+    get :edit_section, :id => 1, :commercial_proposal_id => 1
+    assert_not_nil assigns(:commercial_proposal_section)
+    assert_not_nil assigns(:commercial_proposal_id)
+    assert_response :success
+    assert_template 'commercial_proposals/edit_section'
+  end
+
+  def test_update_section
+    get :update_section, :id => 1, :commercial_proposal_id => 1
+    assert_not_nil assigns(:commercial_proposal_section)
+    assert_not_nil assigns(:commercial_proposal)
+    assert_not_nil assigns(:sections)
+    assert_response :success
+    assert_template '_sections'
+  end
+
+  def test_destroy_section
+    post :remove_section, :id => 1, :commercial_proposal_id => 1
+    assert_response :success
+    assert_template '_sections'
+
+    assert_raise(ActiveRecord::RecordNotFound) {
+      CommercialProposalSection.find(1)
+    }
   end
 
 end

@@ -2,8 +2,8 @@
   <ul>
   <% for section in @sections %>
     <li><%= section.name %>
-    <%= link_to_popup _('Edit'), {:action => 'edit_section', :id => section.id}, {}, 'edit_section', 'proposal_sections' %>
-    <%= link_to _('Remove'), :action => 'remove_section', :id => section.id %></li>
+    <%= link_to_popup _('Edit'), {:action => 'edit_section', :id => section.id, :commercial_proposal_id => @commercial_proposal.id }, {}, 'edit_section', 'proposal_sections' %>
+    <%= link_to _('Remove'), { :action => 'remove_section', :id => section.id, :commercial_proposal_id => @commercial_proposal.id } %></li>
     <p><%= link_to_popup _('New item'), {:action => 'new_item', :id => section.id, :commercial_proposal_id => @commercial_proposal.id}, {}, 'add_item', 'proposal_sections' %></p>
     <%= render :partial => 'items', :locals => {:items => section.commercial_proposal_items} %>
   <% end %>

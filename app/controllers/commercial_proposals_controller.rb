@@ -114,11 +114,27 @@ class CommercialProposalsController < ApplicationController
   end
 
   def edit_section
-    @commercial_proposal_item = CommercialProposalItem.find(params[:id])
+    @commercial_proposal_section = CommercialProposalSection.find(params[:id])
+    @commercial_proposal_id = params[:commercial_proposal_id]
     render :template => 'commercial_proposals/edit_section', :layout => false
   end
 
+  def update_section
+    @commercial_proposal_section = CommercialProposalSection.find(params[:id])
+    if @commercial_proposal_section.update_attributes(params[:commercial_proposal_section])
+      @commercial_proposal = CommercialProposal.find(params[:commercial_proposal_id])
+      @sections = @commercial_proposal.commercial_proposal_sections
+      flash[:notice] = _('Commercial proposal section was successfuly updated.')
+      render :partial => 'sections'
+    else
+    end
+  end
+  
   def remove_section
+    CommercialProposalSection.find(params[:id]).destroy
+    @commercial_proposal = CommercialProposal.find(params[:commercial_proposal_id])
+    @sections = @commercial_proposal.commercial_proposal_sections
+    render :partial => 'sections'    
   end
 
 end

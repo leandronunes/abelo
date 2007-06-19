@@ -55,4 +55,16 @@ class CommercialProposalSectionTest < Test::Unit::TestCase
     assert_equal 2, cps.commercial_proposal_id
   end
 
+  def test_before_destroy
+    s = CommercialProposalSection.find(1)
+    assert !s.commercial_proposal_items.empty?
+    items = s.commercial_proposal_items
+    s.destroy
+    items.each{ |i|
+      assert_raise(ActiveRecord::RecordNotFound){
+        CommercialProposalItem.find(i)
+      }
+    }
+  end
+
 end

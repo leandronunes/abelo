@@ -1,7 +1,9 @@
 <div id="section_items">
   <ul>
   <% for item in items %>
-    <li><%= item.name %></li>
+    <li><%= item.name %>
+    <%= link_to_popup _('Edit'), {:controller => 'commercial_proposal_items', :action => 'edit', :id => item.id, :commercial_proposal_id => @commercial_proposal.id }, {}, 'edit_item', 'proposal_sections' %>
+    <%= link_to _('Remove'), { :controller => 'commercial_proposal_items', :action => 'destroy', :id => item.id, :commercial_proposal_id => @commercial_proposal.id }, :confirm => _('Are you sure'), :post => true %></li>
   <% end %>
   </ul>
 </div>

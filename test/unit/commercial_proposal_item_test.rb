@@ -1,14 +1,11 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class CommercialProposalItemTest < Test::Unit::TestCase
-  fixtures :commercial_proposal_items
+  fixtures :commercial_proposal_items, :products
 
   def test_mandatory_fields
     count = CommercialProposalItem.count
     cpi = CommercialProposalItem.new
-    assert !cpi.save
-
-    cpi.name = "One CommercialProposalItem"
     assert !cpi.save
 
     cpi.quantity = 4
@@ -17,7 +14,7 @@ class CommercialProposalItemTest < Test::Unit::TestCase
     cpi.unitary_value = 10
     assert !cpi.save
 
-    cpi.type_of = 'product'
+    cpi.product_id = 1
     assert !cpi.save
 
     cpi.commercial_proposal_section_id = 1
@@ -29,12 +26,11 @@ class CommercialProposalItemTest < Test::Unit::TestCase
   def test_create
     count = CommercialProposalItem.count
     cpi = CommercialProposalItem.new
-    cpi.name = 'Another CommercialProposalItem'
     cpi.quantity = 4
     cpi.unitary_value = 10
-    cpi.type_of = 'product'
     cpi.commercial_proposal_section_id  = 1
-    cpi.save
+    cpi.product_id = 1
+    assert cpi.save
    
     assert_equal count + 1, CommercialProposalItem.count
   end
@@ -60,6 +56,11 @@ class CommercialProposalItemTest < Test::Unit::TestCase
   def test_total_value
     cpi = CommercialProposalItem.find(1)
     assert_equal 50, cpi.total_value
+  end
+
+  def test_description
+    cpi = CommercialProposalItem.find(1)
+    assert_equal 'Ice Cream', cpi.description
   end
 
 end

@@ -1,13 +1,12 @@
 class CommercialProposalItemsController < ApplicationController
 
   uses_popup_plugin
+  needs_organization
 
   def new
     @commercial_proposal_item = CommercialProposalItem.new
     @commercial_section_id = params[:id]
     @commercial_proposal_id = params[:commercial_proposal_id]
-    @title = _('New item')
-    @button_name = _('Add item')
     render :template => 'commercial_proposal_items/new', :layout => false
   end
 

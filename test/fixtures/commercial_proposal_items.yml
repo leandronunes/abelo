@@ -1,27 +1,20 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 proposal_item_1_of_section_1:
   id: 1
-  name: 'Item one'
   quantity: 10
-  unit: "g"
   number: 5
   unitary_value: 5.0
-  size: "5x5cm"
-  type_of: 'product'
   commercial_proposal_section_id: 1
+  product_id: 1
 proposal_item_2_of_section_1:
   id: 2
-  name: 'Item two'
   quantity: 7
-  unit: 'l'
   unitary_value: 12.0
-  type_of: 'product'
   commercial_proposal_section_id: 1
+  product_id: 2
 proposal_item_3_of_section_2:
   id: 3
-  name: 'Item three'
   quantity: 8
-  unit: 'kg'
   unitary_value: 5.0
-  type_of: 'product'
   commercial_proposal_section_id: 2
+  product_id: 1

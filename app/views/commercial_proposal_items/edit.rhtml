@@ -6,8 +6,7 @@
 
 <%= popup_form_tag( {:action => 'update', :id => @commercial_proposal_item.id, :commercial_proposal_id => @commercial_proposal_id  } ) %>
 
-<p><label for="item_name"><%= _('Name') %></label>
-<%= text_field 'commercial_proposal_item', 'name'%></p>
+<%= render :partial => 'form' %>
 
 <%= submit_tag _('Save') %>
 

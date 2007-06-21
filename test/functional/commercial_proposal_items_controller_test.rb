@@ -25,7 +25,7 @@ class CommercialProposalItemsControllerTest < Test::Unit::TestCase
   end
 
   def test_add
-    get :add, :commercial_proposal_item => {:name => 'Name of section for testing', :quantity => 5, :unitary_value => 2.0, :type_of => 'type for testing', :commercial_proposal_section_id => 1}, :id => 1, :commercial_proposal_id => 1
+    get :add, :commercial_proposal_item => {:quantity => 5, :unitary_value => 2.0, :product_id => 1, :commercial_proposal_section_id => 1}, :id => 1, :commercial_proposal_id => 1
     assert_not_nil assigns(:commercial_proposal)
     assert_not_nil assigns(:sections)
     assert_response :success
@@ -33,7 +33,7 @@ class CommercialProposalItemsControllerTest < Test::Unit::TestCase
   end
 
   def test_edit
-    get :edit, :commercial_proposal_item => {:name => 'Name of section for testing', :quantity => 5, :unitary_value => 2.0, :type_of => 'type for testing', :commercial_proposal_section_id => 1}, :id => 1, :commercial_proposal_id => 1
+    get :edit, :commercial_proposal_item => {:quantity => 5, :unitary_value => 2.0, :product_id => 1, :commercial_proposal_section_id => 1}, :id => 1, :commercial_proposal_id => 1
     assert_not_nil assigns(:commercial_proposal_item)
     assert_not_nil assigns(:commercial_proposal_id)
     assert_response :success
@@ -41,7 +41,7 @@ class CommercialProposalItemsControllerTest < Test::Unit::TestCase
   end
 
   def test_update
-    post :update, :id => 1, :commercial_proposal_id => 1
+    get :update, :id => 1, :commercial_proposal_id => 1
     assert_not_nil assigns(:commercial_proposal_item)
     assert_not_nil assigns(:commercial_proposal)
     assert_not_nil assigns(:sections)

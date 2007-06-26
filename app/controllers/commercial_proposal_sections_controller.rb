@@ -1,6 +1,7 @@
 class CommercialProposalSectionsController < ApplicationController
 
   uses_popup_plugin
+  in_place_edit_for :commercial_proposal_section, :name
 
   def new
     @commercial_proposal_section = CommercialProposalSection.new

@@ -2,6 +2,7 @@ class CommercialProposalsController < ApplicationController
 
   needs_organization
   uses_popup_plugin
+  in_place_edit_for :commercial_proposal, :name
 
   def index
     redirect_to :action => 'list'

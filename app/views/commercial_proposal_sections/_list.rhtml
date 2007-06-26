@@ -1,11 +1,12 @@
 <div id="proposal_sections">
   <ul>
-  <% for section in @sections %>
-    <li><%= section.name %>
-    <%= link_to_popup _('Edit'), {:controller => 'commercial_proposal_sections', :action => 'edit', :id => section.id, :commercial_proposal_id => @commercial_proposal.id }, {}, 'edit_section', 'proposal_sections' %>
-    <%= link_to _('Remove'), { :controller => 'commercial_proposal_sections', :action => 'destroy', :id => section.id, :commercial_proposal_id => @commercial_proposal.id }, :confirm => _('Are you sure'), :post => true %></li>
-    <p><%= link_to_popup _('New item'), {:controller => 'commercial_proposal_items', :action => 'new', :id => section.id, :commercial_proposal_id => @commercial_proposal.id}, {}, 'add_item', 'proposal_sections' %></p>
-    <%= render :partial => 'commercial_proposal_items/list', :locals => {:items => section.commercial_proposal_items} %>
+  <% for @section in @sections %>
+    <p>
+    <%= in_place_editor_field 'section', 'name', {},{:load_text_url => url_for(:action => "get_name", :id => @section.id)  } %>
+    </p>
+    <%= link_to _('Remove'), { :controller => 'commercial_proposal_sections', :action => 'destroy', :id => @section.id, :commercial_proposal_id => @commercial_proposal.id }, :confirm => _('Are you sure'), :post => true %></li>
+    <p><%= link_to_popup _('New item'), {:controller => 'commercial_proposal_items', :action => 'new', :id => @section.id, :commercial_proposal_id => @commercial_proposal.id}, {}, 'add_item', 'proposal_sections' %></p>
+    <%= render :partial => 'commercial_proposal_items/list', :locals => {:items => @section.commercial_proposal_items} %>
   <% end %>
   </ul>
 </div>

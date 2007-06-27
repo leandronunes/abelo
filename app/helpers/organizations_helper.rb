@@ -29,7 +29,7 @@ module OrganizationsHelper
                   can(:controller => controller)
                 end.map do |controller|
 		  x = x+1
-                  content_tag('li', (link_to menu_items[controller], { :controller => controller }), :class => "button_main_#{x}")
+                  content_tag('li', (link_to "<span>#{menu_items[controller]}</span>", { :controller => controller }), :class => "button_main_#{x}")
                 end.join(''))
   end
 

@@ -21,4 +21,33 @@ class Customer < ActiveRecord::Base
     end
   end
 
+  def self.search(search_args, exclude_ids = [], options = {} )
+       return [] unless search_args
+
+       search_args = '%' + search_args + '%'
+       the_class = Customer 
+       searched_people = Array.new
+       if options == nil
+         searched_people = the_class.find(:all, :conditions => [ '(name LIKE :search OR login like :search)', { :search =>  search_args } ] ).reject { |p| exclude_ids.include? p.id }
+       else
+      options.each_key { |o|
+        if o == 'name'
+          searched_people= searched_people + the_class.find(:all, :conditions => [ 'name LIKE :search', { :search =>  search_args } ] ).reject { |p| exclude_ids.include? p.id }
+        elsif o == 'login'
+          searched_people= searched_people + the_class.find(:all, :conditions => [ 'login LIKE :search', { :search =>  search_args } ] ).reject { |p| exclude_ids.include? p.id }
+        elsif o == 'cpf'
+          searched_people= searched_people + the_class.find(:all, :conditions => [ 'cpf LIKE :search', { :search =>  search_args } ] ).reject { |p| exclude_ids.include? p.id }
+        elsif o == 'rg'
+          searched_people= searched_people + the_class.find(:all, :conditions => [ 'rg LIKE :search', { :search =>  search_args } ] ).reject { |p| exclude_ids.include? p.id }
+        end
+      }
+
+    end
+    searched_people.uniq
+  end
+
+  def list_by_categories()
+
+  end
+
 end

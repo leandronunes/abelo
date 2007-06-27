@@ -80,9 +80,9 @@ class PointOfSaleController < ApplicationController
   def show_customers
     existing_people_keys = params[:existing_people] ? params[:existing_people].keys.map { |k| k.to_i } : []
     options = params[:options]
-    @people = Person.search(params[:search], existing_people_keys, options)
+    @people = Customer.search(params[:search], existing_people_keys, options)
     @type_select = params[:type_select]
-    render :action => 'people', :layout => false
+    render :action => 'show_customers', :layout => false
   end
 
 end

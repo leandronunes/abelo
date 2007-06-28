@@ -72,17 +72,27 @@ class PointOfSaleController < ApplicationController
   end
 
   def search_customer
-    @people = @organization.customers
+    @customers = @organization.customers
     @sale_id = params[:sale_id]
     render :template => 'point_of_sale/search_customer'
   end
 
   def show_customers
-    existing_people_keys = params[:existing_people] ? params[:existing_people].keys.map { |k| k.to_i } : []
+    existing_customers_id = params[:existing_customers].any? ? params[:existing_customers].keys : []
     options = params[:options]
-    @people = Customer.search(params[:search], existing_people_keys, options)
+    @customers = Customer.search(params[:search], existing_customers_id, options)
     @type_select = params[:type_select]
     render :action => 'show_customers', :layout => false
+  end
+
+  def associating_customer
+    customer = params[:selected_customer]
+    s = Sale.find(params[:sale_id])
+    if not customer.nil?
+      s.customer = Customer.find(customer)
+      s.save
+    end
+    render :text => s.customer.name
   end
 
 end

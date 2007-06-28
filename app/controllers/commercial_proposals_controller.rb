@@ -2,7 +2,6 @@ class CommercialProposalsController < ApplicationController
 
   needs_organization
   uses_popup_plugin
-  in_place_edit_for :commercial_proposal, :name
 
   def index
     redirect_to :action => 'list'
@@ -46,6 +45,8 @@ class CommercialProposalsController < ApplicationController
 
   def update
     @commercial_proposal = CommercialProposal.find(params[:id])
+    render :text => params.inspect
+    return
     if @commercial_proposal.update_attributes(params[:commercial_proposal])
       flash[:notice] = 'CommercialProposal was successfully updated.'
       redirect_to :action => 'show', :id => @commercial_proposal

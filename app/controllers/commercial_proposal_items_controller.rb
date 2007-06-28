@@ -46,5 +46,5 @@ class CommercialProposalItemsController < ApplicationController
     @sections = @commercial_proposal.commercial_proposal_sections
     redirect_to :controller => 'commercial_proposals', :action => 'edit', :id => params[:commercial_proposal_id]
   end
-
+  
 end

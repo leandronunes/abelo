@@ -1,7 +1,6 @@
 class CommercialProposalSectionsController < ApplicationController
 
   uses_popup_plugin
-  in_place_edit_for :commercial_proposal_section, :name
 
   def new
     @commercial_proposal_section = CommercialProposalSection.new
@@ -43,6 +42,15 @@ class CommercialProposalSectionsController < ApplicationController
     @commercial_proposal = CommercialProposal.find(params[:commercial_proposal_id])
     @sections = @commercial_proposal.commercial_proposal_sections
     redirect_to :controller => 'commercial_proposals', :action => 'edit', :id => params[:commercial_proposal_id]
+  end
+
+  def set_name
+    @commercial_proposal_section =  CommercialProposalSection.find(params[:id])
+    if @commercial_proposal_section.update_attributes(:name => params[:value])
+      render :text => @commercial_proposal_section.name
+    else
+      render :text => CommercialProposalSection.find(params[:id]).name
+    end
   end
 
 end

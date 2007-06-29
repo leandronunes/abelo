@@ -24,16 +24,20 @@ class PointOfSaleController < ApplicationController
   end
 
   def main
+    @total = 0.0
     @sale = @organization.sales.find(params[:id])
+    @sale.items.each{|s| @total += (s.ammount * s.unitary_price)}
   end
 
   def add_item
     begin
-      sale = @organization.sales.find(params[:id])
+      @sale = @organization.sales.find(params[:id])
+      @total = 0.0
       item = SaleItem.new
       item.product = @organization.products.find(params[:product_id])
       item.ammount = params[:ammount]
-      sale.items << item
+      @sale.items << item
+      @sale.items.each{|s| @total += (s.ammount * s.unitary_price)}
       render :partial => 'item', :locals => { :item => item }
     rescue StandardError
       render :text => $!.to_s, :status => 500, :layout => false

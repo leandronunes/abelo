@@ -1,6 +1,19 @@
-<tr>
-  <td><%= item.description %></td>
-  <td>X <%= item.ammount %></td>
-  <td><%= item.unitary_price %></td>
-  <td><%= item.price %></td>
-</tr>
+<table>
+  <tr>
+    <th><%= _('Description') %></th>
+    <th><%= _('Amount') %></th>
+    <th><%= _('Unitary price') %></th>
+    <th><%= _('Price') %></th>
+  </tr>
+  <% @sale.items.each do |item| %>
+  <tr>
+    <td><%= item.description %></td>
+    <td>X <%= item.ammount %></td>
+    <td><%= item.unitary_price %></td>
+    <td><%= item.price %></td>
+  </tr>
+  <% end %>
+  <tr> <td colspan=4>Total: <%= @total %> </td></tr>
+</table>
+
+

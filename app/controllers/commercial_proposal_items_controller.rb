@@ -7,7 +7,7 @@ class CommercialProposalItemsController < ApplicationController
     @commercial_proposal_item = CommercialProposalItem.new
     @commercial_section_id = params[:id]
     @commercial_proposal_id = params[:commercial_proposal_id]
-    render :template => 'commercial_proposal_items/new', :layout => false
+    render :partial => 'new'
   end
 
   def add
@@ -25,7 +25,7 @@ class CommercialProposalItemsController < ApplicationController
   def edit
     @commercial_proposal_item = CommercialProposalItem.find(params[:id])
     @commercial_proposal_id = params[:commercial_proposal_id]
-    render :template => 'commercial_proposal_items/edit', :layout => false
+    render :partial => 'edit'
   end
 
   def update
@@ -36,7 +36,7 @@ class CommercialProposalItemsController < ApplicationController
       flash[:notice] = _('Commercial proposal item was successfuly updated.')
       render :partial => 'commercial_proposal_sections/list'
     else
-      
+      rendet :text => 'blih' 
     end
   end
 
@@ -44,7 +44,11 @@ class CommercialProposalItemsController < ApplicationController
     CommercialProposalItem.find(params[:id]).destroy
     @commercial_proposal = CommercialProposal.find(params[:commercial_proposal_id])
     @sections = @commercial_proposal.commercial_proposal_sections
-    redirect_to :controller => 'commercial_proposals', :action => 'edit', :id => params[:commercial_proposal_id]
+    render :partial => 'commercial_proposal_sections/list'
+  end
+
+  def cancel   
+    render :nothing => true
   end
   
 end

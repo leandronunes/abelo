@@ -1,10 +1,15 @@
 <h1>Editing commercial_proposal</h1>
 
+<div class='left_content'>
 <%= start_form_tag :action => 'update', :id => @commercial_proposal %>
 <%= render :partial => 'form' %>
 <%= render :partial => 'budget' %>
 <%= submit_tag 'Edit' %>
 <%= end_form_tag %>
+</div>
+
+<div id='new_component',class='right_content'>
+</div>
 
 <%= link_to 'Show', :action => 'show', :id => @commercial_proposal %> |
 <%= link_to 'Back', :action => 'list' %>

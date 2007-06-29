@@ -94,3 +94,11 @@ div.progressBar div.background {
   margin-bottom: 0.5em;
   padding: 0.25em;
 }
+.left_content{
+  float: left;
+  width: 50%;
+}
+.right_content{
+  float: right;
+  width: 50%;
+}

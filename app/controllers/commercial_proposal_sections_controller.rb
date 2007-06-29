@@ -5,19 +5,19 @@ class CommercialProposalSectionsController < ApplicationController
   def new
     @commercial_proposal_section = CommercialProposalSection.new
     @commercial_proposal_id = params[:id]
-    render :template => 'commercial_proposal_sections/new', :layout => false
+    render :partial => 'new'
   end
 
   def add
-    section = CommercialProposalSection.new(params[:commercial_proposal_section])
-    section.commercial_proposal = CommercialProposal.find(params[:id])
-    if section.save
+   section = CommercialProposalSection.new(params[:commercial_proposal_section])
+   section.commercial_proposal = CommercialProposal.find(params[:id])
+   if section.save
       @commercial_proposal = CommercialProposal.find(params[:id])
       @sections = @commercial_proposal.commercial_proposal_sections
       render :partial => 'list' 
-    else
-      
-    end
+   else  
+    render :text => 'blih'
+   end
   end
 
   def edit
@@ -41,7 +41,7 @@ class CommercialProposalSectionsController < ApplicationController
     CommercialProposalSection.find(params[:id]).destroy
     @commercial_proposal = CommercialProposal.find(params[:commercial_proposal_id])
     @sections = @commercial_proposal.commercial_proposal_sections
-    redirect_to :controller => 'commercial_proposals', :action => 'edit', :id => params[:commercial_proposal_id]
+    render :partial => 'list'
   end
 
   def set_name
@@ -51,6 +51,10 @@ class CommercialProposalSectionsController < ApplicationController
     else
       render :text => CommercialProposalSection.find(params[:id]).name
     end
+  end
+
+  def cancel
+    render :nothing => true
   end
 
 end

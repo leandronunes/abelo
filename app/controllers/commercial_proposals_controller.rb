@@ -23,6 +23,7 @@ class CommercialProposalsController < ApplicationController
   def new
     @commercial_proposal = CommercialProposal.new
     @departments = @organization.departments
+    @sections = @commercial_proposal.commercial_proposal_sections
   end
 
   def create

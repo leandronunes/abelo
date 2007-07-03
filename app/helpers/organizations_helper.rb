@@ -24,13 +24,13 @@ module OrganizationsHelper
       'commercial_proposals'=> _('Commercial Proposals'),
     }
     x = 0
-   "<div id='nav'>#{ content_tag('ul', 
-                menu_items.keys.select do |controller|
-                  can(:controller => controller)
-                end.map do |controller|
-		  x = x+1
-                  content_tag('li', (link_to "<span>#{menu_items[controller]}</span>", { :controller => controller }), :class => "button_main_#{x}")
-                end.join('')) } </div>"
+   content_tag('div', [content_tag('ul', 
+                  menu_items.keys.select do |controller|
+                    can(:controller => controller)
+                  end.map do |controller|
+		              x = x+1
+                    content_tag('li', (link_to "<span>#{menu_items[controller]}</span>", { :controller => controller }, :class => controller), :class => "button_main_#{x}")
+                end.join('')) ], :id => 'nav' )
   end
 
 end

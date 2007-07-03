@@ -23,12 +23,11 @@ class ApplicationController < ActionController::Base
     headers['Content-Type'] = 'text/html; charset=utf-8'
   end
 
-  layout 'admin'
-
   def self.needs_organization
     before_filter :load_organization
     layout 'organization'
   end
+
   def load_organization
     @organization = Organization.find_by_nickname(params[:organization_nickname])
     render :text => _('There is no organization with nickname %s') % params[:organization_nickname] unless @organization

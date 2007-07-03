@@ -1,5 +1,6 @@
 class MainController < ApplicationController
 
+  layout 'application'
   needs_organization
   helper OrganizationsHelper
 

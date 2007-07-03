@@ -12,11 +12,11 @@ class CommercialProposalSectionsController < ApplicationController
    section = CommercialProposalSection.new(params[:commercial_proposal_section])
    section.commercial_proposal = CommercialProposal.find(params[:id])
    if section.save
-      @commercial_proposal = CommercialProposal.find(params[:id])
-      @sections = @commercial_proposal.commercial_proposal_sections
-      render :partial => 'list' 
+     @commercial_proposal = CommercialProposal.find(params[:id])
+     @sections = @commercial_proposal.commercial_proposal_sections
+     render :partial => 'list' 
    else  
-    render :text => 'blih'
+      render :partial => 'new', :id => :status => HTTP_FORCE_ERROR
    end
   end
 

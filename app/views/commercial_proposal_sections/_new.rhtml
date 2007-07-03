@@ -1,11 +1,11 @@
 <%= error_messages_for 'commercial_proposal_section' %>
 
-<%= form_remote_tag(:url => {:controller => 'commercial_proposal_sections' ,:action => 'add', :id => @commercial_proposal_id}, :update => 'proposal_sections') %>
+<%= form_remote_tag(:url => {:controller => 'commercial_proposal_sections' ,:action => 'add', :id => @commercial_proposal_id}, :update => {:success => 'proposal_sections', :failure => 'new_component'}) %>
 
 <p><label for="section_name"><%= _('Section') %></label>
 <%= text_field 'commercial_proposal_section', 'name'%></p>
 
-<%= link_to_remote _('Close'), {:url => {:action => 'cancel'}, :update => 'new_component'}, :class => 'button :button_close' %>
+<%= link_to_remote _('Close'), {:url => {:action => 'cancel'}, :update => 'new_component'}, :class => 'button button_close' %>
 <%= submit_tag _('Add section'), :class => 'button' %>
 
 <%= end_form_tag %>

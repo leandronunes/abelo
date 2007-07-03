@@ -2,6 +2,7 @@
 # Likewise, all the methods added will be available for all controllers.
 class ApplicationController < ActionController::Base
 
+  HTTP_FORCE_ERROR = 409
   include AuthenticatedSystem
   include AccessControl
   helper AccessControl

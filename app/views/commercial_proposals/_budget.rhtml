@@ -1,5 +1,5 @@
 <p><label for="commercial_proposal_budget"><%= _('Budget') %></label>
 
-<%= link_to_remote _('New section'), :url => {:controller => 'commercial_proposal_sections', :action => 'new', :id => @commercial_proposal.id }, :update => 'new_component' %>
+<%= link_to_remote _('New section'), :url => {:controller => 'commercial_proposal_sections', :action => 'new', :id => @commercial_proposal.id }, :update => {:success => 'new_component'} %>
 
 <%= render :partial => 'commercial_proposal_sections/list' %>

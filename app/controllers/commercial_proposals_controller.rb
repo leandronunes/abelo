@@ -14,6 +14,7 @@ class CommercialProposalsController < ApplicationController
   def list
     @commercial_proposals_templates = @organization.commercial_proposals_templates
     @commercial_proposals = @organization.commercial_proposals_not_templates
+    @departments = @organization.departments
   end
 
   def show
@@ -21,9 +22,15 @@ class CommercialProposalsController < ApplicationController
   end
 
   def new
-    @commercial_proposal = CommercialProposal.new
+    @commercial_proposal = CommercialProposal.new(params[:commercial_proposal])  
+    @commercial_proposal.organization = @organization
     @departments = @organization.departments
     @sections = @commercial_proposal.commercial_proposal_sections
+    if params[:template]
+      template = CommercialProposal.find(params[:template])
+      @sections = template.commercial_proposal_sections
+      @commercial_proposal.body = template.body
+    end
   end
 
   def create
@@ -75,6 +82,15 @@ class CommercialProposalsController < ApplicationController
     @departments = @organization.departments
     @sections = @commercial_proposal.commercial_proposal_sections
     render :action => 'new'
+  end
+
+  def get_template
+    if params[:value] == '1'
+      @templates = @organization.commercial_proposals_templates
+      render :partial => 'templates'
+    else
+      render :nothing => true
+    end
   end
 
 end

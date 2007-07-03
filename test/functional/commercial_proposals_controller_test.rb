@@ -60,7 +60,7 @@ class CommercialProposalsControllerTest < Test::Unit::TestCase
   def test_create_correct_params
     num_commercial_proposals = CommercialProposal.count
 
-    post :create, :commercial_proposal => {:organization_id => 1, :name => 'Any Name', :department_ids => [1,2] }
+    post :create, :commercial_proposal => {:organization_id => 1, :name => 'Any Name', :department_ids => [1,2], :commercial_proposal_section_ids => [1,2] }
 
     assert_valid assigns(:commercial_proposal)
     assert_response :redirect
@@ -123,6 +123,7 @@ class CommercialProposalsControllerTest < Test::Unit::TestCase
     assert_response :success
     assert_template 'edit'
     assert_not_nil assigns(:departments)
+    assert_not_nil assigns(:sections)
     assert_kind_of Array, assigns(:departments)
     assigns(:departments).each do |d|
       assert d.valid?

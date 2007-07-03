@@ -5,7 +5,7 @@
 <p><label for="section_name"><%= _('Section') %></label>
 <%= text_field 'commercial_proposal_section', 'name'%></p>
 
-<%= link_to_remote _('Cancel'), {:url => {:action => 'cancel'}, :update => 'new_component'}, :class => 'button' %>
+<%= link_to_remote _('Close'), {:url => {:action => 'cancel'}, :update => 'new_component'}, :class => 'button :button_close' %>
 <%= submit_tag _('Add section'), :class => 'button' %>
 
 <%= end_form_tag %>

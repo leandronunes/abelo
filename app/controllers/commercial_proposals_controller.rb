@@ -34,6 +34,7 @@ class CommercialProposalsController < ApplicationController
       redirect_to :action => 'list'
     else
       @departments = @organization.departments
+      @sections = @commercial_proposal.commercial_proposal_sections
       render :action => 'new'
     end
   end
@@ -46,8 +47,6 @@ class CommercialProposalsController < ApplicationController
 
   def update
     @commercial_proposal = CommercialProposal.find(params[:id])
-    render :text => params.inspect
-    return
     if @commercial_proposal.update_attributes(params[:commercial_proposal])
       flash[:notice] = 'CommercialProposal was successfully updated.'
       redirect_to :action => 'show', :id => @commercial_proposal
@@ -74,6 +73,7 @@ class CommercialProposalsController < ApplicationController
     @commercial_proposal.is_template = false
     @commercial_proposal.body = CommercialProposal.find(params[:id]).body
     @departments = @organization.departments
+    @sections = @commercial_proposal.commercial_proposal_sections
     render :action => 'new'
   end
 

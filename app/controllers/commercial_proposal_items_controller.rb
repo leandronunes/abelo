@@ -11,14 +11,14 @@ class CommercialProposalItemsController < ApplicationController
   end
 
   def add
-    item = CommercialProposalItem.new(params[:commercial_proposal_item])
-    item.commercial_proposal_section_id = params[:id]
-    if item.save
+    @commercial_proposal_item = CommercialProposalItem.new(params[:commercial_proposal_item])
+    @commercial_proposal_item.commercial_proposal_section_id = params[:id]
+    if @commercial_proposal_item.save
       @commercial_proposal = CommercialProposal.find(params[:commercial_proposal_id])
       @sections = @commercial_proposal.commercial_proposal_sections
       render :partial => 'commercial_proposal_sections/list'
     else
-      render :text => 'nao salvou'
+      render :partial => 'new', :id => params[:id], :commercial_proposal_id => params[:commercial_proposal_id], :status => HTTP_FORCE_ERROR
     end
   end
  

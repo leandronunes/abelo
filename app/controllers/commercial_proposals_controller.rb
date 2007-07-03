@@ -14,7 +14,6 @@ class CommercialProposalsController < ApplicationController
   def list
     @commercial_proposals_templates = @organization.commercial_proposals_templates
     @commercial_proposals = @organization.commercial_proposals_not_templates
-    @departments = @organization.departments
   end
 
   def show
@@ -22,27 +21,27 @@ class CommercialProposalsController < ApplicationController
   end
 
   def new
+    @departments = @organization.departments
+    render :partial => 'new'
+  end
+
+  def create
+    @departments = @organization.departments
     @commercial_proposal = CommercialProposal.new(params[:commercial_proposal])  
     @commercial_proposal.organization = @organization
-    @departments = @organization.departments
     @sections = @commercial_proposal.commercial_proposal_sections
     if params[:template]
       template = CommercialProposal.find(params[:template])
       @sections = template.commercial_proposal_sections
       @commercial_proposal.body = template.body
     end
-  end
-
-  def create
-    @commercial_proposal = CommercialProposal.new(params[:commercial_proposal])
-    @commercial_proposal.organization = @organization
     if @commercial_proposal.save
       flash[:notice] = _('The commercial proposal was successfully created.')
-      redirect_to :action => 'list'
+      redirect_to :action => 'edit', :id => @commercial_proposal.id
     else
-      @departments = @organization.departments
-      @sections = @commercial_proposal.commercial_proposal_sections
-      render :action => 'new'
+      @commercial_proposals_templates = @organization.commercial_proposals_templates
+      @commercial_proposals = @organization.commercial_proposals_not_templates
+      render :action => 'list'
     end
   end
 
@@ -67,10 +66,6 @@ class CommercialProposalsController < ApplicationController
   def destroy
     CommercialProposal.find(params[:id]).destroy
     redirect_to :action => 'list'
-  end
-
-  def choose_template
-    @templates = @organization.commercial_proposals_templates
   end
 
   def new_from_template

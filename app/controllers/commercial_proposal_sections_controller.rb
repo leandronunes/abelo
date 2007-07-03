@@ -9,14 +9,14 @@ class CommercialProposalSectionsController < ApplicationController
   end
 
   def add
-   section = CommercialProposalSection.new(params[:commercial_proposal_section])
-   section.commercial_proposal = CommercialProposal.find(params[:id])
-   if section.save
+   @commercial_proposal_section = CommercialProposalSection.new(params[:commercial_proposal_section])
+   @commercial_proposal_section.commercial_proposal = CommercialProposal.find(params[:id])
+   if @commercial_proposal_section.save
      @commercial_proposal = CommercialProposal.find(params[:id])
      @sections = @commercial_proposal.commercial_proposal_sections
      render :partial => 'list' 
    else  
-      render :partial => 'new', :id => :status => HTTP_FORCE_ERROR
+      render :partial => 'new', :id => params[:id], :status => HTTP_FORCE_ERROR
    end
   end
 

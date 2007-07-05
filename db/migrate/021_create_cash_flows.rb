@@ -6,6 +6,7 @@ class CreateCashFlows < ActiveRecord::Migration
       t.column :date,              :date,     :null => false
       t.column :specification_id,  :int
       t.column :organization_id,   :int,      :null => false
+      t.column :sale_id,           :int
 
       #Identifies foreseen cash flows for generate foressen extract of 'cash flow 
       t.column :foreseen,          :boolean,  :null => false, :default => false

@@ -30,9 +30,13 @@ class CashFlow < ActiveRecord::Base
   end
 
   def add_sale(sale_id)
-    sale= Sale.find(sale_id)
+    sale = Sale.find(sale_id)
     self.date = sale.date
     self.value = sale.total_value
+
+    #connect cash flow to sale
+    self.sale_id = sale_id
+    #end connect
 
     h = Historical.new
     h.name = "sale #{sale.id}"
@@ -40,7 +44,7 @@ class CashFlow < ActiveRecord::Base
     h.operational = true
     h.organization = sale.organization
     h.save
-    self.historical = h
+    self.historical = h 
    
     s = Specification.new
     if sale.customer.nil?

@@ -11,14 +11,11 @@ class PointOfSaleController < ApplicationController
   end
 
   def new
-    sale = @organization.nil_open_sale(current_user)
-
-    if sale.nil?
-      sale = Sale.new
-    end
+    sale = Sale.new
     sale.date = Date.today
     sale.organization = @organization
     sale.user = current_user
+    sale.total_value = 0.0
     sale.save
     redirect_to :action => 'main', :id => sale.id
   end
@@ -38,7 +35,7 @@ class PointOfSaleController < ApplicationController
       item.ammount = params[:ammount]
       @sale.items << item
       @sale.items.each{|s| @total += (s.ammount * s.unitary_price)}
-      render :partial => 'item', :locals => { :item => item }
+      render :partial => 'table', :locals => { :item => item }
     rescue StandardError
       render :text => $!.to_s, :status => 500, :layout => false
     end
@@ -65,14 +62,19 @@ class PointOfSaleController < ApplicationController
     if @sale.close!
       
       #Create a new exit in cash flow
-      cf = CashFlow.new
-      cf.add_sale(@sale.id)
+#      cf = CashFlow.new
+#      cf.add_sale(@sale.id)
       #end of creation
 
       redirect_to :action => 'index'
     else
       render :action => 'main'
     end
+  end
+
+  def payment
+    @sale = @organization.sales.find(params[:id])
+    @total = params[:total]
   end
 
   def search_customer

@@ -4,7 +4,7 @@ class CreateHistoricals < ActiveRecord::Migration
       t.column :name,               :string,              :null => false
       t.column :type_of,            :string, :limit => 1, :null => false
       t.column :operational,        :boolean,             :null => false
-      t.column :organization_id,    :int,                 :null => false
+      t.column :organization_id,    :integer,                 :null => false
     end
   end
 

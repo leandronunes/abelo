@@ -1,0 +1,100 @@
+<table class='cash_flow'>
+  <tr>
+    <td class='heading'><%= _('Hitorical') %></td>
+    <td class='heading'><%= _('Foreseen') %></td>
+    <td class='heading'><%= _('Made') %></td>
+  </tr>
+
+  <% @operational_entrances.map do |h| %>
+    <tr>
+      <td><%= h.name %></td>
+      <td><%= CashFlow.historical_total_value(@operational_entrances_detailed, true, h) %></td>
+      <td><%= CashFlow.historical_total_value(@operational_entrances_detailed, false, h) %></td>
+    </tr>
+  <% end %>
+
+  <tr>
+    <th> <%= _('Operational Entrances Total') %></th>
+    <th> <%= CashFlow.total_value(@operational_entrances_detailed, true) %></th>
+    <th> <%= CashFlow.total_value(@operational_entrances_detailed, false) %></th>
+  </tr>
+
+  <% @not_operational_entrances.map do |h| %>
+    <tr>
+      <td><%= h.name %></td>
+      <td><%= CashFlow.historical_total_value(@not_operational_entrances_detailed, true, h) %></td>
+      <td><%= CashFlow.historical_total_value(@not_operational_entrances_detailed, false, h) %></td>
+    </tr>
+  <% end %>
+
+  <tr>
+    <th> <%= _('Not Operational Entrances Total') %></th>
+    <th> <%= CashFlow.total_value(@not_operational_entrances_detailed, true) %></th>
+    <th> <%= CashFlow.total_value(@not_operational_entrances_detailed, false) %></th>
+  </tr>
+
+  <tr>
+    <th> <%= _('Entrances Total') %></th>
+    <th> <%= @total_entrances_foreseen %></th>
+    <th> <%= @total_entrances %></th>
+  </tr>
+
+
+  <% @operational_exits.map do |h| %>
+    <tr>
+      <td><%= h.name %></td>
+      <td><%= CashFlow.historical_total_value(@operational_exitis_detailed, true, h) %></td>
+      <td><%= CashFlow.historical_total_value(@operational_exitis_detailed, false, h) %></td>
+    </tr>
+  <% end %>
+
+  <tr>
+    <th> <%= _('Operational Exits Total') %></th>
+    <th> <%= CashFlow.total_value(@operational_exits_detailed, true) %></th>
+    <th> <%= CashFlow.total_value(@operational_exits_detailed, false) %></th>
+  </tr>
+
+  <% @not_operational_exits.map do |h| %>
+    <tr>
+      <td><%= h.name %></td>
+      <td><%= CashFlow.historical_total_value(@not_operational_exits_detailed, true, h) %></td>
+      <td><%= CashFlow.historical_total_value(@not_operational_exits_detailed, false, h) %></td>
+    </tr>
+  <% end %>
+
+  <tr>
+    <th> <%= _('Not Operational Exits Total') %></th>
+    <th> <%= CashFlow.total_value(@not_operational_exits_detailed, true) %></th>
+    <th> <%= CashFlow.total_value(@not_operational_exits_detailed, false) %></th>
+  </tr>
+
+  <tr>
+    <th> <%= _('Exits Total') %></th>
+    <th> <%= @total_exits_foreseen %></th>
+    <th> <%= @total_exits %></th>
+  </tr>
+
+  <tr>
+    <td colspan="3"></td>
+  </tr>
+
+  <tr>
+    <th> <%= _('Balance Operational') %></th>
+    <th> <%= @balance_operational_foreseen %></th>
+    <th> <%=  @balance_operational %></th>
+  </tr>
+
+  <tr>
+    <th> <%= _('Balance Not Operational') %></th>
+    <th> <%= @balance_not_operational_foreseen %></th>
+    <th> <%= @balance_not_operational %></th>
+  </tr>
+
+  <tr>
+    <th> <%= _('Balance Total') %></th>
+    <th> <%= @balance_total_foreseen %></th>
+    <th> <%= @balance_total %></th>
+  </tr>
+
+</table>
+

@@ -98,6 +98,22 @@ th {
   padding-top: 5px;
   margin-top: 2px;
 }
+
+table.cash_flow {
+  margin: 10px;
+}
+
+table.cash_flow th{
+  margin-left: 0px;
+  background: #666;
+  text-align: left;
+}
+
+table.cash_flow td.heading {
+  font-weight: bold;
+}
+
+
 /**************** buttons ******************/
 .button {
   background-color: #ffb;

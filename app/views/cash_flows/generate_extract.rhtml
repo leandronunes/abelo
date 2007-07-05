@@ -1,23 +1,18 @@
 <% if @notice %>
   <%= @notice %>
 <% else %>
-  <h1><%= _('%s Extract') % @extract.capitalize %></h1>
-  
-  <h3><%= _('Operational Entrances') %></h3>
-  <%= generate_extract(@extract, @period, @operational_entrances, @operational_entrances_detailed) %>
-
-  <h3><%= _('Operational Exits') %></h3>
-  <%= generate_extract(@extract, @period, @operational_exits, @operational_exits_detailed) %>
-
-  <h3><%= _('Not Operational Entrances') %></h3>
-  <%= generate_extract(@extract, @period, @not_operational_entrances, @not_operational_entrances_detailed) %>
-
-  <h3><%= _('Not Operational Exits') %></h3>
-  <%= generate_extract(@extract, @period, @not_operational_exits, @not_operational_exits_detailed) %>
-
-
-  <p><b><%= _('Balance of the %s made: %f') % [@period, @balance] %><b></p>
-  <p><b><%= _('Balance of the %s foreseen: %f') % [@period, @balance_foreseen] %><b></p>
-  <p><b><%= _('Total Balance: ')%><b></p>
+  <%  if @operational_entrances.empty? and @operational_exits.empty? and @not_operational_entrances.empty? and @not_operational_exits %>
+    <p> <%=  _('None') %> </p>
+  <% else %>
+    <% if @extract == 'simplified' %>
+      <%= render :partial => "simplified_extract"%>
+    <% elsif @period == 'day' %>
+      <%= render :partial => "full_extract_for_day"%>
+    <% elsif @period == 'month'%> 
+      <%= render :partial => "full_extract_for_month"%>
+    <% elsif @period == 'year'%> 
+      <%= render :partial => "full_extract_for_year"%>
+    <% end %>
+  <% end %>
 
 <% end %>

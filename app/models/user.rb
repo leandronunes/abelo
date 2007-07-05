@@ -1,3 +1,5 @@
+require "digest/sha1"
+
 class User < Person
 
   has_many :profiles, :class_name => 'UserProfile'

@@ -2,34 +2,47 @@
    "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-  <title>abelo &rarr; <%= @organization.name %> &rarr; <%= @controller.controller_name  %> </title>
-  <%= stylesheet_link_tag 'style' %>
-  <%= stylesheet_link_tag 'common' %>
+  <title>Abelo &rarr; <%= @organization.name %> &rarr; <%= @controller.controller_name  %> </title>
+  <!-- A variavel aqui é o diretorio "neu", é padrão chamar style.css dentro do diretorio icons, caso não exista.. chama o conjunto padrão do sistema -->
+  <link href="/icons/neu/style.css" media="screen" rel="Stylesheet" type="text/css" />
+  <!-- A variavel aqui são os diretorios dentro do template, caso seja um template valido/completo -->
+  <link href="/template/abelo_gold/css/style.css" media="screen" rel="Stylesheet" type="text/css" />
   <%= javascript_include_tag :defaults %>
   <%= javascript_include_tag 'fckeditor/fckeditor' %>
   <%= define_javascript_functions %>
 </head>
 <body>
+<div id="warp">
+
 <div id="header">
-<p style="color: green"><%= flash[:notice] if flash[:notice] %></p>
 <%= user_bar %>
 <h1><%= @organization.name %></h1>
-<div class='navigation_bar'>
+<div id="userbar">
+<div class="navigation_bar">
 <%= link_to @organization.name, :controller => 'main' %>
 &rarr;
 <%= link_to @controller.controller_name, :controller => @controller.controller_name  %>
 </div>
 </div>
+</div>
 
 <div id="content">
 <%= yield %>
+
+<div id="sidebar">
+
 </div>
 
+</div>
 
+<div id="notice">
+<p style="color: green"><%= flash[:notice] if flash[:notice] %></p>
+</div>
+
+</div>
 <div id="footer">
-<b>Copyrigth © 2007 <a href="http://www.colivre.coop.br" alt="Cooperativa de Tecnologias Livres">Colivre</a> </b><br />
+Copyrigth © 2007 <a href="http://www.colivre.coop.br" alt="Cooperativa de Tecnologias Livres">Colivre</a><br />
 Todo o conteúdo deste software pode ser reutilizado de acordo com os termos da licença <a href="http://www.gnu.org/licenses/licenses.html#GPL">GNU General Public License (GPL)</a>.
+</div>
 </body>
-
 </html>
-

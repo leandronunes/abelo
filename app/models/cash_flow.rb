@@ -136,7 +136,7 @@ class CashFlow < ActiveRecord::Base
 
   def CashFlow.weekly_total_entrances(operational_entrances_detailed, not_operational_entrances_detailed, initial_day, end_day, foreseen)
       return CashFlow.weekly_total_value(operational_entrances_detailed, foreseen, initial_day, end_day) + CashFlow.weekly_total_value(not_operational_entrances_detailed, foreseen, initial_day, end_day)
-    end
+  end
 
   def CashFlow.weekly_total_exits(operational_exits_detailed, not_operational_exits_detailed, initial_day, end_day, foreseen)
     return CashFlow.weekly_total_value(operational_exits_detailed, foreseen, initial_day, end_day) + CashFlow.weekly_total_value(not_operational_exits_detailed, foreseen, initial_day, end_day)

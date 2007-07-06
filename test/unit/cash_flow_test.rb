@@ -67,14 +67,43 @@ class CashFlowTest < Test::Unit::TestCase
     assert_equal cf1.value + cf2.value, CashFlow.historical_total_value(cash_flows, false, h)
   end
 
-  def test_month_total_value
+  def test_weekly_total_value
+    cash_flows = Array.new
+    cf1 =CashFlow.find(1)
+    cf2 = CashFlow.find(2)
+    cash_flows.push(cf1)
+    cash_flows.push(cf2)
+    assert_equal cf1.value + cf2.value, CashFlow.weekly_total_value(cash_flows, false, 8, 14)
+  end
+
+  def test_weekly_historical_total_value
     cash_flows = Array.new
     h = Historical.find(1)
     cf1 =CashFlow.find(1)
     cf2 = CashFlow.find(2)
     cash_flows.push(cf1)
     cash_flows.push(cf2)
-    assert_equal cf1.value + cf2.value, CashFlow.month_total_value(5, cash_flows, false, h)
+    assert_equal cf1.value + cf2.value, CashFlow.weekly_historical_total_value(cash_flows, false, h, 8, 14)
   end
+
+  def test_month_historical_total_value
+    cash_flows = Array.new
+    h = Historical.find(1)
+    cf1 =CashFlow.find(1)
+    cf2 = CashFlow.find(2)
+    cash_flows.push(cf1)
+    cash_flows.push(cf2)
+    assert_equal cf1.value + cf2.value, CashFlow.month_historical_total_value(5, cash_flows, false, h)
+  end
+
+  def test_month_total_value
+    cash_flows = Array.new
+    cf1 =CashFlow.find(1)
+    cf2 = CashFlow.find(2)
+    cash_flows.push(cf1)
+    cash_flows.push(cf2)
+    assert_equal cf1.value + cf2.value, CashFlow.month_total_value(5, cash_flows, false)
+  end
+
 
 end

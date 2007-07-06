@@ -164,11 +164,11 @@ class CashFlowsControllerTest < Test::Unit::TestCase
       assert_equal '2007-05-11', oed.date.to_s
     end
 
-    assert_not_nil assigns(:balance)
-    assert_equal -4904.5, assigns(:balance)
+    assert_not_nil assigns(:balance_total)
+    assert_equal -4904.5, assigns(:balance_total)
     
-    assert_not_nil assigns(:balance_foreseen)
-    assert_equal 20, assigns(:balance_foreseen)
+    assert_not_nil assigns(:balance_total_foreseen)
+    assert_equal 20, assigns(:balance_total_foreseen)
   end
 
   def test_generate_extract_simplified_for_month
@@ -230,11 +230,11 @@ class CashFlowsControllerTest < Test::Unit::TestCase
       assert_equal '5', oed.date.month.to_s
     end
 
-    assert_not_nil assigns(:balance)
-    assert_equal -4904.5, assigns(:balance)
+    assert_not_nil assigns(:balance_total)
+    assert_equal -4904.5, assigns(:balance_total)
     
-    assert_not_nil assigns(:balance_foreseen)
-    assert_equal 20, assigns(:balance_foreseen)
+    assert_not_nil assigns(:balance_total_foreseen)
+    assert_equal 20, assigns(:balance_total_foreseen)
   end
 
   def test_generate_extract_simplified_for_year
@@ -296,11 +296,11 @@ class CashFlowsControllerTest < Test::Unit::TestCase
       assert_equal '2007', oed.date.year.to_s
     end
 
-    assert_not_nil assigns(:balance)
-    assert_equal -4904.5, assigns(:balance)
+    assert_not_nil assigns(:balance_total)
+    assert_equal -4904.5, assigns(:balance_total)
     
-    assert_not_nil assigns(:balance_foreseen)
-    assert_equal 20, assigns(:balance_foreseen)
+    assert_not_nil assigns(:balance_total_foreseen)
+    assert_equal 20, assigns(:balance_total_foreseen)
   end
 
 end

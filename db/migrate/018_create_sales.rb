@@ -6,7 +6,6 @@ class CreateSales < ActiveRecord::Migration
       t.column :date,            :date,     :null => false
       t.column :status,          :integer,  :null => false, :default => 0
       t.column :user_id,         :integer,  :null => false
-      t.column :total_value,     :float,    :null => false
     end
   end
 

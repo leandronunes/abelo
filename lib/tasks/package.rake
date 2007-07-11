@@ -21,7 +21,7 @@ Rake::PackageTask.new('abelo', Abelo::VERSION) do |p|
 
   p.package_files.exclude('public/images/*.xcf')
   p.package_files.exclude('**/*~')
-  p.package_files.exclude('**/.svn')
+  #p.package_files.exclude('**/.svn')
   p.package_files.exclude('config/database.yml')
   p.package_files.include('config/database.yml.dist')
 

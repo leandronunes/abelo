@@ -15,26 +15,23 @@ class PointOfSaleController < ApplicationController
     sale.date = Date.today
     sale.organization = @organization
     sale.user = current_user
-    sale.total_value = 0.0
     sale.save
     redirect_to :action => 'main', :id => sale.id
   end
 
   def main
-    @total = 0.0
     @sale = @organization.sales.find(params[:id])
-    @sale.items.each{|s| @total += (s.ammount * s.unitary_price)}
+    @total = @sale.total_value
   end
 
   def add_item
     begin
       @sale = @organization.sales.find(params[:id])
-      @total = 0.0
       item = SaleItem.new
       item.product = @organization.products.find(params[:product_id])
       item.ammount = params[:ammount]
       @sale.items << item
-      @sale.items.each{|s| @total += (s.ammount * s.unitary_price)}
+      @total = @sale.total_value
       render :partial => 'table', :locals => { :item => item }
     rescue StandardError
       render :text => $!.to_s, :status => 500, :layout => false
@@ -74,7 +71,7 @@ class PointOfSaleController < ApplicationController
 
   def payment
     @sale = @organization.sales.find(params[:id])
-    @total = params[:total]
+    @total = @sale.total_value 
   end
 
   def search_customer
@@ -99,6 +96,10 @@ class PointOfSaleController < ApplicationController
       s.save
     end
     render :text => s.customer.name
+  end
+
+  def new_cash_flow
+    
   end
 
 end

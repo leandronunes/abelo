@@ -8,7 +8,7 @@ body {
   padding:0px;
   color: #545454;
   font: 14px/1.5em Verdana, Arial, sans-Serif;
-  background: #fffaf0 url('../images/bgbody.png');
+  background: #fffaf0 url('../images/bgbody.png') top right repeat-y;
 }
 
 #header {

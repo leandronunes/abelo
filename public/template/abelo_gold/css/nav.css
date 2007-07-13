@@ -1,153 +1,121 @@
 #nav ul {
-width: 530px;
-height: 360px;
+position: relative;
+background: #fffaf0 url('../images/bgnav.png') bottom right no-repeat;
+list-style: none;
+width: 780px;
 margin: 0px;
-padding: 0px;
+padding-bottom: 15px;
 }
 
-#nav {
-position: relative;
-background: url('../images/bggradeicons18.jpg') top left no-repeat;
-width: 530px;
-height: 360px;
+#nav li {
+width: 250px;
+list-style: none;
 }
 
 #nav a {
 display: block;
-list-style: none;
+background-position: top left;
+background-repeat: no-repeat;
+padding-left: 47px;
+height: 47px;
+font-size: 18px;
+color: #545454;
 text-decoration: none;
-width: 48px;
-height: 48px;
-border: 0px;
-margin: 0px;
-padding: 0px;
-}
-
-#nav a span {
-display: none;
 }
 
 #nav a:hover {
-z-index: 999;
+color: #000000;
+text-decoration: underline;
 }
 
-#nav a:hover span {
+/* Positions */
+
+#nav li a.pos_1 {
+margin-left: 10px;
+}
+
+#nav li a.pos_2 {
 position: absolute;
-display: block;
-background: url('../images/fundo_teste.png') bottom right no-repeat;
-width: 167px;
-height: 47px;
-padding-left: 25px;
-padding-right: 10px;
-bottom: 0;
-text-align: right;
-vertical-align: middle;
-color: #545454;
-font-size: 18px;
-z-index: 998;
+top: 1px;
+margin-left: 265px;
 }
 
-
-/* Position icons */
-
-.pos_1 {
+#nav li a.pos_3 {
 position: absolute;
-top: 75px;
-left: 28px;
+top: 1px;
+margin-left: 520px;
 }
 
-.pos_2 {
+#nav li a.pos_4 {
+margin-left: 10px;
+}
+
+#nav li a.pos_5 {
 position: absolute;
-top: 35px;
-left: 96px;
+top: 50px;
+margin-left: 265px;
 }
 
-.pos_3 {
+#nav li a.pos_6 {
 position: absolute;
-top: 115px;
-left: 96px;
+top: 50px;
+margin-left: 520px;
 }
 
-.pos_4 {
+#nav li a.pos_7 {
+margin-left: 10px;
+}
+
+#nav li a.pos_8 {
 position: absolute;
-top: 75px;
-left: 159px;
+top: 100px;
+margin-left: 265px;
 }
 
-.pos_5 {
+#nav li a.pos_9 {
 position: absolute;
-top: 35px;
-left: 225px;
+top: 100px;
+margin-left: 520px;
 }
 
-.pos_6 {
-position: absolute;
-top: 190px;
-left: 96px;
+#nav li a.pos_10 {
+margin-left: 10px;
 }
 
-.pos_7 {
-position: absolute;
-top: 150px;
-left: 159px;
-}
-
-.pos_8 {
-position: absolute;
-top: 115px;
-left: 225px;
-}
-
-.pos_9 {
-position: absolute;
-top: 75px;
-left: 290px;
-}
-
-.pos_10 {
-position: absolute;
-top: 225px;
-left: 159px;
-}
-
-.pos_11 {
-position: absolute;
-top: 265px;
-left: 96px;
-}
-
-.pos_12 {
-position: absolute;
-top: 195px;
-left: 225px;
-}
-
-.pos_13 {
+#nav li a.pos_11 {
 position: absolute;
 top: 150px;
-left: 290px;
+margin-left: 265px;
 }
 
-.pos_14 {
+#nav li a.pos_12 {
 position: absolute;
-top: 35px;
-left: 355px;
+top: 150px;
+margin-left: 520px;
 }
 
-.pos_15 {
-position: absolute;
-top: 115px;
-left: 355px;
+#nav li a.pos_13 {
+margin-left: 10px;
 }
 
-.pos_16 {
+#nav li a.pos_14 {
 position: absolute;
-top: 265px;
-left: 225px;
+top: 200px;
+margin-left: 265px;
 }
 
-.pos_17 {
+#nav li a.pos_15 {
 position: absolute;
-top: 225px;
-left: 290px;
+top: 200px;
+margin-left: 520px;
+}
+
+#nav li a.pos_16 {
+margin-left: 10px;
+}
+
+#nav li a.pos_17 {
+position: absolute;
+top: 250px;
+margin-left: 265px;
 }

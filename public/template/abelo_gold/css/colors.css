@@ -1,0 +1,62 @@
+/* Autor: Valessio S Brito <valessio@colivre.coop.br>  */
+
+body {
+  color: #545454;
+  font: 14px/1.5em Verdana, Arial, sans-Serif;
+  background: #fffaf0 url('../images/bgbody.png') top right repeat-y;
+}
+
+#header {
+  background: #ffffff url('../images/bgheader.png') bottom left repeat-x;
+}
+
+#info_org {
+  font-size: 17px;
+  color: #c4a000;
+}
+
+#info_org span {
+font-size: 19px;
+font-weight: bold;
+}
+
+#userbar {
+  color: #545454;
+  font: 14px/2.2em Verdana, Arial, sans-Serif;
+}
+
+#userbar a {
+color: #545454;
+text-decoration: none;
+margin-bottom: 2px;
+margin-left: 3px;
+margin-right: 3px;
+}
+
+#userbar a:hover {
+color: #000000;
+margin-bottom: 0px;
+border-bottom: 2px solid #ffffff;
+}
+
+div.login_bar a {
+background-position: top left;
+background-repeat: no-repeat;
+padding-left: 18px;
+}
+
+/* Footer */
+#footer {
+background: url('../images/colivre.png') 20px no-repeat;
+font-size: 10px;
+text-align: center;
+}
+
+#footer a {
+color: #545454;
+}
+
+#footer a:hover {
+color: #000000;
+}
+

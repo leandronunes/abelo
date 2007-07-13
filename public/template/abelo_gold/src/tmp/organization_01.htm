@@ -18,21 +18,154 @@
 <div id="warp">
 
 <div id="header">
-<div class="user_bar"><a href="login.htm">Logout</a>&nbsp;<a href="edit_profile.htm">Edit personal information</a>&nbsp;<a href="organization.htm">Start</a></div>
-<h1>Organization number one</h1>
+<img id="logo_org" src="../../../../images/org0001.png" alt="Logo - COOPTECLIVRE" height="75px" width="75px">
+<div id="info_org">
+<span>COOPTECLIVRE - Cooperativa de Tecnologias Livres</span><br />
+CNPJ: 07.970.746/0001-77
+</div>
+<img id="banner_top" src="../../../../images/bannerabelo_160x75.jpg" "Banner - Abelo" height="75px" width="160px">
 <div id="userbar">
-<div class="navigation_bar">
-<a href="organization.htm">Organization number one</a>
-&rarr;
-<a href="organization.htm">main</a>
-</div>
-</div>
+<div class="login_bar"><a href="#" onclick="Element.toggle('nav'); return false;" accesskey="z" id="goto">Go to</a>&nbsp;<a href="edit_profile.htm" id="edit_profile">Edit personal information</a>&nbsp;<a href="login.htm" id="logout">Logout</a></div>
+
+<div class="navigation_bar"><a href="organization.htm">main</a> &rarr; <a href="organization.htm">COOPTECLIVRE - Coo...</a></div>
 </div>
 
+<!--  http://wiki.rubyonrails.org/rails/pages/HowtoUseElement  -->
+<div id="nav" style="display : none;"><ul><li><a href="/one/configuration" class="button_main pos_1" id="configuration"><span>Configurations</span></a></li><li><a href="/one/customer_categories" class="button_main pos_2" id="customer_categories"><span>Customer Categories</span></a></li><li><a href="/one/suppliers" class="button_main pos_3" id="suppliers"><span>Suppliers</span></a></li><li><a href="/one/departments" class="button_main pos_4" id="departments"><span>Departments</span></a></li><li><a href="/one/customers" class="button_main pos_5" id="customers"><span>Customers</span></a></li><li><a href="/one/point_of_sale" class="button_main pos_6" id="point_of_sale"><span>Point of sale</span></a></li><li><a href="/one/contact_positions" class="button_main pos_7" id="contact_positions"><span>Contact Positions</span></a></li><li><a href="/one/stock" class="button_main pos_8" id="stock"><span>Stock</span></a></li><li><a href="/one/products" class="button_main pos_9" id="products"><span>Products</span></a></li><li><a href="/one/commercial_proposals" class="button_main pos_10" id="commercial_proposals"><span>Commercial Proposals</span></a></li><li><a href="/one/store" class="button_main pos_11" id="store"><span>Store</span></a></li><li><a href="/one/product_categories" class="button_main pos_12" id="product_categories"><span>Product Categories</span></a></li><li><a href="/one/cash_flows" class="button_main pos_13" id="cash_flows"><span>Cash Flow</span></a></li><li><a href="/one/permissions" class="button_main pos_14" id="permissions"><span>User administration</span></a></li><li><a href="/one/mass_mails" class="button_main pos_15" id="mass_mails"><span>Mass Mails</span></a></li><li><a href="/one/workers" class="button_main pos_16" id="workers"><span>Workers</span></a></li></ul></div>
+
+</div>
 <div id="content">
 
-<div id="nav"><ul><li><a href="/one/configuration" class="button_main pos_1" id="configuration"><span>Configurations</span></a></li><li><a href="/one/customer_categories" class="button_main pos_2" id="customer_categories"><span>Customer Categories</span></a></li><li><a href="/one/suppliers" class="button_main pos_3" id="suppliers"><span>Suppliers</span></a></li><li><a href="/one/departments" class="button_main pos_4" id="departments"><span>Departments</span></a></li><li><a href="/one/customers" class="button_main pos_5" id="customers"><span>Customers</span></a></li><li><a href="/one/point_of_sale" class="button_main pos_6" id="point_of_sale"><span>Point of sale</span></a></li><li><a href="/one/contact_positions" class="button_main pos_7" id="contact_positions"><span>Contact Positions</span></a></li><li><a href="/one/stock" class="button_main pos_8" id="stock"><span>Stock</span></a></li><li><a href="/one/products" class="button_main pos_9" id="products"><span>Products</span></a></li><li><a href="/one/commercial_proposals" class="button_main pos_10" id="commercial_proposals"><span>Commercial Proposals</span></a></li><li><a href="/one/store" class="button_main pos_11" id="store"><span>Store</span></a></li><li><a href="/one/product_categories" class="button_main pos_12" id="product_categories"><span>Product Categories</span></a></li><li><a href="/one/cash_flows" class="button_main pos_13" id="cash_flows"><span>Cash Flow</span></a></li><li><a href="/one/permissions" class="button_main pos_14" id="permissions"><span>User administration</span></a></li><li><a href="/one/mass_mails" class="button_main pos_15" id="mass_mails"><span>Mass Mails</span></a></li><li><a href="/one/workers" class="button_main pos_16" id="workers"><span>Workers</span></a></li></ul></div>
+<!-- Inicio do conteudo ficticio -->
 
+<h1> Mural de avisos </h1>
+
+<p>The <a href="http://wiki.rubyonrails.org/rails/pages/Prototype" class="existingWikiWord">Prototype</a> <a href="http://wiki.rubyonrails.org/rails/pages/JavaScript" class="existingWikiWord">JavaScript</a> library provides a number of tools for manipulating the content of a view from the <a href="http://wiki.rubyonrails.org/rails/pages/ClientSide" class="existingWikiWord">ClientSide</a>. One such tool is the <code>Element</code> object.</p>
+
+
+	<p>The <code>Element</code> object exposes a number of methods</p>
+
+
+	<ul>
+	<li>toggle</li>
+		<li>hide</li>
+
+		<li>show</li>
+		<li>remove</li>
+		<li>getHeight</li>
+	</ul>
+
+
+	<h2>toggle</h2>
+
+	<p>The <code>Element.toggle()</code> function will toggle the visibility of an  element (using the <span class="caps">CSS</span> property <code>display</code>, not <code>visibility</code>). This will make visible content disapear, or invisible content appear.</p>
+
+
+	<h4>example</h4>
+
+
+<pre>
+&lt;div id="foo"&gt;foo&lt;/div&gt;
+&lt;a href="#" onclick="Element.toggle('foo'); return false;"&gt;toggle foo&lt;/a&gt;
+</pre>
+
+	<p>You can also use the link_to_function Rails helper:</p>
+
+<pre>
+&lt;%= link_to_function('View/hide details', "Element.toggle('details')") %&gt;
+&lt;div id="details"&gt;
+I appear and disappear!
+&lt;/div&gt;
+</pre>
+
+	<h2>hide</h2>
+
+
+	<p>The <code>Element.hide()</code> function sets the display style for the specified element ID(s) to &#8216;none&#8217;.</p>
+
+
+	<h4>example</h4>
+
+
+<pre>
+&lt;div id="foo"&gt;foo&lt;/div&gt;
+&lt;a href="#" onclick="Element.hide('foo'); return false;"&gt;hide foo&lt;/a&gt;
+</pre>
+
+	<h2>show</h2>
+
+
+	<p>The <code>Element.show()</code> function sets the display style for the specified element ID(s) to &#8217;&#8217;(empty string). This will revert the element to the elements default display style or any display style defined in a style sheet. Thus if you have set the display style to be &#8216;none&#8217; in a style sheet <code>Element.show()</code> will not show the element.</p>
+
+
+	<h4>example</h4>
+
+
+<pre>
+&lt;div id="foo" style="display : none;"&gt;foo&lt;/div&gt;
+&lt;a href="#" onclick="Element.show('foo'); return false;"&gt;show foo&lt;/a&gt;
+</pre>
+
+	<h2>remove</h2>
+
+
+	<p>The <code>Element.remove()</code> function prunes the specified element and all of its children from the <span class="caps">DOM</span> tree for the current view of the page.  i.e. if you refresh the page the element will return to its original position and display style.</p>
+
+
+	<h4>example</h4>
+
+
+<pre>
+&lt;div id="foo"&gt;foo&lt;/div&gt;
+&lt;a href="#" onclick="Element.remove('foo'); return false;"&gt;remove foo&lt;/a&gt;
+</pre>
+
+	<h2>getHeight</h2>
+
+
+	<p>The <code>Element.getHeight()</code> function returns the offsetHeight of the element specified.  Generally this is the actual onscreen height of the displayed element. However, if this function is called from within a table, it might not return the value you expect.</p>
+
+
+	<h4>example</h4>
+
+
+	<pre><code>In a test page I created the following table <br /><pre>
+
+&lt;table border="1" id="mytable" cellspacing=0&gt;
+  &lt;tr&gt;&lt;td&gt; table contents &lt;/td&gt; &lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;Element.getHeight('mytable'); = 
+    &lt;script&gt;document.write(""+Element.getHeight('mytable'));&lt;/script&gt; 
+  &lt;/td&gt;&lt;/tr&gt;
+
+  &lt;tr&gt;&lt;td&gt; table contents &lt;/td&gt; &lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;Element.getHeight('mytable'); = 
+     &lt;script&gt;document.write(""+Element.getHeight('mytable'));&lt;/script&gt; 
+  &lt;/td&gt;&lt;/tr&gt;
+
+  &lt;tr&gt;&lt;td&gt; table contents &lt;/td&gt; &lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;Element.getHeight('mytable'); = 
+    &lt;script&gt;document.write(""+Element.getHeight('mytable'));&lt;/script&gt; 
+  &lt;/td&gt;&lt;/tr&gt;
+
+&lt;/table&gt;
+</pre></code></pre>
+
+
+	<p>...and the output for this table looked like the following</p>
+
+
+<pre>
+table contents
+Element.getHeight('mytable'); = 40
+table contents
+Element.getHeight('mytable'); = 80
+table contents
+Element.getHeight('mytable'); = 120
+</pre>
+
+	<p>It appears to me that each successive call to getHeight() returned the height of the table that had been rendered up to the time of the call.  Note: any call to getHeight(&#8216;mytable&#8217;) after the page render had finished returned the final height of the table.</p>
+
+<!-- Fim do conteudo ficticio -->
 
 <div id="sidebar">
 

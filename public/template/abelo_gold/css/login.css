@@ -27,7 +27,22 @@ margin-left: 50px;
 width: 190px;
 }
 
-div.button_bar {
+#loginform a {
+color: #545454;
+text-decoration: none;
+}
+
+#loginform a:hover {
+color: #000000;
+text-decoration: none;
+}
+
+#loginform a:visited {
+color: #545454;
+text-decoration: none;
+}
+
+#loginform .button_bar {
 text-align: center;
 }
 

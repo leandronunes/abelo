@@ -45,6 +45,75 @@ background-repeat: no-repeat;
 padding-left: 18px;
 }
 
+div.navigation_bar {
+padding-left: 40px;
+}
+
+div.control_header {
+position: absolute;
+left: 0;
+bottom: 0;
+width: 35px;
+height: 22px;
+}
+
+div.control_header a {
+display: table-cell;
+margin:0px;
+padding:0px;
+border:0px;
+width: 15px;
+height: 22px;
+}
+
+div.control_header a:hover {
+display: table-cell;
+border: 0px;
+margin: 0px;
+padding: 0px;
+}
+
+div.control_header a.show {
+background: url('../images/downbar.png') top left no-repeat;
+}
+
+div.control_header a.hide {
+background: url('../images/upbar.png') top left no-repeat;
+}
+
+div.control_header span {
+display: none;
+}
+
+/* Content */
+
+#content h1 { 
+color: #545454;
+border-bottom: 5px solid #fff;
+margin: 0px;
+padding: 0px;
+}
+
+#content a {
+text-decoration: none;
+color: #c4a000;
+}
+
+#content a:visited {
+text-decoration: underline;
+color: #a4a000;
+}
+
+#content a:active {
+text-decoration: none;
+color: #000000;
+}
+
+#content a:hover {
+text-decoration: blink;
+color: #545454;
+}
+
 /* Footer */
 #footer {
 background: url('../images/colivre.png') 20px no-repeat;

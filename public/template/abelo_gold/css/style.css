@@ -45,10 +45,14 @@ top: 2px;
 right: 5px;
 }
 
+
 #nav {
 position: absolute;
-top: 110px;
 right: 3px;
+}
+
+#content {
+padding: 10px;
 }
 
 #footer {

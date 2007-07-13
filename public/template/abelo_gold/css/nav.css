@@ -2,8 +2,10 @@
 position: relative;
 background: #fffaf0 url('../images/bgnav.png') bottom right no-repeat;
 list-style: none;
-width: 780px;
+width: 769px;
 margin: 0px;
+padding: 0px;
+padding-left: 10px;
 padding-bottom: 15px;
 }
 

@@ -1,7 +1,6 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 first:
   id: 1
-  total_value: 1.00
   date: '2007-01-01'
   organization_id: 1
   customer_id: 1
@@ -9,7 +8,6 @@ first:
   status: 0
 another:
   id: 2
-  total_value: 1.00
   date: '2007-01-01'
   organization_id: 1
   user_id: 7 # seu_ze
@@ -17,7 +15,6 @@ another:
   # no customer
 cancelled:
   id: 3
-  total_value: 1.00
   date: '2007-01-01'
   organization_id: 1
   user_id: 7 # seu_ze
@@ -25,7 +22,6 @@ cancelled:
   customer_id: 1
 sale for testing total value with item1 and item 2:
   id: 4
-  total_value: 1.00
   date: '2007-01-01'
   organization_id: 1
   user_id: 7 #

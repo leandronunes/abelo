@@ -69,3 +69,11 @@ bottom: 0;
 height: 50px;
 }
 
+/* Others */
+
+#show_cash_flows {
+position: absolute;
+display: none;
+width: 250px;
+height: 191px;
+}

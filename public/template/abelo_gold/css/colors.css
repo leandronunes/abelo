@@ -172,21 +172,7 @@ div.control_header span {
 display: none;
 }
 
-/* SideBar 
-
-#sidebar {
-filter:alpha(opacity=50);
--moz-opacity:.50;
-opacity:.50;
-}
-
-#sidebar:hover {
-filter:alpha(opacity=100);
--moz-opacity:1.0;
-opacity:1.0;
-}
-
-*/
+/* SideBar */
 
 #sidebar a.show_itembar { 
 background: url('../images/itembar_down.png') bottom right no-repeat;
@@ -194,8 +180,9 @@ display: table-cell;
 text-decoration: none !important;
 vertical-align: middle;
 text-align: center !important;
+border-bottom: 1px solid #c4a000;
 width: 290px;
-height: 30px;
+height: 31px;
 margin: 0px;
 padding: 0px;
 color: #545454 !important;
@@ -278,7 +265,7 @@ text-align: left;
 margin: 0px;
 padding: 0px;
 border-spacing: 0;
-margin-left: 50px;
+margin-left: 20px;
 }
 
 tr th {
@@ -298,6 +285,7 @@ background: #fffaf0;
 tr:hover td {
 border-color: #f9f5e6;
 background: #f4edcf;
+font-weight: bold;
 }
 
 td.endcol {
@@ -309,8 +297,22 @@ td.endrow {
 border-bottom: 2px solid #f4edcf;
 }
 
+td.number {
+width: 100px;
+border-left: 2px solid #f4edcf;
+padding-right: 5px;
+text-align: right;
+}
+
 td.value {
 width: 80px;
+border-left: 2px solid #f4edcf;
+padding-right: 5px;
+text-align: right;
+}
+
+td.stock {
+width: 100px;
 border-left: 2px solid #f4edcf;
 padding-right: 5px;
 text-align: right;
@@ -322,10 +324,36 @@ width: 100px;
 text-align: center;
 }
 
+td.text {
+border-left: 2px solid #f4edcf;
+width: 200px;
+padding-left: 5px;
+text-align: left;
+}
+
+td.name {
+border-left: 2px solid #f4edcf;
+width: 250px;
+padding-left: 5px;
+text-align: left;
+}
+
+td.product {
+border-left: 2px solid #f4edcf;
+width: 200px;
+padding-left: 5px;
+text-align: left;
+}
+
 td.option {
 border: 0px !important;
 background: transparent;
 }
+
+/* 
+td.true span, td.false span {
+display: none;
+} */
 
 td.true {
 color: green !important;
@@ -336,6 +364,15 @@ td.false {
 color: red !important;
 text-align: center;
 }
+
+/*
+td.true {
+background: transparent url('../images/icon_true_15px.png') center no-repeat !important;
+}
+td.false {
+background: transparent url('../images/icon_false_15px.png') center no-repeat !important;
+}
+*/
 
 /* Options Icon TD */
 tr td.option a, tr td.option span {
@@ -350,13 +387,25 @@ height: 30px;
 }
 
 td.option a#tdshow {
-background: url('../images/icon_show_30px.png') no-repeat;
+background: url('../images/icon_show_30px.png') bottom no-repeat;
 }
 td.option a#tdedit {
-background: url('../images/icon_edit_30px.png') no-repeat;
+background: url('../images/icon_edit_30px.png') bottom no-repeat;
 }
 td.option a#tddestroy {
-background: url('../images/icon_destroy_30px.png') no-repeat;
+background: url('../images/icon_destroy_30px.png') bottom no-repeat;
+}
+
+td.option a:hover {
+background-position: top !important;
+}
+
+
+/* OThers */
+
+#show_cash_flows {
+background: url('../images/boxfloat_250px.png') no-repeat;
+padding: 8px;
 }
 
 /* Footer */

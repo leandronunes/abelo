@@ -11,10 +11,10 @@
 }
 
 #errorExplanation {
+filter:alpha(opacity=50);
+-moz-opacity:.50;
+opacity:.50;
   position:relative;
-  width:400px;
-  margin:0px 0px 0px -200px;
-  left: 50%;
   border: 2px solid red;
   padding-top: 7px;
   padding-left: 7px;
@@ -22,6 +22,12 @@
   padding-bottom: 12px;
   margin-bottom: 20px;
   background-color: #f0f0f0;
+}
+
+#errorExplanation:hover {
+filter:alpha(opacity=100);
+-moz-opacity:1.0;
+opacity:1.0;
 }
 
 #errorExplanation h2 {

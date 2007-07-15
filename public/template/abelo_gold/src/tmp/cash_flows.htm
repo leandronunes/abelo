@@ -16,6 +16,8 @@
 <script src="../../js/scriptaculous.js" type="text/javascript"></script>
 <script src="../../../../javascripts/fckeditor/fckeditor.js" type="text/javascript"></script>
 
+<script src="../../js/divfloat.js" type="text/javascript"></script>
+
 </head>
 <body>
 <div id="warp">
@@ -28,7 +30,7 @@ CNPJ: 07.970.746/0001-77
 </div>
 <img id="banner_top" src="../../../../images/bannerabelo_160x75.jpg" "Banner - Abelo" height="75px" width="160px">
 <div id="userbar">
-<div class="login_bar"><a href="#" onclick="Effect.toggle('nav','slide',{duration:2}); return false;" accesskey="g" id="goto">Go to</a>&nbsp;<a href="edit_profile.htm" accesskey="e" id="edit_profile">Edit personal information</a>&nbsp;<a href="login.htm" accesskey="q" id="logout">Logout</a></div>
+<div class="login_bar"><a href="#" onclick="Effect.toggle('nav','slide',{duration:1}); return false;" accesskey="g" id="goto">Go to</a>&nbsp;<a href="edit_profile.htm" accesskey="e" id="edit_profile">Edit personal information</a>&nbsp;<a href="login.htm" accesskey="q" id="logout">Logout</a></div>
 
 <div class="navigation_bar"><div class="control_header"><a href="#" onClick="$('warp').style.marginTop='-77px';" class="hide" accesskey="z">&nbsp;<span>Hide</span></a><a href="#" onClick="$('warp').style.marginTop='0px';" class="show" accesskey="x">&nbsp;<span><span>Show</span></span></a></div> <a href="organization.htm">main</a> &rarr; <a href="organization_01.htm">COOPTECLIVRE - Coo...</a> &rarr; <a href="cash_flows.htm">Cash flows</a></div>
 </div>
@@ -57,7 +59,7 @@ CNPJ: 07.970.746/0001-77
 <div id="sidebar">
 
 <!-- Item Bar Options -->
-<p><a href="#" onclick="Effect.toggle('options_cash_flows','slide',{duration:2}); return false;" class="show_itembar">Options cash flows</a></p>
+<p><a href="#" onclick="Effect.toggle('options_cash_flows','slide',{duration:1}); if(this.style.borderBottom == '') { this.style.borderBottom = '1px'; } else { this.style.borderBottom = ''; }; return false;" class="show_itembar" style="border-bottom: none;">Options cash flows</a></p>
 <div id="options_cash_flows" class="itembar">
 <div>
 <form action="/one/cash_flows/generate_extract" method="post">
@@ -98,7 +100,7 @@ new Form.Element.EventObserver('option', function(element, value) {new Ajax.Upda
 <!-- End: Item Bar Options -->
 
 <!-- Item Bar New -->
-<p><a href="#" onclick="Effect.toggle('new_cash_flows','slide',{duration:2}); return false;" class="show_itembar">New cash_flow</a></p>
+<p><a href="#" onclick="Effect.toggle('new_cash_flows','slide',{duration:1}); if(this.style.borderBottom == '') { this.style.borderBottom = '1px'; } else { this.style.borderBottom = ''; }; return false;" class="show_itembar">New cash_flow</a></p>
 <div id="new_cash_flows" class="itembar" style="display : none;">
 <div>
 <form action="/one/cash_flows/create" method="post">
@@ -209,6 +211,30 @@ new Form.Element.EventObserver('option', function(element, value) {new Ajax.Upda
 <p>Adicionado com Sucesso!</p>
 </div>
 
+<div id="show_cash_flows">
+<div>
+<p>
+  <b>Value:</b> 15.5
+</p>
+
+<p>
+  <b>Date:</b> 2007-05-11
+
+</p>
+
+<p>
+  <b>Foreseen:</b> false
+</p>
+
+
+<a href="/one/cash_flows/edit/1">Edit</a> | <a 
+   OnClick="HideContent('show_cash_flows'); return true;"
+   href="javascript:HideContent('show_cash_flows')">
+Close</a>
+</div>
+</div>
+
+
 <table>
   <tr>
     <th>Value</th>
@@ -221,7 +247,7 @@ new Form.Element.EventObserver('option', function(element, value) {new Ajax.Upda
     <td class="date">2007-05-11</td>
     <td class="false endcol"><span>false</span></td>
   
-    <td class="option"><a href="/one/cash_flows/show/1" id="tdshow"><span>Show</span></a></td>
+    <td class="option"><a href="#1" OnClick="ShowContent('show_cash_flows'); return true;" id="tdshow"><span>Show</span></a></td>
     <td class="option"><a href="/one/cash_flows/edit/1" id="tdedit"><span>Edit</span></a></td>
     <td class="option"><a href="/one/cash_flows/destroy/1" id="tddestroy" onclick="if (confirm('Are you sure?')) { var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;f.submit(); };return false;"><span>Destroy</span></a></td>
   </tr>
@@ -230,7 +256,7 @@ new Form.Element.EventObserver('option', function(element, value) {new Ajax.Upda
     <td class="value">20.0</td>
     <td class="date">2007-05-11</td>
     <td class="false endcol"><span>false</span></td>
-    <td class="option"><a href="/one/cash_flows/show/2" id="tdshow"><span>Show</span></a></td>
+    <td class="option"><a href="#2" id="tdshow" OnClick="ShowContent('show_cash_flows'); return true;"><span>Show</span></a></td>
     <td class="option"><a href="/one/cash_flows/edit/2" id="tdedit"><span>Edit</span></a></td>
     <td class="option"><a href="/one/cash_flows/destroy/2" id="tddestroy" onclick="if (confirm('Are you sure?')) { var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;f.submit(); };return false;"><span>Destroy</span></a></td>
   </tr>
@@ -239,7 +265,7 @@ new Form.Element.EventObserver('option', function(element, value) {new Ajax.Upda
     <td class="value">40.0</td>
     <td class="date">2007-05-11</td>
     <td class="false endcol"><span>false</span></td>
-    <td class="option"><a href="/one/cash_flows/show/3" id="tdshow"><span>Show</span></a></td>
+    <td class="option"><a href="javascript:ShowContent('show_cash_flows')" id="tdshow" OnClick="ShowContent('show_cash_flows'); return true;"><span>Show</span></a></td>
     <td class="option"><a href="/one/cash_flows/edit/3" id="tdedit"><span>Edit</span></a></td>
     <td class="option"><a href="/one/cash_flows/destroy/3" id="tddestroy" onclick="if (confirm('Are you sure?')) { var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;f.submit(); };return false;"><span>Destroy</span></a></td>
   </tr>
@@ -248,7 +274,7 @@ new Form.Element.EventObserver('option', function(element, value) {new Ajax.Upda
     <td class="value">100.0</td>
     <td class="date">2007-05-11</td>
     <td class="false endcol"><span>false</span></td>
-    <td class="option"><a href="/one/cash_flows/show/4" id="tdshow"><span>Show</span></a></td>
+    <td class="option"><a href="#4" OnClick="ShowContent('show_cash_flows'); return true;" id="tdshow"><span>Show</span></a></td>
     <td class="option"><a href="/one/cash_flows/edit/4" id="tdedit"><span>Edit</span></a></td>
     <td class="option"><a href="/one/cash_flows/destroy/4" id="tddestroy" onclick="if (confirm('Are you sure?')) { var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;f.submit(); };return false;"><span>Destroy</span></a></td>
   </tr>
@@ -257,7 +283,7 @@ new Form.Element.EventObserver('option', function(element, value) {new Ajax.Upda
     <td class="value">5000.0</td>
     <td class="date">2007-05-11</td>
     <td class="false endcol"><span>false</span></td>
-    <td class="option"><a href="/one/cash_flows/show/5" id="tdshow"><span>Show</span></a></td>
+    <td class="option"><a href="#5" id="tdshow"><span>Show</span></a></td>
     <td class="option"><a href="/one/cash_flows/edit/5" id="tdedit"><span>Edit</span></a></td>
     <td class="option"><a href="/one/cash_flows/destroy/5" id="tddestroy" onclick="if (confirm('Are you sure?')) { var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;f.submit(); };return false;"><span>Destroy</span></a></td>
   </tr>
@@ -266,7 +292,7 @@ new Form.Element.EventObserver('option', function(element, value) {new Ajax.Upda
     <td class="value">14.5</td>
     <td class="date">2007-05-11</td>
     <td class="true endcol"><span>true</span></td>
-    <td class="option"><a href="/one/cash_flows/show/6" id="tdshow"><span>Show</span></a></td>
+    <td class="option"><a href="#6" id="tdshow"><span>Show</span></a></td>
     <td class="option"><a href="/one/cash_flows/edit/6" id="tdedit"><span>Edit</span></a></td>
     <td class="option"><a href="/one/cash_flows/destroy/6" id="tddestroy" onclick="if (confirm('Are you sure?')) { var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;f.submit(); };return false;"><span>Destroy</span></a></td>
   </tr>
@@ -275,16 +301,12 @@ new Form.Element.EventObserver('option', function(element, value) {new Ajax.Upda
     <td class="value endrow">5.5</td>
     <td class="date endrow">2007-05-11</td>
     <td class="true endcol endrow"><span>true</span></td>
-    <td class="option endrow"><a href="/one/cash_flows/show/7" id="tdshow"><span>Show</span></a></td>
+    <td class="option endrow"><a href="#7" id="tdshow"><span>Show</span></a></td>
     <td class="option endrow"><a href="/one/cash_flows/edit/7" id="tdedit"><span>Edit</span></a></td>
     <td class="option endrow"><a href="/one/cash_flows/destroy/7" id="tddestroy" onclick="if (confirm('Are you sure?')) { var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;f.submit(); };return false;"><span>Destroy</span></a></td>
   </tr>
 
 </table>
-
-<br />
-
-
 <!-- Fim do conteudo ficticio -->
 
 </div>

@@ -1,3 +1,14 @@
+#center_box {	
+  position:relative;
+  background: url('../images/bgcenterbox.jpg') bottom center no-repeat;
+  width:290px;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  margin-left: -145px;
+  left: 50%;
+  overflow: none;
+  z-index: 1;
+}
 
 #errorExplanation {
   position:relative;

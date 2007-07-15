@@ -16,6 +16,11 @@ body {
   height: 110px;
 }
 
+#sidebar {
+float: right;
+width: 290px;
+}
+
 #info_org {
   padding-left: 80px;
   padding-right: 160px;
@@ -45,13 +50,15 @@ top: 2px;
 right: 5px;
 }
 
-
 #nav {
 position: absolute;
 right: 3px;
+z-index: 999;
 }
 
 #content {
+position: relative;
+margin: 0px;
 padding: 10px;
 }
 

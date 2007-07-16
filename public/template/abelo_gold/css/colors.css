@@ -386,13 +386,13 @@ width: 30px;
 height: 30px;
 }
 
-td.option a#tdshow {
+td.option a.tdshow {
 background: url('../images/icon_show_30px.png') bottom no-repeat;
 }
-td.option a#tdedit {
+td.option a.tdedit {
 background: url('../images/icon_edit_30px.png') bottom no-repeat;
 }
-td.option a#tddestroy {
+td.option a.tddestroy {
 background: url('../images/icon_destroy_30px.png') bottom no-repeat;
 }
 

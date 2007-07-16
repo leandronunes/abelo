@@ -1,5 +1,20 @@
 <h2> <%= _('Stock control') %></h2>
 
+<%= display_table(
+  [_('Product'), _('Amount in stock')],
+  @products.map{|p| 
+    [
+      p.description, 
+      p.ammount_in_stock, 
+      link_to(content_tag('span', _('Show')), {:action => 'show', :id => p}, :class => 'tdshow')
+    ]},
+  { 
+    :html_title_options => [:class => 'none'], 
+    :html_content_options =>  [{:class => 'product'}, {:class => 'stock endcol'},{:class => 'option'}] 
+  }
+) %>
+
+
 <table>
   <tr>
     <th><%= _('Product') %></th>

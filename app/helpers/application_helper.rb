@@ -308,5 +308,44 @@ module ApplicationHelper
     end
   end
 
+  def display_table(titles, content, html_options = {})
 
+    content_tag('table',[
+        display_table_head(titles, html_options[:html_title_options]),
+        display_table_content(content, html_options[:html_content_options])
+      ]
+    )
+  end
+
+  def display_table_content(content_line, html_options)
+    content_line.map do |content_cel|
+      p = -1
+      content_tag('tr',[
+        content_cel.map do |c|
+          p = p + 1
+          content_tag('td', c, html_options[p])
+        end
+      ])
+    end
+  end
+
+  def display_table_head (titles, html_options)
+    tmp_html_options = Array.new
+
+    if html_options === Array
+      html_options = [:class => 'head'] if html_options.blank?
+      while(tmp_html_options.length < titles.length)
+        tmp_html_options.push(html_options.clone)
+        tmp_html_options.flatten!
+      end
+    end
+    tmp_html_options = tmp_html_options.first(titles.length)
+    p = -1
+    content_tag('tr', 
+      titles.map do |t|
+        p = p + 1
+        content_tag('th', t, tmp_html_options[p]) 
+      end
+    )  
+  end
 end

@@ -1,3 +1,15 @@
+# == Schema Information
+# Schema version: 35
+#
+# Table name: commercial_proposals
+#
+#  id              :integer       not null, primary key
+#  name            :string(255)   not null
+#  is_template     :boolean       
+#  organization_id :integer       not null
+#  body            :text          
+#
+
 class CommercialProposal < ActiveRecord::Base
 
   validates_presence_of :organization_id

@@ -1,5 +1,10 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+  ACTIONS = %w[
+    'new' => _('New')
+    'edit' => _('Edit') 
+    'remove' => _('Remove') 
+  ]
 
   def button(title, type, url_options = {}, html_options = {})
     local_html_options = html_options.merge({ :class => "button button_#{type}" })
@@ -242,5 +247,66 @@ module ApplicationHelper
     fckeditor_textarea(object, method, options.merge({:toolbarSet => 'Simple', :height => '300px'}))
   end
 
-  
+#TODO test it
+  def category_with_sign(type_of, name)
+    if type_of == "I"
+      return "(+) #{name}"
+    else
+      return "(-) #{name}"
+    end
+  end
+
+#TODO see
+  def to_currency(value)
+    value = 0.0 if value.nil?
+    number_to_currency(value, :unit => "", :delimiter => ".", :separator => ",")
+  end
+
+#TODO see
+  def sum_by_category(type, obj)
+    if type == :all
+      obj.sum {|l| l.value * (l.category.expense? ? -1 : 1) }
+    elsif type == :income
+      obj.select {|l| l.category.income? }.sum {|l| l.value }
+    elsif type == :expense
+      obj.select {|l| l.category.expense? }.sum {|l| l.value }
+    end
+  end
+
+#TODO see
+    def navigator_for(pages, objs, flash, color='ligth_blue')
+    str  = "<div class='#{color} navigation' style='text-align:center'>"
+      if flash[:filter]
+        str += flash[:filter]
+        str += " [" + link_to_remote('limpar', :url => {:action => 'find_ledgers', :find => ''}) + "]"
+      elsif pages.length > 1
+        if pages.current.previous
+          str += "<div style='float:left; position:absolute'>" + link_to_remote("&lt;recentes", :url => { :action => 'navigation', :page => pages.current.previous }) + "</div>"
+        end
+        if pages.current.next
+          str += "<div style='float:right; display:table-cell'>" + link_to_remote('antigos&gt;', :url => { :action => 'navigation', :page => pages.current.next }) + "</div>"
+        end
+        str += "página #{pages.current.number} de #{pages.length}"
+      end
+    str  += "</div>"
+  end
+
+#TODO remove it
+  def link_alter_remove_for(obj)
+    str  = link_to_remote 'alterar', :url => {:action => 'edit', :id => obj}
+    str += " ou "
+    str += link_to_remote 'remover', :url => {:action => 'destroy', :id => obj }, :confirm => 'Tem certeza que deseja deletar?'
+  end
+
+
+#TODO remove it
+  def save_or_update(obj)
+    if obj.nil? || obj.new_record?
+      submit_tag _("Add")
+    else
+      submit_tag _("Edit")
+    end
+  end
+
+
 end

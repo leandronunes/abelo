@@ -1,3 +1,14 @@
+# == Schema Information
+# Schema version: 35
+#
+# Table name: user_profiles
+#
+#  id              :integer       not null, primary key
+#  user_id         :integer       
+#  organization_id :integer       
+#  permissions     :text          
+#
+
 class UserProfile < ActiveRecord::Base
 
   validates_presence_of :user_id, :organization_id

@@ -1,3 +1,19 @@
+# == Schema Information
+# Schema version: 35
+#
+# Table name: suppliers
+#
+#  id              :integer       not null, primary key
+#  name            :string(255)   not null
+#  cnpj            :string(14)    
+#  organization_id :integer       not null
+#  address         :string(255)   
+#  birthday        :date          
+#  cpf             :string(11)    
+#  rg              :string(255)   
+#  description     :text          
+#
+
 class Supplier < ActiveRecord::Base
 
   belongs_to :organization

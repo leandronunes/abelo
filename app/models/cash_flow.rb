@@ -1,3 +1,18 @@
+# == Schema Information
+# Schema version: 35
+#
+# Table name: cash_flows
+#
+#  id               :integer       not null, primary key
+#  historical_id    :integer       not null
+#  value            :float         not null
+#  date             :date          not null
+#  specification_id :integer       
+#  organization_id  :integer       not null
+#  sale_id          :integer       
+#  foreseen         :boolean       not null
+#
+
 class CashFlow < ActiveRecord::Base
   belongs_to :historical
   belongs_to :organization

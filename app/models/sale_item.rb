@@ -1,3 +1,15 @@
+# == Schema Information
+# Schema version: 35
+#
+# Table name: sale_items
+#
+#  id            :integer       not null, primary key
+#  sale_id       :integer       not null
+#  product_id    :integer       not null
+#  ammount       :float         not null
+#  unitary_price :float         not null
+#
+
 class SaleItem < ActiveRecord::Base
 
   validates_presence_of :sale_id, :product_id, :ammount

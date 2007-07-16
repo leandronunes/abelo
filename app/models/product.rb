@@ -1,3 +1,18 @@
+# == Schema Information
+# Schema version: 35
+#
+# Table name: products
+#
+#  id              :integer       not null, primary key
+#  description     :string(255)   not null
+#  size            :string(255)   
+#  color           :string(255)   
+#  sell_price      :float         not null
+#  unit            :string(255)   not null
+#  organization_id :integer       not null
+#  category_id     :integer       not null
+#
+
 class Product < ActiveRecord::Base
 
   belongs_to :organization

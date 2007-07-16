@@ -1,3 +1,15 @@
+# == Schema Information
+# Schema version: 35
+#
+# Table name: historicals
+#
+#  id              :integer       not null, primary key
+#  name            :string(255)   not null
+#  type_of         :string(1)     not null
+#  operational     :boolean       not null
+#  organization_id :integer       not null
+#
+
 class Historical < ActiveRecord::Base
   has_many :cash_flows
   belongs_to :organization

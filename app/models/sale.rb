@@ -1,3 +1,16 @@
+# == Schema Information
+# Schema version: 35
+#
+# Table name: sales
+#
+#  id              :integer       not null, primary key
+#  organization_id :integer       not null
+#  customer_id     :integer       
+#  date            :date          not null
+#  status          :integer       default(0), not null
+#  user_id         :integer       not null
+#
+
 class Sale < ActiveRecord::Base
 
   validates_presence_of :date, :organization_id, :user_id

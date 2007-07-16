@@ -6,19 +6,19 @@ module OrganizationsHelper
 
   def main_menu
     menu_items = {
-      'product_categories'  => _('Product Categories'),   
+      'categories'  => _('Categories'),   
       'products'            => _('Products'),             
       'suppliers'           => _('Suppliers'),            
       'stock'               => _('Stock'),                
       'store'               => _('Store'),                
       'permissions'         => _('User administration'),  
       'customers'           => _('Customers'),            
-      'customer_categories' => _('Customer Categories'),  
       'contact_positions'   => _('Contact Positions'),    
       'workers'             => _('Workers'),
       'point_of_sale'       => _('Point of sale'),
       'mass_mails'          => _('Mass Mails'),
       'cash_flows'          => _('Cash Flow'),
+      'ledgers'             => _('Ledgers'),
       'configuration'       => _('Configurations'),
       'departments'         => _('Departments'),
       'commercial_proposals'=> _('Commercial Proposals'),

@@ -1,3 +1,14 @@
+# == Schema Information
+# Schema version: 35
+#
+# Table name: organizations
+#
+#  id       :integer       not null, primary key
+#  name     :string(255)   not null
+#  cnpj     :string(14)    
+#  nickname :string(255)   not null
+#
+
 class Organization < ActiveRecord::Base
 
   validates_presence_of :name, :cnpj, :nickname
@@ -7,8 +18,10 @@ class Organization < ActiveRecord::Base
   
   has_many :departments
   has_many :products
+  has_many :categories
   has_many :product_categories
   has_many :customer_categories
+  has_many :ledger_categories
   has_many :suppliers
   has_many :user_profiles
   has_many :users, :through => :user_profiles

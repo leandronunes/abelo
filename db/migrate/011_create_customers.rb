@@ -10,6 +10,7 @@
       t.column :rg, :string
       t.column :description, :text
       t.column :organization_id, :integer, :null => false
+      t.column :category_id, :integer
       end
    end
 

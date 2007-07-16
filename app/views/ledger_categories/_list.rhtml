@@ -1,0 +1,26 @@
+<%= _('All Categories')%>
+<%= link_to_remote _('New'), :url => {:action => 'new'}, :update => 'action'%>
+
+<table class="tablelist" width="100%" cellpadding=0 cellmargin=0>
+    <thead>
+        <th><%= _('Type') %> </th>
+        <th> <%= _('Name') %> </th>
+        <th><%= _('Ledgers Quantity') %> </th>
+        <th><%= _('Operations')%></th>
+    </thead>
+    
+    <tbody class="ligth_gray">
+        <% for category in @categories %>
+        <tr id="list_category_<%=category.id %>">
+            <td> <%= type_of_ledger_category(category.type_of) %></td>
+            <td> <%= category.name %></td>
+            <td> <%= category.count_ledgers%></td>
+            <td> 
+              <%= link_to_remote _('Edit'), :url => {:action => 'edit', :id => category}, :update => 'action'%> 
+              <%= _('or') %>  
+              <%= link_to_remote _('Remove'), :url =>{:action => 'destroy', :id => category}, :confirm => _('Are you sure?') %>
+            </td>
+        </tr>
+        <% end %>
+    </tbody>
+</table>

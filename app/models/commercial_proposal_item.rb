@@ -1,3 +1,17 @@
+# == Schema Information
+# Schema version: 35
+#
+# Table name: commercial_proposal_items
+#
+#  id                             :integer       not null, primary key
+#  commercial_proposal_section_id :integer       not null
+#  quantity                       :integer       not null
+#  number                         :integer       
+#  unitary_value                  :float         not null
+#  product_id                     :integer       
+#  service_id                     :integer       
+#
+
 class CommercialProposalItem < ActiveRecord::Base
   validates_presence_of :quantity
   validates_presence_of :unitary_value

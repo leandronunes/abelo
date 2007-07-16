@@ -1,0 +1,28 @@
+<!--[form:category]-->
+<div id="form">
+<p> <label for="category_type_of"> <%= _('Type') %> </label><br/>
+<%= radio_button 'category', 'type_of', 'I', :checked => true %>
+<label for="category_type_of_income"><%= type_of_ledger_category('I')%></label>
+<%= radio_button 'category', 'type_of', 'O' %>
+<label for="category_type_of_expense"><%= type_of_ledger_category('O')%></label>
+</p>
+
+<p><label for="category_name"> <%= _('Name')%> </label><br/>
+<%= text_field 'category', 'name'%></p>
+
+<p><label for="category_interests"> <%= _('Interests') %> </label><br/>
+<%= text_field 'category', 'interests'%></p>
+
+<p><label for="category_interests_days"> <%= _('Interests days') %> </label><br/>
+<%= text_field 'category', 'interests_days'%></p>
+
+<p><label for="category_number_of_parcels"> <%= _('Number of parcels')%> </label><br/>
+<%= text_field 'category', 'number_of_parcels'%></p>
+
+<p><label for="category_operational"> <%= _('Operational') %></label>
+<%= check_box 'category', 'operational' %></p> 
+
+<p><label for="category_is_foreseen"> <%= _('Is Foreseen') %></label>
+<%= check_box 'category', 'is_foreseen' %></p> 
+</div>
+<!--[eoform:category]-->

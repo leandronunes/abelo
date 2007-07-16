@@ -1,0 +1,114 @@
+# == Schema Information
+# Schema version: 35
+#
+# Table name: categories
+#
+#  id              :integer       not null, primary key
+#  name            :string(255)   not null
+#  type            :string(255)   not null
+#  parent_id       :integer       
+#  organization_id :integer       not null
+#
+
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+# Product Categories
+product_categoryA:
+  id: 1
+  name: 'product_category A'
+  type: 'ProductCategory'
+  organization_id: 1
+product_categoryB:
+  id: 2
+  name: 'product_category B'
+  type: 'ProductCategory'
+  organization_id: 1
+product_categoryC:
+  id: 3
+  name: 'product_category AA'
+  type: 'ProductCategory'
+  parent_id: 1
+  organization_id: 1
+product_categoryD:
+  id: 4
+  name: 'product_category AB'
+  type: 'ProductCategory'
+  parent_id: 1
+  organization_id: 1
+product_categoryE:
+  id: 5
+  name: 'product_category ABC'
+  type: 'ProductCategory'
+  parent_id: 4
+  organization_id: 1
+product_categoryF:
+  id: 6
+  name: 'product_category A'
+  type: 'ProductCategory'
+  organization_id: 2
+product_categoryG:
+  id: 7
+  name: 'product_category A'
+  type: 'ProductCategory'
+  organization_id: 3
+product_categoryH:
+  id: 8
+  name: 'product_category A'
+  type: 'ProductCategory'
+  organization_id: 4
+product_categoryI:
+  id: 9
+  name: 'product_category AA'
+  type: 'ProductCategory'
+  parent_id: 8
+  organization_id: 4
+
+# Customer Categories
+customer_categoryA:
+  id: 10
+  name: 'customer_category A'
+  type: 'CustomerCategory'
+  organization_id: 1
+customer_categoryB:
+  id: 11
+  name: 'customer_category B'
+  type: 'CustomerCategory'
+  organization_id: 1
+customer_categoryC:
+  id: 12
+  name: 'customer_category AA'
+  type: 'CustomerCategory'
+  parent_id: 10
+  organization_id: 1
+customer_categoryD:
+  id: 13
+  name: 'customer_category AB'
+  type: 'CustomerCategory'
+  parent_id: 10
+  organization_id: 1
+customer_categoryE:
+  id: 14
+  name: 'customer_category ABC'
+  type: 'CustomerCategory'
+  parent_id: 13
+  organization_id: 1
+customer_categoryF:
+  id: 15
+  name: 'customer_category A'
+  type: 'CustomerCategory'
+  organization_id: 2
+customer_categoryG:
+  id: 16
+  name: 'customer_category A'
+  type: 'CustomerCategory'
+  organization_id: 3
+customer_categoryH:
+  id: 17
+  name: 'customer_category A'
+  type: 'CustomerCategory'
+  organization_id: 4
+customer_categoryI:
+  id: 18
+  name: 'customer_category AA'
+  type: 'CustomerCategory'
+  parent_id: 17
+  organization_id: 4

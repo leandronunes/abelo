@@ -1,3 +1,13 @@
+# == Schema Information
+# Schema version: 35
+#
+# Table name: departments
+#
+#  id              :integer       not null, primary key
+#  name            :string(255)   not null
+#  organization_id :integer       not null
+#
+
 class Department < ActiveRecord::Base
 
   validates_presence_of :name

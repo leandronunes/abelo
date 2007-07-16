@@ -1,3 +1,21 @@
+# == Schema Information
+# Schema version: 35
+#
+# Table name: customers
+#
+#  id              :integer       not null, primary key
+#  name            :string(255)   not null
+#  email           :string(255)   not null
+#  birthday        :date          
+#  address         :string(255)   
+#  cnpj            :string(14)    
+#  cpf             :string(11)    
+#  rg              :string(255)   
+#  description     :text          
+#  organization_id :integer       not null
+#  category_id     :integer       
+#
+
 class Customer < ActiveRecord::Base
 
   belongs_to :organization

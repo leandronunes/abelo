@@ -1,3 +1,19 @@
+# == Schema Information
+# Schema version: 35
+#
+# Table name: workers
+#
+#  id              :integer       not null, primary key
+#  name            :string(255)   not null
+#  cpf             :string(11)    
+#  rg              :string(255)   
+#  address         :string(255)   
+#  birthday        :date          
+#  description     :text          
+#  function        :string(255)   
+#  organization_id :integer       not null
+#
+
 class Worker < ActiveRecord::Base
 
   belongs_to :organization

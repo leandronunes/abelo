@@ -202,15 +202,70 @@ module ApplicationHelper
     if self.current_user
       content_tag(
         'div',
-        [ link_to(_('Logout'), :controller => 'users', :action => 'logout'),
-          link_to(_('Edit personal information'), :controller => 'users', :action => 'edit', :id => self.current_user),
-          link_to(_('Start'), :controller => 'users', :action => 'index'),
-        ].join('&nbsp;'),
-        :class => 'user_bar') if self.current_user
+        [
+        content_tag(
+          'div',
+          [ 
+            link_to(_('Go to'), {:controller => 'users', :action => 'index'}, :id => "goto", :accesskey => "g", :onclick => "Effect.toggle('nav','slide',{duration:2}); return false;" ),
+            link_to(_('Edit personal information'), {:controller => 'users', :action => 'edit', :id => self.current_user}, :id => "edit_profile", :accesskey => "e"),
+            link_to(_('Logout'), {:controller => 'users', :action => 'logout'}, :id => "logout", :accesskey => "q", :confirm => _('Exit from system?'), :post => 'true'),
+          ].join('&nbsp;'),
+          :class => 'login_bar'),
+        display_navigation_bar
+        ],
+          :id => 'userbar') if self.current_user
     else
       ''
     end
   end
+
+  def display_navigation_bar
+    content_tag(
+      'div',
+      [
+        link_to(@organization.name, :controller => 'main'),
+        "&rarr",
+        link_to(@controller.controller_name, :controller => @controller.controller_name),
+      ],
+      :class => 'navigation_bar'
+    ) if @organization
+  end
+
+  def main_menu
+    menu_items = {
+      'categories'  => _('Categories'),   
+      'products'            => _('Products'),             
+      'suppliers'           => _('Suppliers'),            
+      'stock'               => _('Stock'),                
+      'store'               => _('Store'),                
+      'permissions'         => _('User administration'),  
+      'customers'           => _('Customers'),            
+      'contact_positions'   => _('Contact Positions'),    
+      'workers'             => _('Workers'),
+      'point_of_sale'       => _('Point of sale'),
+      'mass_mails'          => _('Mass Mails'),
+      'cash_flows'          => _('Cash Flow'),
+      'ledgers'             => _('Ledgers'),
+      'configuration'       => _('Configurations'),
+      'departments'         => _('Departments'),
+      'commercial_proposals'=> _('Commercial Proposals'),
+    }
+    x = 0
+   content_tag(
+     'div', 
+     content_tag( 
+       'div',
+       [content_tag(
+         'ul', 
+          menu_items.keys.select do |controller|
+            can(:controller => controller)
+          end.map do |controller|
+            x = x+1
+            content_tag('li', (link_to "<span>#{menu_items[controller]}</span>", { :controller => controller }, :id => controller, :class => "button_main pos_#{x}"))
+          end.join('')) ]
+       ), :id => 'nav', :style => "display : none;" )
+  end
+
 
   def link_to_organization(org, html_options = {})
     link_to org.name, { :organization_nickname => org.nickname, :controller => 'main', :action => 'index' }, html_options

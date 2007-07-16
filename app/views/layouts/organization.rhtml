@@ -15,16 +15,17 @@
 <body>
 <div id="warp">
 <div id="header">
+
+  <img id="logo_org" src=<%="/images/org_#{@organization.nickname}.png" %> alt="<%= @organization.nickname %>" height="75px" width="75px">
+<div id="info_org">
+  <span><%= @organization.name %></span><br />
+  <%= _('CNPJ')%>: <%= @organization.cnpj %>
+</div>
+
+<img id="banner_top" src="../../../../images/bannerabelo_160x75.jpg" "Banner - Abelo" height="75px" width="160px">
 <%= user_bar %>
-<h1><%= @organization.name %></h1>
-<div id="userbar">
-<div class="navigation_bar">
-<%= link_to @organization.name, :controller => 'main' %>
-&rarr;
-<%= link_to @controller.controller_name, :controller => @controller.controller_name  %>
-</div>
-</div>
-</div>
+
+<%= main_menu %>
 
 <div id="content">
 <%= yield %>

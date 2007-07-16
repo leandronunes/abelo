@@ -1,0 +1,7 @@
+<h2><%= _('Categories') %></h2>
+
+<ul>
+  <li> <%= link_to _('Product'), {:action => 'list', :category_type => 'product' } %> </li>
+  <li> <%= link_to _('Customer'), {:action => 'list', :category_type => 'customer' } %> </li>
+  <li> <%= link_to _('Ledgers'), {:controller => 'ledger_categories'} %> </li>
+</ul>

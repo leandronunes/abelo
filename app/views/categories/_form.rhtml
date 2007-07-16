@@ -1,0 +1,11 @@
+<%= error_messages_for 'category' %>
+
+<!--[form:product_category]-->
+<p><label for="category_name"> <%= _('Name') %> </label>
+<%= text_field 'category', 'name'  %></p>
+
+<%= hidden_field 'category', 'parent_id' %>
+<%= hidden_field_tag 'category_type', @category_type %>
+
+<!--[eoform:product_category]-->
+

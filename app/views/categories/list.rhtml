@@ -1,0 +1,15 @@
+<h2><%= _('Listing categories') %></h2>
+
+<table>
+  <tr>
+    <th><%= _('Name') %></th>
+  </tr>
+  
+<% for category in @categories.select { |c| c.top_level? } %>
+  <%= render :partial => 'list', :locals => { :category => category } %>
+<% end %>
+</table>
+
+<br />
+
+<%= button _('New top-level category'), :add, :action => 'new', :category_type => @category_type %>

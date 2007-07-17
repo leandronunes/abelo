@@ -206,7 +206,7 @@ module ApplicationHelper
         content_tag(
           'div',
           [ 
-            link_to(_('Go to'), {:controller => 'users', :action => 'index'}, :id => "goto", :accesskey => "g", :onclick => "Effect.toggle('nav','slide'); return false;" ),
+            link_to_remote(_('Go to'), {}, :id => "goto", :accesskey => "g", :onclick => visual_effect(:toggle_slide, 'nav',:duration => 2) ),
             link_to(_('Edit personal information'), {:controller => 'users', :action => 'edit', :id => self.current_user}, :id => "edit_profile", :accesskey => "e"),
             link_to(_('Logout'), {:controller => 'users', :action => 'logout'}, :id => "logout", :accesskey => "q", :confirm => _('Exit from system?'), :post => 'true'),
           ].join('&nbsp;'),
@@ -238,7 +238,8 @@ module ApplicationHelper
         content_tag(
         'div',
         [
-          content_tag('a',[] ,:class => 'hide', :accesskey => 'z',:onclick => "$('warp').style.marginTop='-77px';" ),
+          #alterar para usar as funções do rails
+          content_tag('a',[] ,:class => 'hide', :accesskey => 'z',:onclick => "$('warp').style.marginTop='-77px';"),
           content_tag('a',[] ,:class => 'show', :accesskey => 'x',:onClick => "$('warp').style.marginTop='0px';"),
         ],
         :class => 'control_header'),
@@ -422,4 +423,9 @@ module ApplicationHelper
       end
     )  
   end
+
+  def limit_string(s,tam=50)
+    s.first(tam)+"..." if !s.nil?
+  end
+
 end

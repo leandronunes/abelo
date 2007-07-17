@@ -206,7 +206,7 @@ module ApplicationHelper
         content_tag(
           'div',
           [ 
-            link_to(_('Go to'), {:controller => 'users', :action => 'index'}, :id => "goto", :accesskey => "g", :onclick => "Effect.toggle('nav','slide',{duration:2}); return false;" ),
+            link_to(_('Go to'), {:controller => 'users', :action => 'index'}, :id => "goto", :accesskey => "g", :onclick => "Effect.toggle('nav','slide'); return false;" ),
             link_to(_('Edit personal information'), {:controller => 'users', :action => 'edit', :id => self.current_user}, :id => "edit_profile", :accesskey => "e"),
             link_to(_('Logout'), {:controller => 'users', :action => 'logout'}, :id => "logout", :accesskey => "q", :confirm => _('Exit from system?'), :post => 'true'),
           ].join('&nbsp;'),
@@ -217,6 +217,18 @@ module ApplicationHelper
     else
       ''
     end
+  end
+
+  def notice_box(msg)
+    if msg
+    content_tag(
+    'div',
+    content_tag('p', msg) + content_tag('a', _('Ok'), {:onclick => 'Effect.toggle(\'notice\',\'slide\',{duration:1}); return false;' } ) + javascript_tag(visual_effect(:fade, 'notice', :duration => 10)),
+    { :id => 'notice' }
+     )
+     else
+     ''
+   end
   end
 
   def display_navigation_bar

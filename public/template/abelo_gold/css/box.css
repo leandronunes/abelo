@@ -10,6 +10,18 @@
   z-index: 1;
 }
 
+#notice {	
+  position:absolute;
+  background: url('../images/bgcenterbox.jpg') bottom center no-repeat;
+  width:290px;
+  padding: 20px;
+  margin-left: -145px;
+  left: 50%;
+  text-align: center;
+  overflow: none;
+  z-index: 1;
+}
+
 #errorExplanation {
 filter:alpha(opacity=50);
 -moz-opacity:.50;

@@ -1,0 +1,13 @@
+<div id="information" >
+
+<%= link_to_close_popup " ", {:class => 'button_close'}%>
+
+<%= search_customer ('customer_search')  %>
+
+<%= popup_form_tag({ :action => 'show_customers', :id => params[:id]}) %>
+<div id='people_search'>
+</div>
+
+<%= end_form_tag %>
+
+</div>

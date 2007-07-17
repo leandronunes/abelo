@@ -1,0 +1,29 @@
+<div id='form'>
+  <% if @departments %>
+  
+  <%= error_messages_for "commercial_proposal" %>
+  
+  <%= start_form_tag :action => 'create' %>
+  
+  <label><%= _('Name') %></label><%= text_field 'commercial_proposal', 'name' %>
+  
+  <%= multiple_select('commercial_proposal', 'department_ids', @departments, _('Departments')) %>
+  
+  <label><%= _('create from a template?') %></label><%= check_box_tag 'is_template' %>
+  
+  <div id='templates'>
+    <%= render :partial => 'templates'%>
+  </div>
+
+  <%= submit_tag _('New') %>
+
+<%= end_form_tag %>
+
+<%= observe_field 'is_template',
+    :update => 'templates',
+    :url => {:action => 'get_template'},
+    :with => "'value=' + escape(value)"
+    %>
+    
+  <% end %>
+</div>

@@ -223,6 +223,13 @@ module ApplicationHelper
     content_tag(
       'div',
       [
+        content_tag(
+        'div',
+        [
+          content_tag('a',[] ,:class => 'hide', :accesskey => 'z',:onclick => "$('warp').style.marginTop='-77px';" ),
+          content_tag('a',[] ,:class => 'show', :accesskey => 'x',:onClick => "$('warp').style.marginTop='0px';"),
+        ],
+        :class => 'control_header'),
         link_to(@organization.name, :controller => 'main'),
         "&rarr",
         link_to(@controller.controller_name, :controller => @controller.controller_name),

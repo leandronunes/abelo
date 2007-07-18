@@ -428,4 +428,12 @@ module ApplicationHelper
     s.first(tam)+"..." if !s.nil?
   end
 
+  def slidebar(element_id,title)
+    content_tag(
+      'p',
+      content_tag('a', title, :class => "show_itembar", :style => "border-botttom: none;"),
+      :onclick => visual_effect(:toggle_slide, element_id, :duration => 1) 
+    )      
+  end
+
 end

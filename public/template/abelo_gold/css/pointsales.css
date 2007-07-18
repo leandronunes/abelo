@@ -1,0 +1,131 @@
+/* Autor: Valessio S Brito <valessio@colivre.coop.br>  */
+
+#header h1.status {
+text-align: center;
+font-size: 5em;
+color: #4e9a06;
+border-bottom: 3px solid #4e9a06;
+margin: 20px;
+padding-bottom: 20px;
+}
+
+#add_item_panel h1 {
+color: #204a87;
+}
+
+#insert_ammount h1 {
+text-align: left;
+font-size: 20px;
+margin: 5px;
+}
+
+#insert_ammount {
+padding: 5px;
+margin: 5px;
+border: 1px solid #cfdbe5;
+}
+
+#cumpom_sales {
+height: 300px;
+}
+
+#sale_details { 
+margin-right: 300px;
+}
+
+#product_identification {
+display: block;
+vertical-align: middle;
+height: 45px;
+width: auto;
+overflow: hidden;
+font-size: 2em;
+text-align: center;
+}
+
+#search_product a {
+display: block;
+margin-top: 40px;
+width: 48px;
+height: 48px;
+}
+
+#search_product span {
+display: none;
+}
+
+#add_item_panel {
+position: relative;
+border: 1px solid transparent;
+text-align: left;
+}
+
+#code_product {
+position: absolute; 
+top: 0;
+margin-left: 80px;
+}
+
+#add_product input {
+display: block;
+margin-top: 15px;
+width: 48px;
+height: 48px;
+float: right;
+}
+
+input#product_id {
+font-weight: bold;
+font-size: 40px;
+width: 370px;
+text-align: right;
+}
+
+input#ammount {
+font-weight: bold;
+font-size: 25px;
+width: 150px;
+text-align: right;
+}
+
+input#money_in {
+font-weight: bold;
+font-size: 30px;
+width: 200px;
+color: green !important;
+background: #d8f3b1 !important;
+text-align: right;
+}
+
+#money_in h1 {
+text-align: left;
+font-size: 20px;
+color: #4e9a06 !important;
+margin: 5px;
+}
+
+#result_ammount {
+float: right;
+font-weight: bold;
+font-size: 20px;
+padding: 5px;
+width: 200px;
+text-align: left;
+}
+
+#add_item_panel input {
+background: #cfdbe5;
+color: #204a87;
+border: 1px solid #545454;
+}
+
+#add_item_panel input:focus, #add_item_panel input:hover {
+background: #e7ebeb;
+color: #545454;
+border: 1px solid #545454;
+}
+
+#banner_bottom {
+position: absolute;
+left: 0;
+}

@@ -16,4 +16,13 @@
   }
 )%>
 
+<div id='sidebar'>
+  <%= show_item_bar("new_supplier", "new_supplier") %>
+  <div id="new_supplier" class="itembar">
+    <div><%= render :partial => 'form' %></div>
+    <%= hide_item_bar("new_supplier")%>
+  </div>
+</div>
+
+
   <%= button _('New supplier'), :add, :action => 'new', :class => 'button button_new' %>

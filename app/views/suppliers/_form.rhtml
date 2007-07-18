@@ -1,11 +1,11 @@
 <%= error_messages_for 'supplier' %>
 
 <!--[form:supplier]-->
-<p><label for="supplier_name">Name</label>
+<p><label for="supplier_name"><%= _('Name') %></label>
 <span><%= text_field 'supplier', 'name'  %></span>
 </p>
 
-<p><label for="supplier_cnpj">Cnpj</label>
+<p><label for="supplier_cnpj"><%= _('Cnpj') %></label>
 <span><%= text_field 'supplier', 'cnpj'  %></span>
 </p>
 
@@ -26,7 +26,7 @@
 </p>
 
 <p><label for='supplier_description'><%= _('Description') %></label>
-<span><%= text_area 'supplier', 'description' %></span>
+<span><%= text_area 'supplier', 'description', "cols" => 20, "rows" => 2 %></span>
 </p>
 
 <!--[eoform:supplier]-->

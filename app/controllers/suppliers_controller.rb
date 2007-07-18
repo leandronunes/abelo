@@ -49,4 +49,8 @@ class SuppliersController < ApplicationController
     @organization.suppliers.find(params[:id]).destroy
     redirect_to :action => 'list'
   end
+
+  def show
+    @supplier = @organization.suppliers.find(params[:id])
+  end
 end

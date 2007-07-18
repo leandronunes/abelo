@@ -428,12 +428,18 @@ module ApplicationHelper
     s.first(tam)+"..." if !s.nil?
   end
 
-  def slidebar(element_id,title)
+  def show_item_bar(element_id,title)
     content_tag(
       'p',
-      content_tag('a', title, :class => "show_itembar", :style => "border-botttom: none;"),
-      :onclick => visual_effect(:toggle_slide, element_id, :duration => 1) 
-    )      
+      link_to_remote(title, {}, :class => "show_itembar", :style => "border-botttom: none;", :onclick => visual_effect(:toggle_slide, element_id, :duration => 1) )
+     )      
+  end
+
+  def hide_item_bar(element_id)
+    content_tag(
+      'p',
+      link_to_remote(content_tag('span', 'Hide'), {},:class => 'hide_itembar',:onclick => visual_effect(:toggle_slide, element_id, :duration => 1))
+    )
   end
 
 end

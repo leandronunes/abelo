@@ -189,9 +189,9 @@ module ApplicationHelper
     _('%{year}/%{month}/%{day}') % {:day => '%02d' % date.day, :month => '%02d' % date.month, :year => '%04d' % date.year}
   end
 
-  def show_image(image)
+  def show_image(image, size = "50x50")
     link_to(
-      content_tag('span', image_tag(url_for_image_column(image, 'picture', :name => 'thumb'))) +
+      content_tag('span', image_tag(url_for_image_column(image, 'picture', :name => 'thumb'), :size => size)) +
       content_tag('span', image.description),
       url_for_image_column(image, 'picture', :name => 'medium'),
       { :class => 'product_image', :popup => [ 'abelo_image', 'height=240,width=320' ] }

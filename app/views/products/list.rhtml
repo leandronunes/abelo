@@ -1,9 +1,10 @@
 <h2> <%= _('Listing products') %></h2>
 
 <%= display_table(
-  [ _('Code'), _('Description'), _('Sell price') ],
+  [ _('Images'), _('Code'), _('Description'), _('Sell price') ],
   @products.map{|p| 
     [
+      p.images.map{|i| show_image i}[0],
       p.id,
       p.description,
       p.sell_price,
@@ -13,6 +14,6 @@
     ]},
   { 
     :html_title_options => [:class => 'none'], 
-    :html_content_options =>  [{:class => 'number'},{:class => 'name'},{:class => 'stock endcol'},{:class => 'option'},{:class => 'option'},{:class => 'option'}] 
+    :html_content_options =>  [{:class => 'name'},{:class => 'number'},{:class => 'name'},{:class => 'stock endcol'},{:class => 'option'},{:class => 'option'},{:class => 'option'}] 
   }
 ) %>

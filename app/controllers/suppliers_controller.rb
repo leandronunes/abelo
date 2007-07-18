@@ -27,12 +27,13 @@ class SuppliersController < ApplicationController
       flash[:notice] = 'Supplier was successfully created.'
       redirect_to :action => 'list'
     else
-      render :action => 'new'
+      render :partial => 'new'
     end
   end
 
   def edit
     @supplier = @organization.suppliers.find(params[:id])
+    render :partial => 'edit'
   end
 
   def update
@@ -52,5 +53,9 @@ class SuppliersController < ApplicationController
 
   def show
     @supplier = @organization.suppliers.find(params[:id])
+  end
+
+  def reset
+    render :partial => 'new'
   end
 end

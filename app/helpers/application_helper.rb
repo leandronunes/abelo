@@ -206,7 +206,7 @@ module ApplicationHelper
         content_tag(
           'div',
           [ 
-            link_to_remote(_('Go to'), {}, :id => "goto", :accesskey => "g", :onclick => visual_effect(:toggle_slide, 'nav',:duration => 2) ),
+            link_to_remote(_('Go to'), {}, :id => "goto", :accesskey => "g", :onclick => visual_effect(:toggle_slide, 'nav') ),
             link_to(_('Edit personal information'), {:controller => 'users', :action => 'edit', :id => self.current_user}, :id => "edit_profile", :accesskey => "e"),
             link_to(_('Logout'), {:controller => 'users', :action => 'logout'}, :id => "logout", :accesskey => "q", :confirm => _('Exit from system?'), :post => 'true'),
           ].join('&nbsp;'),
@@ -223,7 +223,7 @@ module ApplicationHelper
     if msg
     content_tag(
     'div',
-    content_tag('p', msg) + content_tag('a', _('Ok'), {:onclick => 'Effect.toggle(\'notice\',\'slide\',{duration:1}); return false;' } ) + javascript_tag(visual_effect(:fade, 'notice', :duration => 10)),
+    content_tag('p', msg) + content_tag('a', _('Ok'), :onclick => visual_effect(:toggle_slide, 'notice')) + javascript_tag(visual_effect(:fade, 'notice', :duration => 5)),
     { :id => 'notice' }
      )
      else
@@ -431,14 +431,14 @@ module ApplicationHelper
   def show_item_bar(element_id,title)
     content_tag(
       'p',
-      link_to_remote(title, {}, :class => "show_itembar", :style => "border-botttom: none;", :onclick => visual_effect(:toggle_slide, element_id, :duration => 1) )
+      link_to_remote(title, {}, :class => "show_itembar", :style => "border-botttom: none;", :onclick => visual_effect(:toggle_slide, element_id) )
      )      
   end
 
   def hide_item_bar(element_id)
     content_tag(
       'p',
-      link_to_remote(content_tag('span', 'Hide'), {},:class => 'hide_itembar',:onclick => visual_effect(:toggle_slide, element_id, :duration => 1))
+      link_to_remote(content_tag('span', 'Hide'), {},:class => 'hide_itembar',:onclick => visual_effect(:toggle_slide, element_id))
     )
   end
 

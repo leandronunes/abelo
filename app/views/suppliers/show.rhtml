@@ -1,0 +1,8 @@
+<h1><%= _('Supplier: %s') % @supplier.name %></h1>
+
+<% for column in Supplier.content_columns %>
+<p>
+  <b><%= column.human_name %>:</b><%= h @supplier.send(column.name) %>
+</p>
+<% end %>
+

@@ -1,5 +1,7 @@
 <h1><%= _('Listing suppliers') %></h1>
 
+<%= render :partial => 'new' %>
+
 <%= display_table(
   [_('Name'), _('Description')],
   @suppliers.map{|s|
@@ -7,7 +9,7 @@
     s.name,
     limit_string(s.description),
     link_to(content_tag('span', _('Show')), {:action => 'show', :id => s}, :class => 'tdshow'),
-    link_to(content_tag('span', _('Edit')), {:action => 'edit', :id => s}, :class => 'tdedit'),
+    link_to_remote(content_tag('span', _('Edit')), {:update => 'sidebar', :url => {:action => 'edit', :id => s} }, :class => 'tdedit'),
     link_to(content_tag('span', _('Destroy')), {:action => 'destroy', :id => s}, :confirm => _('Are you sure?'), :post => true,  :class => 'tddestroy')
   ]},
   {
@@ -16,13 +18,3 @@
   }
 )%>
 
-<div id='sidebar'>
-  <%= show_item_bar("new_supplier", "new_supplier") %>
-  <div id="new_supplier" class="itembar">
-    <div><%= render :partial => 'form' %></div>
-    <%= hide_item_bar("new_supplier")%>
-  </div>
-</div>
-
-
-  <%= button _('New supplier'), :add, :action => 'new', :class => 'button button_new' %>

@@ -7,10 +7,21 @@ module ProductsHelper
     ])
   end
 
+  def options_for_product_category(cat, selected_value)
+    if cat.leaf?
+      content_tag('option', cat.name)
+    else
+      options = { :label => cat.name, :style => "padding-left: #{cat.level}em;" }
+      options.merge!(:selected => 'selected') if (selected_value == cat.id)
+      content = cat.children.map { |child| options_for_product_category(child, selected_value) }.join('')
+      content_tag("optgroup", content, options)
+    end
+  end
+
   def select_category(object, method)
     product = self.instance_variable_get("@#{object}")
-    categories = product.organization.product_categories
-    select(object, method, categories.map { |c| [ c.full_name, c.id ] }.sort { |a,b| a[0] <=> b[0] })
+    categories = product.organization.top_level_product_categories
+    select_tag("#{object}[#{method}]", categories.map { |c| options_for_product_category(c,object.send(method)) }.join('') )
   end
 
   def select_suppliers(product)

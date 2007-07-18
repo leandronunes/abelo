@@ -22,7 +22,6 @@ margin: 5px;
 #insert_ammount {
 padding: 5px;
 margin: 5px;
-border: 1px solid #cfdbe5;
 }
 
 #cumpom_sales {
@@ -38,6 +37,7 @@ display: block;
 vertical-align: middle;
 height: 45px;
 width: auto;
+background: #fef4b9;
 overflow: hidden;
 font-size: 2em;
 text-align: center;
@@ -46,8 +46,34 @@ text-align: center;
 #search_product a {
 display: block;
 margin-top: 40px;
-width: 48px;
-height: 48px;
+background: url('../images/icon_search_product.png') bottom no-repeat !important;
+width: 41px;
+height: 41px;
+margin-bottom: 20px;
+margin-left: 20px;	
+}
+
+#search_product a:hover, #search_product a:focus {
+background: url('../images/icon_search_product.png') top no-repeat !important;
+}
+
+#add_product span {
+display: none;
+}
+
+#add_product a {
+display: block;
+margin-top: 15px;
+width: 41px;
+height: 41px;
+float: right;
+border: none !important;
+background: url('../images/icon_add_product.png') bottom no-repeat !important;
+margin: 10px;
+}
+
+#add_product a:hover, #add_product are:focus {
+background: url('../images/icon_add_product.png') top no-repeat !important;
 }
 
 #search_product span {
@@ -64,14 +90,6 @@ text-align: left;
 position: absolute; 
 top: 0;
 margin-left: 80px;
-}
-
-#add_product input {
-display: block;
-margin-top: 15px;
-width: 48px;
-height: 48px;
-float: right;
 }
 
 input#product_id {
@@ -113,10 +131,20 @@ width: 200px;
 text-align: left;
 }
 
+#change_money {
+float: right;
+font-weight: bold;
+font-size: 30px;
+padding: 10px;
+width: 200px;
+color: green !important;
+text-align: left;
+}
+
 #add_item_panel input {
 background: #cfdbe5;
 color: #204a87;
-border: 1px solid #545454;
+border: 1px solid transparent;
 }
 
 #add_item_panel input:focus, #add_item_panel input:hover {
@@ -128,4 +156,42 @@ border: 1px solid #545454;
 #banner_bottom {
 position: absolute;
 left: 0;
+}
+
+#pointsales_bar {
+float: right;
+width: 200px;
+border: 1px solid red;
+}
+
+#pointsales_bar span {
+display: none;
+}
+
+#button_reforco {
+display: block;
+background: url('../images/icon_reforco.png') top no-repeat !important;
+width: 47px;
+height: 47px;
+margin-left: 10px;
+}
+
+#button_reforco:hover {
+background: url('../images/icon_reforco.png') bottom no-repeat !important;
+}
+
+#button_sangria {
+display: block;
+background: url('../images/icon_sangria.png') top no-repeat !important;
+width: 47px;
+height: 47px;
+margin-left: 10px;
+}
+
+#button_sangria:hover {
+background: url('../images/icon_sangria.png') bottom no-repeat !important;
+}
+
+#sidebar {
+ background: url('../images/bgcumpom.png') center repeat-y;
 }

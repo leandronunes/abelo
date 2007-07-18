@@ -285,7 +285,6 @@ background: #fffaf0;
 tr:hover td {
 border-color: #f9f5e6;
 background: #f4edcf;
-font-weight: bold;
 }
 
 td.endcol {
@@ -365,14 +364,12 @@ color: red !important;
 text-align: center;
 }
 
-/*
 td.true {
 background: transparent url('../images/icon_true_15px.png') center no-repeat !important;
 }
 td.false {
 background: transparent url('../images/icon_false_15px.png') center no-repeat !important;
 }
-*/
 
 /* Options Icon TD */
 tr td.option a, tr td.option span {

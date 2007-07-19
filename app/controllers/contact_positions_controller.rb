@@ -23,7 +23,7 @@ class ContactPositionsController < ApplicationController
     @contact_position = ContactPosition.new(params[:contact_position])
     @contact_position.organization = @organization
     if @contact_position.save
-      flash[:notice] = _('ContactPosition was successfully created.')
+      flash[:notice] = _('Contact Position was successfully created.')
       redirect_to :action => 'list'
     else
       render :action => 'new'

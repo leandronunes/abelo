@@ -22,10 +22,48 @@ margin: 5px;
 #insert_ammount {
 padding: 5px;
 margin: 5px;
+background: url('../images/x.png') 170px center no-repeat;
 }
 
 #cumpom_sales {
+background: url('../images/bgcumpom.png') center repeat-y;
 height: 300px;
+overflow: auto;
+}
+
+#cumpom_sales td, #cumpom_sales tr, #cumpom_sales th {
+border: 0px;
+margin: 0px;
+padding: 2px;
+font-size: 10px;
+color: black;
+background: transparent;
+}
+
+#cancel_sale {
+display: block;
+background: url('../images/icon_sangria.png') top left no-repeat !important;
+width: 100px;
+height: 47px;
+margin-left: 10px;
+}
+
+#payment {
+display: block;
+background: url('../images/icon_sangria.png') top left no-repeat !important;
+width: 100px;
+height: 47px;
+margin-left: 10px;
+float: right;
+}
+
+#cumpom_bar span {
+font-weight: bold;
+font-size: 12px;
+display: table-cell;
+height: 47px;
+vertical-align: middle;
+padding-left: 48px;
 }
 
 #sale_details { 
@@ -57,10 +95,6 @@ margin-left: 20px;
 background: url('../images/icon_search_product.png') top no-repeat !important;
 }
 
-#add_product span {
-display: none;
-}
-
 #add_product a {
 display: block;
 margin-top: 15px;
@@ -76,7 +110,7 @@ margin: 10px;
 background: url('../images/icon_add_product.png') top no-repeat !important;
 }
 
-#search_product span {
+#search_product span, #add_product span , #pointsales_bar span {
 display: none;
 }
 
@@ -115,7 +149,11 @@ background: #d8f3b1 !important;
 text-align: right;
 }
 
-#money_in h1 {
+div#money_in {
+padding: 10px;
+}
+
+#money_in h1, #money_in label {
 text-align: left;
 font-size: 20px;
 color: #4e9a06 !important;
@@ -135,7 +173,6 @@ text-align: left;
 float: right;
 font-weight: bold;
 font-size: 30px;
-padding: 10px;
 width: 200px;
 color: green !important;
 text-align: left;
@@ -158,14 +195,16 @@ position: absolute;
 left: 0;
 }
 
-#pointsales_bar {
-float: right;
-width: 200px;
-border: 1px solid red;
+#pointsales_bar ul {
+display: inline;
+list-style: none;
+margin: 0px;
+padding: 0px;
 }
 
-#pointsales_bar span {
-display: none;
+#pointsales_bar li {
+float: right;
+list-style: none;
 }
 
 #button_reforco {
@@ -192,6 +231,3 @@ margin-left: 10px;
 background: url('../images/icon_sangria.png') bottom no-repeat !important;
 }
 
-#sidebar {
- background: url('../images/bgcumpom.png') center repeat-y;
-}

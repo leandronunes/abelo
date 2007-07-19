@@ -31,11 +31,75 @@
 
 <div id="sidebar">
 <!-- sidebar -->
-<div id="cumpom_sales">
-<div class='button_bar'>
-  <a href="/one/point_of_sale/payment/5" class="button button_ok">Payment</a>
-  <a href="/one/point_of_sale/cancel/5" class="button button_cancel" onclick="if (confirm('Are you sure you want to cancel this sale?')) { var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;f.submit(); };return false;">Cancel sale</a>
+<div id="cumpom_bar">
+  <a href="/one/point_of_sale/payment/5" id="payment"><span>Payment</span></a>
+  <a href="/one/point_of_sale/cancel/5" id="cancel_sale" onclick="if (confirm('Are you sure you want to cancel this sale?')) { var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;f.submit(); };return false;"><span>Cancel sale</span></a>
 </div>
+
+<div id="cumpom_sales">
+
+    <div id='items_table'>
+      <table>
+  <tr>
+    <th>Descrição</th>
+    <th>Quant.</th>
+    <th>Preço Unit.</th>
+    <th>Preço Total</th>
+  </tr>
+  
+  <tr>
+    <td>Geladinho de morango</td>
+    <td>10 x</td>
+    <td>R$ 1,00</td>
+    <td>R$ 10,00</td>
+  </tr>
+  
+  <tr>
+    <td>Sabonete de oregano</td>
+    <td>5 x</td>
+    <td>R$ 5,00</td>
+    <td>R$ 25,00</td>
+  </tr>
+  
+  <tr>
+    <td>Picole de arame</td>
+    <td>1 x</td>
+    <td>R$ 1,00</td>
+    <td>R$ 1,00</td>
+  </tr>
+    <tr>
+    <td>Geladinho de morango</td>
+    <td>10 x</td>
+    <td>R$ 1,00</td>
+    <td>R$ 10,00</td>
+  </tr>
+  
+  <tr>
+    <td>Sabonete de oregano</td>
+    <td>5 x</td>
+    <td>R$ 5,00</td>
+    <td>R$ 25,00</td>
+  </tr>
+  
+  <tr>
+    <td>Picole de arame</td>
+    <td>1 x</td>
+    <td>R$ 1,00</td>
+    <td>R$ 1,00</td>
+  </tr>
+  
+  <tr>
+    <td>Cueca de couro</td>
+    <td>1 x</td>
+    <td>R$ 10,00</td>
+    <td>R$ 10,00</td>
+  </tr>
+  
+  <tr> <td colspan=4>Total: R$ 46,00 </td></tr>
+</table>
+    </div> 
+  </div>
+
 </div>
 <!-- sidebar -->
 </div>
@@ -83,7 +147,7 @@
     <div class="valeu_change"> R$ 20,00 </div>
 </div>
     <h1>Valor Recebido</h1>
-    <input id="money_in" accesskey="q" name="money_in" type="text" />
+    <label for="money_in">R$ </label><input id="money_in" accesskey="q" name="money_in" type="text" />
 </div>
 
 
@@ -97,8 +161,9 @@
 <div id="footer">
 
 <div id="pointsales_bar">
-      <a href="#" id="button_reforco" accesskey="r"><span>Reforço</span></a>
-      <a href="#" id="button_sangria" accesskey="s"><span>Sangria</span></a>
+<ul>
+<li><a href="#" class="button_main" id="button_reforco" accesskey="r"><span>Reforço</span></a></li>
+<li><a href="#" class="button_main" id="button_sangria" accesskey="s"><span>Sangria</span></a></li>
 </div>
 <img id="banner_bottom" src="../../../../images/bannerabelo_160x75.jpg" "Banner - Abelo" height="75px" width="160px">
 </div>

@@ -29,14 +29,16 @@ class WorkersController < ApplicationController
     @worker.organization = @organization
     if @worker.save
       flash[:notice] = 'Worker was successfully created.'
+      @workers = @organization.workers
       redirect_to :action => 'list'
     else
-      render :action => 'new'
+      render :partial => 'new', :status => 409
     end
   end
 
   def edit
     @worker = @organization.workers.find(params[:id])
+    render :partial => 'edit'
   end
 
   def update
@@ -45,12 +47,16 @@ class WorkersController < ApplicationController
       flash[:notice] = 'Worker was successfully updated.'
       redirect_to :action => 'list', :id => @worker
     else
-      render :action => 'edit'
+      render :partial => 'edit', :status => 409
     end
   end
 
   def destroy
     Worker.find(params[:id]).destroy
     redirect_to :action => 'list'
+  end
+
+  def reset
+    render :partial => 'new'
   end
 end

@@ -425,7 +425,7 @@ module ApplicationHelper
   end
 
   def limit_string(s,tam=50)
-    s.first(tam)+"..." if !s.nil?
+    s.first(tam)+"..." if !s.nil? && !s.empty?
   end
 
   def show_item_bar(element_id,title)

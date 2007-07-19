@@ -25,7 +25,6 @@ class SuppliersController < ApplicationController
     @supplier.organization = @organization
     if @supplier.save
       flash[:notice] = 'Supplier was successfully created.'
-      @suppliers = @organization.suppliers.find(:all)
       redirect_to :action => 'list'
     else
       render :partial => 'new', :status => 409
@@ -43,7 +42,7 @@ class SuppliersController < ApplicationController
       flash[:notice] = 'Supplier was successfully updated.'
       redirect_to :action => 'list'
     else
-      render :action => 'edit'
+      render :partial => 'edit', :status => 409
     end
   end
 

@@ -12,11 +12,11 @@ class DepartmentsController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @department_pages, @departments = paginate :departments, :per_page => 10
+    @department_pages, @departments = paginate :departments, :per_page => 10, :conditions => [ "organization_id = ?", @organization.id ]
   end
 
   def show
-    @department = Department.find(params[:id])
+    @department = @organization.departments.find(params[:id])
   end
 
   def new
@@ -28,29 +28,34 @@ class DepartmentsController < ApplicationController
     @department.organization = @organization
     if @department.save
       flash[:notice] = _('Department was successfully created.')
+      @departments = @organization.departments
       redirect_to :action => 'list'
     else
-      render :action => 'new'
+      render :action => 'new', :status => 409
     end
   end
 
   def edit
-    @department = Department.find(params[:id])
+    @department = @organization.departments.find(params[:id])
+    render :partial => 'edit'
   end
 
   def update
-    @department = Department.find(params[:id])
+    @department = @organization.departments.find(params[:id])
     if @department.update_attributes(params[:department])
       flash[:notice] = _('Department was successfully updated.')
-      redirect_to :action => 'show', :id => @department
+      redirect_to :action => 'list'
     else
-      render :action => 'edit'
+      render :action => 'edit', :status => 409
     end
   end
 
   def destroy
-    Department.find(params[:id]).destroy
+    @organization.departments.find(params[:id]).destroy
     redirect_to :action => 'list'
   end
 
+  def reset
+    render :partial => 'new'
+  end
 end

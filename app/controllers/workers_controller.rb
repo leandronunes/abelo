@@ -12,7 +12,7 @@ class WorkersController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @workers = @organization.workers
+    @worker_pages, @workers = paginate :workers, :per_page => 10, :conditions => ["organization_id = ?", @organization.id ] 
   end
 
   def show
@@ -21,7 +21,6 @@ class WorkersController < ApplicationController
 
   def new
     @worker = Worker.new
-    @worker.organization = @organization
   end
 
   def create
@@ -45,14 +44,14 @@ class WorkersController < ApplicationController
     @worker = Worker.find(params[:id])
     if @worker.update_attributes(params[:worker])
       flash[:notice] = 'Worker was successfully updated.'
-      redirect_to :action => 'list', :id => @worker
+      redirect_to :action => 'list'
     else
       render :partial => 'edit', :status => 409
     end
   end
 
   def destroy
-    Worker.find(params[:id]).destroy
+    @organization.workers.find(params[:id]).destroy
     redirect_to :action => 'list'
   end
 

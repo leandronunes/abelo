@@ -1,18 +1,6 @@
-<h1>Listing departments</h1>
+<h1><%= _('Listing departments') %></h1>
 
-<div id='sidebar'>
-  <%= show_item_bar("new_departament", _("New departament")) %>
-  <div id="new_departament" class="itembar">
-    <%= start_form_tag :action => 'create' %>
-    <div><%= render :partial => 'form' %></div>
-    <div class='button_bar'>
-      <%= button 'Create', :save %>
-      <%= button 'Cancel', :cancel, :action => 'list' %>
-    </div>
-    <%= end_form_tag %>
-    <%= hide_item_bar("new_departament")%>
-  </div>
-</div>
+<%= render :partial => 'new' %>
 
 <%= display_table(
   [ _('Name') ],
@@ -20,7 +8,7 @@
     [
       d.name,
       link_to(content_tag('span', _('Show')), {:action => 'show', :id => d}, :class => 'tdshow'),
-      link_to(content_tag('span', _('Edit')), {:action => 'edit', :id => d}, :class => 'tdedit'),
+      link_to_remote(content_tag('span', _('Edit')), {:update => 'sidebar', :url => {:action => 'edit', :id => d} }, :class => 'tdedit'),
       link_to(content_tag('span', _('Destroy')), {:action => 'destroy', :id => d}, :confirm => _('Are you sure?'), :post => true , :class => 'tddestroy')
     ]},
   { 

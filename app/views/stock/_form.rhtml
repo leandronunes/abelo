@@ -1,0 +1,35 @@
+<%= error_messages_for :entry %>
+
+<p>
+<label for='entry_suplier_id'><%= _('Supplier') %></label><br/>
+<span><%= select 'entry', 'supplier_id', @product.suppliers.map { |s| [ s.name, s.id] } %></span>
+</p>
+
+<p>
+<label for='entry_ammount'><%= _('Ammount') %></label><br/>
+<span><%= text_field 'entry', 'ammount' %></span>
+</p>
+
+<p>
+<label for='entry_price'><%= _('Buy Price') %></label><br/>
+<span><%= text_field 'entry', 'price' %></span>
+</p>
+
+<p>
+<label for='entry_purpose'><%= _('Purpose') %></label><br/>
+<span><%= select_purpose 'entry', 'purpose' %></span>
+</p>
+
+<p>
+<label for='entry_date'><%= _('Date') %></label><br/>
+<span><%= date_select 'entry', 'date' %></span>
+</p>
+
+<p>
+<label for='entry_validity'><%= _('Validity') %></label><br/>
+<span><%= date_select 'entry', 'validity', :include_blank => true %></span>
+</p>
+
+<p>
+<label for='entry_payment_status'><%= _('Payment status ok?') %></label><br/>
+<span><%= check_box 'entry', 'payment_status' %></span>

@@ -1,4 +1,4 @@
-<h2> <%= _('Stock control') %></h2>
+<h1> <%= _('Stock control') %></h1>
 
 <%= display_table(
   [_('Product'), _('Amount in stock')],
@@ -6,28 +6,10 @@
     [
       p.description, 
       p.ammount_in_stock, 
-      link_to(content_tag('span', _('Show')), {:action => 'show', :id => p}, :class => 'tdshow')
+      link_to(content_tag('span', _('Manage stock')), {:action => 'history', :id => p}, :class => 'tdedit')
     ]},
   { 
     :html_title_options => [:class => 'none'], 
     :html_content_options =>  [{:class => 'product'}, {:class => 'stock endcol'},{:class => 'option'}] 
   }
 ) %>
-
-
-<table>
-  <tr>
-    <th><%= _('Product') %></th>
-    <th><%= _('Ammount in stock') %></th>
-  </tr>
-  <% for product in @products %>
-    <tr>
-      <td><%= product.description %></td>
-      <td><%= product.ammount_in_stock %></td>
-      <td>
-        <%= button _('Manage stock'), :edit, :action => 'history', :id => product %>
-      </td>
-    </tr>
-  <% end %>
-</table>
-

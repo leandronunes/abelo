@@ -1,42 +1,21 @@
-<h2><%= _('Stock history for %s') % @product.description %></h2>
+<h1><%= _('Stock history for %s') % @product.description %></h1>
 
-<table>
-  <tr>
-    <th><%= _('Date') %></th>
-    <th><%= _('Ammount') %></th>
-    <th><%= _('Price') %></th>
-    <th><%= _('Total cost') %></th>
-    <th><%= _('Supplier') %></th>
-    <th><%= _('Purpose') %></th>
-    <th><%= _('Validity') %></th>
-    <th><%= _('Payment status') %></th>
-  </tr>
-  <% total_ammount = 0.0 %>
-  <% total_cost = 0.0 %>
-  <% for entry in @entries %>
-    <% total_ammount += entry.ammount %>
-    <% total_cost += entry.total_cost %>
-    <tr>
-      <td class='date'><%= show_date entry.date  %></td>
-      <td class='number'><%= show_ammount entry.ammount %></td>
-      <td class='number'><%= entry.price %></td>
-      <td class='number'><%= entry.total_cost %></td>
-      <td class='text'><%= show_supplier entry %></td>
-      <td class='text'><%= show_purpose entry.purpose %></td>
-      <td class='date'><%= entry.validity  %></td>
-      <td><%= entry.payment_status %></td>
-    </tr>
-  <% end %>
-  <tr><th colspan='7'><%= _('Totals') %></th></tr>
-  <tr>
-    <th></th>
-    <td class='number'><%= show_ammount total_ammount %></td>
-    <td></td>
-    <td class='number'><%= show_ammount total_cost%></td>
-    <td colspan='3'></td>
-  </tr>
-</table>
+<%= render :partial => 'new' %>
 
-<div class='button_bar'>
-<%= button _('New entry'), :add, :action => 'new_entry', :id => @product %>
-</div>
+<%= display_table(
+  [ _('Date'), _('Ammount'), _('Price'), _('Supplier')],
+  @entries.map{|e| 
+    [
+      show_date(e.date),
+      e.ammount,
+      e.price,
+      e.supplier_id.nil? ? "": e.supplier.name,
+      link_to(content_tag('span', _('Show')), {:action => 'show', :id => e}, :class => 'tdshow'),
+      link_to_remote(content_tag('span', _('Edit')), {:update => 'sidebar', :url => {:action => 'edit', :id => e } }, :class => 'tdedit'),
+      link_to(content_tag('span', _('Destroy')), {:action => 'destroy', :id => e}, :confirm => _('Are you sure?'), :post => true , :class => 'tddestroy')
+    ]},
+  { 
+    :html_title_options => [:class => 'none'], 
+    :html_content_options =>  [{:class => 'date'},{:class => 'number'},{:class => 'value'},{:class => 'endcol'},{:class => 'option'},{:class => 'option'},{:class => 'option'}] 
+  }
+  ) %>

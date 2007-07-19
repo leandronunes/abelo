@@ -5,7 +5,7 @@
       <%= start_form_tag :action => 'update', :id => @supplier %>
     <%= render :partial => 'form' %>
     <div class='button_bar'>
-      <%= button _("Save"), :save %>
+      <%=  submit_to_remote "button_remote", _("Save"), :url => {:action => "update", :id => @supplier}, :update => {:success => 'warp', :failure => 'sidebar'} %>
       <%= button _('Cancel'), :cancel, :action => 'list' %>
     </div>
     <%= end_form_tag %>

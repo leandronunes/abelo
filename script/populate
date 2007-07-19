@@ -1,0 +1,115 @@
+#!/usr/bin/env ruby
+require File.dirname(__FILE__) + '/../config/environment'
+
+############Organizations########################
+Organization.destroy_all
+organization = Organization.create!(:name => 'Toca', :cnpj => '05359933000193', :nickname => 'toca')
+
+###########Categories###################################
+Category.destroy_all
+vestuario = ProductCategory.new(:name => 'vestuário')
+vestuario.organization = organization
+vestuario.save
+acessorio = ProductCategory.new(:name => 'acessório')
+acessorio.organization = organization
+acessorio.save
+
+############Products#############################
+Product.destroy_all
+camisa = Product.create!(:description => 'camisa básica', :size => 'p', :color => 'azul', :sell_price => 25.00, :organization_id => 1, :category_id => 1, :unit => 'letra')
+calca = Product.create!(:description => 'calça xadrez', :size => 'p', :color => 'verde', :sell_price => 45.00, :organization_id => 1, :category_id => 1, :unit => 'letra')
+colar = Product.create!(:description => 'colar golfinho', :size => '20', :color => 'preto', :sell_price => 20.00, :organization_id => 1, :category_id => 2, :unit => 'cm')
+brinco = Product.create!(:description => 'brinco madreperola', :size => '4', :color => 'branco', :sell_price => 15.00, :organization_id => 1, :category_id => 2, :unit => 'cm')
+monitor = Product.create!(:description => 'monitor lcd', :size => '15', :color => 'preto', :sell_price => 0.00, :organization_id => 1, :category_id => 3, :unit => 'polegadas')
+
+#############Images##############################
+#Image.destroy_all
+#camisa_img = Image.create!(:description => 'camisa básica azul', :picture => 'camisa_basica_azul.jpg', :product_id => 1)
+#calca_img = Image.create!(:description => 'calca xadrez verde', :picture => 'calca_xadrez.jpg', :product_id => 2)
+#colar_img = Image.create!(:description => 'colar golfinho', :picture => 'colar_golfinho.jpg', :product_id => 3)
+#brinco_img = Image.create!(:description => 'brinco madreperola', :picture => 'brinco_madreperola.jpg', :product_id => 4)
+
+############Suppliers#############################
+Supplier.destroy_all
+hering = Supplier.create!(:name => 'Hering', :cnpj => '58178734000145', :organization_id => 1, :address => 'R Hermann Hering 1790 CEP: 89010900 Cidade: Blumenau UF: SC', :description => 'fornecedor de roupas')
+renato = Supplier.create!(:name => 'Renato', :cpf => '39377825679', :organization_id => 1, :address => 'Rua: Fonte do Boi, 215 - Rio Vermelho', :birthday => '1980-05-12', :description => 'fornecedor de pratas')
+
+############Product Suppliers#####################
+camisa.add_suppliers(hering)
+calca.add_suppliers(hering)
+colar.add_suppliers(renato)
+brinco.add_suppliers(renato)
+
+############Stock Entries#########################
+StockEntry.destroy_all
+camisa_entrada = StockIn.create!(:supplier_id => '1', :ammount => 50, :price => '15.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => 1)
+calca_entrada = StockIn.create!(:supplier_id => '1', :ammount => 50, :price => '30.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => 2)
+
+############People################################
+Person.destroy_all
+gerente = User.create!("salt"=>"7e3041ebc2fc05a40c60028e2c4901a81035d3cd", "updated_at"=>nil, "crypted_password"=>"00742970dc9e6319f8019fd54864d3ea740f04b1", "type"=>"User", "remember_token_expires_at"=>nil, "id"=>"1", "administrator"=>nil, "remember_token"=>nil, "login"=>"quentin", "email"=>"quentin@example.com", "created_at"=>"2007-07-14 18:03:29")
+
+############User Profile##########################
+UserProfile.destroy_all
+perfil_quentin = UserProfile.new
+perfil_quentin.organization = organization
+perfil_quentin.user = gerente
+perfil_quentin.permissions = [:controller => '*', :action => '*']
+perfil_quentin.save
+
+############Customers#############################
+Customer.destroy_all
+cliente_one = Customer.create!(:name => 'João da Silva', :email => 'joao@softwarelivre.org', :birthday => '1984-08-15', :address => 'Rua Pará, nº 221, Pituba', :cpf => '74676743920', :organization_id => 1)
+cliente_two = Customer.create!(:name => 'Alice Soares', :email => 'alice@softwarelivre.org', :birthday => '1970-10-22', :address => 'Rua João das Botas, nº 15, Canela', :cpf => '93791122894', :organization_id => 1)
+
+############Contacts###############################
+Contact.destroy_all
+
+############Contact Positions######################
+ContactPosition.destroy_all
+
+############Workers################################
+Worker.destroy_all
+vendedor = Worker.create!(:name => 'José Fernandes', :cpf => '63358421813', :address => 'Rua do Timbó, nº 45, Itaigara', :birthday => '1975-06-14', :function => 'vendedor', :organization_id => 1)
+gerente = Worker.create!(:name => 'Carla Alves', :cpf => '53170430424', :address => 'Alameda das Pintagueiras, nº 37, Caminho das Árvores', :birthday => '1979-07-18', :function => 'gerente', :organization_id => 1)
+
+############Payments################################
+Payment.destroy_all
+
+############Sales###################################
+Sale.destroy_all
+
+############Sale Items##############################
+SaleItem.destroy_all
+
+############Mass Mail###############################
+MassMail.destroy_all
+mail_one = MassMail.create!(:subject => 'Festa de Inauguração da Toca!', :body => 'Olá, a Toca o convida para a sua festa de inauguração. Não perca!', :organization_id => 1)
+mail_one = MassMail.create!(:subject => 'Conheça o site da Toca', :body => 'Olá, o site da Toca está disponível em http://www.consumidorsustentavel.com.br/http://www.consumidorsustentavel.com.br/.', :organization_id => 1)
+
+############Cash Flows##############################
+CashFlow.destroy_all
+
+############Historicals#############################
+Historical.destroy_all
+
+############Specification###########################
+Specification.destroy_all
+
+############Departments###############################
+Department.destroy_all
+departamento_marketing = Department.create!(:name => 'Marketing', :organization_id => 1)
+departamento_vendas = Department.create!(:name => 'Vendas', :organization_id => 1)
+
+############Commercial Proposals######################
+CommercialProposal.destroy_all
+proposta_colivre = CommercialProposal.create!(:name => 'Estruturação do espaço de eventos', 'is_template'=> 'false', :organization_id => 1, :body => 'Parceria com a Colivre para estruturação do espaço para realização de cursos de sofware livre.', :department_ids => [1])
+
+############Commercial Proposal Items#################
+CommercialProposalItem.destroy_all
+item_one = CommercialProposalItem.create!(:commercial_proposal_section_id => 1, :quantity => '10', :unitary_value => 400.00,:product_id => 5)
+
+############Commercial Proposal Sections################
+CommercialProposalSection.destroy_all
+section_one = CommercialProposalSection.create!(:name => 'máquinas', :commercial_proposal_id => 1)
+

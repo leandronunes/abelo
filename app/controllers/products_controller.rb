@@ -13,6 +13,8 @@ class ProductsController < ApplicationController
 
   def list
     @products = @organization.products
+    @product = Product.new
+    @product.organization = @organization 
   end
 
   def show
@@ -32,12 +34,13 @@ class ProductsController < ApplicationController
       flash[:notice] = 'Product was successfully created.'
       redirect_to :action => 'list'
     else
-      render :action => 'new'
+      render :partial => 'new', :status => 409
     end
   end
 
   def edit
     @product = @organization.products.find(params[:id])
+    render :partial => 'edit'
   end
 
   def update
@@ -47,13 +50,19 @@ class ProductsController < ApplicationController
       flash[:notice] = _('Product was successfully updated.')
       redirect_to :action => 'list'
     else
-      render :action => 'edit'
+      render :action => 'edit', :status => 409
     end
   end
 
   def destroy
     @organization.products.find(params[:id]).destroy
     redirect_to :action => 'list'
+  end
+
+  def reset
+    @product = Product.new
+    @product.organization = @organization
+    render :partial => 'new'
   end
 
   def images

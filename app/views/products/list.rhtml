@@ -1,4 +1,6 @@
-<h2> <%= _('Listing products') %></h2>
+<h1> <%= _('Listing products') %></h1>
+
+<%= render :partial => 'new' %>
 
 <%= display_table(
   [ _('Images'), _('Code'), _('Description'), _('Sell price') ],
@@ -9,11 +11,11 @@
       p.description,
       p.sell_price,
       link_to(content_tag('span', _('Show')), {:action => 'show', :id => p}, :class => 'tdshow'),
-      link_to(content_tag('span', _('Edit')), {:action => 'edit', :id => p}, :class => 'tdedit'),
-      link_to(content_tag('span', _('Destroy')), {:action => 'destroy', :id => p}, :class => 'tddestroy')
+      link_to_remote(content_tag('span', _('Edit')), {:update => 'sidebar', :url => {:action => 'edit', :id => p} }, :class => 'tdedit'),
+      link_to(content_tag('span', _('Destroy')), {:action => 'destroy', :id => p}, :confirm => _('Are you sure?'), :post => true, :class => 'tddestroy')
     ]},
   { 
     :html_title_options => [:class => 'none'], 
-    :html_content_options =>  [{:class => 'name'},{:class => 'number'},{:class => 'name'},{:class => 'stock endcol'},{:class => 'option'},{:class => 'option'},{:class => 'option'}] 
+    :html_content_options =>  [{:class => 'image'},{:class => 'number'},{:class => 'name'},{:class => 'stock endcol'},{:class => 'option'},{:class => 'option'},{:class => 'option'}] 
   }
-) %>
+)%>

@@ -21,7 +21,7 @@ module ProductsHelper
   def select_category(object, method)
     product = self.instance_variable_get("@#{object}")
     categories = product.organization.top_level_product_categories
-    select_tag("#{object}[#{method}]", categories.map { |c| options_for_product_category(c,object.send(method)) }.join('') )
+    select_tag("#{object}[#{method}]", categories.map { |c| options_for_product_category(c,product.send(method)) }.join('') )
   end
 
   def select_suppliers(product)

@@ -25,6 +25,7 @@ class DepartmentsController < ApplicationController
 
   def create
     @department = Department.new(params[:department])
+    @department.organization = @organization
     if @department.save
       flash[:notice] = _('Department was successfully created.')
       redirect_to :action => 'list'

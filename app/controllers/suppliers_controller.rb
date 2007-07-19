@@ -39,7 +39,7 @@ class SuppliersController < ApplicationController
   def update
     @supplier = @organization.suppliers.find(params[:id])
     if @supplier.update_attributes(params[:supplier])
-      flash[:notice] = 'Supplier was successfully updated.'
+      flash[:notice] = _('Supplier was successfully updated.')
       redirect_to :action => 'list'
     else
       render :partial => 'edit', :status => 409

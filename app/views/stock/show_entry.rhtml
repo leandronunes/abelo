@@ -1,0 +1,7 @@
+<% for column in StockEntry.content_columns %>
+<p>
+  <b><%= column.human_name %>:</b> <%=h @entry.send(column.name) %>
+</p>
+<% end %>
+
+<%= link_to 'Back', :action => 'history', :id => @product %>

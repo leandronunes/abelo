@@ -3,7 +3,7 @@ class StockController < ApplicationController
   needs_organization
 
   def index
-    @products = @organization.products
+    @product_pages, @products = paginate :products, :per_page => 10, :conditions => ["organization_id = ?", @organization.id ]
   end
 
   def history
@@ -13,6 +13,13 @@ class StockController < ApplicationController
     @total_ammount = @product.ammount_in_stock
     @total_cost = @product.total_cost
 
+    @entry = StockIn.new
+    @entry.product = @product
+  end
+
+  def show_history
+    @entry = StockEntry.find(params[:id])
+    @product = @organization.products.find(params[:product_id])
   end
 
   def new_entry
@@ -37,7 +44,21 @@ class StockController < ApplicationController
     else
       render :action => 'new_entry'
     end
-
+  end
+  
+  def edit_entry
+    @product = @organization.products.find(params[:product_id])
+    @entry = StockEntry.find(params[:id])
+    render :partial => 'edit'
   end
 
+  def update_entry
+    @entry = StockEntry.find(params[:entry])
+    if @entry.update_attributes(params[:entry])
+      flash[:notice] = 'Entry was successfully updated.'
+      redirect_to :action => 'list'
+    else
+      render :partial => 'edit', :status => 409
+    end
+  end
 end

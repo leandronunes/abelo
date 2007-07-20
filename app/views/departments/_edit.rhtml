@@ -1,16 +1,15 @@
 <div id='sidebar'>
-  <%= show_item_bar("new_department", _("Edit department")) %>
-  <div id="new_department" class="itembar">
+  <%= show_item_bar("edit_department", _("Edit department")) %>
+  <div id="edit_department" class="itembar">
     <div>
-      <%= start_form_tag :action => 'update', :id => @supplier %>
+      <%= start_form_tag :action => 'update', :id => @department %>
     <%= render :partial => 'form' %>
     <div class='button_bar'>
-      <%= button _("Save"), :save %>
+      <%= submit_to_remote "button_remote", _("Save"), :url => {:action => "update", :id => @department}, :update => {:success => 'warp', :failure => 'sidebar'} %>
       <%= button _('Cancel'), :cancel, :action => 'list' %>
     </div>
     <%= end_form_tag %>
     </div>
-  <%= hide_item_bar("new_department")%>
+  <%= hide_item_bar("edit_department")%>
   </div>
 </div>
-

@@ -2,10 +2,10 @@
   <%= show_item_bar("new_stock_entry", _("New stock entry")) %>
   <div id="new_stock_entry" class="itembar">
     <div>
-    <%= start_form_tag :action => 'create' %>
+      <%= start_form_tag :action => 'create', :id => @product  %>
     <%= render :partial => 'form' %>
     <div class='button_bar'>
-      <%= submit_to_remote "button_remote", _('Create'), :url => {:action => 'create'}, :update => {:success =>'warp', :failure => 'sidebar'} %>
+      <%= submit_to_remote "button_remote", _('Create'), :url => {:action => 'add_entry', :id => @product}, :update => {:success =>'warp', :failure => 'sidebar'} %>
       <%= link_to_remote _('Reset'), :update => 'sidebar', :url => {:action => 'reset'} %>
     </div>
     <%= end_form_tag %>

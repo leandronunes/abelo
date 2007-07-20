@@ -6,7 +6,7 @@
 /* Icons Main */
 
 #configuration { background-image: url('48x48/preferences-desktop.png'); }
-#customer_categories { background-image: url('48x48/document-properties.png'); }
+#ledgers { background-image: url('48x48/document-properties.png'); }
 #suppliers { background-image: url('48x48/dialog-question.png'); }
 #departments { background-image: url('48x48/network-offline.png'); }
 #customers { background-image: url('48x48/system-run.png'); }
@@ -16,7 +16,7 @@
 #products { background-image: url('48x48/help-about.png'); }
 #commercial_proposals { background-image: url('48x48/edit-paste.png'); }
 #store { background-image: url('48x48/emblem-pictures.png'); }
-#product_categories { background-image: url('48x48/edit-select-all.png'); }
+#categories { background-image: url('48x48/edit-select-all.png'); }
 #cash_flows { background-image: url('48x48/x-office-spreadsheet.png'); }
 #permissions { background-image: url('48x48/system-lock-screen.png'); }
 #mass_mails { background-image: url('48x48/mail-reply-all.png'); }

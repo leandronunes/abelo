@@ -1,24 +1,22 @@
-<h2>Listing customers</h2>
+<h1> <%= _('Listing customers') %> </h1>
 
-<table>
-  <tr>
-  <% for column in Customer.content_columns %>
-    <th><%= column.human_name %></th>
-  <% end %>
-  </tr>
-  
-<% for customer in @customers %>
-  <tr>
-  <% for column in Customer.content_columns %>
-    <td><%=h customer.send(column.name) %></td>
-  <% end %>
-    <td><%= button _('Show'), :find, :action => 'show', :id => customer %></td>
-    <td><%= button _('Edit'), :edit, :action => 'edit', :id => customer %></td>
-    <td><%= button _('Destroy'), :remove, { :action => 'destroy', :id => customer }, :confirm => _('Are you sure?'), :post => true %></td>
-  </tr>
-<% end %>
-</table>
+<%= render :partial => 'new' %>
 
-<br />
+<%= display_table(
+  [_('Name'), _('Email')],
+  @customers.map{|c|
+  [
+    c.name,
+    c.email,
+    link_to(content_tag('span', _('Show')), {:action => 'show', :id => c}, :class => 'tdshow'),
+    link_to_remote(content_tag('span', _('Edit')), {:update => 'sidebar', :url => {:action => 'edit', :id => c} }, :class => 'tdedit'),
+    link_to(content_tag('span', _('Destroy')), {:action => 'destroy', :id => c}, :confirm => _('Are you sure?'), :post => true,  :class => 'tddestroy')
+  ]},
+  {
+    :html_title_options => [:class => 'none'],
+    :html_content_options => [{:class => 'name'}, {:class => 'endcol'}, {:class => 'option'}, {:class => 'option'}, {:class => 'option'} ]
+  }
+)%>
 
-<%= button _('New customer'), :new, :action => 'new' %>
+
+

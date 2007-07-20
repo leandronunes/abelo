@@ -19,7 +19,7 @@ body {
 
 #sidebar {
 float: right;
-width: 290px;
+width: 300px;
 }
 
 #info_org {
@@ -64,7 +64,7 @@ padding: 10px;
 }
 
 #footer {
-margin-top: 20px;
+margin-top: 50px;
 padding-left: 60px;
 bottom: 0;
 height: 50px;
@@ -78,3 +78,4 @@ display: none;
 width: 250px;
 height: 191px;
 }
+

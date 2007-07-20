@@ -1,8 +1,6 @@
 class MainController < ApplicationController
 
-  layout 'application'
   needs_organization
-  helper OrganizationsHelper
 
   # bypass access control on index, but do not allow external people do see the
   # menu

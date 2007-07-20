@@ -181,13 +181,15 @@ text-decoration: none !important;
 vertical-align: middle;
 text-align: center !important;
 border-bottom: 1px solid #c4a000;
-width: 290px;
+width: 300px;
 height: 31px;
 margin: 0px;
 padding: 0px;
 color: #545454 !important;
 font-size: 18px;
 }
+
+
 
 #sidebar a:hover.show_itembar, #sidebar a:hover.hide_itembar { 
 color: #c4a000 !important;
@@ -213,17 +215,42 @@ font-size: 10px;
 position: relative;
 background: url('../images/bgtransparent_300px.png') top left repeat-x;
 margin: 0px;
-margin-bottom: 5px;
-padding: 10px;
+padding: 5px;
 border-right: 1px solid #c4a000;
 border-bottom: 1px solid #c4a000;
 border-left: 1px solid #c4a000;
 }
 
-#sidebar p {
+#sidebar .itembar p {
 text-align: left;
-margin: 0px;
-padding 0px;
+padding: 5px;
+margin: 10px 0px 10px 0px;
+}
+
+#sidebar .itembar p label {
+  color: black;
+  font-weight: bold;
+}
+
+#sidebar .button_bar {
+  text-align: center;
+}
+
+#sidebar .button_bar input{
+  border: 1px solid #c4a000;
+  background-color: #f4edcf;
+  color: #918247;
+}
+#sidebar .button_bar a {
+  border: 1px solid #c4a000;
+  background-color: #f4edcf;
+  color: #918247;
+  padding: 1px 12px 2px 12px;
+}
+
+#sidebar textarea{
+  width: 240px;
+  height: 140px;
 }
 
 /* Content 
@@ -236,6 +263,7 @@ content: "<b>" attr(accesskey) "</b>";
 color: #c4a000;
 margin: 8px;
 padding: 0px;
+text-align: center;
 }
 
 #content a {
@@ -272,14 +300,20 @@ tr th {
 background: #f4edcf;
 text-align: center;
 padding: 2px;
+width: 30px;
+height: 30px;
 }
 
 tr td {
 background: #f9f5e6;
+width: 30px;
+height: 30px;
 }
 
 tr.alt td {
 background: #fffaf0;
+width: 30px;
+height: 30px;
 }
 
 tr:hover td {
@@ -379,8 +413,8 @@ display: none;
 tr:hover td.option a {
 position: relative;
 display: block;
-width: 30px;
-height: 30px;
+width: 28px;
+height: 28px;
 }
 
 td.option a.tdshow {
@@ -399,7 +433,6 @@ background-position: top !important;
 
 
 /* OThers */
-
 #show_cash_flows {
 position: absolute;
 left: 50%;

@@ -17,7 +17,7 @@
   <%= javascript_include_tag 'fckeditor/fckeditor' %>
   <%= stylesheet_link_tag 'style_financials' %>
 </head>
-<body>
+<body >
 <div id="warp">
 <div id="header">
 
@@ -35,9 +35,8 @@
 <%= notice_box flash[:notice] %>
 
 <div id="content">
-<%= yield %>
 
-</div>
+<%= yield %>
 
 <div id="footer">
 Copyrigth © 2007 <a href="http://www.colivre.coop.br" alt="Cooperativa de Tecnologias Livres">Colivre</a><br />

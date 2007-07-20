@@ -13,16 +13,12 @@ class CustomersController < ApplicationController
 
   def list
     @customers = @organization.customers
+    @customer = Customer.new
   end
 
   def show
     @customer = @organization.customers.find(params[:id])
     @contacts = @customer.contacts
-  end
-
-  def new
-    @customer = Customer.new
-    @customer.organization = @organization
   end
 
   def create
@@ -32,17 +28,18 @@ class CustomersController < ApplicationController
       flash[:notice] = 'Customer was successfully created.'
       redirect_to :action => 'list'
     else
-      render :action => 'new'
+      render :partial => 'form', :layout => false,  :status => HTTP_FORCE_ERROR
     end
   end
 
   def edit
     @customer = @organization.customers.find(params[:id])
+    render :partial => 'edit', :layout => false
   end
 
   def update
     @customer = @organization.customers.find(params[:id])
-    @customer.customer_category_ids = params[:customer_categories].keys if params[:customer_categories]
+    @customer.customer_category_ids = params[:categories].keys if params[:categories]
     if @customer.update_attributes(params[:customer])
       flash[:notice] = 'Customer was successfully updated.'
       redirect_to :action => 'list', :id => @customer
@@ -84,7 +81,7 @@ class CustomersController < ApplicationController
     @contact = Contact.find(params[:id])
     if @contact.update_attributes(params[:contact])
       flash[:notice] = 'Contact was successfully updated.'
-      redirect_to :action => 'show', :id => @contact.customer_id
+      redirect_to :action => 'list'
     else
       render :action => 'edit_contact'
     end
@@ -96,4 +93,8 @@ class CustomersController < ApplicationController
     redirect_to :action => 'show', :id => @customer_id
   end
 
+  def reset
+    @customer = Customer.new
+    render :partial => 'form'
+  end
 end

@@ -58,4 +58,5 @@ class WorkersController < ApplicationController
   def reset
     render :partial => 'new'
   end
+
 end

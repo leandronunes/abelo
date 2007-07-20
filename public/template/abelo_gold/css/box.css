@@ -33,6 +33,7 @@ opacity:.50;
   padding-right: 7px;
   padding-bottom: 12px;
   margin-bottom: 20px;
+  width: 280px;
   background-color: #f0f0f0;
 }
 
@@ -65,3 +66,7 @@ opacity:1.0;
  list-style: square;
 }
 
+.fieldWithErrors{
+  background-color: blue;
+  width: 40px;
+}

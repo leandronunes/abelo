@@ -322,6 +322,23 @@ module ApplicationHelper
     fckeditor_textarea(object, method, options.merge({:toolbarSet => 'Simple', :height => '300px'}))
   end
 
+  def select_categories(object, category_type)
+    @organization.send("#{category_type}_categories").map { |c|
+      content_tag('div',
+        check_box_tag("categories[#{c.id}]", 1, object.send("#{category_type}_categories").include?(c)) + c.name
+      )
+    }.join('')
+  end
+
+  def select_category(category_type)
+    @organization.send("#{category_type}_categories").map { |c|
+      content_tag('div',
+        radio_button(category_type, 'category_id', c.id) + c.name
+      )
+    }.join('')
+  end
+
+
 #TODO test it
   def category_with_sign(type_of, name)
     if type_of == "I"
@@ -430,7 +447,7 @@ module ApplicationHelper
 
   def show_item_bar(element_id,title)
     content_tag(
-      'p',
+      'div',
       link_to_remote(title, {}, :class => "show_itembar", :style => "border-botttom: none;", :onclick => visual_effect(:toggle_slide, element_id) )
      )      
   end

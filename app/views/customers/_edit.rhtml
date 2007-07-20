@@ -1,0 +1,17 @@
+
+<div id='sidebar'>
+  <%= show_item_bar("edit_customer", _("Edit Customer")) %>
+  <div id="edit_customer" class="itembar">
+    <%= form_remote_tag :url => {:action => 'update', :id => @customer}, :update => {:success => 'warp', :failure => 'form'} %>
+    <div id=form>
+    <%= render :partial => 'form' %>
+    </div>
+    <div class='button_bar'>
+      <%=  submit_tag _("Edit")  %>
+      <%= link_to_remote _("Reset"), :update => 'form', :url => {:action => 'reset'}%>
+    </div>
+    <%= end_form_tag %>
+    <%= hide_item_bar("edit_customer")%>
+  </div>
+</div>
+

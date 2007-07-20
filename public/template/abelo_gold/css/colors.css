@@ -311,7 +311,13 @@ width: 30px;
 height: 30px;
 }
 
-tr.alt td {
+tr.even td {
+background: #f9f5e6;
+width: 30px;
+height: 30px;
+}
+
+tr.odd td {
 background: #fffaf0;
 width: 30px;
 height: 30px;

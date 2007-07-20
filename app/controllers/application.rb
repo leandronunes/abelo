@@ -2,6 +2,63 @@
 # Likewise, all the methods added will be available for all controllers.
 class ApplicationController < ActionController::Base
 
+  # defined 
+  MENU_ITEMS = {
+    'configurations' => [
+      'categories'
+    ],
+    'financial' => [
+    ],
+    'register' => [
+      'products',
+      'workers',
+      'suppliers',
+      'customers',
+    ],
+    'stock' => [
+      'stock_entries'
+    ],
+    'mass_mail' => [
+      'mass_mail'
+    ],
+    'project' => [
+    ],
+    'education' => [
+    ],
+    'web' => [
+      'web'
+    ],
+    'commercial_proposals' => [
+      'commercial'
+    ]
+  }
+
+  before_filter :define_path
+
+  def define_path
+    @item = nil
+    MENU_ITEMS.keys.map do |k|
+      if MENU_ITEMS[k].include? (self.controller_name) 
+        @item = k
+        break 
+      end
+    end
+
+    if @item.nil?
+      render_error _('You have a controller not defined in path')
+      return
+    end
+  end
+
+
+  # maps a template code (a key in TEMPLATES) to an human-readable string
+  def describe(item)
+    return {
+      'register' => _('Register')
+    }[item]
+  end
+
+
   HTTP_FORCE_ERROR = 409
   include AuthenticatedSystem
   include AccessControl

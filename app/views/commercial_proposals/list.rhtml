@@ -1,40 +1,37 @@
-<h1> <%= _('Listing commercial proposals') %> </h1>
-
-<table>
-  <tr>
-    <th><%= _('Name') %></th>
-    <th colspan=3><%= _('Manage commercial proposal') %>
-  </tr>
-  
-<% for commercial_proposal in @commercial_proposals %>
-  <tr>
-    <td><%=h commercial_proposal.name %></td>
-    <td><%= link_to 'Show', :action => 'show', :id => commercial_proposal %></td>
-    <td><%= link_to 'Edit', :action => 'edit', :id => commercial_proposal %></td>
-    <td><%= link_to 'Destroy', { :action => 'destroy', :id => commercial_proposal }, :confirm => 'Are you sure?', :post => true %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-
-<table>
-  <tr>
-    <th><%= _('Name') %></th>
-    <th colspan=3><%= _('Manage commercial proposal') %>
-  </tr>
-  
-<% for commercial_proposal in @commercial_proposals_templates %>
-  <tr>
-    <td><%=h commercial_proposal.name %></td>
-    <td><%= link_to 'Show', :action => 'show', :id => commercial_proposal %></td>
-    <td><%= link_to 'Edit', :action => 'edit', :id => commercial_proposal %></td>
-    <td><%= link_to 'Destroy', { :action => 'destroy', :id => commercial_proposal }, :confirm => 'Are you sure?', :post => true %></td>
-  </tr>
-<% end %>
-</table>
-
-<%= link_to_remote  _('Create a commercial proposal'), :url => {:action => 'new'}, :update => 'form' %>
+<%= title('Listing commercial proposals') %>
 
 <%= render :partial => 'new' %>
+
+<%= display_table(
+  [_('Name')],
+  @commercial_proposals.map{|c|
+  [
+    c.name,
+    link_to(content_tag('span', _('Show')), {:action => 'show', :id => c}, :class => 'tdshow'),
+    link_to_remote(content_tag('span', _('Edit')), {:update => 'sidebar', :url => {:action => 'edit', :id => c} }, :class => 'tdedit'),
+    link_to(content_tag('span', _('Destroy')), {:action => 'destroy', :id => c}, :confirm => _('Are you sure?'), :post => true,  :class => 'tddestroy') 
+  ]},
+  {
+    :html_title_options => [:class => 'none'],
+    :html_content_options => [{:class => 'name endcol'}, {:class => 'option'}, {:class => 'option'}, {:class => 'option'} ]
+  },
+  _('Commercial Proposals')
+  )%>
+
+<%= display_table(
+  [_('Name')],
+  @commercial_proposals_templates.map{|c|
+  [
+    c.name,
+    link_to(content_tag('span', _('Show')), {:action => 'show', :id => c}, :class => 'tdshow'),
+    link_to_remote(content_tag('span', _('Edit')), {:update => 'sidebar', :url => {:action => 'edit', :id => c} }, :class => 'tdedit'),
+    link_to(content_tag('span', _('Destroy')), {:action => 'destroy', :id => c}, :confirm => _('Are you sure?'), :post => true,  :class => 'tddestroy') 
+  ]},
+  {
+    :html_title_options => [:class => 'none'],
+    :html_content_options => [{:class => 'name endcol'}, {:class => 'option'}, {:class => 'option'}, {:class => 'option'} ]
+  },
+  _('Templates')
+  )%>
+
+<%= link_to_remote  _('Create a commercial proposal'), :url => {:action => 'new'}, :update => 'form' %>

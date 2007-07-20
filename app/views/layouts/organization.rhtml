@@ -21,19 +21,33 @@
 </div>
 
 <img id="banner_top" src="/images/bannerabelo_160x75.jpg" alt="Abelo - www.Colivre.coop.br" height="75px" width="160px">
-<%= user_bar %>
 
-<%= main_menu %>
+<div id="userbar">
+  <div class="login_bar" >
+    <%= link_to_remote(_('Go to'), {}, :id => "goto", :accesskey => "g", :onclick => visual_effect(:toggle_slide, 'nav') ) %>
+    <%= link_to(_('Edit personal information'), {:controller => 'users', :action => 'edit', :id => self.current_user}, :id => "edit_profile", :accesskey => "e") %> 
+    <%= link_to(_('Logout'), {:controller => 'users', :action => 'logout'}, :id => "logout", :accesskey => "q", :confirm => _('Exit from system?'), :post => 'true') %>
+  </div>
+
+   <%= display_navigation_bar %> 
+ </div>
+
+ <%= main_menu %>
 
 <%= notice_box flash[:notice] %>
 
 <div id="content">
 
+<div id='sidebar'>
+</div>
+
+<%= tabbed_bar(@item) %>
+
 <%= yield %>
 
 <div id="footer">
 Copyrigth © 2007 <a href="http://www.colivre.coop.br" alt="Cooperativa de Tecnologias Livres">Colivre</a><br />
-Todo o conteúdo deste software pode ser reutilizado de acordo com os termos da licença <a href="http://www.gnu.org/licenses/licenses.html#GPL">GNU General Public License (GPL)</a>.
+Todo o código fonte deste software pode ser reutilizado de acordo com os termos da licença <a href="http://www.gnu.org/licenses/licenses.html#GPL">GNU General Public License (GPL)</a>.
 </div>
 </body>
 </html>

@@ -1,6 +1,5 @@
-<h1> <%= _('Listing products') %></h1>
 
-<%= render :partial => 'new' %>
+<%= title _('Listing products') %>
 
 <%= display_table(
   [ _('Images'), _('Code'), _('Description'), _('Sell price') ],
@@ -11,7 +10,7 @@
       p.description,
       p.sell_price,
       link_to(content_tag('span', _('Show')), {:action => 'show', :id => p}, :class => 'tdshow'),
-      link_to_remote(content_tag('span', _('Edit')), {:update => 'sidebar', :url => {:action => 'edit', :id => p} }, :class => 'tdedit'),
+      button(_('Edit'), :edit,{:action => 'edit', :id => p}),
       link_to(content_tag('span', _('Destroy')), {:action => 'destroy', :id => p}, :confirm => _('Are you sure?'), :post => true, :class => 'tddestroy')
     ]},
   { 

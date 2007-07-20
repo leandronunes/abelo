@@ -40,7 +40,6 @@ class ProductsController < ApplicationController
 
   def edit
     @product = @organization.products.find(params[:id])
-    render :partial => 'edit'
   end
 
   def update
@@ -62,7 +61,7 @@ class ProductsController < ApplicationController
   def reset
     @product = Product.new
     @product.organization = @organization
-    render :partial => 'new'
+    render :partial => 'form'
   end
 
   def images

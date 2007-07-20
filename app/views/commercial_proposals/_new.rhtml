@@ -1,29 +1,33 @@
-<div id='form'>
-  <% if @departments %>
+<div id='sidebar'>
+  <%= show_item_bar("new_commercial_proposal", _("New Commercial Proposal"))%>
+  <div id="new_commercial_proposal" class="itembar">
+    <div> 
+    <%= error_messages_for "commercial_proposal" %>
+    <%= start_form_tag :action => 'create' %>
   
-  <%= error_messages_for "commercial_proposal" %>
-  
-  <%= start_form_tag :action => 'create' %>
-  
-  <label><%= _('Name') %></label><%= text_field 'commercial_proposal', 'name' %>
-  
-  <%= multiple_select('commercial_proposal', 'department_ids', @departments, _('Departments')) %>
-  
-  <label><%= _('create from a template?') %></label><%= check_box_tag 'is_template' %>
-  
-  <div id='templates'>
-    <%= render :partial => 'templates'%>
-  </div>
-
-  <%= submit_tag _('New') %>
-
-<%= end_form_tag %>
-
-<%= observe_field 'is_template',
-    :update => 'templates',
-    :url => {:action => 'get_template'},
-    :with => "'value=' + escape(value)"
-    %>
+    <label><%= _('Name') %></label>
+    <%= text_field 'commercial_proposal', 'name' %>
     
-  <% end %>
+    <label><%= _('Departments') %></label>
+    <%= multiple_select('commercial_proposal', 'department_ids', @departments) %>
+  
+    <label><%= _('create from a template?') %></label>
+    <%= check_box_tag 'is_template' %>
+  
+    <div id='templates'>
+      <%= render :partial => 'templates'%>
+    </div>
+
+    <%= submit_tag _('New') %>
+
+    <%= end_form_tag %>
+    </div>
+
+  <%= observe_field 'is_template',
+      :update => 'templates',
+      :url => {:action => 'get_template'},
+      :with => "'value=' + escape(value)"
+      %>
+    <%= hide_item_bar("new_commercial_proposal")%>
+  </div>
 </div>

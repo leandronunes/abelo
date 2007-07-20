@@ -14,6 +14,7 @@ class CommercialProposalsController < ApplicationController
   def list
     @commercial_proposals_templates = @organization.commercial_proposals_templates
     @commercial_proposals = @organization.commercial_proposals_not_templates
+    @departments = @organization.departments
   end
 
   def show

@@ -12,7 +12,6 @@
 
 class CustomerCategory < Category
 
- belongs_to :organization
  has_many :customers, :foreign_key => 'category_id'
 
 end

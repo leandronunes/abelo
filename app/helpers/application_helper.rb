@@ -15,6 +15,11 @@ module ApplicationHelper
     end
   end
 
+  def button_remote(name, type, url_options = {}, html_options = {})
+    local_html_options = html_options.merge({ :class => "button button_#{type}" })
+    link_to_remote(name, url_options, local_html_options)
+  end
+
   # Creates a color picker field.
   #
   # Slightly based on http://www.bigbold.com/snippets/posts/show/2084
@@ -198,27 +203,6 @@ module ApplicationHelper
     )
   end
 
-  def user_bar
-    if self.current_user
-      content_tag(
-        'div',
-        [
-        content_tag(
-          'div',
-          [ 
-            link_to_remote(_('Go to'), {}, :id => "goto", :accesskey => "g", :onclick => visual_effect(:toggle_slide, 'nav') ),
-            link_to(_('Edit personal information'), {:controller => 'users', :action => 'edit', :id => self.current_user}, :id => "edit_profile", :accesskey => "e"),
-            link_to(_('Logout'), {:controller => 'users', :action => 'logout'}, :id => "logout", :accesskey => "q", :confirm => _('Exit from system?'), :post => 'true'),
-          ].join('&nbsp;'),
-          :class => 'login_bar'),
-        display_navigation_bar
-        ],
-          :id => 'userbar') if self.current_user
-    else
-      ''
-    end
-  end
-
   def notice_box(msg)
     if msg
     content_tag(
@@ -244,8 +228,10 @@ module ApplicationHelper
         ],
         :class => 'control_header'),
         link_to(@organization.name, :controller => 'main'),
-        "&rarr",
-        link_to(@controller.controller_name, :controller => @controller.controller_name),
+        "&rarr " + controller.describe(@item) + " &rarr",
+        link_to(@controller.controller_name, :controller => params[:controller]),
+        "&rarr ",
+        link_to(@controller.action_name, :controller => params[:controller], :action => params[:action], :id => params[:id]),
       ],
       :class => 'navigation_bar'
     ) if @organization
@@ -291,6 +277,12 @@ module ApplicationHelper
     link_to org.name, { :organization_nickname => org.nickname, :controller => 'main', :action => 'index' }, html_options
   end
 
+  def tabbed_bar(item)
+     if 'register' == item
+       render :partial => 'shared/register_menu'
+     end
+  end
+  #TODO see if it's usefull'
   def model_name(m)
     {
       #Cash Flow
@@ -330,9 +322,22 @@ module ApplicationHelper
     }.join('')
   end
 
-  def select_category(object, category_type)
-    select(object, 'category_id', @organization.send("#{category_type}_categories").map { |c| [c.name,c.id]} )
+ def options_for_category(cat, selected_value)
+    if cat.leaf?
+      content_tag('option', cat.name)
+    else
+      options = { :label => cat.name, :style => "padding-left: #{cat.level}em;" }
+      options.merge!(:selected => 'selected') if (selected_value == cat.id)
+      content = cat.children.map { |child| options_for_category(child, selected_value) }.join('')
+      content_tag("optgroup", content, options)
+    end
   end
+
+  def select_category(object, category_type)
+    object = self.instance_variable_get("@#{object}")
+    categories = object.organization.send("top_level_#{category_type}_categories")
+    select_tag("#{object}[category_id]", categories.map { |c| options_for_category(c,object.send('category_id')) }.join('') )  end
+
 
 
 #TODO test it
@@ -396,25 +401,47 @@ module ApplicationHelper
     end
   end
 
-  def display_table(titles, content, html_options = {})
+  def display_table(titles, content, html_options = {}, caption = nil)
 
     content_tag('table',[
+        display_table_caption(caption, html_options[:html_caption_options]),
         display_table_head(titles, html_options[:html_title_options]),
         display_table_content(content, html_options[:html_content_options])
       ]
     )
   end
 
+  def display_table_caption(caption, html_options)
+    if !caption.nil?
+      content_tag('caption', caption, html_options)
+    end
+  end
+
   def display_table_content(content_line, html_options)
+    n = content_line.size
     content_line.map do |content_cel|
+      n = n - 1
       p = -1
       content_tag('tr',[
         content_cel.map do |c|
           p = p + 1
-          content_tag('td', c, html_options[p])
+          if n == 0 #last row
+            content_tag('td', c, cel_options(html_options[p]))
+          else
+            content_tag('td', c, html_options[p])
+          end
         end
-      ])
+      ], :class => line_class(n)) 
     end
+  end
+
+  def cel_options(options)
+    options[:class] = options[:class] + ' ' + 'endrow'
+    return options
+  end
+
+  def line_class(line)
+    line.odd? ? 'odd': 'even'
   end
 
   def display_table_head (titles, html_options)
@@ -456,6 +483,6 @@ module ApplicationHelper
   end
 
   def title(title)
-    content_tag('h1', _("#{title}"))
+    content_tag('h1', title)
   end
 end

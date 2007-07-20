@@ -43,6 +43,18 @@ class Organization < ActiveRecord::Base
     ProductCategory.top_level_for(self)
   end
 
+  def top_level_supplier_categories 
+    SupplierCategory.top_level_for(self)
+  end
+
+  def top_level_worker_categories 
+    WorkerCategory.top_level_for(self)
+  end
+
+  def top_level_customer_categories 
+    CustomerCategory.top_level_for(self)
+  end
+
   def pending_sales(user)
     return Sale.pending(self, user)
   end

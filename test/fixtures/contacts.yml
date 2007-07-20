@@ -12,14 +12,14 @@
 #
 
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-first:
-  id: 1
-  name: 'Vicente'
-  customer_id: 1
-  position_id: 2
-
-another:
-  id: 2
-  name: 'Josy'
-  customer_id: 1
-  position_id: 1
+#first:
+#  id: 1
+#  name: 'Vicente'
+#  customer_id: 1
+#  position_id: 2
+#
+#another:
+#  id: 2
+#  name: 'Josy'
+#  customer_id: 1
+#  position_id: 1

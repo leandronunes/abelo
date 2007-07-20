@@ -1,44 +1,8 @@
-# == Schema Information
-# Schema version: 35
-#
-# Table name: customers
-#
-#  id              :integer       not null, primary key
-#  name            :string(255)   not null
-#  email           :string(255)   not null
-#  birthday        :date          
-#  address         :string(255)   
-#  cnpj            :string(14)    
-#  cpf             :string(11)    
-#  rg              :string(255)   
-#  description     :text          
-#  organization_id :integer       not null
-#  category_id     :integer       
-#
+class Customer < SystemActor
 
-class Customer < ActiveRecord::Base
-
-  belongs_to :organization
-  has_many :contacts
   belongs_to :category, :class_name => 'CustomerCategory', :foreign_key => 'category_id'
-  validates_presence_of :name, :email
   
-  validates_presence_of :organization_id, :message => 'Customers must be associated to an organization'
-
-  validates_as_cnpj :cnpj
-  
-  validates_as_cpf :cpf
-
-  validates_uniqueness_of :cnpj, :scope => :organization_id, :if => lambda { |user| ! user.cnpj.blank? }, :message => 'There is another supplier with this %{fn}'
-  validates_uniqueness_of :cpf, :scope => :organization_id, :if => lambda { |user| ! user.cpf.blank? }, :message => 'There is another supplier with this %{fn}'
-
-  def validate
-    
-    if ((! self.cpf.blank?) && (! self.cnpj.blank?)) || (self.cpf.blank? && self.cnpj.blank?)
-      errors.add('cnpj', 'Either %{fn} or CPF must be filled, and they cannot be filled at the same time.')
-    end
-  end
-
+#TODO see if it's needed
   def self.search(search_args, possible_ids = [], options = {} )
        return [] unless search_args
 
@@ -62,6 +26,7 @@ class Customer < ActiveRecord::Base
     searched_people.uniq
   end
 
+#TODO see if it's needed
   def list_by_categories()
 
   end

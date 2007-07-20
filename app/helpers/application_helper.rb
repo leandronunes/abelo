@@ -330,12 +330,8 @@ module ApplicationHelper
     }.join('')
   end
 
-  def select_category(category_type)
-    @organization.send("#{category_type}_categories").map { |c|
-      content_tag('div',
-        radio_button(category_type, 'category_id', c.id) + c.name
-      )
-    }.join('')
+  def select_category(object, category_type)
+    select(object, 'category_id', @organization.send("#{category_type}_categories").map { |c| [c.name,c.id]} )
   end
 
 

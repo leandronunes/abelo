@@ -4,8 +4,8 @@ class CreateContacts < ActiveRecord::Migration
       t.column :name, :string, :null => false
       t.column :phone, :string
       t.column :email, :string
-      t.column :customer_id, :integer, :null => false
-      t.column :position_id, :integer, :null => false
+      t.column :system_actor_id, :integer, :null => false
+      t.column :category_id, :integer, :null => false
     end
   end
 

@@ -18,10 +18,14 @@ class Organization < ActiveRecord::Base
   
   has_many :departments
   has_many :products
+
   has_many :categories
   has_many :product_categories
   has_many :customer_categories
+  has_many :worker_categories
   has_many :ledger_categories
+
+  has_many :system_actors
   has_many :suppliers
   has_many :user_profiles
   has_many :users, :through => :user_profiles

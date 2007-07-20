@@ -3,6 +3,9 @@ class CategoriesController < ApplicationController
   CATEGORY_TYPES = %w[
     product
     customer
+    contact
+    worker
+    supplier
   ]
 
   needs_organization

@@ -459,4 +459,7 @@ module ApplicationHelper
     )
   end
 
+  def title(title)
+    content_tag('h1', _("#{title}"))
+  end
 end

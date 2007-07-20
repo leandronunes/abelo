@@ -215,7 +215,7 @@ font-size: 10px;
 position: relative;
 background: url('../images/bgtransparent_300px.png') top left repeat-x;
 margin: 0px;
-padding: 5px;
+padding: 10px;
 border-right: 1px solid #c4a000;
 border-bottom: 1px solid #c4a000;
 border-left: 1px solid #c4a000;
@@ -227,9 +227,10 @@ padding: 5px;
 margin: 10px 0px 10px 0px;
 }
 
-#sidebar .itembar p label {
+#sidebar .itembar label {
   color: black;
   font-weight: bold;
+  display: block;
 }
 
 #sidebar .button_bar {

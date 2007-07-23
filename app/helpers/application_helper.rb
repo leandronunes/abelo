@@ -247,7 +247,7 @@ module ApplicationHelper
       'permissions'         => _('User administration'),  
       'customers'           => _('Customers'),            
       'contact_positions'   => _('Contact Positions'),    
-      'workers'             => _('Workers'),
+      'system_actors?actor=worker'             => _('Registers'),
       'point_of_sale'       => _('Point of sale'),
       'mass_mails'          => _('Mass Mails'),
       'cash_flows'          => _('Cash Flow'),

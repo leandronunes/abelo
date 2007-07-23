@@ -19,7 +19,7 @@ class SystemActorsController < ApplicationController
 
   def index
     actor = params[:actor]
-    redirect_to :action => 'list'
+    redirect_to :action => 'list', :actor => actor
   end
 
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)

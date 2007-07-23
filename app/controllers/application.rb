@@ -12,9 +12,7 @@ class ApplicationController < ActionController::Base
     ],
     'register' => [
       'products',
-      'workers',
-      'suppliers',
-      'customers',
+      'system_actors'
     ],
     'stock' => [
       'stock_entries'
@@ -35,6 +33,7 @@ class ApplicationController < ActionController::Base
     'users' => [
       'users'
     ]
+
   }
 
   before_filter :define_path

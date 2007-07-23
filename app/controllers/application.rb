@@ -5,7 +5,8 @@ class ApplicationController < ActionController::Base
   # defined 
   MENU_ITEMS = {
     'configurations' => [
-      'categories'
+      'categories',
+      'main'
     ],
     'financial' => [
     ],
@@ -56,9 +57,9 @@ class ApplicationController < ActionController::Base
 
   # maps a template code (a key in TEMPLATES) to an human-readable string
   def describe(item)
-    return {
+    {
       'register' => _('Register')
-    }[item]
+    }[item] || item
   end
 
 

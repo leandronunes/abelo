@@ -229,9 +229,9 @@ module ApplicationHelper
         :class => 'control_header'),
         link_to(@organization.name, :controller => 'main'),
         "&rarr " + controller.describe(@item) + " &rarr",
-        link_to(@controller.controller_name, :controller => params[:controller]),
+        link_to(controller.controller_name, :controller => params[:controller]),
         "&rarr ",
-        link_to(@controller.action_name, :controller => params[:controller], :action => params[:action], :id => params[:id]),
+        link_to(controller.action_name, :controller => params[:controller], :action => params[:action], :id => params[:id]),
       ],
       :class => 'navigation_bar'
     ) if @organization

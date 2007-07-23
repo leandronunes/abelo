@@ -30,7 +30,7 @@ class SystemActorsController < ApplicationController
     @actor = params[:actor] if SYSTEM_ACTORS.include?(params[:actor])
 #TODO see the better way to launch the exception
     render_access_denied_screen if @actor.blank?
-    @system_actor_pages, @system_actors = paginate @actor.to_sym, :per_page => 10, :conditions => ["organization_id = ?", @organization.id ] 
+    @system_actor_pages, @system_actors = paginate @actor.to_sym, :per_page => 10, :conditions => ["organization_id = ? AND type = ?", @organization.id, @actor.camelize ] 
     @system_actor = SystemActor.new 
   end
 

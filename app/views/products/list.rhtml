@@ -17,4 +17,18 @@
     :html_title_options => [:class => 'none'], 
     :html_content_options =>  [{:class => 'image'},{:class => 'number'},{:class => 'name'},{:class => 'stock endcol'},{:class => 'option'},{:class => 'option'},{:class => 'option'}] 
   }
-)%>
+  )%>
+
+<% @products.map do |p| %>
+  <%=
+  display_list([
+        [p.images.map{|i| show_image i}[0]], 
+        [_('Code:'),p.id],
+        [_('Description:'),p.description],
+        [_('Price'), p.sell_price]
+      ],
+      [1,2,1],
+      {:url_options => 'leo', :li_options => 'eldi'}
+   )
+  %>
+<% end %>

@@ -338,8 +338,6 @@ module ApplicationHelper
     categories = object.organization.send("top_level_#{category_type}_categories")
     select_tag("#{object}[category_id]", categories.map { |c| options_for_category(c,object.send('category_id')) }.join('') )  end
 
-
-
 #TODO test it
   def category_with_sign(type_of, name)
     if type_of == "I"
@@ -399,6 +397,29 @@ module ApplicationHelper
     else
       submit_tag _("Edit")
     end
+  end
+
+  def display_list(content, elements_per_line=[], html_options = {})
+    max_elements = content.length
+    sum_elements = 0
+
+    elements_per_line.each do |e|
+      sum_elements = sum_elements + e
+    end
+    elements_per_line = Array.new(max_elements, 1) if sum_elements != max_elements
+
+    content_tag(
+      'ul', 
+      content_tag(
+        'li', 
+        elements_per_line.map{ |e|
+          c = content.reject{|i| content.index(i) > e - 1 }
+          content = content - c
+          content_tag('p', c)
+        },
+        :class => html_options[:li_options]),
+      :class => html_options[:ul_options]
+    )
   end
 
   def display_table(titles, content, html_options = {}, caption = nil)

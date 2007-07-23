@@ -30,6 +30,9 @@ class ApplicationController < ActionController::Base
     ],
     'commercial_proposals' => [
       'commercial'
+    ],
+    'users' => [
+      'users'
     ]
   }
 

@@ -7,12 +7,34 @@ organization = Organization.create!(:name => 'Toca', :cnpj => '05359933000193', 
 
 ###########Categories###################################
 Category.destroy_all
-vestuario = ProductCategory.new(:name => 'vestuário')
+
+vestuario = ProductCategory.new(:name => 'vestuário')  
 vestuario.organization = organization
 vestuario.save
 acessorio = ProductCategory.new(:name => 'acessório')
 acessorio.organization = organization
 acessorio.save
+
+fornecedor_vestuario = SupplierCategory.new(:name => 'fornecedor de vestuário')  
+fornecedor_vestuario.organization = organization
+fornecedor_vestuario.save
+fornecedor_acessorio = SupplierCategory.new(:name => 'fornecedor de acessórios')  
+fornecedor_acessorio.organization = organization
+fornecedor_acessorio.save
+
+consumidor_pessoa = CustomerCategory.new
+consumidor_pessoa.name = 'consumidor pessoa física'
+consumidor_pessoa.organization = organization
+consumidor_pessoa.save
+
+vendedor = WorkerCategory.new
+vendedor.name = 'vendedor'
+vendedor.organization = organization
+vendedor.save
+gerente = WorkerCategory.new
+gerente.name = 'gerente'
+gerente.organization = organization
+gerente.save
 
 ############Products#############################
 Product.destroy_all
@@ -31,14 +53,14 @@ monitor = Product.create!(:description => 'monitor lcd', :size => '15', :color =
 
 ############Suppliers#############################
 Supplier.destroy_all
-hering = Supplier.create!(:name => 'Hering', :cnpj => '58178734000145', :organization_id => 1, :address => 'R Hermann Hering 1790 CEP: 89010900 Cidade: Blumenau UF: SC', :description => 'fornecedor de roupas')
-renato = Supplier.create!(:name => 'Renato', :cpf => '39377825679', :organization_id => 1, :address => 'Rua: Fonte do Boi, 215 - Rio Vermelho', :birthday => '1980-05-12', :description => 'fornecedor de pratas')
+hering = Supplier.create!(:name => 'Hering', :cnpj => '58178734000145', :organization_id => 1, :address => 'R Hermann Hering 1790 CEP: 89010900 Cidade: Blumenau UF: SC', :description => 'fornecedor de roupas', :email => 'contato@hering.com', :category_id => 3)
+mundo_prata = Supplier.create!(:name => 'Mundo das Pratas', :cpf => '39377825679', :organization_id => 1, :address => 'Rua: Fonte do Boi, 215 - Rio Vermelho', :birthday => '1980-05-12', :description => 'fornecedor de pratas', :email => 'contato@mundo_das_pratas.com', :category_id => 4)
 
 ############Product Suppliers#####################
 camisa.add_suppliers(hering)
 calca.add_suppliers(hering)
-colar.add_suppliers(renato)
-brinco.add_suppliers(renato)
+colar.add_suppliers(mundo_prata)
+brinco.add_suppliers(mundo_prata)
 
 ############Stock Entries#########################
 StockEntry.destroy_all
@@ -59,19 +81,18 @@ perfil_quentin.save
 
 ############Customers#############################
 Customer.destroy_all
-cliente_one = Customer.create!(:name => 'João da Silva', :email => 'joao@softwarelivre.org', :birthday => '1984-08-15', :address => 'Rua Pará, nº 221, Pituba', :cpf => '74676743920', :organization_id => 1)
-cliente_two = Customer.create!(:name => 'Alice Soares', :email => 'alice@softwarelivre.org', :birthday => '1970-10-22', :address => 'Rua João das Botas, nº 15, Canela', :cpf => '93791122894', :organization_id => 1)
+cliente_one = Customer.create!(:name => 'João da Silva', :email => 'joao@softwarelivre.org', :birthday => '1984-08-15', :address => 'Rua Pará, nº 221, Pituba', :cpf => '74676743920', :organization_id => 1, :email => 'joao@softwarelivre.org', :category_id => 5)
+cliente_two = Customer.create!(:name => 'Alice Soares', :email => 'alice@softwarelivre.org', :birthday => '1970-10-22', :address => 'Rua João das Botas, nº 15, Canela', :cpf => '93791122894', :organization_id => 1, :email => 'alice@softwarelivre.org', :category_id => 5)
 
 ############Contacts###############################
 Contact.destroy_all
 
 ############Contact Positions######################
-ContactPosition.destroy_all
 
 ############Workers################################
 Worker.destroy_all
-vendedor = Worker.create!(:name => 'José Fernandes', :cpf => '63358421813', :address => 'Rua do Timbó, nº 45, Itaigara', :birthday => '1975-06-14', :function => 'vendedor', :organization_id => 1)
-gerente = Worker.create!(:name => 'Carla Alves', :cpf => '53170430424', :address => 'Alameda das Pintagueiras, nº 37, Caminho das Árvores', :birthday => '1979-07-18', :function => 'gerente', :organization_id => 1)
+vendedor = Worker.create!(:name => 'José Fernandes', :cpf => '63358421813', :address => 'Rua do Timbó, nº 45, Itaigara', :birthday => '1975-06-14', :category_id => 6, :organization_id => 1, :email => 'jose@toca.com')
+gerente = Worker.create!(:name => 'Carla Alves', :cpf => '53170430424', :address => 'Alameda das Pintagueiras, nº 37, Caminho das Árvores', :birthday => '1979-07-18', :category_id => 7, :organization_id => 1, :email => 'carla@toca.com')
 
 ############Payments################################
 Payment.destroy_all

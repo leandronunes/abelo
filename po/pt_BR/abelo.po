@@ -23,50 +23,48 @@ msgid "This actor it's not valid"
 msgstr ""
 
 #: app/controllers/system_actors_controller.rb:51
-#, fuzzy
 msgid "%s was successfully created."
-msgstr "Usuáro criado com sucesso"
+msgstr ""
 
 #: app/controllers/system_actors_controller.rb:77
-#, fuzzy
 msgid "%s was successfully updated."
-msgstr "Usuário atualizado com sucesso"
+msgstr ""
 
 #: app/controllers/commercial_proposal_sections_controller.rb:34
 msgid "Commercial proposal section was successfuly updated."
-msgstr "Seção da proposta comercial atualizada com sucesso"
+msgstr ""
 
 #: app/controllers/departments_controller.rb:30
 msgid "Department was successfully created."
-msgstr "Departamento criado com sucesso."
+msgstr ""
 
 #: app/controllers/departments_controller.rb:46
 msgid "Department was successfully updated."
-msgstr "Departamento atualizado com sucesso."
+msgstr ""
 
 #: app/controllers/products_controller.rb:49
 msgid "Product was successfully updated."
-msgstr "Produto atualizado com sucesso."
+msgstr ""
 
 #: app/controllers/products_controller.rb:78
 msgid "Image was successfully added."
-msgstr "Imagem adicionada com sucesso."
+msgstr ""
 
 #: app/controllers/customers_controller.rb:69
 msgid "Contact was successfully created."
-msgstr "Contato criado com sucesso."
+msgstr ""
 
 #: app/controllers/permissions_controller.rb:19
 msgid "Profile updated successfully"
-msgstr "Perfil atualizado com sucesso."
+msgstr ""
 
 #: app/controllers/permissions_controller.rb:34
 msgid "Profile successfully created."
-msgstr "Perfil criado com sucesso."
+msgstr ""
 
 #: app/controllers/commercial_proposals_controller.rb:40
 msgid "The commercial proposal was successfully created."
-msgstr "Proposta comercial criada com sucesso"
+msgstr ""
 
 #: app/controllers/ledger_categories_controller.rb:27
 msgid "Ledger category was successfully created."
@@ -79,28 +77,27 @@ msgstr ""
 #: app/controllers/categories_controller.rb:34
 #: app/controllers/categories_controller.rb:41
 msgid "This type didn't exist"
-msgstr "Este tipo não existe."
+msgstr ""
 
 #: app/controllers/categories_controller.rb:48
 msgid "Category was successfully created."
-msgstr "Categoria criada com sucesso."
+msgstr ""
 
 #: app/controllers/categories_controller.rb:62
 msgid "Category was successfully updated."
-msgstr "Categoria atualizada com sucesso."
+msgstr ""
 
 #: app/controllers/cash_flows_controller.rb:63
 msgid "No type of extract was chosen."
 msgstr ""
 
 #: app/controllers/suppliers_controller.rb:42
-#, fuzzy
 msgid "Supplier was successfully updated."
-msgstr "Usuário atualizado com sucesso"
+msgstr ""
 
 #: app/controllers/configuration_controller.rb:15
 msgid "Listing objects of configuration"
-msgstr "Lista de objetos de configuração"
+msgstr ""
 
 #: app/controllers/configuration_controller.rb:20
 msgid "Cash flow related configurations"
@@ -108,40 +105,39 @@ msgstr ""
 
 #: app/controllers/configuration_controller.rb:80
 msgid "Item was successfully updated."
-msgstr "Item atualizado com sucesso."
+msgstr ""
 
 #: app/controllers/configuration_controller.rb:102
 msgid "Item was successfully created."
-msgstr "Item criado com sucesso."
+msgstr ""
 
 #: app/controllers/commercial_proposal_items_controller.rb:36
 msgid "Commercial proposal item was successfuly updated."
-msgstr "Item da proposta comercial atualizado com sucesso."
+msgstr ""
 
 #: app/controllers/users_controller.rb:41
 msgid "Logged in successfully"
-msgstr "Conectado com sucesso."
+msgstr ""
 
 #: app/controllers/users_controller.rb:54
 msgid "Thanks for signing up!"
-msgstr "Obrigado por cadastrar-se!"
+msgstr ""
 
 #: app/controllers/users_controller.rb:64
 msgid "You have been logged out."
-msgstr "Você foi desconectado."
+msgstr ""
 
 #: app/controllers/users_controller.rb:71
 msgid "User was successfully created."
-msgstr "Usuáro criado com sucesso"
+msgstr ""
 
 #: app/controllers/users_controller.rb:94
 msgid "User was successfully updated."
-msgstr "Usuário atualizado com sucesso"
+msgstr ""
 
 #: app/controllers/product_categories_controller.rb:27
-#, fuzzy
 msgid "Product Category was successfully created."
-msgstr "Categoria criada com sucesso."
+msgstr ""
 
 #: app/controllers/application.rb:48
 msgid "You have a controller not defined in path"
@@ -153,48 +149,47 @@ msgstr ""
 
 #: app/controllers/application.rb:91
 msgid "There is no organization with nickname %s"
-msgstr "Não existe organização com apelido %s"
+msgstr ""
 
 #: app/controllers/application.rb:99
 msgid "Access error"
-msgstr "Erro de acesso"
+msgstr ""
 
 #: app/controllers/contact_positions_controller.rb:26
-#, fuzzy
 msgid "Contact Position was successfully created."
-msgstr "Cargo de contato criado com sucesso."
+msgstr ""
 
 #: app/models/product.rb:- app/views/commercial_proposal_items/_form.rhtml:1
 msgid "product"
-msgstr "produto"
+msgstr ""
 
 #: app/models/product.rb:-
 msgid "Product|Description"
-msgstr "Descrição"
+msgstr ""
 
 #: app/models/product.rb:-
 msgid "Product|Size"
-msgstr "Tamanho"
+msgstr ""
 
 #: app/models/product.rb:-
 msgid "Product|Color"
-msgstr "Cor"
+msgstr ""
 
 #: app/models/product.rb:-
 msgid "Product|Sell price"
-msgstr "Preço de venda"
+msgstr ""
 
 #: app/models/product.rb:-
 msgid "Product|Unit"
-msgstr "Unidade"
+msgstr ""
 
 #: app/models/product.rb:-
 msgid "Product|Organization"
-msgstr "Organização"
+msgstr ""
 
 #: app/models/product.rb:-
 msgid "Product|Category"
-msgstr "Categoria"
+msgstr ""
 
 #: app/models/cash_flow.rb:-
 msgid "cash flow"
@@ -230,27 +225,27 @@ msgstr ""
 
 #: app/models/sale.rb:-
 msgid "sale"
-msgstr "venda"
+msgstr ""
 
 #: app/models/sale.rb:-
 msgid "Sale|Organization"
-msgstr "Organização"
+msgstr ""
 
 #: app/models/sale.rb:-
 msgid "Sale|Customer"
-msgstr "Cliente"
+msgstr ""
 
 #: app/models/sale.rb:-
 msgid "Sale|Date"
-msgstr "Data"
+msgstr ""
 
 #: app/models/sale.rb:-
 msgid "Sale|Status"
-msgstr "Situação"
+msgstr ""
 
 #: app/models/sale.rb:-
 msgid "Sale|User"
-msgstr "Usuário"
+msgstr ""
 
 #: app/models/historical.rb:-
 msgid "historical"
@@ -274,119 +269,119 @@ msgstr ""
 
 #: app/models/contact.rb:-
 msgid "contact"
-msgstr "contato"
+msgstr ""
 
 #: app/models/contact.rb:-
 msgid "Contact|Name"
-msgstr "Name"
+msgstr ""
 
 #: app/models/contact.rb:-
 msgid "Contact|Phone"
-msgstr "Telefone"
+msgstr ""
 
 #: app/models/contact.rb:-
 msgid "Contact|Email"
-msgstr "Email"
+msgstr ""
 
 #: app/models/contact.rb:-
 msgid "Contact|Customer"
-msgstr "Cliente"
+msgstr ""
 
 #: app/models/contact.rb:-
 msgid "Contact|Position"
-msgstr "Posição"
+msgstr ""
 
 #: app/models/sale_item.rb:-
 msgid "sale item"
-msgstr "item de venda"
+msgstr ""
 
 #: app/models/sale_item.rb:-
 msgid "SaleItem|Sale"
-msgstr "Venda"
+msgstr ""
 
 #: app/models/sale_item.rb:-
 msgid "SaleItem|Product"
-msgstr "Produto"
+msgstr ""
 
 #: app/models/sale_item.rb:-
 msgid "SaleItem|Ammount"
-msgstr "Quantidade"
+msgstr ""
 
 #: app/models/sale_item.rb:-
 msgid "SaleItem|Unitary price"
-msgstr "Preço unitário"
+msgstr ""
 
 #: app/models/department.rb:-
 msgid "organization"
-msgstr "organização"
+msgstr ""
 
 #: app/models/department.rb:-
 msgid "Organization|Name"
-msgstr "Nome"
+msgstr ""
 
 #: app/models/department.rb:-
 msgid "Organization|Cnpj"
-msgstr "CNPJ"
+msgstr ""
 
 #: app/models/department.rb:-
 msgid "Organization|Nickname"
-msgstr "Apelido"
+msgstr ""
 
 #: app/models/department.rb:-
 msgid "department"
-msgstr "departamento"
+msgstr ""
 
 #: app/models/department.rb:-
 msgid "Department|Name"
-msgstr "Nome"
+msgstr ""
 
 #: app/models/department.rb:-
 msgid "Department|Organization"
-msgstr "Organização"
+msgstr ""
 
 #: app/models/payment.rb:-
 msgid "payment"
-msgstr "pagamento"
+msgstr ""
 
 #: app/models/payment.rb:-
 msgid "Payment|Sale"
-msgstr "Venda"
+msgstr ""
 
 #: app/models/payment.rb:-
 msgid "Payment|Type"
-msgstr "Tipo"
+msgstr ""
 
 #: app/models/payment.rb:-
 msgid "Payment|Value"
-msgstr "Valor"
+msgstr ""
 
 #: app/models/payment.rb:-
 msgid "Payment|Date"
-msgstr "Data"
+msgstr ""
 
 #: app/models/payment.rb:-
 msgid "Payment|Received"
-msgstr "Recebido"
+msgstr ""
 
 #: app/models/payment.rb:-
 msgid "Payment|Cash"
-msgstr "Dinheiro"
+msgstr ""
 
 #: app/models/payment.rb:-
 msgid "Payment|Credit card number"
-msgstr "Número do cartão de crédito"
+msgstr ""
 
 #: app/models/payment.rb:-
 msgid "Payment|Credit card validity"
-msgstr "Validade do cartão de crédito"
+msgstr ""
 
 #: app/models/payment.rb:-
 msgid "Payment|Credit card secutiry code"
-msgstr "Código de segurança do cartão de crédito"
+msgstr ""
 
 #: app/models/payment.rb:-
 msgid "Payment|Credit card owner name"
-msgstr "Nome do propietário do cartão de crédito"
+msgstr ""
 
 #: app/models/payment.rb:-
 msgid "Payment|Credit card cpf"
@@ -394,27 +389,27 @@ msgstr ""
 
 #: app/models/payment.rb:-
 msgid "Payment|Interests"
-msgstr "Juros"
+msgstr ""
 
 #: app/models/payment.rb:-
 msgid "Payment|Check bank"
-msgstr "Banco do cheque"
+msgstr ""
 
 #: app/models/payment.rb:-
 msgid "Payment|Check owner name"
-msgstr "Nome do proprietário do cheque"
+msgstr ""
 
 #: app/models/payment.rb:-
 msgid "Payment|Check account agency"
-msgstr "Agência da conta do cheque"
+msgstr ""
 
 #: app/models/payment.rb:-
 msgid "Payment|Check account number"
-msgstr "Número da conta do cheque"
+msgstr ""
 
 #: app/models/payment.rb:-
 msgid "Payment|Check number"
-msgstr "Número do cheque"
+msgstr ""
 
 #: app/models/payment.rb:-
 msgid "Payment|Check contact telephone"
@@ -523,9 +518,8 @@ msgstr ""
 
 #: app/models/system_actor.rb:26 app/views/shared/_register_menu.rhtml:5
 #: app/views/categories/index.rhtml:6
-#, fuzzy
 msgid "Worker"
-msgstr "trabalhador"
+msgstr ""
 
 #: app/models/system_actor.rb:27 app/views/stock/_form.rhtml:4
 #: app/views/stock/history.rhtml:6 app/views/stock/new_entry.rhtml:8
@@ -2236,19 +2230,16 @@ msgid "Supplier: %s"
 msgstr ""
 
 #: app/views/departments/_new.rhtml:2
-#, fuzzy
 msgid "New departament"
-msgstr "departamento"
+msgstr ""
 
 #: app/views/departments/_edit.rhtml:2
-#, fuzzy
 msgid "Edit department"
-msgstr "departamento"
+msgstr ""
 
 #: app/views/departments/list.rhtml:1
-#, fuzzy
 msgid "Listing departments"
-msgstr "departamento"
+msgstr ""
 
 #: app/views/shared/access_error.rhtml:1
 msgid "Access Error"
@@ -2458,15 +2449,13 @@ msgid "Code"
 msgstr ""
 
 #: app/views/products/_new.rhtml:2
-#, fuzzy
 msgid "New product"
-msgstr "produto"
+msgstr ""
 
 #: app/views/products/_form.rhtml:8 app/views/system_actors/_form.rhtml:23
 #: app/views/system_actors/list.rhtml:18
-#, fuzzy
 msgid "Category"
-msgstr "Categoria"
+msgstr ""
 
 #: app/views/products/_form.rhtml:15
 msgid "Size"
@@ -2545,9 +2534,8 @@ msgid "Consumed Products"
 msgstr ""
 
 #: app/views/customers/_new.rhtml:2
-#, fuzzy
 msgid "New Customer"
-msgstr "Cliente"
+msgstr ""
 
 #: app/views/customers/show_contact.rhtml:3
 msgid "Phone:"
@@ -2567,9 +2555,8 @@ msgid "Email"
 msgstr ""
 
 #: app/views/customers/_edit.rhtml:3
-#, fuzzy
 msgid "Edit Customer"
-msgstr "Cliente"
+msgstr ""
 
 #: app/views/customers/list.rhtml:1
 msgid "Listing customers"
@@ -2648,27 +2635,3 @@ msgstr ""
 #: app/views/categories/edit.rhtml:1
 msgid "Editing Category"
 msgstr ""
-
-#~ msgid "Worker|Name"
-#~ msgstr "nome"
-
-#~ msgid "Worker|Cpf"
-#~ msgstr "CPF"
-
-#~ msgid "Worker|Rg"
-#~ msgstr "RG"
-
-#~ msgid "Worker|Address"
-#~ msgstr "Endereço"
-
-#~ msgid "Worker|Birthday"
-#~ msgstr "Data de nascimento"
-
-#~ msgid "Worker|Description"
-#~ msgstr "Descrição"
-
-#~ msgid "Worker|Function"
-#~ msgstr "Função"
-
-#~ msgid "Worker|Organization"
-#~ msgstr "Organização"

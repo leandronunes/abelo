@@ -6,34 +6,44 @@ class ApplicationController < ActionController::Base
   MENU_ITEMS = {
     'configurations' => [
       'categories',
+      'departments',
       'main'
     ],
     'financial' => [
+      'cash_flows',
+      'ledgers'
     ],
     'register' => [
       'products',
       'system_actors'
     ],
     'stock' => [
-      'stock_entries'
+      'stock'
     ],
     'mass_mail' => [
-      'mass_mail'
+      'mass_mails'
     ],
     'project' => [
     ],
     'education' => [
     ],
     'web' => [
-      'web'
     ],
     'commercial_proposals' => [
-      'commercial'
+      'commercial_proposals'
     ],
     'users' => [
       'users'
+    ],
+    'store' => [
+      'store'
+    ],
+    'administration' => [
+      'permissions'
+    ],
+    'point_of_sale' => [
+      'point_of_sale'
     ]
-
   }
 
   before_filter :define_path

@@ -239,21 +239,15 @@ module ApplicationHelper
 
   def main_menu
     menu_items = {
-      'categories'  => _('Categories'),   
-      'suppliers'           => _('Suppliers'),            
-      'stock'               => _('Stock'),                
-      'store'               => _('Store'),                
-      'permissions'         => _('User administration'),  
-      'customers'           => _('Customers'),            
-      'contact_positions'   => _('Contact Positions'),    
-      'system_actors?actor=worker'             => _('Registers'),
-      'point_of_sale'       => _('Point of sale'),
-      'mass_mails'          => _('Mass Mails'),
-      'cash_flows'          => _('Cash Flow'),
-      'ledgers'             => _('Ledgers'),
-      'configuration'       => _('Configurations'),
-      'departments'         => _('Departments'),
-      'commercial_proposals'=> _('Commercial Proposals'),
+      'categories'                 => _('Configurations'),
+      'stock'                      => _('Stock'),             
+      'store'                      => _('Store'),  
+      'permissions'                => _('User administration'),  
+      'system_actors?actor=worker' => _('Registers'),
+      'point_of_sale'              => _('Point of sale'),
+      'mass_mails'                 => _('Mass mail'),
+      'cash_flows'                 => _('Financial'),
+      'commercial_proposals'       => _('Commercial Proposals'),
     }
     x = 0
    content_tag(
@@ -277,9 +271,7 @@ module ApplicationHelper
   end
 
   def tabbed_bar(item)
-     if 'register' == item
-       render :partial => 'shared/register_menu'
-     end
+    render :partial => "shared/#{item}_menu"
   end
   #TODO see if it's usefull'
   def model_name(m)

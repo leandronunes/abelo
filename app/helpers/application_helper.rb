@@ -240,7 +240,6 @@ module ApplicationHelper
   def main_menu
     menu_items = {
       'categories'  => _('Categories'),   
-      'products'            => _('Products'),             
       'suppliers'           => _('Suppliers'),            
       'stock'               => _('Stock'),                
       'store'               => _('Store'),                
@@ -506,4 +505,5 @@ module ApplicationHelper
   def title(title)
     content_tag('h1', title)
   end
+
 end

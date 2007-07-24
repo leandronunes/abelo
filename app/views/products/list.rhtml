@@ -1,24 +1,6 @@
 
 <%= title _('Listing products') %>
 
-<%= display_table(
-  [ _('Images'), _('Code'), _('Description'), _('Sell price') ],
-  @products.map{|p| 
-    [
-      p.images.map{|i| show_image i}[0],
-      p.id,
-      p.description,
-      p.sell_price,
-      link_to(content_tag('span', _('Show')), {:action => 'show', :id => p}, :class => 'tdshow'),
-      button(_('Edit'), :edit,{:action => 'edit', :id => p}),
-      link_to(content_tag('span', _('Destroy')), {:action => 'destroy', :id => p}, :confirm => _('Are you sure?'), :post => true, :class => 'tddestroy')
-    ]},
-  { 
-    :html_title_options => [:class => 'none'], 
-    :html_content_options =>  [{:class => 'image'},{:class => 'number'},{:class => 'name'},{:class => 'stock endcol'},{:class => 'option'},{:class => 'option'},{:class => 'option'}] 
-  }
-  )%>
-
 <% @products.map do |p| %>
   <%=
   display_list([

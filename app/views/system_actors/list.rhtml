@@ -1,10 +1,6 @@
-<h1><%= _('Listing %s') % SystemActor.describe(@actor) %></h1>
-
+<%= title (_('Listing %s') % SystemActor.describe(@actor)) %>
 
 <h2> <%= _('Filter:') %> </h2>
-
-
-<%= render :partial => 'new' %>
 
 <%= #TODO fix it this filed cannot be called system_actor name
 %>
@@ -13,22 +9,16 @@
 <div class="auto_complete" id="system_actor_name_auto_complete"></div>
 <%= auto_complete_field :system_actor_name,  :url => {:action=>'autocomplete_name'}%>
 
+<div class ="manage_buttons"
+  <%= link_to ("new #{@actor}", {:action => 'new', :actor => @actor} ) %>
+</div>
 
-<%= display_table(
-  [_('Name'), _('Category')],
-  @system_actors.map{|sa|
-  [
-    sa.name,
-    sa.category.name,
-    link_to(content_tag('span', _('Show')), {:action => 'show', :id => sa, :actor => @actor}, :class => 'tdshow'),
-    link_to_remote(content_tag('span', _('Edit')), {:update => 'sidebar', :url => {:action => 'edit', :id => sa, :actor => @actor} }, :class => 'tdedit'),
-    link_to(content_tag('span', _('Destroy')), {:action => 'destroy', :id => sa}, :confirm => _('Are you sure?'), :post => true,  :class => 'tddestroy')
-  ]},
-  {
-    :html_title_options => [:class => 'none'],
-    :html_content_options => [{:class => 'name'}, {:class => 'endcol'}, {:class => 'option'}, {:class => 'option'}, {:class => 'option'}]
-  }
-)%>
-
-
-
+<% @system_actors.sort{|x,y| x.name <=> y.name }.map do |s| %>
+  <%= display_list(
+    [
+      [s.name],
+      [_('Function: '), s.category.name]
+    ]
+  )
+  %>
+<% end %>

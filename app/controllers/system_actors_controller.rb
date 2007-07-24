@@ -38,6 +38,12 @@ class SystemActorsController < ApplicationController
     @worker = @organization.workers.find(params[:id])
   end
 
+  def new
+    @actor = params[:actor] if SYSTEM_ACTORS.include?(params[:actor])
+    @system_actor =  eval("#{@actor.camelize}").new() 
+    @system_actor.organization = @organization
+  end
+
   def create
     @actor = params[:actor] if SYSTEM_ACTORS.include?(params[:actor])
     if @actor.blank?

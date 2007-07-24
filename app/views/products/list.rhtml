@@ -1,7 +1,12 @@
 
 <%= title _('Listing products') %>
 
-<% @products.map do |p| %>
+<%= text_field 'product', 'description'  %>
+
+<div class="auto_complete" id="product_description_auto_complete"></div>
+<%= auto_complete_field :product_description, :url => {:action=>'autocomplete_name', :type => @actor }%>
+
+<% @products.sort_by{|pr| pr.description}.map do |p| %>
   <%=
   display_list(
     [

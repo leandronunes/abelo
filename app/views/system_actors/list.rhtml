@@ -1,24 +1,30 @@
+
 <%= title (_('Listing %s') % SystemActor.describe(@actor)) %>
 
-<h2> <%= _('Filter:') %> </h2>
+<%= subtitle _('Filter:') %>
 
-<%= #TODO fix it this filed cannot be called system_actor name
+<%= 
+#TODO fix it this filed cannot be called system_actor name
 %>
+
 <%= text_field 'system_actor', 'name'  %>
-</p> 
+
 <div class="auto_complete" id="system_actor_name_auto_complete"></div>
 <%= auto_complete_field :system_actor_name,  :url => {:action=>'autocomplete_name', :type => @actor }%>
 
-<div class ="manage_buttons"
+<div class="manage_buttons">
+  <%= link_to ("search #{@actor}", {:action => 'search', :actor => @actor} ) %>
   <%= link_to ("new #{@actor}", {:action => 'new', :actor => @actor} ) %>
 </div>
 
-<% @system_actors.sort{|x,y| x.name <=> y.name }.map do |s| %>
-  <%= display_list(
+<% @system_actors.sort_by{|sa| sa.name}.map do |s| %>
+  <%=
+  display_list(
     [
-      [s.name],
-      [_('Function: '), s.category.name]
-    ]
+      { :title => _('Name:'), :content => s.name, :option => 'Name' },
+      { :title => _('Function:'), :content => s.category.name, :option => 'Name'}
+    ],
+    {:ul_options => 'system_actors'}
   )
   %>
 <% end %>

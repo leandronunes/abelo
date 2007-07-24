@@ -402,12 +402,11 @@ module ApplicationHelper
             content_tag('strong', c[:title]) + 
             " "+
             content_tag('span', c[:content]),
-            :class => "listItem#{c[:option]}"
+            :class => "list_item_#{c[:option]}"
           )
         },
-        :class => html_options[:li_options]),
-      :class => html_options[:ul_options]
-    )
+      :class => html_options[:li_options]),
+    :class => html_options[:ul_options])
   end
 
   def display_table(titles, content, html_options = {}, caption = nil)
@@ -495,4 +494,7 @@ module ApplicationHelper
     content_tag('h1', title)
   end
 
+  def subtitle(subtitle)
+    content_tag('h2', subtitle)
+  end
 end

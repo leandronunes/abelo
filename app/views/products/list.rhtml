@@ -1,11 +1,15 @@
 
 <%= title _('Listing products') %>
 
-
 <%= text_field 'product', 'description'  %>
 
 <div class="auto_complete" id="product_description_auto_complete"></div>
-<%= auto_complete_field :product_description, :url => {:action=>'autocomplete_name', :type => @actor }%>
+<%= auto_complete_field :product_description, :url => {:action=>'autocomplete_description' }%>
+
+<div class="manage_buttons">
+  <%= link_to (_("Search product"), {:action => 'search'} ) %>
+  <%= link_to (_("New product"), {:action => 'new'} ) %>
+</div>
 
 <ul class="products">
 <% @products.sort_by{|pr| pr.description}.map do |p| %>

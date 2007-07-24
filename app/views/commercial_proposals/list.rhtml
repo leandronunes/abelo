@@ -1,37 +1,15 @@
 <%= title('Listing commercial proposals') %>
 
-<%= render :partial => 'new' %>
-
-<%= display_table(
-  [_('Name')],
-  @commercial_proposals.map{|c|
+<% @commercial_proposals.map do |c| %>
+<%= display_list(
   [
-    c.name,
-    link_to(content_tag('span', _('Show')), {:action => 'show', :id => c}, :class => 'tdshow'),
-    link_to_remote(content_tag('span', _('Edit')), {:update => 'sidebar', :url => {:action => 'edit', :id => c} }, :class => 'tdedit'),
-    link_to(content_tag('span', _('Destroy')), {:action => 'destroy', :id => c}, :confirm => _('Are you sure?'), :post => true,  :class => 'tddestroy') 
-  ]},
-  {
-    :html_title_options => [:class => 'none'],
-    :html_content_options => [{:class => 'name endcol'}, {:class => 'option'}, {:class => 'option'}, {:class => 'option'} ]
-  },
-  _('Commercial Proposals')
-  )%>
-
-<%= display_table(
-  [_('Name')],
-  @commercial_proposals_templates.map{|c|
-  [
-    c.name,
-    link_to(content_tag('span', _('Show')), {:action => 'show', :id => c}, :class => 'tdshow'),
-    link_to_remote(content_tag('span', _('Edit')), {:update => 'sidebar', :url => {:action => 'edit', :id => c} }, :class => 'tdedit'),
-    link_to(content_tag('span', _('Destroy')), {:action => 'destroy', :id => c}, :confirm => _('Are you sure?'), :post => true,  :class => 'tddestroy') 
-  ]},
-  {
-    :html_title_options => [:class => 'none'],
-    :html_content_options => [{:class => 'name endcol'}, {:class => 'option'}, {:class => 'option'}, {:class => 'option'} ]
-  },
-  _('Templates')
-  )%>
+    [c.name]
+  ]
+)
+%>
+<% end %>
 
 <%= link_to_remote  _('Create a commercial proposal'), :url => {:action => 'new'}, :update => 'form' %>
+
+<div id='form'>
+</div>

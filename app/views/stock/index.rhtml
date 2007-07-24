@@ -1,15 +1,15 @@
-<h1> <%= _('Stock control') %></h1>
+<%= title _('Stock control') %>
 
-<%= display_table(
-  [_('Product'), _('Amount in stock')],
-  @products.map{|p| 
-    [
-      p.description, 
-      p.ammount_in_stock, 
-      link_to(content_tag('span', _('Manage stock')), {:action => 'history', :id => p}, :class => 'tdedit')
-    ]},
-  { 
-    :html_title_options => [:class => 'none'], 
-    :html_content_options =>  [{:class => 'product'}, {:class => 'stock endcol'},{:class => 'option'}] 
-  }
-) %>
+<% @products.map do |p| %>
+<%= display_list(
+      [
+        [p.images.map{|i| show_image i}[0]],
+        [p.description],
+        [p.ammount_in_stock],
+        [link_to 'New entry', :action => 'new_entry', :id => p.id]
+      ],
+      [1,2]
+  )
+  %>
+<% end %>
+

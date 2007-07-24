@@ -3,14 +3,14 @@
 
 <% @products.map do |p| %>
   <%=
-  display_list([
-        [p.images.map{|i| show_image i}[0]], 
-        [_('Code:'),p.id],
-        [_('Description:'),p.description],
-        [_('Price'), p.sell_price]
-      ],
-      [1,2,1],
-      {:url_options => 'leo', :li_options => 'eldi'}
+  display_list(
+    [
+      { :content => p.images.map{|i| show_image i}[0], :option => 'Img' }, 
+      { :title => _('Code:'), :content => p.id, :option => 'Code' },
+      { :content =>  p.description, :option => 'Name' },
+      { :title => _('Price:'), :content => p.sell_price, :option => 'Price'}
+    ],
+    {:ul_options => 'products'}
    )
   %>
 <% end %>

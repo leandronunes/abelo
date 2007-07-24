@@ -391,23 +391,19 @@ module ApplicationHelper
     end
   end
 
-  def display_list(content, elements_per_line=[], html_options = {})
-    max_elements = content.length
-    sum_elements = 0
-
-    elements_per_line.each do |e|
-      sum_elements = sum_elements + e
-    end
-    elements_per_line = Array.new(max_elements, 1) if sum_elements != max_elements
-
+  def display_list(content, html_options = {})
     content_tag(
       'ul', 
       content_tag(
         'li', 
-        elements_per_line.map{ |e|
-          c = content.reject{|i| content.index(i) > e - 1 }
-          content = content - c
-          content_tag('p', c)
+        content.map{ |c|
+          content_tag(
+            'div',
+            content_tag('strong', c[:title]) + 
+            " "+
+            content_tag('span', c[:content]),
+            :class => "listItem#{c[:option]}"
+          )
         },
         :class => html_options[:li_options]),
       :class => html_options[:ul_options]

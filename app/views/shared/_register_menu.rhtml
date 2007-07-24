@@ -1,6 +1,6 @@
 <ul class='tabs'>
   <%= tab_item ( _('Product'), 'products', { :controller => 'products', :action => 'list' } )%>
-  <%= tab_item_system_actor (_('Customer'), 'system_actors', { :controller => 'system_actors', :action => 'list', :actor => 'customer' }, 'customer' )%>
-  <%= tab_item_system_actor (_('Supplier'), 'system_actors', { :controller => 'system_actors', :action => 'list', :actor => 'supplier' }, 'supplier' )%>
-  <%= tab_item_system_actor (_('Worker'), 'system_actors', { :controller => 'system_actors', :action => 'list', :actor => 'worker' }, 'worker' )%>
+  <%= tab_item (_('Customer'), 'system_actors', { :controller => 'system_actors', :action => 'list', :actor => 'customer' }, 'actor', 'customer' )%>
+  <%= tab_item (_('Supplier'), 'system_actors', { :controller => 'system_actors', :action => 'list', :actor => 'supplier' }, 'actor', 'supplier' )%>
+  <%= tab_item (_('Worker'), 'system_actors', { :controller => 'system_actors', :action => 'list', :actor => 'worker' }, 'actor', 'worker' )%>
 </ul>

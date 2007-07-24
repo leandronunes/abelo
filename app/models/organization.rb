@@ -24,6 +24,7 @@ class Organization < ActiveRecord::Base
   has_many :customer_categories
   has_many :worker_categories
   has_many :ledger_categories
+  has_many :supplier_categories
 
   has_many :system_actors
   has_many :suppliers

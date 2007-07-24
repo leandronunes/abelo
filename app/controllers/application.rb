@@ -6,7 +6,6 @@ class ApplicationController < ActionController::Base
   MENU_ITEMS = {
     'configurations' => [
       'categories',
-      'departments',
       'main'
     ],
     'financial' => [
@@ -43,6 +42,9 @@ class ApplicationController < ActionController::Base
     ],
     'point_of_sale' => [
       'point_of_sale'
+    ],
+    'departments' => [
+      'departments'
     ]
   }
 

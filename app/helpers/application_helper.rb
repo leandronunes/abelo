@@ -239,15 +239,16 @@ module ApplicationHelper
 
   def main_menu
     menu_items = {
-      'categories'                 => _('Configurations'),
-      'stock'                      => _('Stock'),             
-      'store'                      => _('Store'),  
-      'permissions'                => _('User administration'),  
-      'system_actors?actor=worker' => _('Registers'),
-      'point_of_sale'              => _('Point of sale'),
-      'mass_mails'                 => _('Mass mail'),
-      'cash_flows'                 => _('Financial'),
-      'commercial_proposals'       => _('Commercial Proposals'),
+      'categories'                          => _('Configurations'),
+      'stock'                               => _('Stock'),             
+      'store'                               => _('Store'),  
+      'permissions'                         => _('User administration'),  
+      'system_actors?actor=worker'          => _('Registers'),
+      'point_of_sale'                       => _('Point of sale'),
+      'mass_mails'                          => _('Mass mail'),
+      'cash_flows'                          => _('Financial'),
+      'commercial_proposals'                => _('Commercial Proposals'),
+      'departments'                         => _('Departments'),
     }
     x = 0
    content_tag(
@@ -495,8 +496,9 @@ module ApplicationHelper
     render :partial => "shared/#{item}_menu"
   end
 
-  def tab_item(item, item_controller, url_actions)
-    if item_controller == controller.controller_name
+  def tab_item(item, item_controller, url_actions, object=nil, sub_item=nil )
+    object = instance_variable_get("@#{object}") unless object.nil?
+    if item_controller == controller.controller_name && object == sub_item
       content_tag(
         'li',
         link_to(item, url_actions),
@@ -510,18 +512,4 @@ module ApplicationHelper
     end
   end
 
-  def tab_item_system_actor(item, item_controller, url_actions, actor)
-    if item_controller == controller.controller_name && actor == @actor
-      content_tag(
-        'li',
-        link_to(item, url_actions),
-        :class => 'opened_tab'
-      )
-    else
-      content_tag(
-        'li',
-        link_to(item, url_actions)
-      )
-    end
-  end
 end

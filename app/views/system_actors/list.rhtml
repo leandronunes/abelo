@@ -7,7 +7,7 @@
 <%= text_field 'system_actor', 'name'  %>
 </p> 
 <div class="auto_complete" id="system_actor_name_auto_complete"></div>
-<%= auto_complete_field :system_actor_name,  :url => {:action=>'autocomplete_name'}%>
+<%= auto_complete_field :system_actor_name,  :url => {:action=>'autocomplete_name', :type => @actor }%>
 
 <div class ="manage_buttons"
   <%= link_to ("new #{@actor}", {:action => 'new', :actor => @actor} ) %>

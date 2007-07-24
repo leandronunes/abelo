@@ -11,11 +11,11 @@ class SystemActorsController < ApplicationController
   needs_organization
 
   def autocomplete_name
+    actor = params[:type].camelize
     re = Regexp.new("#{params[:system_actor][:name]}", "i")
-    @system_actors = SystemActor.find(:all).select { |sa| sa.name.match re}
+    @system_actors = SystemActor.find(:all, :conditions => [ "type = ?", actor ]).select { |sa| sa.name.match re}
     render :layout=>false
   end
-
 
   def index
     actor = params[:actor]

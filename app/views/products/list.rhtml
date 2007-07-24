@@ -1,11 +1,13 @@
 
 <%= title _('Listing products') %>
 
+
 <%= text_field 'product', 'description'  %>
 
 <div class="auto_complete" id="product_description_auto_complete"></div>
 <%= auto_complete_field :product_description, :url => {:action=>'autocomplete_name', :type => @actor }%>
 
+<ul class="products">
 <% @products.sort_by{|pr| pr.description}.map do |p| %>
   <%=
   display_list(
@@ -14,8 +16,8 @@
       { :title => _('Code:'), :content => p.id, :option => 'Code' },
       { :content =>  p.description, :option => 'Name' },
       { :title => _('Price:'), :content => p.sell_price, :option => 'Price'}
-    ],
-    {:ul_options => 'products'}
+    ]
    )
   %>
-<% end %>
+  <% end %>
+</ul>

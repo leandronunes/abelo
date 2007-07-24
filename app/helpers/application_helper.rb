@@ -392,8 +392,6 @@ module ApplicationHelper
   end
 
   def display_list(content, html_options = {})
-    content_tag(
-      'ul', 
       content_tag(
         'li', 
         content.map{ |c|
@@ -405,8 +403,7 @@ module ApplicationHelper
             :class => "list_item_#{c[:option]}"
           )
         },
-      :class => html_options[:li_options]),
-    :class => html_options[:ul_options])
+        :class => html_options[:li_options])
   end
 
   def display_table(titles, content, html_options = {}, caption = nil)

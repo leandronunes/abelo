@@ -233,6 +233,12 @@ margin: 10px 0px 10px 0px;
   display: block;
 }
 
+#form_reg label {
+  color: black;
+  font-weight: bold;
+  display: block;
+}
+
 #sidebar .button_bar {
   text-align: center;
 }

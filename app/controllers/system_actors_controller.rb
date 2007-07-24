@@ -40,6 +40,7 @@ class SystemActorsController < ApplicationController
 
   def new
     @actor = params[:actor] if SYSTEM_ACTORS.include?(params[:actor])
+    render_access_denied_screen if @actor.blank?
     @system_actor =  eval("#{@actor.camelize}").new() 
     @system_actor.organization = @organization
   end
@@ -57,7 +58,7 @@ class SystemActorsController < ApplicationController
       flash[:notice] = _('%s was successfully created.') % @actor
       redirect_to :action => 'list', :actor => @actor
     else
-      render :partial => 'form', :layout => false, :status => HTTP_FORCE_ERROR
+      render :action => 'new', :actor => @actor, :status => HTTP_FORCE_ERROR
     end
   end
 

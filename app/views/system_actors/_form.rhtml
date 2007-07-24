@@ -1,28 +1,33 @@
 <%= error_messages_for 'system_actor' %>
 <!--[form:system_actor]-->
+
 <%= hidden_field_tag 'actor', @actor  %>
-<p><label for="system_actor_name"><%= _('Name') %> </label>
-<%= text_field 'system_actor', 'name'  %></p>
 
-<p><label for="system_actor_cpf"><%= _('Cpf') %></label>
-<%= text_field 'system_actor', 'cpf'  %></p>
+<div id='form_reg'>
+  <p><label for="system_actor_name"><%= _('Name') %> </label>
+  <%= text_field 'system_actor', 'name'  %></p>
 
-<p><label for="system_actor_rg"> <%= _('Rg') %> </label>
-<%= text_field 'system_actor', 'rg'  %></p>
+  <p><label for="system_actor_cpf"><%= _('Cpf') %></label>
+  <%= text_field 'system_actor', 'cpf'  %></p>
 
-<p><label for="system_actor_address"> <%= _('Address') %></label>
-<%= text_field 'system_actor', 'address'  %></p>
+  <p><label for="system_actor_rg"> <%= _('Rg') %> </label>
+  <%= text_field 'system_actor', 'rg'  %></p>
 
-<p><label for="system_actor_email"><%= _('Email') %> </label>
-<%= text_field 'system_actor', 'email'  %></p>
+  <p><label for="system_actor_address"> <%= _('Address') %></label>
+  <%= text_field 'system_actor', 'address'  %></p>
 
-<p><label for="system_actor_born_day"> <%= _('Born Day') %> </label>
-<%= date_select 'system_actor', 'birthday'  %></p>
+  <p><label for="system_actor_email"><%= _('Email') %> </label>
+  <%= text_field 'system_actor', 'email'  %></p>
 
-<p><label for="system_actor_category"> <%= _('Category') %> </label>
-<%= select_category 'system_actor', @actor %></p>
+  <p><label for="system_actor_born_day"> <%= _('Born Day') %> </label>
+  <%= date_select 'system_actor', 'birthday'  %></p>
 
-<p><label for="system_actor_description"> <%= _('Description') %> </label>
-<%= text_area 'system_actor', 'description' %></p>
+  <p><label for="system_actor_category"> <%= _('Category') %> </label>
+  <%= select_category 'system_actor', @actor %></p>
+
+  <p><label for="system_actor_description"> <%= _('Description') %> </label>
+  <%= text_area 'system_actor', 'description' %></p>
+</div>
+
 <!--[eoform:system_actor]-->
 

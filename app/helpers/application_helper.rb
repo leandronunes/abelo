@@ -315,7 +315,7 @@ module ApplicationHelper
 
  def options_for_category(cat, selected_value)
     if cat.leaf?
-      content_tag('option', cat.name)
+      content_tag('option', cat.name, "value" => cat.id)
     else
       options = { :label => cat.name, :style => "padding-left: #{cat.level}em;" }
       options.merge!(:selected => 'selected') if (selected_value == cat.id)
@@ -325,9 +325,10 @@ module ApplicationHelper
   end
 
   def select_category(object, category_type)
-    object = self.instance_variable_get("@#{object}")
-    categories = object.organization.send("top_level_#{category_type}_categories")
-    select_tag("#{object}[category_id]", categories.map { |c| options_for_category(c,object.send('category_id')) }.join('') )  end
+    instance_object = self.instance_variable_get("@#{object}")
+    categories = instance_object.organization.send("top_level_#{category_type}_categories")
+    select_tag("#{object}[category_id]", categories.map { |c| options_for_category(c,instance_object.send('category_id')) }.join('') )
+  end
 
 #TODO test it
   def category_with_sign(type_of, name)

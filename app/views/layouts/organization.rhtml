@@ -9,6 +9,7 @@
   <%= javascript_include_tag 'fckeditor/fckeditor' %>
   <%= stylesheet_link_tag 'style_financials' %>
   <%= stylesheet_link_tag 'autocomplete' %>
+  <%= stylesheet_link_tag '/template/abelo_gold/css/tabs' %>
 </head>
 <body >
 <div id="warp">
@@ -36,12 +37,13 @@
 
 <%= notice_box flash[:notice] %>
 
+<%= tabbed_bar(@item) %>
+
 <div id="content">
 
 <div id='sidebar'>
 </div>
 
-<%= tabbed_bar(@item) %>
 
 <%= yield %>
 

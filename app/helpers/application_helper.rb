@@ -265,14 +265,10 @@ module ApplicationHelper
        ), :id => 'nav', :style => "display : none;" )
   end
 
-
   def link_to_organization(org, html_options = {})
     link_to org.name, { :organization_nickname => org.nickname, :controller => 'main', :action => 'index' }, html_options
   end
 
-  def tabbed_bar(item)
-    render :partial => "shared/#{item}_menu"
-  end
   #TODO see if it's usefull'
   def model_name(m)
     {
@@ -493,5 +489,39 @@ module ApplicationHelper
 
   def subtitle(subtitle)
     content_tag('h2', subtitle)
+  end
+
+  def tabbed_bar(item)
+    render :partial => "shared/#{item}_menu"
+  end
+
+  def tab_item(item, item_controller, url_actions)
+    if item_controller == controller.controller_name
+      content_tag(
+        'li',
+        link_to(item, url_actions),
+        :class => 'opened_tab'
+      )
+    else
+      content_tag(
+        'li',
+        link_to(item, url_actions)
+      )
+    end
+  end
+
+  def tab_item_system_actor(item, item_controller, url_actions, actor)
+    if item_controller == controller.controller_name && actor == @actor
+      content_tag(
+        'li',
+        link_to(item, url_actions),
+        :class => 'opened_tab'
+      )
+    else
+      content_tag(
+        'li',
+        link_to(item, url_actions)
+      )
+    end
   end
 end

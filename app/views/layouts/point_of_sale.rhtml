@@ -32,9 +32,11 @@
   <!-- sidebar -->
 
   <div id="cumpom_bar">
-    <%= link_to content_tag('span', _('Payment')), {}, :id => 'payment' %>
-    <%= link_to content_tag('span', _('Cancel sale')), {}, :id => 'cancel_sale', :confirm => _('Are you sure you want to cancel this sale?') %>
+    <%= link_to content_tag('span', _('Payment')), {:controller => 'point_of_sale', :action => 'payment', :id => @sale}, :id => 'payment' %>
+    <%= link_to content_tag('span', _('Cancel sale')), {:controller => 'point_of_sale', :action => 'cancel', :id => @sale}, :id => 'cancel_sale', :confirm => _('Are you sure you want to cancel this sale?') %>
   </div>
+
+
 
 <p style="color: green"><%= flash[:notice] if flash[:notice] %></p>
 

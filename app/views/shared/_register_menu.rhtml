@@ -1,6 +1,6 @@
-<ul>
-  <li> <%= link_to _('Product'), { :controller => 'products', :action => 'list' } %> </li>
-  <li> <%= link_to _('Customer'), { :controller => 'system_actors', :action => 'list', :actor => 'customer' } %> </li>
-  <li> <%= link_to _('Supplier'), { :controller => 'system_actors', :action => 'list', :actor => 'supplier' } %> </li>
-  <li> <%= link_to _('Worker'), { :controller => 'system_actors', :action => 'list', :actor => 'worker' } %> </li>
+<ul class='tabs'>
+  <%= tab_item ( _('Product'), 'products', { :controller => 'products', :action => 'list' } )%>
+  <%= tab_item_system_actor (_('Customer'), 'system_actors', { :controller => 'system_actors', :action => 'list', :actor => 'customer' }, 'customer' )%>
+  <%= tab_item_system_actor (_('Supplier'), 'system_actors', { :controller => 'system_actors', :action => 'list', :actor => 'supplier' }, 'supplier' )%>
+  <%= tab_item_system_actor (_('Worker'), 'system_actors', { :controller => 'system_actors', :action => 'list', :actor => 'worker' }, 'worker' )%>
 </ul>

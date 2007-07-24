@@ -7,10 +7,6 @@ class PointOfSaleController < ApplicationController
   verify :method => :post, :only => [ :new, :add_item, :set_customer, :cancel ], :redirect_to => { :action => :index }
 
   def index
-    @pending_sales = @organization.pending_sales(current_user)
-  end
-
-  def new
     sale = Sale.new
     sale.date = Date.today
     sale.organization = @organization

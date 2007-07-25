@@ -3,7 +3,10 @@
 <% @commercial_proposals.map do |c| %>
 <%= display_list(
   [
-    [c.name]
+    { :content => c.name, :option => 'name'},
+    { :content => button (_('Show'), :show, :action => 'show', :id => c.id), :option => 'button' },
+    { :content => button (_('Edit'), :edit, :action => 'edit', :id => c.id), :option => 'button' },
+    { :content => button (_('Destroy'), :destroy, {:action => 'destroy', :id => c.id}, :post => true, :confirm => _('Are you sure?')), :option => 'button' }
   ]
 )
 %>

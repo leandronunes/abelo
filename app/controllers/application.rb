@@ -4,6 +4,10 @@ class ApplicationController < ActionController::Base
 
   uses_tabbed_navigation
 
+  ######Internationalization Settings########
+  GetText.locale = 'pt_BR'
+  init_gettext 'abelo'
+
   # defined 
   MENU_ITEMS = {
     'configurations' => [

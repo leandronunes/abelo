@@ -4,9 +4,11 @@ class ProductsController < ApplicationController
 
   needs_organization
 
-  def autocomplete_description
+  before_filter :create_tabs
+
+  def autocomplete_name
     re = Regexp.new("#{params[:product][:description]}", "i")
-    @products = Product.find(:all).select { |p| p.description.match re}
+    @products = Product.find(:all).select { |sa| sa.name.match re}
     render :layout=>false
   end
 
@@ -95,4 +97,32 @@ class ProductsController < ApplicationController
     redirect_to :action => 'images', :id => params[:product_id]
   end
 
+  def create_tabs
+    add_tab do
+      named 'Workers'
+      links_to :controller => 'system_actors', :action => 'list', :actor => 'worker'
+      in_set 'first'
+      highlights_on :controller => 'system_actors', :actor => 'worker'
+    end
+    add_tab do
+      named 'Customers'
+      links_to :controller => 'system_actors', :action => 'list', :actor => 'customer'
+      in_set 'first'
+      highlights_on :controller => 'system_actors', :actor => 'customer'
+    end
+    add_tab do
+      named 'Suppliers'
+      links_to :controller => 'system_actors', :action => 'list', :actor => 'supplier'
+      in_set 'first'
+      highlights_on :controller => 'system_actors', :actor => 'supplier'
+    end
+    add_tab do
+      named 'Products'
+      links_to :controller => 'products', :action => 'list'
+      in_set 'first'
+      highlights_on :controller => 'products'
+    end
+  end
+
+  
 end

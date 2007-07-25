@@ -1,15 +1,15 @@
 <%= title _('Stock control') %>
 
+<ul class="stock">
 <% @products.map do |p| %>
 <%= display_list(
       [
-        [p.images.map{|i| show_image i}[0]],
-        [p.description],
-        [p.ammount_in_stock],
-        [link_to 'New entry', :action => 'new_entry', :id => p.id]
-      ],
-      [1,2]
+        { :content => p.images.map{|i| show_image i}[0], :option => 'img'},
+        { :content => p.description, :option => 'name'},
+        { :content => p.ammount_in_stock, :option => 'number'},
+        { :content => link_to('New entry', :action => 'new_entry', :id => p.id), :option => 'button_new'}
+      ]
   )
   %>
 <% end %>
-
+</ul>

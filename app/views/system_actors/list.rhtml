@@ -1,14 +1,20 @@
 
 <%= title (_('Listing %s') % SystemActor.describe(@actor)) %>
 
-<%= 
-#TODO fix it this filed cannot be called system_actor name
+<h2> <%= _('Filter:') %> </h2>
+
+
+
+<%= #TODO fix it this filed cannot be called system_actor name
 %>
 
 <%= text_field 'system_actor', 'name'  %>
 
 <div class="auto_complete" id="system_actor_name_auto_complete"></div>
-<%= auto_complete_field :system_actor_name, :url => {:action=>'autocomplete_name', :type => @actor }%>
+<%= auto_complete_field :system_actor_name,  :url => {:action=>'autocomplete_name' :type => @actor}, :indicator => 'leo'%>
+<div id="leo" style="display:none;">
+leandro
+</div>
 
 <div class="manage_buttons">
   <%= link_to (_("Search #{@actor}"), {:action => 'search', :actor => @actor} ) %>

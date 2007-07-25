@@ -26,7 +26,9 @@ class PermissionsController < ApplicationController
   end
 
   def new_with_template
+    permissions = Array.new
     @user_profile = UserProfile.new
+    @user_profile.permissions = permissions
   end
 
   def create_with_template

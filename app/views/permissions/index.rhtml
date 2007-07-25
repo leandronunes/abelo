@@ -1,22 +1,17 @@
-<h2><%= _('Users and permissions') %></h2>
+<%= title _('Users and permissions') %>
 
-<table>
-  <tr>
-    <th><%= _('User') %></th>
-    <th><%= _('Profile type') %></th>
-  </tr>
-  <% for user_profile in @user_profiles %>
-    <tr>
-      <td><%= user_profile.user.login %></td>
-      <td><%= user_profile.description %></td>
-      <td>
-        <%= button  _('Select template'), :edit, :action => 'select_template', :id => user_profile %>
-        <%= button  _('Remove'), :remove, { :action => 'destroy', :id => user_profile }, :post => true, :confirm => _('Are you sure you want to remove this userprofile ? He(she) will not be able to access the system anymore, unless he(she) has another profile.') %>
-      </td>
-    </tr>
-  <% end %>
-</table>
+<ul class="permissions" >
+<% @user_profiles.sort_by{|profile| profile.user.login}.map do |profile|%>
+  <%= display_list(
+    [
+      { :content => profile.user.login, :option => 'name'},
+      { :title => _('Profile type'), :content => profile.description, :option => 'profile_type'},
+      { :content => button (_('Select template'), :edit, :action => 'select_template', :id => profile.id), :option => 'button' },
+      { :content => button (_('Destroy'), :destroy, {:action => 'destroy', :id => profile.id}, :post => true, :confirm => _('Are you sure you want to remove this userprofile ? He(she) will not be able to access the system anymore, unless he(she) has another profile.') ), :option => 'button' } 
+    ]
+  )
+  %>
+<% end %>
+</ul>
 
-<div class='button_bar'>
-  <%= button _('New'), :new, :action => 'new_with_template' %>
-</div>
+<%= button _('New'), :new, :action => 'new_with_template' %>

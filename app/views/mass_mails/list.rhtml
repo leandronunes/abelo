@@ -1,25 +1,17 @@
-<h2>Listing mass_mails</h2>
+<%= title _('Listing mass mail') %>
 
-<table>
-  <tr>
-  <% for column in MassMail.content_columns %>
-    <th><%= column.human_name %></th>
-  <% end %>
-  </tr>
-  
-<% for mass_mail in @mass_mails %>
-  <tr>
-  <% for column in MassMail.content_columns %>
-    <td><%=h mass_mail.send(column.name) %></td>
-  <% end %>
-    <td><%= button _('Show'), :find, :action => 'show', :id => mass_mail %></td>
-    <td><%= button _('Edit'), :edit, :action => 'edit', :id => mass_mail %></td>
-    <td><%= button _('Destroy'), :remove, { :action => 'destroy', :id => mass_mail }, :confirm => 'Are you sure?', :post => true %></td>
-  </tr>
+<ul class="mass_mail">
+<% @mass_mails.map do |m| %>
+  <%= display_list(
+    [
+      {:content => m.subject, :option => 'subject'},
+      { :content => button (_('Show'), :show, :action => 'show', :id => m.id), :option => 'button' },
+      { :content => button (_('Edit'), :edit, :action => 'edit', :id => m.id), :option => 'button' },
+      { :content => button (_('Destroy'), :destroy, {:action => 'destroy', :id => m.id}, :post => true, :confirm => _('Are you sure?')), :option => 'button' }  
+    ]
+  )
+  %>
 <% end %>
-</table>
-
-
-<br />
+</ul>
 
 <%= button _('New mass mail'), :new, :action => 'new' %>

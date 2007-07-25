@@ -25,7 +25,10 @@
       { :content => p.images.map{|i| show_image i}[0], :option => 'img' }, 
       { :title => _('Code:'), :content => p.id, :option => 'code' },
       { :content =>  p.description, :option => 'name' },
-      { :title => _('Price:'), :content => p.sell_price, :option => 'price'}
+      { :title => _('Price:'), :content => p.sell_price, :option => 'price'},
+      { :content => button (_('Show'), :show, :action => 'show', :id => p.id), :option => 'button' },
+      { :content => button (_('Edit'), :edit, :action => 'edit', :id => p.id), :option => 'button' },
+      { :content => button (_('Destroy'), :destroy, {:action => 'destroy', :id => p.id}, :post => true, :confirm => _('Are you sure?')), :option => 'button' }  
     ]
    )
   %>

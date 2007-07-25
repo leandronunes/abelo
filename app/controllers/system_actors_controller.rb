@@ -20,7 +20,7 @@ class SystemActorsController < ApplicationController
   end
 
   def index
-    actor = params[:actor]
+    actor = 'worker'
     redirect_to :action => 'list', :actor => actor
   end
 

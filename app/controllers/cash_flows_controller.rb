@@ -1,6 +1,8 @@
 class CashFlowsController < ApplicationController
 
   needs_organization
+
+  before_filter :create_tabs
   
   def index
     list
@@ -141,5 +143,19 @@ class CashFlowsController < ApplicationController
 
   end
 
+  def create_tabs
+    add_tab do
+      named 'Cash flows'
+      links_to :controller => 'cash_flows', :action => 'list'
+      in_set 'first'
+      highlights_on :controller => 'cash_flows'
+    end
+    add_tab do
+      named 'Ledgers'
+      links_to :controller => 'ledgers'
+      in_set 'first'
+      highlights_on :controller => 'ledgers'
+    end
+  end
 
 end

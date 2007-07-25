@@ -243,7 +243,7 @@ module ApplicationHelper
       'stock'                               => _('Stock'),             
       'store'                               => _('Store'),  
       'permissions'                         => _('User administration'),  
-      'system_actors?actor=worker'          => _('Registers'),
+      'system_actors'                       => _('Registers'),
       'point_of_sale'                       => _('Point of sale'),
       'mass_mails'                          => _('Mass mail'),
       'cash_flows'                          => _('Financial'),

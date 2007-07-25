@@ -4,9 +4,9 @@ class ProductsController < ApplicationController
 
   needs_organization
 
-  def autocomplete_name
+  def autocomplete_description
     re = Regexp.new("#{params[:product][:description]}", "i")
-    @products = Product.find(:all).select { |sa| sa.name.match re}
+    @products = Product.find(:all).select { |p| p.description.match re}
     render :layout=>false
   end
 

@@ -1,10 +1,16 @@
 
 <%= title _('Listing products') %>
 
+<%= 
+#TODO fix it this filed cannot be called system_actor name
+%>
+
 <%= text_field 'product', 'description'  %>
 
 <div class="auto_complete" id="product_description_auto_complete"></div>
-<%= auto_complete_field :product_description, :url => {:action=>'autocomplete_description' }%>
+<%= auto_complete_field :product_description, :url => {:action => 'autocomplete_description' }, :indicator => 'auto_list'%>
+<div id="auto_list" style="display:none;">
+</div>
 
 <div class="manage_buttons">
   <%= link_to (_("Search product"), {:action => 'search'} ) %>
@@ -16,10 +22,10 @@
   <%=
   display_list(
     [
-      { :content => p.images.map{|i| show_image i}[0], :option => 'Img' }, 
-      { :title => _('Code:'), :content => p.id, :option => 'Code' },
-      { :content =>  p.description, :option => 'Name' },
-      { :title => _('Price:'), :content => p.sell_price, :option => 'Price'}
+      { :content => p.images.map{|i| show_image i}[0], :option => 'img' }, 
+      { :title => _('Code:'), :content => p.id, :option => 'code' },
+      { :content =>  p.description, :option => 'name' },
+      { :title => _('Price:'), :content => p.sell_price, :option => 'price'}
     ]
    )
   %>

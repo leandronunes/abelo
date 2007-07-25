@@ -31,16 +31,29 @@
   <div id='sidebar'>
   <!-- sidebar -->
 
-  <div id="cumpom_bar">
-    <%= link_to content_tag('span', _('Payment')), {:controller => 'point_of_sale', :action => 'payment', :id => @sale}, :id => 'payment' %>
-    <%= link_to content_tag('span', _('Cancel sale')), {:controller => 'point_of_sale', :action => 'cancel', :id => @sale}, :id => 'cancel_sale', :confirm => _('Are you sure you want to cancel this sale?') %>
-  </div>
+    <div id="cumpom_bar">
+      <%= link_to content_tag('span', _('Payment')), {:controller => 'point_of_sale', :action => 'payment', :id => @sale}, :id => 'payment' %>
+      <%= link_to content_tag('span', _('Cancel sale')), {:controller => 'point_of_sale', :action => 'cancel', :id => @sale}, :id => 'cancel_sale', :confirm => _('Are you sure you want to cancel this sale?') %>
+    </div>
+  
+    <div id="cumpom_sales">
+      <div id='items_table'>
+        <%= render :partial => 'point_of_sale/table' %>
+      </div>
+    </div>    
 
+  </div>
+  <!-- sidebar -->
+</div>
 
 
 <p style="color: green"><%= flash[:notice] if flash[:notice] %></p>
 
-<%= yield %>
+<div id="sale_details">
+  <%= yield %>
+</div>
+
+</div>
 
 </body>
 

@@ -1,7 +1,12 @@
 <%=error_messages_for 'sale' %>
 
-<div class='sale_details'>
+  <center><div id='product_identification'>
+    <%= @product.name unless @product.nil? %>
+  </div></center>
+
   <div class='add_item_panel'>
+    <div id="search_product"><%= link_to content_tag('span', 'Search product'), {}, :class => "button button_search", :accesskey => "p" %>
+    </div>
     <h2><%= _('Add items') %></h2>
     <%= form_remote_tag :url => { :controller => 'point_of_sale', :action => 'add_item', :id => @sale },
            :update => { :success => 'items_table' },  
@@ -26,9 +31,4 @@
     <div id='customer_identification'>
       <%= @sale.customer.nil? ? _('Unidentified customer') : @sale.customer.name %>
     </div>
-    <h2><%= _('Items') %></h2>
-    <div id='items_table'>
-      <%= render :partial => "table" %>
-    </div> 
   </div>
-</div>

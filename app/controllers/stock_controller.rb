@@ -2,6 +2,8 @@ class StockController < ApplicationController
 
   needs_organization
 
+  before_filter :create_tabs
+
   def index
     @product_pages, @products = paginate :products, :per_page => 10, :conditions => ["organization_id = ?", @organization.id ]
   end
@@ -61,4 +63,14 @@ class StockController < ApplicationController
       render :partial => 'edit', :status => 409
     end
   end
+
+  def create_tabs
+    add_tab do
+      named 'Stock Control'
+      links_to :controller => 'stock', :action => 'list'
+      in_set 'first'
+      highlights_on :controller => 'stock'
+    end
+  end
+
 end

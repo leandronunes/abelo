@@ -1,7 +1,8 @@
 class CommercialProposalsController < ApplicationController
 
   needs_organization
-  uses_popup_plugin
+  
+  before_filter :create_tabs
 
   def index
     redirect_to :action => 'list'
@@ -86,6 +87,15 @@ class CommercialProposalsController < ApplicationController
       render :partial => 'templates'
     else
       render :nothing => true
+    end
+  end
+
+  def create_tabs
+    add_tab do
+      named 'Commercial Proposals'
+      links_to :controller => 'commercial_proposals', :action => 'list'
+      in_set 'first'
+      highlights_on :controller => 'commercial_proposals'
     end
   end
 

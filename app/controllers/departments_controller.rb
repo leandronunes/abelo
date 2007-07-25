@@ -2,6 +2,8 @@ class DepartmentsController < ApplicationController
 
   needs_organization
 
+  before_filter :create_tabs
+
   def index
     list
     render :action => 'list'
@@ -37,7 +39,6 @@ class DepartmentsController < ApplicationController
 
   def edit
     @department = @organization.departments.find(params[:id])
-    render :partial => 'edit'
   end
 
   def update
@@ -58,4 +59,14 @@ class DepartmentsController < ApplicationController
   def reset
     render :partial => 'new'
   end
+
+  def create_tabs
+    add_tab do
+      named 'Departments'
+      links_to :controller => 'departments', :action => 'list'
+      in_set 'first'
+      highlights_on :controller => 'departments'
+    end
+  end
+
 end

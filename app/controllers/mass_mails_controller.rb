@@ -2,6 +2,8 @@ class MassMailsController < ApplicationController
 
   needs_organization
 
+  before_filter :create_tabs
+
   def index
     list
     render :action => 'list'
@@ -95,5 +97,13 @@ class MassMailsController < ApplicationController
     end
   end
 
+  def create_tabs
+    add_tab do
+      named 'Mass mail'
+      links_to :controller => 'mass_mails', :action => 'list'
+      in_set 'first'
+      highlights_on :controller => 'mass_mails'
+    end
+  end
 
 end

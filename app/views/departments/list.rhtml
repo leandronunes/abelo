@@ -1,18 +1,17 @@
 <h1><%= _('Listing departments') %></h1>
 
-<%= render :partial => 'new' %>
+<% @departments.map do |d| %>
+<%= display_list(
+  [
+    { :content => d.name, :option => 'name'},
+    { :content => button (_('Show'), :show, :action => 'show', :id => d.id), :option => 'button' },
+    { :content => button (_('Edit'), :edit, :action => 'edit', :id => d.id), :option => 'button' },
+    { :content => button (_('Destroy'), :destroy, {:action => 'destroy', :id => d.id}, :post => true, :confirm => _('Are you sure?')), :option => 'button' }
 
-<%= display_table(
-  [ _('Name') ],
-  @departments.map{|d| 
-    [
-      d.name,
-      link_to(content_tag('span', _('Show')), {:action => 'show', :id => d}, :class => 'tdshow'),
-      link_to_remote(content_tag('span', _('Edit')), {:update => 'sidebar', :url => {:action => 'edit', :id => d} }, :class => 'tdedit'),
-      link_to(content_tag('span', _('Destroy')), {:action => 'destroy', :id => d}, :confirm => _('Are you sure?'), :post => true , :class => 'tddestroy')
-    ]},
-  { 
-    :html_title_options => [:class => 'none'], 
-    :html_content_options =>  [{:class => 'name endcol'},{:class => 'option'},{:class => 'option'},{:class => 'option'}] 
-  }
-  ) %>
+
+  ]
+)
+%>
+<% end %>
+
+<%= button _('New department'), :new, :action => 'new'%>

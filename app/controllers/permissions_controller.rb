@@ -5,6 +5,8 @@ class PermissionsController < ApplicationController
 
   verify :method => :post, :only => [ :destroy, :create_with_template, :update_template ], :redirect_to => { :action => :index }
 
+  before_filter :create_tabs
+
   def index
     @user_profiles = @organization.user_profiles
   end
@@ -41,6 +43,15 @@ class PermissionsController < ApplicationController
   def destroy
     @organization.user_profiles.find(params[:id]).destroy
     redirect_to :action => 'index'
+  end
+
+   def create_tabs
+    add_tab do
+      named 'Users and permissions'
+      links_to :controller => 'permissions', :action => 'list'
+      in_set 'first'
+      highlights_on :controller => 'permissions'
+    end
   end
 
 end

@@ -354,7 +354,7 @@ module ApplicationHelper
   end
 
 #TODO see
-    def navigator_for(pages, objs, flash, color='ligth_blue')
+  def navigator_for(pages, objs, flash, color='ligth_blue')
     str  = "<div class='#{color} navigation' style='text-align:center'>"
       if flash[:filter]
         str += flash[:filter]
@@ -490,26 +490,6 @@ module ApplicationHelper
 
   def subtitle(subtitle)
     content_tag('h2', subtitle)
-  end
-
-  def tabbed_bar(item)
-    render :partial => "shared/#{item}_menu"
-  end
-
-  def tab_item(item, item_controller, url_actions, object=nil, sub_item=nil )
-    object = instance_variable_get("@#{object}") unless object.nil?
-    if item_controller == controller.controller_name && object == sub_item
-      content_tag(
-        'li',
-        link_to(item, url_actions),
-        :class => 'opened_tab'
-      )
-    else
-      content_tag(
-        'li',
-        link_to(item, url_actions)
-      )
-    end
   end
 
 end

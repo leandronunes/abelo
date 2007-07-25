@@ -2,6 +2,8 @@
 # Likewise, all the methods added will be available for all controllers.
 class ApplicationController < ActionController::Base
 
+  uses_tabbed_navigation
+
   # defined 
   MENU_ITEMS = {
     'configurations' => [

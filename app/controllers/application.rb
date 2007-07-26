@@ -59,7 +59,7 @@ class ApplicationController < ActionController::Base
   def define_path
     @item = 'products'
     MENU_ITEMS.keys.map do |k|
-      if MENU_ITEMS[k].include? (self.controller_name) 
+      if MENU_ITEMS[k].include? self.controller_name 
         @item = k
         break 
       end

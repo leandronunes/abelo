@@ -5,7 +5,12 @@
 #TODO fix it this filed cannot be called system_actor name
 %>
 
+<% form_tag :action => 'list', :actor => @actor do %>
+
 <%= text_field 'system_actor', 'name'  %>
+<%= submit_tag(_("Search #{@actor}"), { :class => 'button button_search' }) %>
+
+<% end %>
 
 <div class="auto_complete" id="system_actor_name_auto_complete"></div>
 <%= auto_complete_field :system_actor_name,  :url => {:action => 'autocomplete_name', :type => @actor}, :indicator => 'auto_list'%>
@@ -13,7 +18,6 @@
 </div>
 
 <div class="manage_buttons">
-  <%= link_to (_("Search #{@actor}"), {:action => 'search', :actor => @actor} ) %>
   <%= link_to (_("New #{@actor}"), {:action => 'new', :actor => @actor} ) %>
 </div>
 
@@ -29,3 +33,4 @@
   %>
   <% end %>
 </ul>
+<%= pagination_links(@system_actor_pages, :params => {:actor => @actor, :query => @query}) %>

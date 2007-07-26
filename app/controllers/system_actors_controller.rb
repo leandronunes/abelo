@@ -10,8 +10,6 @@ class SystemActorsController < ApplicationController
 
   needs_organization
 
-  before_filter :create_tabs
-
   def autocomplete_name
     actor = params[:type].camelize
     re = Regexp.new("#{params[:system_actor][:name]}", "i")
@@ -32,7 +30,23 @@ class SystemActorsController < ApplicationController
     @actor = params[:actor] if SYSTEM_ACTORS.include?(params[:actor])
 #TODO see the better way to launch the exception
     render_access_denied_screen if @actor.blank?
-    @system_actor_pages, @system_actors = paginate @actor.to_sym, :per_page => 10, :conditions => ["organization_id = ? AND type = ?", @organization.id, @actor.camelize ] 
+
+    @query =  params[:query] ? params[:query] : nil
+    if @query.nil?
+      @query = params[:system_actor] ? params[:system_actor][:name] : nil
+    end
+
+    if !@query.nil?
+      page = (params[:page] || 1).to_i
+      items_per_page = 1
+      offset = (page - 1) * items_per_page
+
+      @system_actors = eval("#{@actor.camelize}").find_by_contents(@query, {:limit => :all, :offset => 0})
+      @system_actor_pages = Paginator.new(self, @system_actors.size, items_per_page, page)
+      @system_actors = @system_actors[offset..(offset + items_per_page - 1)]
+    else
+      @system_actor_pages, @system_actors = paginate @actor.to_sym, :per_page => 1, :conditions => ["organization_id = ?", @organization.id ] 
+    end
     @system_actor = SystemActor.new 
   end
 
@@ -97,33 +111,6 @@ class SystemActorsController < ApplicationController
 
   def reset
     render :partial => 'new'
-  end
-
-  def create_tabs
-    add_tab do
-      named 'Workers'
-      links_to :controller => 'system_actors', :action => 'list', :actor => 'worker'
-      in_set 'first'
-      highlights_on :controller => 'system_actors', :actor => 'worker'
-    end
-    add_tab do
-      named 'Customers'
-      links_to :controller => 'system_actors', :action => 'list', :actor => 'customer'
-      in_set 'first'
-      highlights_on :controller => 'system_actors', :actor => 'customer'
-    end
-    add_tab do
-      named 'Suppliers'
-      links_to :controller => 'system_actors', :action => 'list', :actor => 'supplier'
-      in_set 'first'
-      highlights_on :controller => 'system_actors', :actor => 'supplier'
-    end
-    add_tab do
-      named 'Products'
-      links_to :controller => 'products', :action => 'list'
-      in_set 'first'
-      highlights_on :controller => 'products'
-    end
   end
 
 end

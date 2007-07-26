@@ -15,15 +15,18 @@
 <div id="header">
 
   <div id="userbar">
+
     <div class="login_bar">
       <%= link_to _('Edit preferences'), {}, :accesskey => 'e', :id => 'edit_profile' %>
       &nbsp;
       <%= link_to _('Close'), {:controller => 'users', :action => 'logout'}, :accesskey => "q", :id => 'logout', :post => true, :confirm => _('Exit from system?') %>
-    </div>
-    <div class="sales_bar"></div>
+    </div> <!-- login_bar -->
+
     <%= link_to_organization @organization %> | <%= _('Salesman: %s') % self.current_user.login %>
   </div>
-  <h1 class="status"> CAIXA ABERTO <h1>
+  
+  <h1 class="status"> CAIXA ABERTO </h1>
+      
 </div>
 
 <div id='content'>
@@ -46,12 +49,21 @@
   <!-- sidebar -->
 </div>
 
-
+<!--
 <p style="color: green"><%= flash[:notice] if flash[:notice] %></p>
+-->
 
-<div id="sale_details">
   <%= yield %>
+
 </div>
+<div id="footer">
+
+<div id="pointsales_bar">
+<ul>
+<li><a href="#" class="button_main" id="button_reforco" accesskey="r"><span>Reforço</span></a></li>
+<li><a href="#" class="button_main" id="button_sangria" accesskey="s"><span>Sangria</span></a></li>
+</div>
+<img id="banner_bottom" src="/images/bannerabelo_160x75.jpg" "Banner - Abelo" height="75px" width="160px">
 
 </div>
 

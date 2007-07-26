@@ -95,7 +95,7 @@ margin-left: 20px;
 background: url('../images/icon_search_product.png') top no-repeat !important;
 }
 
-#add_product a {
+#button_add_product {
 display: block;
 margin-top: 15px;
 width: 41px;
@@ -106,11 +106,11 @@ background: url('../images/icon_add_product.png') bottom no-repeat !important;
 margin: 10px;
 }
 
-#add_product a:hover, #add_product are:focus {
+#button_add_product input:hover, #button_add_product input:focus {
 background: url('../images/icon_add_product.png') top no-repeat !important;
 }
 
-#search_product span, #add_product span , #pointsales_bar span {
+#search_product span, #pointsales_bar span {
 display: none;
 }
 

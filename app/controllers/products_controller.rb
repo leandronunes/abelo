@@ -4,7 +4,7 @@ class ProductsController < ApplicationController
 
   needs_organization
 
-  before_filter :create_tabs
+  before_filter :create_register_tabs
 
   def autocomplete_description
     re = Regexp.new("#{params[:product][:description]}", "i")

@@ -6,9 +6,8 @@ class Profile < ActiveRecord::Base
   act_as_flexible_template
 
   belongs_to :organization
-  belongs_to :profile_owner, :polymorphic => true
 
-  validates_presence_of :organization_id, :profile_owner_id, :profile_owner_type
+  validates_presence_of :organization_id, :user_id
 
 
   serialize :permissions, Array

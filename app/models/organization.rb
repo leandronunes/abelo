@@ -1,14 +1,3 @@
-# == Schema Information
-# Schema version: 35
-#
-# Table name: organizations
-#
-#  id       :integer       not null, primary key
-#  name     :string(255)   not null
-#  cnpj     :string(14)    
-#  nickname :string(255)   not null
-#
-
 class Organization < ActiveRecord::Base
 
   validates_presence_of :name, :cnpj, :nickname

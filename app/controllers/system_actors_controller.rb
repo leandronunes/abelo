@@ -53,7 +53,7 @@ class SystemActorsController < ApplicationController
   end
 
   def show
-    @worker = @organization.workers.find(params[:id])
+    @system_actor = @organization.system_actors.find(params[:id])
   end
 
   def new
@@ -81,23 +81,18 @@ class SystemActorsController < ApplicationController
   end
 
   def edit
-    @actor = params[:actor] if SYSTEM_ACTORS.include?(params[:actor])
-    if @actor.blank?
-      render_error(_("This actor it's not valid"))
-      return
-    end
     @system_actor = @organization.system_actors.find(params[:id])
-    render :partial => 'edit', :layout => false
+    @actor = @system_actor.type.to_s.downcase
   end
 
   def update
-    @actor = params[:actor] if SYSTEM_ACTORS.include?(params[:actor])
+    @system_actor = @organization.system_actors.find(params[:id])
+    @actor = @system_actor.type.to_s.downcase if SYSTEM_ACTORS.include?(@system_actor.type.to_s.downcase)
     if @actor.blank?
       render_error(_("This actor it's not valid"))
       return
     end
 
-    @system_actor = @organization.system_actors.find(params[:id])
     if @system_actor.update_attributes(params[:system_actor])
       flash[:notice] = _('%s was successfully updated.') % SystemActor.describe(@actor)
       redirect_to :action => 'list', :actor => @actor
@@ -107,12 +102,15 @@ class SystemActorsController < ApplicationController
   end
 
   def destroy
-    @organization.workers.find(params[:id]).destroy
-    redirect_to :action => 'list'
+    @actor = @organization.system_actors.find(params[:id]).destroy.type.to_s.downcase
+    redirect_to :action => 'list', :actor => @actor 
   end
 
   def reset
-    render :partial => 'new'
+    @actor = params[:actor]
+    @system_actor =  eval("#{@actor.camelize}").new()
+    @system_actor.organization = @organization
+    render :partial => 'form'
   end
 
     def create_tabs

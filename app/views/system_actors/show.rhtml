@@ -1,30 +1,30 @@
-<h1><%= @worker.name %></h1>
+<h1><%= @system_actor.name %></h1>
 <p>
 <label><%= _('Birthday:') %></label>
-<%= @worker.birthday %>
+<%= @system_actor.birthday %>
 </p>
 
 <p>
 <label><%= _('Address:') %></label>
-<%= @worker.address %>
+<%= @system_actor.address %>
 </p>
 
 <p>
 <label><%= _('CPF:') %></label>
-<%= @worker.cpf %>
+<%= @system_actor.cpf %>
 </p>
 
 <p>
 <label><%= _('RG:') %></label>
-<%= @worker.rg %>
+<%= @system_actor.rg %>
 </p>
 
 <p>
 <label><%= _('Function:') %></label>
-<%= @worker.function %>
+<%= @system_actor.category.name %>
 </p>
 
 <p>
 <label><%= _('Description:') %></label>
-<%= @worker.description %>
+<%= @system_actor.description %>
 </p>

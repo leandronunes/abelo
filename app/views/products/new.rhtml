@@ -1,9 +1,10 @@
-<h2>New product</h2>
+<%= title(_('New product')) %>
 
-<%= start_form_tag :action => 'create' %>
+<% form_tag :action => 'create' do %>
   <%= render :partial => 'form' %>
   <div class='button_bar'>
-  <%= button "Create", :save %>
-  <%= button 'Cancel', :cancel, :action => 'list' %>
-<%= end_form_tag %>
-
+    <%= button "Create", :save %>
+    <%= button 'Cancel', :cancel, :action => 'list' %>
+    <%= button_remote(_('Reset'), :reset , {:update => 'form', :url => {:action => 'reset'}}) %>
+  </div>
+<% end %>

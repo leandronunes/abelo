@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: abelo 0.2.0\n"
-"POT-Creation-Date: 2007-07-26 11:39-0300\n"
+"POT-Creation-Date: 2007-07-26 13:51-0300\n"
 "PO-Revision-Date: 2007-07-24 01:13-0300\n"
 "Last-Translator: Krishnamurti Lelis Lima Vieira Nunes <krishna@colivre.coop."
 "br>\n"
@@ -23,19 +23,14 @@ msgstr ""
 #: app/controllers/system_actors_controller.rb:69
 #: app/controllers/system_actors_controller.rb:86
 #: app/controllers/system_actors_controller.rb:96
-#: app/controllers/system_actors_controller_old.rb:67
-#: app/controllers/system_actors_controller_old.rb:84
-#: app/controllers/system_actors_controller_old.rb:94
 msgid "This actor it's not valid"
 msgstr "Este ator não é válido"
 
 #: app/controllers/system_actors_controller.rb:76
-#: app/controllers/system_actors_controller_old.rb:74
 msgid "%s was successfully created."
 msgstr "%s foi criado com sucesso."
 
 #: app/controllers/system_actors_controller.rb:102
-#: app/controllers/system_actors_controller_old.rb:100
 msgid "%s was successfully updated."
 msgstr "%s foi atualizado com sucesso."
 
@@ -169,14 +164,12 @@ msgid "Mass mail"
 msgstr "Mala direta"
 
 #: app/controllers/application.rb:86
-#, fuzzy
 msgid "Project"
-msgstr "Produto"
+msgstr "Projeto"
 
 #: app/controllers/application.rb:87
-#, fuzzy
 msgid "Education"
-msgstr "Produção"
+msgstr "Educação"
 
 #: app/controllers/application.rb:88
 msgid "Web"
@@ -1958,9 +1951,8 @@ msgid "Edit preferences"
 msgstr ""
 
 #: app/views/layouts/point_of_sale.rhtml:24
-#, fuzzy
 msgid "Salesman: %s"
-msgstr "Semana 1"
+msgstr "Venderdor: %s"
 
 #: app/views/layouts/point_of_sale.rhtml:35
 msgid "Payment"
@@ -2195,7 +2187,7 @@ msgstr "Nova Organização"
 
 #: app/views/configuration/_new_historical.rhtml:1
 #: app/views/configuration/_new.rhtml:1 app/views/configuration/_list.rhtml:23
-#: app/views/system_actors/_new.rhtml:2
+#: app/views/system_actors/_new.rhtml:2 app/views/system_actors/list.rhtml:21
 msgid "New %s"
 msgstr "Novo %s"
 
@@ -2286,7 +2278,6 @@ msgid "Listing departments"
 msgstr "Listando departamentos"
 
 #: app/views/departments/list.rhtml:17
-#, fuzzy
 msgid "New department"
 msgstr "Novo departamento"
 
@@ -2549,14 +2540,12 @@ msgid "Listing products"
 msgstr "Listando produtos"
 
 #: app/views/products/list.rhtml:16
-#, fuzzy
 msgid "Search product"
-msgstr "Novo produto"
+msgstr "Busca produto"
 
 #: app/views/products/list.rhtml:26
-#, fuzzy
 msgid "Code:"
-msgstr "Código"
+msgstr "Código:"
 
 #: app/views/products/list.rhtml:28 app/views/products/show.rhtml:3
 msgid "Price:"
@@ -2564,7 +2553,7 @@ msgstr "Preço:"
 
 #: app/views/products/edit.rhtml:2
 msgid "Editing Product"
-msgstr "Editando produto:"
+msgstr "Editando Produto"
 
 #: app/views/products/edit.rhtml:12
 msgid "Images"
@@ -2583,9 +2572,8 @@ msgid "Customers"
 msgstr "Consumidores"
 
 #: app/views/mass_mails/list.rhtml:1
-#, fuzzy
 msgid "Listing mass mail"
-msgstr "email em massa"
+msgstr "Listando email em massa"
 
 #: app/views/mass_mails/list.rhtml:17
 msgid "New mass mail"
@@ -2675,9 +2663,8 @@ msgid "New contact"
 msgstr "Novo contato"
 
 #: app/views/system_actors/new.rhtml:1
-#, fuzzy
 msgid "New worker"
-msgstr "Novo usuário"
+msgstr "Novo trabalhador"
 
 #: app/views/system_actors/_show.rhtml:23
 #: app/views/system_actors/list.rhtml:30 app/views/system_actors/show.rhtml:23
@@ -2697,13 +2684,12 @@ msgid "Edit %s"
 msgstr "Editar %s"
 
 #: app/views/system_actors/list.rhtml:11
-msgid "button button_search"
-msgstr ""
+msgid "Search %s"
+msgstr "Busca %s"
 
 #: app/views/system_actors/list.rhtml:29
-#, fuzzy
 msgid "Name:"
-msgstr "Nome"
+msgstr "Nome:"
 
 #: app/views/categories/new.rhtml:1
 msgid "New Category"

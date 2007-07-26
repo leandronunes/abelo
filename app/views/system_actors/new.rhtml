@@ -1,9 +1,10 @@
-<%= title _('New worker') %>
+<%= title _('New %s') % SystemActor.describe(@actor) %>
 
 <% form_tag :action => 'create' do %>
   <%= render :partial => 'form' %>
   <div class='button_bar'>
     <%= button _('Create'), :save %>
     <%= button _('Cancel'), :cancel, :action => 'list' %>
+    <%= button_remote(_('Reset'), :reset ,{:update => 'form_reg', :url => {:action => 'reset', :actor => @actor}}) %>
   </div>
 <% end %>

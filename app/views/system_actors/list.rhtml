@@ -8,7 +8,7 @@
 <% form_tag :action => 'list', :actor => @actor do %>
 
 <%= text_field 'system_actor', 'name'  %>
-<%= submit_tag(_("Search #{@actor}"), { :class => 'button button_search' }) %>
+<%= submit_tag(_("Search %s") % SystemActor.describe(@actor), { :class => 'button button_search' }) %>
 
 <% end %>
 
@@ -18,7 +18,7 @@
 </div>
 
 <div class="manage_buttons">
-  <%= link_to (_("New #{@actor}"), {:action => 'new', :actor => @actor} ) %>
+  <%= button (_("New %s") % SystemActor.describe(@actor), :new, :action => 'new', :actor => @actor ) %>
 </div>
 
 <ul class="system_actors">
@@ -27,7 +27,10 @@
   display_list(
     [
       { :title => _('Name:'), :content => s.name, :option => 'name' },
-      { :title => _('Function:'), :content => s.category.name, :option => 'name'}
+      { :title => _('Function:'), :content => s.category.name, :option => 'name'},
+      { :content => button (_('Show'), :show, :action => 'show', :id => s), :option => 'button' },
+      { :content => button (_('Edit'), :edit, :action => 'edit', :id => s), :option => 'button' },
+      { :content => button (_('Destroy'), :destroy, {:action => 'destroy', :id => s}, :post => true, :confirm => _('Are you sure?')), :option => 'button' }  
     ]
   )
   %>

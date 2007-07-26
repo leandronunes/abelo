@@ -10,7 +10,7 @@ class CategoriesController < ApplicationController
 
   needs_organization
 
-  before_filter :create_tabs
+  before_filter :create_configurations_tabs
 
   # Show all available categories of the system
   def index
@@ -74,34 +74,6 @@ class CategoriesController < ApplicationController
     category_type  = category.type.to_s.gsub(/Category/,'').downcase
     category.destroy
     redirect_to :action => 'list', :category_type => category_type
-  end
-
-  def create_tabs
-    add_tab do
-      named 'Product categories'
-      links_to :controller => 'categories', :action => 'list', :category_type => 'product'
-      in_set 'first'
-      highlights_on :controller => 'categories', :category_type => 'product'
-    end
-    add_tab do
-      named 'Customer categories'
-      links_to :controller => 'categories', :action => 'list', :category_type => 'customer'
-      in_set 'first'
-      highlights_on :controller => 'categories', :category_type => 'customer'
-    end
-    add_tab do
-      named 'Worker categories'
-      links_to :controller => 'categories', :action => 'list', :category_type => 'worker'
-      in_set 'first'
-      highlights_on :controller => 'categories', :category_type => 'worker'
-    end
-    add_tab do
-      named 'Supplier categories'
-      links_to :controller => 'categories', :action => 'list', :category_type => 'supplier'
-      in_set 'first'
-      highlights_on :controller => 'categories', :category_type => 'supplier'
-    end
-
   end
 
 end

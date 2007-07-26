@@ -4,11 +4,15 @@ class ApplicationController < ActionController::Base
 
   uses_tabbed_navigation
 
-  ######Internationalization Settings########
+  ###########################################
+  # Internationalization Settings 
+  ###########################################
   GetText.locale = 'pt_BR'
   init_gettext 'abelo'
-
-  # defined 
+  
+  ###########################################
+  # MENU DETAILS 
+  ###########################################
   MENU_ITEMS = {
     'main' => [
       'main'
@@ -55,6 +59,76 @@ class ApplicationController < ActionController::Base
       'departments'
     ]
   }
+  ####################################
+  #Tabs definitions
+  ####################################
+  def create_configurations_tabs
+    t = add_tab do
+      links_to :controller => 'categories', :action => 'list', :category_type => 'product'
+      in_set 'first'
+      highlights_on :controller => 'categories', :category_type => 'product'
+    end
+    t.named _('Product categories')
+
+    t = add_tab do
+      links_to :controller => 'categories', :action => 'list', :category_type => 'customer'
+      in_set 'first'
+      highlights_on :controller => 'categories', :category_type => 'customer'
+    end
+    t.named _('Customer categories')
+
+    t = add_tab do
+      links_to :controller => 'categories', :action => 'list', :category_type => 'worker'
+      in_set 'first'
+      highlights_on :controller => 'categories', :category_type => 'worker'
+    end
+    t.named _('Worker categories')
+
+    t = add_tab do
+      links_to :controller => 'categories', :action => 'list', :category_type => 'supplier'
+      in_set 'first'
+      highlights_on :controller => 'categories', :category_type => 'supplier'
+    end
+    t.named _('Supplier categories')
+
+    t = add_tab do
+      links_to :controller => 'interface'
+      in_set 'first'
+      highlights_on :controller => 'interface'
+    end
+    t.named _('Interface')
+  end
+
+  def create_register_tabs
+    t = add_tab do
+      links_to :controller => 'system_actors', :action => 'list', :actor => 'worker'
+      in_set 'first'
+      highlights_on :controller => 'system_actors', :actor => 'worker'
+    end
+    t.named _('Workers')
+
+    t = add_tab do
+      links_to :controller => 'system_actors', :action => 'list', :actor => 'customer'
+      in_set 'first'
+      highlights_on :controller => 'system_actors', :actor => 'customer'
+    end
+    t.named _('Customers')
+
+    t = add_tab do
+      links_to :controller => 'system_actors', :action => 'list', :actor => 'supplier'
+      in_set 'first'
+      highlights_on :controller => 'system_actors', :actor => 'supplier'
+    end
+    t.named _('Suppliers')
+
+    t = add_tab do
+      links_to :controller => 'products', :action => 'list'
+      in_set 'first'
+      highlights_on :controller => 'products'
+    end
+    t.named _('Products')
+  end
+  
 
   before_filter :define_path
 

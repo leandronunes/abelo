@@ -27,12 +27,12 @@ class PermissionsController < ApplicationController
 
   def new_with_template
     permissions = Array.new
-    @user_profile = UserProfile.new
+    @user_profile = Profile.new
     @user_profile.permissions = permissions
   end
 
   def create_with_template
-    @user_profile = UserProfile.new(params[:user_profile])
+    @user_profile = Profile.new(params[:user_profile])
     @user_profile.organization = @organization
     if @user_profile.save
       flash[:notice] = _('Profile successfully created.')

@@ -10,7 +10,7 @@ class SystemActorsController < ApplicationController
 
   needs_organization
 
-  before_filter :create_tabs
+  before_filter :create_register_tabs
 
   def autocomplete_name
     actor = params[:type].camelize
@@ -111,33 +111,6 @@ class SystemActorsController < ApplicationController
     @system_actor =  eval("#{@actor.camelize}").new()
     @system_actor.organization = @organization
     render :partial => 'form'
-  end
-
-    def create_tabs
-    add_tab do
-      named 'Workers'
-      links_to :controller => 'system_actors', :action => 'list', :actor => 'worker'
-      in_set 'first'
-      highlights_on :controller => 'system_actors', :actor => 'worker'
-    end
-    add_tab do
-      named 'Customers'
-      links_to :controller => 'system_actors', :action => 'list', :actor => 'customer'
-      in_set 'first'
-      highlights_on :controller => 'system_actors', :actor => 'customer'
-    end
-    add_tab do
-      named 'Suppliers'
-      links_to :controller => 'system_actors', :action => 'list', :actor => 'supplier'
-      in_set 'first'
-      highlights_on :controller => 'system_actors', :actor => 'supplier'
-    end
-    add_tab do
-      named 'Products'
-      links_to :controller => 'products', :action => 'list'
-      in_set 'first'
-      highlights_on :controller => 'products'
-    end
   end
 
 end

@@ -1,0 +1,19 @@
+Show "Go to" Bar, key: g
+Edit Profile, key: e
+Logout, key: q
+
+
+Padrões Web
+-------------
+    * S - Skip navigation
+    * 1 - Home page
+    * 2 - What's new
+    * 3 - Site map
+    * 4 - Search
+    * 5 - Frequently Asked Questions (FAQ)
+    * 6 - Help
+    * 7 - Complaints procedure
+    * 8 - Terms and conditions
+    * 9 - Feedback form
+    * 0 - Access key details
+

@@ -36,6 +36,23 @@ gerente.name = 'gerente'
 gerente.organization = organization
 gerente.save
 
+############Images###############################
+Image.destroy_all
+camisa_img = Image.new
+camisa_img.description = 'camisa básica azul'
+stream = StringIO.new(File.read('public/test_images/camisa_basica_azul.jpg'))
+
+    def stream.original_filename
+      'camisa_basica_azul.jpg'
+    end
+    
+    def stream.content_type
+      'image/jpg'
+    end
+
+camisa_img.picture = stream
+camisa_img.save!
+
 ############Products#############################
 Product.destroy_all
 camisa = Product.create!(:description => 'camisa básica', :size => 'p', :color => 'azul', :sell_price => 25.00, :organization_id => 1, :category_id => 1, :unit => 'letra')

@@ -1,6 +1,5 @@
 class CommercialProposalItemsController < ApplicationController
 
-  uses_popup_plugin
   needs_organization
 
   def new

@@ -1,7 +1,5 @@
 class CommercialProposalSectionsController < ApplicationController
 
-  uses_popup_plugin
-
   def new
     @commercial_proposal_section = CommercialProposalSection.new
     @commercial_proposal_id = params[:id]

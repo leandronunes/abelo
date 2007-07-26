@@ -1,17 +1,16 @@
-# == Schema Information
-# Schema version: 35
-#
-# Table name: user_profiles
-#
-#  id              :integer       not null, primary key
-#  user_id         :integer       
-#  organization_id :integer       
-#  permissions     :text          
-#
+# A Profile is the representation and web-presence of an individual or an
+# organization. Every Profile is attached to its VirtualCommunity of origin,
+# which by default is the one returned by VirtualCommunity:default.
+class Profile < ActiveRecord::Base
 
-class UserProfile < ActiveRecord::Base
+  act_as_flexible_template
 
-  validates_presence_of :user_id, :organization_id
+  belongs_to :organization
+  belongs_to :profile_owner, :polymorphic => true
+
+  validates_presence_of :organization_id, :profile_owner_id, :profile_owner_type
+
+
   serialize :permissions, Array
   def validate
     unless self.permissions.kind_of? Array
@@ -19,8 +18,20 @@ class UserProfile < ActiveRecord::Base
     end
   end
 
-  belongs_to :user
-  belongs_to :organization
+
+  # A profile_owner cannot have more than one profile, but many profiles can exist
+  # without being associated to a particular user.
+  validates_uniqueness_of :profile_owner_id, :scope => :profile_owner_type, :if => (lambda do |profile|
+    ! profile.profile_owner_id.nil?
+  end)
+
+  # creates a new Profile. By default, it is attached to the default
+  # VirtualCommunity (see VirtualCommunity#default), unless you tell it
+  # otherwise
+  def initialize(*args)
+    super(*args)
+    self.virtual_community ||= VirtualCommunity.default
+  end
 
   # tells if an user with this profile is allowed to access the location
   # specified as a URL hash just like other methods in Rails.
@@ -57,7 +68,7 @@ class UserProfile < ActiveRecord::Base
     ]
   }
 
-  # detects the template used for this UserProfile, if any. Returns 'other'
+  # detects the template used for thisr Profile, if any. Returns 'other'
   # if no template matches
   def template
     templates = TEMPLATES.select do |key, value|
@@ -66,7 +77,7 @@ class UserProfile < ActiveRecord::Base
     templates.first ? templates.first.first : 'other'
   end
 
-  # assings the permission template to this instance of UserProfile.
+  # assings the permission template to this instance of Profile.
   # * <tt>template</tt>: a string. Must be a key in the TEMPLATES hash.
   def template=(template)
     raise ArgumentError.new('%s is not a valid template' % template) unless TEMPLATES[template]

@@ -1,0 +1,2 @@
+module InterfaceHelper
+end

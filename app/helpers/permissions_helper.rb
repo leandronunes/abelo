@@ -4,8 +4,8 @@ module PermissionsHelper
     select(
       object,
       method,
-      UserProfile::TEMPLATES.keys.map do |profile|
-        [ UserProfile.describe(profile), profile ]
+      Profile::TEMPLATES.keys.map do |profile|
+        [ Profile.describe(profile), profile ]
       end
     )
   end

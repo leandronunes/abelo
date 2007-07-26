@@ -1,14 +1,3 @@
-# == Schema Information
-# Schema version: 35
-#
-# Table name: user_profiles
-#
-#  id              :integer       not null, primary key
-#  user_id         :integer       
-#  organization_id :integer       
-#  permissions     :text          
-#
-
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 first:
   id: 1
@@ -37,7 +26,7 @@ yet_another:
     :action: '*'
 for_sales_person:
   id: 4
-  user_id: 7 # seu_ze
+  user_id: 7
   organization_id: 1
   permissions:
   - :controller: 'point_of_sale'

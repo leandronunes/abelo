@@ -3,8 +3,6 @@
 # which by default is the one returned by VirtualCommunity:default.
 class Profile < ActiveRecord::Base
 
-  act_as_flexible_template
-
   belongs_to :organization
 
   validates_presence_of :organization_id, :user_id

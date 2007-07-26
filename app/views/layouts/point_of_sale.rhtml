@@ -3,10 +3,12 @@
 <html>
 <head>
   <title>Abelo &rarr; <%= @organization.name %> &rarr; <%= @controller.controller_name  %> </title>
-  <link href="/icons/neu/style.css" media="screen" rel="Stylesheet" type="text/css" >
-  <link href="/template/abelo_gold/css/style.css" media="screen" rel="Stylesheet" type="text/css" />
   <%= javascript_include_tag :defaults %>
   <%= stylesheet_link_tag 'autocomplete' %>
+  <%= stylesheet_link_tag_for_template %>
+  <%= javascript_include_tag_for_template %>
+  <%= stylesheet_link_tag_for_theme %>
+
 </head>
 
 <body onload='if (document.forms[0] != null) { document.forms[0].elements[0].focus(); }'>

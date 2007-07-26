@@ -3,10 +3,11 @@
 <html>
 <head>
   <title>Abelo &rarr; <%= @organization.name %> &rarr; <%= @controller.controller_name  %> </title>
-  <link href="/icons/aurium_neu/style.css" media="screen" rel="Stylesheet" type="text/css" />
-  <link href="/template/abelo_gold/stylesheets/style.css" media="screen" rel="Stylesheet" type="text/css" />
   <%= javascript_include_tag :defaults %>
   <%= javascript_include_tag 'fckeditor/fckeditor' %>
+  <%= #TODO remove this link bellow loading the css file in the correct place
+  %>
+  <link href="/icons/aurium_neu/style.css" media="screen" rel="Stylesheet" type="text/css" />
   <%= stylesheet_link_tag_for_template %>
   <%= javascript_include_tag_for_template %>
   <%= stylesheet_link_tag_for_theme %>

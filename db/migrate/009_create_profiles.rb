@@ -5,9 +5,6 @@ class CreateProfiles < ActiveRecord::Migration
       t.column :organization_id,              :integer
       t.column :permissions,                  :text
       t.column :user_id,                      :integer
-      t.column :flexible_template_template,   :string, :default => "default"
-      t.column :flexible_template_theme,      :string, :default => "default"
-      t.column :flexible_template_icon_theme, :string, :default => "default"
     end
   end
 

@@ -388,18 +388,22 @@ module ApplicationHelper
   end
 
   def display_list(content, html_options = {})
+    content_tag(
+      'li', 
+      content.map{ |c|
+      if c.class == Hash 
       content_tag(
-        'li', 
-        content.map{ |c|
-          content_tag(
-            'div',
-            content_tag('strong', c[:title]) + 
-            " "+
-            content_tag('span', c[:content]),
-            :class => "list_item_#{c[:option]}"
-          )
-        },
-        :class => html_options[:li_options])
+        'div',
+        content_tag('strong', c[:title]) + 
+        " "+
+        content_tag('span', c[:content]),
+        :class => "list_item_#{c[:option]}"
+      )
+      else
+      c
+      end
+      },
+      :class => html_options[:li_options])
   end
 
   def display_table(titles, content, html_options = {}, caption = nil)

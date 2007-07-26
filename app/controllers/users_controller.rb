@@ -37,7 +37,7 @@ class UsersController < ApplicationController
         self.current_user.remember_me
         cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }
       end
-      redirect_back_or_default(:controller => '/users', :action => 'index')
+#      redirect_back_or_default(:controller => '/users', :action => 'index')
       flash[:notice] = _("Logged in successfully")
       if self.current_user.organizations_count == 1
         redirect_to :controller => 'main', :organization_nickname => self.current_user.organizations.find(1).nickname

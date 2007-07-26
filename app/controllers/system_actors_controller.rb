@@ -40,14 +40,14 @@ class SystemActorsController < ApplicationController
 
     if !@query.nil?
       page = (params[:page] || 1).to_i
-      items_per_page = 1
+      items_per_page = 10
       offset = (page - 1) * items_per_page
 
       @system_actors = eval("#{@actor.camelize}").find_by_contents(@query, {:limit => :all, :offset => 0})
       @system_actor_pages = Paginator.new(self, @system_actors.size, items_per_page, page)
       @system_actors = @system_actors[offset..(offset + items_per_page - 1)]
     else
-      @system_actor_pages, @system_actors = paginate @actor.to_sym, :per_page => 1, :conditions => ["organization_id = ?", @organization.id ] 
+      @system_actor_pages, @system_actors = paginate @actor.to_sym, :per_page => 10, :conditions => ["organization_id = ?", @organization.id ] 
     end
     @system_actor = SystemActor.new 
   end

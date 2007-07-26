@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: abelo 0.2.0\n"
-"POT-Creation-Date: 2007-07-25 16:37-0300\n"
+"POT-Creation-Date: 2007-07-26 11:39-0300\n"
 "PO-Revision-Date: 2007-07-24 01:13-0300\n"
 "Last-Translator: Krishnamurti Lelis Lima Vieira Nunes <krishna@colivre.coop."
 "br>\n"
@@ -20,17 +20,22 @@ msgstr ""
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: app/controllers/system_actors_controller.rb:53
-#: app/controllers/system_actors_controller.rb:70
-#: app/controllers/system_actors_controller.rb:80
+#: app/controllers/system_actors_controller.rb:69
+#: app/controllers/system_actors_controller.rb:86
+#: app/controllers/system_actors_controller.rb:96
+#: app/controllers/system_actors_controller_old.rb:67
+#: app/controllers/system_actors_controller_old.rb:84
+#: app/controllers/system_actors_controller_old.rb:94
 msgid "This actor it's not valid"
 msgstr "Este ator não é válido"
 
-#: app/controllers/system_actors_controller.rb:60
+#: app/controllers/system_actors_controller.rb:76
+#: app/controllers/system_actors_controller_old.rb:74
 msgid "%s was successfully created."
 msgstr "%s foi criado com sucesso."
 
-#: app/controllers/system_actors_controller.rb:86
+#: app/controllers/system_actors_controller.rb:102
+#: app/controllers/system_actors_controller_old.rb:100
 msgid "%s was successfully updated."
 msgstr "%s foi atualizado com sucesso."
 
@@ -143,15 +148,72 @@ msgstr "Usuário atualizado com sucesso."
 msgid "Product Category was successfully created."
 msgstr "Categoria de produtos criada com sucesso."
 
-#: app/controllers/application.rb:79
+#: app/controllers/application.rb:81
 msgid "Register"
-msgstr "Registrar"
+msgstr "Cadastro"
 
-#: app/controllers/application.rb:113
+#: app/controllers/application.rb:82 app/helpers/application_helper.rb:241
+msgid "Configurations"
+msgstr "Configurações"
+
+#: app/controllers/application.rb:83 app/helpers/application_helper.rb:248
+msgid "Financial"
+msgstr "Financeiro"
+
+#: app/controllers/application.rb:84 app/helpers/application_helper.rb:242
+msgid "Stock"
+msgstr "Estoque"
+
+#: app/controllers/application.rb:85 app/helpers/application_helper.rb:247
+msgid "Mass mail"
+msgstr "Mala direta"
+
+#: app/controllers/application.rb:86
+#, fuzzy
+msgid "Project"
+msgstr "Produto"
+
+#: app/controllers/application.rb:87
+#, fuzzy
+msgid "Education"
+msgstr "Produção"
+
+#: app/controllers/application.rb:88
+msgid "Web"
+msgstr ""
+
+#: app/controllers/application.rb:89
+msgid "Commercial proposals"
+msgstr "Propostas Comerciais"
+
+#: app/controllers/application.rb:90 app/views/users/list.rhtml:1
+msgid "Users"
+msgstr "Usuários"
+
+#: app/controllers/application.rb:91 app/helpers/application_helper.rb:243
+msgid "Store"
+msgstr "Loja"
+
+#: app/controllers/application.rb:92
+msgid "Administration of users"
+msgstr "Administração de usuários"
+
+#: app/controllers/application.rb:93 app/helpers/application_helper.rb:246
+#: app/views/point_of_sale/index.rhtml:1
+msgid "Point of sale"
+msgstr "Ponto de venda"
+
+#: app/controllers/application.rb:94 app/helpers/application_helper.rb:250
+#: app/views/commercial_proposals/_new.rhtml:8
+#: app/views/commercial_proposals/_form.rhtml:4
+msgid "Departments"
+msgstr "Departamentos"
+
+#: app/controllers/application.rb:128
 msgid "There is no organization with nickname %s"
 msgstr "Não há nenhuma organização com nome %s"
 
-#: app/controllers/application.rb:121
+#: app/controllers/application.rb:136
 msgid "Access error"
 msgstr "Erro de conexão"
 
@@ -562,20 +624,20 @@ msgstr "ator do sistema"
 msgid "SystemActor|Birthday"
 msgstr ""
 
-#: app/models/system_actor.rb:12 app/models/system_actor.rb:13
+#: app/models/system_actor.rb:14 app/models/system_actor.rb:15
 msgid "This %{fn} already exist"
 msgstr "Este %{fn} já existe"
 
-#: app/models/system_actor.rb:25 app/views/point_of_sale/main.rhtml:23
+#: app/models/system_actor.rb:27 app/views/point_of_sale/main.rhtml:28
 #: app/views/categories/index.rhtml:5
 msgid "Customer"
 msgstr "Consumidor"
 
-#: app/models/system_actor.rb:26 app/views/categories/index.rhtml:6
+#: app/models/system_actor.rb:28 app/views/categories/index.rhtml:6
 msgid "Worker"
 msgstr "Empregado"
 
-#: app/models/system_actor.rb:27 app/views/stock/_form.rhtml:4
+#: app/models/system_actor.rb:29 app/views/stock/_form.rhtml:4
 #: app/views/stock/history.rhtml:6 app/views/stock/new_entry.rhtml:8
 msgid "Supplier"
 msgstr "Fornecedor"
@@ -816,6 +878,14 @@ msgstr "Contabilidade|É previsto para"
 msgid "contact position"
 msgstr "posição de contato"
 
+#: app/models/contact_position.rb:-
+msgid "ContactPosition|Name"
+msgstr "PosiçãoDeContato|Nome"
+
+#: app/models/contact_position.rb:-
+msgid "ContactPosition|Organization"
+msgstr "PosiçãoDeContato|Organização"
+
 #: app/models/user_profile.rb:-
 msgid "user profile"
 msgstr "perfil de usuário"
@@ -955,7 +1025,7 @@ msgstr "Extra Grande"
 msgid "None"
 msgstr "Nenhum"
 
-#: app/helpers/cash_flows_helper.rb:11 app/helpers/application_helper.rb:278
+#: app/helpers/cash_flows_helper.rb:11 app/helpers/application_helper.rb:277
 #: app/views/cash_flows/_full_extract_for_month.rhtml:3
 #: app/views/cash_flows/_form.rhtml:7
 #: app/views/cash_flows/_full_extract_for_year.rhtml:3
@@ -1592,61 +1662,31 @@ msgstr ""
 msgid "Ok"
 msgstr "OK"
 
-#: app/helpers/application_helper.rb:242
-msgid "Configurations"
-msgstr "Configurações"
-
-#: app/helpers/application_helper.rb:243
-msgid "Stock"
-msgstr "Estoque"
-
 #: app/helpers/application_helper.rb:244
-msgid "Store"
-msgstr "Loja"
-
-#: app/helpers/application_helper.rb:245
 msgid "User administration"
 msgstr "Administração de usuários"
 
-#: app/helpers/application_helper.rb:246
+#: app/helpers/application_helper.rb:245
 msgid "Registers"
 msgstr "Cadastro"
 
-#: app/helpers/application_helper.rb:247 app/views/point_of_sale/index.rhtml:1
-msgid "Point of sale"
-msgstr "Ponto de venda"
-
-#: app/helpers/application_helper.rb:248
-msgid "Mass mail"
-msgstr "Mala direta"
-
 #: app/helpers/application_helper.rb:249
-msgid "Financial"
-msgstr "Financeiro"
-
-#: app/helpers/application_helper.rb:250
 msgid "Commercial Proposals"
 msgstr "Propostas Comerciais"
 
-#: app/helpers/application_helper.rb:251
-#: app/views/commercial_proposals/_new.rhtml:8
-#: app/views/commercial_proposals/_form.rhtml:4
-msgid "Departments"
-msgstr "Departamentos"
-
-#: app/helpers/application_helper.rb:277
+#: app/helpers/application_helper.rb:276
 msgid "Cash Flow"
 msgstr "Fluxo de Caixa"
 
-#: app/helpers/application_helper.rb:279 app/views/cash_flows/_form.rhtml:13
+#: app/helpers/application_helper.rb:278 app/views/cash_flows/_form.rhtml:13
 msgid "Specification"
 msgstr "Especificação"
 
-#: app/helpers/application_helper.rb:385 app/views/products/images.rhtml:15
+#: app/helpers/application_helper.rb:384 app/views/products/images.rhtml:15
 msgid "Add"
 msgstr "Adicionar "
 
-#: app/helpers/application_helper.rb:387 app/views/stock/history.rhtml:14
+#: app/helpers/application_helper.rb:386 app/views/stock/history.rhtml:14
 #: app/views/users/list.rhtml:11
 #: app/views/commercial_proposal_items/_list.rhtml:5
 #: app/views/ledger_categories/edit.rhtml:5
@@ -1693,7 +1733,7 @@ msgid "Reset"
 msgstr "Reiniciar"
 
 #: app/views/stock/_form.rhtml:9 app/views/stock/history.rhtml:6
-#: app/views/stock/new_entry.rhtml:13 app/views/point_of_sale/main.rhtml:14
+#: app/views/stock/new_entry.rhtml:13 app/views/point_of_sale/main.rhtml:19
 msgid "Ammount"
 msgstr "Quantidade"
 
@@ -1824,10 +1864,6 @@ msgstr "Efetuar login"
 msgid "Sign up"
 msgstr "Registrar-se"
 
-#: app/views/users/list.rhtml:1
-msgid "Users"
-msgstr "Usuários"
-
 #: app/views/users/list.rhtml:18
 msgid "New user"
 msgstr "Novo usuário"
@@ -1867,7 +1903,7 @@ msgid "Close"
 msgstr "Fechar"
 
 #: app/views/commercial_proposal_items/_new.rhtml:9
-#: app/views/point_of_sale/main.rhtml:17
+#: app/views/point_of_sale/main.rhtml:22
 msgid "Add item"
 msgstr "Adicionar item"
 
@@ -2033,29 +2069,25 @@ msgstr "Quantidade"
 msgid "Unitary price"
 msgstr "Preço unitário"
 
-#: app/views/point_of_sale/main.rhtml:5
+#: app/views/point_of_sale/main.rhtml:10
 msgid "Add items"
 msgstr "Adicionar itens"
 
-#: app/views/point_of_sale/main.rhtml:9
+#: app/views/point_of_sale/main.rhtml:14
 msgid "An error occurred when adding the item to this sale:"
 msgstr "Aconteceu um erro ao adicionar esse item à venda:"
 
-#: app/views/point_of_sale/main.rhtml:12 app/views/categories/index.rhtml:4
+#: app/views/point_of_sale/main.rhtml:17 app/views/categories/index.rhtml:4
 msgid "Product"
 msgstr "Produto"
 
-#: app/views/point_of_sale/main.rhtml:24
+#: app/views/point_of_sale/main.rhtml:29
 msgid "Select customer"
 msgstr "Selecionar consumidor"
 
-#: app/views/point_of_sale/main.rhtml:27
+#: app/views/point_of_sale/main.rhtml:32
 msgid "Unidentified customer"
 msgstr "Consumidor não identificado"
-
-#: app/views/point_of_sale/main.rhtml:29
-msgid "Items"
-msgstr "Itens"
 
 #: app/views/point_of_sale/index.rhtml:4
 msgid "Pending sales:"
@@ -2648,7 +2680,7 @@ msgid "New worker"
 msgstr "Novo usuário"
 
 #: app/views/system_actors/_show.rhtml:23
-#: app/views/system_actors/list.rhtml:26 app/views/system_actors/show.rhtml:23
+#: app/views/system_actors/list.rhtml:30 app/views/system_actors/show.rhtml:23
 msgid "Function:"
 msgstr "Função:"
 
@@ -2663,7 +2695,12 @@ msgstr "Dia de nascimento"
 #: app/views/system_actors/_edit.rhtml:2
 msgid "Edit %s"
 msgstr "Editar %s"
-#: app/views/system_actors/list.rhtml:25
+
+#: app/views/system_actors/list.rhtml:11
+msgid "button button_search"
+msgstr ""
+
+#: app/views/system_actors/list.rhtml:29
 #, fuzzy
 msgid "Name:"
 msgstr "Nome"
@@ -2688,6 +2725,9 @@ msgstr "Editando Categoria"
 msgid "Ledgers"
 msgstr "Livro Contábil"
 
+#~ msgid "Items"
+#~ msgstr "Itens"
+
 #~ msgid "You have a controller not defined in path"
 #~ msgstr "Você tem um controlador não definido no caminho"
 
@@ -2696,12 +2736,6 @@ msgstr "Livro Contábil"
 
 #~ msgid "Contact|Position"
 #~ msgstr "Contato|Posição"
-
-#~ msgid "ContactPosition|Name"
-#~ msgstr "PosiçãoDeContato|Nome"
-
-#~ msgid "ContactPosition|Organization"
-#~ msgstr "PosiçãoDeContato|Organização"
 
 #~ msgid "Products"
 #~ msgstr "Produtos"

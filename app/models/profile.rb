@@ -17,23 +17,6 @@ class Profile < ActiveRecord::Base
   end
 
 
-  # A profile_owner cannot have more than one profile, but many profiles can exist
-  # without being associated to a particular user.
-  validates_uniqueness_of :profile_owner_id, :scope => :profile_owner_type, :if => (lambda do |profile|
-    ! profile.profile_owner_id.nil?
-  end)
-
-  # creates a new Profile. By default, it is attached to the default
-  # VirtualCommunity (see VirtualCommunity#default), unless you tell it
-  # otherwise
-  def initialize(*args)
-    super(*args)
-    self.virtual_community ||= VirtualCommunity.default
-  end
-
-  # tells if an user with this profile is allowed to access the location
-  # specified as a URL hash just like other methods in Rails.
-  #
   # For example, suppose we have a profile without access to the <tt>edit</tt>
   # action of the <tt>main</tt> controller, but which has access to the
   # <tt>index</tt> action:

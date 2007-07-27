@@ -37,21 +37,21 @@ gerente.organization = organization
 gerente.save
 
 ############Images###############################
-Image.destroy_all
-camisa_img = Image.new
-camisa_img.description = 'camisa básica azul'
-stream = StringIO.new(File.read('public/test_images/camisa_basica_azul.jpg'))
+#Image.destroy_all
+#camisa_img = Image.new
+#camisa_img.description = 'camisa básica azul'
+#stream = StringIO.new(File.read('public/test_images/camisa_basica_azul.jpg'))
 
-    def stream.original_filename
-      'camisa_basica_azul.jpg'
-    end
+#    def stream.original_filename
+#      'camisa_basica_azul.jpg'
+#    end
     
-    def stream.content_type
-      'image/jpg'
-    end
+#    def stream.content_type
+#      'image/jpg'
+#    end
 
-camisa_img.picture = stream
-camisa_img.save!
+#camisa_img.picture = stream
+#camisa_img.save!
 
 ############Products#############################
 Product.destroy_all
@@ -89,8 +89,8 @@ Person.destroy_all
 gerente = User.create!("salt"=>"7e3041ebc2fc05a40c60028e2c4901a81035d3cd", "updated_at"=>nil, "crypted_password"=>"00742970dc9e6319f8019fd54864d3ea740f04b1", "type"=>"User", "remember_token_expires_at"=>nil, "id"=>"1", "administrator"=>nil, "remember_token"=>nil, "login"=>"quentin", "email"=>"quentin@example.com", "created_at"=>"2007-07-14 18:03:29")
 
 ############User Profile##########################
-UserProfile.destroy_all
-perfil_quentin = UserProfile.new
+Profile.destroy_all
+perfil_quentin = Profile.new
 perfil_quentin.organization = organization
 perfil_quentin.user = gerente
 perfil_quentin.permissions = [:controller => '*', :action => '*']

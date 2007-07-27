@@ -1,17 +1,31 @@
-<h1><%= _('Listing departments') %></h1>
 
-<% @departments.map do |d| %>
+<%= title _('Listing departments') %>
+
+<% form_tag ( { :action => 'list' }, { :class => 'search_itens' } ) do %>
+  <%= text_field 'department', 'name', :class => 'filter_field' %>
+  <%= submit_tag( '', { :class => 'button button_search', :title => _('Search department') }) %>
+  <%= button (_("New department"), :new, :action => 'new' ) %>
+<% end %>
+
+<div class="auto_complete" id="department_name_auto_complete"></div>
+<%= auto_complete_field :department_name, :url => {:action => 'autocomplete_name' }, :indicator => 'auto_list'%>
+<div id="auto_list" style="display:none;">
+</div>
+
+<ul class="info_list departments">
+  <% @departments.sort_by{|dp| dp.name}.map do |d| %>
 <%= display_list(
   [
+    { :content => [
+      button (_('Show'), :show, :action => 'show', :id => d.id),
+      button (_('Edit'), :edit, :action => 'edit', :id => d.id),
+      button (_('Destroy'), :destroy, {:action => 'destroy', :id => d.id},
+                            :post => true,
+                            :confirm => _('Are you sure?'))], :option => 'button' },
     { :content => d.name, :option => 'name'},
-    { :content => button (_('Show'), :show, :action => 'show', :id => d.id), :option => 'button' },
-    { :content => button (_('Edit'), :edit, :action => 'edit', :id => d.id), :option => 'button' },
-    { :content => button (_('Destroy'), :destroy, {:action => 'destroy', :id => d.id}, :post => true, :confirm => _('Are you sure?')), :option => 'button' }
-
-
   ]
 )
 %>
 <% end %>
-
-<%= button _('New department'), :new, :action => 'new'%>
+</ul>
+<%= pagination_links(@department_pages, :params => {:query => @query}) %>

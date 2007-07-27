@@ -19,4 +19,5 @@ class Department < ActiveRecord::Base
 
   has_and_belongs_to_many :commercial_proposals
 
+  acts_as_ferret
 end

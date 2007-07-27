@@ -26,7 +26,7 @@ class ProductsController < ApplicationController
 
     @query = params[:query] ? params[:query] : nil
     if @query.nil?
-      @query = params[:product] ? params[:product][:description] : nil
+      @query = params[:product] ? params[:product][:name] : nil
     end
 
     if !@query.nil?

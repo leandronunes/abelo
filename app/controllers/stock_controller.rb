@@ -67,7 +67,7 @@ class StockController < ApplicationController
   def create_tabs
     add_tab do
       named 'Stock Control'
-      links_to :controller => 'stock', :action => 'list'
+      links_to :controller => 'stock'
       in_set 'first'
       highlights_on :controller => 'stock'
     end

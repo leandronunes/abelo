@@ -8,6 +8,7 @@
   height: 24px;
   background: url(/icons/aurium_neu/24x24/bt_none.png);
   background-repeat: no-repeat;
+  background-position: 50% 50%;
 }
 
 .button:hover {
@@ -18,8 +19,12 @@
   display: none;
 }
 
-.button_search  { background: url(/icons/aurium_neu/24x24/lupa.png) }
-.button_new     { background: url(/icons/aurium_neu/24x24/add.png) }
-.button_show    { background: url(/icons/aurium_neu/24x24/view.png) }
-.button_edit    { background: url(/icons/aurium_neu/24x24/edit.png) }
-.button_destroy { background: url(/icons/aurium_neu/24x24/del.png) }
+.button_search  { background-image: url(/icons/aurium_neu/24x24/lupa.png)   }
+.button_new     { background-image: url(/icons/aurium_neu/24x24/add.png)    }
+.button_add     { background-image: url(/icons/aurium_neu/24x24/add.png)    }
+.button_save    { background-image: url(/icons/aurium_neu/24x24/save.png)   }
+.button_cancel  { background-image: url(/icons/aurium_neu/24x24/cancel.png) }
+.button_img     { background-image: url(/icons/aurium_neu/24x24/image.png)  }
+.button_show    { background-image: url(/icons/aurium_neu/16x16/view.png); width: 16px; height: 16px }
+.button_edit    { background-image: url(/icons/aurium_neu/16x16/edit.png); width: 16px; height: 16px }
+.button_destroy { background-image: url(/icons/aurium_neu/16x16/del.png);  width: 16px; height: 16px }

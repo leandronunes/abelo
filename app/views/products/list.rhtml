@@ -2,18 +2,18 @@
 <%= title _('Listing products') %>
 
 <% form_tag ( { :action => 'list' }, { :class => 'search_itens' } ) do %>
-  <%= text_field 'product', 'description', :class => 'filter_field'  %>
+  <%= text_field 'product', 'name', :class => 'filter_field' %>
   <%= submit_tag( '', { :class => 'button button_search', :title => _('Search product') }) %>
   <%= button (_("New product"), :new, :action => 'new' ) %>
 <% end %>
 
-<div class="auto_complete" id="product_description_auto_complete"></div>
-<%= auto_complete_field :product_description, :url => {:action => 'autocomplete_description' }, :indicator => 'auto_list'%>
+<div class="auto_complete" id="product_name_auto_complete"></div>
+<%= auto_complete_field :product_name, :url => {:action => 'autocomplete_name' }, :indicator => 'auto_list'%>
 <div id="auto_list" style="display:none;">
 </div>
 
 <ul class="info_list products">
-<% @products.sort_by{|pr| pr.description}.map do |p| %>
+<% @products.sort_by{|pr| pr.name}.map do |p| %>
   <%=
   display_list(
     [
@@ -25,7 +25,7 @@
                                 :confirm => _('Are you sure?'))], :option => 'button' },
       { :content => p.images.map{|i| show_image i}[0], :option => 'img' }, 
       { :title => _('Code:'), :content => p.id, :option => 'code' },
-      { :content =>  p.description, :option => 'name' },
+      { :content =>  p.name, :option => 'name' },
       { :title => _('Price:'), :content => p.sell_price, :option => 'price'},
       '<br style="clear:both"/>'
     ]

@@ -13,7 +13,7 @@ class SystemActorsController < ApplicationController
   before_filter :create_register_tabs
 
   def autocomplete_name
-    actor = params[:type].camelize
+    actor = params[:actor].camelize
     re = Regexp.new("#{params[:system_actor][:name]}", "i")
     @system_actors = SystemActor.find(:all, :conditions => [ "type = ?", actor ]).select { |sa| sa.name.match re}
     render :layout=>false

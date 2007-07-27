@@ -5,32 +5,30 @@
 #TODO fix it this filed cannot be called system_actor name
 %>
 
-<% form_tag :action => 'list', :actor => @actor do %>
-
-<%= text_field 'system_actor', 'name'  %>
-<%= submit_tag(_("Search %s") % SystemActor.describe(@actor), { :class => 'button button_search' }) %>
-
+<% form_tag ({:action => 'list', :actor => @actor}, {:class => 'search_itens'} ) do %>
+<%= text_field 'system_actor', 'name', :class => 'filter_field'  %>
+<%= submit_tag('', { :class => 'button button_search', :title => _("Search %s" % SystemActor.describe(@actor)) }) %>
+  <%= button (_("New %s") % SystemActor.describe(@actor), :new, :action => 'new', :actor => @actor ) %>
 <% end %>
 
 <div class="auto_complete" id="system_actor_name_auto_complete"></div>
-<%= auto_complete_field :system_actor_name,  :url => {:action => 'autocomplete_name', :type => @actor}, :indicator => 'auto_list'%>
+<%= auto_complete_field :system_actor_name,  :url => {:action => 'autocomplete_name', :actor => @actor}, :indicator => 'auto_list'%>
 <div id="auto_list" style="display:none;">
 </div>
 
-<div class="manage_buttons">
-  <%= button (_("New %s") % SystemActor.describe(@actor), :new, :action => 'new', :actor => @actor ) %>
-</div>
-
-<ul class="system_actors">
+<ul class="info_list system_actors">
 <% @system_actors.sort_by{|sa| sa.name}.map do |s| %>
 <%=
   display_list(
-    [
+  [
+      { :content => [
+          button (_('Show'), :show, :action => 'show', :id => s.id),
+          button (_('Edit'), :edit, :action => 'edit', :id => s.id),
+          button (_('Destroy'), :destroy, {:action => 'destroy', :id => s.id},
+                                :post => true,
+                                :confirm => _('Are you sure?'))], :option => 'button' },
       { :title => _('Name:'), :content => s.name, :option => 'name' },
-      { :title => _('Function:'), :content => s.category.name, :option => 'name'},
-      { :content => button (_('Show'), :show, :action => 'show', :id => s), :option => 'button' },
-      { :content => button (_('Edit'), :edit, :action => 'edit', :id => s), :option => 'button' },
-      { :content => button (_('Destroy'), :destroy, {:action => 'destroy', :id => s}, :post => true, :confirm => _('Are you sure?')), :option => 'button' }  
+      { :title => _('Function:'), :content => s.category.name, :option => 'name'}
     ]
   )
   %>

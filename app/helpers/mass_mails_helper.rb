@@ -13,7 +13,7 @@ module MassMailsHelper
     mass_mail.organization.products.map { |s|
       content_tag(
         'div',
-        check_box_tag("products[#{s.id}]", 1) + s.description
+        check_box_tag("products[#{s.id}]", 1) + s.name
       )
     }.join("\n")
   end

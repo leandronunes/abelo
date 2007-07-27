@@ -8,7 +8,7 @@ class Product < ActiveRecord::Base
 
   acts_as_ferret
 
-  validates_presence_of :description, :sell_price, :unit
+  validates_presence_of :name, :sell_price, :unit
 
   validates_presence_of :organization_id, :message => 'Products must be associated to an organization'
 

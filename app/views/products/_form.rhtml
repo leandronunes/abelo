@@ -1,27 +1,32 @@
 <%= error_messages_for 'product' %>
 
 <!--[form:product]-->
-<p>
-<label for="product_description"><%= _("Description") %></label>
-<%= text_field 'product', 'description'  %></p>
 
-<p><label for="product_category"><%= _("Category") %></label>
-<%= select_category 'product', 'product'  %></p>
+<div id='form_reg'>
+  <p><label for="product_description"><%= _("Description") %></label>
+  <%= text_field 'product', 'name'  %></p>
 
-<p><label for='product_suppliers'><%= _("Suppliers") %></label>
-<%= select_suppliers @product %>
-</p>
+  <p><label for="product_category"><%= _("Category") %></label>
+  <%= select_category 'product', 'product'  %></p>
 
-<p><label for="product_size"><%= _("Size") %></label>
-<%= select_size 'product', 'size'  %></p>
+  <p><label for='product_suppliers'><%= _("Suppliers") %></label>
+  <%= select_suppliers @product %></p>
 
-<p><label for="product_color"><%= _("Color") %></label>
-<%= color_select 'product', 'color'  %></p>
+  <p><label for="product_size"><%= _("Size") %></label>
+  <%= select_size 'product', 'size'  %></p>
 
-<p><label for="product_sell_price"><%= _("Sell price") %></label>
-<%= text_field 'product', 'sell_price'  %></p>
+  <p><label for="product_color"><%= _("Color") %></label>
+  <%= color_select 'product', 'color'  %></p>
 
-<p><label for="product_unit"><%= _("Unit") %></label>
-<%= select_unit 'product', 'unit'  %></p>
+  <p><label for="product_sell_price"><%= _("Sell price") %></label>
+  <%= text_field 'product', 'sell_price'  %></p>
+
+  <p><label for="product_unit"><%= _("Unit") %></label>
+  <%= select_unit 'product', 'unit'  %></p>
+
+  <p><label for="product_description"> <%= _('Description') %> </label>
+  <%= text_area 'product', 'description' %></p>
+</div>
+
 <!--[eoform:product]-->
 

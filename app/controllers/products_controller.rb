@@ -1,14 +1,14 @@
 class ProductsController < ApplicationController
 
-  auto_complete_for :product, :description
+  auto_complete_for :product, :name
 
   needs_organization
 
   before_filter :create_register_tabs
 
-  def autocomplete_description
-    re = Regexp.new("#{params[:product][:description]}", "i")
-    @products = Product.find(:all).select { |pr| pr.description.match re}
+  def autocomplete_name
+    re = Regexp.new("#{params[:product][:name]}", "i")
+    @products = Product.find(:all).select { |pr| pr.name.match re}
     render :layout=>false
   end
 

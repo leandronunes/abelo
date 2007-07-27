@@ -59,6 +59,12 @@ class ApplicationController < ActionController::Base
       'departments'
     ]
   }
+
+  def flexible_template_owner
+    load_organization
+  end
+
+
   ####################################
   #Tabs definitions
   ####################################
@@ -200,6 +206,7 @@ class ApplicationController < ActionController::Base
   def load_organization
     @organization = Organization.find_by_nickname(params[:organization_nickname])
     render :text => _('There is no organization with nickname %s') % params[:organization_nickname] unless @organization
+    @organization
   end
 
   def render_access_denied_screen

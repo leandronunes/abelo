@@ -1,5 +1,7 @@
 class CategoriesController < ApplicationController
 
+  needs_organization
+
   CATEGORY_TYPES = %w[
     product
     customer
@@ -7,8 +9,6 @@ class CategoriesController < ApplicationController
     worker
     supplier
   ]
-
-  needs_organization
 
   before_filter :create_configurations_tabs
 

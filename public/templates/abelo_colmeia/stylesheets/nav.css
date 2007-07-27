@@ -6,10 +6,14 @@ padding: 0px;
 }
 
 #nav {
-position: relative;
-background: url('../images/bggradeicons18.jpg') top left no-repeat;
+position: absolute;
+background: url('../images/bggradeicons18_leo.jpg') bottom left no-repeat;
 width: 530px;
 height: 360px;
+}
+
+#nav ul{
+  list-style: none;
 }
 
 #nav a {

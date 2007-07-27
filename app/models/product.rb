@@ -6,7 +6,7 @@ class Product < ActiveRecord::Base
   has_and_belongs_to_many :suppliers
   has_many :stock_entries
 
-#  acts_as_ferret
+  acts_as_ferret
 
   validates_presence_of :description, :sell_price, :unit
 

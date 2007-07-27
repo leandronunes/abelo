@@ -5,6 +5,6 @@
   <div class='button_bar'>
     <%= button "Create", :save %>
     <%= button 'Cancel', :cancel, :action => 'list' %>
-    <%= button_remote(_('Reset'), :reset , {:update => 'form', :url => {:action => 'reset'}}) %>
+    <%= button_remote('', :reset , {:update => 'form_reg', :url => {:action => 'reset'}}, :title => _('Reset')) %>
   </div>
 <% end %>

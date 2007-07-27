@@ -28,3 +28,5 @@
 <label><%= _('Description:') %></label>
 <%= @system_actor.description %>
 </p>
+<%= link_to 'Edit', :action => 'edit', :id => @system_actor %> |
+<%= link_to 'Back', :action => 'list', :actor => @system_actor.type.to_s.downcase %>

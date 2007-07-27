@@ -83,7 +83,7 @@ class DepartmentsController < ApplicationController
   end
 
   def reset
-    render :partial => 'new'
+    render :partial => 'form'
   end
 
   def create_tabs

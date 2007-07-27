@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: abelo 0.2.0\n"
-"POT-Creation-Date: 2007-07-26 13:51-0300\n"
+"POT-Creation-Date: 2007-07-27 16:21-0300\n"
 "PO-Revision-Date: 2007-07-24 01:13-0300\n"
 "Last-Translator: Krishnamurti Lelis Lima Vieira Nunes <krishna@colivre.coop."
 "br>\n"
@@ -20,37 +20,36 @@ msgstr ""
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: app/controllers/system_actors_controller.rb:69
-#: app/controllers/system_actors_controller.rb:86
-#: app/controllers/system_actors_controller.rb:96
+#: app/controllers/system_actors_controller.rb:68
+#: app/controllers/system_actors_controller.rb:91
 msgid "This actor it's not valid"
 msgstr "Este ator não é válido"
 
-#: app/controllers/system_actors_controller.rb:76
+#: app/controllers/system_actors_controller.rb:75
 msgid "%s was successfully created."
 msgstr "%s foi criado com sucesso."
 
-#: app/controllers/system_actors_controller.rb:102
+#: app/controllers/system_actors_controller.rb:96
 msgid "%s was successfully updated."
 msgstr "%s foi atualizado com sucesso."
 
-#: app/controllers/commercial_proposal_sections_controller.rb:34
+#: app/controllers/commercial_proposal_sections_controller.rb:32
 msgid "Commercial proposal section was successfuly updated."
 msgstr "A seção de proposca comercial foi atualizada com sucesso."
 
-#: app/controllers/departments_controller.rb:32
+#: app/controllers/departments_controller.rb:58
 msgid "Department was successfully created."
 msgstr "Departamento criado com sucesso."
 
-#: app/controllers/departments_controller.rb:47
+#: app/controllers/departments_controller.rb:73
 msgid "Department was successfully updated."
 msgstr "Departamento atualizado com sucesso."
 
-#: app/controllers/products_controller.rb:59
+#: app/controllers/products_controller.rb:75
 msgid "Product was successfully updated."
 msgstr "Produto atualizado com sucesso."
 
-#: app/controllers/products_controller.rb:88
+#: app/controllers/products_controller.rb:104
 msgid "Image was successfully added."
 msgstr "Imagem adicionada com sucesso."
 
@@ -115,7 +114,7 @@ msgstr "Item atualizado com sucesso."
 msgid "Item was successfully created."
 msgstr "Item criado com sucesso."
 
-#: app/controllers/commercial_proposal_items_controller.rb:36
+#: app/controllers/commercial_proposal_items_controller.rb:35
 msgid "Commercial proposal item was successfuly updated."
 msgstr "Item proposta comercial atualizado com sucesso."
 
@@ -123,19 +122,19 @@ msgstr "Item proposta comercial atualizado com sucesso."
 msgid "Logged in successfully"
 msgstr "Autenticação realizada com sucesso."
 
-#: app/controllers/users_controller.rb:54
+#: app/controllers/users_controller.rb:56
 msgid "Thanks for signing up!"
 msgstr "Obrigado por se registrar!"
 
-#: app/controllers/users_controller.rb:64
+#: app/controllers/users_controller.rb:66
 msgid "You have been logged out."
 msgstr "Você foi desconectado."
 
-#: app/controllers/users_controller.rb:71
+#: app/controllers/users_controller.rb:73
 msgid "User was successfully created."
 msgstr "Usuário criado com sucesso."
 
-#: app/controllers/users_controller.rb:94
+#: app/controllers/users_controller.rb:96
 msgid "User was successfully updated."
 msgstr "Usuário atualizado com sucesso."
 
@@ -143,70 +142,112 @@ msgstr "Usuário atualizado com sucesso."
 msgid "Product Category was successfully created."
 msgstr "Categoria de produtos criada com sucesso."
 
-#: app/controllers/application.rb:81
+#: app/controllers/application.rb:78
+#, fuzzy
+msgid "Product categories"
+msgstr "Produto|categoria"
+
+#: app/controllers/application.rb:85
+#, fuzzy
+msgid "Customer categories"
+msgstr "Listando Categorias"
+
+#: app/controllers/application.rb:92
+#, fuzzy
+msgid "Worker categories"
+msgstr "Categorias"
+
+#: app/controllers/application.rb:99
+#, fuzzy
+msgid "Supplier categories"
+msgstr "Todas as categorias"
+
+#: app/controllers/application.rb:106
+#, fuzzy
+msgid "Interface"
+msgstr "Interesses"
+
+#: app/controllers/application.rb:115
+msgid "Workers"
+msgstr "Empregados"
+
+#: app/controllers/application.rb:122
+#: app/views/mass_mails/filter_customers.rhtml:2
+msgid "Customers"
+msgstr "Consumidores"
+
+#: app/controllers/application.rb:129 app/views/products/_form.rhtml:12
+msgid "Suppliers"
+msgstr "Fornecedores"
+
+#: app/controllers/application.rb:136
+msgid "Products"
+msgstr "Produtos"
+
+#: app/controllers/application.rb:162
 msgid "Register"
 msgstr "Cadastro"
 
-#: app/controllers/application.rb:82 app/helpers/application_helper.rb:241
+#: app/controllers/application.rb:163 app/helpers/application_helper.rb:245
 msgid "Configurations"
 msgstr "Configurações"
 
-#: app/controllers/application.rb:83 app/helpers/application_helper.rb:248
+#: app/controllers/application.rb:164 app/helpers/application_helper.rb:252
 msgid "Financial"
 msgstr "Financeiro"
 
-#: app/controllers/application.rb:84 app/helpers/application_helper.rb:242
+#: app/controllers/application.rb:165 app/helpers/application_helper.rb:246
 msgid "Stock"
 msgstr "Estoque"
 
-#: app/controllers/application.rb:85 app/helpers/application_helper.rb:247
+#: app/controllers/application.rb:166 app/helpers/application_helper.rb:251
 msgid "Mass mail"
 msgstr "Mala direta"
 
-#: app/controllers/application.rb:86
+#: app/controllers/application.rb:167
 msgid "Project"
 msgstr "Projeto"
 
-#: app/controllers/application.rb:87
+#: app/controllers/application.rb:168
 msgid "Education"
 msgstr "Educação"
 
-#: app/controllers/application.rb:88
+#: app/controllers/application.rb:169
 msgid "Web"
 msgstr ""
 
-#: app/controllers/application.rb:89
+#: app/controllers/application.rb:170
 msgid "Commercial proposals"
 msgstr "Propostas Comerciais"
 
-#: app/controllers/application.rb:90 app/views/users/list.rhtml:1
+#: app/controllers/application.rb:171 app/views/users/list.rhtml:1
 msgid "Users"
 msgstr "Usuários"
 
-#: app/controllers/application.rb:91 app/helpers/application_helper.rb:243
+#: app/controllers/application.rb:172 app/helpers/application_helper.rb:247
 msgid "Store"
 msgstr "Loja"
 
-#: app/controllers/application.rb:92
+#: app/controllers/application.rb:173
 msgid "Administration of users"
 msgstr "Administração de usuários"
 
-#: app/controllers/application.rb:93 app/helpers/application_helper.rb:246
+#: app/controllers/application.rb:174 app/helpers/application_helper.rb:250
 #: app/views/point_of_sale/index.rhtml:1
 msgid "Point of sale"
 msgstr "Ponto de venda"
 
-#: app/controllers/application.rb:94 app/helpers/application_helper.rb:250
+#: app/controllers/application.rb:175 app/helpers/application_helper.rb:254
 #: app/views/commercial_proposals/_new.rhtml:8
 #: app/views/commercial_proposals/_form.rhtml:4
 msgid "Departments"
 msgstr "Departamentos"
 
-#: app/controllers/application.rb:128
+#: app/controllers/application.rb:209
 msgid "There is no organization with nickname %s"
 msgstr "Não há nenhuma organização com nome %s"
 
-#: app/controllers/application.rb:136
+#: app/controllers/application.rb:218
 msgid "Access error"
 msgstr "Erro de conexão"
 
@@ -219,8 +260,9 @@ msgid "product"
 msgstr "produto"
 
 #: app/models/product.rb:-
-msgid "Product|Description"
-msgstr "Produto|Descrição"
+#, fuzzy
+msgid "Product|Name"
+msgstr "Produto|Tamanho"
 
 #: app/models/product.rb:-
 msgid "Product|Size"
@@ -229,6 +271,10 @@ msgstr "Produto|Tamanho"
 #: app/models/product.rb:-
 msgid "Product|Color"
 msgstr "Produto|Cor"
+
+#: app/models/product.rb:-
+msgid "Product|Description"
+msgstr "Produto|Descrição"
 
 #: app/models/product.rb:-
 msgid "Product|Sell price"
@@ -277,6 +323,47 @@ msgstr "Fluxo de Caixa|Venda"
 #: app/models/cash_flow.rb:-
 msgid "CashFlow|Foreseen"
 msgstr "Fluxo de Caixa|Previsão"
+
+#: app/models/profile.rb:-
+#, fuzzy
+msgid "profile"
+msgstr "perfil de usuário"
+
+#: app/models/profile.rb:-
+#, fuzzy
+msgid "Profile|Name"
+msgstr "Tipo de perfil"
+
+#: app/models/profile.rb:-
+#, fuzzy
+msgid "Profile|Organization"
+msgstr "PerfilDeUsuário|Organização"
+
+#: app/models/profile.rb:-
+#, fuzzy
+msgid "Profile|Permissions"
+msgstr "PerfilDeUsuário|Permissões"
+
+#: app/models/profile.rb:-
+#, fuzzy
+msgid "Profile|User"
+msgstr "PerfilDeUsuário|Usuário"
+
+#: app/models/profile.rb:77
+msgid "Full access"
+msgstr "Acesso completo"
+
+#: app/models/profile.rb:78
+msgid "Read-only"
+msgstr "Somente-Leitura"
+
+#: app/models/profile.rb:79
+msgid "Sales person"
+msgstr "Vendedor"
+
+#: app/models/profile.rb:80
+msgid "Other"
+msgstr "Outro"
 
 #: app/models/sale.rb:-
 msgid "sale"
@@ -385,16 +472,29 @@ msgid "Organization|Nickname"
 msgstr "Organização|Nome de Fantasia"
 
 #: app/models/department.rb:-
+msgid "Organization|Flexible template template"
+msgstr ""
+
+#: app/models/department.rb:-
+#, fuzzy
+msgid "Organization|Flexible template theme"
+msgstr "Organização|Nome "
+
+#: app/models/department.rb:-
+msgid "Organization|Flexible template icon theme"
+msgstr ""
+
+#: app/models/department.rb:-
 msgid "department"
 msgstr "departamento"
 
 #: app/models/department.rb:-
 msgid "Department|Name"
-msgstr "Departamento|Nome "
+msgstr "Nome"
 
 #: app/models/department.rb:-
 msgid "Department|Organization"
-msgstr "Departamento|Organização"
+msgstr "Organização"
 
 #: app/models/payment.rb:-
 msgid "payment"
@@ -402,55 +502,55 @@ msgstr "pagamento "
 
 #: app/models/payment.rb:-
 msgid "Payment|Sale"
-msgstr "Pagamento|Venda"
+msgstr "Venda"
 
 #: app/models/payment.rb:-
 msgid "Payment|Type"
-msgstr "Pagamento|Tipo"
+msgstr "Tipo"
 
 #: app/models/payment.rb:-
 msgid "Payment|Value"
-msgstr "Pagamento|Valor"
+msgstr "Valor"
 
 #: app/models/payment.rb:-
 msgid "Payment|Date"
-msgstr "Pagamento|Data"
+msgstr "Data"
 
 #: app/models/payment.rb:-
 msgid "Payment|Received"
-msgstr "Pagamento|Recebido"
+msgstr "Recebido"
 
 #: app/models/payment.rb:-
 msgid "Payment|Cash"
-msgstr "Pagamento|Dinheiro"
+msgstr "Dinheiro"
 
 #: app/models/payment.rb:-
 msgid "Payment|Credit card number"
-msgstr "Pagamento|Número do cartão de crédito"
+msgstr "Número do cartão de crédito"
 
 #: app/models/payment.rb:-
 msgid "Payment|Credit card validity"
-msgstr "Pagamento|Validade do cartão de crédito"
+msgstr "Validade do cartão de crédito"
 
 #: app/models/payment.rb:-
 msgid "Payment|Credit card secutiry code"
-msgstr "Pagamento|Código de segurança do cartão"
+msgstr "Código de segurança do cartão"
 
 #: app/models/payment.rb:-
 msgid "Payment|Credit card owner name"
-msgstr "Pagamento|Nome do titular do cartão"
+msgstr "Nome do titular do cartão"
 
 #: app/models/payment.rb:-
 msgid "Payment|Credit card cpf"
-msgstr "Pagamento|CPF do titular do cartão"
+msgstr "CPF do titular do cartão"
 
 #: app/models/payment.rb:-
 msgid "Payment|Interests"
-msgstr "Pagamentos|Juros"
+msgstr "Juros"
 
 #: app/models/payment.rb:-
 msgid "Payment|Check bank"
-msgstr "Pagamento|Banco do cheque"
+msgstr "Banco do cheque"
 
 #: app/models/payment.rb:-
 msgid "Payment|Check owner name"
@@ -621,8 +721,7 @@ msgstr ""
 msgid "This %{fn} already exist"
 msgstr "Este %{fn} já existe"
 
-#: app/models/system_actor.rb:27 app/views/point_of_sale/main.rhtml:28
-#: app/views/categories/index.rhtml:5
+#: app/models/system_actor.rb:27 app/views/categories/index.rhtml:5
 msgid "Customer"
 msgstr "Consumidor"
 
@@ -871,46 +970,6 @@ msgstr "Contabilidade|É previsto para"
 msgid "contact position"
 msgstr "posição de contato"
 
-#: app/models/contact_position.rb:-
-msgid "ContactPosition|Name"
-msgstr "PosiçãoDeContato|Nome"
-
-#: app/models/contact_position.rb:-
-msgid "ContactPosition|Organization"
-msgstr "PosiçãoDeContato|Organização"
-
-#: app/models/user_profile.rb:-
-msgid "user profile"
-msgstr "perfil de usuário"
-
-#: app/models/user_profile.rb:-
-msgid "UserProfile|User"
-msgstr "PerfilDeUsuário|Usuário"
-
-#: app/models/user_profile.rb:-
-msgid "UserProfile|Organization"
-msgstr "PerfilDeUsuário|Organização"
-
-#: app/models/user_profile.rb:-
-msgid "UserProfile|Permissions"
-msgstr "PerfilDeUsuário|Permissões"
-
-#: app/models/user_profile.rb:85
-msgid "Full access"
-msgstr "Acesso completo"
-
-#: app/models/user_profile.rb:86
-msgid "Read-only"
-msgstr "Somente-Leitura"
-
-#: app/models/user_profile.rb:87
-msgid "Sales person"
-msgstr "Vendedor"
-
-#: app/models/user_profile.rb:88
-msgid "Other"
-msgstr "Outro"
-
 #: app/models/ledger_category.rb:-
 msgid "ledger category"
 msgstr "categoria contábil"
@@ -993,7 +1052,7 @@ msgstr "Unidades"
 msgid "Kilograms"
 msgstr "Quilogramas"
 
-#: app/helpers/products_helper.rb:21 app/helpers/application_helper.rb:31
+#: app/helpers/products_helper.rb:21 app/helpers/application_helper.rb:32
 msgid "N/A"
 msgstr "N/A"
 
@@ -1018,7 +1077,7 @@ msgstr "Extra Grande"
 msgid "None"
 msgstr "Nenhum"
 
-#: app/helpers/cash_flows_helper.rb:11 app/helpers/application_helper.rb:277
+#: app/helpers/cash_flows_helper.rb:11 app/helpers/application_helper.rb:281
 #: app/views/cash_flows/_full_extract_for_month.rhtml:3
 #: app/views/cash_flows/_form.rhtml:7
 #: app/views/cash_flows/_full_extract_for_year.rhtml:3
@@ -1059,627 +1118,623 @@ msgstr "Date"
 msgid "Mês"
 msgstr "Mês"
 
-#: app/helpers/application_helper.rb:32
+#: app/helpers/application_helper.rb:33
 msgid "Alice Blue"
 msgstr "Azul Alice"
 
-#: app/helpers/application_helper.rb:33
+#: app/helpers/application_helper.rb:34
 msgid "Antique White"
 msgstr "Branco Antigo"
 
-#: app/helpers/application_helper.rb:34
+#: app/helpers/application_helper.rb:35
 msgid "Aqua"
 msgstr "Aqua"
 
-#: app/helpers/application_helper.rb:35
+#: app/helpers/application_helper.rb:36
 msgid "Aquamarine"
 msgstr "Aqua marinho"
 
-#: app/helpers/application_helper.rb:36
+#: app/helpers/application_helper.rb:37
 msgid "Azure"
 msgstr "Azure"
 
-#: app/helpers/application_helper.rb:37
+#: app/helpers/application_helper.rb:38
 msgid "Beige"
 msgstr "Bege"
 
-#: app/helpers/application_helper.rb:38
+#: app/helpers/application_helper.rb:39
 msgid "Bisque"
 msgstr ""
 
-#: app/helpers/application_helper.rb:39
+#: app/helpers/application_helper.rb:40
 msgid "Black"
 msgstr "Preto"
 
-#: app/helpers/application_helper.rb:40
+#: app/helpers/application_helper.rb:41
 msgid "Blanched Almond"
 msgstr ""
 
-#: app/helpers/application_helper.rb:41
+#: app/helpers/application_helper.rb:42
 msgid "Blue"
 msgstr "Azul"
 
-#: app/helpers/application_helper.rb:42
+#: app/helpers/application_helper.rb:43
 msgid "Blue Violet"
 msgstr "Violeta"
 
-#: app/helpers/application_helper.rb:43
+#: app/helpers/application_helper.rb:44
 msgid "Brown"
 msgstr "Marrom "
 
-#: app/helpers/application_helper.rb:44
+#: app/helpers/application_helper.rb:45
 msgid "Burly Wood"
 msgstr ""
 
-#: app/helpers/application_helper.rb:45
+#: app/helpers/application_helper.rb:46
 msgid "Cadet Blue"
 msgstr "Azul Cadete"
 
-#: app/helpers/application_helper.rb:46
+#: app/helpers/application_helper.rb:47
 msgid "Chartreuse"
 msgstr ""
 
-#: app/helpers/application_helper.rb:47
+#: app/helpers/application_helper.rb:48
 msgid "Chocolate"
 msgstr "Chocolate"
 
-#: app/helpers/application_helper.rb:48
+#: app/helpers/application_helper.rb:49
 msgid "Coral"
 msgstr "Coral"
 
-#: app/helpers/application_helper.rb:49
+#: app/helpers/application_helper.rb:50
 msgid "Cornflower Blue"
 msgstr "Azul Flor de Milho"
 
-#: app/helpers/application_helper.rb:50
+#: app/helpers/application_helper.rb:51
 msgid "Cornsilk"
 msgstr ""
 
-#: app/helpers/application_helper.rb:51
+#: app/helpers/application_helper.rb:52
 msgid "Crimson"
 msgstr "Cravo"
 
-#: app/helpers/application_helper.rb:52
+#: app/helpers/application_helper.rb:53
 msgid "Cyan"
 msgstr "Ciano"
 
-#: app/helpers/application_helper.rb:53
+#: app/helpers/application_helper.rb:54
 msgid "Dark Blue"
 msgstr "Azul Escuro"
 
-#: app/helpers/application_helper.rb:54
+#: app/helpers/application_helper.rb:55
 msgid "Dark Cyan"
 msgstr "Ciano Escuro"
 
-#: app/helpers/application_helper.rb:55
+#: app/helpers/application_helper.rb:56
 msgid "Dark Golden Rod"
 msgstr ""
 
-#: app/helpers/application_helper.rb:56
+#: app/helpers/application_helper.rb:57
 msgid "Dark Gray"
 msgstr "Cinza Escuro"
 
-#: app/helpers/application_helper.rb:57
+#: app/helpers/application_helper.rb:58
 msgid "Dark Grey"
 msgstr "Cinza Escuro"
 
-#: app/helpers/application_helper.rb:58
+#: app/helpers/application_helper.rb:59
 msgid "Dark Green"
 msgstr "Verde Escuro"
 
-#: app/helpers/application_helper.rb:59
+#: app/helpers/application_helper.rb:60
 msgid "Dark Khaki"
 msgstr "Cáqui Escuro"
 
-#: app/helpers/application_helper.rb:60
+#: app/helpers/application_helper.rb:61
 msgid "Dark Magenta"
 msgstr "Escarlate"
 
-#: app/helpers/application_helper.rb:61
+#: app/helpers/application_helper.rb:62
 msgid "Dark Olive Green"
 msgstr "Verde-oliva Escuro"
 
-#: app/helpers/application_helper.rb:62
+#: app/helpers/application_helper.rb:63
 msgid "Darkorange"
 msgstr "Laranja Escuro"
 
-#: app/helpers/application_helper.rb:63
+#: app/helpers/application_helper.rb:64
 msgid "Dark Orchid"
 msgstr "Orquídea Escuro"
 
-#: app/helpers/application_helper.rb:64
+#: app/helpers/application_helper.rb:65
 msgid "Dark Red"
 msgstr "Vermelho Escuro"
 
-#: app/helpers/application_helper.rb:65
+#: app/helpers/application_helper.rb:66
 msgid "Dark Salmon"
 msgstr "Salmão Escuro"
 
-#: app/helpers/application_helper.rb:66
+#: app/helpers/application_helper.rb:67
 msgid "Dark Sea Green"
 msgstr "Verde Marinho Escuro"
 
-#: app/helpers/application_helper.rb:67
+#: app/helpers/application_helper.rb:68
 msgid "Dark Slate Blue"
 msgstr ""
 
-#: app/helpers/application_helper.rb:68
+#: app/helpers/application_helper.rb:69
 msgid "Dark Slate Gray"
 msgstr ""
 
-#: app/helpers/application_helper.rb:69
+#: app/helpers/application_helper.rb:70
 msgid "Dark Slate Grey"
 msgstr ""
 
-#: app/helpers/application_helper.rb:70
+#: app/helpers/application_helper.rb:71
 msgid "Dark Turquoise"
 msgstr "Turquesa Escuro"
 
-#: app/helpers/application_helper.rb:71
+#: app/helpers/application_helper.rb:72
 msgid "Dark Violet"
 msgstr "Violeta Escuro"
 
-#: app/helpers/application_helper.rb:72
+#: app/helpers/application_helper.rb:73
 msgid "Deep Pink"
 msgstr "Rosa Profundo "
 
-#: app/helpers/application_helper.rb:73
+#: app/helpers/application_helper.rb:74
 msgid "Deep Sky Blue"
 msgstr "Azul Celeste Profundo"
 
-#: app/helpers/application_helper.rb:74
+#: app/helpers/application_helper.rb:75
 msgid "Dim Gray"
 msgstr ""
 
-#: app/helpers/application_helper.rb:75
+#: app/helpers/application_helper.rb:76
 msgid "Dim Grey"
 msgstr ""
 
-#: app/helpers/application_helper.rb:76
+#: app/helpers/application_helper.rb:77
 msgid "Dodger Blue"
 msgstr ""
 
-#: app/helpers/application_helper.rb:77
+#: app/helpers/application_helper.rb:78
 msgid "Fire Brick"
 msgstr "Vermelho Tijolo"
 
-#: app/helpers/application_helper.rb:78
+#: app/helpers/application_helper.rb:79
 msgid "Floral White"
 msgstr "Branco Floral"
 
-#: app/helpers/application_helper.rb:79
+#: app/helpers/application_helper.rb:80
 msgid "Forest Green"
 msgstr "Verde Floresta"
 
-#: app/helpers/application_helper.rb:80
+#: app/helpers/application_helper.rb:81
 msgid "Fuchsia"
 msgstr "Fúscia"
 
-#: app/helpers/application_helper.rb:81
+#: app/helpers/application_helper.rb:82
 msgid "Gainsboro"
 msgstr ""
 
-#: app/helpers/application_helper.rb:82
+#: app/helpers/application_helper.rb:83
 msgid "Ghost White"
 msgstr "Branco Fantasma"
 
-#: app/helpers/application_helper.rb:83
+#: app/helpers/application_helper.rb:84
 msgid "Gold"
 msgstr "Dourado"
 
-#: app/helpers/application_helper.rb:84
+#: app/helpers/application_helper.rb:85
 msgid "Golden Rod"
 msgstr ""
 
-#: app/helpers/application_helper.rb:85
+#: app/helpers/application_helper.rb:86
 msgid "Gray"
 msgstr "Cinza"
 
-#: app/helpers/application_helper.rb:86
+#: app/helpers/application_helper.rb:87
 msgid "Grey"
 msgstr "Cinza"
 
-#: app/helpers/application_helper.rb:87
+#: app/helpers/application_helper.rb:88
 msgid "Green"
 msgstr "Verde"
 
-#: app/helpers/application_helper.rb:88
+#: app/helpers/application_helper.rb:89
 msgid "Green Yellow"
 msgstr "Verde Amarelo"
 
-#: app/helpers/application_helper.rb:89
+#: app/helpers/application_helper.rb:90
 msgid "Honey Dew"
 msgstr ""
 
-#: app/helpers/application_helper.rb:90
+#: app/helpers/application_helper.rb:91
 msgid "Hot Pink"
 msgstr "Rosa Quente"
 
-#: app/helpers/application_helper.rb:91
+#: app/helpers/application_helper.rb:92
 msgid "Indian Red"
 msgstr "Vermelho Indiano"
 
-#: app/helpers/application_helper.rb:92
+#: app/helpers/application_helper.rb:93
 msgid "Indigo"
 msgstr ""
 
-#: app/helpers/application_helper.rb:93
+#: app/helpers/application_helper.rb:94
 msgid "Ivory"
 msgstr "Marfim"
 
-#: app/helpers/application_helper.rb:94
+#: app/helpers/application_helper.rb:95
 msgid "Khaki"
 msgstr "Cáqui"
 
-#: app/helpers/application_helper.rb:95
+#: app/helpers/application_helper.rb:96
 msgid "Lavender"
 msgstr ""
 
-#: app/helpers/application_helper.rb:96
+#: app/helpers/application_helper.rb:97
 msgid "Lavender Blush"
 msgstr ""
 
-#: app/helpers/application_helper.rb:97
+#: app/helpers/application_helper.rb:98
 msgid "Lawn Green"
 msgstr ""
 
-#: app/helpers/application_helper.rb:98
+#: app/helpers/application_helper.rb:99
 msgid "Lemon Chiffon"
 msgstr ""
 
-#: app/helpers/application_helper.rb:99
+#: app/helpers/application_helper.rb:100
 msgid "Light Blue"
 msgstr "Azul Claro"
 
-#: app/helpers/application_helper.rb:100
+#: app/helpers/application_helper.rb:101
 msgid "Light Coral"
 msgstr "Coral Claro"
 
-#: app/helpers/application_helper.rb:101
+#: app/helpers/application_helper.rb:102
 msgid "Light Cyan"
 msgstr "Ciano Claro"
 
-#: app/helpers/application_helper.rb:102
+#: app/helpers/application_helper.rb:103
 msgid "Light Golden Rod Yellow"
 msgstr ""
 
-#: app/helpers/application_helper.rb:103
+#: app/helpers/application_helper.rb:104
 msgid "Light Gray"
 msgstr "Cinza Claro"
 
-#: app/helpers/application_helper.rb:104
+#: app/helpers/application_helper.rb:105
 msgid "Light Grey"
 msgstr "Cinza Claro"
 
-#: app/helpers/application_helper.rb:105
+#: app/helpers/application_helper.rb:106
 msgid "Light Green"
 msgstr "Verde Claro"
 
-#: app/helpers/application_helper.rb:106
+#: app/helpers/application_helper.rb:107
 msgid "Light Pink"
 msgstr "Rosa Claro"
 
-#: app/helpers/application_helper.rb:107
+#: app/helpers/application_helper.rb:108
 msgid "Light Salmon"
 msgstr "Salmão Claro"
 
-#: app/helpers/application_helper.rb:108
+#: app/helpers/application_helper.rb:109
 msgid "Light Sea Green"
 msgstr "Verde Marinho Claro"
 
-#: app/helpers/application_helper.rb:109
+#: app/helpers/application_helper.rb:110
 msgid "Light Sky Blue"
 msgstr "Azul Celeste Claro"
 
-#: app/helpers/application_helper.rb:110
+#: app/helpers/application_helper.rb:111
 msgid "Light Slate Gray"
 msgstr ""
 
-#: app/helpers/application_helper.rb:111
+#: app/helpers/application_helper.rb:112
 msgid "Light Slate Grey"
 msgstr ""
 
-#: app/helpers/application_helper.rb:112
+#: app/helpers/application_helper.rb:113
 msgid "Light Steel Blue"
 msgstr "Azul Metálico Claro"
 
-#: app/helpers/application_helper.rb:113
+#: app/helpers/application_helper.rb:114
 msgid "Light Yellow"
 msgstr "Amarelo Claro"
 
-#: app/helpers/application_helper.rb:114
+#: app/helpers/application_helper.rb:115
 msgid "Lime"
 msgstr "Lima"
 
-#: app/helpers/application_helper.rb:115
+#: app/helpers/application_helper.rb:116
 msgid "Lime Green"
 msgstr "Verde Lima"
 
-#: app/helpers/application_helper.rb:116
+#: app/helpers/application_helper.rb:117
 msgid "Linen"
 msgstr ""
 
-#: app/helpers/application_helper.rb:117
+#: app/helpers/application_helper.rb:118
 msgid "Magenta"
 msgstr "Escarlate"
 
-#: app/helpers/application_helper.rb:118
+#: app/helpers/application_helper.rb:119
 msgid "Maroon"
 msgstr ""
 
-#: app/helpers/application_helper.rb:119
+#: app/helpers/application_helper.rb:120
 msgid "Medium Aqua Marine"
 msgstr "Aque Marinho Médio"
 
-#: app/helpers/application_helper.rb:120
+#: app/helpers/application_helper.rb:121
 msgid "Medium Blue"
 msgstr "Azul Médio"
 
-#: app/helpers/application_helper.rb:121
+#: app/helpers/application_helper.rb:122
 msgid "Medium Orchid"
 msgstr "Orquídea Médio"
 
-#: app/helpers/application_helper.rb:122
+#: app/helpers/application_helper.rb:123
 msgid "Medium Purple"
 msgstr "Roxo Médio"
 
-#: app/helpers/application_helper.rb:123
+#: app/helpers/application_helper.rb:124
 msgid "Medium Sea Green"
 msgstr "Verde Marinho Médio "
 
-#: app/helpers/application_helper.rb:124
+#: app/helpers/application_helper.rb:125
 msgid "Medium Slate Blue"
 msgstr ""
 
-#: app/helpers/application_helper.rb:125
+#: app/helpers/application_helper.rb:126
 msgid "Medium Spring Green"
 msgstr "Verde Primavera Médio"
 
-#: app/helpers/application_helper.rb:126
+#: app/helpers/application_helper.rb:127
 msgid "Medium Turquoise"
 msgstr "Turquesa Médio"
 
-#: app/helpers/application_helper.rb:127
+#: app/helpers/application_helper.rb:128
 msgid "Medium Violet Red"
 msgstr "Vermelho Violeta Médio"
 
-#: app/helpers/application_helper.rb:128
+#: app/helpers/application_helper.rb:129
 msgid "Midnight Blue"
 msgstr "Azul Meia-Noite"
 
-#: app/helpers/application_helper.rb:129
+#: app/helpers/application_helper.rb:130
 msgid "Mint Cream"
 msgstr "Creme de Menta"
 
-#: app/helpers/application_helper.rb:130
+#: app/helpers/application_helper.rb:131
 msgid "Misty Rose"
 msgstr "Rosa Enevoado"
 
-#: app/helpers/application_helper.rb:131
+#: app/helpers/application_helper.rb:132
 msgid "Moccasin"
 msgstr "Mocassim"
 
-#: app/helpers/application_helper.rb:132
+#: app/helpers/application_helper.rb:133
 msgid "Navajo White"
 msgstr ""
 
-#: app/helpers/application_helper.rb:133
+#: app/helpers/application_helper.rb:134
 msgid "Navy"
 msgstr "Marinha"
 
-#: app/helpers/application_helper.rb:134
+#: app/helpers/application_helper.rb:135
 msgid "Old Lace"
 msgstr ""
 
-#: app/helpers/application_helper.rb:135
+#: app/helpers/application_helper.rb:136
 msgid "Olive"
 msgstr "Oliva"
 
-#: app/helpers/application_helper.rb:136
+#: app/helpers/application_helper.rb:137
 msgid "Olive Drab"
 msgstr ""
 
-#: app/helpers/application_helper.rb:137
+#: app/helpers/application_helper.rb:138
 msgid "Orange"
 msgstr "Laranja"
 
-#: app/helpers/application_helper.rb:138
+#: app/helpers/application_helper.rb:139
 msgid "Orange Red"
 msgstr "Vermelho Laranja"
 
-#: app/helpers/application_helper.rb:139
+#: app/helpers/application_helper.rb:140
 msgid "Orchid"
 msgstr "Orquídea"
 
-#: app/helpers/application_helper.rb:140
+#: app/helpers/application_helper.rb:141
 msgid "Pale Golden Rod"
 msgstr ""
 
-#: app/helpers/application_helper.rb:141
+#: app/helpers/application_helper.rb:142
 msgid "Pale Green"
 msgstr "Verde Claro"
 
-#: app/helpers/application_helper.rb:142
+#: app/helpers/application_helper.rb:143
 msgid "Pale Turquoise"
 msgstr "Turquesa Claro"
 
-#: app/helpers/application_helper.rb:143
+#: app/helpers/application_helper.rb:144
 msgid "Pale Violet Red"
 msgstr "Vermelho Violeta Claro"
 
-#: app/helpers/application_helper.rb:144
+#: app/helpers/application_helper.rb:145
 msgid "Papaya Whip"
 msgstr "Mamão"
 
-#: app/helpers/application_helper.rb:145
+#: app/helpers/application_helper.rb:146
 msgid "Peach Puff"
 msgstr "Pêssego"
 
-#: app/helpers/application_helper.rb:146
+#: app/helpers/application_helper.rb:147
 msgid "Peru"
 msgstr "Peru"
 
-#: app/helpers/application_helper.rb:147
+#: app/helpers/application_helper.rb:148
 msgid "Pink"
 msgstr "Rosa"
 
-#: app/helpers/application_helper.rb:148
+#: app/helpers/application_helper.rb:149
 msgid "Plum"
 msgstr ""
 
-#: app/helpers/application_helper.rb:149
+#: app/helpers/application_helper.rb:150
 msgid "Powder Blue"
 msgstr "Azul Pólvora"
 
-#: app/helpers/application_helper.rb:150
+#: app/helpers/application_helper.rb:151
 msgid "Purple"
 msgstr "Roxo"
 
-#: app/helpers/application_helper.rb:151
+#: app/helpers/application_helper.rb:152
 msgid "Red"
 msgstr "Vermelho"
 
-#: app/helpers/application_helper.rb:152
+#: app/helpers/application_helper.rb:153
 msgid "Rosy Brown"
 msgstr ""
 
-#: app/helpers/application_helper.rb:153
+#: app/helpers/application_helper.rb:154
 msgid "Royal Blue"
 msgstr "Azul Real"
 
-#: app/helpers/application_helper.rb:154
+#: app/helpers/application_helper.rb:155
 msgid "Saddle Brown"
 msgstr ""
 
-#: app/helpers/application_helper.rb:155
+#: app/helpers/application_helper.rb:156
 msgid "Salmon"
 msgstr "Salmão"
 
-#: app/helpers/application_helper.rb:156
+#: app/helpers/application_helper.rb:157
 msgid "Sandy Brown"
 msgstr "Marrom Areia"
 
-#: app/helpers/application_helper.rb:157
+#: app/helpers/application_helper.rb:158
 msgid "Sea Green"
 msgstr "Verde Marinho"
 
-#: app/helpers/application_helper.rb:158
+#: app/helpers/application_helper.rb:159
 msgid "Sea Shell"
 msgstr "Concha Marinha"
 
-#: app/helpers/application_helper.rb:159
+#: app/helpers/application_helper.rb:160
 msgid "Sienna"
 msgstr ""
 
-#: app/helpers/application_helper.rb:160
+#: app/helpers/application_helper.rb:161
 msgid "Silver"
 msgstr "Prata"
 
-#: app/helpers/application_helper.rb:161
+#: app/helpers/application_helper.rb:162
 msgid "Sky Blue"
 msgstr "Azul Celeste"
 
-#: app/helpers/application_helper.rb:162
+#: app/helpers/application_helper.rb:163
 msgid "Slate Blue"
 msgstr ""
 
-#: app/helpers/application_helper.rb:163
+#: app/helpers/application_helper.rb:164
 msgid "Slate Gray"
 msgstr ""
 
-#: app/helpers/application_helper.rb:164
+#: app/helpers/application_helper.rb:165
 msgid "Slate Grey"
 msgstr ""
 
-#: app/helpers/application_helper.rb:165
+#: app/helpers/application_helper.rb:166
 msgid "Snow"
 msgstr "Neve"
 
-#: app/helpers/application_helper.rb:166
+#: app/helpers/application_helper.rb:167
 msgid "Spring Green"
 msgstr "Verde Primavera"
 
-#: app/helpers/application_helper.rb:167
+#: app/helpers/application_helper.rb:168
 msgid "Steel Blue"
 msgstr "Azul Metálico"
 
-#: app/helpers/application_helper.rb:168
+#: app/helpers/application_helper.rb:169
 msgid "Tan"
 msgstr ""
 
-#: app/helpers/application_helper.rb:169
+#: app/helpers/application_helper.rb:170
 msgid "Teal"
 msgstr ""
 
-#: app/helpers/application_helper.rb:170
+#: app/helpers/application_helper.rb:171
 msgid "Thistle"
 msgstr ""
 
-#: app/helpers/application_helper.rb:171
+#: app/helpers/application_helper.rb:172
 msgid "Tomato"
 msgstr "Tomate"
 
-#: app/helpers/application_helper.rb:172
+#: app/helpers/application_helper.rb:173
 msgid "Turquoise"
 msgstr "Turquesa"
 
-#: app/helpers/application_helper.rb:173
+#: app/helpers/application_helper.rb:174
 msgid "Violet"
 msgstr "Violeta "
 
-#: app/helpers/application_helper.rb:174
+#: app/helpers/application_helper.rb:175
 msgid "Wheat"
 msgstr ""
 
-#: app/helpers/application_helper.rb:175
+#: app/helpers/application_helper.rb:176
 msgid "White"
 msgstr "Branco"
 
-#: app/helpers/application_helper.rb:176
+#: app/helpers/application_helper.rb:177
 msgid "White Smoke"
 msgstr "Branco Fumaça"
 
-#: app/helpers/application_helper.rb:177
+#: app/helpers/application_helper.rb:178
 msgid "Yellow"
 msgstr "Amarelo"
 
-#: app/helpers/application_helper.rb:178
+#: app/helpers/application_helper.rb:179
 msgid "Yellow Green"
 msgstr "Verde Amarelado"
 
-#: app/helpers/application_helper.rb:194
+#: app/helpers/application_helper.rb:195
 msgid "%{year}/%{month}/%{day}"
 msgstr ""
 
-#: app/helpers/application_helper.rb:210
-msgid "Ok"
-msgstr "OK"
-
-#: app/helpers/application_helper.rb:244
+#: app/helpers/application_helper.rb:248
 msgid "User administration"
 msgstr "Administração de usuários"
 
-#: app/helpers/application_helper.rb:245
+#: app/helpers/application_helper.rb:249
 msgid "Registers"
 msgstr "Cadastro"
 
-#: app/helpers/application_helper.rb:249
+#: app/helpers/application_helper.rb:253
 msgid "Commercial Proposals"
 msgstr "Propostas Comerciais"
 
-#: app/helpers/application_helper.rb:276
+#: app/helpers/application_helper.rb:280
 msgid "Cash Flow"
 msgstr "Fluxo de Caixa"
 
-#: app/helpers/application_helper.rb:278 app/views/cash_flows/_form.rhtml:13
+#: app/helpers/application_helper.rb:282 app/views/cash_flows/_form.rhtml:13
 msgid "Specification"
 msgstr "Especificação"
 
-#: app/helpers/application_helper.rb:384 app/views/products/images.rhtml:15
+#: app/helpers/application_helper.rb:388 app/views/products/images.rhtml:15
 msgid "Add"
 msgstr "Adicionar "
 
-#: app/helpers/application_helper.rb:386 app/views/stock/history.rhtml:14
+#: app/helpers/application_helper.rb:390 app/views/stock/history.rhtml:14
 #: app/views/users/list.rhtml:11
 #: app/views/commercial_proposal_items/_list.rhtml:5
 #: app/views/ledger_categories/edit.rhtml:5
@@ -1688,12 +1743,12 @@ msgstr "Adicionar "
 #: app/views/customer_categories/_list.rhtml:4
 #: app/views/organizations/list.rhtml:16 app/views/configuration/_show.rhtml:7
 #: app/views/configuration/_list.rhtml:17 app/views/suppliers/list.rhtml:12
-#: app/views/departments/list.rhtml:8
+#: app/views/departments/list.rhtml:21
 #: app/views/contact_positions/list.rhtml:15
-#: app/views/product_categories/_list.rhtml:4 app/views/products/list.rhtml:30
+#: app/views/product_categories/_list.rhtml:4 app/views/products/list.rhtml:22
 #: app/views/mass_mails/list.rhtml:9 app/views/customers/_edit.rhtml:10
 #: app/views/customers/list.rhtml:12 app/views/customers/show.rhtml:52
-#: app/views/categories/_list.rhtml:4
+#: app/views/system_actors/list.rhtml:26 app/views/categories/_list.rhtml:4
 msgid "Edit"
 msgstr "Editar"
 
@@ -1719,14 +1774,15 @@ msgid "Create"
 msgstr "Criar"
 
 #: app/views/stock/_new.rhtml:9 app/views/suppliers/_new.rhtml:9
-#: app/views/departments/_new.rhtml:9 app/views/products/_new.rhtml:9
-#: app/views/products/edit.rhtml:11 app/views/customers/_new.rhtml:10
-#: app/views/customers/_edit.rhtml:11 app/views/system_actors/_new.rhtml:10
+#: app/views/departments/_new.rhtml:9 app/views/products/new.rhtml:8
+#: app/views/products/_new.rhtml:9 app/views/customers/_new.rhtml:10
+#: app/views/customers/_edit.rhtml:11 app/views/system_actors/new.rhtml:8
+#: app/views/system_actors/_new.rhtml:10
 msgid "Reset"
 msgstr "Reiniciar"
 
 #: app/views/stock/_form.rhtml:9 app/views/stock/history.rhtml:6
-#: app/views/stock/new_entry.rhtml:13 app/views/point_of_sale/main.rhtml:19
+#: app/views/stock/new_entry.rhtml:13 app/views/point_of_sale/main.rhtml:33
 msgid "Ammount"
 msgstr "Quantidade"
 
@@ -1762,7 +1818,7 @@ msgstr "Editar entrada"
 #: app/views/product_categories/edit.rhtml:6 app/views/products/edit.rhtml:9
 #: app/views/mass_mails/edit.rhtml:6 app/views/customers/edit_contact.rhtml:6
 #: app/views/customers/edit.rhtml:6 app/views/system_actors/_edit.rhtml:10
-#: app/views/categories/edit.rhtml:6
+#: app/views/system_actors/edit.rhtml:6 app/views/categories/edit.rhtml:6
 msgid "Save"
 msgstr "Salvar"
 
@@ -1781,8 +1837,8 @@ msgstr "Salvar"
 #: app/views/product_categories/edit.rhtml:7 app/views/products/edit.rhtml:10
 #: app/views/mass_mails/edit.rhtml:7 app/views/customers/edit_contact.rhtml:7
 #: app/views/customers/edit.rhtml:7 app/views/system_actors/new.rhtml:7
-#: app/views/system_actors/_edit.rhtml:11 app/views/categories/new.rhtml:7
-#: app/views/categories/edit.rhtml:7
+#: app/views/system_actors/_edit.rhtml:11 app/views/system_actors/edit.rhtml:7
+#: app/views/categories/new.rhtml:7 app/views/categories/edit.rhtml:7
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -1797,9 +1853,9 @@ msgstr "Preço"
 #: app/views/stock/history.rhtml:13
 #: app/views/commercial_proposals/list.rhtml:7
 #: app/views/configuration/_list.rhtml:16 app/views/suppliers/list.rhtml:11
-#: app/views/departments/list.rhtml:7 app/views/products/list.rhtml:29
+#: app/views/departments/list.rhtml:20 app/views/products/list.rhtml:21
 #: app/views/mass_mails/list.rhtml:8 app/views/customers/list.rhtml:11
-#: app/views/customers/show.rhtml:51
+#: app/views/customers/show.rhtml:51 app/views/system_actors/list.rhtml:25
 msgid "Show"
 msgstr "Mostrar"
 
@@ -1807,11 +1863,12 @@ msgstr "Mostrar"
 #: app/views/commercial_proposals/list.rhtml:9
 #: app/views/customer_categories/_list.rhtml:5
 #: app/views/configuration/_list.rhtml:18 app/views/suppliers/list.rhtml:13
-#: app/views/departments/list.rhtml:9
+#: app/views/departments/list.rhtml:22
 #: app/views/contact_positions/list.rhtml:16
-#: app/views/product_categories/_list.rhtml:5 app/views/products/list.rhtml:31
+#: app/views/product_categories/_list.rhtml:5 app/views/products/list.rhtml:23
 #: app/views/mass_mails/list.rhtml:10 app/views/customers/list.rhtml:13
-#: app/views/customers/show.rhtml:53 app/views/categories/_list.rhtml:5
+#: app/views/customers/show.rhtml:53 app/views/system_actors/list.rhtml:27
+#: app/views/categories/_list.rhtml:5
 msgid "Destroy"
 msgstr "Destruir"
 
@@ -1819,12 +1876,13 @@ msgstr "Destruir"
 #: app/views/commercial_proposals/list.rhtml:9
 #: app/views/customer_categories/_list.rhtml:5
 #: app/views/organizations/list.rhtml:17 app/views/suppliers/list.rhtml:13
-#: app/views/departments/list.rhtml:9
+#: app/views/departments/list.rhtml:24
 #: app/views/contact_positions/list.rhtml:16
 #: app/views/product_categories/_list.rhtml:5
-#: app/views/products/images.rhtml:32 app/views/products/list.rhtml:31
+#: app/views/products/images.rhtml:30 app/views/products/list.rhtml:25
 #: app/views/mass_mails/list.rhtml:10 app/views/customers/list.rhtml:13
-#: app/views/customers/show.rhtml:53 app/views/categories/_list.rhtml:5
+#: app/views/customers/show.rhtml:53 app/views/system_actors/list.rhtml:29
+#: app/views/categories/_list.rhtml:5
 msgid "Are you sure?"
 msgstr "Tem certeza?"
 
@@ -1849,11 +1907,11 @@ msgstr "Login"
 msgid "Password"
 msgstr "Senha"
 
-#: app/views/users/login.rhtml:14
+#: app/views/users/login.rhtml:15
 msgid "Log in"
 msgstr "Efetuar login"
 
-#: app/views/users/login.rhtml:15 app/views/users/signup.rhtml:6
+#: app/views/users/login.rhtml:18 app/views/users/signup.rhtml:6
 msgid "Sign up"
 msgstr "Registrar-se"
 
@@ -1890,13 +1948,13 @@ msgid "New item"
 msgstr "Novo item"
 
 #: app/views/commercial_proposal_items/_new.rhtml:8
-#: app/views/layouts/point_of_sale.rhtml:21
+#: app/views/layouts/point_of_sale.rhtml:24
 #: app/views/commercial_proposal_sections/_new.rhtml:8
 msgid "Close"
 msgstr "Fechar"
 
 #: app/views/commercial_proposal_items/_new.rhtml:9
-#: app/views/point_of_sale/main.rhtml:22
+#: app/views/point_of_sale/main.rhtml:20
 msgid "Add item"
 msgstr "Adicionar item"
 
@@ -1924,45 +1982,49 @@ msgstr "Remover"
 msgid "Are you sure"
 msgstr "Você tem certeza"
 
-#: app/views/layouts/organization.rhtml:21
+#: app/views/layouts/login.rhtml:5
+msgid "Abelo &rarr; Login"
+msgstr ""
+
+#: app/views/layouts/organization.rhtml:23
 #: app/views/organizations/list.rhtml:7
 msgid "CNPJ"
 msgstr "CNPJ"
 
-#: app/views/layouts/organization.rhtml:28
+#: app/views/layouts/organization.rhtml:30
 msgid "Go to"
 msgstr "Ir para"
 
-#: app/views/layouts/organization.rhtml:29
+#: app/views/layouts/organization.rhtml:31
 msgid "Edit personal information"
 msgstr "Editar informação pessoal"
 
-#: app/views/layouts/organization.rhtml:30
+#: app/views/layouts/organization.rhtml:32
 msgid "Logout"
 msgstr "Sair"
 
-#: app/views/layouts/organization.rhtml:30
-#: app/views/layouts/point_of_sale.rhtml:21
+#: app/views/layouts/organization.rhtml:32
+#: app/views/layouts/point_of_sale.rhtml:24
 msgid "Exit from system?"
 msgstr "Sair do sistema?"
 
-#: app/views/layouts/point_of_sale.rhtml:19
+#: app/views/layouts/point_of_sale.rhtml:22
 msgid "Edit preferences"
 msgstr ""
 
-#: app/views/layouts/point_of_sale.rhtml:24
+#: app/views/layouts/point_of_sale.rhtml:27
 msgid "Salesman: %s"
 msgstr "Venderdor: %s"
 
-#: app/views/layouts/point_of_sale.rhtml:35
+#: app/views/layouts/point_of_sale.rhtml:40
 msgid "Payment"
 msgstr "Pagamento"
 
-#: app/views/layouts/point_of_sale.rhtml:36
+#: app/views/layouts/point_of_sale.rhtml:41
 msgid "Cancel sale"
 msgstr "Cancelar venda"
 
-#: app/views/layouts/point_of_sale.rhtml:36
+#: app/views/layouts/point_of_sale.rhtml:41
 msgid "Are you sure you want to cancel this sale?"
 msgstr "Você tem certeza que quer cancelar esta venda?"
 
@@ -2048,8 +2110,9 @@ msgid "or"
 msgstr "ou"
 
 #: app/views/point_of_sale/_table.rhtml:3 app/views/suppliers/_form.rhtml:28
-#: app/views/suppliers/list.rhtml:6 app/views/products/_form.rhtml:5
-#: app/views/products/images.rhtml:7 app/views/system_actors/_form.rhtml:28
+#: app/views/suppliers/list.rhtml:6 app/views/products/_form.rhtml:6
+#: app/views/products/_form.rhtml:27 app/views/products/images.rhtml:7
+#: app/views/system_actors/_form.rhtml:28
 msgid "Description"
 msgstr "Descrição"
 
@@ -2061,25 +2124,19 @@ msgstr "Quantidade"
 msgid "Unitary price"
 msgstr "Preço unitário"
 
-#: app/views/point_of_sale/main.rhtml:10
-msgid "Add items"
-msgstr "Adicionar itens"
-
-#: app/views/point_of_sale/main.rhtml:14
+#: app/views/point_of_sale/main.rhtml:16
 msgid "An error occurred when adding the item to this sale:"
 msgstr "Aconteceu um erro ao adicionar esse item à venda:"
 
-#: app/views/point_of_sale/main.rhtml:17 app/views/categories/index.rhtml:4
-msgid "Product"
+#: app/views/point_of_sale/main.rhtml:23
+#, fuzzy
+msgid "Product code"
 msgstr "Produto"
 
 #: app/views/point_of_sale/main.rhtml:29
-msgid "Select customer"
-msgstr "Selecionar consumidor"
-
-#: app/views/point_of_sale/main.rhtml:32
-msgid "Unidentified customer"
-msgstr "Consumidor não identificado"
+#, fuzzy
+msgid "Unitary Value"
+msgstr "Valor unitário"
 
 #: app/views/point_of_sale/index.rhtml:4
 msgid "Pending sales:"
@@ -2187,7 +2244,8 @@ msgstr "Nova Organização"
 
 #: app/views/configuration/_new_historical.rhtml:1
 #: app/views/configuration/_new.rhtml:1 app/views/configuration/_list.rhtml:23
-#: app/views/system_actors/_new.rhtml:2 app/views/system_actors/list.rhtml:21
+#: app/views/system_actors/new.rhtml:1 app/views/system_actors/_new.rhtml:2
+#: app/views/system_actors/list.rhtml:11
 msgid "New %s"
 msgstr "Novo %s"
 
@@ -2273,11 +2331,16 @@ msgstr "Novo departamento"
 msgid "Edit department"
 msgstr "Editar departamento"
 
-#: app/views/departments/list.rhtml:1
+#: app/views/departments/list.rhtml:2
 msgid "Listing departments"
 msgstr "Listando departamentos"
 
-#: app/views/departments/list.rhtml:17
+#: app/views/departments/list.rhtml:6
+#, fuzzy
+msgid "Search department"
+msgstr "Novo departamento"
+
+#: app/views/departments/list.rhtml:7
 msgid "New department"
 msgstr "Novo departamento"
 
@@ -2487,17 +2550,14 @@ msgstr "Gerar extrato"
 msgid "Code"
 msgstr "Código"
 
-#: app/views/products/_new.rhtml:2 app/views/products/list.rhtml:17
+#: app/views/products/new.rhtml:1 app/views/products/_new.rhtml:2
+#: app/views/products/list.rhtml:7
 msgid "New product"
 msgstr "Novo produto"
 
-#: app/views/products/_form.rhtml:8 app/views/system_actors/_form.rhtml:25
+#: app/views/products/_form.rhtml:9 app/views/system_actors/_form.rhtml:25
 msgid "Category"
 msgstr "Categoria"
-
-#: app/views/products/_form.rhtml:11
-msgid "Suppliers"
-msgstr "Fornecedores"
 
 #: app/views/products/_form.rhtml:15
 msgid "Size"
@@ -2531,7 +2591,7 @@ msgstr "Arquivo de imagem"
 msgid "Current images"
 msgstr "Imagens atuais"
 
-#: app/views/products/images.rhtml:32
+#: app/views/products/images.rhtml:30
 msgid "Remove image"
 msgstr "Remover imagem"
 
@@ -2539,23 +2599,24 @@ msgstr "Remover imagem"
 msgid "Listing products"
 msgstr "Listando produtos"
 
-#: app/views/products/list.rhtml:16
+#: app/views/products/list.rhtml:6
 msgid "Search product"
 msgstr "Busca produto"
 
-#: app/views/products/list.rhtml:26
+#: app/views/products/list.rhtml:27
 msgid "Code:"
 msgstr "Código:"
 
-#: app/views/products/list.rhtml:28 app/views/products/show.rhtml:3
+#: app/views/products/list.rhtml:29 app/views/products/show.rhtml:3
 msgid "Price:"
 msgstr "Preço:"
 
 #: app/views/products/edit.rhtml:2
-msgid "Editing Product"
+#, fuzzy
+msgid "Editing product"
 msgstr "Editando Produto"
 
-#: app/views/products/edit.rhtml:12
+#: app/views/products/edit.rhtml:11
 msgid "Images"
 msgstr "Imagens"
 
@@ -2566,10 +2627,6 @@ msgstr "Assunto:"
 #: app/views/mass_mails/_message.rhtml:1
 msgid "Has been sent successfully!"
 msgstr "Enviado com sucesso!"
-
-#: app/views/mass_mails/filter_customers.rhtml:2
-msgid "Customers"
-msgstr "Consumidores"
 
 #: app/views/mass_mails/list.rhtml:1
 msgid "Listing mass mail"
@@ -2662,12 +2719,8 @@ msgstr "Contatos:"
 msgid "New contact"
 msgstr "Novo contato"
 
-#: app/views/system_actors/new.rhtml:1
-msgid "New worker"
-msgstr "Novo trabalhador"
-
 #: app/views/system_actors/_show.rhtml:23
-#: app/views/system_actors/list.rhtml:30 app/views/system_actors/show.rhtml:23
+#: app/views/system_actors/list.rhtml:31 app/views/system_actors/show.rhtml:23
 msgid "Function:"
 msgstr "Função:"
 
@@ -2683,13 +2736,18 @@ msgstr "Dia de nascimento"
 msgid "Edit %s"
 msgstr "Editar %s"
 
-#: app/views/system_actors/list.rhtml:11
+#: app/views/system_actors/list.rhtml:10
 msgid "Search %s"
 msgstr "Busca %s"
 
-#: app/views/system_actors/list.rhtml:29
+#: app/views/system_actors/list.rhtml:30
 msgid "Name:"
 msgstr "Nome:"
+
+#: app/views/system_actors/edit.rhtml:1
+#, fuzzy
+msgid "Editing %s"
+msgstr "Editando \"%s\""
 
 #: app/views/categories/new.rhtml:1
 msgid "New Category"
@@ -2707,9 +2765,34 @@ msgstr "Nova categoria superior"
 msgid "Editing Category"
 msgstr "Editando Categoria"
 
+#: app/views/categories/index.rhtml:4
+msgid "Product"
+msgstr "Produto"
+
 #: app/views/categories/index.rhtml:7
 msgid "Ledgers"
 msgstr "Livro Contábil"
+
+#~ msgid "ContactPosition|Name"
+#~ msgstr "PosiçãoDeContato|Nome"
+
+#~ msgid "ContactPosition|Organization"
+#~ msgstr "PosiçãoDeContato|Organização"
+
+#~ msgid "Ok"
+#~ msgstr "OK"
+
+#~ msgid "Add items"
+#~ msgstr "Adicionar itens"
+
+#~ msgid "Select customer"
+#~ msgstr "Selecionar consumidor"
+
+#~ msgid "Unidentified customer"
+#~ msgstr "Consumidor não identificado"
+
+#~ msgid "New worker"
+#~ msgstr "Novo trabalhador"
 
 #~ msgid "Items"
 #~ msgstr "Itens"
@@ -2723,14 +2806,8 @@ msgstr "Livro Contábil"
 #~ msgid "Contact|Position"
 #~ msgstr "Contato|Posição"
 
-#~ msgid "Products"
-#~ msgstr "Produtos"
-
 #~ msgid "Contact Positions"
 #~ msgstr "Posições de Contato"
-
-#~ msgid "Workers"
-#~ msgstr "Empregados"
 
 #~ msgid "Mass Mails"
 #~ msgstr "Emails em Massa"

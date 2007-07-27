@@ -1,7 +1,9 @@
 <%= error_messages_for 'department' %>
 
 <!--[form:department]-->
-<p><label for="department_name">Name</label><br/>
-<%= text_field 'department', 'name'  %></p>
+<div id="form_reg">
+  <p><label for="department_name"><%= _('Name')%></label><br/>
+  <%= text_field 'department', 'name'  %></p>
+</div>
 <!--[eoform:department]-->
 

@@ -7,11 +7,16 @@ module ApplicationHelper
   ]
 
   def button(title, type, url_options = {}, html_options = {})
-    local_html_options = html_options.merge({ :class => "button button_#{type}" })
-    if [ :save ].include? type 
-      submit_tag(title, local_html_options)
+    html_options[:class] ||= "button button_#{type}"
+    html_options[:title] ||= title
+    if [ :save ].include? type
+      # !! Opção Ultrapassada !!
+      # submit_tag() gera uma tag diferente de link_to() e impede estruturas filhas
+      # por usar <input>. por isso é bom usar submit_tag() explicitamente em lugar
+      # de button() para que fique claro que algo diferente esta sendo usado.
+      submit_tag( '* Use submit_tag() em lugar de button() para este caso * '+ title, html_options)
     else
-      link_to(title, url_options, local_html_options)
+      link_to( content_tag( 'span', title), url_options, html_options)
     end
   end
 
@@ -391,18 +396,18 @@ module ApplicationHelper
     content_tag(
       'li', 
       content.map{ |c|
-      if c.class == Hash 
-      content_tag(
-        'div',
-        content_tag('strong', c[:title]) + 
-        " "+
-        content_tag('span', c[:content]),
-        :class => "list_item_#{c[:option]}"
-      )
-      else
-      c
-      end
-      },
+        if c.class == Hash 
+          content_tag(
+            'div',
+            content_tag('strong', c[:title]) + 
+            " " +
+            content_tag('span', c[:content]),
+            :class => "list_item_#{c[:option]}"
+          )
+        else
+          c
+        end
+      }.join("\n"),
       :class => html_options[:li_options])
   end
 

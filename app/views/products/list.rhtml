@@ -1,15 +1,10 @@
 
 <%= title _('Listing products') %>
 
-<%= 
-#TODO fix it this filed cannot be called system_actor name
-%>
-
-<% form_tag :action => 'list' do %>
-
-<%= text_field 'product', 'description'  %>
-<%= submit_tag(_("Search product"), { :class => 'button button_search' }) %>
-
+<% form_tag ( { :action => 'list' }, { :class => 'search_itens' } ) do %>
+  <%= text_field 'product', 'description', :class => 'filter_field'  %>
+  <%= submit_tag( '', { :class => 'button button_search', :title => _('Search product') }) %>
+  <%= button (_("New product"), :new, :action => 'new' ) %>
 <% end %>
 
 <div class="auto_complete" id="product_description_auto_complete"></div>
@@ -17,25 +12,24 @@
 <div id="auto_list" style="display:none;">
 </div>
 
-<div class="manage_buttons">
-  <%= button (_("New product"), :new, :action => 'new' ) %>
-</div>
-
-<ul class="products">
+<ul class="info_list products">
 <% @products.sort_by{|pr| pr.description}.map do |p| %>
   <%=
   display_list(
     [
+      { :content => [
+          button (_('Show'), :show, :action => 'show', :id => p.id),
+          button (_('Edit'), :edit, :action => 'edit', :id => p.id),
+          button (_('Destroy'), :destroy, {:action => 'destroy', :id => p.id},
+                                :post => true,
+                                :confirm => _('Are you sure?'))], :option => 'button' },
       { :content => p.images.map{|i| show_image i}[0], :option => 'img' }, 
       { :title => _('Code:'), :content => p.id, :option => 'code' },
       { :content =>  p.description, :option => 'name' },
       { :title => _('Price:'), :content => p.sell_price, :option => 'price'},
-      { :content => button (_('Show'), :show, :action => 'show', :id => p.id), :option => 'button' },
-      { :content => button (_('Edit'), :edit, :action => 'edit', :id => p.id), :option => 'button' },
-      { :content => button (_('Destroy'), :destroy, {:action => 'destroy', :id => p.id}, :post => true, :confirm => _('Are you sure?')), :option => 'button' }  
+      '<br style="clear:both"/>'
     ]
    )
-  %>
-  <% end %>
+  %><% end %>
 </ul>
 <%= pagination_links(@product_pages, :params => {:query => @query}) %>

@@ -1,0 +1,25 @@
+.button{
+  float: left;
+  border: none;
+  display: block;
+  opacity: 0.6;
+  margin-left: 5px;
+  width: 24px;
+  height: 24px;
+  background: url(/icons/aurium_neu/24x24/bt_none.png);
+  background-repeat: no-repeat;
+}
+
+.button:hover {
+  opacity: 1;
+}
+
+.button span {
+  display: none;
+}
+
+.button_search  { background: url(/icons/aurium_neu/24x24/lupa.png) }
+.button_new     { background: url(/icons/aurium_neu/24x24/add.png) }
+.button_show    { background: url(/icons/aurium_neu/24x24/view.png) }
+.button_edit    { background: url(/icons/aurium_neu/24x24/edit.png) }
+.button_destroy { background: url(/icons/aurium_neu/24x24/del.png) }

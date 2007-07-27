@@ -1,0 +1,50 @@
+
+.filter_field {
+  border: 1px solid #C96;
+  color: #753;
+  padding: 2px 0px;
+  text-align: center;
+  width: 200px;
+  float: left;
+}
+
+.info_list {
+  clear: left;
+  margin: 0px;
+  padding: 5px 0px 0px 0px;
+  list-style: none;
+  width: 300px;
+}
+
+.info_list li {
+  clear: left;
+  margin: 5px 0px;
+  padding: 4px 4px 4px 6px;
+  list-style: none;
+  background: #FFFCF8;
+  border: 2px solid #963;
+}
+
+.info_list div {
+  display: inline;
+  padding: 0px 4px;
+}
+.info_list img {
+  float: left;
+  margin: 0px 8px 0px -2px;
+  padding: 3px;
+  background: #F4E4D0;
+  border: 2px solid #B97;
+}
+
+.info_list .list_item_code {
+  display: block;
+  font-size: 80%;
+}
+
+.info_list div.list_item_button {
+  float: right;
+}
+.info_list div.list_item_button .button {
+  float: none;
+}

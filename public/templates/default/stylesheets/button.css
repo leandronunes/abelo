@@ -53,7 +53,7 @@
 }
 
 .beault_button span, .beault_button input {
-  color: #FFF;
+  color: #654;
   height: 30px;
   line-height: 30px;
   font-size: 13px;
@@ -69,5 +69,5 @@
 }
 
 .beault_button :hover {
-  color: #FFF !important;
+  color: #543 !important;
 }

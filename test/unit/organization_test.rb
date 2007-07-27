@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class OrganizationTest < Test::Unit::TestCase
-  fixtures :organizations, :people, :user_profiles, :sales, :departments, :historicals, :specifications, :cash_flows, :customers, :customer_categories, :customers_customer_categories
+  fixtures :organizations, :people, :profiles, :sales, :departments, :historicals, :specifications, :cash_flows, :customers, :customer_categories, :customers_customer_categories
 
   def setup
     @organization = Organization.new

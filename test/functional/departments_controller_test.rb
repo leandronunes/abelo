@@ -8,7 +8,7 @@ class DepartmentsControllerTest < Test::Unit::TestCase
   fixtures :departments
 #TODO the test didn't works very well. When we run it at the first time it didn't  works, but at the second time it
 #works. I put all the fixtures to be loaded but it's not the solution. We have to see this bug in the future
-#  fixtures :departments, :commercial_proposal_items, :commercial_proposals, :contact_positions, :contacts, :customer_categories, :customers_customer_categories, :customers, :images, :mass_mails, :organizations, :payments, :people, :product_categories, :products_suppliers, :products, :sale_items, :sales, :specifications, :stock_entries, :suppliers, :user_profiles, :workers
+#  fixtures :departments, :commercial_proposal_items, :commercial_proposals, :contact_positions, :contacts, :customer_categories, :customers_customer_categories, :customers, :images, :mass_mails, :organizations, :payments, :people, :product_categories, :products_suppliers, :products, :sale_items, :sales, :specifications, :stock_entries, :suppliers, :profiles, :workers
   under_organization :one
 
   def setup

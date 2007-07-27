@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class UserTest < Test::Unit::TestCase
-  fixtures :people, :user_profiles
+  fixtures :people, :profiles
 
   def test_should_create_user
     assert_difference User, :count do
@@ -69,7 +69,7 @@ class UserTest < Test::Unit::TestCase
     assert_not_nil people(:quentin).profiles
     assert_kind_of Array, people(:quentin).profiles
     people(:quentin).profiles.each { |profile|
-      assert_kind_of UserProfile, profile
+      assert_kind_of Profile, profile
     }
   end
 

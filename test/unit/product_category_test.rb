@@ -35,5 +35,18 @@ class ProductCategoryTest < Test::Unit::TestCase
     assert c2.leaf?
   end
 
+  def test_uniqueness
+    category_a = Category.find(1)
+
+    category_b = ProductCategory.new
+    category_b.name = category_a.name
+    category_b.organization = category_a.organization
+    assert !category_b.save
+
+    category_b = SupplierCategory.new
+    category_b.name = category_a.name
+    category_b.organization = category_a.organization
+    assert category_b.save
+  end
 
 end

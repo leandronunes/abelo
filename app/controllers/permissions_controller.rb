@@ -8,15 +8,15 @@ class PermissionsController < ApplicationController
   before_filter :create_tabs
 
   def index
-    @user_profiles = @organization.user_profiles
+    @profiles = @organization.profiles
   end
 
   def select_template
-    @user_profile = @organization.user_profiles.find(params[:id])
+    @user_profile = @organization.profiles.find(params[:id])
   end
 
   def update_template
-    @user_profile = @organization.user_profiles.find(params[:id])
+    @user_profile = @organization.profiles.find(params[:id])
     if @user_profile.update_attributes(params[:user_profile])
       flash[:notice] = _('Profile updated successfully')
       redirect_to :action => 'index'
@@ -43,7 +43,7 @@ class PermissionsController < ApplicationController
   end
 
   def destroy
-    @organization.user_profiles.find(params[:id]).destroy
+    @organization.profiles.find(params[:id]).destroy
     redirect_to :action => 'index'
   end
 

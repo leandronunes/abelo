@@ -61,7 +61,8 @@ class ApplicationController < ActionController::Base
   }
 
   def flexible_template_owner
-    load_organization
+    load_organization unless params[:organization_nickname].nil?
+
   end
 
 

@@ -4,7 +4,7 @@ class SystemActor < ActiveRecord::Base
   belongs_to :organization
   has_many :contacts 
 
-  acts_as_ferret :fields => ['name', 'description']
+#  acts_as_ferret :fields => ['name', 'description']
 
   #validations
   validates_presence_of :name, :organization_id, :category_id

@@ -1,7 +1,7 @@
 <%= title _('Users and permissions') %>
 
 <ul class="permissions" >
-<% @user_profiles.sort_by{|profile| profile.user.login}.map do |profile|%>
+<% @profiles.sort_by{|profile| profile.user.login}.map do |profile|%>
   <%= display_list(
     [
       { :content => profile.user.login, :option => 'name'},

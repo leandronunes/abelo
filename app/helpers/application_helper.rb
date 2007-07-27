@@ -205,15 +205,18 @@ module ApplicationHelper
   end
 
   def notice_box(msg)
-    if msg
+    return if msg.nil?
     content_tag(
-    'div',
-    content_tag('p', msg) + content_tag('a', _('Ok'), :onclick => visual_effect(:toggle_slide, 'notice')) + javascript_tag(visual_effect(:fade, 'notice', :duration => 5)),
-    { :id => 'notice' }
-     )
-     else
-     ''
-   end
+      'div',
+       [
+         content_tag(
+           :p, 
+           msg
+         ),
+         javascript_tag(visual_effect(:toggle_slide, 'notice', :duration => 3))
+      ].join("\n"),
+      { :id => 'notice' }
+    )
   end
 
   def display_navigation_bar

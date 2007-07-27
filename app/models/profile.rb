@@ -4,6 +4,7 @@
 class Profile < ActiveRecord::Base
 
   belongs_to :organization
+  belongs_to :user
 
   validates_presence_of :organization_id, :user_id
 

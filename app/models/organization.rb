@@ -18,8 +18,8 @@ class Organization < ActiveRecord::Base
 
   has_many :system_actors
   has_many :suppliers
-  has_many :user_profiles
-  has_many :users, :through => :user_profiles
+  has_many :profiles
+  has_many :users, :through => :profiles
   has_many :customers
   has_many :contacts, :through => :customers
   has_many :contact_positions

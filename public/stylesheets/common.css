@@ -114,7 +114,7 @@ table.cash_flow td.heading {
 }
 
 
-/**************** buttons ******************/
+/**************** buttons ******************
 .button {
   background-color: #ffb;
   background-repeat: no-repeat;
@@ -130,29 +130,14 @@ table.cash_flow td.heading {
   color: #fff !important;
   border-color: #000;
   background-color: #f33;
-}
+}*/
 
-.button_add, .button_new {
-  background-image: url(../images/add.png);
-}
-.button_remove {
-  background-image: url(../images/remove.png);
-}
-.button_edit {
-  background-image: url(../images/edit.png);
-}
 .button_close {
   background-image: url(../images/cancel.png);
   float: right;
   padding: 8px;
   margin-top: 5px;
   margin-right: 2px;
-}
-.button_cancel {
-  background-image: url(../images/cancel.png);
-}
-.button_save {
-  background-image: url(../images/filesave.png);
 }
 .button_find, .button_search {
   background-image: url(../images/find.png);
@@ -171,9 +156,6 @@ table.cash_flow td.heading {
 }
 .button_help {
   background-image: url(../images/help.png);
-}
-.button_login {
-  background-image: url(../images/password.png);
 }
 /******************************* images *************************/
 .product_image {

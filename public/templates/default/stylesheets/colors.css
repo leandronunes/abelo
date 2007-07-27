@@ -63,16 +63,6 @@ text-align: center;
   height: 20px;
 }
 
-#center_box input.button_login, #center_box input.button_save {
-height: 33px;
-font-size: 1.0em;
-text-align: center;
-border: 0px;
-cursor: pointer;
-color: #545454;
-background: transparent;
-}
-
 #center_box p:hover {
 color: #000000;
 }
@@ -113,17 +103,28 @@ font-weight: bold;
 }
 
 #userbar a {
-color: #545454;
-text-decoration: none;
-margin-bottom: 2px;
-margin-left: 3px;
-margin-right: 3px;
+  color: #000;
+  text-decoration: none;
+  margin: 0px 3px 2px 3px;
 }
 
-#userbar a:hover {
-color: #000000;
-margin-bottom: 0px;
-border-bottom: 2px solid #ffffff;
+#userbar .navigation_bar a {
+  color: #654;
+}
+#userbar .navigation_bar a:hover {
+  color: #000;
+  margin-bottom: 0px;
+}
+
+#userbar .login_bar a {
+  opacity: 0.4;
+}
+#userbar .login_bar a#goto {
+  opacity: 0.6;
+}
+#userbar .login_bar a#goto:hover,
+#userbar .login_bar a:hover {
+  opacity: 1;
 }
 
 div.login_bar a {

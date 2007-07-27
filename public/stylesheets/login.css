@@ -68,8 +68,13 @@ input#user_email {
 font: 13px Verdana, Arial, sans-Serif;
 }
 
+.beault_button {
+  height: 40px;
+  border: 1px solid #0b0;
+  background: url('/images/bgbutton.png') no-repeat;
+}
+
 input.button_login, input.button_save {
-background: url('../images/bgbutton.png') no-repeat;
 border: 0px;
 width: 146px;
 height: 40px;

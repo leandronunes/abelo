@@ -1,4 +1,4 @@
-<div id='loginform'>
+<div id="loginform">
 
 <%= start_form_tag %>
 
@@ -10,11 +10,16 @@
 <span><%= password_field_tag 'password' %></span>
 </p>
 
-<div class='button_bar'>
-<%= submit_tag _('Log in'), { :class => 'button button_login' } %><br />
-<%= link_to _('Sign up'), { :action => 'signup' }, { :class => 'button button_new' } %>
+<div class="button_bar">
+ <div class="beault_button">
+  <%= submit_tag _('Log in'), { :class => 'button button_login with_text' } %>
+ </div>
+ <div class="beault_button">
+  <%= link_to content_tag( 'span', _('Sign up') ), { :action => 'signup' }, { :class => 'button button_new with_text' } %>
+ </div>
 </div>
 
+<br style="clear:both"/>
 <%= end_form_tag %>
 
 </div>

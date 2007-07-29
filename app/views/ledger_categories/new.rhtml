@@ -1,7 +1,7 @@
 <h3> <%= _('New Ledger Category') %> </h3>
 
-<% form_remote_tag :url => {:action => 'create'} do %>
+<% form_tag :action => 'create' do %>
   <%= render :partial => 'form' %>
   <%= submit_tag _("Create") %>
-  <%= link_to_remote "limpar", :url => {:action => 'clean'} %>
+  <%= link_to_remote _('Clean'), :url => {:action => 'clean'} %>
 <% end %>

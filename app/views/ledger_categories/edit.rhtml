@@ -1,6 +1,6 @@
 <h3> <%= _('Edit Ledger Category') %> </h3>
 
-<% form_remote_tag :url => {:action => 'update', :id => @category } do %>
+<% form_tag :action => 'update', :id => @category do %>
   <%= render :partial => 'form' %>
   <%= submit_tag _("Edit") %>
   <%= link_to_remote _('Clean'), :url => {:action => 'clean'} %>

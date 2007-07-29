@@ -3,8 +3,9 @@ class LedgerCategoriesController < ApplicationController
   needs_organization
 
   def index
-    list
+    redirect_to :action => 'list'
   end
+
 
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
   verify :method => :post, :only => [ :destroy, :create, :update ],
@@ -16,8 +17,7 @@ class LedgerCategoriesController < ApplicationController
 
   def new
     @category = LedgerCategory.new
-    render :action => 'new', :layout => false
-  end
+     end
 
   def create
     @category = LedgerCategory.new(params[:category])
@@ -25,17 +25,15 @@ class LedgerCategoriesController < ApplicationController
 
     if @category.save
       flash[:notice] = _('Ledger category was successfully created.')
-      index
-      render_for :save, :success
+      redirect_to :action => 'list'
     else
-      render_for :save, :error
+      render :action => 'new'
     end
 
   end
 
   def edit
     @category = @organization.ledger_categories.find(params[:id])
-    render :action => 'edit', :layout => false
   end
 
   def update
@@ -43,10 +41,9 @@ class LedgerCategoriesController < ApplicationController
 
     if @category.update_attributes(params[:category])
       flash[:notice] = _('Ledger category was successfully updated.')
-      index
-      render_for :save, :success
+      redirect_to :action => 'list'
     else
-      render_for :save, :error
+      render :action => 'edit'
     end
 
   end

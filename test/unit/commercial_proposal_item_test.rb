@@ -48,7 +48,7 @@ class CommercialProposalItemTest < Test::Unit::TestCase
   end
 
   def test_fixtures_if_valid
-    CommercialProposalItem.find_all.each do |cpi|
+    CommercialProposalItem.find(:all).each do |cpi|
       assert cpi.valid?
     end
   end
@@ -61,6 +61,15 @@ class CommercialProposalItemTest < Test::Unit::TestCase
   def test_description
     cpi = CommercialProposalItem.find(1)
     assert_equal 'Ice Cream', cpi.description
+  end
+
+  def test_validate
+    cpi = CommercialProposalItem.new
+    cpi.commercial_proposal_section_id = 1
+    cpi.unitary_value = 2.0
+    cpi.quantity = 5
+    assert !cpi.save
+    assert_equal 1, cpi.errors.count
   end
 
 end

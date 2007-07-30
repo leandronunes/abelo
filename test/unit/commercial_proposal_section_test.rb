@@ -41,7 +41,7 @@ class CommercialProposalSectionTest < Test::Unit::TestCase
     
     count = cps.commercial_proposal_items.count
     cpi = CommercialProposalItem.find(3)
-    cps.add_commercial_proposal_items(cpi)
+    cps.commercial_proposal_items.concat(cpi)
 
     assert_equal count+1, cps.commercial_proposal_items.count
   end

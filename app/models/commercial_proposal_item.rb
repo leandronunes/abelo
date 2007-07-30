@@ -29,7 +29,7 @@ class CommercialProposalItem < ActiveRecord::Base
   def validate
     filled = [:product_id, :service_id].find_all { |i| self.send(i) != nil }
     if filled.length != 1
-      self.errors.add(_('You must choose a type of item'))
+      self.errors.add(_('None a type of item chosen'))
     end
   end
 

@@ -1,9 +1,11 @@
 <div style="clear:both; text-align:center; font-size:11px; border-bottom:solid 1px #DDE3EB">
-  <b>Tags</b>
-</div>
 
+<p> <label> <%= _('Tags') %> </label>
 <div style="clear:both; margin-top:5px; text-align:center">
-    <% Ledger.tag_counts.each do |t| %>
+    <% @tags.tag_counts.each do |t| %>
         <%= link_to_remote(t.name, :url => {:action => 'find_by_tag', :tag => t.name }) + "(#{t.count})" %>
     <% end %>
 </div>
+</p>
+</div>
+

@@ -3,8 +3,8 @@ require "digest/sha1"
 class User < Person
 
   has_many :profiles, :class_name => 'Profile'
-
   has_many :organizations, :through => :profiles
+  has_many :ledgers
 
   # Tells if this user has access to the <tt>location</tt> passed as parameter
   # (as a URL hash, just like everywhere in Rails).

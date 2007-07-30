@@ -1,0 +1,18 @@
+<div id="left_content">
+  <div id="tag">
+    <%= render :partial => 'tag' %>
+  </div>
+
+  <div id="budget" >
+    <%= render :partial => 'budget' %>
+  </div>
+</div>
+
+<div id="rigth_content">
+  <% form_tag :action => 'create', :id => @ledger do %>
+    <div id="form">
+      <%= render :partial => 'form'%>
+    </div>
+  <% end %>
+</div>
+<br class="clear"/>

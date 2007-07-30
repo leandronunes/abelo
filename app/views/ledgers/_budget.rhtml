@@ -15,7 +15,7 @@
     <% for budget in @budgets %>
         <tr class="<%= (budget.value < budget.sum_ledgers) ? 'rosa' : 'branco' %>">
             <td nowrap=true title="<%= budget.name %>">
-                <%= category_with_sign(budget.type_of, budget.name) %>
+                <%= category_with_sign(budget) %>
             </td>
             <td nowrap=true align="right">
                 <%= to_currency(budget.value) %>

@@ -1,0 +1,24 @@
+<div id="box_content_1">
+  <div id="tag">
+    <%= render :partial => 'tag' %>
+  </div>
+
+  <div id="budget" >
+    <%= render :partial => 'budget' %>
+  </div>
+</div>
+
+<div id="box_content_2">
+  <p>
+  <%= link_to _('Add new ledger'), :action => 'new'%>
+  </p>
+
+
+   <%= navigator_for @ledgers_page, @ledgers, flash %>
+
+<%= render :partial => 'list'%>
+
+
+</div>
+
+<br class="clear"/>   

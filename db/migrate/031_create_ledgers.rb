@@ -6,7 +6,8 @@ class CreateLedgers < ActiveRecord::Migration
       t.column :type,                   :string, :null => false
       t.column :category_id,            :integer, :null => false
       t.column :value,                  :float, :null => false
-      t.column :description,            :string,  :limit => 255, :null => true
+      t.column :description,            :string
+      t.column :tag_list,               :string
       t.column :date,                   :date, :null => false
       t.column :interests,              :float, :default => 0
       t.column :interests_days,         :integer, :default => 0

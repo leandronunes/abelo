@@ -6,4 +6,5 @@ module LedgerCategoriesHelper
       LedgerCategory::TYPE_OF['O'] 
     end
   end
+
 end

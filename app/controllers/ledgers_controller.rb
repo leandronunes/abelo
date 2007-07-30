@@ -8,10 +8,39 @@ class LedgersController < ApplicationController
   uses_financial_tabs
 
   def index
-    get_ledgers
-    get_budgets
+    redirect_to :action => 'list'
   end
+
+  def list
+    @ledger_categories =  @organization.ledger_categories_sorted
+    @tags = @organization.ledgers
+    #TODO see if it's useful
+    get_ledgers 
+    get_budgets  
+  end
+
+  def new
+    @ledger_categories =  @organization.ledger_categories_sorted
+    @ledger = Ledger.new
+    get_ledgers 
+    get_budgets  
+  end
+
+  def create
+    @ledger = Ledger.new(params[:ledger])
+    @ledger.owner = current_user
+    @ledger.organization = @organization
+    
+    if @ledger.save
+      flash[:notice] = _('The ledger was successfully created')
+      redirect_to :action => 'list'
+    else
+      render_action :new
+    end
+  end
+
   
+    #TODO see if it's useful
   def navigation
     get_ledgers
     render :update do |page|
@@ -19,6 +48,7 @@ class LedgersController < ApplicationController
     end
   end
   
+    #TODO see if it's useful
   def find_budgets
     get_budgets
     render :update do |page|
@@ -26,20 +56,23 @@ class LedgersController < ApplicationController
     end
   end
   
+    #TODO see if it's useful
   def find_ledgers
     flash[:filter] = nil
   	get_ledgers
     render_for :index, :success
   end
   
+    #TODO see if it's useful
   def find_by_tag
     flash[:filter] = "Tag: #{params[:tag]}"
-    @ledgers = Ledger.find_tagged_with(params[:tag])
+    @ledgers = @organization.ledgers.find_tagged_with(params[:tag])
     render :update do |page|
-      page.replace_html 'list', :partial => 'list'
+      page.replace_html 'box_content_2', :partial => 'list'
     end
   end
 
+    #TODO see if it's useful
   def save
     if params[:id]
       @ledger = Ledger.find(params[:id])
@@ -64,12 +97,14 @@ class LedgersController < ApplicationController
   end
   
   
+    #TODO see if it's useful
   def edit
     @ledger = Ledger.find(params[:id])
     render_for :edit, :success
   end
 
 
+    #TODO see if it's useful
   def destroy
     Ledger.find(params[:id]).destroy
     render_for :destroy, :success, "list_ledger_#{params[:id]}"
@@ -77,16 +112,18 @@ class LedgersController < ApplicationController
   
   
   private
+    #TODO see if it's useful
   def get_ledgers
-    parameters = {:include => 'ledger_category', :order => 'ledgers.date DESC, ledgers.id DESC', :per_page => 50}
+    parameters = {:include => 'category', :order => 'ledgers.date DESC, ledgers.id DESC', :per_page => 50}
     unless params[:find].blank?
       flash[:filter] = "Descricao ou Categoria: #{params[:find]}"
-      parameters.merge! :conditions => ["ledgers.description like ? or ledger_categories.name like ? ", "%#{params[:find]}%", "%#{params[:find]}%"]
+      parameters.merge! :conditions => ["ledgers.description like ? or categories.name like ? ", "%#{params[:find]}%", "%#{params[:find]}%"]
     end
     
     @ledgers_page, @ledgers = paginate :ledgers, parameters
   end
   
+    #TODO see if it's useful
   def get_budgets
     date = (params[:date]) ? params[:date].to_time : Time.now
     flash.merge! :date => date, :date_ago => date.months_ago(1), :date_since => date.months_since(1)

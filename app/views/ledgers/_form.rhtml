@@ -1,32 +1,22 @@
-<% form_remote_tag :url => {:action => 'save', :id => @ledger} do %>
-        <div>
-            Data: <br/>
-            <%= date_select 'ledger', 'date', :order => [:day, :month, :year] %>
-        </div>
-        <div>
-            Categoria: <br/>
-            <%=# select 'ledger', 'category_id', LedgerCategory.find_all_ordened.collect {|c| [category_with_sign(c.type_of, c.name), c.id]}, {},  {:style => 'width:98%'}  
-             #TODO old code see a better way to do that
-            %>            
-            <%= select 'ledger', 'category_id', LedgerCategory.find_all_ordened.collect {|c| [c.name, c.id]}, {},  {:style => 'width:98%'}  %>            
-        </div>
-        <div>
-            Descricao: <br/>
-            <%= text_area 'ledger', 'description', :rows => 2, :style => "width:98%"  %>
-            <%= error_message_on 'ledger', 'description', 'descricao ' %>             
-        </div> 
-        <div>
-            Tags (separados por virgula): <br/>
-            <%= text_field 'ledger', 'tag_list', :style => "width:98%"  %>
-            <%= error_message_on 'ledger', 'tag_list', 'tags ' %>             
-        </div>         
-        <div>
-            Valor: <br/>
-            <%= text_field 'ledger', 'value', :style => "width:98%"  %>
-            <%= error_message_on 'ledger', 'value', 'valor ' %>             
-        </div>
-        <div style="text-align:right;">
-            <%= save_or_update(@ledger) %> 
-            <%= link_to_remote "limpar", :url => {:action => 'clean'} %>           
-        </div>        
-<% end %>
+  <p> <label> <%= _('Date:') %> </label>
+    <%= date_select 'ledger', 'date', :order => [:day, :month, :year] %>
+  </p>
+
+  <p> <label> <%= _('Category:') %> </label>
+    <%= select 'ledger', 'category_id', @ledger_categories.collect {|c| [category_with_sign(c), c.id]} %>
+  </p>
+
+  <p> <label> <%= _('Description:') %> </label>
+    <%= text_area 'ledger', 'description', :rows => 4 %>
+  </p>
+
+  <p> <label> <%= _('Tags (separated by comma):') %> </label>
+    <%= text_field 'ledger', 'tag_list' %>
+  </p>
+  <p> <label> <%= _('Value:') %> </label>
+    <%= text_field 'ledger', 'value' %>
+  </p>
+  <p> 
+    <%= submit_tag _('Save') %>
+    <%= link_to_remote _('Clean'), :url => {:action => 'clean'} %>           
+  </p>

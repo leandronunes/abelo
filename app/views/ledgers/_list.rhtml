@@ -14,10 +14,10 @@
     <% for ledger in @ledgers %>
       <tr id="list_ledger_<%=ledger.id %>">
         <td align="left"><%= ledger.date.strftime('%d/%m/%Y') %></td>
-        <td align="left"> <%= ledger.ledger_category.name %></td>
+        <td align="left"> <%= ledger.category.name %></td>
         <td align="left"> <%= ledger.description %></td>
-    	<td align="right"><%= to_currency(ledger.value) if ledger.ledger_category.income? %></td>
-    	<td align="right"><%= to_currency(ledger.value) if ledger.ledger_category.expense? %></td>
+    	<td align="right"><%= to_currency(ledger.value) if ledger.category.income? %></td>
+    	<td align="right"><%= to_currency(ledger.value) if ledger.category.expense? %></td>
     	<td align="right">
             <%= link_alter_remove_for ledger %>
         </td>

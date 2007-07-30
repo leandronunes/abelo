@@ -14,6 +14,7 @@ class Organization < ActiveRecord::Base
   has_many :customer_categories
   has_many :worker_categories
   has_many :ledger_categories
+  has_many :ledgers
   has_many :supplier_categories
 
   has_many :system_actors
@@ -58,22 +59,34 @@ class Organization < ActiveRecord::Base
     return self.commercial_proposals.select{ |c| !c.is_template? }
   end
 
+  # Return all ledger categories ordened by type and name.
+  # Income ledger categories appear first ordened by name and
+  # Out ledger categories appear after ordened by name too.
+  def ledger_categories_sorted
+    LedgerCategory.find(:all, :conditions => ['organization_id = ?', self], :order => 'type_of, name ASC' )
+  end
+
+  #TODO see if it's useful
   def operational_entrances
     return filter_historicals('t', TypeTransaction::CREDIT)
   end
 
+  #TODO see if it's useful
   def operational_exits
     return filter_historicals('t', TypeTransaction::DEBIT)
   end
 
+  #TODO see if it's useful
   def not_operational_entrances
     return filter_historicals('f', TypeTransaction::CREDIT)
   end
 
+  #TODO see if it's useful
   def not_operational_exits
     return filter_historicals('f', TypeTransaction::DEBIT)
   end
 
+  #TODO see if it's useful
   def historical_total_value(id)
     value = 0.0
     self.cash_flows.each { |c|
@@ -105,6 +118,7 @@ class Organization < ActiveRecord::Base
 
   private
 
+  #TODO see if it's useful
   def filter_historicals(operational, type_transaction)
     return self.historicals.find(:all, :conditions => "operational = '#{operational}' AND type_of = '#{type_transaction}'" )
   end

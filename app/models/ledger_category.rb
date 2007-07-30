@@ -9,14 +9,9 @@ class LedgerCategory < ActiveRecord::Base
   validates_inclusion_of :type_of, :in => TYPE_OF.keys
   belongs_to :organization
 
+# TODO see if it's needed
   def value
     0
-  end
-
-  def self.find_all_ordened(ids = :all, options = {})
-#TODO see the better way to do that
-#    options.merge! :order => "categories.type_of, categories.name"
-    self.find ids, options
   end
 
   def income?

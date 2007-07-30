@@ -78,4 +78,6 @@ display: none;
 width: 250px;
 height: 191px;
 }
-
+.clear{
+  clear: both;
+}

@@ -273,16 +273,6 @@ module ApplicationHelper
     link_to org.name, { :organization_nickname => org.nickname, :controller => 'main', :action => 'index' }, html_options
   end
 
-  #TODO see if it's usefull'
-  def model_name(m)
-    {
-      #Cash Flow
-      'cash_flow' => _('Cash Flow'),
-      'historical' => _('Historical'),
-      'specification' => _('Specification'),
-    } [m] || m
-  end
-
   def multiple_select(object, method, collection=[], title="", value_method=:id, text_method=:name)
     value_method = value_method.to_s
     text_method = text_method.to_s
@@ -328,15 +318,6 @@ module ApplicationHelper
     instance_object = self.instance_variable_get("@#{object}")
     categories = instance_object.organization.send("top_level_#{category_type}_categories")
     select_tag("#{object}[category_id]", categories.map { |c| options_for_category(c,instance_object.send('category_id')) }.join('') )
-  end
-
-#TODO test it
-  def category_with_sign(type_of, name)
-    if type_of == "I"
-      return "(+) #{name}"
-    else
-      return "(-) #{name}"
-    end
   end
 
 #TODO see

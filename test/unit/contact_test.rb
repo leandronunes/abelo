@@ -1,11 +1,11 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class ContactTest < Test::Unit::TestCase
-  fixtures :contacts, :customers, :contact_positions
+  fixtures :contacts, :system_actors, :categories
 
   def setup
-    @customer = Customer.find(1)
-    @position = ContactPosition.find(1)
+    @customer = Customer.find(:all).first
+    @category = ContactCategory.find(:all).first
   end
 
   def test_mandatory_fields
@@ -14,19 +14,13 @@ class ContactTest < Test::Unit::TestCase
     c = Contact.new
     assert(!c.save)
 
-    c.phone = '5555-5555'
-    assert(!c.save)
-
-    c.email = 'test@test.test'
-    assert(!c.save)
-
     c.name = 'Test'
     assert(!c.save)
 
-    c.customer_id = @customer.id
+    c.system_actor_id = @customer.id
     assert(!c.save)
 
-    c.position_id = @position.id
+    c.category_id = @category.id
     assert(c.save)
 
     assert_equal count + 1, Contact.count
@@ -34,8 +28,8 @@ class ContactTest < Test::Unit::TestCase
   
   def test_relation_with_customer
     contact = Contact.find(1)
-    assert_not_nil contact.customer
-    assert_equal Customer, contact.customer.class
+    assert_not_nil contact.system_actor
+    assert_equal Customer, contact.system_actor.class
   end
 
 end

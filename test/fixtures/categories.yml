@@ -112,3 +112,15 @@ customer_categoryI:
   type: 'CustomerCategory'
   parent_id: 17
   organization_id: 4
+# Contact categories
+contact_categoryA:
+  id: 19
+  name: 'contact category A'
+  type: 'ContactCategory'
+  organization_id: 1
+# Supplier categories
+supplier_categoryA:
+  id: 20
+  name: 'supplier category A'
+  type: 'SupplierCategory'
+  organization_id: 1

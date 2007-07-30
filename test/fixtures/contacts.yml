@@ -1,25 +1,11 @@
-# == Schema Information
-# Schema version: 35
-#
-# Table name: contacts
-#
-#  id          :integer       not null, primary key
-#  name        :string(255)   not null
-#  phone       :string(255)   
-#  email       :string(255)   
-#  customer_id :integer       not null
-#  position_id :integer       not null
-#
-
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-#first:
-#  id: 1
-#  name: 'Vicente'
-#  customer_id: 1
-#  position_id: 2
-#
-#another:
-#  id: 2
-#  name: 'Josy'
-#  customer_id: 1
-#  position_id: 1
+first:
+  id: 1
+  name: 'Vicente'
+  system_actor_id: 2
+  category_id: 19
+another:
+  id: 2
+  name: 'Josy'
+  system_actor_id: 2
+  category_id: 19

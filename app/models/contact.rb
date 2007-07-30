@@ -7,15 +7,13 @@
 #  name        :string(255)   not null
 #  phone       :string(255)   
 #  email       :string(255)   
-#  customer_id :integer       not null
-#  position_id :integer       not null
+#  system_actor_id :integer   not null
+#  category_id :integer       not null
 #
 
 class Contact < ActiveRecord::Base
   validates_presence_of :name
-  validates_presence_of :customer_id, :message => 'Every contact must be associated to a customer'
-  validates_presence_of :position_id, :message => 'Every contact must be associated to a position'
-
-  belongs_to :customer
-  belongs_to :position, :class_name => 'ContactPosition', :foreign_key => 'position_id'
+  validates_presence_of :system_actor_id, :message => 'Every contact must be associated to an actor'
+  validates_presence_of :category_id, :message => 'Every contact must belongs to a cetegory'
+  belongs_to :system_actor
 end

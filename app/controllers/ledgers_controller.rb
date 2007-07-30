@@ -22,6 +22,7 @@ class LedgersController < ApplicationController
   def new
     @ledger_categories =  @organization.ledger_categories_sorted
     @ledger = Ledger.new
+    @tags = @organization.ledgers
     get_ledgers 
     get_budgets  
   end

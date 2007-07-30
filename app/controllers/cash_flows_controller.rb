@@ -2,7 +2,7 @@ class CashFlowsController < ApplicationController
 
   needs_organization
 
-  before_filter :create_tabs
+  uses_financial_tabs
   
   def index
     list
@@ -141,21 +141,6 @@ class CashFlowsController < ApplicationController
 
     @balance_total_foreseen = CashFlow.total_value(@operational_entrances_detailed, true) + CashFlow.total_value(@not_operational_entrances_detailed, true) - CashFlow.total_value(@operational_exits_detailed, true) - CashFlow.total_value(@not_operational_exits_detailed, true)
 
-  end
-
-  def create_tabs
-    add_tab do
-      named 'Cash flows'
-      links_to :controller => 'cash_flows', :action => 'list'
-      in_set 'first'
-      highlights_on :controller => 'cash_flows'
-    end
-    add_tab do
-      named 'Ledgers'
-      links_to :controller => 'ledgers'
-      in_set 'first'
-      highlights_on :controller => 'ledgers'
-    end
   end
 
 end

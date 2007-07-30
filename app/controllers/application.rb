@@ -69,6 +69,11 @@ class ApplicationController < ActionController::Base
   ####################################
   #Tabs definitions
   ####################################
+
+  def self.uses_configurations_tabs
+    before_filter :create_configurations_tabs
+  end
+
   def create_configurations_tabs
     t = add_tab do
       links_to :controller => 'categories', :action => 'list', :category_type => 'product'
@@ -106,6 +111,10 @@ class ApplicationController < ActionController::Base
     t.named _('Interface')
   end
 
+  def self.uses_register_tabs
+    before_filter :create_register_tabs
+  end
+
   def create_register_tabs
     t = add_tab do
       links_to :controller => 'system_actors', :action => 'list', :actor => 'worker'
@@ -135,9 +144,30 @@ class ApplicationController < ActionController::Base
     end
     t.named _('Products')
   end
-  
+ 
+  def self.uses_financial_tabs
+    before_filter :create_financial_tabs
+  end 
+ 
+  def create_financial_tabs
+    t = add_tab do
+      links_to :controller => 'ledger_categories'
+      in_set 'first'
+      highlights_on :controller => 'ledger_categories'
+    end
+    t.named _('Ledger Categories')
 
-  before_filter :define_path
+    t = add_tab do
+      links_to :controller => 'ledgers'
+      in_set 'first'
+      highlights_on :controller => 'ledgers'
+    end
+    t.named _('Ledgers')
+  end
+
+  # END TABS DEFINITION
+
+  before_filter :define_path  
 
   def define_path
     @item = 'products'

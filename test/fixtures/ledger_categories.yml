@@ -1,18 +1,3 @@
-# == Schema Information
-# Schema version: 35
-#
-# Table name: ledger_categories
-#
-#  id                :integer       not null, primary key
-#  name              :string(255)   not null
-#  interests         :float         default(0.0)
-#  interests_days    :integer       default(0)
-#  number_of_parcels :integer       default(1)
-#  operational       :boolean       not null
-#  organization_id   :integer       not null
-#  is_foreseen       :boolean       not null
-#
-
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 one:
   id: 1
@@ -20,9 +5,8 @@ one:
   interests: 0
   interests_days: 0
   number_of_parcels: 1
-  operational: true
+  is_operational: true
   organization_id: 1
-  is_foreseen: false
   type_of: 'I'
 two:
   id: 2
@@ -30,27 +14,24 @@ two:
   interests: 10
   interests_days: 30
   number_of_parcels: 2
-  operational: true
+  is_operational: true
   organization_id: 1
-  is_foreseen: false
   type_of: 'I'
 three:
   id: 3
-  name: 'Expenditure Clean'
+  name: 'Expenditure Clean 1'
   interests: 0
   interests_days: 0
   number_of_parcels: 0
-  operational: false
+  is_operational: false
   organization_id: 1
-  is_foreseen: true
   type_of: 'O'
 four:
   id: 4
-  name: 'Expenditure Clean'
+  name: 'Expenditure Clean 2'
   interests: 0
   interests_days: 0
   number_of_parcels: 0
-  operational: false
+  is_operational: false
   organization_id: 1
-  is_foreseen: false
   type_of: 'O'

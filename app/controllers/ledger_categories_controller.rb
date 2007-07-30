@@ -2,6 +2,8 @@ class LedgerCategoriesController < ApplicationController
 
   needs_organization
 
+  uses_financial_tabs
+
   def index
     redirect_to :action => 'list'
   end

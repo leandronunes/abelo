@@ -5,7 +5,7 @@ class LedgersController < ApplicationController
 
   needs_organization
 
-  before_filter :create_tabs
+  uses_financial_tabs
 
   def index
     get_ledgers
@@ -93,35 +93,6 @@ class LedgersController < ApplicationController
     @budgets = LedgerCategory.find(:all) 
 #TODO old code see the better way to do that
 #    @budgets = Budget.sum_ledgers_by_month(date, true)
-  end
-
-  def create_tabs
-    add_tab do
-      named 'Cash flows'
-      links_to :controller => 'cash_flows', :action => 'list'
-      in_set 'first'
-      highlights_on :controller => 'cash_flows'
-    end
-    add_tab do
-        def create_tabs
-    add_tab do
-      named 'Cash flows'
-      links_to :controller => 'cash_flows', :action => 'list'
-      in_set 'first'
-      highlights_on :controller => 'cash_flows'
-    end
-    add_tab do
-      named 'Ledgers'
-      links_to :controller => 'ledgers'
-      in_set 'first'
-      highlights_on :controller => 'ledgers'
-    end
-  end
-named 'Ledgers'
-      links_to :controller => 'ledgers'
-      in_set 'first'
-      highlights_on :controller => 'ledgers'
-    end
   end
 
 end

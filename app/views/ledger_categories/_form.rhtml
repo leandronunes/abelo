@@ -1,6 +1,7 @@
 <!--[form:category]-->
 <%= error_messages_for 'category' %>
 <div id="form">
+
 <p> <label for="category_type_of"> <%= _('Type') %> </label><br/>
 <%= radio_button 'category', 'type_of', 'I', :checked => true %>
 <label for="category_type_of_income"><%= type_of_ledger_category('I')%></label>
@@ -21,9 +22,7 @@
 <%= text_field 'category', 'number_of_parcels'%></p>
 
 <p><label for="category_operational"> <%= _('Operational') %></label>
-<%= check_box 'category', 'operational' %></p> 
+<%= check_box 'category', 'is_operational' %></p> 
 
-<p><label for="category_is_foreseen"> <%= _('Is Foreseen') %></label>
-<%= check_box 'category', 'is_foreseen' %></p> 
 </div>
 <!--[eoform:category]-->

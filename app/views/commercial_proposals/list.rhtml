@@ -1,18 +1,31 @@
+
 <%= title('Listing commercial proposals') %>
 
-<% @commercial_proposals.map do |c| %>
+<% form_tag ( { :action => 'list', :is_template => @is_template }, { :class => 'search_itens' } ) do %>
+  <%= text_field 'commmercial_proposal', 'name', :class => 'filter_field' %>
+  <%= submit_tag( '', { :class => 'button button_search', :title => _('Search commmercial_proposal') }) %>
+  <%= button (_("New commmercial_proposal"), :new, :action => 'new' ) %>
+<% end %>
+
+<div class="auto_complete" id="commmercial_proposal_name_auto_complete"></div>
+<%= auto_complete_field :commmercial_proposal_name, :url => {:action => 'autocomplete_name' }, :indicator => 'auto_list'%>
+<div id="auto_list" style="display:none;">
+</div>
+
+<ul class="info_list commercial_proposal">
+  <% @commercial_proposals.sort_by{|cp| cp.name}.map do |c| %>
 <%= display_list(
   [
-    { :content => c.name, :option => 'name'},
-    { :content => button (_('Show'), :show, :action => 'show', :id => c.id), :option => 'button' },
-    { :content => button (_('Edit'), :edit, :action => 'edit', :id => c.id), :option => 'button' },
-    { :content => button (_('Destroy'), :destroy, {:action => 'destroy', :id => c.id}, :post => true, :confirm => _('Are you sure?')), :option => 'button' }
+    { :content => [
+      button (_('Show'), :show, :action => 'show', :id => c.id),
+      button (_('Edit'), :edit, :action => 'edit', :id => c.id),
+      button (_('Destroy'), :destroy, {:action => 'destroy', :id => c.id},
+                            :post => true,
+                            :confirm => _('Are you sure?'))], :option => 'button' },
+    { :content => c.name, :option => 'name'}
   ]
 )
 %>
 <% end %>
-
-<%= link_to_remote  _('Create a commercial proposal'), :url => {:action => 'new'}, :update => 'form' %>
-
-<div id='form'>
-</div>
+</ul>
+<%= pagination_links(@commercial_proposal_pages, :params => {:query => @query, :is_template => @is_template}) %>

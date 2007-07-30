@@ -16,6 +16,8 @@ class CommercialProposal < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name, :scope => :organization_id
 
+  acts_as_ferret
+
   has_many :commercial_proposal_sections
   has_and_belongs_to_many :departments
   belongs_to :organization

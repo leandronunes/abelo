@@ -1,11 +1,19 @@
 class CommercialProposalsController < ApplicationController
 
+  auto_complete_for :commercial_proposal, :name
+
   needs_organization
   
   before_filter :create_tabs
 
+  def autocomplete_name
+    re = Regexp.new("#{params[:commercial_proposal][:name]}", "i")
+    @commercial_proposals = CommercialProposal.find(:all).select { |cp| cp.name.match re}
+    render :layout=>false
+  end
+
   def index
-    redirect_to :action => 'list'
+    redirect_to :action => 'list', :is_template => true
   end
 
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
@@ -13,9 +21,29 @@ class CommercialProposalsController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @commercial_proposals_templates = @organization.commercial_proposals_templates
-    @commercial_proposals = @organization.commercial_proposals_not_templates
-    @departments = @organization.departments
+    @is_template = params[:is_template]
+    if @is_template
+      @commercial_proposals = @organization.commercial_proposals_templates
+    else
+      @commercial_proposals = @organization.commercial_proposals_not_templates
+    end
+    
+    @query = params[:query] ? params[:query] : nil
+    if @query.nil?
+      @query = params[:commercial_proposal] ? params[:commercial_proposal][:name] : nil
+    end
+
+    if !@query.nil?
+      page = (params[:page] || 1).to_i
+      items_per_page = 10
+      offset = (page - 1) * items_per_page
+
+      @commercial_proposals = CommercialProposal.find_by_contents(@query, {:limit => :all, :offset => 0}, :conditions => ["is_template = ?", @is_template])
+      @commercial_proposal_pages = Paginator.new(self, @commercial_proposals.size, items_per_page, page)
+      @commercial_proposals = @commercial_proposals[offset..(offset + items_per_page - 1)]
+    else 
+      @commercial_proposal_pages, @commercial_proposals = paginate :commercial_proposals, :per_page => 10, :conditions => [ "organization_id = ?", @organization.id ]
+    end
   end
 
   def show

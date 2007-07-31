@@ -36,7 +36,7 @@
   float: left;
   margin: 0px 8px 0px -6px;
   padding: 3px;
-  background: #FFF; /* #F4E4D0 */
+  background: #FFF;
   border: 2px solid #B97;
 }
 
@@ -52,4 +52,8 @@
 .info_list div.list_item_button .button {
   float: none;
   margin: 2px;
+}
+
+.system_actors .list_item_name {
+  display: block;
 }

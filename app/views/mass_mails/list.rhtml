@@ -1,13 +1,17 @@
 <%= title _('Listing mass mail') %>
 
-<ul class="mass_mail">
+<ul class="info_list mass_mail">
 <% @mass_mails.map do |m| %>
   <%= display_list(
     [
+      { :content => [
+          button (_('Show'), :show, :action => 'show', :id => m.id),
+          button (_('Edit'), :edit, :action => 'edit', :id => m.id),
+          button (_('Destroy'), :destroy, {:action => 'destroy', :id => m.id},
+                                :post => true,
+                                :confirm => _('Are you sure?'))], :option => 'button' },
       {:content => m.subject, :option => 'subject'},
-      { :content => button (_('Show'), :show, :action => 'show', :id => m.id), :option => 'button' },
-      { :content => button (_('Edit'), :edit, :action => 'edit', :id => m.id), :option => 'button' },
-      { :content => button (_('Destroy'), :destroy, {:action => 'destroy', :id => m.id}, :post => true, :confirm => _('Are you sure?')), :option => 'button' }  
+      '<br style="clear:both"/>'
     ]
   )
   %>

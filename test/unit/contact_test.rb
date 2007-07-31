@@ -26,7 +26,7 @@ class ContactTest < Test::Unit::TestCase
     assert_equal count + 1, Contact.count
   end
   
-  def test_relation_with_customer
+  def test_relation_with_system_actor
     contact = Contact.find(1)
     assert_not_nil contact.system_actor
     assert_equal Customer, contact.system_actor.class

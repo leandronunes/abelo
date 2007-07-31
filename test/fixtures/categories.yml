@@ -118,6 +118,11 @@ contact_categoryA:
   name: 'contact category A'
   type: 'ContactCategory'
   organization_id: 1
+contact_categoryB:
+  id: 21
+  name: 'contact category B'
+  type: 'ContactCategory'
+  organization_id: 1
 # Supplier categories
 supplier_categoryA:
   id: 20

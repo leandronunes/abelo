@@ -23,20 +23,14 @@ class DepartmentsController < ApplicationController
 
   def list
     @departments = @organization.departments
-
     @query = params[:query] ? params[:query] : nil
     if @query.nil?
       @query = params[:department] ? params[:department][:name] : nil
     end
 
     if !@query.nil?
-      page = (params[:page] || 1).to_i
-      items_per_page = 10
-      offset = (page - 1) * items_per_page
-
-      @departments = Department.find_by_contents(@query, {:limit => :all, :offset => 0})
-      @department_pages = Paginator.new(self, @departments.size, items_per_page, page)
-      @departments = @departments[offset..(offset + items_per_page - 1)]
+      @total, @departments = Department.full_text_search(@query, :page => (params[:page] || 1))
+      @department_pages = pages_for(@total)
     else 
       @department_pages, @departments = paginate :departments, :per_page => 10, :conditions => [ "organization_id = ?", @organization.id ]
     end

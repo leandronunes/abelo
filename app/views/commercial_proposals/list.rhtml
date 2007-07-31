@@ -2,13 +2,13 @@
 <%= title('Listing commercial proposals') %>
 
 <% form_tag ( { :action => 'list', :is_template => @is_template }, { :class => 'search_itens' } ) do %>
-  <%= text_field 'commmercial_proposal', 'name', :class => 'filter_field' %>
-  <%= submit_tag( '', { :class => 'button button_search', :title => _('Search commmercial_proposal') }) %>
-  <%= button (_("New commmercial_proposal"), :new, :action => 'new' ) %>
+  <%= text_field 'commercial_proposal', 'name', :class => 'filter_field' %>
+  <%= submit_tag( '', { :class => 'button button_search', :title => _('Search commercial_proposal') }) %>
+  <%= button (_("New commercial_proposal"), :new, :action => 'new' ) %>
 <% end %>
 
-<div class="auto_complete" id="commmercial_proposal_name_auto_complete"></div>
-<%= auto_complete_field :commmercial_proposal_name, :url => {:action => 'autocomplete_name' }, :indicator => 'auto_list'%>
+<div class="auto_complete" id="commercial_proposal_name_auto_complete"></div>
+<%= auto_complete_field :commercial_proposal_name, :url => {:action => 'autocomplete_name', :is_template => @is_template }, :indicator => 'auto_list'%>
 <div id="auto_list" style="display:none;">
 </div>
 

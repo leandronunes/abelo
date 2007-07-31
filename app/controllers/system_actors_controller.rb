@@ -30,7 +30,7 @@ class SystemActorsController < ApplicationController
 
   def list
     @actor = params[:actor] if SYSTEM_ACTORS.include?(params[:actor])
-    @actor  =  params[:actor]  = 'worker' if @actor.blank?
+    @actor = params[:actor] = 'worker' if @actor.blank?
 
     @query =  params[:query] ? params[:query] : nil
     if @query.nil?

@@ -7,13 +7,15 @@ class CommercialProposalsController < ApplicationController
   before_filter :create_tabs
 
   def autocomplete_name
+    is_template = params[:is_template] == 't' ? true : false
     re = Regexp.new("#{params[:commercial_proposal][:name]}", "i")
-    @commercial_proposals = CommercialProposal.find(:all).select { |cp| cp.name.match re}
+    @commercial_proposals = CommercialProposal.find(:all, :conditions => ['is_template = ?', is_template]).select { |cp| cp.name.match re}
     render :layout=>false
   end
 
   def index
-    redirect_to :action => 'list', :is_template => true
+    is_template = 't'
+    redirect_to :action => 'list', :is_template => is_template 
   end
 
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
@@ -22,6 +24,7 @@ class CommercialProposalsController < ApplicationController
 
   def list
     @is_template = params[:is_template]
+    is_template = params[:is_template] == 't' ? true : false
     if @is_template
       @commercial_proposals = @organization.commercial_proposals_templates
     else
@@ -38,11 +41,11 @@ class CommercialProposalsController < ApplicationController
       items_per_page = 10
       offset = (page - 1) * items_per_page
 
-      @commercial_proposals = CommercialProposal.find_by_contents(@query, {:limit => :all, :offset => 0}, :conditions => ["is_template = ?", @is_template])
+      @commercial_proposals = CommercialProposal.find_by_contents(@query, {:limit => :all, :offset => 0}, :conditions => ["is_template = ?", is_template])
       @commercial_proposal_pages = Paginator.new(self, @commercial_proposals.size, items_per_page, page)
       @commercial_proposals = @commercial_proposals[offset..(offset + items_per_page - 1)]
     else 
-      @commercial_proposal_pages, @commercial_proposals = paginate :commercial_proposals, :per_page => 10, :conditions => [ "organization_id = ?", @organization.id ]
+      @commercial_proposal_pages, @commercial_proposals = paginate :commercial_proposals, :per_page => 10, :conditions => [ "organization_id = ? AND is_template = ?", @organization.id, is_template ]
     end
   end
 
@@ -119,12 +122,19 @@ class CommercialProposalsController < ApplicationController
   end
 
   def create_tabs
-    add_tab do
-      named 'Commercial Proposals'
-      links_to :controller => 'commercial_proposals', :action => 'list'
+    t = add_tab do      
+      links_to :controller => 'commercial_proposals', :action => 'list', :is_template => 't'
       in_set 'first'
-      highlights_on :controller => 'commercial_proposals'
+      highlights_on :controller => 'commercial_proposals', :is_template => 't'
     end
+    t.named _("Commercial Proposal Templates")
+    
+    t = add_tab do      
+      links_to :controller => 'commercial_proposals', :action => 'list', :is_template => 'f'
+      in_set 'first'
+      highlights_on :controller => 'commercial_proposals', :is_template => 'f'
+    end
+    t.named _('Commercial Proposals')
   end
 
 end

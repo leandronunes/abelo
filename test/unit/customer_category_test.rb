@@ -1,38 +1,24 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class CustomerCategoryTest < Test::Unit::TestCase
-  fixtures :customer_categories, :organizations
 
-  # Replace this with your real tests.
-  def test_mandatory_fields
-    count = CustomerCategory.count
-
-    cat = CustomerCategory.new
-    assert !cat.save
-
-    cat.name = 'A category for testing mandatory fields'
-    assert !cat.save
-
-    cat.organization = Organization.find(1)
-    assert cat.save
-
-    assert_equal count + 1, CustomerCategory.count
+  def setup
+    @org = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :nickname => 'org')
   end
 
-  def test_full_name
-    c = CustomerCategory.find(1)
-    assert_equal 'Category a', c.full_name
-    c = CustomerCategory.find(3)
-    assert_equal 'Category a/Category aa', c.full_name
-    assert_equal 'Category a--Category aa', c.full_name('--')
+  def test_relation_with_customers
+    cust_cat = CustomerCategory.create(:name => 'Category for testing', :organization_id => @org.id)
+    customer = Customer.new(:name => 'Customer for testing', :organization_id => @org.id, :email => 'testing@email', :cpf => '65870844274')
+    cust_cat.customers.concat(customer)
+    assert_equal 1, cust_cat.customers.count
   end
 
-  def test_leaf
-    c1 = CustomerCategory.find(1)
-    assert !c1.leaf?
+  def test_uniqueness_field_name
+    cust_cat_1 = CustomerCategory.create(:name => 'Category for testing', :organization_id => @org.id)
+    
+    cust_cat_2 = CustomerCategory.create(:name => 'Category for testing', :organization_id => @org.id)
 
-    c2 = CustomerCategory.find(2)
-    assert c2.leaf?
+    assert cust_cat_2.errors.invalid?(:name)
   end
 
 end

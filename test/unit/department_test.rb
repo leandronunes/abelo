@@ -1,73 +1,47 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class DepartmentTest < Test::Unit::TestCase
-  fixtures :departments, :organizations, :people
 
-  def test_mandatory_fields
-    d = Department.new
-    assert !d.save
-
-    d.name = "One Department"
-    assert !d.save
-
-    d.organization_id = 1
-    assert d.organization.valid?
-    assert d.save
+  def setup
+    @org = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :nickname => 'org')
   end
 
-  def test_uniqueness
-    d1 = Department.new
-    d1.name = 'One Department'
-    d1.organization_id = 1
-    assert d1.save
+  def test_mandatory_field_name
+    dept = Department.create(:organization_id => @org.id)
+    assert dept.errors.invalid?(:name)
+  end
 
-    d2 = Department.new
-    d2.name = 'One Department'
-    d2.organization_id = 1
-    assert !d2.save
+  def test_mandatory_field_organization
+    dept = Department.create(:name => 'Department for testing')
+    assert dept.errors.invalid?(:organization_id)
+  end
 
-    d3 = Department.new
-    d3.name = 'One Department'
-    d3.organization_id = 2
-    assert d3.save
+  def test_uniqueness_field_name
+    dept_1 = Department.create(:name => 'Department for testing', :organization_id => @org.id)
+    dept_2 = Department.create(:name => 'Department for testing', :organization_id => @org.id)
+    assert dept_2.errors.invalid?(:name)
   end
 
   def test_create
-    count = Department.count
-    d = Department.new
-    d.name = 'Department'
-    d.organization = Organization.find(1)
-    assert d.save
-    assert_equal count + 1, Department.count
+    dept = Department.create(:name => 'Department for testing', :organization_id => @org.id)
+    assert_equal 1, Department.count
   end
 
   def test_destroy
-    count = Department.count
-    d = Department.find(1)
-    assert_not_nil d
-    d.destroy
-    assert_equal count - 1, Department.count
+    dept = Department.create(:name => 'Department for testing', :organization_id => @org.id)
+    dept.destroy
+    assert_equal 0, Department.count
     assert_raise(ActiveRecord::RecordNotFound) {
       Department.find(1)
     }
-
   end
 
   def test_invalid_organization
-    count = Department.count
     invalid_organization_id = 1000
-    assert !(Organization.find_all.collect{|o|o.id}.include? invalid_organization_id)
     d = Department.new
     d.name = 'Department'
     d.organization_id = invalid_organization_id
-    assert !d.save
-    assert_equal count, Department.count
-  end
-
-  def test_fixtures_if_valid
-    Department.find_all.each do |d|
-      assert d.valid?
-    end
+    assert_equal 0, Department.count
   end
 
 end

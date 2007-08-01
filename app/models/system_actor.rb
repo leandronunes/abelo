@@ -20,6 +20,12 @@ class SystemActor < ActiveRecord::Base
     end
   end
 
+  def self.full_text_search(q, options = {})
+    default_options = {:limit => :all, :offset => 0}
+    options = default_options.merge options
+    results = self.find_by_contents(q, options)
+    return [results.size, results]
+  end
 
   # maps an actor to an human-readable string
   def self.describe(actor)

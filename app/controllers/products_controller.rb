@@ -23,7 +23,6 @@ class ProductsController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @products = @organization.products
     if params[:query]
       @query = params[:query]
     else

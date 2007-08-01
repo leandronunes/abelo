@@ -23,7 +23,6 @@ class DepartmentsController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @departments = @organization.departments
     if params[:query]
       @query = params[:query]
     else

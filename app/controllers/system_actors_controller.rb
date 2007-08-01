@@ -14,7 +14,8 @@ class SystemActorsController < ApplicationController
 
   def autocomplete_name
     actor = params[:actor].camelize
-    re = Regexp.new("#{params[:system_actor][:name]}", "i")
+    escaped_string = Regexp.escape(params[:system_actor][:name])
+    re = Regexp.new(escaped_string, "i")
     @system_actors = SystemActor.find(:all, :conditions => [ "type = ?", actor ]).select { |sa| sa.name.match re}
     render :layout=>false
   end
@@ -32,23 +33,20 @@ class SystemActorsController < ApplicationController
     @actor = params[:actor] if SYSTEM_ACTORS.include?(params[:actor])
     @actor = params[:actor] = 'worker' if @actor.blank?
 
-    @query =  params[:query] ? params[:query] : nil
-    if @query.nil?
+    if params[:query]
+      @query = params[:query]
+    else
       @query = params[:system_actor] ? params[:system_actor][:name] : nil
     end
-
     if !@query.nil?
-      page = (params[:page] || 1).to_i
       items_per_page = 10
-      offset = (page - 1) * items_per_page
-
-      @system_actors = eval("#{@actor.camelize}").find_by_contents(@query, {:limit => :all, :offset => 0})
-      @system_actor_pages = Paginator.new(self, @system_actors.size, items_per_page, page)
+      offset = ((params[:page] || 1).to_i - 1) * items_per_page
+      @total, @system_actors = eval("#{@actor.camelize}").full_text_search(@query)
+      @system_actor_pages = pages_for(@total, :per_page => items_per_page)
       @system_actors = @system_actors[offset..(offset + items_per_page - 1)]
     else
       @system_actor_pages, @system_actors = paginate @actor.to_sym, :per_page => 10, :conditions => ["organization_id = ?", @organization.id ] 
     end
-    @system_actor = SystemActor.new 
   end
 
   def show

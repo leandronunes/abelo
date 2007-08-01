@@ -29,13 +29,12 @@ class DepartmentsController < ApplicationController
     else
       @query = params[:department] ? params[:department][:name] : nil
     end
-
     if !@query.nil?
       items_per_page = 10
       offset = ((params[:page] || 1).to_i - 1) * items_per_page
       @total, @departments = Department.full_text_search(@query)
-      @departments = @departments[offset..(offset + items_per_page - 1)]
       @department_pages = pages_for(@total, :per_page => items_per_page)
+      @departments = @departments[offset..(offset + items_per_page - 1)]
     else 
       @department_pages, @departments = paginate :departments, :per_page => 10, :conditions => [ "organization_id = ?", @organization.id ]
     end

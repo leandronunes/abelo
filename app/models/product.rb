@@ -14,6 +14,13 @@ class Product < ActiveRecord::Base
 
   validates_presence_of :category_id, :message => 'Every product must belong to a category'
 
+  def self.full_text_search(q, options = {})
+    default_options = {:limit => :all, :offset => 0}
+    options = default_options.merge options
+    results = Product.find_by_contents(q, options)
+    return [results.size, results]
+  end
+
   def ammount_in_stock
     self.connection.select_value('select sum(ammount) from stock_entries where product_id = %d' % self.id).to_f
   end

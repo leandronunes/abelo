@@ -7,7 +7,8 @@ class ProductsController < ApplicationController
   before_filter :create_register_tabs
 
   def autocomplete_name
-    re = Regexp.new("#{params[:product][:name]}", "i")
+    escaped_string = Regexp.escape(params[:product][:name])
+    re = Regexp.new(escaped_string, "i")
     @products = Product.find(:all).select { |pr| pr.name.match re}
     render :layout=>false
   end
@@ -23,24 +24,20 @@ class ProductsController < ApplicationController
 
   def list
     @products = @organization.products
-
-    @query = params[:query] ? params[:query] : nil
-    if @query.nil?
+    if params[:query]
+      @query = params[:query]
+    else
       @query = params[:product] ? params[:product][:name] : nil
     end
-
     if !@query.nil?
-      page = (params[:page] || 1).to_i
       items_per_page = 10
-      offset = (page - 1) * items_per_page
-
-      @products = Product.find_by_contents(@query, {:limit => :all, :offset => 0})
-      @product_pages = Paginator.new(self, @products.size, items_per_page, page)
+      offset = ((params[:page] || 1).to_i - 1) * items_per_page
+      @total, @products = Product.full_text_search(@query)
+      @product_pages = pages_for(@total, :per_page => items_per_page)
       @products = @products[offset..(offset + items_per_page - 1)]
     else 
       @product_pages, @products = paginate :product, :per_page => 10, :conditions => ["organization_id = ?", @organization.id ] 
     end
-    @product = Product.new
   end
 
   def show

@@ -1,7 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class OrganizationTest < Test::Unit::TestCase
-  fixtures :organizations, :people, :profiles, :sales, :departments, :historicals, :specifications, :cash_flows, :customers, :customer_categories, :customers_customer_categories
 
   def setup
     @organization = Organization.new
@@ -9,28 +8,32 @@ class OrganizationTest < Test::Unit::TestCase
     @organization.cnpj = '19900000002462'
     @organization.nickname = 'test_organization'
     @organization.save
+    
+    @cat_prod = ProductCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
+    @cat_cust = CustomerCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
+    @cat_worker = WorkerCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
+    @cat_supp = SupplierCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
+
+    @user = User.create!("salt"=>"7e3041ebc2fc05a40c60028e2c4901a81035d3cd", "updated_at"=>nil, "crypted_password"=>"00742970dc9e6319f8019fd54864d3ea740f04b1", "type"=>"User", "remember_token_expires_at"=>nil, "id"=>"1", "administrator"=>nil, "remember_token"=>nil, "login"=>"new_user", "email"=>"new_user@example.com", "created_at"=>"2007-07-14 18:03:29")
   end
 
-  def test_mandatory_fields
-    count = Organization.count
+  def test_mandatory_field_name
+    org = Organization.create(:cnpj => '63182452000151', :nickname => 'org')
+    assert org.errors.invalid?(:name) 
+  end
 
-    org = Organization.new
-    assert(!org.save)
-
-    org.name = 'Organization for testing mandatory fields'
-    assert(!org.save)
-
-    org.cnpj = '77635813000182'
-    assert(!org.save)
-
-    org.nickname = 'testing_mandatory_fields'
-    assert(org.save)
-
-    assert_equal(count + 1, Organization.count)
+  def test_mandatory_field_cnpj
+    org = Organization.create(:name => 'Organization for testing', :nickname => 'org')
+    assert org.errors.invalid?(:cnpj) 
+  end
+  
+  def test_mandatory_field_nickname
+    org = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151')
+    assert org.errors.invalid?(:nickname)
   end
 
   def test_cnpj_format
-    org = Organization.find(1)
+    org = Organization.new(:name => 'Organization for testing', :nickname => 'org')
     org.cnpj = 'bli'
     assert(!org.save)
     org.cnpj = '12121212121212'
@@ -40,52 +43,131 @@ class OrganizationTest < Test::Unit::TestCase
   end
 
   def test_nickname_format
-    org = Organization.find(1)
+    org = Organization.new(:name => 'Organization for testing', :cnpj => '63182452000151')
     org.nickname = 'invalid nickname'
     assert(!org.save)
     org.nickname = 'valid_nickname'
     assert(org.save)
   end
 
-  def test_should_have_users
+  def test_relation_with_departaments
+    dept = Department.create(:name => 'Department for testing')
+    @organization.departments.concat(dept)
+    assert @organization.departments.include?(dept)
+  end
+
+  def test_relation_with_products
+    product = Product.create(:name => 'Image of product', :sell_price => 2.0, :unit => 'kg', :organization_id => @organization.id)
+    @organization.products.concat(product)
+    assert @organization.products.include?(product)
+  end
+
+  def test_relation_with_sales
+    sale = Sale.create(:date => '05-11-2007', :user_id => 1, :organization_id => @organization.id)
+    @organization.sales.concat(sale)
+    assert @organization.sales.include?(sale)
+  end
+
+  def test_relation_with_mass_mails
+    mail = MassMail.create(:subject => "Email subject", :body => "Email body", :organization_id => @organization.id)
+    @organization.mass_mails.concat(mail)
+    assert @organization.mass_mails.include?(mail)
+  end
+
+  def test_relation_with_commercial_proposals
+    dept = Department.create(:name => 'Department for testing')
+    com_prop = CommercialProposal.create(:name => 'Commercial Proposal', :organization_id => @organization.id, :is_template => true, :department_ids => [dept.id])
+    @organization.commercial_proposals.concat(com_prop)
+    assert @organization.commercial_proposals.include?(com_prop)
+  end
+
+  def test_relation_with_ledgers
+  end
+
+  def test_relation_with_categories
+    assert_equal 4, @organization.categories.count
+  end
+
+  def test_relation_with_product_categories
+    assert @organization.product_categories.include?(@cat_prod)
+  end
+
+  def test_relation_with_customer_categories
+    assert @organization.customer_categories.include?(@cat_cust)
+  end
+
+  def test_relation_with_worker_categories
+    assert @organization.worker_categories.include?(@cat_worker)
+  end
+
+  def test_relation_with_supplier_categories
+    assert @organization.supplier_categories.include?(@cat_supp)
+  end
+
+  def test_relation_with_system_actors
+    supplier = Supplier.create!(:name => 'Hering', :cnpj => '58178734000145', :organization_id => @organization.id, :email => 'contato@hering.com', :category_id => @cat_supp.id)
+    customer = Customer.create!(:name => 'João da Silva', :email => 'joao@softwarelivre.org', :cpf => '74676743920', :organization_id => @organization.id, :email => 'joao@softwarelivre.org', :category_id => @cat_cust.id)
+    worker = Worker.create!(:name => 'José Fernandes', :cpf => '63358421813', :category_id => @cat_worker.id, :organization_id => @organization.id , :email => 'jose@toca.com')
+    assert_equal 3, @organization.system_actors.count
+  end
+
+  def test_relation_with_suppliers
+    supplier = Supplier.create!(:name => 'Hering', :cnpj => '58178734000145', :organization_id => @organization.id, :email => 'contato@hering.com', :category_id => @cat_prod.id)
+    assert @organization.suppliers.include?(supplier)
+  end
+
+  def test_relation_with_customers
+    customer = Customer.create!(:name => 'João da Silva', :email => 'joao@softwarelivre.org', :cpf => '74676743920', :organization_id => @organization.id, :email => 'joao@softwarelivre.org', :category_id => @cat_supp.id)
+    assert @organization.customers.include?(customer)
+  end
+
+  def test_relation_with_workers
+    worker = Worker.create!(:name => 'José Fernandes', :cpf => '63358421813', :category_id => @cat_worker.id, :organization_id => @organization.id , :email => 'jose@toca.com')
+    assert @organization.workers.include?(worker)
+  end
+
+  def test_relation_with_profiles
+    profile = Profile.create(:organization_id => @organization.id, :user_id => @user.id, :permissions => [:controller => '*', :action => '*'])
+    assert @organization.profiles.include?(profile)
+  end
+
+  def test_users
+   profile = Profile.create(:organization_id => @organization.id, :user_id => @user.id, :permissions => [:controller => '*', :action => '*'])
+   assert @organization.users.include?(@user)
+  end
+
+  def test_relation_with_contacts
+    supplier = Supplier.create!(:name => 'Hering', :cnpj => '58178734000145', :organization_id => @organization.id, :email => 'contato@hering.com', :category_id => @cat_supp.id)
+    contact = Contact.create(:name => 'Contact for testing', :system_actor_id => supplier.id, :category_id => @cat_supp)
+    assert @organization.contacts.include?(contact)
+  end
+
+  def test_pending_sales
+    sale = Sale.create(:date => '05-11-2007', :user_id => 1, :organization_id => @organization.id)
+    Sale.stubs(:pending).returns([sale])
+    user = User.find(1)
+    assert @organization.pending_sales(user).include?(sale)
+  end
+
+
+  def test_customers_by_products
+    customers_expected = []
+    list_products = ["1", "3"]
     org = Organization.find(1)
-    assert_not_nil org.users
-    assert_kind_of Array, org.users
-    assert !org.users.empty?
-    org.users.each do |user|
-      assert_kind_of User, user
-    end
+    customers_expected.push(Customer.find(1))
+    assert_equal customers_expected, org.customers_by_products(list_products).uniq
   end
 
-  def test_should_have_sales
+  def test_customers_by_categories
+    customers_expected = []
+    list_categories = [1, 2]
     org = Organization.find(1)
-    assert_not_nil org.sales
-    assert_kind_of Array, org.sales
-    assert ! org.sales.empty?
-    assert(org.sales.all? do |sale|
-      sale.kind_of? Sale
-    end)
+    customers_expected.push(Customer.find(3))
+    customers_expected.push(Customer.find(2))
+    assert_equal customers_expected, org.customers_by_categories(list_categories).uniq
   end
 
-  def test_should_have_pending_sales
-    org = Organization.find(1)
-    user = org.users.find(7)
-    sales = org.pending_sales(user)
-    assert_not_nil sales
-    assert_kind_of Array, org.pending_sales(user)
-    assert ! sales.empty?
-    assert (sales.all? { |sale| sale.kind_of?(Sale) })
-  end
-
-  def test_has_many_departaments
-    o = Organization.find(1)
-    assert o.valid?
-    d = Department.find(1)
-    o.add_departments(d)
-    assert d.valid?
-    assert o.departments.include?(d)
-  end
-
+  #TODO see it's necessary
   def test_has_many_cash_flows
     o = Organization.find(1)
     assert_valid o
@@ -170,23 +252,6 @@ class OrganizationTest < Test::Unit::TestCase
     assert_equal cf_1.historical_id, cf_2.historical_id
     total_value =  cf_1.value + cf_2.value
     assert_equal total_value, @organization.historical_total_value(cf_1.historical_id)
-  end
-
-  def test_customers_by_products
-    customers_expected = []
-    list_products = ["1", "3"]
-    org = Organization.find(1)
-    customers_expected.push(Customer.find(1))
-    assert_equal customers_expected, org.customers_by_products(list_products).uniq
-  end
-
-  def test_customers_by_categories
-    customers_expected = []
-    list_categories = [1, 2]
-    org = Organization.find(1)
-    customers_expected.push(Customer.find(3))
-    customers_expected.push(Customer.find(2))
-    assert_equal customers_expected, org.customers_by_categories(list_categories).uniq
   end
 
 end

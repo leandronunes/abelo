@@ -5,29 +5,29 @@ first:
   organization_id: 1
   permissions:
   - :controller: '*'
-    :action: '*'
+  - :action: '*'
 another:
   id: 2
   user_id: 2
   organization_id: 1
   permissions:
   - :controller: '*'
-    :action: 'index'
+  - :action: 'index'
   - :controller: '*'
-    :action: 'list'
+  - :action: 'list'
   - :controller: '*'
-    :action: 'show'
+  - :action: 'show'
 yet_another:
   id: 3
   user_id: 3
   organization_id: 1
   permissions:
   - :controller: '*'
-    :action: '*'
+  - :action: '*'
 for_sales_person:
   id: 4
   user_id: 7
   organization_id: 1
   permissions:
   - :controller: 'point_of_sale'
-    :action: '*'
+  - :action: '*'

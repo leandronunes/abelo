@@ -8,6 +8,7 @@ class CategoriesController < ApplicationController
     contact
     worker
     supplier
+    ledger
   ]
 
   before_filter :create_configurations_tabs

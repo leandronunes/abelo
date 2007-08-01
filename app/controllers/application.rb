@@ -66,7 +66,7 @@ class ApplicationController < ActionController::Base
   def pages_for(size, options = {})
    default_options = {:per_page => 10}
    options = default_options.merge options
-   pages = Paginator.new self, size, options[:per_page], (params[:page] || 1)
+   Paginator.new self, size, options[:per_page], (params[:page] || 1).to_i
   end
 
   def flexible_template_owner

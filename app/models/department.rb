@@ -12,10 +12,8 @@ class Department < ActiveRecord::Base
   acts_as_ferret
 
   def self.full_text_search(q, options = {})
-    return nil if q.nil? or q == ""
-    default_options = {:limit => 10, :page => 1}
+    default_options = {:limit => :all, :offset => 0}
     options = default_options.merge options
-    options[:offset] = options[:limit] * (options.delete(:page).to_i - 1)
     results = Department.find_by_contents(q, options)
     return [results.size, results]
   end

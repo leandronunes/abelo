@@ -1,0 +1,124 @@
+#nav ul {
+position: relative;
+background: #fffaf0 url('../images/bgnav.png') bottom right no-repeat;
+list-style: none;
+width: 769px;
+margin: 10px 0px 0px 0px;
+padding: 0px;
+padding-left: 10px;
+padding-bottom: 15px;
+}
+
+#nav li {
+width: 250px;
+margin: 3px;
+list-style: none;
+}
+
+#nav a {
+display: block;
+background-position: top left;
+background-repeat: no-repeat;
+padding-left: 47px;
+height: 47px;
+font-size: 18px;
+color: #545454;
+text-decoration: none;
+}
+
+#nav a:hover {
+color: #000000;
+text-decoration: underline;
+}
+
+/* Positions */
+
+#nav li a.pos_1 {
+margin-left: 10px;
+}
+
+#nav li a.pos_2 {
+position: absolute;
+top: 1px;
+margin-left: 265px;
+}
+
+#nav li a.pos_3 {
+position: absolute;
+top: 1px;
+margin-left: 520px;
+}
+
+#nav li a.pos_4 {
+margin-left: 10px;
+}
+
+#nav li a.pos_5 {
+position: absolute;
+top: 50px;
+margin-left: 265px;
+}
+
+#nav li a.pos_6 {
+position: absolute;
+top: 50px;
+margin-left: 520px;
+}
+
+#nav li a.pos_7 {
+margin-left: 10px;
+}
+
+#nav li a.pos_8 {
+position: absolute;
+top: 100px;
+margin-left: 265px;
+}
+
+#nav li a.pos_9 {
+position: absolute;
+top: 100px;
+margin-left: 520px;
+}
+
+#nav li a.pos_10 {
+margin-left: 10px;
+}
+
+#nav li a.pos_11 {
+position: absolute;
+top: 150px;
+margin-left: 265px;
+}
+
+#nav li a.pos_12 {
+position: absolute;
+top: 150px;
+margin-left: 520px;
+}
+
+#nav li a.pos_13 {
+margin-left: 10px;
+}
+
+#nav li a.pos_14 {
+position: absolute;
+top: 200px;
+margin-left: 265px;
+}
+
+#nav li a.pos_15 {
+position: absolute;
+top: 200px;
+margin-left: 520px;
+}
+
+#nav li a.pos_16 {
+margin-left: 10px;
+}
+
+#nav li a.pos_17 {
+position: absolute;
+top: 250px;
+margin-left: 265px;
+}

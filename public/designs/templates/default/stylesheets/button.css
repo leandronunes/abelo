@@ -1,0 +1,80 @@
+.button {
+  float: left;
+  border: none;
+  display: block;
+  opacity: 0.6;
+  margin-left: 5px;
+  width: 24px;
+  height: 24px;
+  background: url(/icons/aurium_neu/24x24/bt_none.png);
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+
+.button:hover {
+  opacity: 1;
+}
+
+.button span {
+  display: none;
+}
+
+.button_new,
+.button_add     { background-image: url(/icons/aurium_neu/24x24/add.png)      }
+.button_save    { background-image: url(/icons/aurium_neu/24x24/save.png)     }
+.button_cancel  { background-image: url(/icons/aurium_neu/24x24/cancel.png)   }
+.button_back    { background-image: url(/icons/aurium_neu/24x24/back.png)     }
+.button_search  { background-image: url(/icons/aurium_neu/24x24/lupa.png)     }
+.button_login   { background-image: url(/icons/aurium_neu/24x24/password.png) }
+.button_img     { background-image: url(/icons/aurium_neu/24x24/image.png)    }
+.button_send_mail { background-image: url(/icons/aurium_neu/24x24/mail-send.png) }
+.button_show    { background-image: url(/icons/aurium_neu/16x16/view.png); width: 16px; height: 16px }
+.button_edit    { background-image: url(/icons/aurium_neu/16x16/edit.png); width: 16px; height: 16px }
+.button_remove,
+.button_destroy { background-image: url(/icons/aurium_neu/16x16/del.png);  width: 16px; height: 16px }
+
+.with_text {
+  padding: 2px 0px;
+  padding-left: 24px;
+  background-position: 0% 50%;
+  width: inherit !important;
+  display: inline !important;
+}
+.with_text span {
+  display: inline !important;
+}
+
+#loginform .button {
+  float: none;
+}
+
+.beault_button {
+  margin: 5px;
+  height: 33px;
+  padding-top: 5px;
+  background: url('/images/bgbutton.png') no-repeat 50% 50%;
+}
+
+.beault_button span, .beault_button input {
+  color: #654;
+  height: 30px;
+  line-height: 30px;
+  font-size: 13px;
+  font-weight: 800;
+}
+.beault_button a {
+  position: relative;
+  top: 1px;
+}
+.beault_button a span {
+  position: relative;
+  top: -2px;
+}
+
+.beault_button :hover {
+  color: #543 !important;
+}
+
+.beault_button .button_new {
+  padding-left: 28px;
+}

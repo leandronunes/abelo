@@ -1,5 +1,5 @@
 class Organization < ActiveRecord::Base
-  act_as_flexible_template
+  acts_as_design
 
   validates_presence_of :name, :cnpj, :nickname
   validates_uniqueness_of :name, :cnpj, :nickname

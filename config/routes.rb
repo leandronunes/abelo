@@ -23,4 +23,7 @@ ActionController::Routing::Routes.draw do |map|
   # non-organization-based controllers
   map.connect 'users/:action/:id', :controller => 'users'
 
+  # documentation browser
+  map.connect 'doc', :controller => 'doc'
+
 end

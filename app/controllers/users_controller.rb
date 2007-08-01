@@ -5,6 +5,13 @@ class UsersController < ApplicationController
   before_filter :check_admin_rights, :only => [ :create, :list, :new ]
   before_filter :extra_access_control , :only => [ :edit, :update ]
 
+  design :fixed => {
+    :template => 'default',
+    :theme => 'default',
+    :icon_theme => 'default',
+  }
+
+
   def extra_access_control
     unless current_user.administrator || current_user.id == params[:id].to_i
       render :action => 'access_denied', :status => 403, :layout => false

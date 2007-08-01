@@ -4,7 +4,7 @@ class InterfaceController < ApplicationController
 
   before_filter :create_configurations_tabs
 
-  uses_flexible_template :edit => true, :owner => 'organization'
-  
+  design_editor :holder => 'organization', :autosave => true
+ 
 
 end

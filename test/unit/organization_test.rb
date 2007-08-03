@@ -17,38 +17,6 @@ class OrganizationTest < Test::Unit::TestCase
     @user = User.create!("salt"=>"7e3041ebc2fc05a40c60028e2c4901a81035d3cd", "updated_at"=>nil, "crypted_password"=>"00742970dc9e6319f8019fd54864d3ea740f04b1", "type"=>"User", "remember_token_expires_at"=>nil, "id"=>"1", "administrator"=>nil, "remember_token"=>nil, "login"=>"new_user", "email"=>"new_user@example.com", "created_at"=>"2007-07-14 18:03:29")
   end
 
-  def test_mandatory_field_name
-    org = Organization.create(:cnpj => '63182452000151', :nickname => 'org')
-    assert org.errors.invalid?(:name) 
-  end
-
-  def test_mandatory_field_cnpj
-    org = Organization.create(:name => 'Organization for testing', :nickname => 'org')
-    assert org.errors.invalid?(:cnpj) 
-  end
-  
-  def test_mandatory_field_nickname
-    org = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151')
-    assert org.errors.invalid?(:nickname)
-  end
-
-  def test_cnpj_format
-    org = Organization.new(:name => 'Organization for testing', :nickname => 'org')
-    org.cnpj = 'bli'
-    assert(!org.save)
-    org.cnpj = '12121212121212'
-    assert(!org.save)
-    org.cnpj = '66145476000129'
-    assert(org.save)
-  end
-
-  def test_nickname_format
-    org = Organization.new(:name => 'Organization for testing', :cnpj => '63182452000151')
-    org.nickname = 'invalid nickname'
-    assert(!org.save)
-    org.nickname = 'valid_nickname'
-    assert(org.save)
-  end
 
   def test_relation_with_departaments
     dept = Department.create(:name => 'Department for testing')
@@ -77,7 +45,6 @@ class OrganizationTest < Test::Unit::TestCase
   def test_relation_with_commercial_proposals
     dept = Department.create(:name => 'Department for testing')
     com_prop = CommercialProposal.create(:name => 'Commercial Proposal', :organization_id => @organization.id, :is_template => true, :department_ids => [dept.id])
-    @organization.commercial_proposals.concat(com_prop)
     assert @organization.commercial_proposals.include?(com_prop)
   end
 
@@ -137,9 +104,76 @@ class OrganizationTest < Test::Unit::TestCase
   end
 
   def test_relation_with_contacts
-    supplier = Supplier.create!(:name => 'Hering', :cnpj => '58178734000145', :organization_id => @organization.id, :email => 'contato@hering.com', :category_id => @cat_supp.id)
-    contact = Contact.create(:name => 'Contact for testing', :system_actor_id => supplier.id, :category_id => @cat_supp)
+    customer= Customer.create!(:name => 'Hering', :cnpj => '58178734000145', :organization_id => @organization.id, :email => 'contato@hering.com', :category_id => @cat_cust.id)
+    contact = Contact.create(:name => 'Contact for testing', :system_actor_id => customer.id, :category_id => @cat_cust)
     assert @organization.contacts.include?(contact)
+  end
+
+  def test_mandatory_field_name
+    org = Organization.create(:cnpj => '63182452000151', :nickname => 'org')
+    assert org.errors.invalid?(:name) 
+  end
+
+  def test_mandatory_field_cnpj
+    org = Organization.create(:name => 'Organization for testing', :nickname => 'org')
+    assert org.errors.invalid?(:cnpj) 
+  end
+  
+  def test_mandatory_field_nickname
+    org = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151')
+    assert org.errors.invalid?(:nickname)
+  end
+
+  def test_uniqueness_name
+    org_1 = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :nickname => 'org_1')
+    org_2 = Organization.create(:name => 'Organization for testing', :cnpj => '67444545000168', :nickname => 'org_2')
+    assert org_2.errors.invalid?(:name) 
+  end
+
+  def test_uniqueness_cnpj
+    org_1 = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :nickname => 'org_1')
+    org_2 = Organization.create(:name => 'Organization for testing 2', :cnpj => '63182452000151', :nickname => 'org_2')
+    assert org_2.errors.invalid?(:cnpj) 
+  end
+
+  def test_uniqueness_nickname
+    org_1 = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :nickname => 'org')
+    org_2 = Organization.create(:name => 'Organization for testing 2', :cnpj => '67444545000168', :nickname => 'org')
+    assert org_2.errors.invalid?(:nickname) 
+  end
+
+  def test_cnpj_format
+    org = Organization.new(:name => 'Organization for testing', :nickname => 'org')
+    org.cnpj = 'bli'
+    assert(!org.save)
+    org.cnpj = '12121212121212'
+    assert(!org.save)
+    org.cnpj = '66145476000129'
+    assert(org.save)
+  end
+
+  def test_nickname_format
+    org = Organization.new(:name => 'Organization for testing', :cnpj => '63182452000151')
+    org.nickname = 'invalid nickname'
+    assert(!org.save)
+    org.nickname = 'valid_nickname'
+    assert(org.save)
+  end
+
+  def test_top_level_product_categories
+    assert @organization.top_level_product_categories.include?(@cat_prod)
+  end
+
+  def test_top_level_supplier_categories
+    assert @organization.top_level_supplier_categories.include?(@cat_supp)
+  end
+
+  def test_top_level_worker_categories
+    assert @organization.top_level_worker_categories.include?(@cat_worker)
+  end
+  
+  def test_top_level_customer_categories
+    assert @organization.top_level_customer_categories.include?(@cat_cust)
   end
 
   def test_pending_sales
@@ -149,22 +183,21 @@ class OrganizationTest < Test::Unit::TestCase
     assert @organization.pending_sales(user).include?(sale)
   end
 
-
-  def test_customers_by_products
-    customers_expected = []
-    list_products = ["1", "3"]
-    org = Organization.find(1)
-    customers_expected.push(Customer.find(1))
-    assert_equal customers_expected, org.customers_by_products(list_products).uniq
+  def test_commercial_proposals_templates
+    dept = Department.create(:name => 'Department for testing')
+    com_prop = CommercialProposal.create(:name => 'Commercial Proposal', :organization_id => @organization.id, :is_template => true, :department_ids => [dept.id])
+    CommercialProposal.stubs(:is_template).returns(true)
+    assert @organization.commercial_proposals_templates.include?(com_prop)
   end
 
-  def test_customers_by_categories
-    customers_expected = []
-    list_categories = [1, 2]
-    org = Organization.find(1)
-    customers_expected.push(Customer.find(3))
-    customers_expected.push(Customer.find(2))
-    assert_equal customers_expected, org.customers_by_categories(list_categories).uniq
+  def test_commercial_proposals_not_templates
+    dept = Department.create(:name => 'Department for testing')
+    com_prop = CommercialProposal.create(:name => 'Commercial Proposal', :organization_id => @organization.id, :is_template => false, :department_ids => [dept.id])
+    CommercialProposal.stubs(:is_template).returns(false)
+    assert @organization.commercial_proposals_not_templates.include?(com_prop) 
+  end
+
+  def test_ledger_categories_sorted
   end
 
   #TODO see it's necessary
@@ -181,6 +214,7 @@ class OrganizationTest < Test::Unit::TestCase
     assert o.cash_flows.include?(cf)
   end
 
+  #TODO see it's necessary
   def test_has_many_historicals
     o = Organization.find(1)
     assert_valid o
@@ -193,6 +227,7 @@ class OrganizationTest < Test::Unit::TestCase
     assert o.historicals.include?(h)
   end
 
+  #TODO see it's necessary
   def test_operational_entrances
     h = Historical.find(1)
     assert_valid h
@@ -205,6 +240,7 @@ class OrganizationTest < Test::Unit::TestCase
     assert_equal 1, historicals_expecteds.size
   end
 
+  #TODO see it's necessary
   def test_operational_exits
     h = Historical.find(2)
     assert_valid h
@@ -217,6 +253,7 @@ class OrganizationTest < Test::Unit::TestCase
     assert_equal 1, historicals_expecteds.size
   end
 
+  #TODO see it's necessary
   def test_not_operational_entrances
     h = Historical.find(3)
     assert_valid h
@@ -229,6 +266,7 @@ class OrganizationTest < Test::Unit::TestCase
     assert_equal 1, historicals_expecteds.size
   end
 
+  #TODO see it's necessary
   def test_not_operational_exits
     h = Historical.find(4)
     assert_valid h
@@ -241,6 +279,7 @@ class OrganizationTest < Test::Unit::TestCase
     assert_equal 1, historicals_expecteds.size
   end
 
+  #TODO see it's necessary
   def test_historical_total_value
     cf_1 = CashFlow.find(1)
     assert_valid cf_1

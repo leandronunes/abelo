@@ -1,112 +1,100 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class ProductTest < Test::Unit::TestCase
-  fixtures :products
-  fixtures :organizations
-  fixtures :product_categories
-  fixtures :suppliers
-
+  
   def setup
-    @organization = Organization.find(1)
+    @org = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :nickname => 'org')
+    @cat_prod = ProductCategory.create(:name => 'Category for testing', :organization_id => @org.id)
+    cat_supp = SupplierCategory.create(:name => 'Category for testing', :organization_id => @org.id)
+    @supplier = Supplier.create!(:name => 'Hering', :cnpj => '58178734000145', :organization_id => @org.id, :email => 'contato@hering.com', :category_id => cat_supp.id)
   end
 
-  def test_mandatory_fields
-    count = Product.count
-
-    p = Product.new
-    assert(!p.save)
-
-    p.description = 'Testing mandatory fields'
-    assert(!p.save)
-
-    p.sell_price = 10.50
-    assert(!p.save)
-
-    p.organization = @organization
-    assert(!p.save)
-
-    p.unit = 'un'
-    assert(!p.save)
-
-    category = @organization.product_categories.find(1)
-    p.category_id = category.id
-
-    assert(p.save)
-
-    assert_equal(count + 1, Product.count)
+  def test_relation_with_organization
+    product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
+    assert_equal @org, product.organization
   end
 
-  def test_suppliers
-    p = Product.find(1)
-    assert_not_nil p.suppliers
-    assert_equal Array, p.suppliers.class
-    p.suppliers.each { |s|
-      assert_equal Supplier, s.class
-    }
+  def test_relation_with_organization
+    product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
+    assert_equal @cat_prod, product.category
   end
 
-  def test_stock
-    p = Product.new({
-      :description => 'Product for testing stock ammount',
-      :organization_id => 1,
-      :unit => 'un',
-      :sell_price => 5.99,
-      :category_id => 1
-    })
-    assert p.save
+  def test_relation_with_organization
+    product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
+    img = Image.new 
+    stream = StringIO.new(File.read('public/images/rails.png'))
+    def stream.original_filename
+      'rails.png'
+    end
+    def stream.content_type
+      'image/png'
+    end
+    img.description = ('Image for testing')
+    img.picture = stream
+    img.product = product
+    img.save
+    
+    assert product.images.include?(img)
+  end
 
+  def test_relation_with_suppliers
+    product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
+    product.suppliers.concat(@supplier)
+    assert product.suppliers.include?(@supplier)
+  end
+
+  def test_relation_with_stock
+    product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
+    entry = StockIn.create!(:supplier_id => @supplier.id, :ammount => 50, :price => '15.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => product.id)
+    assert product.stock_entries.include?(entry)
+  end
+
+  def test_full_text_search
+    product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
+    products = Product.full_text_search('prod*')
+    assert_equal 1, products[0]
+    assert products[1].include?(product)
+  end
+
+  def test_amount_in_stock
+    product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
 
     # generate 10 stock ins
     total_ammount = 0.0
     total_cost = 0.0
     (1..10).each { |n|
-      entry = StockIn.new
-      entry.ammount = n
-
-      entry.product = p
-      entry.supplier = p.organization.suppliers.find(:first)
-
-      assert_not_nil entry.supplier
-
-      entry.price = 1.99
-      entry.purpose = 'sell'
-      entry.date = Date.today
-      entry.payment_status = true
-      
-      assert entry.save
-
-      total_ammount += n
+      entry = StockIn.create!(:supplier_id => @supplier.id, :ammount => 5, :price => '1.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => product.id)
+      total_ammount += entry.ammount
       total_cost += entry.price * entry.ammount
     }
 
-    # 55 = 1 + 2 + ... + 10
-    assert_in_delta total_ammount, p.ammount_in_stock, 0.001 
-    # 1.99 * 55
-    assert_in_delta total_cost, p.total_cost, 0.001
+    assert_equal total_ammount, product.ammount_in_stock
+    assert_in_delta total_cost, product.total_cost, 0.01
+  end
+  
+  def test_mandatory_field_name
+    product = Product.create(:sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
+    assert product.errors.invalid?(:name)
+  end
 
-    out_ammount = 15
+  def test_mandatory_field_sell_price
+    product = Product.create(:name => 'Image of product', :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
+    assert product.errors.invalid?(:sell_price)
+  end
 
-    # one stock out
-    out = StockOut.new
-    out.product = p
-    out.purpose = 'sell'
-    out.date = Date.today
-    out.ammount = - out_ammount
-    assert out.save
+  def test_mandatory_field_unit
+    product = Product.create(:name => 'Image of product', :sell_price => 2.0, :organization_id => @org.id, :category_id => @cat_prod.id)
+    assert product.errors.invalid?(:unit)
+  end
 
-    assert_equal (total_ammount - out_ammount), p.ammount_in_stock
+  def test_mandatory_field_organization_id
+    product = Product.create(:name => 'Image of product', :sell_price => 2.0, :unit => 'kg', :category_id => @cat_prod.id)
+    assert product.errors.invalid?(:organization_id)
+  end
 
-    # one stock out of the allowed range
-    overflow = StockOut.new
-    overflow.product = p
-    overflow.purpose = 'sell'
-    overflow.date = Date.today
-    overflow.ammount = -1000
-    assert !overflow.save
-
-    # we must still have a non-negative ammount
-    assert(p.ammount_in_stock >= 0)
-
+  def test_mandatory_field_category_id
+    product = Product.create(:name => 'Image of product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id)
+    assert product.errors.invalid?(:category_id)
   end
 
 end

@@ -6,13 +6,13 @@ class Product < ActiveRecord::Base
   has_and_belongs_to_many :suppliers
   has_many :stock_entries
 
-  acts_as_ferret
-
   validates_presence_of :name, :sell_price, :unit
 
   validates_presence_of :organization_id, :message => 'Products must be associated to an organization'
 
   validates_presence_of :category_id, :message => 'Every product must belong to a category'
+
+  acts_as_ferret
 
   def self.full_text_search(q, options = {})
     default_options = {:limit => :all, :offset => 0}

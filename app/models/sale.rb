@@ -1,25 +1,11 @@
-# == Schema Information
-# Schema version: 35
-#
-# Table name: sales
-#
-#  id              :integer       not null, primary key
-#  organization_id :integer       not null
-#  customer_id     :integer       
-#  date            :date          not null
-#  status          :integer       default(0), not null
-#  user_id         :integer       not null
-#
-
 class Sale < ActiveRecord::Base
-
-  validates_presence_of :date, :organization_id, :user_id
-
   belongs_to :organization
   belongs_to :customer
   belongs_to :user
   has_many :payments
   has_many :items, :class_name => 'SaleItem'
+
+  validates_presence_of :date, :organization_id, :user_id
 
   STATUS_OPEN = 0
   STATUS_CLOSED = 1  # total or parcial credit

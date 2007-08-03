@@ -1,30 +1,21 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class SaleItemTest < Test::Unit::TestCase
-  fixtures :sale_items, :sales, :products
 
-  # Replace this with your real tests.
-  def test_mandatory_fields
-    item = SaleItem.new
-    assert(!item.save)
-    item.sale = Sale.find(1)
-    assert(!item.save)
-    item.product = Product.find(1)
-    assert(!item.save)
-    item.ammount = 5
-    assert(item.save)
+  def setup
+    @org = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :nickname => 'org')
+    @cat_prod = ProductCategory.create(:name => 'Category for testing', :organization_id => @org.id)
+    @user = User.create!("salt"=>"7e3041ebc2fc05a40c60028e2c4901a81035d3cd", "updated_at"=>nil, "crypted_password"=>"00742970dc9e6319f8019fd54864d3ea740f04b1", "type"=>"User", "remember_token_expires_at"=>nil, "id"=>"1", "administrator"=>nil, "remember_token"=>nil, "login"=>"new_user", "email"=>"new_user@example.com", "created_at"=>"2007-07-14 18:03:29")
   end
 
-  def test_sale
-    item = SaleItem.find(1)
-    assert_not_nil item.sale
-    assert_kind_of Sale, item.sale
+  def test_relation_with_sale
+    product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
+    sale = Sale.create(:date => '2007-08-04', :organization_id => @org.id, :user_id => @user.id)
+    item = SaleItem.create(:sale_id => sale.id, :product_id => product.id, :ammount => 2)
+    assert_equal sale, item.sale
   end
 
-  def test_product
-    item = SaleItem.find(1)
-    assert_not_nil item.product
-    assert_kind_of Product, item.product
+  def test_relation_with_product
   end
 
   def test_description

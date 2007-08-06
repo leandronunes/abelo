@@ -1,13 +1,14 @@
 <%= title _('Stock control') %>
 
-<ul class="stock">
-<% @products.map do |p| %>
+<ul class="info_list stock">
+  <% @products.sort_by{|p| p.name}.map do |p| %>
 <%= display_list(
       [
+        { :content => button(_('New entry'), :new_entry, :action => 'new_entry', :id => p.id), :option => 'button'},
         { :content => p.images.map{|i| show_image i}[0], :option => 'img'},
-        { :content => p.description, :option => 'name'},
-        { :content => p.ammount_in_stock, :option => 'number'},
-        {:content => link_to(_('New entry'), :action => 'new_entry', :id => p.id), :option => 'button_new'},
+        { :content => p.name, :option => 'name'},
+        { :title => _('Ammount: '), :content => p.ammount_in_stock, :option => 'number'},
+        '<br style="clear:both"/>'
       ]
   )
   %>

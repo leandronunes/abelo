@@ -25,6 +25,7 @@
  * We cannot access a icon directly
 */
 .button_add     { background-image: url(/icons/aurium_neu/24x24/add.png)      }
+.button_new_entry     { background-image: url(../../../icons/default/add_16.png); width: 16px; height: 16px }
 .button_back    { background-image: url(/icons/aurium_neu/24x24/back.png)     }
 .button_search  { background-image: url(/icons/aurium_neu/24x24/lupa.png)     }
 .button_send_mail { background-image: url(/icons/aurium_neu/24x24/mail-send.png) }

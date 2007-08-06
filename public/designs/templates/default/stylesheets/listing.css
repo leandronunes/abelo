@@ -57,3 +57,7 @@
 .system_actors .list_item_name {
   display: block;
 }
+
+.stock .list_item_name {
+  display: block;
+}

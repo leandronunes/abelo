@@ -14,8 +14,7 @@ class CommercialProposalsController < ApplicationController
   end
 
   def index
-    is_template = 't'
-    redirect_to :action => 'list', :is_template => is_template 
+    redirect_to :action => 'list', :is_template => 'false'
   end
 
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
@@ -24,11 +23,14 @@ class CommercialProposalsController < ApplicationController
 
   def list
     @is_template = params[:is_template]
-    is_template = params[:is_template] == 't' ? true : false
-    if @is_template
+    if @is_template == 'true'
+      is_template = 't'
       @commercial_proposals = @organization.commercial_proposals_templates
+      @title = _('Commercial Proposals Templates')
     else
+      is_template = 'f'
       @commercial_proposals = @organization.commercial_proposals_not_templates
+      @title = _('Commercial Proposals')
     end
     
     @query = params[:query] ? params[:query] : nil
@@ -123,16 +125,16 @@ class CommercialProposalsController < ApplicationController
 
   def create_tabs
     t = add_tab do      
-      links_to :controller => 'commercial_proposals', :action => 'list', :is_template => 't'
+      links_to :controller => 'commercial_proposals', :action => 'list', :is_template => 'true'
       in_set 'first'
-      highlights_on :controller => 'commercial_proposals', :is_template => 't'
+      highlights_on :controller => 'commercial_proposals', :is_template => 'true'
     end
     t.named _("Commercial Proposal Templates")
     
     t = add_tab do      
-      links_to :controller => 'commercial_proposals', :action => 'list', :is_template => 'f'
+      links_to :controller => 'commercial_proposals', :action => 'list', :is_template => 'false'
       in_set 'first'
-      highlights_on :controller => 'commercial_proposals', :is_template => 'f'
+      highlights_on :controller => 'commercial_proposals', :is_template => 'false'
     end
     t.named _('Commercial Proposals')
   end

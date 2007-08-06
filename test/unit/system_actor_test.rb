@@ -3,14 +3,14 @@ require File.dirname(__FILE__) + '/../test_helper'
 class SystemActorTest < Test::Unit::TestCase
   fixtures :system_actors
 
-  # Replace this with your real tests.
-  def test_truth
-    assert true
-  end
-
-  
   def setup
     @organization = Organization.find(1)
+    @system_actor = SystemActor.new(:name => 'A customer for testing CNPJ format', :email => 'teste@teste', :organization_id => 1, :category_id => 1, :cpf => '23831442312')
+  end
+
+  def test_setup
+    assert @organization.valid?
+    assert @system_actor.valid?
   end
 
   def test_mandatory_fields
@@ -40,31 +40,37 @@ class SystemActorTest < Test::Unit::TestCase
     assert_equal count + 1, Customer.count
   end
 
-  def test_cnpj_format
-    count = Customer.count
-    c = Customer.new(:name => 'A customer for testing CNPJ format', :email => 'teste@teste', :organization_id => 1)
-    c.cnpj = '00000000000000'
-    assert !c.save
+  def test_cpf_format
+    c = SystemActor.new
+    c.cpf = '00000000000' #invalid cpf
+    !c.valid?
+    assert c.errors.invalid?(:cpf)
    
-    c.cnpj = '85978357000100'
-    assert c.save
-    
-    assert_equal count + 1, Customer.count
+    c.cpf = '058.131.361-50' #valid cpf
+    c.valid?
+    assert !c.errors.invalid?(:cpf)
   end
 
   def test_cnpj_or_cpf
 
-    c = Customer.find(1)
-    c.cpf = '27774667857'
-    assert !c.save
-    c.cnpj = nil
-    assert c.save
+    c = SystemActor.new
+    c.cpf = '058.131.361-50' #valid cpf
+    c.valid?
+    assert !c.errors.invalid?(:cpf)
+    assert !c.errors.invalid?(:cnpj)
 
-    s = Customer.find(3)
-    s.cnpj = '28695988000170'
-    assert !s.save
-    s.cnpj = nil
-    assert s.save
+    c.cnpj = '01.288.368/0001-60' #valid cnpj
+    c.valid?
+    assert c.errors.invalid?(:cnpj)
+
+    c.cpf = nil 
+    c.valid?
+    assert !c.errors.invalid?(:cpf)
+    assert !c.errors.invalid?(:cnpj)
+    
+    c.cnpj = nil
+    c.valid?
+    assert c.errors.invalid?(:cnpj)
   end
 
   def test_cnpj_uniq

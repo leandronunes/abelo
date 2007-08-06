@@ -6,13 +6,13 @@ module ApplicationHelper
     'remove' => _('Remove') 
   ]
 
-  def button(title, type, url_options = {}, html_options = {})
+  def button(button, title, type, url_options = {}, html_options = {})
     html_options[:class] ||= "button button_#{type}"
     html_options[:title] ||= title
-    if [ :save ].include? type
-      submit_tag( ' ', html_options)
+    if [:save ].include? type
+      design_display_icon_submit button, title , html_options
     else
-      link_to( content_tag( 'span', title), url_options, html_options)
+      design_display_icon(button, title, url_options, html_options)
     end
   end
 

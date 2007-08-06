@@ -22,9 +22,9 @@
   display_list(
   [
       { :content => [
-          button (_('Show'), :show, :action => 'show', :id => s.id, :actor => @actor),
-          button (_('Edit'), :edit, :action => 'edit', :id => s.id, :actor => @actor),
-          button (_('Destroy'), :destroy, {:action => 'destroy', :id => s.id},
+          button ('view_small', _('Show'), :show, :action => 'show', :id => s.id, :actor => @actor),
+          button ('edit_small', _('Edit'), :edit, :action => 'edit', :id => s.id, :actor => @actor),
+          button ('del_small',_('Destroy'), :destroy, {:action => 'destroy', :id => s.id, :actor => @actor},
                                 :post => true,
                                 :confirm => _('Are you sure?'))], :option => 'button' },
       { :title => _('Name:'), :content => s.name, :option => 'name' },

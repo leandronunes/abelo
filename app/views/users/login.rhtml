@@ -12,10 +12,10 @@
 
 <div class="button_bar">
  <div class="beault_button">
-  <%= submit_tag _('Log in'), { :class => 'button button_login with_text' } %>
+  <%= button 'password', _('Log in'), :save, {}, {:class => 'button button_login with_text'} %>
  </div>
  <div class="beault_button">
-  <%= link_to content_tag( 'span', _('Sign up') ), { :action => 'signup' }, { :class => 'button button_new with_text' } %>
+  <%= button 'add', _('Sign up'), :add, {:action => 'signup'}, {:class => 'button button_new with_text'} %>
  </div>
 </div>
 

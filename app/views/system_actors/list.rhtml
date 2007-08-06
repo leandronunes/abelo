@@ -22,8 +22,8 @@
   display_list(
   [
       { :content => [
-          button (_('Show'), :show, :action => 'show', :id => s.id),
-          button (_('Edit'), :edit, :action => 'edit', :id => s.id),
+          button (_('Show'), :show, :action => 'show', :id => s.id, :actor => @actor),
+          button (_('Edit'), :edit, :action => 'edit', :id => s.id, :actor => @actor),
           button (_('Destroy'), :destroy, {:action => 'destroy', :id => s.id},
                                 :post => true,
                                 :confirm => _('Are you sure?'))], :option => 'button' },

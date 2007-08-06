@@ -3,7 +3,7 @@ class Ledger < ActiveRecord::Base
 
   belongs_to :category, :class_name => 'LedgerCategory',  :foreign_key => 'category_id'
   belongs_to :organization
-  validates_presence_of :date, :category_id
+  validates_presence_of :date, :category_id, :owner
   validates_numericality_of :value
 
   belongs_to :owner, :polymorphic => true
@@ -15,12 +15,18 @@ class Ledger < ActiveRecord::Base
     super
   end
 
+  def value= value
+    self[:value] = value.to_s.gsub(/,/,'.') 
+  end
+
+  #TODO see if it's needed
   def self.find_all_ordened(options = {})
     options.merge! :order => 'ledgers.date DESC, ledgers.id DESC'
     self.find :all, options
   end
 
-
+   
+  #TODO see if it's needed
   def self.sum_by_month(category_id, time = Time.now)
     date_init = time.at_beginning_of_month
     date_end  = time.months_since(1).at_beginning_of_month
@@ -36,7 +42,11 @@ class Ledger < ActiveRecord::Base
 
   protected
   def validate
-    errors.add(:value, "should be at least 0.01" ) if value.nil? || value <= 0.00
+    errors.add(:value, _("should be at least 0.01" )) if value.nil? || value <= 0.00
+  end
+
+  def type= value
+    errors.add(:type, _("You cannot set a type manually") )
   end
 
 end

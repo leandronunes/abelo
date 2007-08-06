@@ -19,7 +19,7 @@ class LedgerCategoriesController < ApplicationController
 
   def new
     @category = LedgerCategory.new
-     end
+  end
 
   def create
     @category = LedgerCategory.new(params[:category])

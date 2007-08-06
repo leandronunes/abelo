@@ -12,13 +12,9 @@
   <p>
   <%= link_to _('Add new ledger'), :action => 'new'%>
   </p>
-
-
    <%= navigator_for @ledgers_page, @ledgers, flash %>
 
-<%= render :partial => 'list'%>
-
-
+  <%= render :partial => 'list'%>
 </div>
 
 <br class="clear"/>   

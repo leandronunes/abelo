@@ -249,7 +249,7 @@ module ApplicationHelper
       'system_actors'                       => _('Registers'),
       'point_of_sale'                       => _('Point of sale'),
       'mass_mails'                          => _('Mass mail'),
-      'cash_flows'                          => _('Financial'),
+      'ledgers'                             => _('Financial'),
       'commercial_proposals'                => _('Commercial Proposals'),
       'departments'                         => _('Departments'),
     }
@@ -353,23 +353,6 @@ module ApplicationHelper
         str += "página #{pages.current.number} de #{pages.length}"
       end
     str  += "</div>"
-  end
-
-#TODO remove it
-  def link_alter_remove_for(obj)
-    str  = link_to_remote 'alterar', :url => {:action => 'edit', :id => obj}
-    str += " ou "
-    str += link_to_remote 'remover', :url => {:action => 'destroy', :id => obj }, :confirm => 'Tem certeza que deseja deletar?'
-  end
-
-
-#TODO remove it
-  def save_or_update(obj)
-    if obj.nil? || obj.new_record?
-      submit_tag _("Add")
-    else
-      submit_tag _("Edit")
-    end
   end
 
   def display_list(content, html_options = {})

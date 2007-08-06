@@ -1,3 +1,5 @@
+<%= #TODO see if this helper navigator_for is util
+ %>
 <%= navigator_for @ledgers_page, @ledgers, flash %>
 
 <table class="tablelist" width="100%">
@@ -19,7 +21,8 @@
     	<td align="right"><%= to_currency(ledger.value) if ledger.category.income? %></td>
     	<td align="right"><%= to_currency(ledger.value) if ledger.category.expense? %></td>
     	<td align="right">
-            <%= link_alter_remove_for ledger %>
+       <%= link_to _('Edit'), :action => 'edit', :id => ledger %> <%= _('or') %>
+       <%= link_to_remote _('Remove'), :url => {:action => 'destroy', :id => ledger} %> 
         </td>
       </tr>
     <% end %>

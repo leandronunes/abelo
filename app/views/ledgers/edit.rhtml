@@ -9,7 +9,7 @@
 </div>
 
 <div id="box_content_2">
-  <% form_tag :action => 'create', :id => @ledger do %>
+  <% form_tag :action => 'update', :id => @ledger do %>
     <%= render :partial => 'form'%>
     <p>
       <%= submit_tag _('Save') %>

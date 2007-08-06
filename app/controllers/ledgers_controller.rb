@@ -1,29 +1,28 @@
 class LedgersController < ApplicationController
-  # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
-  verify :method => :post, :only => [ :find_ledgers, :save, :destroy, :find_budgets, :find_by_tag, :navigation ],
-         :redirect_to => { :action => :index }
 
   needs_organization
 
   uses_financial_tabs
+
+  # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
+  verify :method => :post, :only => [ :find_ledgers, :save, :destroy, :find_budgets, :find_by_tag, :navigation ],
+         :redirect_to => { :action => :index }
 
   def index
     redirect_to :action => 'list'
   end
 
   def list
-    @ledger_categories =  @organization.ledger_categories_sorted
-    @tags = @organization.ledgers
-    #TODO see if it's useful
-    get_ledgers 
-    get_budgets  
+    parameters = {:order => 'ledgers.date DESC, ledgers.id DESC', :per_page => 5, :conditions => ['organization_id = ?', @organization]}
+    get_tags
+    get_budgets
+    @ledgers_page, @ledgers = paginate :ledgers, parameters
   end
 
   def new
-    @ledger_categories =  @organization.ledger_categories_sorted
     @ledger = Ledger.new
-    @tags = @organization.ledgers
-    get_ledgers 
+    get_ledger_cagetories
+    get_tags
     get_budgets  
   end
 
@@ -36,11 +35,52 @@ class LedgersController < ApplicationController
       flash[:notice] = _('The ledger was successfully created')
       redirect_to :action => 'list'
     else
+      @ledger_categories =  @organization.ledger_categories_sorted
+      get_tags
+      get_budgets  
       render_action :new
     end
   end
 
+  def edit
+    @ledger = @organization.ledgers.find(params[:id])
+    get_ledger_cagetories
+    get_tags 
+    get_budgets
+  end
+
+  def update
+    @ledger = @organization.ledgers.find(params[:id])
+    
+    if @ledger.update_attributes(params[:ledger])
+      flash[:notice] = _('The ledger was successfully created')
+      redirect_to :action => 'list'
+    else
+      @ledger_categories =  @organization.ledger_categories_sorted
+      get_tags
+      get_budgets  
+      render_action :edit
+    end
+  end
+
+
+  def clean
+    @ledger_categories =  @organization.ledger_categories_sorted
+    @ledger = Ledger.new
+    render :update do |page|
+      page.replace_html 'form', :partial => 'form'
+    end
+  end
+
+#TODO how can I test page.remove?
+  def destroy
+    @organization.ledgers.find(params[:id]).destroy
+    render :update do |page|
+      page.remove "list_ledger_#{params[:id]}"
+    end
+  end
   
+
     #TODO see if it's useful
   def navigation
     get_ledgers
@@ -73,57 +113,17 @@ class LedgersController < ApplicationController
     end
   end
 
-    #TODO see if it's useful
-  def save
-    if params[:id]
-      @ledger = Ledger.find(params[:id])
-      @ledger.attributes = params[:ledger]
-    else
-      @ledger = Ledger.new(params[:ledger])
-    end
-
-    if @ledger.save
-      index
-      @ledger = nil
-            
-      render :update do |page|
-        page.replace_html 'list', :partial => 'list'
-        page.replace_html 'form', :partial => 'form'
-        page.replace_html 'budget', :partial => 'budget'
-        page.replace_html 'tag', :partial => 'tag'
-      end
-    else
-      render_for :save, :error
-    end
-  end
-  
-  
-    #TODO see if it's useful
-  def edit
-    @ledger = Ledger.find(params[:id])
-    render_for :edit, :success
-  end
-
-
-    #TODO see if it's useful
-  def destroy
-    Ledger.find(params[:id]).destroy
-    render_for :destroy, :success, "list_ledger_#{params[:id]}"
-  end
-  
   
   private
-    #TODO see if it's useful
-  def get_ledgers
-    parameters = {:include => 'category', :order => 'ledgers.date DESC, ledgers.id DESC', :per_page => 50}
-    unless params[:find].blank?
-      flash[:filter] = "Descricao ou Categoria: #{params[:find]}"
-      parameters.merge! :conditions => ["ledgers.description like ? or categories.name like ? ", "%#{params[:find]}%", "%#{params[:find]}%"]
-    end
-    
-    @ledgers_page, @ledgers = paginate :ledgers, parameters
+ 
+  def get_ledger_cagetories 
+    @ledger_categories =  @organization.ledger_categories_sorted
   end
-  
+
+  def get_tags
+    @tags = @organization.ledgers
+  end
+
     #TODO see if it's useful
   def get_budgets
     date = (params[:date]) ? params[:date].to_time : Time.now

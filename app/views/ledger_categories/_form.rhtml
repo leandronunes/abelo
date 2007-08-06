@@ -21,8 +21,12 @@
 <p><label for="category_number_of_parcels"> <%= _('Number of parcels')%> </label><br/>
 <%= text_field 'category', 'number_of_parcels'%></p>
 
-<p><label for="category_operational"> <%= _('Operational') %></label>
+<p><label for="category_operational"> <%= _('Is operational?') %></label>
 <%= check_box 'category', 'is_operational' %></p> 
+
+<p><label for="category_operational"> <%= _('Is operation of store?') %></label>
+<%= check_box 'category', 'is_store' %></p> 
+
 
 </div>
 <!--[eoform:category]-->

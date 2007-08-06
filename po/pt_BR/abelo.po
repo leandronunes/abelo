@@ -681,7 +681,7 @@ msgstr ""
 #: app/models/system_actor.rb:-
 #, fuzzy
 msgid "SystemActor|Description"
-msgstr "Contabilidade|Descrição"
+msgstr "Descrição"
 
 #: app/models/system_actor.rb:-
 #, fuzzy
@@ -696,7 +696,7 @@ msgstr "EntradaNoEstoque|Tipo"
 #: app/models/system_actor.rb:-
 #, fuzzy
 msgid "SystemActor|Category"
-msgstr "Contabilidade|Categoria"
+msgstr "Categoria"
 
 #: app/models/system_actor.rb:-
 #, fuzzy
@@ -912,59 +912,59 @@ msgstr "Livro contábil"
 
 #: app/models/ledger.rb:-
 msgid "Ledger|Owner type"
-msgstr "Contabilidade|Tipo de proprietário"
+msgstr "Tipo de proprietário"
 
 #: app/models/ledger.rb:-
 msgid "Ledger|Owner"
-msgstr "Contabilidade|Proprietário"
+msgstr "Proprietário"
 
 #: app/models/ledger.rb:-
 msgid "Ledger|Type"
-msgstr "Contabilidade|Tipo"
+msgstr "Tipo"
 
 #: app/models/ledger.rb:-
 msgid "Ledger|Category"
-msgstr "Contabilidade|Categoria"
+msgstr "Categoria"
 
 #: app/models/ledger.rb:-
 msgid "Ledger|Value"
-msgstr "Contabilidade|Valor"
+msgstr "Valor"
 
 #: app/models/ledger.rb:-
 msgid "Ledger|Description"
-msgstr "Contabilidade|Descrição"
+msgstr "Descrição"
 
 #: app/models/ledger.rb:-
 msgid "Ledger|Date"
-msgstr "Contabilidade|Data"
+msgstr "Data"
 
 #: app/models/ledger.rb:-
 msgid "Ledger|Interests"
-msgstr "Contabilidade|Juros"
+msgstr "Juros"
 
 #: app/models/ledger.rb:-
 msgid "Ledger|Interests days"
-msgstr "Contabilidade|Dias dos Juros"
+msgstr "Dias dos Juros"
 
 #: app/models/ledger.rb:-
 msgid "Ledger|Number of parcels"
-msgstr "Contabilidade|Número de parcelas"
+msgstr "Número de parcelas"
 
 #: app/models/ledger.rb:-
 msgid "Ledger|Parcel number"
-msgstr "Contabilidade|Número da parcela"
+msgstr "Número da parcela"
 
 #: app/models/ledger.rb:-
 msgid "Ledger|Operational"
-msgstr "Contabilidade|Operacional"
+msgstr "Operacional"
 
 #: app/models/ledger.rb:-
 msgid "Ledger|Organization"
-msgstr "Contabilidade|Organização"
+msgstr "Organização"
 
 #: app/models/ledger.rb:-
 msgid "Ledger|Is foreseen"
-msgstr "Contabilidade|É previsto para"
+msgstr "É previsto para"
 
 #: app/models/contact_position.rb:-
 msgid "contact position"
@@ -976,35 +976,35 @@ msgstr "categoria contábil"
 
 #: app/models/ledger_category.rb:-
 msgid "LedgerCategory|Name"
-msgstr "CategoriaContábil|Nome"
+msgstr "Nome"
 
 #: app/models/ledger_category.rb:-
 msgid "LedgerCategory|Interests"
-msgstr "CategoriaContábil|Juros"
+msgstr "Juros"
 
 #: app/models/ledger_category.rb:-
 msgid "LedgerCategory|Interests days"
-msgstr "CategoriaContábil|Dias de juros"
+msgstr "Dias de juros"
 
 #: app/models/ledger_category.rb:-
 msgid "LedgerCategory|Number of parcels"
-msgstr "CategoriaContábil|Número de parcelas"
+msgstr "Número de parcelas"
 
 #: app/models/ledger_category.rb:-
 msgid "LedgerCategory|Operational"
-msgstr "CategoriaContábil|Operacional"
+msgstr "Operacional"
 
 #: app/models/ledger_category.rb:-
 msgid "LedgerCategory|Organization"
-msgstr "CategoriaContábil|Organização"
+msgstr "Organização"
 
 #: app/models/ledger_category.rb:-
 msgid "LedgerCategory|Type of"
-msgstr "CategoriaContábil|Tipo de"
+msgstr "Tipo de"
 
 #: app/models/ledger_category.rb:-
 msgid "LedgerCategory|Is foreseen"
-msgstr "CategoriaContábil|É previsto para"
+msgstr "É previsto para"
 
 #: app/models/ledger_category.rb:19
 msgid "Income"

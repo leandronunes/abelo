@@ -1,3 +1,6 @@
+<div id="form">
+  <%= error_messages_for 'ledger' %>
+
   <p> <label> <%= _('Date:') %> </label>
     <%= date_select 'ledger', 'date', :order => [:day, :month, :year] %>
   </p>
@@ -13,10 +16,8 @@
   <p> <label> <%= _('Tags (separated by comma):') %> </label>
     <%= text_field 'ledger', 'tag_list' %>
   </p>
+
   <p> <label> <%= _('Value:') %> </label>
     <%= text_field 'ledger', 'value' %>
   </p>
-  <p> 
-    <%= submit_tag _('Save') %>
-    <%= link_to_remote _('Clean'), :url => {:action => 'clean'} %>           
-  </p>
+</div>

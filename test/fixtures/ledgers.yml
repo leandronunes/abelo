@@ -1,22 +1,22 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 income:
   id: 1
-  owner_type: 'Sell'
+  owner_type: 'Organization'
   owner_id: 1
   type: 'DebitLedger'
-  date: <%= Date.today - 2 %>
+  date: <%=  Date.today - 2 %>
   value: 1000.00
-  description: teste
+  description: 'teste'
   category_id: 1
   operational: false
   organization_id: 1
   is_foreseen: false
 expense:
   id: 2
-  owner_type: 'Sell'
+  owner_type: 'Organization'
   owner_id: 1
   type: 'CreditLedger'
-  date: <%= Date.today - 3 %>
+  date: <%=  Date.today - 3 %>
   value: 700.00
   description: teste
   category_id: 2

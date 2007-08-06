@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
       'categories'
     ],
     'financial' => [
-      'cash_flows',
+      'ledger_categories',
       'ledgers'
     ],
     'register' => [
@@ -256,36 +256,6 @@ class ApplicationController < ActionController::Base
   def render_error(message = nil)
     @message = message.nil? ? _('Access error') : message
     render :template => 'shared/access_error'
-  end
-
-  def clean
-    render_for :clean 
-  end
-  
-  protected
-  def render_for(action = :save, type = :success, html_id = nil)
-    if (action == :save && type == :success)
-      render :update do |page|
-        page.replace_html 'list', :partial => 'list'
-        page.replace_html 'action', ''
-      end
-      
-    elsif (action == :destroy)
-      render :update do |page|
-        page.remove html_id
-      end      
-      
-    elsif(action == :save || action == :clean)
-      render :update do |page|
-        page.replace_html 'form', :partial => 'form'
-      end
-      
-    else
-      render :update do |page|
-        page.replace_html 'list', :partial => 'list'
-      end     
-    end
-    
   end
 
 end

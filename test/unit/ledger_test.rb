@@ -1,36 +1,71 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class LedgerTest < Test::Unit::TestCase
-  fixtures :categories
-  fixtures :ledgers
 
-  # Replace this with your real tests.
-  def test_precense_of
+  def test_precense_of_owner
+    o = Organization.new(:name => 'Some category', :cnpj =>'14.574.763/0001-50')
+    o.save
     l = Ledger.new
-   
-    assert !l.valid?
-    
-    assert l.errors.invalid?(:value)
+    l.valid?
+    assert l.errors.invalid?(:owner)
+    l.owner = o
+    l.valid?
+    assert !l.errors.invalid?(:owner)
+  end
+
+  def test_precense_of_category
+    c = LedgerCategory.new(:name => 'Some category', :organization_id => 1, :type_of => 'I')
+    c.save!
+    l = Ledger.new
+    l.valid?
     assert l.errors.invalid?(:category_id)
+    l.category = c 
+    l.valid?
+    assert !l.errors.invalid?(:category_id)
+  end
+
+  def test_precense_of_date
+    l = Ledger.new
+    l.valid?
     assert l.errors.invalid?(:date)
-    assert !l.errors.invalid?(:description)
+    l.date = Time.now
+    l.valid?
+    assert !l.errors.invalid?(:date)
   end
-  
-  def test_numericality_of
-    l = ledgers(:income)
-    l.value = 'fff'
-    
-    assert !l.valid?
+
+  def test_precense_of_value
+    l = Ledger.new
+    l.valid?
     assert l.errors.invalid?(:value)
+    l.value = 1
+    l.valid?
+    assert !l.errors.invalid?(:value)
   end
-  
-  def test_saldo
-    saldo = Ledger.sum_saldo_until_time Time.now
-    assert_equal 300.00, saldo
+
+  def test_numericality_of_value
+    l = Ledger.new
+    l.value = 'a'
+    l.valid?
+    assert l.errors.invalid?(:value)
+    l.value = ''
+    l.valid?
+    assert l.errors.invalid?(:value)
+    l.value = 12
+    l.valid?
+    assert !l.errors.invalid?(:value)
   end
-  
-  def test_find_all_ordened
-    l = Ledger.find_all_ordened
-    assert l.first.date > l.last.date
+
+  def test_value_must_be_greater_then_zero
+    l = Ledger.new
+    l.value = 0.0
+    l.valid?
+    assert l.errors.invalid?(:value)
+    l.value = -1
+    l.valid?
+    assert l.errors.invalid?(:value)
+    l.value = 0.01
+    l.valid?
+    assert !l.errors.invalid?(:value)
   end
+
 end

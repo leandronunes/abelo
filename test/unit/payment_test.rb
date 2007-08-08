@@ -19,7 +19,7 @@ class PaymentTest < Test::Unit::TestCase
   end
 
   def test_mandatory_field_value
-    pay = PaymentWithCash.create(:sale_id => @sale.id, :date => '2007-08-04', :received => true, :cash => 50.00)
+    pay = PaymentWithCash.create(:sale_id => @sale.id, :date => '2007-08-04', :received => true)
     assert pay.errors.invalid?('value')
   end
 

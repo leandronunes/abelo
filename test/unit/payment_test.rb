@@ -20,7 +20,7 @@ class PaymentTest < Test::Unit::TestCase
 
   def test_mandatory_field_value
     pay = PaymentWithCash.create(:sale_id => @sale.id, :date => '2007-08-04', :received => true)
-    assert pay.errors.invalid?('value')
+    assert pay.errors.invalid?(:value)
   end
 
   def test_mandatory_field_date
@@ -31,6 +31,16 @@ class PaymentTest < Test::Unit::TestCase
   def test_mandatory_field_received
     pay = PaymentWithCash.create(:sale_id => @sale.id, :value => 50.00, :date => '2007-08-04', :cash => 50.00)
     assert pay.errors.invalid?(:received)
+  end
+
+  def test_numericality_value
+    pay = PaymentWithCash.create(:sale_id => @sale.id, :value => 'bli', :date => '2007-08-04', :received => true, :cash => 50.00)
+    pay.errors.invalid?(:value)
+  end
+
+  def test_inclusion_value
+    pay = PaymentWithCash.create(:sale_id => @sale.id, :value => -50.00, :date => '2007-08-04', :received => true, :cash => 50.00)
+    pay.errors.invalid?(:value)
   end
 
 end

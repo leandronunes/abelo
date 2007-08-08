@@ -22,8 +22,8 @@ class SaleItem < ActiveRecord::Base
     self.unitary_price = self.product.sell_price
   end
 
-  def description
-    self.product.description
+  def name
+    self.product.name
   end
 
   def price

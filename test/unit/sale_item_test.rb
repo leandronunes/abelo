@@ -16,18 +16,47 @@ class SaleItemTest < Test::Unit::TestCase
   end
 
   def test_relation_with_product
+    product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
+    sale = Sale.create(:date => '2007-08-04', :organization_id => @org.id, :user_id => @user.id)
+    item = SaleItem.create(:sale_id => sale.id, :product_id => product.id, :ammount => 2)
+    assert_equal product, item.product
   end
 
-  def test_description
-    item = SaleItem.find(1)
-    assert_equal(item.product.description, item.description)
+  def test_sale_id
+    product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
+    item = SaleItem.create(:product_id => product.id, :ammount => 2)
+    assert item.errors.include?(:sale_id)
   end
 
-  def test_unitary_price
-    item = SaleItem.new
-    product = Product.find(:first)
+  def test_product_id
+    sale = Sale.create(:date => '2007-08-04', :organization_id => @org.id, :user_id => @user.id)
+    item = SaleItem.create(:sale_id => sale.id, :ammount => 2)
+    assert item.errors.invalid?(:product_id)
+  end
+
+  def test_unitary_price_with_product
+    product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
+    item = SaleItem.new(:ammount => 2)
     item.product = product
     assert_equal(product.sell_price, item.unitary_price)
+  end
+
+  def test_unitary_price_with_product=
+    product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
+    item = SaleItem.new(:product_id => product.id, :ammount => 2)
+    assert_equal(product.sell_price, item.unitary_price)
+  end
+
+  def test_name
+    product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
+    item = SaleItem.new(:product_id => product.id, :ammount => 2)
+    assert_equal product.name, item.name
+  end
+
+  def test_price
+    product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
+    item = SaleItem.new(:product_id => product.id, :ammount => 2)
+    assert_equal 4, item.price
   end
 
 end

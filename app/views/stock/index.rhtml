@@ -4,7 +4,7 @@
   <% @products.sort_by{|p| p.name}.map do |p| %>
 <%= display_list(
       [
-        { :content => button(_('New entry'), :new_entry, :action => 'new_entry', :id => p.id), :option => 'button'},
+        { :content => button('new_entry', _('New entry'), :new_entry, :action => 'new_entry', :id => p.id), :option => 'button'},
         { :content => p.images.map{|i| show_image i}[0], :option => 'img'},
         { :content => p.name, :option => 'name'},
         { :title => _('Ammount: '), :content => p.ammount_in_stock, :option => 'number'},

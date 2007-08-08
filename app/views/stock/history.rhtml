@@ -1,6 +1,4 @@
-<h1><%= _('Stock history for %s') % @product.description %></h1>
-
-<%= render :partial => 'new' %>
+<%= title _('Stock history for %s') % @product.name %>
 
 <%= display_table(
   [ _('Date'), _('Ammount'), _('Price'), _('Supplier')],

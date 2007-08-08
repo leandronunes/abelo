@@ -1,91 +1,112 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class SaleTest < Test::Unit::TestCase
-  fixtures :sales, :customers, :payments, :organizations, :sale_items
 
-  def test_mandatory_fields
-    s = Sale.new
-    assert(!s.save)
-    s.date = Date.today
-    assert(!s.save)
-    s.organization = Organization.find(1)
-    assert(!s.save)
-    s.user = User.find(7)
-    assert(s.save)
+  def setup
+    @org = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :nickname => 'org')
+    @user = User.create!("salt"=>"7e3041ebc2fc05a40c60028e2c4901a81035d3cd", "updated_at"=>nil, "crypted_password"=>"00742970dc9e6319f8019fd54864d3ea740f04b1", "type"=>"User", "remember_token_expires_at"=>nil, "id"=>"1", "administrator"=>nil, "remember_token"=>nil, "login"=>"new_user", "email"=>"new_user@example.com", "created_at"=>"2007-07-14 18:03:29")
   end
 
-
-  def test_should_have_a_customer
-    s = Sale.find(1)
-    assert_not_nil s.customer
-    assert_kind_of Customer, s.customer
+  def test_relation_with_organization
+    sale = Sale.create(:date => '2007-08-04', :organization_id => @org.id, :user_id => @user.id)
+    assert_equal @org, sale.organization
   end
 
-  def test_should_have_payments
-    s = Sale.find(1)
-    assert_not_nil s.payments
-    assert_kind_of Array, s.payments
-    assert ! s.payments.empty?
-    assert(s.payments.all? do |payment|
-      payment.kind_of? Payment
-    end)
+  def test_relation_with_customer
+    customer = Customer.new(:name => 'João da Silva')
+    sale = Sale.create(:date => '2007-08-04', :organization_id => @org.id, :user_id => @user.id)
+    sale.customer = customer
+    assert_equal customer, sale.customer        
   end
 
-  def test_should_have_items
-    s = Sale.find(1)
-    assert_not_nil s.items
-    assert_kind_of Array, s.items
-    assert !s.items.empty?
-    assert(s.items.all? do |item|
-      item.kind_of? SaleItem
-    end)
+  def test_relation_with_user
+    sale = Sale.create(:date => '2007-08-04', :organization_id => @org.id, :user_id => @user.id)
+    assert_equal @user, sale.user
   end
 
-  def test_should_have_user
-    s = Sale.find(1)
-    assert_not_nil s.user
-    assert_kind_of User, s.user
+  def test_relation_with_payments
+    sale = Sale.create(:date => '2007-08-04', :organization_id => @org.id, :user_id => @user.id)
+    pay = PaymentWithCash.new(:value => 50.00, :date => '2007-08-04', :received => true, :cash => 50.00)
+    sale.payments.concat(pay)
+    assert sale.payments.include?(pay)
   end
 
-  def test_default_status
-    s = Sale.new
-    assert(s.open?)
+  def test_relation_with_items
+    sale = Sale.create(:date => '2007-08-04', :organization_id => @org.id, :user_id => @user.id)
+    cat_prod = ProductCategory.create(:name => 'Category for testing', :organization_id => @org.id)
+    product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => cat_prod.id)
+    item = SaleItem.create(:sale_id => sale.id, :product_id => product.id, :ammount => 2)
+    assert sale.items.include?(item)
+  end
+ 
+  def test_mandatory_field_date
+    sale = Sale.create(:organization_id => @org.id, :user_id => @user.id)
+    assert sale.errors.invalid?(:date)
   end
 
-  def test_close
-    s = Sale.find(1)
-    s.close!
-    assert(s.closed?)
+  def test_mandatory_field_organization_id
+    sale = Sale.create(:date => '2007-08-04', :user_id => @user.id) 
+    assert sale.errors.invalid?(:organization_id)
+  end
+
+  def test_mandatory_field_user_id
+    sale = Sale.create(:date => '2007-08-04', :organization_id => @org.id) 
+    assert sale.errors.invalid?(:user_id)
+  end
+
+  def test_pendind
+    sale = Sale.create(:date => '2007-08-04', :organization_id => @org.id, :user_id => @user.id, :status => Sale::STATUS_OPEN) 
+    assert Sale.pending(@org, @user).include?(sale)
+  end
+
+  def test_open
+    sale = Sale.create(:date => '2007-08-04', :organization_id => @org.id, :user_id => @user.id) 
+    sale.open?
+    assert_equal Sale::STATUS_OPEN, sale.status
+  end
+
+  def test_cancelled
+    sale = Sale.create(:date => '2007-08-04', :organization_id => @org.id, :user_id => @user.id) 
+    sale.cancelled?
+    assert_equal Sale::STATUS_CANCELLED, sale.status
+  end
+
+  def test_cancel_raises
+    sale = Sale.create(:date => '2007-08-04', :organization_id => @org.id, :user_id => @user.id, :status => Sale::STATUS_CLOSED)
+    assert_raise ArgumentError do
+      sale.cancel!
+    end
+  end
+
+  def test_cancel_destroy
+    sale = Sale.create(:date => '2007-08-04', :organization_id => @org.id, :user_id => @user.id, :status => Sale::STATUS_OPEN)
+    sale.destroy
+    assert_raise ActiveRecord::RecordNotFound do
+      Sale.find(sale.id)
+    end
   end
 
   def test_cancel
-    s = Sale.find(1)
-    s.cancel!
-    assert(s.cancelled?)
-  end
-
-  def test_total_value
-    s = Sale.find(4)
-    item1 = SaleItem.find(3)
-    item2 = SaleItem.find(4)
-    assert_valid item1
-    assert_valid item2
-    s.add_items(item1)
-    s.add_items(item2)
-    assert_equal 2, s.items.size
-    value_expected = item1.price + item2.price
-    assert_equal value_expected, s.total_value
+    sale = Sale.create(:date => '2007-08-04', :organization_id => @org.id, :user_id => @user.id, :status => Sale::STATUS_OPEN)
+    cat_prod = ProductCategory.create(:name => 'Category for testing', :organization_id => @org.id)
+    product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => cat_prod.id)
+    item = SaleItem.create(:sale_id => sale.id, :product_id => product.id, :ammount => 2)
+    sale.cancel!
+    assert_equal Sale::STATUS_CANCELLED, sale.status
   end
 
   def test_customers_products
-    list_products = []
-    customers_expected = []
-    org = Organization.find(1)
-    s = Sale.find(1)
-    list_products.push("1")
-    list_products.push("3")
-    customers_expected.push(Customer.find(1))
-    assert_equal customers_expected, s.customers_products(list_products, org)
+    cat = CustomerCategory.create(:name => 'Category for testing', :organization_id => @org.id)
+    customer = Customer.create(:name => 'João da Silva', :birthday => '1984-08-15', :address => 'Rua Pará, nº 221, Pituba', :cpf => '85288242682', :organization_id => @org.id, :email => 'customer', :category_id => cat.id)
+    sale = Sale.create(:date => '2007-08-04', :organization_id => @org.id, :user_id => @user.id)
+    cat_prod = ProductCategory.create(:name => 'Category for testing', :organization_id => @org.id)
+    product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => cat_prod.id)
+    item = SaleItem.create(:sale_id => sale.id, :product_id => product.id, :ammount => 2)
+    sale.customer = customer
+    assert cat_prod.save
+    assert item.save
+    assert product.save
+    assert sale.customers_products(["#{product.id}"], @org).include?(customer)
   end
 
 end

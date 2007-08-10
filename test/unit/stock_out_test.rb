@@ -1,42 +1,23 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class StockOutTest < Test::Unit::TestCase
-  fixtures :stock_entries, :products, :suppliers
 
-  def test_mandatory_fields
-    count = StockOut.count
-
-    entry = StockOut.new
-    assert !entry.save
-    
-    entry.product = Product.find(1)
-    assert !entry.save
-
-    entry.ammount = -10
-    assert !entry.save
-
-    entry.purpose = 'sell'
-    assert !entry.save
-
-    entry.payment_status = true
-    assert !entry.save
-   
-    entry.date = Date.today
-    assert entry.save
-
-    assert_equal count + 1, StockOut.count
+  def setup
+    @org = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :nickname => 'org')
+    @cat_prod = ProductCategory.create(:name => 'Category for testing', :organization_id => @org.id)
+    @product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id) 
+    cat_supp = SupplierCategory.create(:name => 'Category for testing', :organization_id => @org.id)
+    @supplier = Supplier.create!(:name => 'Hering', :cnpj => '58178734000145', :organization_id => @org.id, :email => 'contato@hering.com', :category_id => cat_supp.id)
   end
 
-  def test_ammout_signal
-    entry = StockOut.new({
-      :product_id => 1,
-      :purpose => 'sell',
-      :date => '2007-01-01',
-    })
-    entry.ammount = 10
-    assert !entry.save
-    entry.ammount = -10
-    assert entry.save
+  def test_amount_not_negative
+    entry = StockOut.create(:ammount => 5, :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => @product.id, :price => 10.00)
+    assert entry.errors.invalid?(:ammount) 
+  end
+ 
+  def test_validate
+    entry = StockOut.create(:ammount => -5, :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => @product.id, :price => 10.00)
+    assert entry.errors.invalid?(:ammount)
   end
 
 end

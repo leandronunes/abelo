@@ -17,21 +17,52 @@ class StockEntryTest < Test::Unit::TestCase
   end
 
   def test_relation_with_organization
-    entry = StockIn.create!(:supplier_id => @supplier.id, :ammount => 5, :price => '1.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => @product.id)
+    entry = StockIn.create(:supplier_id => @supplier.id, :ammount => 5, :price => '1.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => @product.id)
     entry.organization = @org
     assert_equal @org, entry.organization
   end
 
-  def test_belongs_organization
-    entry = StockEntry.find(1)
-    assert_not_nil entry.product
-    assert_not_nil entry.organization
+  def test_mandatory_field_product_id
+    entry = StockIn.create(:supplier_id => @supplier.id, :ammount => 5, :price => '1.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true)
+    assert entry.errors.invalid?(:product_id)    
   end
 
-  def test_purpose
-    count = StockEntry.count
+  def test_mandatory_field_purpose
+    entry = StockIn.create(:supplier_id => @supplier.id, :ammount => 5, :price => '1.00', :date => '2007-07-01', :payment_status => true, :product_id => @product.id)
+    assert entry.errors.invalid?(:purpose)    
+  end
 
-    entry = StockIn.new({
+  def test_mandatory_field_date
+    entry = StockIn.create(:supplier_id => @supplier.id, :ammount => 5, :price => '1.00', :purpose => 'sell', :payment_status => true, :product_id => @product.id)
+    assert entry.errors.invalid?(:date)    
+  end
+
+  def test_mandatory_field_ammount
+    entry = StockIn.create(:supplier_id => @supplier.id, :price => '1.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => @product.id)
+    assert entry.errors.invalid?(:ammount)
+  end
+  
+  def test_invalid_field_ammount
+    entry = StockIn.create(:supplier_id => @supplier.id, :price => '1.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => @product.id, :ammount => 'not_numerical')
+    assert entry.errors.invalid?(:ammount)
+  end
+
+  def test_valid_purpose
+    count = StockIn.count
+    entry = StockIn.create({
+      :product_id => 1,
+      :supplier_id => 1,
+      :ammount => 1,
+      :price => 1.99,
+      :purpose => 'sell',
+      :date =>  '2007-01-01',
+      :payment_status => true,
+    })
+    assert count+1, StockIn.count
+  end
+
+  def test_invalid_purpose
+    entry = StockIn.create({
       :product_id => 1,
       :supplier_id => 1,
       :ammount => 1,
@@ -40,20 +71,7 @@ class StockEntryTest < Test::Unit::TestCase
       :date =>  '2007-01-01',
       :payment_status => true,
     })
-
-    assert !entry.save
-
-    entry.purpose = 'sell'
-    assert entry.save
-
-    entry.purpose = 'production'
-    assert entry.save
-
-    entry.purpose = 'kkkkk' # other invalid purpose
-    assert !entry.save
-
-    assert_equal count + 1, StockEntry.count
-
+    assert entry.errors.invalid?(:purpose)
   end
 
 end

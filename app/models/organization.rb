@@ -3,7 +3,7 @@ class Organization < ActiveRecord::Base
   has_many :products
   has_many :sales
   has_many :mass_mails
-  has_many :commercial_proposals
+  has_many :documents
   has_many :ledgers
 
   has_many :categories
@@ -50,12 +50,12 @@ class Organization < ActiveRecord::Base
     return Sale.pending(self, user)
   end
 
-  def commercial_proposals_templates
-    return self.commercial_proposals.select{ |c| c.is_template? }
+  def documents_model
+    return self.documents.select{ |c| c.is_template? }
   end
 
-  def commercial_proposals_not_templates
-    return self.commercial_proposals.select{ |c| !c.is_template? }
+  def documents_not_model
+    return self.documents.select{ |c| !c.is_template? }
   end
 
   # Return all ledger categories ordened by type and name.

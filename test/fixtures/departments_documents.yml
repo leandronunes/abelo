@@ -1,10 +1,10 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 relation_commercial_proposal_3_and_department_1:
   department_id: 1
-  commercial_proposal_id: 3
+  document_id: 3
 relation_commercial_proposal_1_and_department_1:
   department_id: 1
-  commercial_proposal_id: 1
+  document_id: 1
 relation_commercial_proposal_1_and_department_2:
   department_id: 2
-  commercial_proposal_id: 1
+  document_id: 1

@@ -1,8 +1,8 @@
-class CreateCommercialProposalItems < ActiveRecord::Migration
+class CreateDocumentItems < ActiveRecord::Migration
   def self.up
-    create_table :commercial_proposal_items do |t|
+    create_table :document_items do |t|
 
-      t.column :commercial_proposal_section_id,  :integer, :null => false
+      t.column :document_section_id,  :integer, :null => false
 
       #####################################################################
       ## Related information to an item that makes reference to a product 
@@ -22,6 +22,6 @@ class CreateCommercialProposalItems < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :commercial_proposal_items
+    drop_table :document_items
   end
 end

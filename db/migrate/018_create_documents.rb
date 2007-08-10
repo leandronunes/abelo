@@ -1,6 +1,6 @@
-class CreateCommercialProposals < ActiveRecord::Migration
+class CreateDocuments < ActiveRecord::Migration
   def self.up
-    create_table :commercial_proposals do |t|
+    create_table :documents do |t|
       t.column :name,             :string,  :null => false
       t.column :is_template,      :boolean, :default => false
       t.column :organization_id,  :integer, :null => false
@@ -9,6 +9,6 @@ class CreateCommercialProposals < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :commercial_proposals
+    drop_table :documents
   end
 end

@@ -2,18 +2,18 @@
 <%= title('Listing Models') %>
 
 <% form_tag ( { :action => 'list', :is_template => @is_template }, { :class => 'search_itens' } ) do %>
-  <%= text_field 'commercial_proposal', 'name', :class => 'filter_field' %>
-  <%= button ( 'lupa', _('Search'), :search, { :class => 'button button_search', :title => _('Search commercial_proposal') }) %>
-  <%= button ('add',_("New commercial_proposal"), :new, :action => 'new' ) %>
+  <%= text_field 'document', 'name', :class => 'filter_field' %>
+  <%= button ( 'lupa', _('Search'), :search, { :class => 'button button_search', :title => _('Search document') }) %>
+  <%= button ('add',_("New document"), :new, :action => 'new' ) %>
 <% end %>
 
-<div class="auto_complete" id="commercial_proposal_name_auto_complete"></div>
-<%= auto_complete_field :commercial_proposal_name, :url => {:action => 'autocomplete_name', :is_template => @is_template }, :indicator => 'auto_list'%>
+<div class="auto_complete" id="document_name_auto_complete"></div>
+<%= auto_complete_field :document_name, :url => {:action => 'autocomplete_name', :is_template => @is_template }, :indicator => 'auto_list'%>
 <div id="auto_list" style="display:none;">
 </div>
 
-<ul class="info_list commercial_proposal">
-  <% @commercial_proposals.sort_by{|cp| cp.name}.map do |c| %>
+<ul class="info_list document">
+  <% @documents.sort_by{|cp| cp.name}.map do |c| %>
 <%= display_list(
   [
     { :content => [
@@ -29,4 +29,4 @@
 %>
 <% end %>
 </ul>
-<%= pagination_links(@commercial_proposal_pages, :params => {:query => @query, :is_template => @is_template}) %>
+<%= pagination_links(@document_pages, :params => {:query => @query, :is_template => @is_template}) %>

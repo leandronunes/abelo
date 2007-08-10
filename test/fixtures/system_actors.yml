@@ -4,7 +4,7 @@ customer_one:
   name: 'João'
   organization_id: 1
   cpf: '82951456573'
-  category_id: 1
+  category_id: 10
   email: 'joao@email.com'
   type: 'Customer'
 customer_two:
@@ -12,7 +12,7 @@ customer_two:
   name: 'Colivre'
   organization_id: 1
   cnpj: '87641464000165'
-  category_id: 1
+  category_id: 11
   email: 'contato@colivre.com'
   type: 'Customer'
 supplier_two:
@@ -20,6 +20,6 @@ supplier_two:
   name: 'Maria'
   organization_id: 1
   cpf: '33672388483'
-  category_id: 2
+  category_id: 20
   email: 'maria@email.com'
   type: 'Supplier'

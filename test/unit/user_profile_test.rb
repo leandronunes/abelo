@@ -3,23 +3,19 @@ require File.dirname(__FILE__) + '/../test_helper'
 class ProfileTest < Test::Unit::TestCase
   fixtures :profiles, :people, :organizations
 
-  # Replace this with your real tests.
-  def test_mandatory_fields
-    count = Profile.count
+  def setup
+    @org = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :nickname => 'org')
+    @user = User.create!("salt"=>"7e3041ebc2fc05a40c60028e2c4901a81035d3cd", "updated_at"=>nil, "crypted_password"=>"00742970dc9e6319f8019fd54864d3ea740f04b1", "type"=>"User", "remember_token_expires_at"=>nil, "id"=>"1", "administrator"=>nil, "remember_token"=>nil, "login"=>"new_user", "email"=>"new_user@example.com", "created_at"=>"2007-07-14 18:03:29")
+  end
 
-    profile = Profile.new
-    assert(!profile.save)
+  def test_mandatory_field_organization_id
+    profile = Profile.create(:user => @user, :permissions => [])
+    assert profile.errors.invalid?(:organization_id)
+  end
 
-    profile.user = User.find(1)
-    assert(!profile.save)
-
-    profile.organization = Organization.find(1)
-    assert(!profile.save)
-
-    profile.permissions = []
-    assert(profile.save)
-
-    assert_equal count + 1, Profile.count
+  def test_mandatory_field_user
+    profile = Profile.create(:organization_id => @org.id, :permissions => [])
+    assert profile.errors.invalid?(:user_id)
   end
 
   def test_relationships_and_stuff

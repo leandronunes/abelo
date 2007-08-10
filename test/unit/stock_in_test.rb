@@ -1,57 +1,44 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class StockInTest < Test::Unit::TestCase
-  fixtures :stock_entries, :products, :suppliers
 
-  def test_mandatory_fields
-    count = StockIn.count
+  def setup
+    @org = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :nickname => 'org')
+    @cat_prod = ProductCategory.create(:name => 'Category for testing', :organization_id => @org.id)
+    @product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id) 
+    cat_supp = SupplierCategory.create(:name => 'Category for testing', :organization_id => @org.id)
+    @supplier = Supplier.create!(:name => 'Hering', :cnpj => '58178734000145', :organization_id => @org.id, :email => 'contato@hering.com', :category_id => cat_supp.id)
+  end
 
+  def test_relation_with_supplier
     entry = StockIn.new
-    assert !entry.save
-    
-    entry.product = Product.find(1)
-    assert !entry.save
-
-    entry.supplier = Supplier.find(1)
-    assert !entry.save
-
-    entry.ammount = 10
-    assert !entry.save
-
-    entry.price = 9.99
-    assert !entry.save
-
-    entry.purpose = 'sell'
-    assert !entry.save
-
-    entry.payment_status = true
-    assert !entry.save
-
-    entry.date = Date.today
-    assert entry.save
-
-    assert_equal count + 1, StockIn.count
+    entry.supplier = @supplier
+    assert_equal @supplier, entry.supplier
   end
 
-  # One cannot add a invalid item to the stock. The validity date must always
-  # be after the date in which the entry gets into the stock.
-  def test_dates
-    entry = StockIn.find(1)
-    entry.date = Date.today
-    
-    entry.validity = (Date.today << 1) # a month ago (must be invalid)
-    assert !entry.save
-
-    entry.validity = (Date.today >> 1) # a month from today (must be valid)
-    assert entry.save
+  def test_mandatory_field_supplier_id
+    entry = StockIn.create(:ammount => 5, :price => '1.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => @product.id)
+    assert entry.errors.invalid?(:supplier_id)
   end
 
-  def test_ammout_signal
-    entry = StockIn.find(1)
-    entry.ammount = -10
-    assert !entry.save
-    entry.ammount = 10
-    assert entry.save
+  def test_mandatory_field_price
+    entry = StockIn.create(:ammount => 5, :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => @product.id)
+    assert entry.errors.invalid?(:price) 
+  end
+
+  def test_price_not_numerical
+    entry = StockIn.create(:ammount => 5, :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => @product.id, :price => 'not_numerical')
+    assert entry.errors.invalid?(:price) 
+  end
+
+  def test_amount_not_positive
+    entry = StockIn.create(:ammount => -5, :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => @product.id, :price => 10.00)
+    assert entry.errors.invalid?(:ammount) 
+  end
+
+  def test_total_cost
+    entry = StockIn.create(:ammount => 5, :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => @product.id, :price => 10.00)
+    assert_in_delta 50, entry.total_cost, 0.01
   end
 
 end

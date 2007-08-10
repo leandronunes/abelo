@@ -1,10 +1,10 @@
 
-<%= title('Listing %s') % @title %>
+<%= title('Listing Models') %>
 
 <% form_tag ( { :action => 'list', :is_template => @is_template }, { :class => 'search_itens' } ) do %>
   <%= text_field 'commercial_proposal', 'name', :class => 'filter_field' %>
-  <%= submit_tag( '', { :class => 'button button_search', :title => _('Search commercial_proposal') }) %>
-  <%= button (_("New commercial_proposal"), :new, :action => 'new' ) %>
+  <%= button ( 'lupa', _('Search'), :search, { :class => 'button button_search', :title => _('Search commercial_proposal') }) %>
+  <%= button ('add',_("New commercial_proposal"), :new, :action => 'new' ) %>
 <% end %>
 
 <div class="auto_complete" id="commercial_proposal_name_auto_complete"></div>
@@ -17,9 +17,9 @@
 <%= display_list(
   [
     { :content => [
-      button (_('Show'), :show, :action => 'show', :id => c.id, :is_template => @is_template),
-      button (_('Edit'), :edit, :action => 'edit', :id => c.id, :is_template => @is_template),
-      button (_('Destroy'), :destroy, {:action => 'destroy', :id => c.id},
+      button ('view_small',_('Show'), :show, :action => 'show', :id => c.id, :is_template => @is_template),
+      button ('edit_small', _('Edit'), :edit, :action => 'edit', :id => c.id, :is_template => @is_template),
+      button ('del_small',_('Destroy'), :destroy, {:action => 'destroy', :id => c.id},
                             :post => true,
                             :confirm => _('Are you sure?'))], :option => 'button' },
     { :content => c.name, :option => 'name'},

@@ -9,7 +9,7 @@ module ApplicationHelper
   def button(button, title, type, url_options = {}, html_options = {})
     html_options[:class] ||= "button button_#{type}"
     html_options[:title] ||= title
-    if [:save ].include? type
+    if [:save, :search ].include? type
       design_display_icon_submit button, title , html_options
     else
       design_display_icon(button, title, url_options, html_options)

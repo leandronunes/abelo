@@ -1,8 +1,8 @@
-<% for column in CommercialProposal.content_columns %>
+<% for column in Document.content_columns %>
 <p>
-  <b><%= column.human_name %>:</b> <%=h @commercial_proposal.send(column.name) %>
+  <b><%= column.human_name %>:</b> <%=h @document.send(column.name) %>
 </p>
 <% end %>
 
-<%= link_to 'Edit', :action => 'edit', :id => @commercial_proposal %> |
-<%= link_to 'Back', :action => 'list' %>
+<%= button('back', _('Back'), :list, :action => 'list') %> 
+<%= button('edit', _('Edit'), :edit, :action => 'edit', :id => @document) %> 

@@ -1,16 +1,16 @@
-<%= error_messages_for 'commercial_proposal_section' %>
+<%= error_messages_for 'document_section' %>
 
 <div id="proposal_sections">
   <% for @section in @sections %>
   <p>
     <input type="button" id="edit_name" value="edit"/>
     <strong><%= _('Section') %>:</strong>
-    <%= in_place_editor_field 'section', 'name', {}, {:external_control => "edit_name", :url => {:controller => 'commercial_proposal_sections', :action => 'set_name', :id => @section.id } } %>
+    <%= in_place_editor_field 'section', 'name', {}, {:external_control => "edit_name", :url => {:controller => 'document_sections', :action => 'set_name', :id => @section.id } } %>
 
-    <%= link_to_remote _('Remove'), :url => {:controller => 'commercial_proposal_sections', :action => 'destroy', :id => @section.id, :commercial_proposal_id => @commercial_proposal.id }, :update => 'proposal_sections', :confirm => _('Are you sure'), :post => true %></p>
+    <%= link_to_remote _('Remove'), :url => {:controller => 'document_sections', :action => 'destroy', :id => @section.id, :document_id => @document.id }, :update => 'proposal_sections', :confirm => _('Are you sure'), :post => true %></p>
 
-    <%= link_to_remote 'New item', :url => {:controller => 'commercial_proposal_items', :action => 'new', :id => @section.id, :commercial_proposal_id => @commercial_proposal.id }, :update => 'new_component' %>
+    <%= link_to_remote 'New item', :url => {:controller => 'document_items', :action => 'new', :id => @section.id, :document_id => @document.id }, :update => 'new_component' %>
 
-    <%= render :partial => 'commercial_proposal_items/list', :locals => {:items => @section.commercial_proposal_items} %>
+    <%= render :partial => 'document_items/list', :locals => {:items => @section.document_items} %>
     <% end %>
 </div>

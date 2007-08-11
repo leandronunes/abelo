@@ -26,6 +26,10 @@ consumidor_pessoa = CustomerCategory.new
 consumidor_pessoa.name = 'consumidor pessoa física'
 consumidor_pessoa.organization = organization
 consumidor_pessoa.save
+consumidor_empresa = CustomerCategory.new
+consumidor_empresa.name = 'consumidor empresa'
+consumidor_empresa.organization = organization
+consumidor_empresa.save
 
 vendedor = WorkerCategory.new
 vendedor.name = 'vendedor'
@@ -98,8 +102,9 @@ perfil_quentin.save
 
 ############Customers#############################
 Customer.destroy_all
-cliente_one = Customer.create!(:name => 'João da Silva', :email => 'joao@softwarelivre.org', :birthday => '1984-08-15', :address => 'Rua Pará, nº 221, Pituba', :cpf => '74676743920', :organization_id => 1, :email => 'joao@softwarelivre.org', :category_id => 5)
-cliente_two = Customer.create!(:name => 'Alice Soares', :email => 'alice@softwarelivre.org', :birthday => '1970-10-22', :address => 'Rua João das Botas, nº 15, Canela', :cpf => '93791122894', :organization_id => 1, :email => 'alice@softwarelivre.org', :category_id => 5)
+cliente_one = Customer.create!(:name => 'João da Silva', :email => 'joao@colibre.coop.br', :birthday => '1984-08-15', :address => 'Rua Pará, nº 221, Pituba', :cpf => '74676743920', :organization_id => 1, :category_id => 6)
+cliente_two = Customer.create!(:name => 'Alice Soares', :email => 'livia@localhost', :birthday => '1970-10-22', :address => 'Rua João das Botas, nº 15, Canela', :cpf => '93791122894', :organization_id => 1, :category_id => 5)
+cliente_one = Customer.create!(:name => 'Lívia Barreiros', :email => 'livinhaba@gmail.com', :birthday => '1982-03-05', :address => 'Rua Prado Valadares, nº 19, apt202, Nazaré', :cpf => '01652747516', :organization_id => 1, :category_id => 5)
 
 ############Contacts###############################
 Contact.destroy_all
@@ -108,8 +113,8 @@ Contact.destroy_all
 
 ############Workers################################
 Worker.destroy_all
-vendedor = Worker.create!(:name => 'José Fernandes', :cpf => '63358421813', :address => 'Rua do Timbó, nº 45, Itaigara', :birthday => '1975-06-14', :category_id => 6, :organization_id => 1, :email => 'jose@toca.com')
-gerente = Worker.create!(:name => 'Carla Alves', :cpf => '53170430424', :address => 'Alameda das Pintagueiras, nº 37, Caminho das Árvores', :birthday => '1979-07-18', :category_id => 7, :organization_id => 1, :email => 'carla@toca.com')
+vendedor = Worker.create!(:name => 'José Fernandes', :cpf => '63358421813', :address => 'Rua do Timbó, nº 45, Itaigara', :birthday => '1975-06-14', :category_id => 7, :organization_id => 1, :email => 'jose@toca.com')
+gerente = Worker.create!(:name => 'Carla Alves', :cpf => '53170430424', :address => 'Alameda das Pintagueiras, nº 37, Caminho das Árvores', :birthday => '1979-07-18', :category_id => 8, :organization_id => 1, :email => 'carla@toca.com')
 
 ############Payments################################
 Payment.destroy_all

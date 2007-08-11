@@ -1,11 +1,15 @@
 <h2><%= @mass_mail.subject %></h2>
+
+<% for @attachment in @mass_mail.attachments %>  
+  <%=  link_to File.basename(@attachment.file) , url_for_file_column ('attachment', 'file') %></td>
+<% end %>
 <p>
 <label><%= _('Body:') %></label>
 <%= @mass_mail.body %>
 </p>
 
 <%= _("Send to: ") %>
-<%= link_to "Filter customers", :action => "filter_categories", :id => @mass_mail.id %>
+<%= link_to _("Filter customers"), :action => "filter_categories", :id => @mass_mail.id %>
 
 
 

@@ -5,9 +5,9 @@
   <%= display_list(
     [
       { :content => [
-          button (_('Show'), :show, :action => 'show', :id => m.id),
-          button (_('Edit'), :edit, :action => 'edit', :id => m.id),
-          button (_('Destroy'), :destroy, {:action => 'destroy', :id => m.id},
+          button ('view_small', _('Show'), :show, :action => 'show', :id => m.id),
+          button ('edit_small',_('Edit'), :edit, :action => 'edit', :id => m.id),
+          button ('del_small',_('Destroy'), :destroy, {:action => 'destroy', :id => m.id},
                                 :post => true,
                                 :confirm => _('Are you sure?'))], :option => 'button' },
       {:content => m.subject, :option => 'subject'},
@@ -18,4 +18,4 @@
 <% end %>
 </ul>
 
-<%= button _('New mass mail'), :new, :action => 'new' %>
+<%= button 'add',_('New mass mail'), :new, :action => 'new' %>

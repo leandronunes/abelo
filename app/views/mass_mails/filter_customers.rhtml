@@ -1,8 +1,8 @@
 <%= start_form_tag :action => 'send_emails', :id => @mass_mail_id %>
 <br><p><label for="customers"><%= _("Customers") %></label>
 <%= select_customers @customers if @customers %></p>
-<%= button "Send", :save, nil, { :class => 'button button_send_mail' } %>
-<%= button "Back", :cancel, :action => 'filter_categories', :id => @mass_mail_id %>
+<%= button 'send_mail', :save, nil, { :class => 'button button_send_mail' } %>
+<%= button 'back',"Back", :cancel, :action => 'filter_categories', :id => @mass_mail_id %>
 <%= end_form_tag %>
 
 

@@ -4,6 +4,14 @@
 <label for="mass_mail_subject"><b><%= _('Subject:') %></b></label>
 <%= text_field 'mass_mail', 'subject', 'size' => 65  %>
 <br>
+<label for="attachment_file"><b>
+    <div id="attachments">
+    </div>
+    <%= link_to_function _('Attach a file '), nil, :id => "attach_file" do |page|
+      page.insert_html :bottom, :attachments, file_column_field ('attachment', 'file') + "<br>"
+    end %><b></label> 
+    
+<br>
 <label for="mass_mail_body"><b><% _('Body') %></b></label><br/>
 <%= rich_text_editor 'mass_mail', 'body', :width => '54%', :height => '300px' %>
 <!--[eoform:mass_mail]-->

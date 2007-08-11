@@ -12,8 +12,8 @@
   <%= file_column_field 'image', 'picture' %>
   </p>
   <div class='button_bar'>
-    <%= button _('Add'), :save %>
-    <%= button _('Back'), :back, :action => 'list' %>
+    <%= button 'add',_('Add'), :save %>
+    <%= button 'back',_('Back'), :back, :action => 'list' %>
   </div>
 <%= end_form_tag %>
 
@@ -27,7 +27,7 @@
 </tr>
 <tr>
 <% for image in @product.images %>  
-  <td><%= button  _('Remove image'), :remove, { :action => 'remove_image', :image_id => image.id, :product_id => @product }, { :confirm => _('Are you sure?') } %></td>
+  <td><%= button 'destroy', _('Remove image'), :remove, { :action => 'remove_image', :image_id => image.id, :product_id => @product }, { :confirm => _('Are you sure?') } %></td>
 <% end %>
 </tr>
 </table>

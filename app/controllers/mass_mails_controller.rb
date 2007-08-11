@@ -39,10 +39,16 @@ class MassMailsController < ApplicationController
 
   def edit
     @mass_mail = @organization.mass_mails.find(params[:id])
+    @attachment = Attachment.new
   end
 
   def update
     @mass_mail = MassMail.find(params[:id])
+    @attachment = Attachment.new(params[:attachment])
+    @attachment.mass_mail_id = params[:id]
+    if @attachment.save
+      @mass_mail.attachments.push(@attachment)
+    end
     if @mass_mail.update_attributes(params[:mass_mail])
       flash[:notice] = 'MassMail was successfully updated.'
       redirect_to :action => 'list'
@@ -105,5 +111,29 @@ class MassMailsController < ApplicationController
       highlights_on :controller => 'mass_mails'
     end
   end
+
+  def attachments
+    @mass_mail = @organization.mass_mails.find(params[:id])
+    @attachment = Attachment.new
+  end
+
+  def add_attachment
+    @mass_mail = @organization.mass_mails.find(params[:id])
+    @attachment = Attachment.new
+    @attachment.mass_mail_id = params[:id]
+    if @attachment.save
+      @mass_mail.attachments.push(@attachment)
+      flash[:notice] = _('Attachment was successfully added.')
+      redirect_to :action => 'attachments', :id => @mass_mail
+    else
+      render :action => 'attachments', :id => @product
+    end
+  end
+
+  def remove_attachment
+    Attachment.find(params[:attchment_id]).destroy
+    redirect_to :action => 'attchments', :id => params[:mass_mail_id]  #verificar depois para permanecer na tela
+  end
+
 
 end

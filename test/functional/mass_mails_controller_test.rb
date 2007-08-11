@@ -8,7 +8,7 @@ class MassMailsControllerTest < Test::Unit::TestCase
 
   include TestingUnderOrganization
 
-  fixtures :mass_mails, :organizations, :customers, :customer_categories, :customers_customer_categories
+  fixtures :mass_mails, :organizations, :products
 
   def setup
     @controller = MassMailsController.new
@@ -16,6 +16,66 @@ class MassMailsControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
     @organization_nickname = 'one'
     @organization = Organization.find_by_nickname 'one' 
+
+    @category1 = CustomerCategory.new
+    @category1.id = 1
+    @category1.name = "category test 1"
+    @category1.organization_id = 1
+    @category1.save
+
+    @category2 = CustomerCategory.new
+    @category2.id = 2
+    @category2.name = "category test 2"
+    @category2.organization_id = 1
+    @category2.save
+
+    @customer = Customer.new
+    @customer.id = 1
+    @customer.name = "teste"
+    @customer.email = "teste@email.com"
+    @customer.organization_id = 1
+    @customer.category_id = 1
+    @customer.cpf = "01652747516"
+    @customer.rg = "0992383145"
+    @customer.birthday = "1982-03-05"
+    @customer.save
+
+    @customer2 = Customer.new
+    @customer2.id = 2
+    @customer2.name = "teste2"
+    @customer2.email = "teste2@email.com"
+    @customer2.organization_id = 1
+    @customer2.category_id = 1
+    @customer2.cnpj = "00000000000191 "
+    @customer2.birthday = "1982-03-05"
+    @customer2.save
+
+#    @product = Product.new
+#    @product.id = 1
+#    @product.name = "product test 1"
+#    @product.sell_price = 10
+#    @product.unit = false
+#    @product.organization_id = 1
+#    @product.category_id = 1
+#    @product.save
+
+    @sale = Sale.new
+    @sale.id = 1
+    @sale.organization_id = 1
+    @sale.customer_id = 1
+    @sale.date = "2007-07-07"
+    @sale.status = 0
+    @sale.user_id = 1
+    assert @sale.save
+
+    @sale_item = SaleItem.new
+    @sale_item.id = 1
+    @sale_item.sale_id = 1
+    @sale_item.product_id = 1
+    @sale_item.ammount = 15
+#    @sale_item.unitary_price = 12
+    assert @sale_item.save
+
     login_as("quentin")
 
     ActionMailer::Base.delivery_method = :test
@@ -126,7 +186,7 @@ class MassMailsControllerTest < Test::Unit::TestCase
     assert_template 'filter_customers'
 
     customers = []
-    customers.push(Customer.find(3))
+    customers.push(Customer.find(1))
     customers.push(Customer.find(2))
 
     assert_equal customers, assigns(:customers)
@@ -134,7 +194,7 @@ class MassMailsControllerTest < Test::Unit::TestCase
   end
 
   def test_filter_customer_by_products
-    get :filter_customers, :id => 1, :products => {"1" => "1", "3" => "1"}
+    get :filter_customers, :id => 1, :products => {"1" => "1", "2" => "1"}
 
     assert_response :success
     assert_template 'filter_customers'
@@ -147,7 +207,7 @@ class MassMailsControllerTest < Test::Unit::TestCase
   end
 
   def test_filter_customer_by_categories_and_products
-    get :filter_customers, :id => 1, :categories => {1 => "1", 5 => "1"}, :products => {"1" => "1", "3" => "1"}
+    get :filter_customers, :id => 1, :categories => {1 => "1", 2 => "1"}, :products => {"1" => "1", "2" => "1"}
 
     assert_response :success
     assert_template 'filter_customers'

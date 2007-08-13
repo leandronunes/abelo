@@ -69,8 +69,13 @@ class ApplicationController < ActionController::Base
    Paginator.new self, size, options[:per_page], (params[:page] || 1).to_i
   end
 
-  def paginate_collection(collection, options = {})
-     
+  def paginate(collection, options = {})
+    page = (params[:page] || 1).to_i
+    items_per_page = options[:per_page]
+    offset = (page - 1) * items_per_page
+    document_pages = Paginator.new(self, collection.size, items_per_page, page)
+    collection = collection[offset..(offset + items_per_page - 1)]
+    return document_pages, collection
   end
 
   def flexible_template_owner

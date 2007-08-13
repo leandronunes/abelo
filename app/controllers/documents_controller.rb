@@ -34,16 +34,12 @@ class DocumentsController < ApplicationController
     @title = document_model.nil? ?  _('Listing Document Models') : document_model.name
     
     search_param = params[:document].nil? ? nil : params[:document][:name]
-    page = (params[:page] || 1).to_i
-    items_per_page = 10
-    offset = (page - 1) * items_per_page
+
     @documents = search_param.blank? ? 
                  @organization.documents_by_model(document_model) : 
                  @organization.documents.find_by_contents(search_param).select{|d| d.document_model == document_model}
-    @document_pages = Paginator.new(self, @documents.size, items_per_page, page)
-    @documents = @documents[offset..(offset + items_per_page - 1)]
 
-    paginate_collection(@documents, :per_page => 1 )
+    @document_pages, @documents = paginate @documents, :per_page => 1
   end
 
   def show

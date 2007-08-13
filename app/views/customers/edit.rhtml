@@ -1,9 +1,0 @@
-<h2>Editing customer</h2>
-
-<%= start_form_tag :action => 'update', :id => @customer %>
-  <%= render :partial => 'form' %>
-  <div class='button_bar'>
-    <%= button _('Save'), :save %>
-    <%= button _('Cancel'), :cancel, :action => 'list' %>
-  </div>
-<%= end_form_tag %>

@@ -1,8 +1,0 @@
-<h2>New contact</h2>
-
-<%= start_form_tag :action => 'create_contact', :id => @contact.customer_id %>
-  <%= render :partial => 'form_contact' %>
-  <div class='button_bar'>
-  <%= button 'Create', :save %>
-  <%= button 'Cancel', :cancel, :action => 'list'%>
-<%= end_form_tag %>

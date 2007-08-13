@@ -48,12 +48,12 @@ class DocumentTest < Test::Unit::TestCase
   end
 
   def test_uniqueness_of_name
-    d = Document.new(:name => 'Anohter Document', :organization_id => 1, :is_model => true)
+    d = Document.new(:name => 'Some Another Document', :organization_id => 1, :is_model => true)
     departments = Organization.find(1).departments
     d.departments = departments
     assert d.save
 
-    d = Document.new(:name => 'Anohter Document', :organization_id => 1, :is_model => true)
+    d = Document.new(:name => 'Some Another Document', :organization_id => 1, :is_model => true)
     departments = Organization.find(1).departments
     d.departments = departments
     d.valid?

@@ -17,6 +17,14 @@ class OrganizationTest < Test::Unit::TestCase
     @user = User.create!("salt"=>"7e3041ebc2fc05a40c60028e2c4901a81035d3cd", "updated_at"=>nil, "crypted_password"=>"00742970dc9e6319f8019fd54864d3ea740f04b1", "type"=>"User", "remember_token_expires_at"=>nil, "id"=>"1", "administrator"=>nil, "remember_token"=>nil, "login"=>"new_user", "email"=>"new_user@example.com", "created_at"=>"2007-07-14 18:03:29")
   end
 
+  def test_setup
+    assert @organization.valid?
+    assert @cat_prod.valid?
+    assert @cat_cust.valid?
+    assert @cat_worker.valid?
+    assert @cat_supp.valid?
+  end
+
 
   def test_relation_with_departaments
     dept = Department.create(:name => 'Department for testing')
@@ -40,12 +48,6 @@ class OrganizationTest < Test::Unit::TestCase
     mail = MassMail.create(:subject => "Email subject", :body => "Email body", :organization_id => @organization.id)
     @organization.mass_mails.concat(mail)
     assert @organization.mass_mails.include?(mail)
-  end
-
-  def test_relation_with_commercial_proposals
-    dept = Department.create(:name => 'Department for testing')
-    com_prop = CommercialProposal.create(:name => 'Commercial Proposal', :organization_id => @organization.id, :is_template => true, :department_ids => [dept.id])
-    assert @organization.commercial_proposals.include?(com_prop)
   end
 
   def test_relation_with_ledgers
@@ -176,121 +178,17 @@ class OrganizationTest < Test::Unit::TestCase
     assert @organization.top_level_customer_categories.include?(@cat_cust)
   end
 
-  def test_pending_sales
-    sale = Sale.create(:date => '05-11-2007', :user_id => 1, :organization_id => @organization.id)
-    Sale.stubs(:pending).returns([sale])
-    user = User.find(1)
-    assert @organization.pending_sales(user).include?(sale)
+  def test_documents_model
+    dept = Department.create!(:name => 'Department for testing', :organization_id => @organization.id)
+    com_prop = Document.create!(:name => 'Commercial Proposal', :organization_id => @organization.id, :is_model => true, :department_ids => [dept.id])
+    assert @organization.documents_model.include?(com_prop)
   end
 
-  def test_commercial_proposals_templates
-    dept = Department.create(:name => 'Department for testing')
-    com_prop = CommercialProposal.create(:name => 'Commercial Proposal', :organization_id => @organization.id, :is_template => true, :department_ids => [dept.id])
-    CommercialProposal.stubs(:is_template).returns(true)
-    assert @organization.commercial_proposals_templates.include?(com_prop)
-  end
-
-  def test_commercial_proposals_not_templates
-    dept = Department.create(:name => 'Department for testing')
-    com_prop = CommercialProposal.create(:name => 'Commercial Proposal', :organization_id => @organization.id, :is_template => false, :department_ids => [dept.id])
-    CommercialProposal.stubs(:is_template).returns(false)
-    assert @organization.commercial_proposals_not_templates.include?(com_prop) 
-  end
-
-  def test_ledger_categories_sorted
-  end
-
-  #TODO see it's necessary
-  def test_has_many_cash_flows
-    o = Organization.find(1)
-    assert_valid o
-    cf = CashFlow.new
-    cf.date = Date.today
-    cf.value = 10.0
-    cf.historical_id = Historical.find(1)
-    cf.specification_id = Specification.find(1)
-    o.add_cash_flows(cf)
-    assert_valid cf
-    assert o.cash_flows.include?(cf)
-  end
-
-  #TODO see it's necessary
-  def test_has_many_historicals
-    o = Organization.find(1)
-    assert_valid o
-    h = Historical.new
-    h.name = 'hisotrical for testing'
-    h.type_of = 'C'
-    h.operational = true
-    o.add_historicals(h)
-    assert_valid h
-    assert o.historicals.include?(h)
-  end
-
-  #TODO see it's necessary
-  def test_operational_entrances
-    h = Historical.find(1)
-    assert_valid h
-    @organization.historicals.clear
-    @organization.add_historicals(h)
-    assert_equal true, h.operational
-    assert_equal 'C', h.type_of
-    historicals_expecteds = @organization.operational_entrances
-    assert historicals_expecteds.include?(h)
-    assert_equal 1, historicals_expecteds.size
-  end
-
-  #TODO see it's necessary
-  def test_operational_exits
-    h = Historical.find(2)
-    assert_valid h
-    @organization.historicals.clear
-    @organization.add_historicals(h)
-    assert_equal true, h.operational
-    assert_equal 'D', h.type_of
-    historicals_expecteds = @organization.operational_exits
-    assert historicals_expecteds.include?(h)
-    assert_equal 1, historicals_expecteds.size
-  end
-
-  #TODO see it's necessary
-  def test_not_operational_entrances
-    h = Historical.find(3)
-    assert_valid h
-    @organization.historicals.clear
-    @organization.add_historicals(h)
-    assert_equal false, h.operational
-    assert_equal 'C', h.type_of
-    historicals_expecteds = @organization.not_operational_entrances
-    assert historicals_expecteds.include?(h)
-    assert_equal 1, historicals_expecteds.size
-  end
-
-  #TODO see it's necessary
-  def test_not_operational_exits
-    h = Historical.find(4)
-    assert_valid h
-    @organization.historicals.clear
-    @organization.add_historicals(h)
-    assert_equal false, h.operational
-    assert_equal 'D', h.type_of
-    historicals_expecteds = @organization.not_operational_exits
-    assert historicals_expecteds.include?(h)
-    assert_equal 1, historicals_expecteds.size
-  end
-
-  #TODO see it's necessary
-  def test_historical_total_value
-    cf_1 = CashFlow.find(1)
-    assert_valid cf_1
-    @organization.add_cash_flows(cf_1)
-    cf_2 = CashFlow.find(2)
-    assert_valid cf_2
-    @organization.add_cash_flows(cf_2)
-    assert_equal 2, @organization.cash_flows.count
-    assert_equal cf_1.historical_id, cf_2.historical_id
-    total_value =  cf_1.value + cf_2.value
-    assert_equal total_value, @organization.historical_total_value(cf_1.historical_id)
+  def test_document_not_model
+    dept = Department.create!(:name => 'Department for testing', :organization_id => @organization.id)
+    model = Document.create!(:name => 'Document model', :organization_id => @organization.id, :is_model => true, :department_ids => [dept.id])
+    doc = Document.create!(:name => 'Commercial Proposal', :organization_id => @organization.id, :is_model => false, :department_ids => [dept.id], :document_model_id => model.id)
+    assert @organization.documents_not_model.include?(doc) 
   end
 
 end

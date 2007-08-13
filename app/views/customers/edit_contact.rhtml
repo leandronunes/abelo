@@ -1,9 +1,0 @@
-<h2>Editing contact</h2>
-
-<%= start_form_tag :action => 'update_contact', :id => @contact %>
-  <%= render :partial => 'form_contact' %>
-  <div class='button_bar'>
-    <%= button _('Save'), :save %>
-    <%= button _('Cancel'), :cancel, { :action => 'list_contacts', :id => @contact.customer_id } %>
-  </div>
-<%= end_form_tag %>

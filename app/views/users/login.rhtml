@@ -1,6 +1,6 @@
 <div id="loginform">
 
-<%= start_form_tag %>
+<% form_tag do %>
 
 <p><label for="login"> <%= _("Login") %> </label><br />
 <span><%= text_field_tag 'login' %></span>
@@ -20,6 +20,6 @@
 </div>
 
 <br style="clear:both"/>
-<%= end_form_tag %>
+<% end %>
 
 </div>

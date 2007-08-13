@@ -5,10 +5,10 @@
 #TODO fix it this filed cannot be called system_actor name
 %>
 
-<% form_tag ({:action => 'list', :actor => @actor}, {:class => 'search_itens'} ) do %>
+<% form_tag({:action => 'list', :actor => @actor}, {:class => 'search_itens'} ) do %>
 <%= text_field 'system_actor', 'name', :class => 'filter_field'  %>
 <%= submit_tag('', { :class => 'button button_search', :title => _("Search %s" % SystemActor.describe(@actor)) }) %>
-  <%= button (_("New %s") % SystemActor.describe(@actor), :new, :action => 'new', :actor => @actor ) %>
+  <%= button('add', _("New %s") % SystemActor.describe(@actor), :new, :action => 'new', :actor => @actor ) %>
 <% end %>
 
 <div class="auto_complete" id="system_actor_name_auto_complete"></div>
@@ -22,9 +22,9 @@
   display_list(
   [
       { :content => [
-          button ('view_small', _('Show'), :show, :action => 'show', :id => s.id, :actor => @actor),
-          button ('edit_small', _('Edit'), :edit, :action => 'edit', :id => s.id, :actor => @actor),
-          button ('del_small',_('Destroy'), :destroy, {:action => 'destroy', :id => s.id, :actor => @actor},
+          button('view_small', _('Show'), :show, :action => 'show', :id => s.id, :actor => @actor),
+          button('edit_small', _('Edit'), :edit, :action => 'edit', :id => s.id, :actor => @actor),
+          button('del_small',_('Destroy'), :destroy, {:action => 'destroy', :id => s.id, :actor => @actor},
                                 :post => true,
                                 :confirm => _('Are you sure?'))], :option => 'button' },
       { :title => _('Name:'), :content => s.name, :option => 'name' },

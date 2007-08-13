@@ -15,11 +15,19 @@ customer_two:
   category_id: 11
   email: 'contato@colivre.com'
   type: 'Customer'
-supplier_two:
+supplier_one:
   id: 3
   name: 'Maria'
   organization_id: 1
   cpf: '33672388483'
   category_id: 20
   email: 'maria@email.com'
+  type: 'Supplier'
+supplier_two:
+  id: 4
+  name: 'The Company'
+  organization_id: 1
+  cnpj: '12.815.063/0001-85'
+  category_id: 20
+  email: 'company@email.com'
   type: 'Supplier'

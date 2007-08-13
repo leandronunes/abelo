@@ -3,12 +3,12 @@ class SystemActor < ActiveRecord::Base
   #relationships 
   belongs_to :organization
   has_many :contacts 
+  belongs_to :supplier_category
 
   acts_as_ferret :fields => ['name', 'description']
 
   #validations
-  validates_presence_of :name, :organization_id, :category_id,
-:email    
+  validates_presence_of :name, :organization_id, :category_id,:email    
   validates_as_cnpj :cnpj
   validates_as_cpf :cpf
   validates_uniqueness_of :cnpj, :scope => :organization_id, :if => lambda { |user| ! user.cnpj.blank? }, :message => _('This %{fn} already exist')

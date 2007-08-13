@@ -63,7 +63,7 @@ class ApplicationController < ActionController::Base
     ]
   }
 
-  def paginate(collection, options = {})
+  def paginate_by_collection(collection, options = {})
     page = (params[:page] || 1).to_i
     items_per_page = options[:per_page].nil? ? 10 : options[:per_page].to_i
     offset = (page - 1) * items_per_page

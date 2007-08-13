@@ -73,17 +73,21 @@ class SystemActorsController < ApplicationController
   end
 
   def edit
-    @system_actor = @organization.system_actors.find(params[:id])
-    @actor = @system_actor.type.to_s.downcase
-  end
-
-  def update
-    @system_actor = @organization.system_actors.find(params[:id])
-    @actor = @system_actor.type.to_s.downcase if SYSTEM_ACTORS.include?(@system_actor.type.to_s.downcase)
+    @actor = params[:actor] if SYSTEM_ACTORS.include?(params[:actor])
     if @actor.blank?
       render_error(_("This actor it's not valid"))
       return
     end
+    @system_actor = @organization.send("#{@actor.pluralize}").find(params[:id])
+  end
+
+  def update
+    @actor = params[:actor] if SYSTEM_ACTORS.include?(params[:actor])
+    if @actor.blank?
+      render_error(_("This actor it's not valid"))
+      return
+    end
+    @system_actor = @organization.send("#{@actor.pluralize}").find(params[:id])
 
     if @system_actor.update_attributes(params[:system_actor])
       flash[:notice] = _('%s was successfully updated.') % SystemActor.describe(@actor)
@@ -94,12 +98,22 @@ class SystemActorsController < ApplicationController
   end
 
   def destroy
-    @actor = @organization.system_actors.find(params[:id]).destroy.type.to_s.downcase
+    @actor = params[:actor] if SYSTEM_ACTORS.include?(params[:actor])
+    if @actor.blank?
+      render_error(_("This actor it's not valid"))
+      return
+    end
+    @system_actor = @organization.send("#{@actor.pluralize}").find(params[:id])
+    @system_actor.destroy
     redirect_to :action => 'list', :actor => @actor 
   end
 
   def reset
-    @actor = params[:actor]
+    @actor = params[:actor] if SYSTEM_ACTORS.include?(params[:actor])
+    if @actor.blank?
+      render_error(_("This actor it's not valid"))
+      return
+    end
     @system_actor =  eval("#{@actor.camelize}").new()
     @system_actor.organization = @organization
     render :partial => 'form'

@@ -17,6 +17,7 @@ class SuppliersControllerTest < Test::Unit::TestCase
     @organization_nickname = 'one'
     @organization = Organization.find_by_nickname 'one'
     login_as("quentin")
+    @system_actor = Supplier.create!(:name => "Another Name to Test", :cpf => '874.923.844-24', :category_id => '20', :email => 'test@test.com', :organization_id => 1)
   end
 
   def test_index
@@ -66,33 +67,44 @@ class SuppliersControllerTest < Test::Unit::TestCase
     assert_equal num_suppliers + 1, Supplier.count
   end
 
-#TODO see these test below
-#
   def test_edit
-    get :edit, :id => 1
+    get :edit, :id => @system_actor.id, :actor => 'supplier'
 
     assert_response :success
     assert_template 'edit'
 
-    assert_not_nil assigns(:supplier)
-    assert assigns(:supplier).valid?
+    assert_not_nil assigns(:system_actor)
+    assert assigns(:system_actor).valid?
+    assert_kind_of Supplier, assigns(:system_actor)
+    assert_not_nil assigns(:actor)
   end
 
   def test_update
-    post :update, :id => 1
+    post :update, :id => @system_actor.id, :actor => 'supplier'
     assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_redirected_to :action => 'list', :actor => 'supplier'
+    assert_not_nil assigns(:system_actor)
+    assert assigns(:system_actor).valid?
+    assert_kind_of Supplier, assigns(:system_actor)
+    assert_not_nil assigns(:actor)
   end
 
   def test_destroy
-    assert_not_nil Supplier.find(1)
+    assert_not_nil @system_actor
 
-    post :destroy, :id => 1
+    post :destroy, :id => @system_actor.id, :actor => 'supplier'
     assert_response :redirect
     assert_redirected_to :action => 'list'
 
     assert_raise(ActiveRecord::RecordNotFound) {
-      Supplier.find(1)
+      Supplier.find(@system_actor.id)
     }
   end
+
+   def test_reset
+     get :reset, :actor => 'supplier'
+     assert_response :success
+     assert_template '_form'
+   end
+
 end

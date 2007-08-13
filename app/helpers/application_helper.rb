@@ -16,9 +16,9 @@ module ApplicationHelper
     end
   end
 
-  def button_remote(name, type, url_options = {}, html_options = {})
+  def button_remote(button, title, type, url_options = {}, html_options = {})
     local_html_options = html_options.merge({ :class => "button button_#{type}" })
-    link_to_remote(name, url_options, local_html_options)
+    design_display_icon(button, title, url_options, local_html_options, true)
   end
 
   # Creates a color picker field.

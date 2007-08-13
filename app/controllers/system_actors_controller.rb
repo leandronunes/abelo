@@ -1,10 +1,10 @@
 class SystemActorsController < ApplicationController
 
-  SYSTEM_ACTORS = %w[
-    customer
-    worker 
-    supplier
-  ]
+  SYSTEM_ACTORS = {
+    'customer' => _('Customer'),
+    'worker' => _('Workers'),
+    'supplier' => _('Supplier'),
+  }
 
   auto_complete_for :system_actor, :name
 
@@ -33,20 +33,15 @@ class SystemActorsController < ApplicationController
     @actor = params[:actor] if SYSTEM_ACTORS.include?(params[:actor])
     @actor = params[:actor] = 'worker' if @actor.blank?
 
-    if params[:query]
-      @query = params[:query]
-    else
-      @query = params[:system_actor] ? params[:system_actor][:name] : nil
-    end
-    if !@query.nil?
-      items_per_page = 10
-      offset = ((params[:page] || 1).to_i - 1) * items_per_page
-      @total, @system_actors = eval("#{@actor.camelize}").full_text_search(@query)
-      @system_actor_pages = pages_for(@total, :per_page => items_per_page)
-      @system_actors = @system_actors[offset..(offset + items_per_page - 1)]
-    else
-      @system_actor_pages, @system_actors = paginate @actor.to_sym, :per_page => 10, :conditions => ["organization_id = ?", @organization.id ] 
-    end
+    @title = _("Linsting %s") % SYSTEM_ACTORS[@actor.to_s]
+
+    search_param = params[:system_actor].nil? ? nil : params[:system_actor][:name]
+
+    @system_actors = search_param.blank? ?
+                 @organization.send("#{@actor.pluralize}") :
+                 @organization.send("#{@actor.pluralize}").full_text_search(search_param)
+
+    @system_actor_pages, @system_actors = paginate @system_actors
   end
 
   def show

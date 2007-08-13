@@ -63,15 +63,9 @@ class ApplicationController < ActionController::Base
     ]
   }
 
-  def pages_for(size, options = {})
-   default_options = {:per_page => 10}
-   options = default_options.merge options
-   Paginator.new self, size, options[:per_page], (params[:page] || 1).to_i
-  end
-
   def paginate(collection, options = {})
     page = (params[:page] || 1).to_i
-    items_per_page = options[:per_page]
+    items_per_page = options[:per_page].nil? ? 10 : options[:per_page].to_i
     offset = (page - 1) * items_per_page
     document_pages = Paginator.new(self, collection.size, items_per_page, page)
     collection = collection[offset..(offset + items_per_page - 1)]

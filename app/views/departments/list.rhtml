@@ -3,8 +3,8 @@
 
 <% form_tag ( { :action => 'list' }, { :class => 'search_itens' } ) do %>
   <%= text_field 'department', 'name', :class => 'filter_field' %>
-  <%= submit_tag( '', { :class => 'button button_search', :title => _('Search department') }) %>
-  <%= button (_("New department"), :new, :action => 'new' ) %>
+  <%= button ( 'lupa', _('Search'), :search,  { :class => 'button button_search', :title => _('Search department') }) %>
+  <%= button ('add',_("New department"), :new, :action => 'new' ) %>
 <% end %>
 
 <div class="auto_complete" id="department_name_auto_complete"></div>
@@ -17,9 +17,9 @@
 <%= display_list(
   [
     { :content => [
-      button (_('Show'), :show, :action => 'show', :id => d.id),
-      button (_('Edit'), :edit, :action => 'edit', :id => d.id),
-      button (_('Destroy'), :destroy, {:action => 'destroy', :id => d.id},
+      button ( 'view_small', _('Show'), :show, :action => 'show', :id => d.id),
+      button ( 'edit_small', _('Edit'), :edit, :action => 'edit', :id => d.id),
+      button ( 'del_small', _('Destroy'), :destroy, {:action => 'destroy', :id => d.id},
                             :post => true,
                             :confirm => _('Are you sure?'))], :option => 'button' },
     { :content => d.name, :option => 'name'}, 

@@ -7,11 +7,10 @@
   <%= javascript_include_tag :defaults %>
 </head>
 <body>
+<%= flash[:notice] if flash[:notice] %>
 <div id="warp">
-
 <div id="header">
 <div id="banner_header"> </div>
-<span><%= flash[:notice] if flash[:notice] %></span>
 </div>
 
 <div id="content">

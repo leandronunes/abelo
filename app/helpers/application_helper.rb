@@ -250,7 +250,7 @@ module ApplicationHelper
       'point_of_sale'                       => _('Point of sale'),
       'mass_mails'                          => _('Mass mail'),
       'ledgers'                             => _('Financial'),
-      'commercial_proposals'                => _('Commercial Proposals'),
+      'documents'                           => _('Documents'),
       'departments'                         => _('Departments'),
     }
     x = 0
@@ -276,15 +276,15 @@ module ApplicationHelper
   def multiple_select(object, method, collection=[], title="", value_method=:id, text_method=:name)
     value_method = value_method.to_s
     text_method = text_method.to_s
-    selected_options = params[object].nil? || params[object][method].nil? ? Array.new : params[object][method]
+    selected_options = controller.instance_variable_get("@#{object}").send(method)
     content_tag('p', 
       {
       content_tag('label', title),
       collection.map do |c|
-        if selected_options.include? c.send(value_method).to_s
-          content_tag('input', c.send(text_method) , :name => "#{object}[#{method}][]", :type => 'checkbox', :value => c.send(value_method) , :checked => 'checked' )
+        if selected_options.include? c
+          content_tag('input', c.send(text_method) , :name => "#{object}[#{method.singularize}_ids][]", :type => 'checkbox', :value => c.send(value_method) , :checked => 'checked' )
         else
-          content_tag('input', c.send(text_method) , :name => "#{object}[#{method}][]", :type => 'checkbox', :value => c.send(value_method) )
+          content_tag('input', c.send(text_method) , :name => "#{object}[#{method.singularize}_ids][]", :type => 'checkbox', :value => c.send(value_method) )
         end
       end
       }

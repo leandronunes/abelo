@@ -1,7 +1,7 @@
 <%= error_messages_for 'document' %>
 
 <!--[form:document]-->
-<%= multiple_select('document', 'department_ids', @departments, _('Departments')) %>
+<%= multiple_select('document', 'departments', @departments, _('Departments')) %>
 
 <p><label for="document_name"> <%= _('Name') %> </label>
 <%= text_field 'document', 'name', :size => '60'  %></p>
@@ -9,7 +9,4 @@
 <p><label for="document_body"> <%= _('Body') %></label></p>
 <%= fckeditor_textarea 'document', 'body', :width => '80%', :height => '500px' %>
 
-<p><label for="document_is_template"> <%= _('Is template') %>? </label>
-<%= check_box 'document', 'is_template' %>
-</p>
 <!--[eoform:document]-->

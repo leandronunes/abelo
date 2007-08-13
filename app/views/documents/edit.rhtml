@@ -2,15 +2,15 @@
 
 
 <div class='left_content'>
-<%= start_form_tag :action => 'update', :id => @document %>
+<%= start_form_tag :action => 'update', :id => @document, :document_model => params[:document_model] %>
 <%= render :partial => 'form' %>
 <%= render :partial => 'budget' %>
-<%= submit_tag 'Edit' %>
+<%= button 'view', _('Show'), :show, :action => 'show', :id => @document, :document_model => params[:document_model] %>
+<%= button 'back',_('Back'), :back,  :action => 'list', :document_model => params[:document_model] %>
+<%= button 'save', _('Edit'), :save%>
 <%= end_form_tag %>
 </div>
 
 <div id='new_component',class='right_content'>
 </div>
 
-<%= link_to 'Show', :action => 'show', :id => @document %> |
-<%= link_to 'Back', :action => 'list' %>

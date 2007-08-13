@@ -1,8 +1,8 @@
-<% for column in Document.content_columns %>
-<p>
-  <b><%= column.human_name %>:</b> <%=h @document.send(column.name) %>
-</p>
+<p> <b><%= _('Name') %>:</b> <%= @document.name %></p>
+<% for department in @departments %>
+  <p> <b><%= _('Department') %>:</b> <%= department.name %></p>
 <% end %>
+<p> <b><%= _('Body') %>:</b> <%= @document.body %></p>
 
-<%= button('back', _('Back'), :list, :action => 'list') %> 
-<%= button('edit', _('Edit'), :edit, :action => 'edit', :id => @document) %> 
+<%= button('back', _('Back'), :list, :action => 'list', :document_model => params[:document_model]) %> 
+<%= button('edit', _('Edit'), :edit, :action => 'edit', :id => @document, :document_model => params[:document_model]) %> 

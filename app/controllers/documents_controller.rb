@@ -6,15 +6,18 @@ class DocumentsController < ApplicationController
   
   before_filter :create_tabs
 
+
+#TODO fix this autocomplete field because it searchs on all non model document.
+#And in this case it must search only on a non model document of based on a given model
   def autocomplete_name
-    is_template = params[:is_template] == 't' ? true : false
-    re = Regexp.new("#{params[:document][:name]}", "i")
-    @documents = Document.find(:all, :conditions => ['is_template = ?', is_template]).select { |cp| cp.name.match re}
+    escaped_string = Regexp.escape(params[:document][:name])
+    re = Regexp.new(escaped_string, "i")
+    @documents = @organization.documents.find(:all, :conditions => ['is_model = ?', false]).select { |d| d.name.match re}
     render :layout=>false
   end
 
   def index
-    redirect_to :action => 'list', :is_template => 'false'
+    redirect_to :action => 'list'
   end
 
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
@@ -22,44 +25,35 @@ class DocumentsController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @is_template = params[:is_template]
-    if @is_template == 'true'
-      is_template = 't'
-      @documents = @organization.documents_model
-      @title = _('Documents Templates')
-    else
-      is_template = 'f'
-      @documents = @organization.documents_not_model
-      @title = _('Documents')
+    begin
+      document_model = @organization.documents.find(params[:document_model])
+    rescue
+      document_model = nil
     end
+
+    @title = document_model.nil? ?  _('Listing Document Models') : document_model.name
     
-    @query = params[:query] ? params[:query] : nil
-    if @query.nil?
-      @query = params[:document] ? params[:document][:name] : nil
-    end
-
-    if !@query.nil?
-      page = (params[:page] || 1).to_i
-      items_per_page = 10
-      offset = (page - 1) * items_per_page
-
-      @documents = Document.find_by_contents(@query, {:limit => :all, :offset => 0}, :conditions => ["is_template = ?", is_template])
-      @document_pages = Paginator.new(self, @documents.size, items_per_page, page)
-      @documents = @documents[offset..(offset + items_per_page - 1)]
-    else 
-      @document_pages, @documents = paginate :documents, :per_page => 10, :conditions => [ "organization_id = ? AND is_template = ?", @organization.id, is_template ]
-    end
+    search_param = params[:document].nil? ? nil : params[:document][:name]
+    page = (params[:page] || 1).to_i
+    items_per_page = 10
+    offset = (page - 1) * items_per_page
+    @documents = search_param.blank? ? 
+                 @organization.documents_by_model(document_model) : 
+                 @organization.documents.find_by_contents(search_param).select{|d| d.document_model == document_model}
+    @document_pages = Paginator.new(self, @documents.size, items_per_page, page)
+    @documents = @documents[offset..(offset + items_per_page - 1)]
   end
 
   def show
-    @document = Document.find(params[:id])
+    @document = @organization.documents.find(params[:id])
+    @departments = @document.departments
   end
 
   def new
     @departments = @organization.departments
-    render :partial => 'new'
   end
 
+#TODO see if it's usefull
   def create
     @departments = @organization.departments
     @document = Document.new(params[:document])  
@@ -74,18 +68,21 @@ class DocumentsController < ApplicationController
       flash[:notice] = _('The document was successfully created.')
       redirect_to :action => 'edit', :id => @document.id
     else
-      @documents_templates = @organization.documents_templates
-      @documents = @organization.documents_not_templates
-      render :action => 'list'
+render :text => @document.errors.inspect
+#      @documents_templates = @organization.documents_model
+#      @documents = @organization.documents_not_model
+#      render :action => 'list'
     end
   end
 
+#TODO see if it's usefull
   def edit
-    @document = Document.find(params[:id])
+    @document = @organization.documents.find(params[:id])
     @departments = @organization.departments
     @sections = @document.document_sections
   end
 
+#TODO see if it's usefull
   def update
     @document = Document.find(params[:id])
     if @document.update_attributes(params[:document])
@@ -98,11 +95,13 @@ class DocumentsController < ApplicationController
     end
   end
 
+#TODO see if it's usefull
   def destroy
     Document.find(params[:id]).destroy
     redirect_to :action => 'list'
   end
 
+#TODO see if it's usefull
   def new_from_template
     @document = Document.find(params[:id]).clone
     @document.name = ''
@@ -114,6 +113,7 @@ class DocumentsController < ApplicationController
     render :action => 'new'
   end
 
+#TODO see if it's usefull
   def get_template
     if params[:value] == '1'
       @templates = @organization.documents_templates
@@ -125,18 +125,20 @@ class DocumentsController < ApplicationController
 
   def create_tabs
     t = add_tab do      
-      links_to :controller => 'documents', :action => 'list', :is_template => 'true'
+      links_to :controller => 'documents', :action => 'list'
       in_set 'first'
-      highlights_on :controller => 'documents', :is_template => 'true'
     end
+    t.highlights_off :organization_nickname => @organization.nickname, :controller => 'documents', :action => 'list', :document_model => /.*/
     t.named _("Models")
-    
-    t = add_tab do      
-      links_to :controller => 'documents', :action => 'list', :is_template => 'false'
-      in_set 'first'
-      highlights_on :controller => 'documents', :is_template => 'false'
+   
+    @organization.documents_model.each do |d| 
+      t = add_tab do      
+        links_to :controller => 'documents', :action => 'list', :document_model => d.id
+        in_set 'first'
+        highlights_on :controller => 'documents', :action => /.*/, :document_model => d.id
+      end
+      t.named d.name
     end
-    t.named _('Documents')
   end
 
 end

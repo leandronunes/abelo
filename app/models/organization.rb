@@ -50,17 +50,30 @@ class Organization < ActiveRecord::Base
     return Sale.pending(self, user)
   end
 
+  #####################################
+  # Documents Methods Related
+  #####################################
+  
+  #Get all document models from organization
   def documents_model
-    return self.documents.select{ |c| c.is_template? }
+    self.documents.select{ |d| d.is_model? }
   end
 
+  #Get all document not models from organization
   def documents_not_model
-    return self.documents.select{ |c| !c.is_template? }
+    self.documents.select{ |d| !d.is_model? }
   end
+
+  #Get all documents by a given model from organization
+  def documents_by_model(model)
+    self.documents.select{ |d| d.document_model == model }
+  end
+
 
   # Return all ledger categories ordened by type and name.
   # Income ledger categories appear first ordened by name and
   # Out ledger categories appear after ordened by name too.
+  #TODO see if it's useful
   def ledger_categories_sorted
     LedgerCategory.find(:all, :conditions => ['organization_id = ?', self], :order => 'type_of, name ASC' )
   end

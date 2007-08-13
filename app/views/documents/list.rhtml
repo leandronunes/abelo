@@ -1,14 +1,14 @@
 
-<%= title('Listing Models') %>
+<%= title('%s') % @title %>
 
-<% form_tag ( { :action => 'list', :is_template => @is_template }, { :class => 'search_itens' } ) do %>
+<% form_tag ( { :action => 'list', :document_model => params[:document_model] }, { :class => 'search_itens' } ) do %>
   <%= text_field 'document', 'name', :class => 'filter_field' %>
   <%= button ( 'lupa', _('Search'), :search, { :class => 'button button_search', :title => _('Search document') }) %>
   <%= button ('add',_("New document"), :new, :action => 'new' ) %>
 <% end %>
 
 <div class="auto_complete" id="document_name_auto_complete"></div>
-<%= auto_complete_field :document_name, :url => {:action => 'autocomplete_name', :is_template => @is_template }, :indicator => 'auto_list'%>
+<%= auto_complete_field :document_name, :url => {:action => 'autocomplete_name' }, :indicator => 'auto_list'%>
 <div id="auto_list" style="display:none;">
 </div>
 
@@ -17,8 +17,8 @@
 <%= display_list(
   [
     { :content => [
-      button ('view_small',_('Show'), :show, :action => 'show', :id => c.id, :is_template => @is_template),
-      button ('edit_small', _('Edit'), :edit, :action => 'edit', :id => c.id, :is_template => @is_template),
+      button ('view_small',_('Show'), :show, :action => 'show', :id => c.id, :document_model => params[:document_model]),
+      button ('edit_small', _('Edit'), :edit, :action => 'edit', :id => c.id, :document_model => params[:document_model]),
       button ('del_small',_('Destroy'), :destroy, {:action => 'destroy', :id => c.id},
                             :post => true,
                             :confirm => _('Are you sure?'))], :option => 'button' },
@@ -29,4 +29,4 @@
 %>
 <% end %>
 </ul>
-<%= pagination_links(@document_pages, :params => {:query => @query, :is_template => @is_template}) %>
+<%= pagination_links(@document_pages, :params => {:document_model => params[:document_model], :query => @query}) %>

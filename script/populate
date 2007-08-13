@@ -130,9 +130,6 @@ MassMail.destroy_all
 mail_one = MassMail.create!(:subject => 'Festa de Inauguração da Toca!', :body => 'Olá, a Toca o convida para a sua festa de inauguração. Não perca!', :organization_id => 1)
 mail_one = MassMail.create!(:subject => 'Conheça o site da Toca', :body => 'Olá, o site da Toca está disponível em http://www.consumidorsustentavel.com.br/http://www.consumidorsustentavel.com.br/.', :organization_id => 1)
 
-############Cash Flows##############################
-CashFlow.destroy_all
-
 ############Historicals#############################
 Historical.destroy_all
 
@@ -144,15 +141,15 @@ Department.destroy_all
 departamento_marketing = Department.create!(:name => 'Marketing', :organization_id => 1)
 departamento_vendas = Department.create!(:name => 'Vendas', :organization_id => 1)
 
-############Commercial Proposals######################
-CommercialProposal.destroy_all
-proposta_colivre = CommercialProposal.create!(:name => 'Estruturação do espaço de eventos', 'is_template'=> 'false', :organization_id => 1, :body => 'Parceria com a Colivre para estruturação do espaço para realização de cursos de sofware livre.', :department_ids => [1])
+############Document######################
+Document.destroy_all
+proposta_colivre = Document.create!(:name => 'Estruturação do espaço de eventos', :is_model => true, :organization_id => 1, :body => 'Parceria com a Colivre para estruturação do espaço para realização de cursos de sofware livre.', :department_ids => [1])
 
-############Commercial Proposal Items#################
-CommercialProposalItem.destroy_all
-item_one = CommercialProposalItem.create!(:commercial_proposal_section_id => 1, :quantity => '10', :unitary_value => 400.00,:product_id => 5)
+############Document Items#################
+DocumentItem.destroy_all
+item_one = DocumentItem.create!(:document_section_id => 1, :quantity => '10', :unitary_value => 400.00,:product_id => 5)
 
-############Commercial Proposal Sections################
-CommercialProposalSection.destroy_all
-section_one = CommercialProposalSection.create!(:name => 'máquinas', :commercial_proposal_id => 1)
+###########Document Section################
+DocumentSection.destroy_all
+section_one = DocumentSection.create!(:name => 'máquinas', :document_id => 1)
 

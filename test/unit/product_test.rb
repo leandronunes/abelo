@@ -75,8 +75,8 @@ class ProductTest < Test::Unit::TestCase
   end
 
   def test_full_text_search
-    product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
-    products = Product.full_text_search('prod*')
+    product = Product.create(:name => 'test product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
+    products = Product.full_text_search('test*')
     assert_equal 1, products[0]
     assert products[1].include?(product)
   end

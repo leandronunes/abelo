@@ -4,8 +4,18 @@ class StockController < ApplicationController
 
   before_filter :create_tabs
 
+  def autocomplete_name
+    escaped_string = Regexp.escape(params[:product][:name])
+    re = Regexp.new(escaped_string, "i")
+    @product = Product.find(:all).select { |sa| sa.name.match re}
+    render :layout=>false
+  end
+
+
   def index
-    @product_pages, @products = paginate :products, :per_page => 10, :conditions => ["organization_id = ?", @organization.id ]
+    search_param = params[:product].nil? ? nil : params[:product][:name]
+    @products = search_param.blank? ? @organization.products : @organization.products.full_text_search(search_param)
+    @product_pages, @products = paginate @products
   end
 
   def history

@@ -1,5 +1,17 @@
 <%= title _('Stock control') %>
 
+<% form_tag({:action => 'index'}, {:class => 'search_itens'} ) do %>
+<%= text_field 'product', 'name', :class => 'filter_field'  %>
+<%= submit_tag('', { :class => 'button button_search', :title => _("Search product") }) %>
+<%= button('add', _("New product"), :new, :controller => 'product', :action => 'new') %>
+<% end %>
+
+<div class="auto_complete" id="stock_name_auto_complete"></div>
+<%= auto_complete_field :stock_name,  :url => {:action => 'autocomplete_name'}, :indicator => 'auto_list'%>
+<div id="auto_list" style="display:none;">
+</div>
+
+
 <ul class="info_list stock">
   <% @products.sort_by{|p| p.name}.map do |p| %>
 <%= display_list(

@@ -3,83 +3,63 @@ require File.dirname(__FILE__) + '/../test_helper'
 class DocumentTest < Test::Unit::TestCase
   fixtures :documents, :departments_documents, :document_sections, :organizations, :departments
 
-  def test_bli
-    assert true
+  def test_mandatory_field_organization
+    d = Document.new()
+    d.valid?
+    assert d.errors.invalid?(:organization_id)
+    d.organization = Organization.find(:first)
+    d.valid?
+    assert !d.errors.invalid?(:organization_id)
   end
 
-  def test_mandatory_fields
-    count = Document.count
-
-    cp = Document.new
-    assert !cp.save
-    cp.name = 'Proposal Test 2'
-    assert !cp.save
-    cp.is_template = false
-    assert !cp.save
-    cp.organization_id = 1
-    assert !cp.save
-    cp.departments.concat(Department.find(1))
-    assert cp.save
-
-    cp = Document.new
-    assert !cp.save
-    cp.name = 'Proposal Test 3'
-    assert !cp.save
-    cp.organization_id = 1
-    assert !cp.save
-    cp.is_template = true
-    assert !cp.save
-    cp.departments.concat(Department.find(1))
-    assert cp.save
-    
-    assert_equal count + 2, Document.count
+  def test_mandatory_field_name
+    d = Document.new()
+    d.valid?
+    assert d.errors.invalid?(:name)
+    d.name = "Another name"
+    d.valid?
+    assert !d.errors.invalid?(:name)
   end
 
-  def test_uniqueness_name
-    cp1 = Document.new
-    cp1.organization_id = 1
-    cp1.name = 'One Document'
-    cp1.is_template = true
-    cp1.departments.concat(Department.find(1))
-    assert cp1.save
-
-    cp2 = Document.new
-    cp2.organization_id = 1
-    cp2.name = 'One Document'
-    cp2.is_template = true
-    cp2.departments.concat(Department.find(1))
-    assert !cp2.save
+  def test_mandatory_field_document_model_if_is_not_a_model_itself
+    d = Document.new()
+    d.valid?
+    assert d.errors.invalid?(:document_model_id)
+    model = Document.new(:name => 'Anohter Document', :organization_id => 1, :is_model => true)
+    departments = Organization.find(1).departments
+    model.departments = departments
+    assert model.save
+    d.document_model = model
+    d.valid?
+    assert !d.errors.invalid?(:document_model_id)
   end
 
-  def test_create
-    count = Document.count
+  def test_the_presence_of_document_model_if_its_a_model_itself
+    model = Document.new(:name => 'Anohter Document', :organization_id => 1, :is_model => true)
+    departments = Organization.find(1).departments
+    model.departments = departments
+    assert model.save
 
-    cp = Document.new
-    cp.name = 'Another Document'
-    cp.organization_id = 1
-    cp.is_template = true
-    cp.departments.concat(Department.find(1))
-    assert cp.save
-
-    assert_equal count + 1, Document.count
+    d = Document.new(:name => 'Anohter Document Again', :organization_id => 1, :is_model => true)
+    departments = Organization.find(1).departments
+    d.departments = departments
+    d.document_model = model
+    assert !d.save
   end
 
-  def test_destroy
-    count = Document.count
-    cp = Document.find(1)
-    assert_not_nil cp
-    cp.destroy
-    assert_equal count - 1, Document.count
-    assert_raise(ActiveRecord::RecordNotFound) {
-      Document.find(1)
-    }
+  def test_uniqueness_of_name
+    d = Document.new(:name => 'Anohter Document', :organization_id => 1, :is_model => true)
+    departments = Organization.find(1).departments
+    d.departments = departments
+    assert d.save
 
-  end
+    d = Document.new(:name => 'Anohter Document', :organization_id => 1, :is_model => true)
+    departments = Organization.find(1).departments
+    d.departments = departments
+    d.valid?
+    assert d.errors.invalid?(:name)
+    assert !d.save
 
-  def test_fixtures_if_valid
-    Document.find(:all).each do |cp|
-      assert cp.valid?
-    end
   end
 
   def test_document_sections
@@ -93,13 +73,13 @@ class DocumentTest < Test::Unit::TestCase
   end
 
   def test_departments
-    cp = Document.find(1)
-    assert_equal 2, cp.departments.count
+    d = Document.find(1)
+    assert_equal 2, d.departments.count
   end
 
   def test_organization
-    cp = Document.find(1)
-    assert_equal cp.organization, Organization.find(1)
+    d = Document.find(1)
+    assert_equal d.organization, Organization.find(1)
   end
 
 end

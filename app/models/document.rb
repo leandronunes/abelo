@@ -2,8 +2,8 @@ class Document < ActiveRecord::Base
 
   validates_presence_of :organization_id
   validates_presence_of :name
-  validates_uniqueness_of :name, :scope => :organization_id
   validates_presence_of :document_model_id, :if => lambda {|dm|  not dm.is_model? }
+  validates_uniqueness_of :name, :scope => :organization_id
 
 
   acts_as_ferret
@@ -14,8 +14,7 @@ class Document < ActiveRecord::Base
   belongs_to :document_model, :class_name => 'Document', :foreign_key => 'document_model_id'
 
   def validate
-#TODO see if it's need validate is_model like this
-    self.errors.add('is_model', _('You have to choose an option to the template')) if self.is_model.nil?
+    self.errors.add(:document_model_id, _('You cannot have a document model in a model document')) if self.is_model? and not self.document_model.nil?
     self.errors.add( _('You have to choose almost an department to the document')) if  (not self.organization.nil?) and (not self.organization.departments.empty?) and (self.departments.empty?)
   end
 
@@ -24,6 +23,15 @@ class Document < ActiveRecord::Base
     options = default_options.merge options
     results = self.find_by_contents(q, options)
     return [results.size, results]
+  end
+
+  def dclone
+    d = self.clone 
+    d.name = self.name + " " + Document.count.to_s
+    d.is_model = false
+    d.departments = self.departments
+    d.document_model = self
+    d
   end
 
 end

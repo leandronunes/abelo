@@ -50,32 +50,30 @@ class DocumentsController < ApplicationController
   end
 
   def new
+    begin 
+      @document = Document.find(params[:document_model]).dclone
+      @document.save
+      redirect_to :action => 'edit', :id => @document.id, :document_model => @document.document_model.id
+    rescue
+      @document = Document.new
+    end
     @departments = @organization.departments
   end
 
-#TODO see if it's usefull
   def create
-    @departments = @organization.departments
     @document = Document.new(params[:document])  
     @document.organization = @organization
-    @sections = @document.document_sections
-    if params[:template]
-      template = Document.find(params[:template])
-      @sections = template.document_sections
-      @document.body = template.body
-    end
+    @document.is_model = true
+     
     if @document.save
       flash[:notice] = _('The document was successfully created.')
       redirect_to :action => 'edit', :id => @document.id
     else
-render :text => @document.errors.inspect
-#      @documents_templates = @organization.documents_model
-#      @documents = @organization.documents_not_model
-#      render :action => 'list'
+      @departments = @organization.departments
+      render :action => 'new'
     end
   end
 
-#TODO see if it's usefull
   def edit
     @document = @organization.documents.find(params[:id])
     @departments = @organization.departments
@@ -101,34 +99,12 @@ render :text => @document.errors.inspect
     redirect_to :action => 'list'
   end
 
-#TODO see if it's usefull
-  def new_from_template
-    @document = Document.find(params[:id]).clone
-    @document.name = ''
-    @document.departments.clear
-    @document.is_template = false
-    @document.body = Document.find(params[:id]).body
-    @departments = @organization.departments
-    @sections = @document.document_sections
-    render :action => 'new'
-  end
-
-#TODO see if it's usefull
-  def get_template
-    if params[:value] == '1'
-      @templates = @organization.documents_templates
-      render :partial => 'templates'
-    else
-      render :nothing => true
-    end
-  end
-
   def create_tabs
     t = add_tab do      
-      links_to :controller => 'documents', :action => 'list'
+      links_to :controller => 'documents'
       in_set 'first'
     end
-    t.highlights_off :organization_nickname => @organization.nickname, :controller => 'documents', :action => 'list', :document_model => /.*/
+    t.highlights_off :organization_nickname => @organization.nickname, :controller => 'documents', :action => /.*/, :document_model => /.*/
     t.named _("Models")
    
     @organization.documents_model.each do |d| 

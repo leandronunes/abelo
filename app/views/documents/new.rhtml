@@ -1,26 +1,14 @@
+<%= title('New Document Model') %>
+
 <%= error_messages_for "document" %>
+
 
 <% form_tag :action => 'create' do %>
   
-<label><%= _('Name') %></label>
-<%= text_field 'document', 'name' %>
+  <label><%= _('Name') %></label>
+  <%= text_field 'document', 'name' %>
     
-<label><%= _('Departments') %></label>
-<%= multiple_select('document', 'department_ids', @departments) %>
-  
-<label><%= _('create from a template?') %></label>
-<%= check_box_tag 'is_template' %>
-  
-<div id='templates'>
-  <%= render :partial => 'templates'%>
-</div>
-
-<%= submit_tag _('New') %>
-
+  <%= multiple_select('document', 'departments', @departments, _('Departments')) %>
+  <%= button 'back',_('Back'), :back,  :action => 'list', :document_model => params[:document_model] %>
+  <%= button 'save', _('Edit'), :save%>
 <% end %>
-
-<%= observe_field 'is_template',
-      :update => 'templates',
-      :url => {:action => 'get_template'},
-      :with => "'value=' + escape(value)"
-%>

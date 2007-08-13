@@ -1,10 +1,10 @@
 
 <%= title('%s') % @title %>
 
-<% form_tag ( { :action => 'list', :document_model => params[:document_model] }, { :class => 'search_itens' } ) do %>
+<% form_tag( { :action => 'list', :document_model => params[:document_model] }, { :class => 'search_itens' } ) do %>
   <%= text_field 'document', 'name', :class => 'filter_field' %>
-  <%= button ( 'lupa', _('Search'), :search, { :class => 'button button_search', :title => _('Search document') }) %>
-  <%= button ('add',_("New document"), :new, :action => 'new' ) %>
+  <%= button( 'lupa', _('Search'), :search, { :class => 'button button_search', :title => _('Search document') }) %>
+  <%= button('add',_("New document"), :new, :action => 'new', :document_model => params[:document_model] ) %>
 <% end %>
 
 <div class="auto_complete" id="document_name_auto_complete"></div>
@@ -17,9 +17,9 @@
 <%= display_list(
   [
     { :content => [
-      button ('view_small',_('Show'), :show, :action => 'show', :id => c.id, :document_model => params[:document_model]),
-      button ('edit_small', _('Edit'), :edit, :action => 'edit', :id => c.id, :document_model => params[:document_model]),
-      button ('del_small',_('Destroy'), :destroy, {:action => 'destroy', :id => c.id},
+      button('view_small',_('Show'), :show, :action => 'show', :id => c.id, :document_model => params[:document_model]),
+      button('edit_small', _('Edit'), :edit, :action => 'edit', :id => c.id, :document_model => params[:document_model]),
+      button('del_small',_('Destroy'), :destroy, {:action => 'destroy', :id => c.id},
                             :post => true,
                             :confirm => _('Are you sure?'))], :option => 'button' },
     { :content => c.name, :option => 'name'},

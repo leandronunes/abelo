@@ -25,7 +25,7 @@
           button('view_small', _('Show'), :show, :action => 'show', :id => s.id, :actor => @actor),
           button('edit_small', _('Edit'), :edit, :action => 'edit', :id => s.id, :actor => @actor),
           button('del_small',_('Destroy'), :destroy, {:action => 'destroy', :id => s.id, :actor => @actor},
-                                :post => true,
+                                :method => 'post',
                                 :confirm => _('Are you sure?'))], :option => 'button' },
       { :title => _('Name:'), :content => s.name, :option => 'name' },
       { :title => _('Function:'), :content => s.category.name, :option => 'function'},

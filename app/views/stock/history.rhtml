@@ -10,7 +10,7 @@
       e.supplier_id.nil? ? "": e.supplier.name,
       link_to(content_tag('span', _('Show')), {:action => 'show_entry', :id => e, :product_id => @product}, :class => 'tdshow'),
       link_to_remote(content_tag('span', _('Edit')), {:update => 'sidebar', :url => {:action => 'edit_entry', :id => e } }, :class => 'tdedit'),
-      link_to(content_tag('span', _('Destroy')), {:action => 'destroy', :id => e}, :confirm => _('Are you sure?'), :post => true , :class => 'tddestroy')
+      link_to(content_tag('span', _('Destroy')), {:action => 'destroy', :id => e}, :confirm => _('Are you sure?'), :method => 'post' , :class => 'tddestroy')
     ]},
   { 
     :html_title_options => [:class => 'none'], 

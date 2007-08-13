@@ -3,7 +3,6 @@ class SystemActor < ActiveRecord::Base
   #relationships 
   belongs_to :organization
   has_many :contacts 
-  belongs_to :supplier_category
 
   acts_as_ferret :fields => ['name', 'description']
 

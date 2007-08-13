@@ -41,7 +41,7 @@ class SystemActorsController < ApplicationController
                  @organization.send("#{@actor.pluralize}") :
                  @organization.send("#{@actor.pluralize}").full_text_search(search_param)
 
-    @system_actor_pages, @system_actors = paginate @system_actors
+    @system_actor_pages, @system_actors = paginate_by_collection @system_actors
   end
 
   def show

@@ -57,14 +57,14 @@ class CategoriesController < ApplicationController
   end
 
   def edit
-    @category = @organization.product_categories.find(params[:id])
+    @category = @organization.categories.find(params[:id])
   end
 
   def update
     @category = @organization.categories.find(params[:id])
     if @category.update_attributes(params[:category])
       flash[:notice] = _('Category was successfully updated.')
-      redirect_to :action => 'list', :category_type => @category.type.to_s.gsub(/Category/,'').downcase
+      redirect_to :action => 'list', :category_type => @category.class.to_s.gsub(/Category/,'').downcase
     else
       render :action => 'edit', :id => @category
     end
@@ -72,7 +72,7 @@ class CategoriesController < ApplicationController
 
   def destroy
     category = @organization.categories.find(params[:id])
-    category_type  = category.type.to_s.gsub(/Category/,'').downcase
+    category_type  = category.class.to_s.gsub(/Category/,'').downcase
     category.destroy
     redirect_to :action => 'list', :category_type => category_type
   end

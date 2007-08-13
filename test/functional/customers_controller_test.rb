@@ -1,60 +1,67 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'customers_controller'
+require 'system_actors_controller'
 
 # Re-raise errors caught by the controller.
-class CustomersController; def rescue_action(e) raise e end; end
+class SystemActorsController; def rescue_action(e) raise e end; end
 
 class CustomersControllerTest < Test::Unit::TestCase
 
-  fixtures :customers, :contacts, :contact_positions
-  under_organization :one
+  include TestingUnderOrganization
+
+  fixtures :organizations, :system_actors, :categories
 
   def setup
-    @controller = CustomersController.new
+    @controller = SystemActorsController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
+    @organization_nickname = 'one'
+    @organization = Organization.find_by_nickname 'one'
     login_as("quentin")
+    @system_actor = Customer.create!(:name => "Another Name to Test", :cpf => '874.923.844-24', :category_id => '20', :email => 'test@test.com', :organization_id => 1)
   end
 
-  def test_index
-    get :index
-    assert_response :success
-    assert_template 'list'
+  def test_system_actors_fixtures 
+    SystemActor.find(:all).each do |item|
+      assert item.valid?
+      assert item.category.valid?
+    end
   end
-
   def test_list
-    get :list
+    get :list, :actor => 'customer'
 
     assert_response :success
     assert_template 'list'
 
-    assert_not_nil assigns(:customers)
-  end
-
-  def test_show
-    get :show, :id => 1
-
-    assert_response :success
-    assert_template 'show'
-
-    assert_not_nil assigns(:customer)
-    assert assigns(:customer).valid?
+    assert_not_nil assigns(:system_actor_pages)
+    assert_not_nil assigns(:system_actors)
+    assert_kind_of Array, assigns(:system_actors)
+    assigns(:system_actors).each  do |s|
+      assert_kind_of Customer, s
+      assert s.valid?
+    end
   end
 
   def test_new
-    get :new
+    get :new, :actor => 'customer'
 
     assert_response :success
     assert_template 'new'
 
-    assert_not_nil assigns(:customer)
+    assert_not_nil assigns(:system_actor)
+    assert_not_nil assigns(:actor)
+    assert_kind_of Customer, assigns(:system_actor)
+    assert_equal @organization, assigns(:system_actor).organization
   end
 
   def test_create
     num_customers = Customer.count
 
-    post :create, :customer => {:name => 'Luluzinha', :email => 'teste@teste.com', :cnpj => '32284871000170', :organization_id => 1}
+    post :create, :actor => 'customer', :system_actor =>{:name=>"Some Name", :cpf => "403.786.765-63", :category_id => "20", :email => "test@mail.com"}
 
+
+    assert_not_nil assigns(:system_actor)
+    assert_not_nil assigns(:actor)
+    assert_kind_of Customer, assigns(:system_actor)
     assert_response :redirect
     assert_redirected_to :action => 'list'
 
@@ -62,87 +69,46 @@ class CustomersControllerTest < Test::Unit::TestCase
   end
 
   def test_edit
-    get :edit, :id => 1
+    get :edit, :id => @system_actor.id, :actor => 'customer'
 
     assert_response :success
     assert_template 'edit'
 
-    assert_not_nil assigns(:customer)
-    assert assigns(:customer).valid?
+    assert_not_nil assigns(:system_actor)
+    assert assigns(:system_actor).valid?
+    assert_kind_of Customer, assigns(:system_actor)
+    assert_not_nil assigns(:actor)
   end
 
   def test_update
-    post :update, :id => 1
+    post :update, :id => @system_actor.id, :actor => 'customer'
     assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_redirected_to :action => 'list', :actor => 'customer'
+    assert_not_nil assigns(:system_actor)
+    assert assigns(:system_actor).valid?
+    assert_kind_of Customer, assigns(:system_actor)
+    assert_not_nil assigns(:actor)
   end
 
   def test_destroy
-    assert_not_nil Customer.find(1)
+    assert_not_nil @system_actor
 
-    post :destroy, :id => 1
+    post :destroy, :id => @system_actor.id, :actor => 'customer'
     assert_response :redirect
     assert_redirected_to :action => 'list'
 
     assert_raise(ActiveRecord::RecordNotFound) {
-      Customer.find(1)
+      Customer.find(@system_actor.id)
     }
   end
 
-  def test_show_contact
-    get :show_contact, :id => 1
+   def test_reset
+     get :reset, :actor => 'customer'
+     assert_response :success
+     assert_template '_form'
+     assert_not_nil assigns(:system_actor)
+     assert_kind_of Customer, assigns(:system_actor)
+     assert_not_nil assigns(:actor)
+   end
 
-    assert_response :success
-    assert_template 'show_contact'
-
-    assert_not_nil assigns(:contact)
-    assert assigns(:contact).valid?
-  end
-
-  def test_new_contact
-    get :new_contact, :id => 1
-
-    assert_response :success
-    assert_template 'new_contact'
-
-    assert_not_nil assigns(:contact)
-  end
-
-  def test_create_contact
-    num_contacts = Contact.count
-
-    post :create_contact, :id => 1, :contact => { :name => 'Test', :position_id => 1 }
-    assert_response :redirect
-    assert_redirected_to :action => 'show', :id => 1
-
-    assert_equal num_contacts + 1, Contact.count
-  end
-
-  def test_edit_contact
-    get :edit_contact, :id => 1
-
-    assert_response :success
-    assert_template 'edit_contact'
-
-    assert_not_nil assigns(:contact)
-    assert assigns(:contact).valid?
-  end
-
-  def test_update_contact
-    post :update_contact, :id => 1
-    assert_response :redirect
-    assert_redirected_to :action => 'show', :id => 1
-  end
-
-  def test_destroy_contact
-    assert_not_nil Contact.find(1)
-
-    post :destroy_contact, :id => 1
-    assert_response :redirect
-    assert_redirected_to :action => 'show', :id => 1
-
-    assert_raise(ActiveRecord::RecordNotFound) {
-      Contact.find(1)
-    }
-  end
 end

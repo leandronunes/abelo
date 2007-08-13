@@ -8,7 +8,7 @@ class SuppliersControllerTest < Test::Unit::TestCase
 
   include TestingUnderOrganization
 
-  fixtures :organizations, :system_actors
+  fixtures :organizations, :system_actors, :categories
 
   def setup
     @controller = SystemActorsController.new
@@ -20,12 +20,12 @@ class SuppliersControllerTest < Test::Unit::TestCase
     @system_actor = Supplier.create!(:name => "Another Name to Test", :cpf => '874.923.844-24', :category_id => '20', :email => 'test@test.com', :organization_id => 1)
   end
 
-  def test_index
-    get :index
-    assert_response :success
-    assert_template 'list'
+  def test_system_actors_fixtures 
+    SystemActor.find(:all).each do |item|
+      assert item.valid?
+      assert item.category.valid?
+    end
   end
-
   def test_list
     get :list, :actor => 'supplier'
 
@@ -37,6 +37,7 @@ class SuppliersControllerTest < Test::Unit::TestCase
     assert_kind_of Array, assigns(:system_actors)
     assigns(:system_actors).each  do |s|
       assert_kind_of Supplier, s
+      assert s.valid?
     end
   end
 
@@ -105,6 +106,9 @@ class SuppliersControllerTest < Test::Unit::TestCase
      get :reset, :actor => 'supplier'
      assert_response :success
      assert_template '_form'
+     assert_not_nil assigns(:system_actor)
+     assert_kind_of Supplier, assigns(:system_actor)
+     assert_not_nil assigns(:actor)
    end
 
 end

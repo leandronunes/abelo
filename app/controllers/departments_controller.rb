@@ -52,7 +52,6 @@ class DepartmentsController < ApplicationController
     @department.organization = @organization
     if @department.save
       flash[:notice] = _('Department was successfully created.')
-      @departments = @organization.departments
       redirect_to :action => 'list'
     else
       render :action => 'new', :status => 409

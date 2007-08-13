@@ -69,6 +69,10 @@ class ApplicationController < ActionController::Base
    Paginator.new self, size, options[:per_page], (params[:page] || 1).to_i
   end
 
+  def paginate_collection(collection, options = {})
+     
+  end
+
   def flexible_template_owner
     load_organization unless params[:organization_nickname].nil?
 

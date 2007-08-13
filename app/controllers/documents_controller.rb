@@ -42,6 +42,8 @@ class DocumentsController < ApplicationController
                  @organization.documents.find_by_contents(search_param).select{|d| d.document_model == document_model}
     @document_pages = Paginator.new(self, @documents.size, items_per_page, page)
     @documents = @documents[offset..(offset + items_per_page - 1)]
+
+    paginate_collection(@documents, :per_page => 1 )
   end
 
   def show

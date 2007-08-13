@@ -2,12 +2,12 @@
 
 
 <div class='left_content'>
-<%= start_form_tag :action => 'update', :id => @document, :document_model => params[:document_model] %>
-<%= render :partial => 'form' %>
-<%= render :partial => 'budget' %>
-<%= button 'view', _('Show'), :show, :action => 'show', :id => @document, :document_model => params[:document_model] %>
-<%= button 'back',_('Back'), :back,  :action => 'list', :document_model => params[:document_model] %>
-<%= button 'save', _('Edit'), :save%>
+  <%= start_form_tag :action => 'update', :id => @document, :document_model => params[:document_model] %>
+  <%= render :partial => 'form' %>
+  <%= render :partial => 'budget' %>
+  <%= button 'view', _('Show'), :show, :action => 'show', :id => @document, :document_model => params[:document_model] %>
+  <%= button 'back',_('Back'), :back,  :action => 'list', :document_model => params[:document_model] %>
+  <%= button 'save', _('Edit'), :save%>
 <%= end_form_tag %>
 </div>
 

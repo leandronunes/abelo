@@ -23,20 +23,10 @@ class DepartmentsController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    if params[:query]
-      @query = params[:query]
-    else
-      @query = params[:department] ? params[:department][:name] : nil
-    end
-    if !@query.nil?
-      items_per_page = 10
-      offset = ((params[:page] || 1).to_i - 1) * items_per_page
-      @total, @departments = Department.full_text_search(@query)
-      @department_pages = pages_for(@total, :per_page => items_per_page)
-      @departments = @departments[offset..(offset + items_per_page - 1)]
-    else 
-      @department_pages, @departments = paginate :departments, :per_page => 10, :conditions => [ "organization_id = ?", @organization.id ]
-    end
+    search_param = params[:department].nil? ? nil : params[:department][:name]
+
+    @departments = search_param.blank? ? @organization.departments : @organization.departmants.find_by_contents(search_param)
+    @department_pages, @departments = paginate_by_collection @departments
   end
 
   def show
@@ -54,7 +44,7 @@ class DepartmentsController < ApplicationController
       flash[:notice] = _('Department was successfully created.')
       redirect_to :action => 'list'
     else
-      render :action => 'new', :status => 409
+      render :action => 'new'
     end
   end
 

@@ -65,11 +65,9 @@ class DepartmentsControllerTest < Test::Unit::TestCase
 
   # The organization id do not exist
   def test_create_wrong_params
-    invalid_organization_id = 1000
-    assert !(Organization.find_all.collect{|o| o.id}.include? invalid_organization_id)
     num_departments = Department.count
 
-    post :create, :department => {:name => 'Another Department', :organization_id => invalid_organization_id }
+    post :create, :department => {}
 
     assert_response :success
     assert_template  'new'

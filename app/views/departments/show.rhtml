@@ -1,8 +1,7 @@
-<% for column in Department.content_columns %>
-<p>
-  <b><%= column.human_name %>:</b> <%=h @department.send(column.name) %>
-</p>
-<% end %>
 
-<%= link_to _('Edit'), :action => 'edit', :id => @department %> |
-<%= link_to _('Back'), :action => 'list' %>
+<%= title @department.name %>
+
+<p> <b><%= _('Name') %>:</b> <%= @department.name %></p>
+
+<%= button('back', _('Back'), :list, :action => 'list' ) %>
+<%= button('edit', _('Edit'), :list, :action => 'edit', :id => @department) %> 

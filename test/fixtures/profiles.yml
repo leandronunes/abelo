@@ -20,6 +20,8 @@ organization_admin:
     :action: '*'
   - :controller: 'ledgers'
     :action: '*'
+  - :controller: 'ledger_categories'
+    :action: '*'
   - :controller: 'documents'
     :action: '*'
   - :controller: 'departments'

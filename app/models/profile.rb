@@ -46,10 +46,32 @@ class Profile < ActiveRecord::Base
     ],
     'sales_person' => [
       { :controller => 'point_of_sale', :action => '*' }
+    ],
+    'financial' => [
+      { :controller => 'ledgers', :action => '*' },
+      { :controller => 'ledger_categories', :action => '*' },
+    ],
+    'administration' => [
+      { :controller => 'organizations', :action => '*' },
+      { :controller => 'admin_configurations', :action => '*' },
+      { :controller => 'banks', :action => '*' },
+    ],
+    'organization_management' => [
+      { :controller => 'categories', :action => '*' },
+      { :controller => 'stock', :action => '*' },
+      { :controller => 'store', :action => '*' },
+      { :controller => 'permissions', :action => '*' },
+      { :controller => 'system_actors', :action => '*' },
+      { :controller => 'point_of_sale', :action => '*' },
+      { :controller => 'mass_mails', :action => '*' },
+      { :controller => 'ledgers', :action => '*' },
+      { :controller => 'ledger_categories', :action => '*' },
+      { :controller => 'documents', :action => '*' },
+      { :controller => 'departments', :action => '*' },
     ]
   }
 
-  # detects the template used for thisr Profile, if any. Returns 'other'
+  # detects the template used for this Profile, if any. Returns 'other'
   # if no template matches
   def template
     templates = TEMPLATES.select do |key, value|
@@ -77,6 +99,9 @@ class Profile < ActiveRecord::Base
       'full_access' => _('Full access'),
       'read_only' => _('Read-only'), 
       'sales_person' => _('Sales person'), 
+      'financial' => _('Financial'), 
+      'organization_management' => _('Organization Management'), 
+      'administration' => _('Administration'), 
       'other' => _('Other')
     }[template]
   end

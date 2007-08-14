@@ -1,7 +1,11 @@
 class OrganizationsController < ApplicationController
 
-  skip_before_filter :check_access_control
-  before_filter :check_admin_rights
+  needs_administrator
+
+  skip_before_filter :check_admin_rights, :only => :none_organization
+
+  def none_organization
+  end
 
   def index
     list

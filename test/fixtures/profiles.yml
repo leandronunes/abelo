@@ -1,10 +1,28 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-first:
+organization_admin:
   id: 1
   user_id: 1
   organization_id: 1
   permissions:
-  - :controller: '*'
+  - :controller: 'categories'
+    :action: '*'
+  - :controller: 'stock'
+    :action: '*'
+  - :controller: 'store'
+    :action: '*'
+  - :controller: 'permissions'
+    :action: '*'
+  - :controller: 'system_actors'
+    :action: '*'
+  - :controller: 'point_of_sale'
+    :action: '*'
+  - :controller: 'mass_mails'
+    :action: '*'
+  - :controller: 'ledgers'
+    :action: '*'
+  - :controller: 'documents'
+    :action: '*'
+  - :controller: 'departments'
     :action: '*'
 another:
   id: 2
@@ -30,4 +48,14 @@ for_sales_person:
   organization_id: 1
   permissions:
   - :controller: 'point_of_sale'
+    :action: '*'
+admin_profile:
+  id: 5
+  user_id: 6
+  permissions:
+  - :controller: 'organizations'
+    :action: '*'
+  - :controller: 'admin_configurations'
+    :action: '*'
+  - :controller: 'banks'
     :action: '*'

@@ -252,6 +252,9 @@ module ApplicationHelper
       'ledgers'                             => _('Financial'),
       'documents'                           => _('Documents'),
       'departments'                         => _('Departments'),
+      'admin_configurations'                => _('Configurations'),
+      'organizations'                       => _('Organizations'),
+      'banks'                               => _('Banks'),
     }
     x = 0
    content_tag(

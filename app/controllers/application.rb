@@ -77,7 +77,6 @@ class ApplicationController < ActionController::Base
 
   end
 
-
   ####################################
   #Tabs definitions
   ####################################
@@ -239,6 +238,18 @@ class ApplicationController < ActionController::Base
   before_filter :i18n_settings
   def i18n_settings
     headers['Content-Type'] = 'text/html; charset=utf-8'
+  end
+
+  def self.needs_administrator
+    skip_before_filter :check_access_control
+    before_filter :check_admin_rights
+    layout 'administration'
+
+    design :fixed => {
+       :template => 'default',
+       :theme => 'default',
+       :icon_theme => 'default'
+     }
   end
 
   def self.needs_organization

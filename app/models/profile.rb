@@ -6,7 +6,7 @@ class Profile < ActiveRecord::Base
   belongs_to :organization
   belongs_to :user
 
-  validates_presence_of :organization_id, :user_id
+  validates_presence_of :user_id
 
 
   serialize :permissions, Array
@@ -24,7 +24,7 @@ class Profile < ActiveRecord::Base
   #   profile.allows(:controller => 'main', :action => 'index')   => true
   #   profile.allows(:controller => 'main', :action => 'edit')    => false
   def allows?(location)
-    return false unless location[:organization_nickname] = self.organization.nickname
+    return false unless  self.organization.nil? or (location[:organization_nickname] = self.organization.nickname)
     test = location.reject { |key,value| key == :organization_nickname }
     self.permissions.any? do |permission|
       test.all? do |key,value|

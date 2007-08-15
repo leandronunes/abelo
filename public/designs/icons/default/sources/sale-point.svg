@@ -623,15 +623,15 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="10.208333"
-     inkscape:cx="20.363692"
-     inkscape:cy="24.194887"
+     inkscape:zoom="9.7083333"
+     inkscape:cx="24"
+     inkscape:cy="24"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
-     inkscape:window-width="1024"
-     inkscape:window-height="704"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:window-width="749"
+     inkscape:window-height="670"
+     inkscape:window-x="112"
+     inkscape:window-y="29"
      width="48px"
      height="48px"
      gridtolerance="3">
@@ -654,6 +654,9 @@
             <dc:title>Aurélio A. Heckert</dc:title>
           </cc:Agent>
         </dc:creator>
+        <dc:title>Ponto de Venda</dc:title>
+        <cc:license
+           rdf:resource="http://www.gnu.org/licenses/gpl-3.0.html" />
       </cc:Work>
     </rdf:RDF>
   </metadata>

@@ -61,3 +61,12 @@
 .stock .list_item_name {
   display: block;
 }
+
+.history .list_item_date {
+  display: block;
+}
+
+.history .list_item_supplier {
+  display: block;
+}
+

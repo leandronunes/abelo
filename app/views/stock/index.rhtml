@@ -3,20 +3,22 @@
 <% form_tag({:action => 'index'}, {:class => 'search_itens'} ) do %>
 <%= text_field 'product', 'name', :class => 'filter_field'  %>
 <%= submit_tag('', { :class => 'button button_search', :title => _("Search product") }) %>
-<%= button('add', _("New product"), :new, :controller => 'product', :action => 'new') %>
+<%= button('add', _("New product"), :new, {:controller => 'products', :action => 'new'}) %>
 <% end %>
 
-<div class="auto_complete" id="stock_name_auto_complete"></div>
-<%= auto_complete_field :stock_name,  :url => {:action => 'autocomplete_name'}, :indicator => 'auto_list'%>
+<div class="auto_complete" id="product_name_auto_complete"></div>
+<%= auto_complete_field :product_name,  :url => {:controller => 'products', :action => 'autocomplete_name'}, :indicator => 'auto_list'%>
 <div id="auto_list" style="display:none;">
 </div>
 
 
 <ul class="info_list stock">
-  <% @products.sort_by{|p| p.name}.map do |p| %>
+  <% @products.sort_by{|prod| prod.name}.map do |p| %>
 <%= display_list(
       [
-        { :content => button('new_entry', _('New entry'), :new_entry, :action => 'new_entry', :id => p.id), :option => 'button'},
+        { :content => [
+          button('new_entry', _('New entry'), :new_entry, :action => 'new_entry', :id => p.id),
+          button('history', _('History'), :history, :action => 'history', :id => p.id)], :option => 'button'},
         { :content => p.images.map{|i| show_image i}[0], :option => 'img'},
         { :content => p.name, :option => 'name'},
         { :title => _('Ammount: '), :content => p.ammount_in_stock, :option => 'number'},
@@ -26,3 +28,5 @@
   %>
 <% end %>
 </ul>
+
+<%= pagination_links(@product_pages) %>

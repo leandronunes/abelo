@@ -1,0 +1,10 @@
+<%= title _('Edit stock entry for %s') % @product.description %>
+<%= error_messages_for :entry %>
+<%= form_tag :action => 'update_entry', :id => @product %>
+<%= render :partial => 'form'%>
+<div class='button_bar'>
+<%= button 'save', '', :save %>
+<%= button 'cancel', '', :cancel, :action => 'history', :id => @product %>
+</div>
+
+<%= end_form_tag %>

@@ -8,21 +8,12 @@ class StockController < ApplicationController
   verify :method => :post, :only => [ :destroy, :create, :update ],
          :redirect_to => { :action => :list }
 
-
-  def autocomplete_name
-    escaped_string = Regexp.escape(params[:product][:name])
-    re = Regexp.new(escaped_string, "i")
-    @product = Product.find(:all).select { |sa| sa.name.match re}
-    render :layout=>false
-  end
-
-
   def index
     search_param = params[:product].nil? ? nil : params[:product][:name]
-    @products = search_param.blank? ? @organization.products : @organization.products.full_text_search(search_param)
+    @products = search_param.blank? ? @organization.products : @organization.products.find_by_contents(search_param)
     @product_pages, @products = paginate_by_collection @products
   end
-
+  
   def history
     @product = @organization.products.find(params[:id])
     @entries = @product.stock_entries
@@ -50,12 +41,6 @@ class StockController < ApplicationController
     @entry = StockIn.new(params[:entry])
     @entry.product = @product
     if @entry.save
-      
-      # Create a new item in cash flow
-      cf = CashFlow.new
-      cf.add_stock_entry(@entry.id)
-      # end of creation
-      
       flash[:notice] = 'Stock entry was successfully created and was added to cash flow too.'
       redirect_to :action => 'history', :id => @product
     else
@@ -63,10 +48,9 @@ class StockController < ApplicationController
     end
   end
   
-  def edit_entry
+  def edit
     @product = @organization.products.find(params[:product_id])
     @entry = StockEntry.find(params[:id])
-    render :partial => 'edit'
   end
 
   def update_entry
@@ -79,13 +63,19 @@ class StockController < ApplicationController
     end
   end
 
+  def destroy
+    @entry = StockEntry.find(params[:id])
+    @entry.destroy
+    redirect_to :action => 'history', :id => params[:product_id]
+  end
+
   def create_tabs
-    add_tab do
-      named 'Stock Control'
+    t = add_tab do
       links_to :controller => 'stock'
       in_set 'first'
       highlights_on :controller => 'stock'
     end
+    t.named _('Stock control')
   end
 
 end

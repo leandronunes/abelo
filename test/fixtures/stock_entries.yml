@@ -1,28 +1,10 @@
-# == Schema Information
-# Schema version: 35
-#
-# Table name: stock_entries
-#
-#  id             :integer       not null, primary key
-#  type           :string(255)   not null
-#  product_id     :integer       not null
-#  ammount        :float         not null
-#  purpose        :string(255)   not null
-#  date           :date          not null
-#  supplier_id    :integer       
-#  price          :float         
-#  validity       :date          
-#  payment_status :boolean       
-#  sell_id        :integer       
-#
-
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 in1:
   id: 1
   type: 'StockIn'
   product_id: 1
   ammount: 5
-  supplier_id: 1
+  supplier_id: 3
   purpose: 'sell'
   price: 1.99
   date: '2006-01-01'
@@ -32,7 +14,7 @@ in2:
   type: 'StockIn'
   product_id: 1
   ammount: 10
-  supplier_id: 1
+  supplier_id: 3
   purpose: 'sell'
   price: 2.05
   date: '2006-02-01'

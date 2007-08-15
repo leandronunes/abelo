@@ -1,19 +1,18 @@
 <%= title _('Stock history for %s') % @product.name %>
 
-<%= display_table(
-  [ _('Date'), _('Ammount'), _('Price'), _('Supplier')],
-  @entries.map{|e| 
-    [
-      show_date(e.date),
-      e.ammount,
-      e.price,
-      e.supplier_id.nil? ? "": e.supplier.name,
-      link_to(content_tag('span', _('Show')), {:action => 'show_entry', :id => e, :product_id => @product}, :class => 'tdshow'),
-      link_to_remote(content_tag('span', _('Edit')), {:update => 'sidebar', :url => {:action => 'edit_entry', :id => e } }, :class => 'tdedit'),
-      link_to(content_tag('span', _('Destroy')), {:action => 'destroy', :id => e}, :confirm => _('Are you sure?'), :method => 'post' , :class => 'tddestroy')
-    ]},
-  { 
-    :html_title_options => [:class => 'none'], 
-    :html_content_options =>  [{:class => 'date'},{:class => 'number'},{:class => 'value'},{:class => 'date endcol'},{:class => 'option'},{:class => 'option'},{:class => 'option'}] 
-  }
-  ) %>
+<ul class="info_list history">
+<% @entries.sort_by{|entry| entry.date}.map do |e| %>
+<%= display_list(
+  [
+    {:content => [
+      button('edit_small', _('Edit'), :edit, :action => 'edit', :id => e, :product_id => @product.id),
+      button('del_small', _('Destroy'), :destroy, {:action => 'destroy', :id => e, :product_id => @product.id}, :confirm => _('Are you sure?'), :post => true )], :option => 'button'},
+    {:title => _('Date:'), :content => show_date(e.date), :option => 'date'},
+    {:title => _('Ammount:'), :content => e.ammount},
+    {:title => _('Price:'), :content => e.price},
+    if e.class == StockIn then e.supplier.nil? ? "":  {:title => _('Supplier:'), :content => e.supplier.name, :option => 'supplier'} end,
+    '<br style="clear:both"/>'
+  ]  
+)%>
+<% end %>
+</ul>

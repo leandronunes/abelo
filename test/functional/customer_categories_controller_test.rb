@@ -1,17 +1,17 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'customer_categories_controller'
+require 'categories_controller'
 
 # Re-raise errors caught by the controller.
-class CustomerCategoriesController; def rescue_action(e) raise e end; end
+class CategoriesController; def rescue_action(e) raise e end; end
 
 class CustomerCategoriesControllerTest < Test::Unit::TestCase
   
   include TestingUnderOrganization
   
-  fixtures :customer_categories, :organizations
+  fixtures :categories, :organizations
 
   def setup
-    @controller = CustomerCategoriesController.new
+    @controller = CategoriesController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     @organization_nickname = 'one'
@@ -19,34 +19,32 @@ class CustomerCategoriesControllerTest < Test::Unit::TestCase
     login_as("quentin")
   end
 
-  def test_index
-    get :index
-    assert_response :success
-    assert_template 'list'
-  end
-
   def test_list
-    get :list
+    get :list, :category_type => 'customer'
 
     assert_response :success
     assert_template 'list'
 
-    assert_not_nil assigns(:customer_categories)
+    assert_not_nil assigns(:categories)
+    assigns(:categories).each do |category|
+      assert_kind_of CustomerCategory, category
+    end
+    assert_not_nil assigns(:category_type)
   end
 
   def test_new
-    get :new
+    get :new, :category_type => 'customer'
 
     assert_response :success
     assert_template 'new'
 
-    assert_not_nil assigns(:customer_category)
+    assert_not_nil assigns(:category)
   end
 
   def test_create_top_level
     num_customer_categories = @organization.customer_categories.count
 
-    post :create, :customer_category => { :name => 'Top level test category' }
+    post :create, :category_type => 'customer', :category => { :name => 'Top level test category' }
 
     assert_response :redirect
     assert_redirected_to :action => 'list'
@@ -57,7 +55,7 @@ class CustomerCategoriesControllerTest < Test::Unit::TestCase
   def test_create_child
     num_customer_categories = @organization.customer_categories.count
 
-    post :create, :customer_category => { :name => 'Top level test category', :parent_id => 1 }
+    post :create, :category => { :name => 'Top level test category', :parent_id => 1 }, :category_type => 'customer'
 
     assert_response :redirect
     assert_redirected_to :action => 'list'
@@ -66,13 +64,15 @@ class CustomerCategoriesControllerTest < Test::Unit::TestCase
   end
 
   def test_edit
-    get :edit, :id => 1
+    customer = @organization.customer_categories.find(:first)
+    get :edit, :id => customer.id, :category_type => 'customer'
 
     assert_response :success
     assert_template 'edit'
 
-    assert_not_nil assigns(:customer_category)
-    assert assigns(:customer_category).valid?
+    assert_not_nil assigns(:category)
+    assert_kind_of CustomerCategory, assigns(:category)
+    assert assigns(:category).valid?
   end
 
   def test_update
@@ -82,9 +82,10 @@ class CustomerCategoriesControllerTest < Test::Unit::TestCase
   end
 
   def test_destroy
-    assert_not_nil @organization.customer_categories.find(1)
+    customer_destroy = @organization.customer_categories.find(:first)
+    assert_not_nil customer_destroy
 
-    post :destroy, :id => 1
+    post :destroy, :id => customer_destroy.id
     assert_response :redirect
     assert_redirected_to :action => 'list'
 

@@ -32,6 +32,9 @@ class ProductCategoriesControllerTest < Test::Unit::TestCase
     assert_template 'list'
 
     assert_not_nil assigns(:categories)
+    assigns(:categories).each do |category|
+      assert_kind_of ProductCategory, category
+    end
     assert_not_nil assigns(:category_type)
   end
 
@@ -73,6 +76,7 @@ class ProductCategoriesControllerTest < Test::Unit::TestCase
     assert_template 'edit'
 
     assert_not_nil assigns(:category)
+    assert_kind_of ProductCategory, assigns(:category)
     assert assigns(:category).valid?
   end
 
@@ -83,9 +87,10 @@ class ProductCategoriesControllerTest < Test::Unit::TestCase
   end
 
   def test_destroy
-    assert_not_nil @organization.product_categories.find(1)
+    category_destroy = @organization.product_categories.find(:first)
+    assert_not_nil category_destroy
 
-    post :destroy, :id => 1
+    post :destroy, :id => category_destroy.id
     assert_response :redirect
     assert_redirected_to :action => 'list'
 

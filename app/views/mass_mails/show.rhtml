@@ -1,7 +1,7 @@
 <h2><%= @mass_mail.subject %></h2>
 
 <% for @attachment in @mass_mail.attachments %>  
-  <%=  link_to File.basename(@attachment.file) , url_for_file_column ('attachment', 'file') %></td>
+  <%=  link_to File.basename(@attachment.file) , url_for_file_column('attachment', 'file') %></td>
 <% end %>
 <p>
 <label><%= _('Body:') %></label>

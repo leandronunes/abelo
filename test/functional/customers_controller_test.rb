@@ -17,7 +17,8 @@ class CustomersControllerTest < Test::Unit::TestCase
     @organization_nickname = 'one'
     @organization = Organization.find_by_nickname 'one'
     login_as("quentin")
-    @system_actor = Customer.create!(:name => "Another Name to Test", :cpf => '874.923.844-24', :category_id => '20', :email => 'test@test.com', :organization_id => 1)
+    @system_actor = Customer.create!(:name => "Another Name to Test", :cpf => '874.923.844-24', 
+                   :category => CustomerCategory.find(:first), :email => 'test@test.com', :organization_id => 1)
   end
 
   def test_system_actors_fixtures 

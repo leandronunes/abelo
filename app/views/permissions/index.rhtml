@@ -6,8 +6,8 @@
     [
       { :content => profile.user.login, :option => 'name'},
       { :title => _('Profile type'), :content => profile.description, :option => 'profile_type'},
-      { :content => button (_('Select template'), :edit, :action => 'select_template', :id => profile.id), :option => 'button' },
-      { :content => button (_('Destroy'), :destroy, {:action => 'destroy', :id => profile.id}, :method => 'post', :confirm => _('Are you sure you want to remove this userprofile ? He(she) will not be able to access the system anymore, unless he(she) has another profile.') ), :option => 'button' } 
+      { :content => button(_('Select template'), :edit, :action => 'select_template', :id => profile.id), :option => 'button' },
+      { :content => button(_('Destroy'), :destroy, {:action => 'destroy', :id => profile.id}, :method => 'post', :confirm => _('Are you sure you want to remove this userprofile ? He(she) will not be able to access the system anymore, unless he(she) has another profile.') ), :option => 'button' } 
     ]
   )
   %>

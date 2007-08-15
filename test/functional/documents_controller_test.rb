@@ -134,7 +134,7 @@ class DocumentsControllerTest < Test::Unit::TestCase
       assert_valid d
     end
     cp = Document.find(1)
-    cp.add_departments(Department.find(1))
+    cp.departments.concat(Department.find(1))
     assert_valid assigns(:document)
   end
 
@@ -150,6 +150,7 @@ class DocumentsControllerTest < Test::Unit::TestCase
     cp = Document.new
     cp.name = "Any Name"
     cp.organization_id=2
+    cp.is_model = true
     assert cp.save
     assert_equal count + 1, Document.count
     post :update, :id => cp.id, :document => {:organization_id => 1}

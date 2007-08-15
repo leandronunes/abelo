@@ -10,6 +10,8 @@ class MassMailsControllerTest < Test::Unit::TestCase
 
   fixtures :mass_mails, :organizations, :products
 
+  under_organization :one
+
   def setup
     @controller = MassMailsController.new
     @request    = ActionController::TestRequest.new

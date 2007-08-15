@@ -20,7 +20,7 @@
       button ( 'view_small', _('Show'), :show, :action => 'show', :id => d.id),
       button ( 'edit_small', _('Edit'), :edit, :action => 'edit', :id => d.id),
       button ( 'del_small', _('Destroy'), :destroy, {:action => 'destroy', :id => d.id},
-                            :post => true,
+                            :method => 'post',
                             :confirm => _('Are you sure?'))], :option => 'button' },
     { :content => d.name, :option => 'name'}, 
       '<br style="clear:both"/>'

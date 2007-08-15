@@ -13,7 +13,7 @@
     <td><%=h contact_position.send(column.name) %></td>
   <% end %>
     <td><%= button _('Edit'), :edit, :action => 'edit', :id => contact_position %></td>
-    <td><%= button _('Destroy'), :remove, { :action => 'destroy', :id => contact_position }, :confirm => _('Are you sure?'), :post => true %></td>
+    <td><%= button _('Destroy'), :remove, { :action => 'destroy', :id => contact_position }, :confirm => _('Are you sure?'), :method => 'post' %></td>
   </tr>
 <% end %>
 </table>

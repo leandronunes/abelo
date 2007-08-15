@@ -8,7 +8,7 @@
           button ('view_small', _('Show'), :show, :action => 'show', :id => m.id),
           button ('edit_small',_('Edit'), :edit, :action => 'edit', :id => m.id),
           button ('del_small',_('Destroy'), :destroy, {:action => 'destroy', :id => m.id},
-                                :post => true,
+                                :method => 'post',
                                 :confirm => _('Are you sure?'))], :option => 'button' },
       {:content => m.subject, :option => 'subject'},
       '<br style="clear:both"/>'

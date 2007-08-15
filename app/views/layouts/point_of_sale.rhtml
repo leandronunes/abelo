@@ -21,7 +21,7 @@
     <div class="login_bar">
       <%= link_to _('Edit preferences'), {}, :accesskey => 'e', :id => 'edit_profile' %>
       &nbsp;
-      <%= link_to _('Close'), {:controller => 'users', :action => 'logout'}, :accesskey => "q", :id => 'logout', :post => true, :confirm => _('Exit from system?') %>
+      <%= link_to _('Close'), {:controller => 'users', :action => 'logout'}, :accesskey => "q", :id => 'logout', :method => 'post', :confirm => _('Exit from system?') %>
     </div> <!-- login_bar -->
 
     <%= link_to_organization @organization %> | <%= _('Salesman: %s') % self.current_user.login %>

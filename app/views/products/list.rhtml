@@ -21,7 +21,7 @@
           button ('view_small', _('Show'), :show, :action => 'show', :id => p.id),
           button ('edit_small',_('Edit'), :edit, :action => 'edit', :id => p.id),
           button ('del_small', _('Destroy'), :destroy, {:action => 'destroy', :id => p.id},
-                                :post => true,
+                                :method => 'post',
                                 :confirm => _('Are you sure?'))], :option => 'button' },
       { :content => p.images.map{|i| show_image i}[0], :option => 'img' }, 
       { :title => _('Code:'), :content => p.id, :option => 'code' },

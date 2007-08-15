@@ -3,7 +3,7 @@
   <% for item in items %>
     <li><%= item.description %>
     <%= link_to_remote _('Edit'), :url => {:controller => 'document_items', :action => 'edit', :id => item.id, :document_id => @document.id }, :update => 'new_component' %>
-    <%= link_to_remote _('Remove'), :url => {:controller => 'document_items', :action => 'destroy', :id => item.id, :document_id => @document.id }, :update => 'proposal_sections', :confirm => _('Are you sure'), :post => true %></li>
+    <%= link_to_remote _('Remove'), :url => {:controller => 'document_items', :action => 'destroy', :id => item.id, :document_id => @document.id }, :update => 'proposal_sections', :confirm => _('Are you sure'), :method => 'post' %></li>
   <% end %>
   </ul>
 </div>

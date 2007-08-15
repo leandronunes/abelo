@@ -2,7 +2,7 @@
     <td><%= '&nbsp;&nbsp;' * customer_category.level  %><%=  customer_category.name %></td>
     <td><%= button _('New subcategory'), :add, :action => 'new', :parent_id => customer_category %></td>
     <td><%= button _('Edit'), :edit, :action => 'edit', :id => customer_category %></td>
-    <td><%= button _('Destroy'), :remove, { :action => 'destroy', :id => customer_category }, :confirm => _('Are you sure?'), :post => true %></td>
+    <td><%= button _('Destroy'), :remove, { :action => 'destroy', :id => customer_category }, :confirm => _('Are you sure?'), :method => 'post' %></td>
   </tr>
   <% for child in customer_category.children %>
     <%= render :partial => 'list', :locals => { :customer_category => child } %>

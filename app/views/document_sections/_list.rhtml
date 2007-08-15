@@ -7,7 +7,7 @@
     <strong><%= _('Section') %>:</strong>
     <%= in_place_editor_field 'section', 'name', {}, {:external_control => "edit_name", :url => {:controller => 'document_sections', :action => 'set_name', :id => @section.id } } %>
 
-    <%= link_to_remote _('Remove'), :url => {:controller => 'document_sections', :action => 'destroy', :id => @section.id, :document_id => @document.id }, :update => 'proposal_sections', :confirm => _('Are you sure'), :post => true %></p>
+    <%= link_to_remote _('Remove'), :url => {:controller => 'document_sections', :action => 'destroy', :id => @section.id, :document_id => @document.id }, :update => 'proposal_sections', :confirm => _('Are you sure'), :method => 'post' %></p>
 
     <%= link_to_remote 'New item', :url => {:controller => 'document_items', :action => 'new', :id => @section.id, :document_id => @document.id }, :update => 'new_component' %>
 

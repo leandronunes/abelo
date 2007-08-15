@@ -14,7 +14,7 @@
     <td><%= org.cnpj %></td>
     <td>
       <%= button _('Edit'), :edit, { :action => 'edit', :id => org } %>
-      <%= button _('Remove'), :remove , { :action => 'destroy', :id => org }, { :post => true, :confirm => _('Are you sure?') } %>
+      <%= button _('Remove'), :remove , { :action => 'destroy', :id => org }, { :method => 'post', :confirm => _('Are you sure?') } %>
     </td>
   </tr>
 <% end %>

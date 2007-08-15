@@ -358,24 +358,8 @@ module ApplicationHelper
     str  += "</div>"
   end
 
-  def display_list(content, html_options = {})
-    content_tag(
-      'li', 
-      content.map{ |c|
-        if c.class == Hash 
-          content_tag(
-            'div',
-            content_tag('strong', c[:title]) + 
-            " " +
-            content_tag('span', c[:content]),
-            :class => "list_item_#{c[:option]}"
-          )
-        else
-          c
-        end
-      }.join("\n"),
-      :class => html_options[:li_options])
-  end
+
+
 
   def display_table(titles, content, html_options = {}, caption = nil)
 
@@ -465,5 +449,66 @@ module ApplicationHelper
   def subtitle(subtitle)
     content_tag('h2', subtitle)
   end
+
+  def display_list(content, html_options = {})
+    content_tag(
+      'li', 
+      content.map{ |c|
+        if c.class == Hash 
+          content_tag(
+            'div',
+            content_tag('strong', c[:title]) + 
+            " " +
+            content_tag('span', c[:content]),
+            :class => "list_item_#{c[:option]}"
+          )
+        else
+          c
+        end
+      }.join("\n"),
+      :class => html_options[:li_options])
+  end
+
+  def display_collection(collection = Array.new, html_options = {}, &block)
+    content = capture(&block)
+
+    bli = collection.each do |item|
+
+      content
+    end
+
+    text = content_tag('div',bli , :class => 'help_box')
+
+    unless block.nil?
+      concat(text, block.binding)
+    end
+    text
+
+  end
+
+  def help(content = nil, type = :html, &block)
+
+    if content.nil?
+      return '' if block.nil?
+      content = capture(&block)
+    end
+
+    if type == :textile
+      content = RedCloth.new(content).to_html
+    end
+
+    # TODO: implement this button, and add style='display: none' to the help
+    # message DIV
+    button = link_to_function(_('Help'), "alert('change me, Leandro!')")
+
+    text = content_tag('div', button + content_tag('div', content, :class => 'help_message', :style => 'display: none;'), :class => 'help_box')
+
+    unless block.nil?
+      concat(text, block.binding)
+    end
+
+    text
+  end
+
 
 end

@@ -1,4 +1,10 @@
-<h1>Listing banks</h1>
+<%= title _('List of banks') %>
+
+viuxe
+<% display_collection(@banks, {:class_li => 'bank_li', :class_ul => 'info_list products'}) do |item |%>
+<strong><%= item.name %> </strong>
+<% end %>
+oxe
 
 <table>
   <tr>

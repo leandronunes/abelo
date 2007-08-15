@@ -10,12 +10,11 @@
     <div id="search_product"><%= link_to content_tag('span', 'Search product'), {}, :class => "button button_search", :accesskey => "p" %>
     </div>
     
-    <%= form_remote_tag :url => { :controller => 'point_of_sale', :action => 'add_item', :id => @sale },
+    <% form_remote_tag :url => { :controller => 'point_of_sale', :action => 'add_item', :id => @sale },
            :update => { :success => 'items_table' },  
            :success => 'document.forms["add_item_form"].reset(); document.forms["add_item_form"].elements[0].focus()',
            :failure => ("alert('%s' + \"\\n\\n\"  + request.responseText);" % _('An error occurred when adding the item to this sale:')),
-           :html => { :name => 'add_item_form' }
-    %>
+           :html => { :name => 'add_item_form' }   do %>
     
     <%= submit_tag '', :title => _('Add item'), :id => 'button_add_product', :accesskey => 'x' %>
 
@@ -36,7 +35,7 @@
           
 
 
-  <%= end_form_tag %>
+  <% end %>
   
   <div id="money_in">
     <div id="change_money">

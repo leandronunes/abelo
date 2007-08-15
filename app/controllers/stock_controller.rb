@@ -4,6 +4,11 @@ class StockController < ApplicationController
 
   before_filter :create_tabs
 
+  # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
+  verify :method => :post, :only => [ :destroy, :create, :update ],
+         :redirect_to => { :action => :list }
+
+
   def autocomplete_name
     escaped_string = Regexp.escape(params[:product][:name])
     re = Regexp.new(escaped_string, "i")

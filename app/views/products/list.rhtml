@@ -1,10 +1,10 @@
 
 <%= title _('Listing products') %>
 
-<% form_tag ( { :action => 'list' }, { :class => 'search_itens' } ) do %>
+<% form_tag( { :action => 'list' }, { :class => 'search_itens' } ) do %>
   <%= text_field 'product', 'name', :class => 'filter_field' %>
-  <%= submit_tag( '', { :class => 'button button_search', :title => _('Search product') }) %>
-  <%= button (_("New product"), :new, :action => 'new' ) %>
+  <%= button( 'lupa', _('Search'), :search,  { :class => 'button button_search', :title => _('Search product') }) %>
+  <%= button('add', _("New product"), :new, :action => 'new' ) %>
 <% end %>
 
 <div class="auto_complete" id="product_name_auto_complete"></div>
@@ -18,9 +18,9 @@
   display_list(
     [
       { :content => [
-          button ('view_small', _('Show'), :show, :action => 'show', :id => p.id),
-          button ('edit_small',_('Edit'), :edit, :action => 'edit', :id => p.id),
-          button ('del_small', _('Destroy'), :destroy, {:action => 'destroy', :id => p.id},
+          button('view_small', _('Show'), :show, :action => 'show', :id => p.id),
+          button('edit_small',_('Edit'), :edit, :action => 'edit', :id => p.id),
+          button('del_small', _('Destroy'), :destroy, {:action => 'destroy', :id => p.id},
                                 :method => 'post',
                                 :confirm => _('Are you sure?'))], :option => 'button' },
       { :content => p.images.map{|i| show_image i}[0], :option => 'img' }, 

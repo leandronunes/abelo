@@ -1,11 +1,11 @@
 <%= title _('Adding Organization') %>
 
-<%= start_form_tag :action => 'create' %>
+<% form_tag :action => 'create' do %>
   <%= render :partial => 'form' %>
 
   <div class='button_bar'>
     <%= button 'save',  _("Create"), :save %>
-    <%= button 'back', _('Back'), :cancel, :action => 'list' %>
+    <%= button 'back', _('Back'), :back, :action => 'list' %>
   </div>
-<%= end_form_tag %>
+<% end %>
 

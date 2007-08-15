@@ -1,10 +1,10 @@
-<h1>Editing organization</h1>
+<%= title _('Editing Organization %s') % @organization.name %>
 
-<%= start_form_tag :action => 'update', :id => @organization %>
+<% form_tag :action => 'update', :id => @organization  do %>
   <%= render :partial => 'form' %>
   <div class='button_bar'>
-    <%= button 'Save', :save %>
-    <%= button 'Back', :cancel, :action => 'list' %>
+    <%= button 'save', _('Save'), :save %>
+    <%= button 'back', _('Back'), :back, :action => 'list' %>
   </div>
-<%= end_form_tag %>
+<% end %>
 

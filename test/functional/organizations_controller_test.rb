@@ -7,12 +7,16 @@ class OrganizationsController; def rescue_action(e) raise e end; end
 class OrganizationsControllerTest < Test::Unit::TestCase
 
   fixtures :organizations
-  
+
+  under_organization :admin #TODO see the better way to do that. This are admin controllers
+ 
+
   def setup
     @controller = OrganizationsController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     login_as('admin')
+    
   end
 
   def test_only_admin_has_access

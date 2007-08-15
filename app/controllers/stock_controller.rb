@@ -15,7 +15,7 @@ class StockController < ApplicationController
   def index
     search_param = params[:product].nil? ? nil : params[:product][:name]
     @products = search_param.blank? ? @organization.products : @organization.products.full_text_search(search_param)
-    @product_pages, @products = paginate @products
+    @product_pages, @products = paginate_by_collection @products
   end
 
   def history

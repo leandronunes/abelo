@@ -75,6 +75,7 @@ class Profile < ActiveRecord::Base
       { :controller => 'documents', :action => '*' },
       { :controller => 'departments', :action => '*' },
       { :controller => 'main', :action => '*' },
+      { :controller => 'products', :action => '*' },
     ]
   }
 

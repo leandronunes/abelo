@@ -11,7 +11,7 @@ class CreatePeople < ActiveRecord::Migration
       # user's information
       ###############################################
       t.column :login,                     :string
-      t.column :administrator,             :boolean
+      t.column :administrator,             :boolean, :default => false, :null => false
       t.column :email,                     :string
       t.column :crypted_password,          :string, :limit => 40
       t.column :salt,                      :string, :limit => 40

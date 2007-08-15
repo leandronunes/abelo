@@ -26,6 +26,8 @@ organization_admin:
     :action: '*'
   - :controller: 'departments'
     :action: '*'
+  - :controller: 'main'
+    :action: '*'
 another:
   id: 2
   user_id: 2

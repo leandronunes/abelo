@@ -5,11 +5,17 @@ class ProfileTest < Test::Unit::TestCase
 
   def setup
     @org = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :nickname => 'org')
-    @user = User.create!("salt"=>"7e3041ebc2fc05a40c60028e2c4901a81035d3cd", "updated_at"=>nil, "crypted_password"=>"00742970dc9e6319f8019fd54864d3ea740f04b1", "type"=>"User", "remember_token_expires_at"=>nil, "id"=>"1", "administrator"=>nil, "remember_token"=>nil, "login"=>"new_user", "email"=>"new_user@example.com", "created_at"=>"2007-07-14 18:03:29")
+    @user = User.create!("salt"=>"7e3041ebc2fc05a40c60028e2c4901a81035d3cd", "updated_at"=>nil, "crypted_password"=>"00742970dc9e6319f8019fd54864d3ea740f04b1", "type"=>"User", "remember_token_expires_at"=>nil, "id"=>"1", "administrator"=>false, "remember_token"=>nil, "login"=>"new_user", "email"=>"new_user@example.com", "created_at"=>"2007-07-14 18:03:29")
+    @user_admin = User.create!("salt"=>"7e3041ebc2fc05a40c60028e2c4901a81035d3cd", "updated_at"=>nil, "crypted_password"=>"00742970dc9e6319f8019fd54864d3ea740f04b1", "type"=>"User", "remember_token_expires_at"=>nil, "id"=>"1", "administrator"=>true, "remember_token"=>nil, "login"=>"admin_test", "email"=>"admin_test@example.com", "created_at"=>"2007-07-14 18:03:29")
   end
 
-  def test_mandatory_field_organization_id
+  def test_mandatory_field_organization_id_when_the_user_is_not_admin
     profile = Profile.create(:user => @user, :permissions => [])
+    assert profile.errors.invalid?(:organization_id)
+  end
+
+  def test_presence_of_organization_id_when_the_user_is_admin
+    profile = Profile.create(:user => @user_admin, :permissions => [], :organization_id => @org.id)
     assert profile.errors.invalid?(:organization_id)
   end
 
@@ -64,15 +70,5 @@ class ProfileTest < Test::Unit::TestCase
     end
   end
 
-  def test_read_template
-    profile = Profile.find(1)
-    assert_equal 'full_access', profile.template
-    profile = Profile.find(2)
-    assert_equal 'read_only', profile.template
-    profile = Profile.find(3)
-    assert_equal 'full_access', profile.template
-    profile = Profile.find(4)
-    assert_equal 'sales_person', profile.template
-  end
 
 end

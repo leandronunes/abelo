@@ -7,19 +7,21 @@ class BanksController; def rescue_action(e) raise e end; end
 class BanksControllerTest < Test::Unit::TestCase
   fixtures :banks
 
+
+  under_organization :admin #TODO see the better way to do that. This are admin controllers
+
   def setup
     @controller = BanksController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-
     login_as('admin')
-#    @first_id = banks(:first).id
+    @bank = Bank.create!(:name => 'The Name', :code => 'The Code')
   end
 
   def test_index
     get :index
-    assert_response :success
-    assert_template 'list'
+    assert_response :redirect
+    assert_redirected_to :action => 'list'
   end
 
   def test_list
@@ -32,7 +34,7 @@ class BanksControllerTest < Test::Unit::TestCase
   end
 
   def test_show
-    get :show, :id => @first_id
+    get :show, :id => @bank.id
 
     assert_response :success
     assert_template 'show'
@@ -53,7 +55,7 @@ class BanksControllerTest < Test::Unit::TestCase
   def test_create
     num_banks = Bank.count
 
-    post :create, :bank => {}
+    post :create, :bank => {:name => 'Another Name', :code => 'Another Code'}
 
     assert_response :redirect
     assert_redirected_to :action => 'list'
@@ -62,7 +64,7 @@ class BanksControllerTest < Test::Unit::TestCase
   end
 
   def test_edit
-    get :edit, :id => @first_id
+    get :edit, :id => @bank.id
 
     assert_response :success
     assert_template 'edit'
@@ -72,22 +74,22 @@ class BanksControllerTest < Test::Unit::TestCase
   end
 
   def test_update
-    post :update, :id => @first_id
+    post :update, :id => @bank.id
     assert_response :redirect
-    assert_redirected_to :action => 'show', :id => @first_id
+    assert_redirected_to :action => 'show', :id => @bank.id
   end
 
   def test_destroy
     assert_nothing_raised {
-      Bank.find(@first_id)
+      Bank.find(@bank.id)
     }
 
-    post :destroy, :id => @first_id
+    post :destroy, :id => @bank.id
     assert_response :redirect
     assert_redirected_to :action => 'list'
 
     assert_raise(ActiveRecord::RecordNotFound) {
-      Bank.find(@first_id)
+      Bank.find(@bank.id)
     }
   end
 end

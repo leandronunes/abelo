@@ -8,7 +8,7 @@ class StockControllerTest < Test::Unit::TestCase
 
   include TestingUnderOrganization
 
-  fixtures :organizations, :products, :stock_entries, :system_actors
+  fixtures :organizations, :stock_entries, :system_actors
 
   def setup
     @controller = StockController.new

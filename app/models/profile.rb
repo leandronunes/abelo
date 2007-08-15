@@ -14,6 +14,12 @@ class Profile < ActiveRecord::Base
     unless self.permissions.kind_of? Array
       self.errors.add('permissions', '%{fn} must be a list of permissions')
     end
+    if !self.user.nil? and self.user.administrator and !self.organization.nil?
+      self.errors.add('organization_id', 'An administrator user cannot be associated to an organization')
+    end
+    if !self.user.nil? and !self.user.administrator and self.organization.nil?
+      self.errors.add('organization_id', 'An administrator user cannot be associated to an organization')
+    end
   end
 
 
@@ -68,6 +74,7 @@ class Profile < ActiveRecord::Base
       { :controller => 'ledger_categories', :action => '*' },
       { :controller => 'documents', :action => '*' },
       { :controller => 'departments', :action => '*' },
+      { :controller => 'main', :action => '*' },
     ]
   }
 

@@ -12,7 +12,8 @@ class BanksControllerTest < Test::Unit::TestCase
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
 
-    @first_id = banks(:first).id
+    login_as('admin')
+#    @first_id = banks(:first).id
   end
 
   def test_index

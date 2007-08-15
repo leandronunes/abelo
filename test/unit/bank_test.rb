@@ -5,20 +5,29 @@ class BankTest < Test::Unit::TestCase
 
   def test_mandatory_field_name
     b = Bank.new
-    assert !b.valid?
+    !b.valid?
     assert b.errors.invalid?(:name) 
     b.name = "Some name"
-    assert b.valid?
+    b.valid?
     assert !b.errors.invalid?(:name) 
   end
 
   def test_mandatory_field_code
     b = Bank.new
-    assert !b.valid?
+    !b.valid?
     assert b.errors.invalid?(:code) 
     b.code = "0-3323" #some test code
-    assert b.valid? 
+    b.valid? 
     assert !b.errors.invalid?(:code)
+  end
+
+  def test_uniqueness_of_code
+    Bank.create!(:name => 'Test', :code => 'some code')
+
+    b = Bank.new(:code => 'some code')
+    b.valid?
+    assert b.errors.invalid?(:code)
+
   end
 
 

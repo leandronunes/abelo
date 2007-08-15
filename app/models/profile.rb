@@ -8,8 +8,13 @@ class Profile < ActiveRecord::Base
 
   validates_presence_of :user_id
 
-
   serialize :permissions, Array
+
+  def save
+    self.permissions = Array.new if self.permissions.nil?
+    super
+  end
+
   def validate
     unless self.permissions.kind_of? Array
       self.errors.add('permissions', '%{fn} must be a list of permissions')

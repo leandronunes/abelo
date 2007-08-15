@@ -52,7 +52,7 @@ class PermissionsControllerTest < Test::Unit::TestCase
   end
 
   def test_create_with_template_failed
-    post :create_with_template, :user_profile => { }
+    post :create_with_template, :user_profile => {:permissions => [] }
     assert_response :success
     assert_template 'new_with_template'
   end

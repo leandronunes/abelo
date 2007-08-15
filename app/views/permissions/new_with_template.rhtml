@@ -2,7 +2,7 @@
 
 <%= error_messages_for 'user_profile' %>
 
-<%= start_form_tag(:action => 'create_with_template') %>
+<% form_tag(:action => 'create_with_template')  do %>
 
   <p>
   <label for='user_profile_user'><%= _('User') %></label>
@@ -11,7 +11,7 @@
 
   <%= render :partial => 'form' %>
   <div class='button_bar'>
-    <%= button _('Save'), :save %>
-    <%= button _('Cancel'), :cancel, :action => 'index' %>
+    <%= button 'save',  _('Save'), :save %>
+    <%= button 'cancel', _('Cancel'), :cancel, :action => 'index' %>
   </div>
-<%= end_form_tag %>
+<% end %>

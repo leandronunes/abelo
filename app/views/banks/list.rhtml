@@ -1,10 +1,13 @@
 <%= title _('List of banks') %>
 
-viuxe
-<% display_collection(@banks, {:class_li => 'bank_li', :class_ul => 'info_list products'}) do |item |%>
-<strong><%= item.name %> </strong>
+<% display_collection @banks do |item|%>
+<strong> Vamo ver   </strong>
+   <strong> <%= item.name %>  </strong>
 <% end %>
-oxe
+
+<% form_tag :action => 'bli' do %>
+<label> Teste</label>
+<% end %>
 
 <table>
   <tr>

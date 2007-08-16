@@ -469,21 +469,20 @@ module ApplicationHelper
       :class => html_options[:li_options])
   end
 
-  def display_collection(collection = Array.new, html_options = {}, &block)
-    content = capture(&block)
-
-    bli = collection.each do |item|
-
-      content
+  def display_collection(collection = Array.new, &block)
+    content = Array.new
+    collection.each do |c| 
+      content.push(capture(c, &block))
     end
 
-    text = content_tag('div',bli , :class => 'help_box')
-
-    unless block.nil?
-      concat(text, block.binding)
-    end
-    text
-
+    concat( 
+      content_tag(:ul, 
+        content.map{|c|
+          content_tag(:li, c)
+        }.join("\n"),
+        :class => 'info_list'
+      ), block.binding
+    )
   end
 
   def help(content = nil, type = :html, &block)

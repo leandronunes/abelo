@@ -1,4 +1,14 @@
 class Organization < ActiveRecord::Base
+
+  after_create do |organization|
+    configuration = Configuration.new
+    configuration.owner = organization
+    configuration.organization = organization
+    configuration.save!
+  end
+
+  has_one :configuration, :as => :owner
+
   has_many :departments
   has_many :products
   has_many :sales

@@ -2,13 +2,20 @@
 
 <div id="form">
 <!--[form:organization]-->
-<p><label for="organization_name"> <%= _('Name') %> </label>
-<%= text_field 'organization', 'name'  %></p>
+<p><label for="configuration_full_product"> <%= _('Full Product Informations') %> </label>
+  <ul>
 
-<p><label for="organization_cnpj"> <%= _('Cnpj') %> </label>
-<%= text_field 'organization', 'cnpj'  %></p>
-
-<p><label for="organization_nickname"> <%= _('Nickname') %> </label>
-<%= text_field 'organization', 'nickname'  %></p>
+  <% @product_informations.each do |pi|%>
+    <li>
+      <% if !@organization.configuration.full_product.nil? %>
+        <%= check_box_tag("product_informations[#{pi}]",1, true ) %>
+      <% else %>
+        <%= check_box_tag("product_informations[#{pi}]",1, false ) %>
+      <% end %>
+        <%= pi %>
+    </li>
+  <% end %>
+  </ul>
+</p>
 <!--[eoform:organization]-->
 </div>

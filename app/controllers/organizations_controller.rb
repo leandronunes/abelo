@@ -80,19 +80,24 @@ class OrganizationsController < ApplicationController
   end
 
   def show_configuration
-    organization = Organization.find(params[:id])
-    @org_configuration = organization.configuration
+    @organization = Organization.find(params[:id])
+    @org_configuration = @organization.configuration
   end
 
   def edit_configuration
     @organization = Organization.find(params[:id])
+    @configuration = @organization.configuration
+    @product_informations = Product.column_names
   end
 
   def update_configuration
-    @organization = Organization.find(params[:id])
-    if @organization.update_attributes(params[:organization])
-      flash[:notice] = 'Organization was successfully updated.'
-      redirect_to :action => 'list'
+    @configuration = Configuration.find(params[:id])
+    @organization = @configuration.organization
+    @configuration.full_product = params[:product_informations].nil? ? Array.new : params[:product_informations].keys
+
+    if @configuration.update_attributes(params[:configuration])
+      flash[:notice] = _('The configurations was successfully updated.')
+      redirect_to :action => 'show', :id => @organization
     else
       render :action => 'edit'
     end

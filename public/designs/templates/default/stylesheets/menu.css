@@ -8,7 +8,7 @@ z-index: 999;
 
 #menu ul {
 position: relative;
-background: #fffaf0 url('../images/bgmenu.png') bottom right no-repeat;
+background: url('../images/bgmenu.png') bottom right no-repeat;
 list-style: none;
 width: 769px;
 margin: -2px 0px 0px 0px;
@@ -27,7 +27,8 @@ list-style: none;
 display: block;
 background-position: top left;
 background-repeat: no-repeat;
-padding-left: 47px;
+padding: 10px 0px 0px 50px;
+max-height: 37px;
 height: 47px;
 font-size: 18px;
 color: #545454;

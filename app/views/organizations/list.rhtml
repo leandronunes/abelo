@@ -1,26 +1,28 @@
-<h1><%= _('Managing organizations') %></h1>
+<%= title _('Managing organizations') %>
 
-<table>
-<tr>
-  <th><%= _('Name') %></th>
-  <th><%= _('Nickname') %></th>
-  <th><%= _('CNPJ') %></th>
-  <th colspan='2'></th>
-</tr>
-<% for org in @organizations %>
-  <tr>
-    <td><%= link_to_organization org.name, org %></td>
-    <td><%= org.nickname %></td>
-    <td><%= org.cnpj %></td>
-    <td>
-      <%= button _('Edit'), :edit, { :action => 'edit', :id => org } %>
-      <%= button _('Remove'), :remove , { :action => 'destroy', :id => org }, { :method => 'post', :confirm => _('Are you sure?') } %>
-    </td>
-  </tr>
+<% form_tag( { :action => 'list' }, { :class => 'search_itens' } ) do %>
+  <%= text_field 'organization', 'name', :class => 'filter_field' %>
+  <%= button( 'lupa', _('Search'), :search) %>
+  <%= button('add', _("New Organization"), :new, :action => 'new' ) %>
 <% end %>
-</table>
 
-<div class='button_bar'>
-<%= button _('New Organization'), :new, { :action => :new } %>
+<div class="auto_complete" id="organization_name_auto_complete"></div>
+<%= auto_complete_field :organization_name, :url => {:action => 'autocomplete_name' }, :indicator => 'auto_list'%>
+<div id="auto_list" style="display:none;">
 </div>
+
+
+
+<% display_collection @organizations do |item|%>
+
+  <div class="line_item">
+    <strong> <%= _('Name:') %> </strong>
+    <span> <%= item.name %>  </span>
+  </div>
+
+  <div>
+    <strong> <%= _('CNPJ:') %>   </strong>
+    <span> <%= item.cnpj %>  </span>
+  </div>
+<% end %>
 

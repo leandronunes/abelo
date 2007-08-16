@@ -10,7 +10,7 @@ module ApplicationHelper
     html_options[:class] ||= "button button_#{type}"
     html_options[:title] ||= title
     if [:save, :search ].include? type
-      design_display_icon_submit button, title , html_options
+      design_display_icon_submit button, '', html_options
     else
       design_display_icon(button, title, url_options, html_options)
     end
@@ -269,7 +269,7 @@ module ApplicationHelper
             x = x+1
             content_tag('li',  design_display_icon(controller, menu_items[controller], { :controller => controller }, :id => controller, :class => "button_main pos_#{x}"))
           end.join("\n")) ]
-       ), :id => 'nav', :style => "display : none;" )
+       ), :id => 'menu', :style => "display : none;" )
   end
 
   def link_to_organization(org, html_options = {})
@@ -469,7 +469,7 @@ module ApplicationHelper
       :class => html_options[:li_options])
   end
 
-  def display_collection(collection = Array.new, &block)
+  def display_collection(collection = Array.new, html_options = {}, &block)
     content = Array.new
     collection.each do |c| 
       content.push(
@@ -477,14 +477,17 @@ module ApplicationHelper
         capture(c, &block)
       )
     end
-
+    item_class = []
+    item_class.push(html_options[:item_class]) unless item_class.include?(html_options[:item_class])
+    collection_class = ['info_list']
+    collection_class.push(html_options[:collection_class]) unless collection_class.include?(html_options[:collection_class])
     concat( 
       content_tag(:ul, 
         content.map{|c|
-          content_tag(:li, c)
-#          content_tag(:br,'' ,:style => 'clear:both;') TODO this is needed
+          content_tag(:li, c, :class => item_class.join(' ')) + 
+          tag(:br, :style => 'clear:both;') 
         }.join("\n"),
-        :class => 'info_list'
+        :class => collection_class.join(' ')
       ), block.binding
     )
   end
@@ -499,5 +502,22 @@ module ApplicationHelper
       ].join("\n"),
       :class => 'list_item_button'
     )
+  end
+
+
+  #TODO Aks to tongo if it's a good solution I didn't like so much
+  def display_collection_item(item, info = {})
+    content_tag(:div,
+      [
+       content_tag(:strong, info[:title]),
+       content_tag(:span, info[:content])
+      ].join("\n"),
+      info[:html_options] 
+    )   
+  end
+
+  def footer
+    _("Copyrigth © 2007 %s. This software is under %s") % [link_to(_('Colivre'), 'http://www.colivre.coop.br', :alt => 'Cooperativa de Tecnologias Livres'), link_to(_('GPL'), 'http://www.gnu.org/licenses/licenses.html#GPL')]
+
   end
 end

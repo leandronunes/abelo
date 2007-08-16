@@ -40,11 +40,6 @@
   border: 2px solid #B97;
 }
 
-.info_list .list_item_code {
-  display: block;
-  font-size: 80%;
-}
-
 .info_list div.list_item_button {
   float: right;
   margin: -3px -6px 0px 0px;
@@ -54,19 +49,6 @@
   margin: 2px;
 }
 
-.system_actors .list_item_name {
+.info_list .line_item {
   display: block;
 }
-
-.stock .list_item_name {
-  display: block;
-}
-
-.history .list_item_date {
-  display: block;
-}
-
-.history .list_item_supplier {
-  display: block;
-}
-

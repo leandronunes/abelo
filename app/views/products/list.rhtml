@@ -3,7 +3,7 @@
 
 <% form_tag( { :action => 'list' }, { :class => 'search_itens' } ) do %>
   <%= text_field 'product', 'name', :class => 'filter_field' %>
-  <%= button( 'lupa', _('Search'), :search,  { :class => 'button button_search', :title => _('Search product') }) %>
+  <%= button( 'lupa', _('Search'), :search) %>
   <%= button('add', _("New product"), :new, :action => 'new' ) %>
 <% end %>
 
@@ -12,24 +12,27 @@
 <div id="auto_list" style="display:none;">
 </div>
 
-<ul class="info_list products">
-<% @products.sort_by{|pr| pr.name}.map do |p| %>
-  <%=
-  display_list(
-    [
-      { :content => [
-          button('view_small', _('Show'), :show, :action => 'show', :id => p.id),
-          button('edit_small',_('Edit'), :edit, :action => 'edit', :id => p.id),
-          button('del_small', _('Destroy'), :destroy, {:action => 'destroy', :id => p.id},
-                                :method => 'post',
-                                :confirm => _('Are you sure?'))], :option => 'button' },
-      { :content => p.images.map{|i| show_image i}[0], :option => 'img' }, 
-      { :title => _('Code:'), :content => p.id, :option => 'code' },
-      { :content =>  p.name, :option => 'name' },
-      { :title => _('Price:'), :content => p.sell_price, :option => 'price'},
-      '<br style="clear:both"/>'
-    ]
-   )
-  %><% end %>
-</ul>
+<% display_collection @products do |item|%>
+
+  <%= display_collection_item(item,
+        :title => _('Name'), 
+        :content => item.name,
+        :html_options => {:class => 'line_item'}
+      ) 
+  %>
+
+  <div class="line_item">
+    <strong> <%= _('Name:') %> </strong>
+    <span> <%= item.name %>  </span>
+  </div>
+  <div>
+    <strong> <%= _('Code:') %>   </strong>
+    <span> <%= item.id %>  </span>
+  </div>
+  <div>
+    <strong> <%= _('Price:') %>   </strong>
+    <span> <%= item.sell_price %>  </span>
+  </div>
+<% end %>
+
 <%= pagination_links(@product_pages, :params => {:query => @query}) %>

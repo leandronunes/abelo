@@ -1,13 +1,14 @@
 <%= error_messages_for 'organization' %>
 
+<div id="form">
 <!--[form:organization]-->
-<p><label for="organization_name">Name</label>
+<p><label for="organization_name"> <%= _('Name') %> </label>
 <%= text_field 'organization', 'name'  %></p>
 
-<p><label for="organization_cnpj">Cnpj</label>
+<p><label for="organization_cnpj"> <%= _('Cnpj') %> </label>
 <%= text_field 'organization', 'cnpj'  %></p>
 
-<p><label for="organization_nickname">Nickname</label>
+<p><label for="organization_nickname"> <%= _('Nickname') %> </label>
 <%= text_field 'organization', 'nickname'  %></p>
 <!--[eoform:organization]-->
-
+</div>

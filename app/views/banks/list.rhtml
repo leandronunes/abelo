@@ -1,18 +1,18 @@
 <%= title _('List of banks') %>
 
 <% display_collection @banks do |item|%>
-<div class="list_item_name">
-  <strong> <%= _('Name:') %>   </strong>
-  <span> <%= item.name %>  </span>
-</div>
-<div class="list_item_code">
-  <strong> <%= _('Code:') %>   </strong>
-  <span> <%= item.code %>  </span>
-</div>
-<div class="list_item_site">
-  <strong> <%= _('Site:') %>   </strong>
-  <span> <%= item.site %>  </span>
-</div>
+  <div class="list_item_name">
+    <strong> <%= _('Name:') %> </strong>
+    <span> <%= item.name %>  </span>
+  </div>
+  <div class="list_item_code">
+    <strong> <%= _('Code:') %>   </strong>
+    <span> <%= item.code %>  </span>
+  </div>
+  <div class="list_item_site">
+    <strong> <%= _('Site:') %>   </strong>
+    <span> <%= item.site %>  </span>
+  </div>
 <% end %>
 
 <table>

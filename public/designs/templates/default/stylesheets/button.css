@@ -6,7 +6,6 @@
   margin-left: 5px;
   width: 24px;
   height: 24px;
-  background: url(/icons/aurium_neu/24x24/bt_none.png);
   background-repeat: no-repeat;
   background-position: 50% 50%;
 }
@@ -19,25 +18,10 @@
   display: none;
 }
 
-/*
- *TODO remove this
- *These definition of button are wrong
- * We cannot access a icon directly
-*/
-.button_new,
-.button_add     { background-image: url(../../../icons/default/add.png)      }
-.button_new_entry    { background-image: url(../../../icons/default/add_16.png)      }
-.button_save    { background-image: url(../../../icons/default/save.png)     }
-.button_cancel  { background-image: url(../../../icons/default/cancel.png)   }
-.button_back    { background-image: url(../../../icons/default/back.png)     }
-.button_search  { background-image: url(../../../icons/default/lupa.png)     }
-.button_login   { background-image: url(../../../icons/default/password.png) }
-.button_img     { background-image: url(../../../icons/default/image.png)    }
-.button_send_mail { background-image: url(../../../icons/default/mail-send.png) }
-.button_show    { background-image: url(../../../icons/default/view.png); width: 16px; height: 16px }
-.button_edit    { background-image: url(../../../icons/default/edit.png); width: 16px; height: 16px }
+.button_show    { width: 16px; height: 16px }
+.button_edit    { width: 16px; height: 16px }
 .button_remove,
-.button_destroy { background-image: url(../../../icons/default/del.png);  width: 16px; height: 16px }
+.button_destroy { width: 16px; height: 16px }
 
 .with_text {
   padding: 2px 0px;
@@ -58,7 +42,7 @@
   margin: 5px;
   height: 33px;
   padding-top: 5px;
-  background: url('/images/bgbutton.png') no-repeat 50% 50%;
+  background: url('../images/bgbutton.png') no-repeat 50% 50%;
 }
 
 .beault_button span, .beault_button input {

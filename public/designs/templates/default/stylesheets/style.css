@@ -1,25 +1,28 @@
 /* Autor: Valessio S Brito <valessio@colivre.coop.br>  */
 
-@import "colors.css";
-@import "nav.css";
-@import "box.css";
-@import "pointsales.css";
-
 body {
   margin:0px;
   padding:0px;
+  color: #545454;
+  font: 14px/1.5em Verdana, Arial, sans-Serif;
+  background: #fffaf0 url('../images/bgbody.png') top right repeat-y;
 }
 
 #header {
-  position: relative;
   margin:0px;
   padding:0px;
   height: 110px;
+  background: #ffffff url('../images/bgheader.png') bottom left repeat-x;
 }
 
-#sidebar {
-float: right;
-width: 300px;
+#info_org {
+  font-size: 17px;
+  color: #c4a000;
+}
+
+#info_org span {
+font-size: 19px;
+font-weight: bold;
 }
 
 #info_org {
@@ -28,14 +31,6 @@ width: 300px;
   height: 78px;
   display:table-cell;
   vertical-align: middle;
-}
-
-#userbar {
-height: 30px;
-}
-
-div.login_bar {
-float: right;
 }
 
 #logo_org {
@@ -51,16 +46,11 @@ top: 2px;
 right: 5px;
 }
 
-#nav {
-position: absolute;
-right: 3px;
-z-index: 999;
-}
 
-#content {
-position: relative;
-margin: 0px;
-padding: 10px;
+#form label {
+  color: black;
+  font-weight: bold;
+  display: block;
 }
 
 #footer {
@@ -70,14 +60,6 @@ bottom: 0;
 height: 50px;
 }
 
-/* Others */
-
-#show_cash_flows {
-position: absolute;
-display: none;
-width: 250px;
-height: 191px;
-}
 .clear{
   clear: both;
 }

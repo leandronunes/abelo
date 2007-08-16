@@ -40,6 +40,28 @@
           <%= design_display(yield) %>
         </div>
 
+<div id="sidebar">
+
+<!-- Item Bar Options -->
+<p><a href="#" onclick="Effect.toggle('options_cash_flows','slide',{duration:1}); if(this.style.borderBottom == '') { this.style.borderBottom = '1px'; } else { this.style.borderBottom = ''; }; return false;" class="show_itembar" style="border-bottom: none;">New department</a></p>
+<div id="options_cash_flows" class="itembar">
+<div>
+<form action="/one/departments/create" method="post">
+
+
+<!--[form:department]-->
+<p><label for="department_name">Name</label><br/>
+<input id="department_name" name="department[name]" size="30" type="text" /></p>
+<!--[eoform:department]-->
+
+
+  <input name="commit" type="submit" value="Create" />
+
+</form>
+
+<p><a href="#" onclick="Effect.toggle('options_cash_flows','slide',{duration:1}); return false;" class="hide_itembar"><span>Hide</span></a></p>
+</div>
+
         <div id="footer">
           <%= footer %>
         </div>

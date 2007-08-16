@@ -63,3 +63,14 @@ height: 50px;
 .clear{
   clear: both;
 }
+
+/* Main Content */
+#box_1 {
+  border: 2px solid black;
+  margin-right: 220px;
+}
+
+/* TODO Remove This */
+#box_3{
+  border: 2px solid green;
+}

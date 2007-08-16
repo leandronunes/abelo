@@ -516,6 +516,24 @@ module ApplicationHelper
     )   
   end
 
+  #TODO Aks to tongo if it's a good solution I didn't like so much
+  def display_field(item, field, info = {})
+    return '' unless @organization.configuration.send("full_#{item.class.to_s.tableize.singularize}").include?(field)
+
+    content_tag(:div,
+      [
+       content_tag(:strong, info[:title]),
+       content_tag(:span, info[:content])
+      ].join("\n"),
+      info[:html_options] 
+    )
+  end
+
+  def display_info(object, html_options = {}, &block)
+    content = capture(object, &block)
+    concat(content_tag(:div, content), block.binding )
+  end
+
   def footer
     _("Copyrigth © 2007 %s. This software is under %s") % [link_to(_('Colivre'), 'http://www.colivre.coop.br', :alt => 'Cooperativa de Tecnologias Livres'), link_to(_('GPL'), 'http://www.gnu.org/licenses/licenses.html#GPL')]
 

@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
 
   uses_tabbed_navigation
 
-  design :holder => 'organization', :autosave => true
+  design :holder => 'organization'
 
 
   ###########################################

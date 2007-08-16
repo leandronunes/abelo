@@ -1,8 +1,36 @@
-<h2><%= @product.name %></h2>
-<p>
-<label><%= _('Price:') %></label>
-<%= @product.sell_price %>
-</p>
+
+<% display_info @product, :class => 'view_data' do |item| %>
+
+  <%= display_field(item, 'name',
+        :title => _('Name'),
+        :content => item.name,
+        :html_options => {:class => 'line_item'}
+      )
+  %>
+
+  <%= display_field(item, 'size',
+        :title => _('Size'),
+        :content => item.size
+      )
+  %>
+
+  <%= display_field(item, 'sell_price',
+        :title => _('Price'),
+        :content => item.sell_price
+      )
+  %>
+
+  <div class="list_item_name">
+    <strong> <%= _('Name:') %> </strong>
+    <span> <%= item.name %>  </span>
+  </div>
+
+  <div>
+    <strong> <%= _('Price:') %> </strong>
+    <span> <%= item.sell_price %>  </span>
+  </div>
+<% end %>
+
 
 <%= render :partial => 'list_images' %>
 <%= link_to 'Edit', :action => 'edit', :id => @product %> |

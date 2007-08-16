@@ -97,7 +97,7 @@ class OrganizationsController < ApplicationController
 
     if @configuration.update_attributes(params[:configuration])
       flash[:notice] = _('The configurations was successfully updated.')
-      redirect_to :action => 'show', :id => @organization
+      redirect_to :action => 'show_configuration', :id => @organization.id
     else
       render :action => 'edit'
     end

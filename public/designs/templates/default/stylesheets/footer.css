@@ -1,0 +1,13 @@
+/* Footer */
+#footer {
+background: url('../images/colivre.png') 20px no-repeat;
+font-size: 10px;
+text-align: center;
+}
+
+#footer a {
+color: #545454;
+}
+#footer a:hover {
+color: #000000;
+}

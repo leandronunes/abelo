@@ -1,0 +1,34 @@
+#content {
+position: relative;
+margin: 0px;
+padding: 10px;
+}
+
+#content h1 {
+color: #c4a000;
+margin: 8px;
+padding: 0px;
+text-align: center;
+}
+
+#content a {
+text-decoration: none;
+color: #c4a000;
+}
+
+#content a:visited {
+text-decoration: underline;
+color: #a4a000;
+}
+
+#content a:active {
+text-decoration: none;
+color: #000000;
+}
+#content a:hover {
+text-decoration: blink;
+color: #545454;
+}
+
+
+

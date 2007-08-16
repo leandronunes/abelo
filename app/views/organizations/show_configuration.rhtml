@@ -1,0 +1,8 @@
+
+<%= title @organization.name %>
+
+<p> <b><%= _('Name') %>:</b> <%= @organization.name %></p>
+<p> <b><%= _('CNPJ') %>:</b> <%= @organization.cnpj %></p>
+<p> <b><%= _('Nickname') %>:</b> <%= @organization.nickname %></p>
+
+<%= button('edit', _('Edit'), :list, :action => 'edit_configuration', :id => @organization) %> 

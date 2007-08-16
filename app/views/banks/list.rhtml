@@ -1,12 +1,18 @@
 <%= title _('List of banks') %>
 
 <% display_collection @banks do |item|%>
-<strong> Vamo ver   </strong>
-   <strong> <%= item.name %>  </strong>
-<% end %>
-
-<% form_tag :action => 'bli' do %>
-<label> Teste</label>
+<div class="list_item_name">
+  <strong> <%= _('Name:') %>   </strong>
+  <span> <%= item.name %>  </span>
+</div>
+<div class="list_item_code">
+  <strong> <%= _('Code:') %>   </strong>
+  <span> <%= item.code %>  </span>
+</div>
+<div class="list_item_site">
+  <strong> <%= _('Site:') %>   </strong>
+  <span> <%= item.site %>  </span>
+</div>
 <% end %>
 
 <table>

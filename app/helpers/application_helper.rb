@@ -472,42 +472,32 @@ module ApplicationHelper
   def display_collection(collection = Array.new, &block)
     content = Array.new
     collection.each do |c| 
-      content.push(capture(c, &block))
+      content.push(
+        display_collection_options(c) +
+        capture(c, &block)
+      )
     end
 
     concat( 
       content_tag(:ul, 
         content.map{|c|
           content_tag(:li, c)
+#          content_tag(:br,'' ,:style => 'clear:both;') TODO this is needed
         }.join("\n"),
         :class => 'info_list'
       ), block.binding
     )
   end
 
-  def help(content = nil, type = :html, &block)
-
-    if content.nil?
-      return '' if block.nil?
-      content = capture(&block)
-    end
-
-    if type == :textile
-      content = RedCloth.new(content).to_html
-    end
-
-    # TODO: implement this button, and add style='display: none' to the help
-    # message DIV
-    button = link_to_function(_('Help'), "alert('change me, Leandro!')")
-
-    text = content_tag('div', button + content_tag('div', content, :class => 'help_message', :style => 'display: none;'), :class => 'help_box')
-
-    unless block.nil?
-      concat(text, block.binding)
-    end
-
-    text
+  def display_collection_options(item)
+    content_tag(:div,
+      [
+        button('view_small', _('Show'), :show, :action => 'show', :id => item.id),
+        button('edit_small', _('Edit'), :edit, :action => 'edit', :id => item.id),
+        button('del_small', _('Destroy'), :destroy, {:action => 'destroy', :id => item.id},
+               :method => 'post', :confirm => _('Are you sure?'))
+      ].join("\n"),
+      :class => 'list_item_button'
+    )
   end
-
-
 end

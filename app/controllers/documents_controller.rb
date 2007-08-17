@@ -12,7 +12,7 @@ class DocumentsController < ApplicationController
   def autocomplete_name
     escaped_string = Regexp.escape(params[:document][:name])
     re = Regexp.new(escaped_string, "i")
-    @documents = @organization.documents.find(:all, :conditions => ['is_model = ?', false]).select { |d| d.name.match re}
+    @documents = @organization.documents.find(:all, :conditions => ['is_model = ?', true]).select { |d| d.name.match re}
     render :layout=>false
   end
 

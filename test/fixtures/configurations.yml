@@ -1,9 +1,21 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 one:
-  id: 1
-  owner_type: 'Organization'
-  owner_id: 1
+  id: 1  
+  organization_id: 1
+  customer_name: "Consumidor"
+  organization_name: "Organização"
+  department_name: "Departamento"
+  product_name: "Product"
+  full_product:
+  - "name"
+  - "size"
+  - "unit"
+  - "category_id"
+  - "color"
+  - "sell_price"
+  - "description"
+  lite_product:
+  - "name"
+  - "description"
 two:
   id: 2
-  owner_type: 'Organization'
-  owner_id: 2

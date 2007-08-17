@@ -7,7 +7,7 @@ class Organization < ActiveRecord::Base
     configuration.save!
   end
 
-  has_one :configuration, :as => :owner
+  has_one :configuration
 
   has_many :departments
   has_many :products

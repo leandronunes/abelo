@@ -4,8 +4,6 @@ class CreateConfigurations < ActiveRecord::Migration
       t.column :is_model,           :boolean
       t.column :name,               :string
       t.column :description,        :text
-      t.column :owner_type,         :string
-      t.column :owner_id,           :interger
       t.column :organization_id,    :interger
       t.column :full_product,       :text
       t.column :lite_product,       :text

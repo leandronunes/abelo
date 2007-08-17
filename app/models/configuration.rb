@@ -1,5 +1,4 @@
 class Configuration < ActiveRecord::Base
-  belongs_to :owner, :polymorphic => true
   belongs_to :organization
 
   serialize :full_product, Array

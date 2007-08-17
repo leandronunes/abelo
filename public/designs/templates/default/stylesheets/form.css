@@ -1,0 +1,43 @@
+#info_form {
+  clear: left;
+  margin: 0px;
+  padding: 5px 0px 0px 0px;
+  list-style: none;
+  width: 500px;
+  background-color: red;
+}
+
+
+#info_form label {
+  color: black;
+  font-weight: bold;
+#  display: block;
+}
+#info_form div {
+  display: inline;
+  padding: 0px 4px;
+}
+.list_item_img {
+  float: left;
+}
+#info_form .list_item_img img {
+  float: left;
+  margin: 0px 8px 0px -6px;
+  padding: 3px;
+  background: #FFF;
+  border: 2px solid #B97;
+}
+
+#info_form div.list_item_button {
+  float: right;
+  margin: -3px -6px 0px 0px;
+}
+#info_form div.list_item_button .button {
+  float: none;
+  margin: 2px;
+}
+
+#info_form .line_item {
+  display: block;
+  background-color: blue;
+}

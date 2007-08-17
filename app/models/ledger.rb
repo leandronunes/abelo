@@ -1,4 +1,5 @@
 class Ledger < ActiveRecord::Base
+
   acts_as_taggable
 
   belongs_to :category, :class_name => 'LedgerCategory',  :foreign_key => 'category_id'

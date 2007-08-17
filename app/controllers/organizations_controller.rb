@@ -11,8 +11,8 @@ class OrganizationsController < ApplicationController
       in_set 'first'
       highlights_on :action => 'show'
       highlights_on :action => 'edit'
-      show_if "params[:action] != 'list' and params[:action] != 'new'"
     end
+    t.show_if "!['list', 'new_configuration', 'create_configuration', 'list_configuration'].include?(params[:action])"
     t.links_to :action => 'show', :id => params[:id]
     t.named _('Show')
 
@@ -20,10 +20,28 @@ class OrganizationsController < ApplicationController
       in_set 'first'
       highlights_on :action => 'show_configuration'
       highlights_on :action => 'edit_configuration'
-      show_if "params[:action] != 'list' and params[:action] != 'new'"
     end
+    t.show_if "!['list', 'new_configuration', 'create_configuration', 'list_configuration'].include?(params[:action])"
     t.links_to :action => 'show_configuration', :id => params[:id]
     t.named _('Configurations')
+
+    t = add_tab do
+      in_set 'first'
+      links_to :action => 'list'
+      highlights_on :action => 'list'
+    end
+    t.show_if "['list', 'new_configuration', 'create_configuration', 'list_configuration'].include?(params[:action])"
+    t.named _('Organizations')
+
+    t = add_tab do
+      in_set 'first'
+      highlights_on :action => 'new_configuration'
+      highlights_on :action => 'create_configuration'
+      highlights_on :action => 'list_configuration'
+      links_to :action => 'list_configuration'
+    end
+    t.show_if "['list', 'new_configuration', 'create_configuration', 'list_configuration'].include?(params[:action])"
+    t.named _('Organizations Profiles')
 
   end
 
@@ -67,7 +85,7 @@ class OrganizationsController < ApplicationController
   def update
     @organization = Organization.find(params[:id])
     if @organization.update_attributes(params[:organization])
-      flash[:notice] = 'Organization was successfully updated.'
+      flash[:notice] = _('The organization was successfully updated.')
       redirect_to :action => 'list'
     else
       render :action => 'edit'
@@ -79,9 +97,32 @@ class OrganizationsController < ApplicationController
     redirect_to :action => 'list'
   end
 
+  def list_configuration
+    @configurations = Configuration.find_all_model
+  end
+
+  def new_configuration
+    @configuration = Configuration.new
+    @product_informations = Product.column_names
+  end
+
+  def create_configuration
+    @configuration = Configuration.new(params[:configuration])
+    @configuration.is_model = true
+    @configuration.full_product = params[:product_full_informations].nil? ? Array.new : params[:product_full_informations].keys
+    @configuration.lite_product = params[:product_lite_informations].nil? ? Array.new : params[:product_lite_informations].keys
+
+    if @configuration.save
+      flash[:notice] = _('The configurations was successfully updated.')
+      redirect_to :action => 'list_configuration'
+    else
+      render :action => 'new'
+    end
+  end
+
   def show_configuration
     @organization = Organization.find(params[:id])
-    @org_configuration = @organization.configuration
+    @configuration = @organization.configuration
   end
 
   def edit_configuration
@@ -93,7 +134,8 @@ class OrganizationsController < ApplicationController
   def update_configuration
     @configuration = Configuration.find(params[:id])
     @organization = @configuration.organization
-    @configuration.full_product = params[:product_informations].nil? ? Array.new : params[:product_informations].keys
+    @configuration.full_product = params[:product_full_informations].nil? ? Array.new : params[:product_full_informations].keys
+    @configuration.lite_product = params[:product_lite_informations].nil? ? Array.new : params[:product_lite_informations].keys
 
     if @configuration.update_attributes(params[:configuration])
       flash[:notice] = _('The configurations was successfully updated.')

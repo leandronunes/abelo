@@ -1,21 +1,50 @@
 <%= error_messages_for 'organization' %>
 
-<div id="form">
 <!--[form:organization]-->
-<p><label for="configuration_full_product"> <%= _('Full Product Informations') %> </label>
-  <ul>
+<p><label for="configuration_organization_name"> <%= _('Organization Name') %> </label>
+   <%= text_field 'configuration', 'organization_name'  %>
+</p>
+   
+<p><label for="configuration_product_name"> <%= _('Product Name') %> </label>
+   <%= text_field 'configuration', 'product_name'  %>
+</p>
 
+<p><label for="configuration_full_product"> <%= _('Product All Available Informations') %> </label>
+  <ul>
   <% @product_informations.each do |pi|%>
     <li>
       <% if @configuration.full_product.include?(pi) %>
-        <%= check_box_tag("product_informations[#{pi}]",1, true ) %>
+        <%= check_box_tag("product_full_informations[#{pi}]",1, true ) %>
       <% else %>
-        <%= check_box_tag("product_informations[#{pi}]",1, false ) %>
+        <%= check_box_tag("product_full_informations[#{pi}]",1, false ) %>
       <% end %>
         <%= pi %>
     </li>
   <% end %>
   </ul>
 </p>
+
+<p><label for="configuration_lite_product"> <%= _('Product Limited Available Informations') %> </label>
+  <ul>
+  <% @product_informations.each do |pi|%>
+    <li>
+      <% if @configuration.lite_product.include?(pi) %>
+        <%= check_box_tag("product_lite_informations[#{pi}]",1, true ) %>
+      <% else %>
+        <%= check_box_tag("product_lite_informations[#{pi}]",1, false ) %>
+      <% end %>
+        <%= pi %>
+    </li>
+  <% end %>
+  </ul>
+</p>
+
+<p><label for="configuration_department_name"> <%= _('Department Name') %> </label>
+   <%= text_field 'configuration', 'department_name'  %>
+</p>
+
+<p><label for="configuration_customer_name"> <%= _('Customer Name') %> </label>
+   <%= text_field 'configuration', 'customer_name'  %>
+</p>
+
 <!--[eoform:organization]-->
-</div>

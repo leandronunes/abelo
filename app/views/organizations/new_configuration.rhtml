@@ -1,0 +1,24 @@
+<%= title _('Adding Organization Profile') %>
+
+<% form_tag :action => 'create_configuration' do %>
+
+  <div id="form">
+
+    <p><label for="configuration_name"> <%= _('Name') %> </label>
+       <%= text_field 'configuration', 'name'  %>
+    </p>
+  
+    <p><label for="configuration_description"> <%= _('Description') %> </label>
+       <%= text_field 'configuration', 'description'  %>
+    </p>
+  
+    <%= render :partial => 'form_configuration' %>
+
+  </div>
+
+  <div class='button_bar'>
+    <%= button 'back', _('Back'), :back, :action => 'list' %>
+    <%= button 'save',  _("Create"), :save %>
+  </div>
+<% end %>
+

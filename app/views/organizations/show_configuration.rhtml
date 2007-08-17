@@ -1,8 +1,21 @@
 
 <%= title @organization.name %>
 
-<p> <b><%= _('Name') %>:</b> <%= @organization.name %></p>
-<p> <b><%= _('CNPJ') %>:</b> <%= @organization.cnpj %></p>
-<p> <b><%= _('Nickname') %>:</b> <%= @organization.nickname %></p>
+<p> <b><%= _('Organization Name') %>:</b> <%= @configuration.organization_name %></p>
+<p> <b><%= _('Product Name') %>:</b> <%= @configuration.product_name %></p>
+<p> <b><%= _('Product All Available Informations') %>:</b> </p>
+<ul>
+  <% @configuration.full_product.each do |field| %>
+    <li> <%= field %></li>
+  <% end %>
+</ul>
+<p> <b><%= _('Product Limited Available Informations') %>:</b> </p>
+<ul>
+  <% @configuration.lite_product.each do |field| %>
+    <li> <%= field %></li>
+  <% end %>
+</ul>
+<p> <b><%= _('Dertparment Name') %>:</b> <%= @configuration.department_name %></p>
+<p> <b><%= _('Customer Name') %>:</b> <%= @configuration.customer_name %></p>
 
 <%= button('edit', _('Edit'), :list, :action => 'edit_configuration', :id => @organization) %> 

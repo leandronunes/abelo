@@ -1,0 +1,37 @@
+<%= title _('Managing organizations') %>
+
+<% form_tag( { :action => 'list' }, { :class => 'search_itens' } ) do %>
+  <%= text_field 'organization', 'name', :class => 'filter_field' %>
+  <%= button( 'lupa', _('Search'), :search) %>
+  <%= button('add', _("New Organization"), :new, :action => 'new_configuration' ) %>
+<% end %>
+
+<div class="auto_complete" id="organization_name_auto_complete"></div>
+<%= auto_complete_field :organization_name, :url => {:action => 'autocomplete_name' }, :indicator => 'auto_list'%>
+<div id="auto_list" style="display:none;">
+</div>
+
+
+<ul class="info_list" >
+
+  <% @configurations.each do |item|%>
+    <li>  
+      <div class='list_item_button' >
+        <%= button('view_small', _('Show'), :show, :action => 'show_configuration', :id => item.id) %>
+        <%= button('edit_small', _('Edit'), :edit, :action => 'edit_configuration', :id => item.id) %> 
+        <%= button('del_small', _('Destroy'), :destroy, {:action => 'destroy_configuration', :id => item.id}) %>
+      </div>
+      <div class='line_item'>
+        <strong> <%= _('Name') %> </strong>
+        <span> <%= item.name %> </span>
+      </div>
+      <div>
+        <strong> <%= _('Description') %> </strong>
+        <span> <%= item.description %> </span>
+      </div>
+
+    </li>
+  <% end %>
+
+</ul>
+

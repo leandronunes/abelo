@@ -120,6 +120,13 @@ class ApplicationController < ActionController::Base
       highlights_on :controller => 'interface'
     end
     t.named _('Interface')
+
+    t = add_tab do
+      links_to :controller => 'organization_configuration'
+      in_set 'first'
+      highlights_on :controller => 'organization_configuration'
+    end
+    t.named _('Field Configuration')
   end
 
   def self.uses_register_tabs

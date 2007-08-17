@@ -96,7 +96,7 @@ class Profile < ActiveRecord::Base
   # assings the permission template to this instance of Profile.
   # * <tt>template</tt>: a string. Must be a key in the TEMPLATES hash.
   def template=(template)
-    raise ArgumentError.new('%s is not a valid template' % template) unless TEMPLATES[template]
+    raise ArgumentError.new("%s is not a valid template" % template) unless TEMPLATES[template]
     self.permissions = TEMPLATES[template]
   end
 

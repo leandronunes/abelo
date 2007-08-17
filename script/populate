@@ -91,14 +91,20 @@ calca_entrada = StockIn.create!(:supplier_id => '1', :ammount => 50, :price => '
 ############People################################
 Person.destroy_all
 gerente = User.create!("salt"=>"7e3041ebc2fc05a40c60028e2c4901a81035d3cd", "updated_at"=>nil, "crypted_password"=>"00742970dc9e6319f8019fd54864d3ea740f04b1", "type"=>"User", "remember_token_expires_at"=>nil, "id"=>"1", "administrator"=>false, "remember_token"=>nil, "login"=>"quentin", "email"=>"quentin@example.com", "created_at"=>"2007-07-14 18:03:29")
+admin = User.create!("salt"=>"7e3041ebc2fc05a40c60028e2c4901a81035d3cd", "updated_at"=>nil, "crypted_password"=>"00742970dc9e6319f8019fd54864d3ea740f04b1", "type"=>"User", "remember_token_expires_at"=>nil, "id"=>"1", "administrator"=>true, "remember_token"=>nil, "login"=>"admin", "email"=>"admin@example.com", "created_at"=>"2007-07-14 18:03:29")
 
 ############User Profile##########################
 Profile.destroy_all
-perfil_quentin = Profile.new
-perfil_quentin.organization = organization
-perfil_quentin.user = gerente
-perfil_quentin.permissions = [:controller => '*', :action => '*']
-perfil_quentin.save
+perfil_organization = Profile.new
+perfil_organization.organization = organization
+perfil_organization.user = gerente
+perfil_organization.template = 'organization_management'
+perfil_organization.save!
+
+perfil_admin = Profile.new
+perfil_admin.user = admin
+perfil_admin.template = 'administration'
+perfil_admin.save!
 
 ############Customers#############################
 Customer.destroy_all

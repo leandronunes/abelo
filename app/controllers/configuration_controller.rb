@@ -1,4 +1,4 @@
-class ConfigurationController < ApplicationController
+class OrganizationConfigurationController < ApplicationController
 
   needs_organization
 

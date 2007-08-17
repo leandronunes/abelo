@@ -516,9 +516,10 @@ module ApplicationHelper
     )   
   end
 
-  #TODO Aks to tongo if it's a good solution I didn't like so much
   def display_field(item, field, info = {})
-    return '' unless @organization.configuration.send("full_#{item.class.to_s.tableize.singularize}").include?(field)
+    unless @organization.nil?
+      return '' unless @organization.configuration.send("full_#{item.class.to_s.tableize.singularize}").include?(field)
+    end
 
     content_tag(:div,
       [

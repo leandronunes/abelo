@@ -16,7 +16,12 @@ class OrganizationsControllerTest < Test::Unit::TestCase
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     login_as('admin')
-    
+    @organization = Organization.create!(
+      :name => 'Organization for testing',
+      :nickname => 'organization_test',
+      :cnpj => '99249952000100'
+    )
+
   end
 
   def test_only_admin_has_access
@@ -53,10 +58,23 @@ class OrganizationsControllerTest < Test::Unit::TestCase
   def test_new
     get :new
 
+    assert_not_nil assigns(:organization)
+
     assert_response :success
     assert_template 'new'
 
+
+  end
+
+  def test_show
+    get :show, :id => 1
+
+    assert_response :success
+    assert_template 'show'
+
     assert_not_nil assigns(:organization)
+    assert assigns(:organization).valid?
+    assert_equal 1, assigns(:organization).id
   end
 
   def test_create
@@ -88,6 +106,12 @@ class OrganizationsControllerTest < Test::Unit::TestCase
     post :update, :id => 1
     assert_response :redirect
     assert_redirected_to :action => 'list'
+  end
+
+  def test_update_with_wrong_params
+    post :update, :id => @organization.id, :organization => {:cnpj => '1'}
+    assert_response :success
+    assert_template 'edit'
   end
 
   def test_destroy

@@ -23,19 +23,15 @@ class ProductsController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    if params[:query]
-      @query = params[:query]
-    else
-      @query = params[:product] ? params[:product][:name] : nil
-    end
+    @query = params[:query]
+    @query ||= params[:product][:name] if params[:produt]
+
     if !@query.nil?
-      items_per_page = 10
-      offset = ((params[:page] || 1).to_i - 1) * items_per_page
-      @total, @products = Product.full_text_search(@query)
-      @product_pages = pages_for(@total, :per_page => items_per_page)
-      @products = @products[offset..(offset + items_per_page - 1)]
-    else 
-      @product_pages, @products = paginate :product, :per_page => 10, :conditions => ["organization_id = ?", @organization.id ] 
+      @products = Product.full_text_search(@query)
+      @product_pages, @products = paginate_by_collection @products
+    else
+      @products = @organization.products
+      @product_pages, @products = paginate_by_collection @products
     end
   end
 

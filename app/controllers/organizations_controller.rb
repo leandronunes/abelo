@@ -128,7 +128,7 @@ class OrganizationsController < ApplicationController
   def edit_configuration
     @organization = Organization.find(params[:id])
     @configuration = @organization.configuration
-    @product_informations = Product.column_names
+    @product_informations = Product.available_fields
   end
 
   def update_configuration

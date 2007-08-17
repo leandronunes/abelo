@@ -4,16 +4,20 @@ require File.dirname(__FILE__) + '/../config/environment'
 ############Organizations########################
 Organization.destroy_all
 organization = Organization.create!(:name => 'Toca', :cnpj => '05359933000193', :nickname => 'toca')
+configuration = organization.configuration
+configuration.full_product = Product.available_fields
+configuration.lite_product = ['name', 'category_id','sell_price']
+configuration.save!
 
 ###########Categories###################################
 Category.destroy_all
 
 vestuario = ProductCategory.new(:name => 'vestuário')  
 vestuario.organization = organization
-vestuario.save
+vestuario.save!
 acessorio = ProductCategory.new(:name => 'acessório')
 acessorio.organization = organization
-acessorio.save
+acessorio.save!
 
 fornecedor_vestuario = SupplierCategory.new(:name => 'fornecedor de vestuário')  
 fornecedor_vestuario.organization = organization
@@ -59,11 +63,26 @@ gerente.save
 
 ############Products#############################
 Product.destroy_all
-camisa = Product.create!(:name => 'camisa básica', :size => 'p', :color => 'azul', :sell_price => 25.00, :organization_id => 1, :category_id => 1, :unit => 'letra')
-calca = Product.create!(:name => 'calça xadrez', :size => 'p', :color => 'verde', :sell_price => 45.00, :organization_id => 1, :category_id => 1, :unit => 'letra')
-colar = Product.create!(:name => 'colar golfinho', :size => '20', :color => 'preto', :sell_price => 20.00, :organization_id => 1, :category_id => 2, :unit => 'cm')
-brinco = Product.create!(:name => 'brinco madreperola', :size => '4', :color => 'branco', :sell_price => 15.00, :organization_id => 1, :category_id => 2, :unit => 'cm')
-monitor = Product.create!(:name => 'monitor lcd', :size => '15', :color => 'preto', :sell_price => 0.00, :organization_id => 1, :category_id => 3, :unit => 'polegadas')
+camisa = Product.new(:name => 'camisa básica', :size => 'p', :color => 'azul', :sell_price => 25.00, :unit => 'letra')
+camisa.organization = organization
+camisa.category = vestuario
+camisa.save!
+calca = Product.new(:name => 'calça xadrez', :size => 'p', :color => 'verde', :sell_price => 45.00, :unit => 'letra')
+calca.organization = organization
+calca.category = vestuario
+calca.save!
+colar = Product.new(:name => 'colar golfinho', :size => '20', :color => 'preto', :sell_price => 20.00, :unit => 'cm')
+colar.organization = organization
+colar.category = acessorio
+colar.save!
+brinco = Product.new(:name => 'brinco madreperola', :size => '4', :color => 'branco', :sell_price => 15.00, :unit => 'cm')
+brinco.organization = organization
+brinco.category = acessorio
+brinco.save!
+monitor = Product.new(:name => 'monitor lcd', :size => '15', :color => 'preto', :sell_price => 0.00, :unit => 'polegadas')
+monitor.organization = organization
+monitor.category = acessorio
+monitor.save!
 
 #############Images##############################
 #Image.destroy_all

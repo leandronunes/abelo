@@ -14,25 +14,50 @@
 
 <% display_collection @products do |item|%>
 
-  <%= display_collection_item(item,
-        :title => _('Name'), 
+  <%= display_field_lite(item, 'name',
+        :title => _('Name'),
         :content => item.name,
         :html_options => {:class => 'line_item'}
-      ) 
+      )
   %>
 
-  <div class="line_item">
-    <strong> <%= _('Name:') %> </strong>
-    <span> <%= item.name %>  </span>
-  </div>
-  <div>
-    <strong> <%= _('Code:') %>   </strong>
-    <span> <%= item.id %>  </span>
-  </div>
-  <div>
-    <strong> <%= _('Price:') %>   </strong>
-    <span> <%= item.sell_price %>  </span>
-  </div>
+  <%= display_field_lite(item, 'size',
+        :title => _('Size'),
+        :content => item.size
+      )
+  %>
+
+  <%= display_field_lite(item, 'color',
+        :title => _('Color'),
+        :content => item.color
+      )
+  %>
+
+  <%= display_field_lite(item, 'description',
+        :title => _('Description'),
+        :content => item.description
+      )
+  %>
+
+  <%= display_field_lite(item, 'sell_price',
+        :title => _('Price'),
+        :content => item.sell_price
+      )
+  %>
+
+  <%= display_field_lite(item, 'unit',
+        :title => _('Unit'),
+        :content => item.unit
+      )
+  %>
+
+  <%= display_field_lite(item, 'category_id',
+        :title => _('Category'),
+        :title => Product.describe_field('category_id'),
+        :content => item.category.name
+      )
+  %>
+  
 <% end %>
 
 <%= pagination_links(@product_pages, :params => {:query => @query}) %>

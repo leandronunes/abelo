@@ -9,7 +9,7 @@ class ProductsController < ApplicationController
   def autocomplete_name
     escaped_string = Regexp.escape(params[:product][:name])
     re = Regexp.new(escaped_string, "i")
-    @products = Product.find(:all).select { |pr| pr.name.match re}
+    @products = @organization.products.select { |pr| pr.name.match re}
     render :layout=>false
   end
 

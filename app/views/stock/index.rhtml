@@ -2,7 +2,7 @@
 
 <% form_tag({:action => 'index'}, {:class => 'search_itens'} ) do %>
 <%= text_field 'product', 'name', :class => 'filter_field'  %>
-<%= submit_tag('', { :class => 'button button_search', :title => _("Search product") }) %>
+<%= button('lupa', _('Search'), :search) %>
 <%= button('add', _("New product"), :new, {:controller => 'products', :action => 'new'}) %>
 <% end %>
 

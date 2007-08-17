@@ -21,8 +21,10 @@ class StockControllerTest < Test::Unit::TestCase
   def test_index
     get :index
     assert_template 'index'
+    assert_nil assigns(:search_param)
     assert_not_nil assigns(:products)
   end
+  
 
   def test_history
     get :history, :id => 1
@@ -83,17 +85,24 @@ class StockControllerTest < Test::Unit::TestCase
   end
 
   def test_update_fails
-    post :update, :product_id => 1, :id => 1, :entry => { }
-    assert_template 'stock/edit', :id => 1, :product_id => 1
+    entry = StockIn.new
+    entry.supplier = Supplier.find(3)
+    entry.ammount = 1
+    entry.price = 2
+    entry.purpose = 'sell'
+    entry.product = Product.find(1)
+    entry.date = '2006-04-01'
+    assert entry.save
+    post :update, :id => entry.id, :product_id => 1, :entry => {:price => 'bli'}
+    assert_not_nil assigns(:entry)
+    assert_not_nil assigns(:product)
+    assert_template 'edit', :id => 1, :product_id => 1
   end
 
   def test_destroy
     post :destroy, :id => 1, :product_id => 1
     assert_response :redirect
     assert_redirected_to :action => 'history', :id => 1
-  end
-
-  def test_
   end
 
 end

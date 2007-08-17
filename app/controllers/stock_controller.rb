@@ -10,7 +10,7 @@ class StockController < ApplicationController
 
   def index
     search_param = params[:product].nil? ? nil : params[:product][:name]
-    @products = search_param.blank? ? @organization.products : @organization.products.find_by_contents(search_param)
+    @products = search_param.nil? ? @organization.products : @organization.products.find_by_contents(search_param)
     @product_pages, @products = paginate_by_collection @products
   end
   
@@ -54,7 +54,8 @@ class StockController < ApplicationController
       flash[:notice] = 'Entry was successfully updated.'
       redirect_to :action => 'history', :id => params[:product_id]
     else
-      render :action => 'edit', :id => @entry.id, :product_id => params[:product_id]
+      @product = @organization.products.find(params[:product_id])
+      render :action => 'edit'
     end
   end
 

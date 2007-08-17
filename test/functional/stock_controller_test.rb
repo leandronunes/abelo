@@ -37,8 +37,8 @@ class StockControllerTest < Test::Unit::TestCase
     assert_template 'history'
   end
 
-  def test_new_entry
-    get :new_entry, :id => 1
+  def test_new
+    get :new, :id => 1
 
     assert_not_nil assigns(:product)
     assert_equal 1, assigns(:product).id
@@ -46,27 +46,54 @@ class StockControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:entry)
     assert_kind_of StockEntry, assigns(:entry)
   
-    assert_response 200
-    assert_template 'new_entry'
+    assert_response :success
+    assert_template 'new'
   end
-#TODO make this test
-#  def test_add_entry_ok
-#    count = StockIn.count
-#
-#    post :add_entry, :id => 1, :entry => { :supplier_id => 1, :ammount => 1, :price => 1.99, :purpose => 'sell', :date => '2007-01-01' }
-#
-#    assert_redirected_to :action => 'history', :id => 1
-#    assert_equal count + 1, StockIn.count
-#  end
 
-  def test_add_entry_fail
+  def test_create
     count = StockIn.count
 
-    post :add_entry, :id => 1, :entry => {  }
+    post :create, :id => 1, :entry => { :supplier_id => 3, :ammount => 1, :price => 1.99, :purpose => 'sell', :date => '2007-01-01' }
+
+    assert_redirected_to :action => 'history', :id => 1
+    assert_equal count + 1, StockIn.count
+  end
+
+  def test_create_fail
+    count = StockIn.count
+
+    post :create, :id => 1, :entry => {  }
 
     assert_equal count , StockIn.count
-    assert_template 'new_entry'
-    assert_response 200
+    assert_template 'new'
+    assert_response :success
+  end
+
+  def test_edit
+    get :edit, :id => 1, :product_id => 1
+    assert_response :success
+    assert_template 'edit' 
+  end
+
+  def test_update
+    post :update, :product_id => 1, :id => 1, :entry => { :supplier_id => 3, :ammount => 1, :price => 1.99, :purpose => 'sell', :date => '2007-01-01' }
+
+    assert_response :redirect
+    assert_redirected_to :action => 'history', :id => 1
+  end
+
+  def test_update_fails
+    post :update, :product_id => 1, :id => 1, :entry => { }
+    assert_template 'stock/edit', :id => 1, :product_id => 1
+  end
+
+  def test_destroy
+    post :destroy, :id => 1, :product_id => 1
+    assert_response :redirect
+    assert_redirected_to :action => 'history', :id => 1
+  end
+
+  def test_
   end
 
 end

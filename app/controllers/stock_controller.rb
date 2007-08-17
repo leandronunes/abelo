@@ -25,18 +25,13 @@ class StockController < ApplicationController
     @entry.product = @product
   end
 
-  def show_history
-    @entry = StockEntry.find(params[:id])
-    @product = @organization.products.find(params[:product_id])
-  end
-
-  def new_entry
+  def new
     @product = @organization.products.find(params[:id])
     @entry = StockIn.new
     @entry.product = @product
   end
 
-  def add_entry
+  def create
     @product = @organization.products.find(params[:id])
     @entry = StockIn.new(params[:entry])
     @entry.product = @product
@@ -44,7 +39,7 @@ class StockController < ApplicationController
       flash[:notice] = 'Stock entry was successfully created and was added to cash flow too.'
       redirect_to :action => 'history', :id => @product
     else
-      render :action => 'new_entry'
+      render :action => 'new'
     end
   end
   
@@ -53,13 +48,13 @@ class StockController < ApplicationController
     @entry = StockEntry.find(params[:id])
   end
 
-  def update_entry
-    @entry = StockEntry.find(params[:entry])
+  def update
+    @entry = StockEntry.find(params[:id])
     if @entry.update_attributes(params[:entry])
       flash[:notice] = 'Entry was successfully updated.'
-      redirect_to :action => 'list'
+      redirect_to :action => 'history', :id => params[:product_id]
     else
-      render :partial => 'edit', :status => 409
+      render :action => 'edit', :id => @entry.id, :product_id => params[:product_id]
     end
   end
 

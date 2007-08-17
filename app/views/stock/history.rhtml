@@ -6,7 +6,7 @@
   [
     {:content => [
       button('edit_small', _('Edit'), :edit, :action => 'edit', :id => e, :product_id => @product.id),
-      button('del_small', _('Destroy'), :destroy, {:action => 'destroy', :id => e, :product_id => @product.id}, :confirm => _('Are you sure?'), :post => true )], :option => 'button'},
+      button('del_small', _('Destroy'), :destroy, {:action => 'destroy', :id => e, :product_id => @product.id}, :confirm => _('Are you sure?'), :method => 'post' )], :option => 'button'},
     {:title => _('Date:'), :content => show_date(e.date), :option => 'date'},
     {:title => _('Ammount:'), :content => e.ammount},
     {:title => _('Price:'), :content => e.price},

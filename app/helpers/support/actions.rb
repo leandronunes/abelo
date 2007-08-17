@@ -51,8 +51,7 @@
     content = capture(object, &block)
     concat(
       content_tag(:div,
-        content +
-        display_info_options_on_edit(object, html_options[:button_class])
+        content 
       ),
       block.binding
     )

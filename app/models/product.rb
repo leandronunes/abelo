@@ -15,7 +15,7 @@ class Product < ActiveRecord::Base
   acts_as_ferret
 
   def self.available_fields
-    ['name', 'size', 'color', 'description', 'sell_price', 'unit', 'category_id']
+    ['name', 'size', 'color', 'description', 'sell_price', 'unit', 'category_id', 'suppliers']
   end
 
   def self.full_text_search(q, options = {})

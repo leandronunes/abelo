@@ -64,6 +64,11 @@ height: 50px;
   clear: both;
 }
 
+.product_color{
+  width: 140px;
+  height: 22px;
+}
+
 /* Main Content */
 #box_1 {
   border: 2px solid black;

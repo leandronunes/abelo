@@ -4,8 +4,8 @@
 <% form_tag :action => 'update', :id => @product do %>
     <%= render :partial => 'form' %>
   <div class='button_bar'>
+    <%= button 'back', _('Back'), :back, :action => 'list' %>
     <%= button 'save', _('Save'), :save %>
-    <%= button 'cancel', _('Cancel'), :cancel, :action => 'list' %>
     <%= button 'image', _('Images'), :img, :action => 'images', :id => @product %>
   </div>
 <% end %>

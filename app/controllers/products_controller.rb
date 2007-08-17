@@ -42,6 +42,10 @@ class ProductsController < ApplicationController
   def new
     @product = Product.new
     @product.organization = @organization
+    @suppliers = @organization.suppliers
+    @sizes = Size.options
+    @colors = Color.options
+    @units = Unit.options
   end
 
   def create
@@ -58,6 +62,10 @@ class ProductsController < ApplicationController
 
   def edit
     @product = @organization.products.find(params[:id])
+    @suppliers = @organization.suppliers
+    @sizes = Size.options
+    @colors = Color.options
+    @units = Unit.options
   end
 
   def update

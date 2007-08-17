@@ -6,46 +6,62 @@
 
 <% display_info_edit @product, :class => 'view_data' do |item| %>
 
-  <%= display_field_edit(item, 'description',
-        :title => _('Description'),
+  <%= display_field_edit(item, 'name',
+        :title => _('Name'),
         :content => text_field('product', 'name'),  
         :html_options => {:class => 'line_item'}
       )
   %>
   
-  <%= display_field_edit(item, 'description',
-        :title => _('description'),
+  <%= display_field_edit(item, 'category_id',
+        :title => _('Category'),
         :content => select_category('product', 'product'),  
         :html_options => {:class => 'line_item'}
       )
   %>
 
-  <%= display_field_edit(item, 'description',
-        :title => _('description'),
-        :content => select_category('product', 'product'),  
+  <%= display_field_edit(item, 'suppliers',
+        :title => _('Suppliers'),
+        :content => multiple_select('product', 'suppliers', @suppliers ),  
         :html_options => {:class => 'line_item'}
       )
   %>
+
+  <%= display_field_edit(item, 'size',
+        :title => _('Size'),
+        :content => select_item('product', 'size', @sizes),
+        :html_options => {:class => 'line_item'}
+      )
+  %>
+
+  <%= display_field_edit(item, 'unit',
+        :title => _('Unit'),
+        :content => select_item('product', 'unit', @units)
+      )
+  %>
+
+  <%= display_field_edit(item, 'color',
+        :title => _('Color'),
+        :content => select_item('product', 'color', @colors)
+      )
+  %>
+
+  <%= display_field_edit(item, 'sell_price',
+        :title => _('Sell Price'),
+        :content => text_field('product', 'sell_price')
+      )
+  %>
+
+  <%= display_field_edit(item, 'description',
+        :title => _('Description'),
+        :content => text_field('product', 'description'),  
+        :html_options => {:class => 'line_item'}
+      )
+  %>
+  
 
 <% end %>
 
-  <p><label for='product_suppliers'><%= _("Suppliers") %></label>
-  <%= select_suppliers @product %></p>
-
-  <p><label for="product_size"><%= _("Size") %></label>
-  <%= select_size 'product', 'size'  %></p>
-
-  <p><label for="product_color"><%= _("Color") %></label>
-  <%= color_select 'product', 'color'  %></p>
-
-  <p><label for="product_sell_price"><%= _("Sell price") %></label>
-  <%= text_field 'product', 'sell_price'  %></p>
-
-  <p><label for="product_unit"><%= _("Unit") %></label>
-  <%= select_unit 'product', 'unit'  %></p>
-
-  <p><label for="product_description"> <%= _('Description') %> </label>
-  <%= text_area 'product', 'description' %></p>
 </div>
 
 <!--[eoform:product]-->

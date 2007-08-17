@@ -8,9 +8,9 @@ module ApplicationHelper
 
   require 'support/button'
 
-  require 'support/color'
-
   require 'support/menu'
+
+  require 'support/actions'
 
   def show_date(date)
     _('%{year}/%{month}/%{day}') % {:day => '%02d' % date.day, :month => '%02d' % date.month, :year => '%04d' % date.year}
@@ -262,10 +262,12 @@ module ApplicationHelper
 
   def footer
     _("Copyrigth © 2007 %s. This software is under %s") % [link_to(_('Colivre'), 'http://www.colivre.coop.br', :alt => 'Cooperativa de Tecnologias Livres'), link_to(_('GPL'), 'http://www.gnu.org/licenses/licenses.html#GPL')]
-
   end
 
-  require 'support/actions'
+  def select_item(object, method, collection=[])
+    select(object, method, collection) 
+  end
+
 
   private 
 

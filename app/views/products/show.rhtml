@@ -17,7 +17,7 @@
   %>
   <%= display_field_full(item, 'color',
         :title => _('Color'),
-        :content => item.color
+        :content => content_tag(:div, '', :class => 'product_color', :style => "background-color: #{item.color};")
       )
   %>
 

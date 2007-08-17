@@ -90,7 +90,7 @@ class SystemActorTest < Test::Unit::TestCase
   end
 
   def test_full_text_search
-    c = Customer.create(:name => 'Testing unique CNPJ (first)', :email => 'teste2@teste', :organization_id => 1, :cpf => '86666532724', :category_id => @cat.id)
+    c = Customer.create!(:name => 'Testing unique CNPJ (first)', :email => 'teste2@teste', :organization_id => 1, :cpf => '86666532724', :category_id => @cat.id)
     customers = SystemActor.full_text_search('Test*')
     assert customers[1].include?(c)
   end

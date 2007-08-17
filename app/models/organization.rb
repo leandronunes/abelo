@@ -2,7 +2,6 @@ class Organization < ActiveRecord::Base
 
   after_create do |organization|
     configuration = Configuration.new
-    configuration.owner = organization
     configuration.organization = organization
     configuration.save!
   end

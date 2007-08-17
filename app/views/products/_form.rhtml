@@ -2,8 +2,6 @@
 
 <!--[form:product]-->
 
-<div id='form'>
-
 <% display_info_edit @product, :class => 'view_data' do |item| %>
 
   <%= display_field_edit(item, 'name',
@@ -36,7 +34,8 @@
 
   <%= display_field_edit(item, 'unit',
         :title => _('Unit'),
-        :content => select_item('product', 'unit', @units)
+        :content => select_item('product', 'unit', @units),
+        :html_options => {:class => 'line_item'}
       )
   %>
 
@@ -61,8 +60,6 @@
   
 
 <% end %>
-
-</div>
 
 <!--[eoform:product]-->
 

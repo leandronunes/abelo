@@ -51,7 +51,8 @@
     content = capture(object, &block)
     concat(
       content_tag(:div,
-        content 
+        content,
+        :id => 'info_form'
       ),
       block.binding
     )
@@ -62,7 +63,18 @@
     unless @organization.nil?
       return '' unless @organization.configuration.send("full_#{item.class.to_s.tableize.singularize}").include?(field)
     end
-    display_field_info_edit(info)
+
+    info[:html_options] ||= Hash.new
+
+    info[:html_options][:class] = 'info_field ' +  info[:html_options][:class].to_s if !info[:html_options].empty?
+
+    content_tag(:div,
+      [
+       content_tag(:label, info[:title]),
+       content_tag(:span, info[:content])
+      ].join("\n"),
+      info[:html_options]
+    )
   end
 
   private 
@@ -90,15 +102,6 @@
     )
   end
 
-  def display_field_info_edit(info)
-    content_tag(:div,
-      [
-       content_tag(:label, info[:title]),
-       content_tag(:span, info[:content])
-      ].join("\n"),
-      info[:html_options]
-    )
-  end
 
 
   def display_info_options_on_show(object, html_options = {})

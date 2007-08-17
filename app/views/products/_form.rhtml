@@ -4,7 +4,7 @@
 
 <div id='form'>
 
-<% display_info @product, :class => 'view_data' do |item| %>
+<% display_info_edit @product, :class => 'view_data' do |item| %>
 
   <%= display_field_edit(item, 'description',
         :title => _('Description'),
@@ -13,6 +13,13 @@
       )
   %>
   
+  <%= display_field_edit(item, 'description',
+        :title => _('description'),
+        :content => select_category('product', 'product'),  
+        :html_options => {:class => 'line_item'}
+      )
+  %>
+
   <%= display_field_edit(item, 'description',
         :title => _('description'),
         :content => select_category('product', 'product'),  

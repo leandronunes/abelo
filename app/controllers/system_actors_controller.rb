@@ -32,16 +32,17 @@ class SystemActorsController < ApplicationController
   def list
     @actor = params[:actor] if SYSTEM_ACTORS.include?(params[:actor])
     @actor = params[:actor] = 'worker' if @actor.blank?
+    
+    @query = params[:query]
+    @query ||= params[:system_actor][:name] if params[:system_actor]
 
-    @title = _("Listing %s") % @actor.to_s
-
-    search_param = params[:system_actor].nil? ? nil : params[:system_actor][:name]
-
-    @system_actors = search_param.blank? ?
-                 @organization.send("#{@actor.pluralize}") :
-                 @organization.send("#{@actor.pluralize}").full_text_search(search_param)
-
-    @system_actor_pages, @system_actors = paginate_by_collection @system_actors
+    if !@query.nil?
+      @system_actors = eval("#{@actor.camelize}").full_text_search(@query)
+      @system_actor_pages, @system_actors = paginate_by_collection @system_actors
+    else
+      @system_actors = @organization.system_actors.find(:all, :conditions => ["type = ?", @actor.camelize])
+      @system_actor_pages, @system_actors = paginate_by_collection @system_actors
+    end
   end
 
   def show

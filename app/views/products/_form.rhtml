@@ -3,11 +3,24 @@
 <!--[form:product]-->
 
 <div id='form'>
-  <p><label for="product_description"><%= _("Description") %></label>
-  <%= text_field 'product', 'name'  %></p>
 
-  <p><label for="product_category"><%= _("Category") %></label>
-  <%= select_category 'product', 'product'  %></p>
+<% display_info @product, :class => 'view_data' do |item| %>
+
+  <%= display_field_edit(item, 'description',
+        :title => _('Description'),
+        :content => text_field('product', 'name'),  
+        :html_options => {:class => 'line_item'}
+      )
+  %>
+  
+  <%= display_field_edit(item, 'description',
+        :title => _('description'),
+        :content => select_category('product', 'product'),  
+        :html_options => {:class => 'line_item'}
+      )
+  %>
+
+<% end %>
 
   <p><label for='product_suppliers'><%= _("Suppliers") %></label>
   <%= select_suppliers @product %></p>

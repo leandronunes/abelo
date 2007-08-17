@@ -2,9 +2,9 @@
 
 <%=error_messages_for 'sale' %>
 
-  <center><div id='product_identification'>
+  <div id='product_identification'>
     <%= @product.name unless @product.nil? %>
-  </div></center>
+  </div>
 
   <div id='add_item_panel'>
     <div id="search_product"><%= link_to content_tag('span', 'Search product'), {}, :class => "button button_search", :accesskey => "p" %>

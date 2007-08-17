@@ -2021,7 +2021,7 @@ msgstr "Fechar"
 
 #: app/views/layouts/point_of_sale.rhtml:23
 msgid "Salesman: %s"
-msgstr "Venderdor: %s"
+msgstr "Vendedor: %s"
 
 #: app/views/layouts/point_of_sale.rhtml:36
 msgid "Payment"

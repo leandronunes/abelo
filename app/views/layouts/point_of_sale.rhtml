@@ -9,19 +9,20 @@
 
 <body onload='if (document.forms[0] != null) { document.forms[0].elements[0].focus(); }'>
 <div id="warp">
-  
-<div id="header">
+  <div id="frame">
+    
+    <div id="header">
 
-  <div id="userbar">
+      <div id="userbar">
 
-    <div class="login_bar">
-      <%= link_to _('Edit preferences'), {}, :accesskey => 'e', :id => 'edit_profile' %>
-      &nbsp;
-      <%= link_to _('Close'), {:controller => 'users', :action => 'logout'}, :accesskey => "q", :id => 'logout', :method => 'post', :confirm => _('Exit from system?') %>
-    </div> <!-- login_bar -->
+      <div class="login_bar">
+        <%= design_display_icon( 'edit_small' , _('Edit prederences'), {:controller => 'users', :action => 'edit', :id => self.current_user}, :id => "edit_profile", :accesskey => "e") %> 
+        &nbsp;
+        <%= design_display_icon( 'system-log-out', _('Logout'), {:controller => 'users', :action => 'logout'}, :id => "logout", :accesskey => "q", :confirm => _('Exit from system?'), :method => 'post') %>
+      </div> <!-- login_bar -->
 
-    <%= link_to_organization @organization %> | <%= _('Salesman: %s') % self.current_user.login %>
-  </div>
+      <%= link_to_organization @organization %> | <%= _('Salesman: %s') % self.current_user.login %>
+      </div>
   
   <h1 class="status"> CAIXA ABERTO </h1>
       
@@ -29,7 +30,7 @@
 
 <div id='content'>
 
-  <div id='sidebar'>
+  <div id='box_2'>
   <!-- sidebar -->
 
     <div id="cumpom_bar">
@@ -63,6 +64,7 @@
 </div>
 <img id="banner_bottom" src="/images/bannerabelo_160x75.jpg" "Banner - Abelo" height="75px" width="160px">
 
+</div>
 </div>
 
 </body>

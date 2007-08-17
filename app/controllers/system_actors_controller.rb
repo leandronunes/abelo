@@ -33,7 +33,7 @@ class SystemActorsController < ApplicationController
     @actor = params[:actor] if SYSTEM_ACTORS.include?(params[:actor])
     @actor = params[:actor] = 'worker' if @actor.blank?
 
-    @title = _("Listing %s") % SYSTEM_ACTORS[@actor.to_s]
+    @title = _("Listing %s") % @actor.to_s
 
     search_param = params[:system_actor].nil? ? nil : params[:system_actor][:name]
 

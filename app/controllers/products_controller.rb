@@ -24,10 +24,10 @@ class ProductsController < ApplicationController
 
   def list
     @query = params[:query]
-    @query ||= params[:product][:name] if params[:produt]
+    @query ||= params[:product][:name] if params[:product]
 
     if !@query.nil?
-      @products = Product.full_text_search(@query)
+      @products = @organization.products.full_text_search(@query)
       @product_pages, @products = paginate_by_collection @products
     else
       @products = @organization.products

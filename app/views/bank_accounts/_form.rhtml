@@ -1,0 +1,33 @@
+<%= error_messages_for 'bank_account' %>
+
+<!--[form:bank_account]-->
+
+<% display_edit_info @bank_account, :class => 'view_data' do |item| %>
+
+  <%= display_field_edit(item, 'bank',
+        :title => _('Agency'),
+        :content => select_item('bank_account', 'bank_id', @banks),
+        :html_options => {:class => 'line_item'}
+      )
+  %>
+
+  <%= display_field_edit(item, 'agency',
+        :title => _('Agency'),
+        :content => text_field('bank_account', 'agency')
+      )
+  %>
+
+  <%= display_field_edit(item, 'account',
+        :title => _('Account'),
+        :content => text_field('bank_account', 'account')
+      )
+  %>
+
+  <%= display_field_edit(item, 'variation',
+        :title => _('Variation'),
+        :content => text_field('bank_account', 'variation')
+      )
+  %>
+<% end %>
+<!--[eoform:bank_account]-->
+

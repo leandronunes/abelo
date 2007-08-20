@@ -1,0 +1,17 @@
+<%= title _('Listing Bank Accounts') %>
+
+<% form_tag( { :action => 'list' }, { :class => 'search_itens' } ) do %>
+  <%= text_field 'bank_account', 'account', :class => 'filter_field' %>
+  <%= button( 'lupa', _('Search'), :search) %>
+  <%= button('add', _("New Account"), :new, :action => 'new' ) %>
+<% end %>
+
+<div class="auto_complete" id="bank_account_account_auto_complete"></div>
+<%= auto_complete_field :bank_account_account, :url => {:action => 'autocomplete_account' }, :indicator => 'auto_list'%>
+<div id="auto_list" style="display:none;">
+</div>
+
+<%= display_collection @bank_accounts %>
+
+<%= pagination_links(@bank_account_pages, :params => {:query => @query}) %> 
+

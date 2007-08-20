@@ -3,10 +3,8 @@ class Configuration < ActiveRecord::Base
 
   serialize :full_product, Array
   serialize :lite_product, Array
-  #, Array TODO fix this problem
-  #The serialize must be an array but if the value is nil
-  #It craches
-  #
+  serialize :full_department, Array
+  serialize :lite_department, Array
 
   def validate
     self.errors.add('organization_id', _('You cannot associate a template to an organization') )   if self.is_model? and !self.organization.nil?

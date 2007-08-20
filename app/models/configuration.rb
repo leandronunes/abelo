@@ -23,11 +23,11 @@ class Configuration < ActiveRecord::Base
   end
 
   def full_bank_account
-    BankAccount.column_names
+    ["onwer", "bank", "agency", "variation", "account"]
   end
 
   def lite_bank_account
-    BankAccount.column_names
+    ["owner", "bank", "agency", "variation", "account"]
   end
 
   def full_department

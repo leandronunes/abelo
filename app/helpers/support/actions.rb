@@ -92,13 +92,16 @@
 
   # End Specific Block Methods Related
 
-
   def display_field_info(object, field, html_options = {})
     content = object.send("#{field}")
     content_tag(:div,
       [
        content_tag(:strong, object.class.send("title_#{field}") + ": "),
-       self.send("display_field_type_#{content.class.to_s.tableize.singularize}", content)
+       begin
+         self.send("display_field_type_#{content.class.to_s.tableize.singularize}", content)
+       rescue
+         content.name
+       end
       ].join("\n"),
      html_options
     )
@@ -177,17 +180,6 @@
        content_tag(:span, info[:content])
       ].join("\n"),
       info[:html_options]
-    )
-  end
-
-  def display_field_info(object, field, html_options = {})
-    content = object.send("#{field}")
-    content_tag(:div,
-      [
-       content_tag(:strong, object.class.send("title_#{field}") + ": "),
-       self.send("display_field_type_#{content.class.to_s.tableize.singularize}", content)
-      ].join("\n"),
-     html_options
     )
   end
 

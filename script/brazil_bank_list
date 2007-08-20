@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 require File.dirname(__FILE__) + '/../config/environment'
 
+Bank.delete_all()
 Bank.create!(:code => 'M08', :name => 'Banco Citicard S.A. ', :site => 'www.credicardbanco.com.br ')
 Bank.create!(:code => '654', :name => 'Banco A.J.Renner S.A. ', :site => 'www.bancorenner.com.br ')
 Bank.create!(:code => '246', :name => 'Banco ABC Brasil S.A. ', :site => 'www.abcbrasil.com.br')
@@ -29,7 +30,7 @@ Bank.create!(:code => '263', :name => 'Banco Cacique S.A. ', :site => 'www.banco
 Bank.create!(:code => '222', :name => 'Banco Calyon Brasil S.A. ', :site => 'www.calyon.com.br ')
 Bank.create!(:code => '412', :name => 'Banco Capital S.A. ', :site => 'www.bancocapital.com.br ')
 Bank.create!(:code => '040', :name => 'Banco Cargill S.A. ', :site => 'www.bancocargill.com.br ')
-Bank.create!(:code => '', :name => 'Banco Carrefour S.A. ', :site => '')
+#Bank.create!(:code => '', :name => 'Banco Carrefour S.A. ', :site => '') #TODO See the code of this bank
 Bank.create!(:code => '266', :name => 'Banco Cédula S.A. ', :site => 'www.bancocedula.com.br ')
 Bank.create!(:code => '745', :name => 'Banco Citibank S.A. ', :site => 'www.citibank.com/brasil ')
 Bank.create!(:code => '241', :name => 'Banco Clássico S.A. ', :site => 'Não possui site ')
@@ -79,7 +80,8 @@ Bank.create!(:code => '653', :name => 'Banco Indusval S.A. ', :site => 'www.indu
 Bank.create!(:code => '630', :name => 'Banco Intercap S.A. ', :site => 'www.intercap.com.br ')
 Bank.create!(:code => '249', :name => 'Banco Investcred Unibanco S.A. ', :site => 'Não possui site ')
 Bank.create!(:code => '184-8', :name => 'Banco Itaú BBA S.A. ', :site => 'www.itaubba.com.br ')
-Bank.create!(:code => '', :name => 'Banco Itaú Cartões S.A. ', :site => 'www.itau.com.br ')
+#Bank.create!(:code => '', :name => 'Banco Itaú Cartões S.A. ', :site => 'www.itau.com.br ') TODO see the code of this
+#bank
 Bank.create!(:code => '652', :name => 'Banco Itaú Holding Financeira S.A. ', :site => 'www.itau.com.br ')
 Bank.create!(:code => '341', :name => 'Banco Itaú S.A. ', :site => 'www.itau.com.br ')
 Bank.create!(:code => '479', :name => 'Banco ItaúBank S.A ', :site => 'www.bankboston.com.br ')

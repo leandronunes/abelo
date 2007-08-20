@@ -7,10 +7,6 @@ class CreateConfigurations < ActiveRecord::Migration
       t.column :organization_id,    :interger
       t.column :full_product,       :text
       t.column :lite_product,       :text
-      t.column :full_department,    :text
-      t.column :lite_department,    :text
-      t.column :full_supplier,      :text
-      t.column :lite_supplier,      :text
       t.column :department_name,    :string
       t.column :product_name,       :string
       t.column :customer_name,      :string

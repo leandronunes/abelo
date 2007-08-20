@@ -156,7 +156,7 @@
     content_tag(:div,
       [
         button('back', _('Back'), :back, {:action => 'destroy', :id => object.id}),
-        button('edit', _('Edit'), :edit, :action => 'edit', :id => object.id)
+        button('edit', _('Save'), :save)
       ].join("\n"),
       html_options
     )

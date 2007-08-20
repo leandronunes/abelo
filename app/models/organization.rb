@@ -14,23 +14,20 @@ class Organization < ActiveRecord::Base
   has_many :mass_mails
   has_many :documents
   has_many :ledgers
-
   has_many :categories
   has_many :product_categories
   has_many :customer_categories
   has_many :worker_categories
   has_many :ledger_categories
   has_many :supplier_categories
-
   has_many :system_actors
   has_many :suppliers
   has_many :customers
   has_many :workers
-
   has_many :profiles
-  has_many :users, :through => :profiles
-  
+  has_many :users, :through => :profiles  
   has_many :contacts, :through => :customers
+  has_many :bank_accounts, :as => :owner
 
   validates_presence_of :name, :cnpj, :nickname
   validates_uniqueness_of :name, :cnpj, :nickname

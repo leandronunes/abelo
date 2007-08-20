@@ -23,4 +23,20 @@ class Configuration < ActiveRecord::Base
   end
 
 
+  def full_bank_account
+    BankAccount.column_names
+  end
+
+  def lite_bank_account
+    BankAccount.column_names
+  end
+
+  def full_department
+    Department.column_names
+  end
+
+  def lite_department
+    Department.column_names
+  end
+
 end

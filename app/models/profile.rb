@@ -61,6 +61,7 @@ class Profile < ActiveRecord::Base
     'financial' => [
       { :controller => 'ledgers', :action => '*' },
       { :controller => 'ledger_categories', :action => '*' },
+      { :controller => 'bank_accounts', :action => '*' },
     ],
     'administration' => [
       { :controller => 'organizations', :action => '*' },
@@ -81,6 +82,7 @@ class Profile < ActiveRecord::Base
       { :controller => 'departments', :action => '*' },
       { :controller => 'main', :action => '*' },
       { :controller => 'products', :action => '*' },
+      { :controller => 'bank_accounts', :action => '*' },
     ]
   }
 

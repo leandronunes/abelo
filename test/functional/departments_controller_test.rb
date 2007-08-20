@@ -5,18 +5,15 @@ require 'departments_controller'
 class DepartmentsController; def rescue_action(e) raise e end; end
 
 class DepartmentsControllerTest < Test::Unit::TestCase
-  fixtures :departments, :organizations
-#TODO the test didn't works very well. When we run it at the first time it didn't  works, but at the second time it
-#works. I put all the fixtures to be loaded but it's not the solution. We have to see this bug in the future
-#  fixtures :departments, :commercial_proposal_items, :commercial_proposals, :contact_positions, :contacts, :customer_categories, :customers_customer_categories, :customers, :images, :mass_mails, :organizations, :payments, :people, :product_categories, :products_suppliers, :products, :sale_items, :sales, :specifications, :stock_entries, :suppliers, :profiles, :workers
   under_organization :one
+
+  fixtures :departments, :organizations, :configurations
 
   def setup
     @controller = DepartmentsController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     login_as("quentin")
-    @department = Department.create!(:name => 'The Department', :organization_id => 1)
   end
 
   def test_index
@@ -32,6 +29,33 @@ class DepartmentsControllerTest < Test::Unit::TestCase
     assert_template 'list'
 
     assert_not_nil assigns(:departments)
+  end
+
+  def test_list_when_query_param_is_nil
+    get :list
+
+    assert_nil assigns(:query)
+    assert_not_nil assigns(:departments)
+    assert_kind_of Array, assigns(:departments)
+    assert_not_nil assigns(:department_pages)
+    assert_kind_of ActionController::Pagination::Paginator, assigns(:department_pages)
+  end
+
+  def test_list_when_query_param_not_nil
+    Department.delete_all
+    Department.create!(:name => 'Some Department', :organization_id => 1)
+    Department.create!(:name => 'Another Some Department', :organization_id => 1)
+    Department.create!(:name => 'Department', :organization_id => 1)
+    get :list, :query => 'Another*'
+
+    assert_not_nil assigns(:query)
+    assert_not_nil assigns(:departments)
+    assert_kind_of Array, assigns(:departments)
+    assert_not_nil assigns(:department_pages)
+    assert_kind_of ActionController::Pagination::Paginator, assigns(:department_pages)
+
+    assert_equal 1, assigns(:departments).size
+
   end
 
   def test_show

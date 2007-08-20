@@ -30,7 +30,7 @@ class DepartmentsController < ApplicationController
       @departments = @organization.departments
       @department_pages, @departments = paginate_by_collection @departments
     else
-      @departments = @organization.departments
+      @departments = @organization.departments.full_text_search(@query)
       @department_pages, @departments = paginate_by_collection @departments
     end
   end

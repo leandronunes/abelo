@@ -1,55 +1,9 @@
 
 <%= title _("Product %s") % @product.name %>
 
-<div id="show_data">
+<%= display_show_info @product, :class => 'view_data'%>
 
-<% display_info @product, :class => 'view_data' do |item| %>
-
-  <%= display_field_full(item, 'name',
-        :title => _('Name'),
-        :content => item.name,
-        :html_options => {:class => 'line_item'}
-      )
-  %>
-
-  <%= display_field_full(item, 'size',
-        :title => _('Size'),
-        :content => item.size
-      )
-  %>
-  <%= display_field_full(item, 'color',
-        :title => _('Color'),
-        :content => content_tag(:div, '', :class => 'product_color', :style => "background-color: #{item.color};")
-      )
-  %>
-
-  <%= display_field_full(item, 'description',
-        :title => _('Description'),
-        :content => item.description
-      )
-  %>
-    <%= display_field_full(item, 'sell_price',
-        :title => _('Price'),
-        :content => item.sell_price
-      )
-  %>
-
-  <%= display_field_full(item, 'unit',
-        :title => _('Unit'),
-        :content => item.unit
-      )
-  %>
-
-  <%= display_field_full(item, 'category_id',
-        :title => _('Category'),
-        :title => Product.describe_field('category_id'),
-        :content => item.category.name
-      )
-  %>
-
-<% end %>
+<%= display_show_info_options(@product) %> 
 
 <%= render :partial => 'list_images' %>
-
-</div>
 

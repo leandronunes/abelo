@@ -25,15 +25,16 @@ class Product < ActiveRecord::Base
     return results
   end
 
-  def self.describe_field(field)
-    {
-      'id' => 'Id',
-      'name' => _('Name'),
-      'size' => _('Size'),
-      'organization_id' => _('Organization'),
-      'category_id' => _('Category'),
-    }[field.to_s] || field
-  end
+  #TODO Remove this it's deprecated use title_"field"
+#  def self.describe_field(field)
+#    {
+#      'id' => 'Id',
+#      'name' => _('Name'),
+#      'size' => _('Size'),
+#      'organization_id' => _('Organization'),
+#      'category_id' => _('Category'),
+#    }[field.to_s] || field
+#  end
 
   def ammount_in_stock
     self.connection.select_value('select sum(ammount) from stock_entries where product_id = %d' % self.id).to_f
@@ -45,6 +46,44 @@ class Product < ActiveRecord::Base
 
   def image
     self.images.find(:first)
+  end
+
+  def self.title_name
+    _('Name')
+  end
+
+#TODO see if it's the better way to do that
+  def self.name_on_edit
+    "text_field('product', 'name')"
+  end
+
+  def self.title_size
+    _('Size')
+ end
+
+  def self.title_color
+    _('Color')
+  end
+
+
+  def self.title_description
+    _('Description')
+  end
+
+  def self.title_sell_price
+    _('Sell Price')
+  end
+
+  def self.title_unit
+    _('Unit')
+  end
+
+  def self.title_category_id
+    _('Category')
+  end
+
+  def self.title_suppliers
+    _('Suppliers')
   end
 
 end

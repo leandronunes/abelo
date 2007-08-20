@@ -5,7 +5,7 @@
       content.push(
         [
           display_collection_options(c),
-          display_info(c,html_options )
+          display_info(c,html_options, 'lite' )
         ]
       )
     end

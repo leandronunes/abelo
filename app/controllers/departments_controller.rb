@@ -23,10 +23,16 @@ class DepartmentsController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    search_param = params[:department].nil? ? nil : params[:department][:name]
+    @query = params[:query]
+    @query ||= params[:department][:name] if params[:department]
 
-    @departments = search_param.blank? ? @organization.departments : @organization.departmants.find_by_contents(search_param)
-    @department_pages, @departments = paginate_by_collection @departments
+    if @query.nil?
+      @departments = @organization.departments
+      @department_pages, @departments = paginate_by_collection @departments
+    else
+      @departments = @organization.departments
+      @department_pages, @departments = paginate_by_collection @departments
+    end
   end
 
   def show

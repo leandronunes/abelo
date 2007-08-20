@@ -22,7 +22,6 @@ class Configuration < ActiveRecord::Base
     Configuration.find(:all, :conditions => ['is_model = ?', true])
   end
 
-
   def full_bank_account
     BankAccount.column_names
   end
@@ -32,11 +31,11 @@ class Configuration < ActiveRecord::Base
   end
 
   def full_department
-    Department.column_names
+    ['name']
   end
 
   def lite_department
-    Department.column_names
+    ['name']
   end
 
 end

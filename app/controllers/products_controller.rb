@@ -26,12 +26,12 @@ class ProductsController < ApplicationController
     @query = params[:query]
     @query ||= params[:product][:name] if params[:product]
 
-    if !@query.nil?
-      @products = @organization.products.full_text_search(@query)
-      @product_pages, @products = paginate_by_collection @products
-    else
+    if @query.nil?
       @products = @organization.products
       @product_pages, @products = paginate_by_collection @products
+    else
+      @products = @organization.products.full_text_search(@query)
+      @product_pages, @products = paginate_by_collection @products, :per_page => 1
     end
   end
 

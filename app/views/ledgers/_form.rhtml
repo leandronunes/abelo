@@ -1,23 +1,36 @@
-<div id="form">
-  <%= error_messages_for 'ledger' %>
+<%= error_messages_for 'ledger' %>
 
-  <p> <label> <%= _('Date:') %> </label>
-    <%= date_select 'ledger', 'date', :order => [:day, :month, :year] %>
-  </p>
+<p> <label> <%= _('Date:') %> </label>
+  <%= date_select 'ledger', 'date', :order => [:day, :month, :year] %>
+</p>
 
-  <p> <label> <%= _('Category:') %> </label>
-    <%= select 'ledger', 'category_id', @ledger_categories.collect {|c| [category_with_sign(c), c.id]} %>
-  </p>
+<p> <label> <%= _('Category:') %> </label>
+  <%= select 'ledger', 'category_id', @ledger_categories.collect{|c| [category_with_sign(c), c.id]} %>
+</p>
 
-  <p> <label> <%= _('Description:') %> </label>
-    <%= text_area 'ledger', 'description', :rows => 4 %>
-  </p>
+<p> <label> <%= _('Repeat this ledger?') %> </label>
+  <%= check_box 'ledger', 'is_foreseen' %>
+</p>
 
-  <p> <label> <%= _('Tags (separated by comma):') %> </label>
-    <%= text_field 'ledger', 'tag_list' %>
-  </p>
-
-  <p> <label> <%= _('Value:') %> </label>
-    <%= text_field 'ledger', 'value' %>
-  </p>
+<div id="foreseen_informations">
+  <%= render :partial => 'get_foreseen_informations' if @ledger.is_foreseen? %>
 </div>
+
+<%= observe_field('ledger_is_foreseen',
+    :update => 'foreseen_informations',
+    :url => {:action => 'get_foreseen_informations' },
+    :with => "'value=' +  escape(value)"
+    )
+%>
+
+<p> <label> <%= _('Description:') %> </label>
+  <%= text_area 'ledger', 'description', :rows => 4 %>
+</p>
+
+<p> <label> <%= _('Tags (separated by comma):') %> </label>
+  <%= text_field 'ledger', 'tag_list' %>
+</p>
+
+<p> <label> <%= _('Value:') %> </label>
+  <%= text_field 'ledger', 'value' %>
+</p>

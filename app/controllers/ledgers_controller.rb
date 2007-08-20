@@ -12,13 +12,34 @@ class LedgersController < ApplicationController
     redirect_to :action => 'list'
   end
 
+  def get_foreseen_informations
+    if params[:value] == "1"
+      @schedule_ledger = ScheduleLedger.new
+      @periodicities = @organization.periodicities
+      render :partial => 'get_foreseen_informations', :layout => false
+    else
+      render :nothing => true
+    end
+  end
+
+  def get_periodicity_informations
+    if params[:value].blank?
+      render :nothing => true
+    else
+      @schedule_ledger = ScheduleLedger.new
+      render :partial => 'get_periodicity_informations', :layout => false
+    end
+  end
+
+  #TODO see
   def list
-    parameters = {:order => 'ledgers.date DESC, ledgers.id DESC', :per_page => 5, :conditions => ['organization_id = ?', @organization]}
+    parameters = {:order => 'ledgers.effective_date DESC, ledgers.id DESC', :per_page => 5, :conditions => ['organization_id = ?', @organization]}
     get_tags
     get_budgets
     @ledgers_page, @ledgers = paginate :ledgers, parameters
   end
 
+  #TODO see
   def new
     @ledger = Ledger.new
     get_ledger_cagetories
@@ -26,7 +47,10 @@ class LedgersController < ApplicationController
     get_budgets  
   end
 
+  #TODO see
   def create
+    render :text => params.inspect
+    return
     @ledger = Ledger.new(params[:ledger])
     @ledger.owner = current_user
     @ledger.organization = @organization
@@ -42,6 +66,7 @@ class LedgersController < ApplicationController
     end
   end
 
+  #TODO see
   def edit
     @ledger = @organization.ledgers.find(params[:id])
     get_ledger_cagetories
@@ -49,6 +74,7 @@ class LedgersController < ApplicationController
     get_budgets
   end
 
+  #TODO see
   def update
     @ledger = @organization.ledgers.find(params[:id])
     
@@ -64,6 +90,7 @@ class LedgersController < ApplicationController
   end
 
 
+  #TODO see
   def clean
     @ledger_categories =  @organization.ledger_categories_sorted
     @ledger = Ledger.new
@@ -116,10 +143,12 @@ class LedgersController < ApplicationController
   
   private
  
+  #TODO see
   def get_ledger_cagetories 
     @ledger_categories =  @organization.ledger_categories_sorted
   end
 
+  #TODO see
   def get_tags
     @tags = @organization.ledgers
   end

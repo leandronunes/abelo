@@ -178,3 +178,30 @@ item_one = DocumentItem.create!(:document_section_id => 1, :quantity => '10', :u
 DocumentSection.destroy_all
 section_one = DocumentSection.create!(:name => 'máquinas', :document_id => 1)
 
+########### Bank ###################
+Bank.delete_all
+bank = Bank.create!(:code => '001', :name => 'Banco do Brasil S.A. ', :site => 'www.bb.com.br')
+ 
+
+########### Bank Account ###################
+BankAccount.delete_all
+account = BankAccount.new(:agency => '3352-3', :account => '23456-3')
+account.bank = bank
+account.owner = organization
+account.save!
+saving_account = BankAccount.new(:agency => '3352-3', :account => '23456-3', :variation => 1)
+saving_account.bank = bank
+saving_account.owner = organization
+saving_account.save!
+
+########### Ledger Category ###################
+LedgerCategory.delete_all
+ledger_category = LedgerCategory.create!(:name => 'Limpeza', :organization => organization, :type_of => LedgerCategory::TYPE_OF_EXPENSE)
+
+#############################
+# Period
+# ###########################
+
+Periodicity.delete_all
+Periodicity.create!(:name => 'Mensal', :number_of_days => 30, :organization => organization)
+Periodicity.create!(:name => 'Quinzenal', :number_of_days => 15, :organization => organization)

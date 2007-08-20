@@ -1,8 +1,6 @@
-<% for column in BankAccount.content_columns %>
-<p>
-  <b><%= column.human_name %>:</b> <%=h @bank_account.send(column.name) %>
-</p>
-<% end %>
 
-<%= link_to 'Edit', :action => 'edit', :id => @bank_account %> |
-<%= link_to 'Back', :action => 'list' %>
+<%= title _("Bank Account") %>
+
+<%= display_show_info @bank_account, :class => 'view_data'%>
+
+<%= display_show_info_options(@bank_account) %>

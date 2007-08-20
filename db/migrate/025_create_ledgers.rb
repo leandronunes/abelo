@@ -5,10 +5,12 @@ class CreateLedgers < ActiveRecord::Migration
       t.column :owner_id,               :integer, :null => false
       t.column :type,                   :string, :null => false
       t.column :category_id,            :integer, :null => false
-      t.column :value,                  :float, :null => false
+      t.column :foreseen_value,         :float
+      t.column :effective_value,        :float
       t.column :description,            :string
       t.column :tag_list,               :string
-      t.column :date,                   :date, :null => false
+      t.column :foreseen_date,          :date
+      t.column :effective_date,         :date
       t.column :interests,              :float, :default => 0
       t.column :interests_days,         :integer, :default => 0
       t.column :number_of_parcels,      :integer, :default => 1

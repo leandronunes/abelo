@@ -23,7 +23,7 @@ class Configuration < ActiveRecord::Base
   end
 
   def full_bank_account
-    ["onwer", "bank", "agency", "variation", "account"]
+    ["owner", "bank", "agency", "variation", "account"]
   end
 
   def lite_bank_account

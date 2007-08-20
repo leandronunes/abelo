@@ -4,8 +4,8 @@ class Ledger < ActiveRecord::Base
 
   belongs_to :category, :class_name => 'LedgerCategory',  :foreign_key => 'category_id'
   belongs_to :organization
-  validates_presence_of :date, :category_id, :owner
-  validates_numericality_of :value
+  validates_presence_of :category_id, :owner
+  validates_numericality_of :effective_value #TODO upgrade this
 
   belongs_to :owner, :polymorphic => true
 
@@ -17,12 +17,28 @@ class Ledger < ActiveRecord::Base
   end
 
   def value= value
-    self[:value] = value.to_s.gsub(/,/,'.') 
+    self.is_foreseen? ?  self[:foreseen_value] = value :  self[:effective_value] = value
+  end
+
+  def value
+    self.is_foreseen == true ? self[:foreseen_value] :  self[:effective_value]
+  end
+
+  def date= date
+    self.is_foreseen? ?  self[:foreseen_date] = date :  self[:effective_date] = date
+  end
+
+  def date
+    self.is_foreseen == true ? self[:foreseen_date] :  self[:effective_date]
+  end
+
+  def periodicity
+
   end
 
   #TODO see if it's needed
   def self.find_all_ordened(options = {})
-    options.merge! :order => 'ledgers.date DESC, ledgers.id DESC'
+    options.merge! :order => 'ledgers.effective_date DESC, ledgers.id DESC'
     self.find :all, options
   end
 
@@ -32,7 +48,7 @@ class Ledger < ActiveRecord::Base
     date_init = time.at_beginning_of_month
     date_end  = time.months_since(1).at_beginning_of_month
 
-    results = self.find_by_sql ["select sum(value) as total_ledgers from ledgers where ledgers.date >= ? and ledgers.date < ? and ledgers.category_id = ?", date_init, date_end, category_id]
+    results = self.find_by_sql ["select sum(value) as total_ledgers from ledgers where ledgers.effective_date >= ? and ledgers.effective_date < ? and ledgers.category_id = ?", date_init, date_end, category_id]
 
     unless results.empty? || results.first.total_ledgers.nil?
       Float(results.first.total_ledgers)
@@ -48,6 +64,16 @@ class Ledger < ActiveRecord::Base
 
   def type= value
     errors.add(:type, _("You cannot set a type manually") )
+  end
+
+  private
+
+  def effective_value= value
+    self[:effective_value] = value.to_s.gsub(/,/,'.') 
+  end
+
+  def foreseen_value= value
+    self[:foreseen_value] = value.to_s.gsub(/,/,'.') 
   end
 
 end

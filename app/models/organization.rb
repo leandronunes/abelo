@@ -28,6 +28,7 @@ class Organization < ActiveRecord::Base
   has_many :users, :through => :profiles  
   has_many :contacts, :through => :customers
   has_many :bank_accounts, :as => :owner
+  has_many :periodicities
 
   validates_presence_of :name, :cnpj, :nickname
   validates_uniqueness_of :name, :cnpj, :nickname

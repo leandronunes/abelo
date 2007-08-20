@@ -2,6 +2,8 @@ class LedgerCategory < ActiveRecord::Base
   has_many :ledgers, :foreign_key => 'category_id', :dependent => :delete_all
   
   TYPE_OF = {'I' => _('Income'), 'O' => _('Expense')}
+  TYPE_OF_INCOME = 'I'
+  TYPE_OF_EXPENSE = 'O'
 
   validates_presence_of :name, :type_of, :organization_id
   validates_uniqueness_of :name
@@ -24,7 +26,7 @@ class LedgerCategory < ActiveRecord::Base
 
 #TODO see
   def sum_ledgers
-    ledgers.sum('value')
+#    ledgers.sum('value')
     30
   end
 

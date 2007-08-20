@@ -26,7 +26,7 @@ class BankAccountsController < ApplicationController
   end
 
   def show
-    @bank_account = BankAccount.find(params[:id])
+    @bank_account = @organization.bank_accounts.find(params[:id])
   end
 
   def new
@@ -46,11 +46,12 @@ class BankAccountsController < ApplicationController
   end
 
   def edit
-    @bank_account = BankAccount.find(params[:id])
+    @banks = Bank.options
+    @bank_account = @organization.bank_accounts.find(params[:id])
   end
 
   def update
-    @bank_account = BankAccount.find(params[:id])
+    @bank_account = @organization.bank_accounts.find(params[:id])
     if @bank_account.update_attributes(params[:bank_account])
       flash[:notice] = 'BankAccount was successfully updated.'
       redirect_to :action => 'show', :id => @bank_account

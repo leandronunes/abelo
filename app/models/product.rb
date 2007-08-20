@@ -26,15 +26,15 @@ class Product < ActiveRecord::Base
   end
 
   #TODO Remove this it's deprecated use title_"field"
-#  def self.describe_field(field)
-#    {
-#      'id' => 'Id',
-#      'name' => _('Name'),
-#      'size' => _('Size'),
-#      'organization_id' => _('Organization'),
-#      'category_id' => _('Category'),
-#    }[field.to_s] || field
-#  end
+  def self.describe_field(field)
+    {
+      'id' => 'Id',
+      'name' => _('Name'),
+      'size' => _('Size'),
+      'organization_id' => _('Organization'),
+      'category_id' => _('Category'),
+    }[field.to_s] || field
+  end
 
   def ammount_in_stock
     self.connection.select_value('select sum(ammount) from stock_entries where product_id = %d' % self.id).to_f

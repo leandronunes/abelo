@@ -10,10 +10,20 @@ class Department < ActiveRecord::Base
 
   acts_as_ferret
 
+  def self.available_fields
+    ['name']
+  end
+
+  def self.title_name
+    _('Name')
+  end
+
   def self.full_text_search(q, options = {})
     default_options = {:limit => :all, :offset => 0}
     options = default_options.merge options
     results = self.find_by_contents(q, options)
-    return [results.size, results]
+    return results
   end
+
+
 end

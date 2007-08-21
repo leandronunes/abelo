@@ -4,7 +4,7 @@
     html_options[:class] ||= "button button_#{type}"
     html_options[:title] ||= title
     if [:save, :search ].include? type
-      design_display_icon_submit button, '', html_options
+      design_display_icon_submit button, ( (html_options[:class]['with_text'])? title : '' ), html_options
     else
       design_display_icon(button, title, url_options, html_options)
     end

@@ -197,7 +197,8 @@ saving_account.save!
 
 ########### Ledger Category ###################
 LedgerCategory.delete_all
-ledger_category = LedgerCategory.create!(:name => 'Limpeza', :organization => organization, :type_of => LedgerCategory::TYPE_OF_EXPENSE)
+ledger_category_expense = LedgerCategory.create!(:name => 'Limpeza', :organization => organization, :type_of => LedgerCategory::TYPE_OF_EXPENSE)
+ledger_category_income = LedgerCategory.create!(:name => 'Venda Produto', :organization => organization, :type_of => LedgerCategory::TYPE_OF_INCOME)
 
 #############################
 # Period
@@ -212,5 +213,6 @@ Periodicity.create!(:name => 'Quinzenal', :number_of_days => 15, :organization =
 # ###########################
 
 Ledger.delete_all
-DebitLedger.create!(:category => ledger_category, :value => 2.3, :bank_account => account, :date => Date.today)
+DebitLedger.create!(:category => ledger_category_expense, :value => 2.3, :bank_account => account, :effective_date => Date.today)
+CreditLedger.create!(:category => ledger_category_income, :value => 222.50, :bank_account => account, :effective_date => Date.today)
 

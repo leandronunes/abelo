@@ -64,6 +64,14 @@ class LedgersController < ApplicationController
     @ledgers_page, @ledgers = paginate :ledgers, parameters
   end
 
+  #TODO move it to a block on a Desgin plugin
+  def get_budgets
+    @date = params[:date].nil? ? Date.today : params[:date].to_time
+    @earlier_month = @date << 1
+    @last_month = @date >> 1
+    @categories = @organization.ledger_categories
+  end
+
 
   #TODO see
   def edit
@@ -151,15 +159,6 @@ class LedgersController < ApplicationController
   def get_tags
     @tags = @organization.ledgers_by_bank_account
 
-  end
-
-    #TODO see if it's useful
-  def get_budgets
-    date = (params[:date]) ? params[:date].to_time : Time.now
-    flash.merge! :date => date, :date_ago => date.months_ago(1), :date_since => date.months_since(1)
-    @budgets = LedgerCategory.find(:all) 
-#TODO old code see the better way to do that
-#    @budgets = Budget.sum_ledgers_by_month(date, true)
   end
 
 end

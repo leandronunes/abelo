@@ -7,7 +7,7 @@ class Ledger < ActiveRecord::Base
   belongs_to :category, :class_name => 'LedgerCategory',  :foreign_key => 'category_id'
   belongs_to :schedule_ledger
   belongs_to :bank_account
-  validates_presence_of :category_id
+  validates_presence_of :category_id, :foreseen_value
 
   def save
     if self[:type].blank? && !self.category.nil?
@@ -17,7 +17,8 @@ class Ledger < ActiveRecord::Base
   end
 
   def value= value
-    self.is_foreseen? ?  self[:foreseen_value] = value :  self[:effective_value] = value
+    self[:foreseen_value] = value
+    self[:effective_value] = value if not self.is_foreseen? 
   end
 
   def value

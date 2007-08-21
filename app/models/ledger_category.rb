@@ -11,11 +11,6 @@ class LedgerCategory < ActiveRecord::Base
   validates_inclusion_of :type_of, :in => TYPE_OF.keys
   belongs_to :organization
 
-# TODO see if it's needed
-  def value
-    0
-  end
-
   def income?
     self.type_of == 'I'
   end
@@ -24,7 +19,26 @@ class LedgerCategory < ActiveRecord::Base
     type_of == 'O'
   end
 
-#TODO see
+  def foreseen_value_by_date(date = Date.today)
+    ledgers = self.ledgers.select{|l| l.date.month == date.month}
+    value = 0
+    ledgers.collect{|l| value = value + l.foreseen_value }
+    value
+  end
+
+  def effective_value_by_date(date = Date.today)
+    ledgers = self.ledgers.select{|l| !l.is_foreseen? and l.date.month == date.month}
+    value = 0
+    ledgers.collect{|l| value = value + l.effective_value }
+    value
+  end
+
+
+# TODO see if it's needed
+  def value
+    0
+  end
+
   def sum_ledgers
 #    ledgers.sum('value')
     30

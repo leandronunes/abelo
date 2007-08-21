@@ -1,44 +1,44 @@
 <div class="financial_calendar" >
 <table>
-  <thead>
-    <th> <%= link_to_remote flash[:date_ago].strftime('%b/%Y'), :url => {:action => 'find_budgets', :date => flash[:date_ago].to_date.to_s} %>    
+  <tr>
+    <th> <%= link_to_remote @earlier_month.strftime('%b/%Y'), :url => {:action => 'find_categories', :date => @earlier_month.to_date.to_s} %>    
     </th>
-    <th style="width:5em">
-      <%= link_to_remote flash[:date_ago].strftime('%b/%Y'), :url => {:action => 'find_budgets', :date => flash[:date_ago].to_date.to_s} %>
+    <th>
+      <b><%= @date.strftime('%b/%Y') %></b>
     </th>
-    <th style="width:5em">
-      <b><%= flash[:date].strftime('%b/%Y') %></b>
+    <th>
+      <%= link_to_remote @last_month.strftime('%b/%Y'), :url => {:action => 'find_categories', :date => @last_month.to_date.to_s} %>
     </th>
-  </thead>
-  <thead>
+  </tr>
+  <tr>
     <th> <%= _('Name') %> </th>
-    <th style="width:5em">prev.</th>
-    <th style="width:5em">real.</th>
-  </thead>
-    <tbody>
-    <% for budget in @budgets %>
-        <tr class="<%= (budget.value < budget.sum_ledgers) ? 'rosa' : 'branco' %>">
-            <td nowrap=true title="<%= budget.name %>">
-                <%= category_with_sign(budget) %>
-            </td>
-            <td nowrap=true align="right">
-                <%= to_currency(budget.value) %>
-            </td>
-            <td nowrap=true align="right">
-                <%= to_currency(budget.sum_ledgers) %>
-            </td>
-        </tr>
+    <th> <%= _('Forecast') %> </th>
+    <th> <%= _('Real') %></th>
+  </tr>
+  <tbody>
+    <% for category in @categories %>
+      <tr>
+        <td  title="<%= category.name %>">
+          <%= limit_string(category_with_sign(category), 17) %>
+        </td>
+        <td>
+          <%= category.foreseen_value_by_date(@date) %>
+        </td>
+        <td>
+          <%= category.effective_value_by_date(@date) %>
+        </td>
+      </tr>
     <% end %>
-    <% if @budgets.empty? %>
-        <tr class="branco">
-            <td colspan=3> Sem orcamento para o mes </td>
-        </tr>
-    <% end %>
-    </tbody>
-    <tfooter>
-        <th align="right">sobra:</th>
-        <th align="right"><%= to_currency @budgets.sum {|b| b.value * ((b.income?) ? 1 : -1) } %></th>
-        <th align="right"><%= to_currency @budgets.sum {|b| b.sum_ledgers * ((b.income?) ? 1 : -1)} %></th>
-    </tfooter>
-  </table>
+  </tbody>
+  <tr>
+    <th> <%= _('Total') %> </th>
+    <th> <%= @organization.sum_foreseen_value_by_date(@organization.default_bank_account,@date) %> </th>
+    <th> <%= @organization.sum_effective_value_by_date(@organization.default_bank_account,@date) %> </th>
+  </tr>
+  <tr>
+    <th> <%= _('Balance') %> </th>
+    <th colspan=2> <%= @organization.sum_foreseen_value_by_date(@organization.default_bank_account,@date) - @organization.sum_effective_value_by_date(@organization.default_bank_account,@date) %> 
+    </th>
+  </tr>
+</table>
 </div>

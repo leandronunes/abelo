@@ -1,0 +1,14 @@
+.financial_calendar{
+  font-size: 10px;
+}
+
+.financial_calendar table{
+  width: 100%;
+  margin: 0px;
+}
+
+.financial_calendar th, .financial_calendar td{
+  border: 1px solid black;
+  text-align: center;
+}
+

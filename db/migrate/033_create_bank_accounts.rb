@@ -7,6 +7,7 @@ class CreateBankAccounts < ActiveRecord::Migration
       t.column :agency,     :string
       t.column :variation,  :string
       t.column :account,    :string
+      t.column :is_default, :boolean, :default => false
     end
   end
 

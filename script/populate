@@ -188,6 +188,7 @@ BankAccount.delete_all
 account = BankAccount.new(:agency => '3352-3', :account => '23456-3')
 account.bank = bank
 account.owner = organization
+account.is_default = true
 account.save!
 saving_account = BankAccount.new(:agency => '3352-3', :account => '23456-3', :variation => 1)
 saving_account.bank = bank
@@ -205,3 +206,11 @@ ledger_category = LedgerCategory.create!(:name => 'Limpeza', :organization => or
 Periodicity.delete_all
 Periodicity.create!(:name => 'Mensal', :number_of_days => 30, :organization => organization)
 Periodicity.create!(:name => 'Quinzenal', :number_of_days => 15, :organization => organization)
+
+#############################
+# Ledger
+# ###########################
+
+Ledger.delete_all
+DebitLedger.create!(:category => ledger_category, :value => 2.3, :bank_account => account, :date => Date.today)
+

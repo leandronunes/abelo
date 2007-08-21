@@ -3,7 +3,7 @@ class CreateScheduleLedgers < ActiveRecord::Migration
     create_table :schedule_ledgers do |t|
       t.column :periodicity_id,  :integer
       t.column :start_date,      :date
-      t.column :interval,        :date
+      t.column :interval,        :integer
     end
   end
 

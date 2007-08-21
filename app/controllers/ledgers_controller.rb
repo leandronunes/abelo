@@ -12,48 +12,37 @@ class LedgersController < ApplicationController
     redirect_to :action => 'list'
   end
 
-  def get_foreseen_informations
-    if params[:value] == "1"
-      @schedule_ledger = ScheduleLedger.new
+  def get_periodicity_informations
+    if params[:value] == "true"
+      @ledger = Ledger.new
       @periodicities = @organization.periodicities
-      render :partial => 'get_foreseen_informations', :layout => false
+      render :partial => 'get_periodicity_informations'
     else
       render :nothing => true
     end
   end
 
-  def get_periodicity_informations
+  def get_interval_informations
     if params[:value].blank?
       render :nothing => true
     else
-      @schedule_ledger = ScheduleLedger.new
-      render :partial => 'get_periodicity_informations', :layout => false
+      @ledger = Ledger.new
+      render :partial => 'get_interval_informations'
     end
   end
 
-  #TODO see
-  def list
-    parameters = {:order => 'ledgers.effective_date DESC, ledgers.id DESC', :per_page => 5, :conditions => ['organization_id = ?', @organization]}
-    get_tags
-    get_budgets
-    @ledgers_page, @ledgers = paginate :ledgers, parameters
-  end
-
-  #TODO see
   def new
     @ledger = Ledger.new
+    @bank_accounts = @organization.bank_accounts.map{|b| 
+       ["AG:" + b.agency + "/ CC:" + b.account, b.id]
+    }
     get_ledger_cagetories
-    get_tags
-    get_budgets  
   end
+
 
   #TODO see
   def create
-    render :text => params.inspect
-    return
     @ledger = Ledger.new(params[:ledger])
-    @ledger.owner = current_user
-    @ledger.organization = @organization
     
     if @ledger.save
       flash[:notice] = _('The ledger was successfully created')
@@ -65,6 +54,16 @@ class LedgersController < ApplicationController
       render_action :new
     end
   end
+
+  #TODO see
+  def list
+    default_bank_account = @organization.default_bank_account
+    parameters = {:order => 'ledgers.effective_date DESC, ledgers.id DESC', :per_page => 5, :conditions => ['bank_account_id = ?', default_bank_account]}
+    get_tags
+    get_budgets
+    @ledgers_page, @ledgers = paginate :ledgers, parameters
+  end
+
 
   #TODO see
   def edit

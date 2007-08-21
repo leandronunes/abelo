@@ -1,3 +1,18 @@
-<p> <label> <%= _('Interval:') %> </label>
-  <%= date_select 'schedule_ledger', 'start_date', :order => [:day, :month, :year] %>
-</p>
+<%= display_field_edit(@ledger, 'schedule_periodicity',
+      :title => _('Periodicity?'),
+      :content => select('ledger', 'schedule_periodicity', [[_('None'), nil]].concat(@periodicities.map{|p| [p.name, p.id]})),
+      :html_options => {:class => 'line_item'}
+    )
+%>
+
+<div id="periodicity_informations" >
+
+</div>
+
+<%= observe_field('ledger_schedule_periodicity',
+      :update => 'periodicity_informations',
+      :url => {:action => 'get_interval_informations' },
+      :with => "'value=' +  escape(value)"
+    )
+%>
+

@@ -38,4 +38,8 @@ class Configuration < ActiveRecord::Base
     ['name']
   end
 
+  def full_ledger
+   Ledger.column_names + ['date', 'value', 'schedule_repeat', 'schedule_periodicity', 'schedule_interval']
+  end
+
 end

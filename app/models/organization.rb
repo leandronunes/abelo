@@ -13,7 +13,6 @@ class Organization < ActiveRecord::Base
   has_many :sales
   has_many :mass_mails
   has_many :documents
-  has_many :ledgers
   has_many :categories
   has_many :product_categories
   has_many :customer_categories
@@ -28,6 +27,7 @@ class Organization < ActiveRecord::Base
   has_many :users, :through => :profiles  
   has_many :contacts, :through => :customers
   has_many :bank_accounts, :as => :owner
+  has_many :ledgers, :through => :bank_accounts
   has_many :periodicities
 
   validates_presence_of :name, :cnpj, :nickname
@@ -55,6 +55,10 @@ class Organization < ActiveRecord::Base
 
   def pending_sales(user)
     return Sale.pending(self, user)
+  end
+
+  def default_bank_account
+    self.bank_accounts.find(:first, :conditions => ['is_default = ?', true])
   end
 
   #####################################

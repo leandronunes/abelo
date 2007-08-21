@@ -2,12 +2,12 @@ class Ledger < ActiveRecord::Base
 
   acts_as_taggable
 
-  belongs_to :category, :class_name => 'LedgerCategory',  :foreign_key => 'category_id'
-  belongs_to :organization
-  validates_presence_of :category_id, :owner
-  validates_numericality_of :effective_value #TODO upgrade this
+  attr_accessor :schedule_repeat, :schedule_periodicity, :schedule_interval
 
-  belongs_to :owner, :polymorphic => true
+  belongs_to :category, :class_name => 'LedgerCategory',  :foreign_key => 'category_id'
+  belongs_to :schedule_ledger
+  belongs_to :bank_account
+  validates_presence_of :category_id
 
   def save
     if self[:type].blank? && !self.category.nil?
@@ -24,16 +24,9 @@ class Ledger < ActiveRecord::Base
     self.is_foreseen == true ? self[:foreseen_value] :  self[:effective_value]
   end
 
-  def date= date
-    self.is_foreseen? ?  self[:foreseen_date] = date :  self[:effective_date] = date
-  end
-
   def date
-    self.is_foreseen == true ? self[:foreseen_date] :  self[:effective_date]
-  end
-
-  def periodicity
-
+#    self.is_foreseen == true ? self[:foreseen_date] :  
+    self[:effective_date]
   end
 
   #TODO see if it's needed

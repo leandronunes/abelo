@@ -158,7 +158,7 @@
   def display_edit_info_options(object, html_options = {})
     content_tag(:div,
       [
-        button('back', _('Back'), :back, {:action => 'destroy', :id => object.id}),
+        button('back', _('Back'), :back, {:action => 'list'}),
         button('edit', _('Save'), :save)
       ].join("\n"),
       html_options

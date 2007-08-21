@@ -149,7 +149,8 @@ class LedgersController < ApplicationController
 
   #TODO see
   def get_tags
-    @tags = @organization.ledgers
+    @tags = @organization.ledgers_by_bank_account
+
   end
 
     #TODO see if it's useful

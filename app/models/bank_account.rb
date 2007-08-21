@@ -1,7 +1,7 @@
 class BankAccount < ActiveRecord::Base
   belongs_to :bank
   belongs_to :owner, :polymorphic => true
-  has_many :ledgers, :foreign_key => :id
+  has_many :ledgers, :foreign_key => :bank_account_id
 
   validates_presence_of :bank_id
   validates_presence_of :owner

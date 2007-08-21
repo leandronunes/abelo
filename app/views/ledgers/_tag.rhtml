@@ -2,7 +2,7 @@
 
 <p> <label> <%= _('Tags') %> </label>
 <div style="clear:both; margin-top:5px; text-align:center">
-    <% @tags.tag_counts.each do |t| %>
+  <% @tags.tag_counts.each do |t| %>
         <%= link_to_remote(t.name, :url => {:action => 'find_by_tag', :tag => t.name }) + "(#{t.count})" %>
     <% end %>
 </div>

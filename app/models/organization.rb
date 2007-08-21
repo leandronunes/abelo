@@ -27,7 +27,7 @@ class Organization < ActiveRecord::Base
   has_many :users, :through => :profiles  
   has_many :contacts, :through => :customers
   has_many :bank_accounts, :as => :owner
-  has_many :ledgers, :through => :bank_accounts
+  has_many :ledgers, :through => :bank_accounts, :foreign_key => :organization_id
   has_many :periodicities
 
   validates_presence_of :name, :cnpj, :nickname
@@ -59,6 +59,11 @@ class Organization < ActiveRecord::Base
 
   def default_bank_account
     self.bank_accounts.find(:first, :conditions => ['is_default = ?', true])
+  end
+
+  def ledgers_by_bank_account(bank_account = nil)
+    bank_account = default_bank_account if bank_account.nil?
+    bank_account.ledgers
   end
 
   #####################################

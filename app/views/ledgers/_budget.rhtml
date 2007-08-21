@@ -1,16 +1,20 @@
-<div style="clear:both; text-align:center; font-size:11px; border-bottom:solid 1px #DDE3EB">
-    <div style="float:left"><%= link_to_remote flash[:date_ago].strftime('%b/%Y'), :url => {:action => 'find_budgets', :date => flash[:date_ago].to_date.to_s} %></div>
-    <div style="float:right"><%= link_to_remote flash[:date_since].strftime('%b/%Y'), :url => {:action => 'find_budgets', :date => flash[:date_since].to_date.to_s} %></div>
-    <b><%= flash[:date].strftime('%b/%Y') %></b>
-</div>
-
-<div style="clear:both; margin-top:10px">
-<table class="tablesidebar" width="100%" cellmargin=0 cellpadding=0>
-    <thead>
-        <th>nome</th>
-        <th style="width:5em">prev.</th>
-        <th style="width:5em">real.</th>
-    </thead>
+<div class="financial_calendar" >
+<table>
+  <thead>
+    <th> <%= link_to_remote flash[:date_ago].strftime('%b/%Y'), :url => {:action => 'find_budgets', :date => flash[:date_ago].to_date.to_s} %>    
+    </th>
+    <th style="width:5em">
+      <%= link_to_remote flash[:date_ago].strftime('%b/%Y'), :url => {:action => 'find_budgets', :date => flash[:date_ago].to_date.to_s} %>
+    </th>
+    <th style="width:5em">
+      <b><%= flash[:date].strftime('%b/%Y') %></b>
+    </th>
+  </thead>
+  <thead>
+    <th> <%= _('Name') %> </th>
+    <th style="width:5em">prev.</th>
+    <th style="width:5em">real.</th>
+  </thead>
     <tbody>
     <% for budget in @budgets %>
         <tr class="<%= (budget.value < budget.sum_ledgers) ? 'rosa' : 'branco' %>">
@@ -36,5 +40,5 @@
         <th align="right"><%= to_currency @budgets.sum {|b| b.value * ((b.income?) ? 1 : -1) } %></th>
         <th align="right"><%= to_currency @budgets.sum {|b| b.sum_ledgers * ((b.income?) ? 1 : -1)} %></th>
     </tfooter>
-</table>
+  </table>
 </div>

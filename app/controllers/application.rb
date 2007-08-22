@@ -184,7 +184,7 @@ class ApplicationController < ActionController::Base
       links_to :controller => 'ledger_categories'
       in_set 'first'
     end
-    t.named _('Ledger Categories')
+    t.named _('Ledger Category')
 
   end
 

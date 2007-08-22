@@ -24,9 +24,9 @@
           <img id="banner_top" src="/designs/templates/default/images/bannerabelo_160x75.jpg" alt="Abelo - www.Colivre.coop.br" height="75px" width="160px">
           <div id="userbar">
             <div class="login_bar" >
-              <%= design_display_icon( 'go-jump' , _('Go to'), {}, {:id => "goto", :accesskey => "g", :onclick => visual_effect(:toggle_slide, 'menu')}, true ) %>
-              <%= design_display_icon( 'edit_small' , _('Edit'), {:controller => 'users', :action => 'edit', :id => self.current_user}, :id => "edit_profile", :accesskey => "e") %> 
-              <%= design_display_icon( 'system-log-out', _('Logout'), {:controller => 'users', :action => 'logout'}, :id => "logout", :accesskey => "q", :confirm => _('Exit from system?'), :method => 'post') %>
+              <%= design_display_button( 'go-jump' , _('Go to'), {}, {:id => "goto", :accesskey => "g", :onclick => visual_effect(:toggle_slide, 'menu')}, true ) %>
+              <%= design_display_button( 'edit_small' , _('Edit'), {:controller => 'users', :action => 'edit', :id => self.current_user}, :id => "edit_profile", :accesskey => "e") %> 
+              <%= design_display_button( 'system-log-out', _('Logout'), {:controller => 'users', :action => 'logout'}, :id => "logout", :accesskey => "q", :confirm => _('Exit from system?'), :method => 'post') %>
             </div>
             <%= display_navigation_bar %> 
           </div>

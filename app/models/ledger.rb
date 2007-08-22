@@ -82,8 +82,8 @@ class Ledger < ActiveRecord::Base
     if ((!self.schedule_periodicity.nil? or !self.schedule_interval.nil?) and !(self.schedule_repeat?))
       self.errors.add(:schedule_repeat, _('You have to mark schedule repeat field to schedule a ledger')) 
     end
-
- #   self.errors.add(:schedule_repeat, _('You have to mark schedule repeat field to schedule a ledger')) 
+#TODO implements the scheduler ledger
+#    self.errors.add(:schedule_repeat, _('You have to mark schedule repeat field to schedule a ledger')) 
   end
 
   def type= value

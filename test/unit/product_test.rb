@@ -22,7 +22,7 @@ class ProductTest < Test::Unit::TestCase
   def test_relation_with_images
     product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
     img = Image.new 
-    stream = StringIO.new(File.read('public/images/rails.png'))
+    stream = StringIO.new(File.read("#{RAILS_ROOT}/public/images/rails.png"))
     def stream.original_filename
       'rails.png'
     end
@@ -75,10 +75,12 @@ class ProductTest < Test::Unit::TestCase
   end
 
   def test_full_text_search
-    product = Product.create(:name => 'test product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
+    Product.delete_all
+    product1 = Product.create!(:name => 'test product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
+    product2 = Product.create!(:name => 'te_product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
     products = Product.full_text_search('test*')
-    assert_equal 1, products[0]
-    assert products[1].include?(product)
+    assert_equal 1, products.length
+    assert products.include?(product1)
   end
 
   def test_amount_in_stock

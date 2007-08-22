@@ -1,9 +1,10 @@
-  def display_collection(collection = Array.new, html_options = {})
+
+  def display_collection(collection = Array.new, type = 'collection', params = {}, html_options = {})
     content = Array.new
     collection.each do |c|
       content.push(
         [
-          display_collection_options(c),
+          type == 'collection' ? display_collection_options(c, params) : display_stock_options(c, params),
           display_info(c,html_options, 'lite' )
         ]
       )
@@ -204,4 +205,13 @@
     )
   end
 
+  def display_stock_options(item, params ={})
+    content_tag(:div,
+      [
+        button('new_entry', _('New entry'), :new_entry, {:action => 'new', :id => item.id}.merge(params)),
+        button('history', _('History'), :history, {:action => 'history', :id => item.id}.merge(params))
+      ].join("\n"),
+      :class => 'list_item_button'
+    )
+  end
 

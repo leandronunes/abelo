@@ -11,22 +11,6 @@
 <div id="auto_list" style="display:none;">
 </div>
 
+<%= display_collection @products, 'stock' %>
 
-<ul class="info_list stock">
-  <% @products.sort_by{|prod| prod.name}.map do |p| %>
-<%= display_list(
-      [
-        { :content => [
-          button('new_entry', _('New entry'), :new_entry, :action => 'new', :id => p.id),
-          button('history', _('History'), :history, :action => 'history', :id => p.id)], :option => 'button'},
-        { :content => p.images.map{|i| show_image i}[0], :option => 'img'},
-        { :content => p.name, :option => 'name'},
-        { :title => _('Ammount: '), :content => p.ammount_in_stock, :option => 'number'},
-        '<br style="clear:both"/>'
-      ]
-  )
-  %>
-<% end %>
-</ul>
-
-<%= pagination_links(@product_pages) %>
+<%= pagination_links(@product_pages, :params => {:query => @query}) %>

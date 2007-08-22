@@ -31,7 +31,7 @@ class ProductsController < ApplicationController
       @product_pages, @products = paginate_by_collection @products
     else
       @products = @organization.products.full_text_search(@query)
-      @product_pages, @products = paginate_by_collection @products, :per_page => 1
+      @product_pages, @products = paginate_by_collection @products
     end
   end
 

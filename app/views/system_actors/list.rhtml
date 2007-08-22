@@ -6,8 +6,8 @@
 %>
 
 <% form_tag({:action => 'list', :actor => @actor}, {:class => 'search_itens'} ) do %>
-<%= text_field 'system_actor', 'name', :class => 'filter_field'  %>
-<%= submit_tag('', { :class => 'button button_search', :title => _("Search %s" % SystemActor.describe(@actor)) }) %>
+  <%= text_field 'system_actor', 'name', :class => 'filter_field' %>
+  <%= button('lupa', _('Search'), :search) %>
   <%= button('add', _("New %s") % SystemActor.describe(@actor), :new, :action => 'new', :actor => @actor ) %>
 <% end %>
 

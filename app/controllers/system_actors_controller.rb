@@ -36,11 +36,11 @@ class SystemActorsController < ApplicationController
     @query = params[:query]
     @query ||= params[:system_actor][:name] if params[:system_actor]
 
-    if !@query.nil?
-      @system_actors = eval("#{@actor.camelize}").full_text_search(@query)
+    if @query.nil?
+      @system_actors = @organization.system_actors.find(:all, :conditions => ["type = ?", @actor.camelize])
       @system_actor_pages, @system_actors = paginate_by_collection @system_actors
     else
-      @system_actors = @organization.system_actors.find(:all, :conditions => ["type = ?", @actor.camelize])
+      @system_actors = eval("#{@actor.camelize}").full_text_search(@query)
       @system_actor_pages, @system_actors = paginate_by_collection @system_actors
     end
   end

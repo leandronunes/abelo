@@ -17,7 +17,7 @@
 <%= display_list(
       [
         { :content => [
-          button('new_entry', _('New entry'), :new_entry, :action => 'new_entry', :id => p.id),
+          button('new_entry', _('New entry'), :new_entry, :action => 'new', :id => p.id),
           button('history', _('History'), :history, :action => 'history', :id => p.id)], :option => 'button'},
         { :content => p.images.map{|i| show_image i}[0], :option => 'img'},
         { :content => p.name, :option => 'name'},

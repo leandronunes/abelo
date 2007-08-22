@@ -1,4 +1,4 @@
-<h2>Editing mass mail</h2>
+<% title _('Editing mass mail') %>
 
 <%= start_form_tag ({:action => 'update', :id => @mass_mail}, :multipart => true) %>
   <%= render :partial => 'form' %>
@@ -7,3 +7,5 @@
     <%= button 'cancel',_('Cancel'), :cancel, :action => 'list' %>
   </div>
 <%= end_form_tag %>
+
+<%= render :partial => 'attachments' %>

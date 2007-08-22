@@ -1,10 +1,9 @@
-
-  def display_collection(collection = Array.new, params = {}, html_options = {})
+  def display_collection(collection = Array.new, html_options = {})
     content = Array.new
     collection.each do |c|
       content.push(
         [
-          display_collection_options(c, params),
+          display_collection_options(c),
           display_info(c,html_options, 'lite' )
         ]
       )
@@ -107,12 +106,15 @@
     )
   end
 
-  def display_field_type_date(content)
-    content_tag(:span, content)
-  end
-
   def display_field_type_nil_class(content=nil)
     nil
+  end
+
+  def display_field_type_image(image, size = "50x50") 
+    link_to(
+      image_tag(url_for_image_column(image, 'picture', :name => 'thumb'), :size => size, :class => 'product_image', :popup => [ 'abelo_image', 'height=240,width=320' ] ),
+      url_for_image_column(image, 'picture', :name => 'medium')
+      )
   end
 
   def display_field_type_string(content)
@@ -138,11 +140,11 @@
     content_tag(:div, display_info(object, html_options))
   end
 
-  def display_show_info_options(object, params = {}, html_options = {})
+  def display_show_info_options(object, html_options = {})
     content_tag(:div,
       [
-        button('back', _('Back'), :back, {:action => 'list'}.merge(params)),
-        button('edit', _('Edit'), :edit, {:action => 'edit', :id => object.id}.merge(params))
+        button('back', _('Back'), :back, {:action => 'destroy', :id => object.id}),
+        button('edit', _('Edit'), :edit, :action => 'edit', :id => object.id)
       ].join("\n"),
       html_options
     )
@@ -159,12 +161,11 @@
     )
   end
 
-  def display_edit_info_options(object, params={}, html_options = {})
+  def display_edit_info_options(object, html_options = {})
     content_tag(:div,
       [
-        button('back', _('Back'), :back, {:action => 'list'}.merge(params)),
-        button('save', _('Save'), :save), 
-        button_remote('reset', _('Reset'), :reset,{:update => 'info_form', :url => {:action => 'reset', :id => object.id}.merge(params) } ) 
+        button('back', _('Back'), :back, {:action => 'list'}),
+        button('edit', _('Save'), :save)
       ].join("\n"),
       html_options
     )
@@ -191,12 +192,12 @@
   private 
 
   #Display a set of options available generally on list methods
-  def display_collection_options(item, params ={})
+  def display_collection_options(item)
     content_tag(:div,
       [
-        button('view_small', _('Show'), :show, {:action => 'show', :id => item.id}.merge(params)),
-        button('edit_small', _('Edit'), :edit, {:action => 'edit', :id => item.id}.merge(params)),
-        button('del_small', _('Destroy'), :destroy, {:action => 'destroy', :id => item.id}.merge(params),
+        button('view_small', _('Show'), :show, :action => 'show', :id => item.id),
+        button('edit_small', _('Edit'), :edit, :action => 'edit', :id => item.id),
+        button('del_small', _('Destroy'), :destroy, {:action => 'destroy', :id => item.id},
                :method => 'post', :confirm => _('Are you sure?'))
       ].join("\n"),
       :class => 'list_item_button'

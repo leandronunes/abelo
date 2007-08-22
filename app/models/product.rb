@@ -86,4 +86,8 @@ class Product < ActiveRecord::Base
     _('Suppliers')
   end
 
+  def self.title_image
+    ''
+  end
+
 end

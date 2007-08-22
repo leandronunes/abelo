@@ -7,8 +7,6 @@ organization = Organization.create!(:name => 'Toca', :cnpj => '05359933000193', 
 configuration = organization.configuration
 configuration.full_product = Product.available_fields
 configuration.lite_product = ['name', 'category_id','sell_price']
-configuration.full_customer = Customer.available_fields
-configuration.lite_customer = ['name', 'category_id','address']
 configuration.full_worker = Worker.available_fields
 configuration.lite_worker = ['name', 'category_id','address']
 configuration.full_supplier = Supplier.available_fields
@@ -50,23 +48,6 @@ gerente.name = 'gerente'
 gerente.organization = organization
 gerente.save
 
-############Images###############################
-#Image.destroy_all
-#camisa_img = Image.new
-#camisa_img.description = 'camisa básica azul'
-#stream = StringIO.new(File.read('public/test_images/camisa_basica_azul.jpg'))
-
-#    def stream.original_filename
-#      'camisa_basica_azul.jpg'
-#    end
-    
-#    def stream.content_type
-#      'image/jpg'
-#    end
-
-#camisa_img.picture = stream
-#camisa_img.save!
-
 ############Products#############################
 Product.destroy_all
 camisa = Product.new(:name => 'camisa básica', :size => 'p', :color => 'azul', :sell_price => 25.00, :unit => 'letra')
@@ -90,12 +71,73 @@ monitor.organization = organization
 monitor.category = acessorio
 monitor.save!
 
-#############Images##############################
-#Image.destroy_all
-#camisa_img = Image.create!(:description => 'camisa básica azul', :picture => 'camisa_basica_azul.jpg', :product_id => 1)
-#calca_img = Image.create!(:description => 'calca xadrez verde', :picture => 'calca_xadrez.jpg', :product_id => 2)
-#colar_img = Image.create!(:description => 'colar golfinho', :picture => 'colar_golfinho.jpg', :product_id => 3)
-#brinco_img = Image.create!(:description => 'brinco madreperola', :picture => 'brinco_madreperola.jpg', :product_id => 4)
+############Images###############################
+Image.destroy_all
+
+camisa_img = Image.new
+camisa_img.description = 'camisa básica azul'
+stream = StringIO.new(File.read("#{RAILS_ROOT}/test/images/camisa_basica_azul.jpg"))
+def stream.original_filename
+  'camisa_basica_azul.jpg'
+end
+def stream.content_type
+  'image/jpg'
+end
+camisa_img.picture = stream
+camisa_img.product = camisa
+camisa_img.save!
+
+calca_img = Image.new
+calca_img.description = 'calça xadrez'
+stream = StringIO.new(File.read("#{RAILS_ROOT}/test/images/calca_xadrez.jpg"))
+def stream.original_filename
+  'calca_xadrez.jpg'
+end
+def stream.content_type
+  'image/jpg'
+end
+calca_img.picture = stream
+calca_img.product = calca
+calca_img.save!
+
+brinco_img = Image.new
+brinco_img.description = 'brinco madrepérola'
+stream = StringIO.new(File.read("#{RAILS_ROOT}/test/images/brinco_madreperola.jpg"))
+def stream.original_filename
+  'brinco_madreperola.jpg'
+end
+def stream.content_type
+  'image/jpg'
+end
+brinco_img.picture = stream
+brinco_img.product = brinco
+brinco_img.save!
+
+colar_img = Image.new
+colar_img.description = 'colar golfinho'
+stream = StringIO.new(File.read("#{RAILS_ROOT}/test/images/colar_golfinho.jpg"))
+def stream.original_filename
+  'colar_golfinho.jpg'
+end
+def stream.content_type
+  'image/jpg'
+end
+colar_img.picture = stream
+colar_img.product = colar
+colar_img.save!
+
+monitor_img = Image.new
+monitor_img.description = 'monitor lcd'
+stream = StringIO.new(File.read("#{RAILS_ROOT}/test/images/monitor_lcd.jpg"))
+def stream.original_filename
+  'monitor_lcd.jpg'
+end
+def stream.content_type
+  'image/jpg'
+end
+monitor_img.picture = stream
+monitor_img.product = monitor
+monitor_img.save!
 
 ############Suppliers#############################
 Supplier.destroy_all

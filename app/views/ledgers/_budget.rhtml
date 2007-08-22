@@ -1,24 +1,27 @@
 <div class="financial_calendar" >
 <table>
   <tr>
-    <th> <%= link_to_remote @earlier_month.strftime('%b/%Y'), :url => {:action => 'find_categories', :date => @earlier_month.to_date.to_s} %>    
-    </th>
-    <th>
-      <b><%= @date.strftime('%b/%Y') %></b>
-    </th>
-    <th>
-      <%= link_to_remote @last_month.strftime('%b/%Y'), :url => {:action => 'find_categories', :date => @last_month.to_date.to_s} %>
-    </th>
+    <th class="frist_col month_header" colspan="3"><div> 
+      <%= link_to_remote @earlier_month.strftime('%b/%Y'),
+          {:url => {:action => 'find_categories', :date => @earlier_month.to_date.to_s} },
+          { :class => 'month_1' } %>    
+      <b class="month_2"><%= @date.strftime('%b/%Y') %></b>
+      <%= link_to_remote @last_month.strftime('%b/%Y'),
+          { :url => {:action => 'find_categories', :date => @last_month.to_date.to_s} },
+          { :class => 'month_3' } %>
+    </div></th>
   </tr>
   <tr>
-    <th> <%= _('Name') %> </th>
+    <th class="frist_col"> <%= _('Name') %> </th>
     <th> <%= _('Forecast') %> </th>
     <th> <%= _('Real') %></th>
   </tr>
   <tbody>
+    <% i = 0 %>
     <% for category in @categories %>
-      <tr>
-        <td  title="<%= category.name %>">
+      <% i = ( i==0 )? 1 : 0 %>
+      <tr class="line_<%= ( i==0 )? 'odd' : 'pair' %>" title="<%= category.name %>">
+        <td class="frist_col category_name">
           <%= limit_string(category_with_sign(category), 17) %>
         </td>
         <td>
@@ -31,13 +34,13 @@
     <% end %>
   </tbody>
   <tr>
-    <th> <%= _('Total') %> </th>
+    <th class="frist_col"> <%= _('Total') %> </th>
     <th> <%= @organization.sum_foreseen_value_by_date(@organization.default_bank_account,@date) %> </th>
     <th> <%= @organization.sum_effective_value_by_date(@organization.default_bank_account,@date) %> </th>
   </tr>
-  <tr>
-    <th> <%= _('Balance') %> </th>
-    <th colspan=2> <%= @organization.sum_foreseen_value_by_date(@organization.default_bank_account,@date) - @organization.sum_effective_value_by_date(@organization.default_bank_account,@date) %> 
+  <tr class="table_footer">
+    <th class="frist_col"> <%= _('Balance') %> </th>
+    <th class="balance" colspan="2"> <%= @organization.sum_foreseen_value_by_date(@organization.default_bank_account,@date) - @organization.sum_effective_value_by_date(@organization.default_bank_account,@date) %> 
     </th>
   </tr>
 </table>

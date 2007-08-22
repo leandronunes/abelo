@@ -1,10 +1,11 @@
-#center_box {	
+#center_box {
   position:relative;
-  background: url('../images/bgcenterbox.jpg') bottom center no-repeat;
+  background: url('../images/bgcenterbox.png') bottom center no-repeat;
   width:290px;
   padding-top: 10px;
   padding-bottom: 20px;
   margin-left: -145px;
+  margin-top: -11px;
   left: 50%;
   overflow: none;
   z-index: 1;
@@ -12,7 +13,7 @@
 
 #notice {	
   position:absolute;
-  background: url('../images/bgcenterbox.jpg') bottom center no-repeat;
+  background: url('../images/bgcenterbox.png') bottom center no-repeat;
   width:290px;
   padding: 20px;
   margin-left: -145px;

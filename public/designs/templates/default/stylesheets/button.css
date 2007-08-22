@@ -6,6 +6,7 @@
   margin-left: 5px;
   width: 24px;
   height: 24px;
+  background-color: transparent;
   background-repeat: no-repeat;
   background-position: 50% 50%;
 }
@@ -24,14 +25,20 @@
 .button_destroy { width: 16px; height: 16px }
 
 .with_text {
-  padding: 2px 0px;
+  padding: 3px 0px;
   padding-left: 24px;
-  background-position: 0% 50%;
+  background-position: 0px -1px;
   width: inherit !important;
   display: inline !important;
 }
+input.with_text {
+  background-position: 0px 50%;
+}
 .with_text span {
   display: inline !important;
+}
+.with_text:hover {
+  text-decoration: none;
 }
 
 #loginform .button {

@@ -3,7 +3,17 @@
 
 <%= hidden_field_tag 'actor', @actor  %>
 
-<div id='form'>
+
+<% display_edit_info @system_actor  do |item| %>
+  
+  <%= display_field_edit(item, 'name',
+        :title => _('Name'),
+        :content => text_field('system_actor', 'name'),
+        :html_options => {:class => 'line_item'}
+      )
+  %>
+<% end %>
+
   <p><label for="system_actor_name"><%= _('Name') %> </label>
   <%= text_field 'system_actor', 'name'  %></p>
 
@@ -27,7 +37,6 @@
 
   <p><label for="system_actor_description"> <%= _('Description') %> </label>
   <%= text_area 'system_actor', 'description' %></p>
-</div>
 
 <!--[eoform:system_actor]-->
 

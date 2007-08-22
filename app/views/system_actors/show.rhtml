@@ -1,32 +1,8 @@
-<h1><%= @system_actor.name %></h1>
-<p>
-<label><%= _('Birthday:') %></label>
-<%= @system_actor.birthday %>
-</p>
 
-<p>
-<label><%= _('Address:') %></label>
-<%= @system_actor.address %>
-</p>
 
-<p>
-<label><%= _('CPF:') %></label>
-<%= @system_actor.cpf %>
-</p>
+<%= title _("Product %s") % @system_actor.name %>
 
-<p>
-<label><%= _('RG:') %></label>
-<%= @system_actor.rg %>
-</p>
+<%= display_show_info @system_actor, :class => 'view_data'%>
 
-<p>
-<label><%= _('Function:') %></label>
-<%= @system_actor.category.name %>
-</p>
+<%= display_show_info_options(@system_actor,{:actor => @actor}) %>
 
-<p>
-<label><%= _('Description:') %></label>
-<%= @system_actor.description %>
-</p>
-<%= link_to 'Edit', :action => 'edit', :id => @system_actor %> |
-<%= link_to 'Back', :action => 'list', :actor => @system_actor.type.to_s.downcase %>

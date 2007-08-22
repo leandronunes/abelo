@@ -1,10 +1,10 @@
 
-  def display_collection(collection = Array.new, html_options = {})
+  def display_collection(collection = Array.new, params = {}, html_options = {})
     content = Array.new
     collection.each do |c|
       content.push(
         [
-          display_collection_options(c),
+          display_collection_options(c, params),
           display_info(c,html_options, 'lite' )
         ]
       )
@@ -107,6 +107,10 @@
     )
   end
 
+  def display_field_type_date(content)
+    content_tag(:span, content)
+  end
+
   def display_field_type_nil_class(content=nil)
     nil
   end
@@ -134,11 +138,11 @@
     content_tag(:div, display_info(object, html_options))
   end
 
-  def display_show_info_options(object, html_options = {})
+  def display_show_info_options(object, params = {}, html_options = {})
     content_tag(:div,
       [
-        button('back', _('Back'), :back, {:action => 'destroy', :id => object.id}),
-        button('edit', _('Edit'), :edit, :action => 'edit', :id => object.id)
+        button('back', _('Back'), :back, {:action => 'list'}.merge(params)),
+        button('edit', _('Edit'), :edit, {:action => 'edit', :id => object.id}.merge(params))
       ].join("\n"),
       html_options
     )
@@ -155,12 +159,12 @@
     )
   end
 
-  def display_edit_info_options(object, html_options = {})
+  def display_edit_info_options(object, params={}, html_options = {})
     content_tag(:div,
       [
-        button('back', _('Back'), :back, {:action => 'list'}),
+        button('back', _('Back'), :back, {:action => 'list'}.merge(params)),
         button('save', _('Save'), :save), 
-        button('reset', _('Reset'), :reset) 
+        button_remote('reset', _('Reset'), :reset,{:update => 'info_form', :url => {:action => 'reset', :id => object.id}.merge(params) } ) 
       ].join("\n"),
       html_options
     )
@@ -187,12 +191,12 @@
   private 
 
   #Display a set of options available generally on list methods
-  def display_collection_options(item)
+  def display_collection_options(item, params ={})
     content_tag(:div,
       [
-        button('view_small', _('Show'), :show, :action => 'show', :id => item.id),
-        button('edit_small', _('Edit'), :edit, :action => 'edit', :id => item.id),
-        button('del_small', _('Destroy'), :destroy, {:action => 'destroy', :id => item.id},
+        button('view_small', _('Show'), :show, {:action => 'show', :id => item.id}.merge(params)),
+        button('edit_small', _('Edit'), :edit, {:action => 'edit', :id => item.id}.merge(params)),
+        button('del_small', _('Destroy'), :destroy, {:action => 'destroy', :id => item.id}.merge(params),
                :method => 'post', :confirm => _('Are you sure?'))
       ].join("\n"),
       :class => 'list_item_button'

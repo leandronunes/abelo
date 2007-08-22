@@ -7,6 +7,8 @@ organization = Organization.create!(:name => 'Toca', :cnpj => '05359933000193', 
 configuration = organization.configuration
 configuration.full_product = Product.available_fields
 configuration.lite_product = ['name', 'category_id','sell_price']
+configuration.full_customer = Customer.available_fields
+configuration.lite_customer = ['name', 'category_id','address']
 configuration.save!
 
 ###########Categories###################################

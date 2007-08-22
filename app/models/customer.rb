@@ -1,7 +1,11 @@
 class Customer < SystemActor
 
   belongs_to :category, :class_name => 'CustomerCategory', :foreign_key => 'category_id'
-  
+
+  def self.available_fields
+    ['name', 'address', 'description', 'email', 'category_id', 'cnpj', 'cpf', 'rg', 'birthday']
+  end
+
 #TODO see if it's needed
   def self.search(search_args, possible_ids = [], options = {} )
        return [] unless search_args

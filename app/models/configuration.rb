@@ -5,6 +5,8 @@ class Configuration < ActiveRecord::Base
   serialize :lite_product, Array
   serialize :full_department, Array
   serialize :lite_department, Array
+  serialize :full_customer, Array
+  serialize :lite_customer, Array
 
   def validate
     self.errors.add('organization_id', _('You cannot associate a template to an organization') )   if self.is_model? and !self.organization.nil?
@@ -17,6 +19,15 @@ class Configuration < ActiveRecord::Base
   def lite_product
     self[:lite_product] ||= Array.new
   end
+
+  def full_customer
+    self[:full_customer] ||= Array.new
+  end
+ 
+  def lite_customer
+    self[:lite_customer] ||= Array.new
+  end
+
 
   def self.find_all_model
     Configuration.find(:all, :conditions => ['is_model = ?', true])

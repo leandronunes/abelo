@@ -47,6 +47,8 @@ class SystemActorsController < ApplicationController
 
   def show
     @system_actor = @organization.system_actors.find(params[:id])
+    @actor = params[:actor] if SYSTEM_ACTORS.include?(params[:actor])
+    render_access_denied_screen if @actor.blank?
   end
 
   def new

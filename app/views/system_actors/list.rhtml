@@ -16,23 +16,6 @@
 <div id="auto_list" style="display:none;">
 </div>
 
-<ul class="info_list system_actors">
-<% @system_actors.sort_by{|sa| sa.name}.map do |s| %>
-<%=
-  display_list(
-  [
-      { :content => [
-          button('view_small', _('Show'), :show, :action => 'show', :id => s.id, :actor => @actor),
-          button('edit_small', _('Edit'), :edit, :action => 'edit', :id => s.id, :actor => @actor),
-          button('del_small',_('Destroy'), :destroy, {:action => 'destroy', :id => s.id, :actor => @actor},
-                                :method => 'post',
-                                :confirm => _('Are you sure?'))], :option => 'button' },
-      { :title => _('Name:'), :content => s.name, :option => 'name' },
-      { :title => _('Function:'), :content => s.category.name, :option => 'function'},
-      '<br style="clear:both"/>'
-    ]
-  )
-  %>
-  <% end %>
-</ul>
+<%= display_collection @system_actors, {:actor => @actor} %>
+
 <%= pagination_links(@system_actor_pages, :params => {:actor => @actor}) %>

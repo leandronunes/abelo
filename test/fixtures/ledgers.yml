@@ -1,25 +1,25 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 income:
   id: 1
-  owner_type: 'Organization'
-  owner_id: 1
   type: 'DebitLedger'
-  date: <%=  Date.today - 2 %>
-  value: 1000.00
+  foreseen_date: <%=  Date.today - 2 %>
+  effective_date: <%=  Date.today - 2 %>
+  foreseen_value: 1000.00
+  effective_value: 1000.00
   description: 'teste'
   category_id: 1
   operational: false
-  organization_id: 1
   is_foreseen: false
+  bank_account_id: 1
 expense:
   id: 2
-  owner_type: 'Organization'
-  owner_id: 1
   type: 'CreditLedger'
-  date: <%=  Date.today - 3 %>
-  value: 700.00
+  foreseen_date: <%=  Date.today - 3 %>
+  effective_date: <%=  Date.today - 3 %>
+  foreseen_value: 700.00
+  effective_value: 700.00
   description: teste
   category_id: 2
   operational: false
-  organization_id: 1
   is_foreseen: false
+  bank_account_id: 1

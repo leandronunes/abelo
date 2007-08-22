@@ -35,6 +35,20 @@ class ProductsControllerTest < Test::Unit::TestCase
     assert_kind_of Array, assigns(:products)
   end
 
+  def test_list_when_query_param_not_nil
+    Product.delete_all
+    Product.create!(:name => 'Some Product', :sell_price => '20', :unit => 'U', :organization_id => 1, :category_id => 1)
+    Product.create!(:name => 'Another Product', :sell_price => '25', :unit => 'U', :organization_id => 1, :category_id => 1)
+    Product.create!(:name => 'Product Three', :sell_price => '30', :unit => 'U', :organization_id => 1, :category_id => 1)
+    get :list, :query => 'Another*' 
+
+    assert_not_nil assigns(:query)
+    assert_not_nil assigns(:products)
+    assert_kind_of Array, assigns(:products)
+    assert_not_nil assigns(:product_pages)
+    assert_kind_of ActionController::Pagination::Paginator, assigns(:product_pages)
+  end
+
   def test_show
     get :show, :id => 1
 
@@ -71,6 +85,20 @@ class ProductsControllerTest < Test::Unit::TestCase
     post :update, :id => 1
     assert_response :redirect
     assert_redirected_to :action => 'list'
+  end
+
+  def test_update_with_wrong_params
+    product = Product.new
+    product.name = 'Test Department'
+    product.sell_price = 20
+    product.unit = 'one'
+    product.organization_id = 1
+    product.category_id = 1
+    assert product.save
+#    post :update, :id => product.id, :product => {:name => nil}
+#    assert_response :success
+#    assert_not_nil assigns(:product)
+#    assert_template 'edit'
   end
 
   #TODO make this test

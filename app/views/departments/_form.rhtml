@@ -1,9 +1,16 @@
 <%= error_messages_for 'department' %>
 
 <!--[form:department]-->
-<div id="form_reg">
-  <p><label for="department_name"><%= _('Name')%></label><br/>
-  <%= text_field 'department', 'name'  %></p>
-</div>
+
+<% display_edit_info @department, :class => 'view_data' do |item| %>
+
+  <%= display_field_edit(item, 'name',
+        :title => _('Name'),
+        :content => text_field('department', 'name'),  
+        :html_options => {:class => 'line_item'}
+      )
+  %>
+
+<% end %>
 <!--[eoform:department]-->
 

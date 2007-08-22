@@ -118,8 +118,14 @@ class DepartmentsControllerTest < Test::Unit::TestCase
   end
 
   def test_update_with_wrong_params
-    post :update, :id => @department.id, :department => {:name => nil}
-    assert_response :success
+    department = Department.new
+    department.name = 'Test Department'
+    department.organization_id = 1
+    assert department.save
+
+    post :update, :id => department.id , :department => {:name => nil}
+   # assert_response :success
+    assert_not_nil assigns(:department)
     assert_template 'edit'
   end
 

@@ -1,7 +1,7 @@
 
-<%= title @department.name %>
+<%= title _("Department %s") % @department.name %>
 
-<p> <b><%= _('Name') %>:</b> <%= @department.name %></p>
+<%= display_show_info @department, :class => 'view_data'%>
 
-<%= button('back', _('Back'), :list, :action => 'list' ) %>
-<%= button('edit', _('Edit'), :list, :action => 'edit', :id => @department) %> 
+<%= display_show_info_options(@department) %> 
+

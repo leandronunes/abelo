@@ -2,7 +2,7 @@
 
 <h3><%= _('Add Image')%></h3>
 
-<%= form_tag({:action => 'add_image', :id => @product}, :multipart => true) %>
+<% form_tag({:action => 'add_image', :id => @product}, :multipart => true) do %>
   <p>
     <label for='image_description'><%= _('Description') %></label>
     <%= text_field 'image', 'description' %>
@@ -15,7 +15,7 @@
     <%= button 'add',_('Add'), :save %>
     <%= button 'back',_('Back'), :back, :action => 'list' %>
   </div>
-<%= end_form_tag %>
+<% end %>
 
 <h3><%= _('Current images')  %></h3>
 

@@ -40,14 +40,17 @@ class LedgersController < ApplicationController
   end
 
   def create
-render :text => params.inspect
-return
+#render :text => params.inspect
+#return
     @ledger = Ledger.new(params[:ledger])
     
     if @ledger.save
       flash[:notice] = _('The ledger was successfully created')
       redirect_to :action => 'list'
     else
+      @bank_accounts = @organization.bank_accounts.map{|b| 
+         ["AG:" + b.agency + "/ CC:" + b.account, b.id]
+      }
       @ledger_categories =  @organization.ledger_categories_sorted
       render_action :new
     end

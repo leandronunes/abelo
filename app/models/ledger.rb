@@ -69,10 +69,21 @@ class Ledger < ActiveRecord::Base
     raise _('This function cannot be accessed directly')
   end
 
+  def schedule_repeat?
+    self.schedule_repeat.to_s == 'true' ? true : false
+  end
+
   protected
   def validate
-    errors.add(:value, _("should be at least 0.01" )) if value.nil? || value <= 0.00
-    errors.add(:date, _("Date cannot be set" )) unless self[:date].nil?
+    self.errors.add(:value, _("The value should be at least 0.01" )) if value.nil? || value <= 0.00
+
+    self.errors.add(:date, _("Date cannot be set" )) unless self[:date].nil?
+
+    if ((!self.schedule_periodicity.nil? or !self.schedule_interval.nil?) and !(self.schedule_repeat?))
+      self.errors.add(:schedule_repeat, _('You have to mark schedule repeat field to schedule a ledger')) 
+    end
+
+ #   self.errors.add(:schedule_repeat, _('You have to mark schedule repeat field to schedule a ledger')) 
   end
 
   def type= value

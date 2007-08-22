@@ -6,11 +6,11 @@ class LedgerTest < Test::Unit::TestCase
 
   def setup
     @ledger = Ledger.find(1)
+    @periodicity = Periodicity.create!(:organization_id =>1, :name => 'Some', :number_of_days => 10)
   end
 
   def test_setup
     assert @ledger.valid?
-    assert @ledger_schedule.valid?
   end
 
   def test_precense_of_category
@@ -110,8 +110,76 @@ class LedgerTest < Test::Unit::TestCase
   end
 
 
-  def test_schedule_mandatory_param_schedule_repeat
+  def test_schedule_mandatory_fields_param_schedule_repeat_when_all_informations_correct
+    ledger = @ledger
+    ledger.schedule_repeat = true
+    ledger.schedule_periodicity = @periodicity
+    ledger.schedule_interval = 34
+    ledger.valid?
+    assert !ledger.errors.invalid?(:schedule_repeat)
+
   end
+
+  def test_schedule_mandatory_fields_param_schedule_repeat_when_periodicity_is_nil
+    ledger = @ledger
+    ledger.schedule_repeat = true
+    ledger.schedule_periodicity = nil
+    ledger.schedule_interval = 34
+    ledger.valid?
+    assert !ledger.errors.invalid?(:schedule_repeat)
+  end
+
+  def test_schedule_mandatory_fields_param_schedule_repeat_when_interval_is_nil
+    ledger = @ledger
+    ledger.schedule_repeat = true
+    ledger.schedule_periodicity = @periodicity
+    ledger.schedule_interval = nil
+    ledger.valid?
+    assert !ledger.errors.invalid?(:schedule_repeat)
+  end
+
+  def test_schedule_mandatory_fields_param_schedule_repeat_when_interval_and_periodicity_is_nil
+    ledger = @ledger
+    ledger.schedule_repeat = true
+    ledger.schedule_periodicity = nil
+    ledger.schedule_interval = nil
+    ledger.valid?
+    assert !ledger.errors.invalid?(:schedule_repeat)
+
+    ledger.schedule_repeat = false
+    ledger.schedule_periodicity = nil
+    ledger.schedule_interval = nil
+    ledger.valid?
+    assert !ledger.errors.invalid?(:schedule_repeat)
+  end
+
+  def test_schedule_mandatory_fields_param_schedule_repeat_true_and_interval_and_periodicity_exist
+    ledger = @ledger
+    ledger.schedule_periodicity = @periodicity
+    ledger.schedule_interval = 34
+    ledger.schedule_repeat = false
+    ledger.valid?
+    assert ledger.errors.invalid?(:schedule_repeat)
+  end
+
+  def test_schedule_mandatory_fields_param_schedule_repeat_false_and_periodicity_is_nil
+    ledger = @ledger
+    ledger.schedule_periodicity = nil
+    ledger.schedule_interval = 34
+    ledger.schedule_repeat = false
+    ledger.valid?
+    assert ledger.errors.invalid?(:schedule_repeat)
+  end
+
+  def test_schedule_mandatory_fields_param_schedule_repeat_false_and_interval_is_nil
+    ledger = @ledger
+    ledger.schedule_periodicity = @periodicity
+    ledger.schedule_interval = nil
+    ledger.schedule_repeat = false
+    ledger.valid?
+    assert ledger.errors.invalid?(:schedule_repeat)
+  end
+
 
 
 end

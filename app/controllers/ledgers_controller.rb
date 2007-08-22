@@ -36,11 +36,9 @@ class LedgersController < ApplicationController
     @bank_accounts = @organization.bank_accounts.map{|b| 
        ["AG:" + b.agency + "/ CC:" + b.account, b.id]
     }
-    get_ledger_cagetories
+    @ledger_categories =  @organization.ledger_categories_sorted
   end
 
-
-  #TODO see
   def create
     @ledger = Ledger.new(params[:ledger])
     
@@ -49,8 +47,6 @@ class LedgersController < ApplicationController
       redirect_to :action => 'list'
     else
       @ledger_categories =  @organization.ledger_categories_sorted
-      get_tags
-      get_budgets  
       render_action :new
     end
   end
@@ -76,7 +72,7 @@ class LedgersController < ApplicationController
   #TODO see
   def edit
     @ledger = @organization.ledgers.find(params[:id])
-    get_ledger_cagetories
+    @ledger_categories =  @organization.ledger_categories_sorted
     get_tags 
     get_budgets
   end
@@ -150,11 +146,6 @@ class LedgersController < ApplicationController
   
   private
  
-  #TODO see
-  def get_ledger_cagetories 
-    @ledger_categories =  @organization.ledger_categories_sorted
-  end
-
   #TODO see
   def get_tags
     @tags = @organization.ledgers_by_bank_account

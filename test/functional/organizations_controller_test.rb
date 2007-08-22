@@ -40,10 +40,17 @@ class OrganizationsControllerTest < Test::Unit::TestCase
     assert_response 403
   end
 
+  def test_check_access_non_admin_user_on_none_organization_action
+    login_as('aaron')
+    get :none_organization
+    assert_response :success
+    assert_template 'none_organization' 
+  end
+
   def test_index
     get :index
-    assert_response :success
-    assert_template 'list'
+    assert_response :redirect
+    assert_redirected_to :action => 'list'
   end
 
   def test_list
@@ -53,6 +60,8 @@ class OrganizationsControllerTest < Test::Unit::TestCase
     assert_template 'list'
 
     assert_not_nil assigns(:organizations)
+    assert_kind_of Array, assigns(:organizations)
+    assert_not_nil assigns(:organization_pages)
   end
 
   def test_new
@@ -62,38 +71,79 @@ class OrganizationsControllerTest < Test::Unit::TestCase
 
     assert_response :success
     assert_template 'new'
-
-
   end
 
   def test_show
-    get :show, :id => 1
+    Organization.delete_all
+    o = Organization.create!(:name => 'Some Organization', :nickname => 'testing_org', :cnpj => '78048802000169')
+    get :show, :id => o.id
 
     assert_response :success
     assert_template 'show'
 
     assert_not_nil assigns(:organization)
     assert assigns(:organization).valid?
-    assert_equal 1, assigns(:organization).id
+    assert_equal o.id, assigns(:organization).id
   end
 
-  def test_create
+  def test_successfully_create
     num_organizations = Organization.count
 
-    post :create, :organization => {
-      :name => 'Organization for testing organizations controller',
-      :nickname => 'testing_organizations_controller',
-      :cnpj => '78048802000169',
-    }
+    post :create, :organization => {:name => 'Some Organization', :nickname => 'testing_org', :cnpj => '78048802000169'}
 
     assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_redirected_to :action => 'edit_configuration'
 
     assert_equal num_organizations + 1, Organization.count
   end
 
+  def test_save_name_on_create
+    Organization.delete_all
+    post :create, :organization => {:name => 'Some Organization', :nickname => 'testing_org', :cnpj => '78048802000169'}
+    
+    o = Organization.find(:first)
+    assert_not_nil o
+    assert o.valid?
+    assert_equal 'Some Organization', o.name
+  end
+
+  def test_save_nickname_on_create
+    Organization.delete_all
+    post :create, :organization => {:name => 'Some Organization', :nickname => 'testing_org', :cnpj => '78048802000169'}
+    
+    o = Organization.find(:first)
+    assert_not_nil o
+    assert o.valid?
+    assert_equal 'testing_org', o.nickname
+  end
+
+  def test_save_cnpj_on_create
+    Organization.delete_all
+    post :create, :organization => {:name => 'Some Organization', :nickname => 'testing_org', :cnpj => '78048802000169'}
+    
+    o = Organization.find(:first)
+    assert_not_nil o
+    assert o.valid?
+    assert_equal '78048802000169', o.cnpj
+  end
+
+
+  def test_unsuccessfully_create
+    num_organizations = Organization.count
+
+    post :create, :organization => {:name => 'Some Organization', :nickname => 'testing_org'}
+
+    assert_response :success
+    assert_template 'new'
+    assert assigns(:organization)
+
+    assert_equal num_organizations, Organization.count
+  end
+
   def test_edit
-    get :edit, :id => 1
+    Organization.delete_all
+    o = Organization.create!(:name => 'Some Organization', :nickname => 'testing_org', :cnpj => '78048802000169')
+    get :edit, :id => o.id
 
     assert_response :success
     assert_template 'edit'
@@ -102,17 +152,68 @@ class OrganizationsControllerTest < Test::Unit::TestCase
     assert assigns(:organization).valid?
   end
 
-  def test_update
-    post :update, :id => 1
+
+  def test_successfully_update
+    Organization.delete_all
+    o = Organization.create!(:name => 'Some Organization', :nickname => 'testing_org', :cnpj => '78048802000169')
+    num_organizations = Organization.count
+    post :update, :id => o.id, :organization => {:name => 'Another Organization'}
+
     assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_redirected_to :action => 'show'
+
+    assert_equal num_organizations, Organization.count
   end
 
-  def test_update_with_wrong_params
-    post :update, :id => @organization.id, :organization => {:cnpj => '1'}
+  def test_save_name_on_update
+    Organization.delete_all
+    o = Organization.create!(:name => 'Some Organization', :nickname => 'testing_org', :cnpj => '78048802000169')
+    post :update, :id => o.id, :organization => {:name => 'Another Organization'}
+
+    o = Organization.find(:first)
+    assert_not_nil o
+    assert o.valid?
+    assert_equal 'Another Organization', o.name
+  end
+
+
+  def test_save_nickname_on_update
+    Organization.delete_all
+    o = Organization.create!(:name => 'Some Organization', :nickname => 'testing_org', :cnpj => '78048802000169')
+    post :update, :id => o.id, :organization => {:nickname => 'another_org'}
+
+    o = Organization.find(:first)
+    assert_not_nil o
+    assert o.valid?
+    assert_equal 'another_org', o.nickname
+  end
+
+
+  def test_save_cnpj_on_update
+    Organization.delete_all
+    o = Organization.create!(:name => 'Some Organization', :nickname => 'testing_org', :cnpj => '78048802000169')
+    post :update, :id => o.id, :organization => {:cnpj => '62.370.998/0001-73'}
+
+    o = Organization.find(:first)
+    assert_not_nil o
+    assert o.valid?
+    assert_equal '62.370.998/0001-73', o.cnpj
+  end
+
+  def test_unsuccessfully_update
+    Organization.delete_all
+    Organization.create!(:name => 'Another Some Organization', :nickname => 'another_testing_org', :cnpj => '62.370.998/0001-73')
+    o = Organization.create!(:name => 'Some Organization', :nickname => 'testing_org', :cnpj => '78048802000169')
+    num_organizations = Organization.count
+    post :update, :id => o.id, :organization => {:cnpj => '62.370.998/0001-73'}
+
     assert_response :success
     assert_template 'edit'
+    assert assigns(:organization)
+
+    assert_equal num_organizations, Organization.count
   end
+
 
   def test_destroy
     assert_not_nil Organization.find(1)
@@ -124,52 +225,6 @@ class OrganizationsControllerTest < Test::Unit::TestCase
     assert_raise(ActiveRecord::RecordNotFound) {
       Organization.find(1)
     }
-  end
-
-  def test_uniqueness_of_fields
-    num_organizations = Organization.count
-    post :create, :organization => {
-      :name => 'Organization for testing duplicated fields',
-      :nickname => 'testing_duplicated_fields',
-      :cnpj => '20419721000148',
-    }
-    assert_response :redirect
-    assert_redirected_to :action => 'list'
-    assert_equal num_organizations + 1, Organization.count
-
-    num_organizations = Organization.count
-
-    # testing duplicated name
-    post :create, :organization => {
-      :name => 'Organization for testing duplicated fields',
-      :nickname => 'testing_duplicated_fields_different',
-      :cnpj => '54341741000165',
-    }
-    assert_response :success
-    assert_template 'new'
-    assert_equal num_organizations, Organization.count
-
-    # testing duplicated nickname
-    post :create, :organization => {
-      :name => 'Organization for testing duplicated fields, repeated nickname',
-      :nickname => 'testing_duplicated_fields',
-      :cnpj => '54341741000165',
-    }
-    assert_response :success
-    assert_template 'new'
-    assert_equal num_organizations, Organization.count
-
-    # testing duplicated cnpj
-    post :create, :organization => {
-      :name => 'Organization for testing duplicated fields, repeated cnpj',
-      :nickname => 'testing_duplicated_fields_different',
-      :cnpj => '20419721000148',
-    }
-    assert_response :success
-    assert_template 'new'
-    assert_equal num_organizations, Organization.count
-
-
   end
 
 end

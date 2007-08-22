@@ -24,13 +24,13 @@ class LedgerTest < Test::Unit::TestCase
     assert !l.errors.invalid?(:category_id)
   end
 
-  def test_precense_of_date
+  def test_precense_of_foreseen_date
     l = Ledger.new
     l.valid?
-    assert l.errors.invalid?(:date)
+    assert l.errors.invalid?(:foreseen_date)
     l.date = Time.now
     l.valid?
-    assert !l.errors.invalid?(:date)
+    assert !l.errors.invalid?(:foreseen_date)
   end
 
   def test_precense_of_value

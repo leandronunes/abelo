@@ -1,5 +1,5 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-income:
+expense:
   id: 1
   type: 'DebitLedger'
   foreseen_date: <%=  Date.today - 2 %>
@@ -11,7 +11,7 @@ income:
   operational: false
   is_foreseen: false
   bank_account_id: 1
-expense:
+income:
   id: 2
   type: 'CreditLedger'
   foreseen_date: <%=  Date.today - 3 %>

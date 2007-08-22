@@ -2,6 +2,17 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class LedgerTest < Test::Unit::TestCase
 
+  fixtures :bank_accounts, :categories, :ledgers
+
+  def setup
+    @ledger = Ledger.find(1)
+  end
+
+  def test_setup
+    assert @ledger.valid?
+    assert @ledger_schedule.valid?
+  end
+
   def test_precense_of_category
     c = LedgerCategory.new(:name => 'Some category', :organization_id => 1, :type_of => 'I')
     c.save!
@@ -97,5 +108,10 @@ class LedgerTest < Test::Unit::TestCase
     l.valid?
     assert !l.errors.invalid?(:value)
   end
+
+
+  def test_schedule_mandatory_param_schedule_repeat
+  end
+
 
 end

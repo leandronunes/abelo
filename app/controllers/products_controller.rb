@@ -84,9 +84,18 @@ class ProductsController < ApplicationController
     redirect_to :action => 'list'
   end
 
+#TODO It's not used yet
   def reset
-    @product = Product.new
+    begin 
+      @product = Product.find(params[:id])
+    rescue
+      @product = Product.new
+    end
     @product.organization = @organization
+    @suppliers = @organization.suppliers
+    @sizes = Size.options
+    @colors = Color.options
+    @units = Unit.options
     render :partial => 'form'
   end
 

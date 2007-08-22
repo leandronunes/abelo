@@ -159,7 +159,8 @@
     content_tag(:div,
       [
         button('back', _('Back'), :back, {:action => 'list'}),
-        button('edit', _('Save'), :save)
+        button('save', _('Save'), :save), 
+        button('reset', _('Reset'), :reset) 
       ].join("\n"),
       html_options
     )

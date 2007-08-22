@@ -40,6 +40,8 @@ class LedgersController < ApplicationController
   end
 
   def create
+render :text => params.inspect
+return
     @ledger = Ledger.new(params[:ledger])
     
     if @ledger.save

@@ -213,6 +213,6 @@ Periodicity.create!(:name => 'Quinzenal', :number_of_days => 15, :organization =
 # ###########################
 
 Ledger.delete_all
-DebitLedger.create!(:category => ledger_category_expense, :value => 2.3, :bank_account => account, :effective_date => Date.today)
-CreditLedger.create!(:category => ledger_category_income, :value => 222.50, :bank_account => account, :effective_date => Date.today)
+DebitLedger.create!(:category => ledger_category_expense, :value => 2.3, :bank_account => account, :date => Date.today)
+CreditLedger.create!(:category => ledger_category_income, :value => 222.50, :bank_account => account, :date => Date.today)
 

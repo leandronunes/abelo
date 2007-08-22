@@ -9,9 +9,9 @@
       )
   %>
 
-  <%= display_field_edit(item, 'effective_date',
+  <%= display_field_edit(item, 'date',
         :title => _('Date:'),
-        :content => date_select('ledger', 'effective_date', :order => [:day, :month, :year]),
+        :content => date_select('ledger', 'date', :order => [:day, :month, :year]),
         :html_options => {:class => 'line_item'}
       )
   %>

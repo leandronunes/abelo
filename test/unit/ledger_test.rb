@@ -2,17 +2,6 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class LedgerTest < Test::Unit::TestCase
 
-  def test_precense_of_owner
-    o = Organization.new(:name => 'Some category', :cnpj =>'14.574.763/0001-50')
-    o.save
-    l = Ledger.new
-    l.valid?
-    assert l.errors.invalid?(:owner)
-    l.owner = o
-    l.valid?
-    assert !l.errors.invalid?(:owner)
-  end
-
   def test_precense_of_category
     c = LedgerCategory.new(:name => 'Some category', :organization_id => 1, :type_of => 'I')
     c.save!
@@ -28,18 +17,59 @@ class LedgerTest < Test::Unit::TestCase
     l = Ledger.new
     l.valid?
     assert l.errors.invalid?(:foreseen_date)
-    l.date = Time.now
+    assert_raise(RuntimeError){l.foreseen_date = 1}
+    l.date = Date.today
     l.valid?
     assert !l.errors.invalid?(:foreseen_date)
   end
 
-  def test_precense_of_value
+  def test_precense_of_effective_date
     l = Ledger.new
     l.valid?
-    assert l.errors.invalid?(:value)
+    assert l.errors.invalid?(:effective_date)
+    assert_raise(RuntimeError){l.effective_date = 1}
+    l.date = Date.today
+    l.valid?
+    assert !l.errors.invalid?(:effective_date)
+  end
+  
+  def test_precense_of_effective_date_when_is_foreseen
+    l = Ledger.new
+    l.is_foreseen = true
+    l.date =  Date.today
+    l.valid?
+    assert !l.errors.invalid?(:effective_date)
+    assert_raise(RuntimeError){l.effective_date = Date.today}
+  end
+
+
+  def test_precense_of_foressen_value
+    l = Ledger.new
+    l.valid?
+    assert l.errors.invalid?(:foreseen_value)
+    assert_raise(RuntimeError){l.foreseen_value = 1}
     l.value = 1
     l.valid?
-    assert !l.errors.invalid?(:value)
+    assert !l.errors.invalid?(:foreseen_value)
+  end
+
+  def test_precense_of_effective_value
+    l = Ledger.new
+    l.valid?
+    assert l.errors.invalid?(:effective_value)
+    assert_raise(RuntimeError){l.effective_value = 1}
+    l.value = 1
+    l.valid?
+    assert !l.errors.invalid?(:effective_value)
+  end
+
+  def test_precense_of_effective_value_when_is_foreseen
+    l = Ledger.new
+    l.is_foreseen = true
+    l.value = 1
+    l.valid?
+    assert !l.errors.invalid?(:effective_value)
+    assert_raise(RuntimeError){l.effective_value = 1}
   end
 
   def test_numericality_of_value

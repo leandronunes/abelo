@@ -11,7 +11,8 @@
   z-index: 1;
 }
 
-#notice {	
+#notice {
+  border: 1px solid #f00;
   position:absolute;
   background: url('../images/bgcenterbox.png') bottom center no-repeat;
   width:290px;

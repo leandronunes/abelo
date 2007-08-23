@@ -74,9 +74,11 @@ monitor.save!
 ############Images###############################
 Image.destroy_all
 
+IMAGE_PATH_DIR = "#{RAILS_ROOT}/script/test_images"
+
 camisa_img = Image.new
 camisa_img.description = 'camisa básica azul'
-stream = StringIO.new(File.read("#{RAILS_ROOT}/test/images/camisa_basica_azul.jpg"))
+stream = StringIO.new(File.read("#{IMAGE_PATH_DIR}/camisa_basica_azul.jpg"))
 def stream.original_filename
   'camisa_basica_azul.jpg'
 end
@@ -89,7 +91,7 @@ camisa_img.save!
 
 calca_img = Image.new
 calca_img.description = 'calça xadrez'
-stream = StringIO.new(File.read("#{RAILS_ROOT}/test/images/calca_xadrez.jpg"))
+stream = StringIO.new(File.read("#{IMAGE_PATH_DIR}/calca_xadrez.jpg"))
 def stream.original_filename
   'calca_xadrez.jpg'
 end
@@ -102,7 +104,7 @@ calca_img.save!
 
 brinco_img = Image.new
 brinco_img.description = 'brinco madrepérola'
-stream = StringIO.new(File.read("#{RAILS_ROOT}/test/images/brinco_madreperola.jpg"))
+stream = StringIO.new(File.read("#{IMAGE_PATH_DIR}/brinco_madreperola.jpg"))
 def stream.original_filename
   'brinco_madreperola.jpg'
 end
@@ -115,7 +117,7 @@ brinco_img.save!
 
 colar_img = Image.new
 colar_img.description = 'colar golfinho'
-stream = StringIO.new(File.read("#{RAILS_ROOT}/test/images/colar_golfinho.jpg"))
+stream = StringIO.new(File.read("#{IMAGE_PATH_DIR}/colar_golfinho.jpg"))
 def stream.original_filename
   'colar_golfinho.jpg'
 end
@@ -128,7 +130,7 @@ colar_img.save!
 
 monitor_img = Image.new
 monitor_img.description = 'monitor lcd'
-stream = StringIO.new(File.read("#{RAILS_ROOT}/test/images/monitor_lcd.jpg"))
+stream = StringIO.new(File.read("#{IMAGE_PATH_DIR}/monitor_lcd.jpg"))
 def stream.original_filename
   'monitor_lcd.jpg'
 end

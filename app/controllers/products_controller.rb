@@ -56,7 +56,11 @@ class ProductsController < ApplicationController
       flash[:notice] = 'Product was successfully created.'
       redirect_to :action => 'list'
     else
-      render :partial => 'new', :status => 409
+      @suppliers = @organization.suppliers
+      @sizes = Size.options
+      @colors = Color.options
+      @units = Unit.options
+      render :action => 'new'
     end
   end
 
@@ -69,13 +73,19 @@ class ProductsController < ApplicationController
   end
 
   def update
+
     @product = @organization.products.find(params[:id])
     @product.supplier_ids = params[:suppliers].keys if params[:suppliers]
+
     if @product.update_attributes(params[:product])
       flash[:notice] = _('Product was successfully updated.')
       redirect_to :action => 'list'
     else
-      render :action => 'edit', :status => 409
+      @suppliers = @organization.suppliers
+      @sizes = Size.options
+      @colors = Color.options
+      @units = Unit.options
+      render :action => 'edit'
     end
   end
 

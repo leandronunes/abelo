@@ -70,6 +70,21 @@ class ProductsControllerTest < Test::Unit::TestCase
     assert_equal @organization, assigns(:product).organization
   end
 
+  def test_create
+    count = Product.count
+
+    post :create, :id => 1, :product => {:name => 'Some Product', :sell_price => '20', :unit => 'U', :organization_id => 1, :category_id => 1 }
+  end
+  
+  def test_create_wrong_params
+    num_products = Product.count
+    post :create, :product => {}
+
+    assert_response :success
+    assert_template 'new'
+
+    assert_equal num_products, Product.count
+  end
 
   def test_edit
     get :edit, :id => 1
@@ -87,6 +102,8 @@ class ProductsControllerTest < Test::Unit::TestCase
     assert_redirected_to :action => 'list'
   end
 
+  #TODO make this test with :name => nil
+
   def test_update_with_wrong_params
     product = Product.new
     product.name = 'Test Department'
@@ -95,10 +112,13 @@ class ProductsControllerTest < Test::Unit::TestCase
     product.organization_id = 1
     product.category_id = 1
     assert product.save
-#    post :update, :id => product.id, :product => {:name => nil}
-#    assert_response :success
-#    assert_not_nil assigns(:product)
-#    assert_template 'edit'
+    post :update, :id => product.id,:product => {:name => nil }
+    assert_response :success
+    assert_not_nil assigns(:product)
+    assert_not_nil assigns(:sizes)
+    assert_not_nil assigns(:colors)
+    assert_not_nil assigns(:units)
+    assert_template 'edit'
   end
 
   #TODO make this test

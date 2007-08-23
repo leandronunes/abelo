@@ -64,7 +64,7 @@ class DepartmentsController < ApplicationController
       flash[:notice] = _('Department was successfully updated.')
       redirect_to :action => 'list'
     else
-      render :action => 'edit', :status => 409
+      render :action => 'edit'
     end
   end
 

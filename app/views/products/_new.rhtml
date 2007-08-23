@@ -2,13 +2,13 @@
   <%= show_item_bar("new_product", _("New product")) %>
   <div id="new_product" class="itembar">
     <div>
-    <%= start_form_tag :action => 'create' %>
+    <% form_tag :action => 'create' do %>
     <%= render :partial => 'form' %>
     <div class='button_bar'>
       <%= submit_to_remote "button_remote", _('Create'), :url => {:action =>'create'}, :update => {:success => 'warp', :failure => 'sidebar'} %>
       <%= link_to_remote _("Reset"), :update => 'sidebar', :url => {:action =>'reset'}%>
     </div>
-    <%= end_form_tag %>
+    <% end %>
     </div>
     <%= hide_item_bar("new_product")%>
   </div>

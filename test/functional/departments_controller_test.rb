@@ -114,9 +114,10 @@ class DepartmentsControllerTest < Test::Unit::TestCase
   def test_update
     post :update, :id => 1
     assert_response :redirect
-    assert_redirected_to :action => 'show', :id => 1
+    assert_redirected_to :action => 'list'
   end
 
+  #TODO need complement this test 
   def test_update_with_wrong_params
     department = Department.new
     department.name = 'Test Department'
@@ -124,7 +125,7 @@ class DepartmentsControllerTest < Test::Unit::TestCase
     assert department.save
 
     post :update, :id => department.id , :department => {:name => nil}
-   # assert_response :success
+    assert_response :success
     assert_not_nil assigns(:department)
     assert_template 'edit'
   end

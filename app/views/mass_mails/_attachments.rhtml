@@ -1,10 +1,9 @@
 <div id="attachments">
 </div>
 
-<% form_remote_tag (:url => {:action => 'add_attachment'}, :update => 'attachments') do %>
 
 <%= link_to_function _('Attach a file '), nil, :id => "attach_file" do |page|
     page.insert_html :bottom, :attachments, file_column_field('attachment', 'file')
 end %>
 
-<% end %>
+

@@ -3,7 +3,14 @@ require File.dirname(__FILE__) + '/../config/environment'
 
 ############Organizations########################
 Organization.destroy_all
-organization = Organization.create!(:name => 'Toca', :cnpj => '05359933000193', :nickname => 'toca')
+organization = Organization.new
+organization.name = 'Toca'
+organization.cnpj = '05359933000193'
+organization.nickname = 'toca'
+organization.save!
+
+############Configuration#########################
+Configuration.destroy_all
 configuration = organization.configuration
 configuration.full_product = Product.available_fields
 configuration.lite_product = ['name', 'category_id','sell_price']

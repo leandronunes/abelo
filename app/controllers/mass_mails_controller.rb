@@ -22,8 +22,8 @@ class MassMailsController < ApplicationController
   end
 
   def new
-    @mass_mail = MassMail.new
-    @mass_mail.organization = @organization
+  #  @mass_mail = MassMail.new
+  #  @mass_mail.organization = @organization
   end
 
   def create
@@ -44,11 +44,14 @@ class MassMailsController < ApplicationController
 
   def update
     @mass_mail = MassMail.find(params[:id])
-    @attachment = Attachment.new(params[:attachment])
-    @attachment.mass_mail_id = params[:id]
-    if @attachment.save
-      @mass_mail.attachments.push(@attachment)
-    end
+    
+#    params[:file].each{ |file|
+#      @attachment = Attachment.new
+#      @attachment.file = file
+#      @attachment.mass_mail = @mass_mail
+#      @attachment.save
+#    }
+
     if @mass_mail.update_attributes(params[:mass_mail])
       flash[:notice] = 'MassMail was successfully updated.'
       redirect_to :action => 'list'
@@ -112,22 +115,20 @@ class MassMailsController < ApplicationController
     end
   end
 
-  def attachments
-    @mass_mail = @organization.mass_mails.find(params[:id])
+  def new_attachment
+    @mass_mail = @organization.mass_mails.find(params[:mail_id])
     @attachment = Attachment.new
   end
 
   def add_attachment
     @mass_mail = @organization.mass_mails.find(params[:id])
-    @attachment = Attachment.new
-    @attachment.mass_mail_id = params[:id]
+    @attachment = Attachment.new(:params[:attachment])
+    @attachment.mass_mail = @mass_mail
     if @attachment.save
       @mass_mail.attachments.push(@attachment)
       flash[:notice] = _('Attachment was successfully added.')
-      redirect_to :action => 'attachments', :id => @mass_mail
-    else
-      render :action => 'attachments', :id => @product
     end
+      render :partial => "attachments"
   end
 
   def remove_attachment

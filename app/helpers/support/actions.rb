@@ -15,9 +15,8 @@
     collection_class.push(html_options[:collection_class]) unless collection_class.include?(html_options[:collection_class])
       content_tag(:ul,
         content.map{|c|
-          content_tag(:li, c, :class => item_class.join(' ')) +
-          tag(:br, :style => 'clear:both;')
-        }.join("\n"),
+          content_tag(:li, c.to_s + tag(:br, :style => 'clear:both;'), :class => item_class.join(' '))
+        },
         :class => collection_class.join(' ')
       )
   end

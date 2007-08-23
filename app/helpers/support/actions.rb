@@ -1,10 +1,10 @@
 
-  def display_collection(collection = Array.new, type = 'collection', params = {}, html_options = {})
+  def display_collection(collection = Array.new, params = {}, html_options = {})
     content = Array.new
     collection.each do |c|
       content.push(
         [
-          type == 'collection' ? display_collection_options(c, params) : display_stock_options(c, params),
+          display_collection_options(c, params),
           display_info(c,html_options, 'lite' )
         ]
       )
@@ -193,18 +193,20 @@
   private 
 
   #Display a set of options available generally on list methods
-  def display_collection_options(item)
+  def display_collection_options(item, params = {})
     content_tag(:div,
       [
-        button('view_small', _('Show'), :show, :action => 'show', :id => item.id),
-        button('edit_small', _('Edit'), :edit, :action => 'edit', :id => item.id),
-        button('del_small', _('Destroy'), :destroy, {:action => 'destroy', :id => item.id},
+        button('view_small', _('Show'), :show, {:action => 'show', :id => item.id}.merge(params)),
+        button('edit_small', _('Edit'), :edit, {:action => 'edit', :id => item.id}.merge(params)),
+        button('del_small', _('Destroy'), :destroy, {:action => 'destroy', :id => item.id}.merge(params),
                :method => 'post', :confirm => _('Are you sure?'))
       ].join("\n"),
       :class => 'list_item_button'
     )
   end
 
+  #This is very specific we have to study a better way to generate the stock list
+  #TODO Attention
   def display_stock_options(item, params ={})
     content_tag(:div,
       [

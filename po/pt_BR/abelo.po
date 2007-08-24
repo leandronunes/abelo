@@ -232,7 +232,7 @@ msgstr "Categoria de produtos criada com sucesso."
 
 #: app/controllers/application.rb:94
 msgid "Product categories"
-msgstr "Produto|categorias"
+msgstr "Categorias de produto"
 
 #: app/controllers/application.rb:101
 msgid "Customer categories"

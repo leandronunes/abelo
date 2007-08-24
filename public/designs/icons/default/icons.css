@@ -1,10 +1,9 @@
-/*
 
-Os icones não devem ser referenciados diretamente no html comcss inline.
-
-Aurium e Leo concordaram nas vantagens de vincular classe à imagem neste css com nome padrão dentro de cada pasta de tema de icone.
-
-*/
+.back { 
+  width: 24px;
+  height: 24px;
+  background-image: url('back.png');
+}
 
 .none_add { background-image: url('none.png');}
 .add { background-image: url('add.png');}

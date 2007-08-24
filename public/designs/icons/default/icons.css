@@ -18,3 +18,6 @@
 .back { background-image: url('back.png');}
 .reset { background-image: url('reset.png');}
 .image { background-image: url('image.png');}
+.password { background-image: url('password.png');}
+.go-jump { background-image: url('go-jump.png');}
+.system-log-out { background-image: url('system-log-out.png');}

@@ -13,6 +13,8 @@ class CreateConfigurations < ActiveRecord::Migration
       t.column :lite_worker,        :text
       t.column :full_supplier,      :text
       t.column :lite_supplier,      :text
+      t.column :full_category,      :text
+      t.column :lite_category,      :text
       t.column :department_name,    :string
       t.column :product_name,       :string
       t.column :customer_name,      :string

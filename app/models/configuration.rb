@@ -11,6 +11,8 @@ class Configuration < ActiveRecord::Base
   serialize :lite_worker, Array
   serialize :full_supplier, Array
   serialize :lite_supplier, Array
+  serialize :full_category, Array
+  serialize :lite_category, Array
 
 #TODO See a way to guarantee that a configuration cannot be created whithout an organization
 #  validates_presence_of :organization_id, :if => lambda { |conf| !conf.is_model?}
@@ -50,6 +52,19 @@ class Configuration < ActiveRecord::Base
   def lite_supplier
     self[:lite_supplier] ||= Array.new
   end
+
+  def full_category
+    self[:full_category] ||= Array.new
+  end
+ 
+  def lite_category
+    self[:lite_category] ||= Array.new
+  end
+
+  alias :lite_product_category :lite_category
+  alias :lite_customer_category :lite_category
+  alias :lite_worker_category :lite_category
+  alias :lite_supplier_category :lite_category
 
   def self.find_all_model
     Configuration.find(:all, :conditions => ['is_model = ?', true])

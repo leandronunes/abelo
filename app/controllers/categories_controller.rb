@@ -22,10 +22,29 @@ class CategoriesController < ApplicationController
   verify :method => :post, :only => [ :destroy, :create, :update ],
          :redirect_to => { :action => :list }
 
+  def autocomplete_name
+    escaped_string = Regexp.escape(params[:category][:name])
+    re = Regexp.new(escaped_string, "i")
+    @category_type = params[:category_type] if CATEGORY_TYPES.include?(params[:category_type])
+    @categories = @organization.send("#{@category_type}_categories").select { |cat| cat.name.match re}
+    render :layout=>false
+  end
+
   def list
+    @query = params[:query]
+    @query ||= params[:category][:name] if params[:category]
+    
     @category_type = params[:category_type] if CATEGORY_TYPES.include?(params[:category_type])
     render_access_denied_screen if @category_type.blank?
-    @categories = @organization.send("#{@category_type}_categories")
+
+
+    if @query.nil?
+      @categories = @organization.send("#{@category_type}_categories")
+      @category_pages, @categories = paginate_by_collection @categories
+    else
+      @categories = @organization.send("#{@category_type}_categories").full_text_search(@query)
+      @category_pages, @categories = paginate_by_collection @categories
+    end
   end
 
   def new

@@ -1,15 +1,17 @@
-<h2><%= _('Listing categories') %></h2>
+<%= title _('Listing categories') %>
 
-<table>
-  <tr>
-    <th><%= _('Name') %></th>
-  </tr>
-  
-<% for category in @categories.select { |c| c.top_level? } %>
-  <%= render :partial => 'list', :locals => { :category => category } %>
+<% form_tag( { :action => 'list' }, { :class => 'search_itens' } ) do %>
+  <%= text_field 'category', 'name', :class => 'filter_field' %>
+  <%= button('lupa', _('Search'), :search) %>
+  <%= button('add', _("New category"), :new, :action => 'new' ) %>
 <% end %>
-</table>
 
-<br />
+<div class="auto_complete" id="category_name_auto_complete"></div>
+<%= auto_complete_field :category_name, :url => {:action => 'autocomplete_name', :category_type => @category_type }, :indicator => 'auto_list'%>
+<div id="auto_list" style="display:none;">
+</div>
 
-<%= button _('New top-level category'), :add, :action => 'new', :category_type => @category_type %>
+<%= display_collection @categories, {:category_type => @category_type} %>
+
+<%= pagination_links(@category_pages, :params => {:query => @query}) %>
+

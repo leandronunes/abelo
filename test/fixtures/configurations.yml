@@ -17,5 +17,11 @@ one:
   lite_product:
   - "name"
   - "description"
+  full_category:
+  - "name"
+  - "category_id"
+  lite_product:
+  - "name"
+  - desc
 two:
   id: 2

@@ -20,7 +20,7 @@ class SystemActor < ActiveRecord::Base
   end
 
   def self.available_fields
-    ['name', 'address', 'description', 'email', 'category_id', 'suppliers', 'cnpj', 'cpf', 'rg', 'birthday']
+    ['name', 'address', 'description', 'email', 'category_id', 'cnpj', 'cpf', 'rg', 'birthday']
   end
 
   def self.full_text_search(q, options = {})

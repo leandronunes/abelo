@@ -3,7 +3,7 @@
   def button(button, title, type, url_options = {}, html_options = {})
     html_options[:class] ||= "button button_#{type}"
     html_options[:title] ||= title
-    if [:save, :search ].include? type
+    if [:save, :search, :reset ].include? type
       design_display_button_submit button, ( (html_options[:class]['with_text'])? title : '' ), html_options
     else
       design_display_button(button, title, url_options, html_options)

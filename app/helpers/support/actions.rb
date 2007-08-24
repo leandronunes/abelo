@@ -121,6 +121,10 @@
     content_tag(:span, content)
   end
 
+  def display_field_type_date(content)
+    content_tag(:span, content)
+  end
+
   def display_field_type_float(content)
     content_tag(:span, content)
   end
@@ -140,11 +144,11 @@
     content_tag(:div, display_info(object, html_options))
   end
 
-  def display_show_info_options(object, html_options = {})
+  def display_show_info_options(object, params = {},  html_options = {})
     content_tag(:div,
       [
-        button('back', _('Back'), :back, {:action => 'destroy', :id => object.id}),
-        button('edit', _('Edit'), :edit, :action => 'edit', :id => object.id)
+        button('back', _('Back'), :back, {:action => 'list'}.merge(params)),
+        button('edit', _('Edit'), :edit, {:action => 'edit', :id => object.id}.merge(params))
       ].join("\n"),
       html_options
     )
@@ -165,7 +169,8 @@
     content_tag(:div,
       [
         button('back', _('Back'), :back, {:action => 'list'}),
-        button('edit', _('Save'), :save)
+        button('save', _('Save'), :save),
+        button('reset', _('Reset'), :reset, {}, {:type => 'reset'} ),
       ].join("\n"),
       html_options
     )

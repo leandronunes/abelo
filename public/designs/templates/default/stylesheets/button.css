@@ -20,7 +20,7 @@
 }
 
 .button_show    { width: 16px; height: 16px }
-.button_edit    { width: 16px; height: 16px }
+.list_item_button .button_edit { width: 16px; height: 16px }
 .button_remove,
 .button_destroy { width: 16px; height: 16px }
 

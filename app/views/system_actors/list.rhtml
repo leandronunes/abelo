@@ -7,7 +7,7 @@
 
 <% form_tag({:action => 'list', :actor => @actor}, {:class => 'search_itens'} ) do %>
   <%= text_field 'system_actor', 'name', :class => 'filter_field' %>
-  <%= button('lupa', _('Search'), :search) %>
+  <%= button('search', _('Search'), :search) %>
   <%= button('add', _("New %s") % SystemActor.describe(@actor), :new, :action => 'new', :actor => @actor ) %>
 <% end %>
 

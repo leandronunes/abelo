@@ -1,6 +1,6 @@
 <%= title _('Listing categories') %>
 
-<% form_tag( { :action => 'list' }, { :class => 'search_itens' } ) do %>
+<% form_tag( { :action => 'list', :category_type => @category_type }, { :class => 'search_itens' } ) do %>
   <%= text_field 'category', 'name', :class => 'filter_field' %>
   <%= button('lupa', _('Search'), :search) %>
   <%= button('add', _("New category"), :new, :action => 'new' ) %>

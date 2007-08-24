@@ -17,7 +17,7 @@ configuration.full_worker = Worker.available_fields
 configuration.lite_worker = ['name', 'category_id','address']
 configuration.full_supplier = Supplier.available_fields
 configuration.lite_supplier = ['name', 'category_id','address']
-configuration.full_category = Category.available_fields
+configuration.full_category = ProductCategory.available_fields
 configuration.lite_category = ['name', 'parent_id']
 configuration.save!
 

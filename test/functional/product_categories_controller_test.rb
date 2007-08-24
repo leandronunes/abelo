@@ -8,7 +8,7 @@ class ProductCategoriesControllerTest < Test::Unit::TestCase
 
   include TestingUnderOrganization
 
-  fixtures :categories, :organizations
+  fixtures :categories, :organizations, :configurations
 
   def setup
     @controller = CategoriesController.new
@@ -16,6 +16,7 @@ class ProductCategoriesControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
     @organization_nickname = 'one'
     @organization = Organization.find_by_nickname 'one'
+    @organization.configuration = Configuration.find(1)
     login_as("quentin")
   end
 
@@ -25,7 +26,7 @@ class ProductCategoriesControllerTest < Test::Unit::TestCase
     assert_redirected_to :action => 'list', :category_type => 'product'
   end
 
-  def test_list
+  def test_list_query_nil
     get :list, :category_type => 'product'
 
     assert_response :success
@@ -36,6 +37,23 @@ class ProductCategoriesControllerTest < Test::Unit::TestCase
       assert_kind_of ProductCategory, category
     end
     assert_not_nil assigns(:category_type)
+    assert_equal "product", assigns(:category_type)
+    assert_nil assigns(:query)
+  end
+
+  def test_list_query_not_nil
+    get :list, :category_type => 'product', :category => {'name' => 'product*'}
+    assert_response :success
+    assert_template 'list'
+
+    assert_not_nil assigns(:categories)
+    assigns(:categories).each do |category|
+      assert_kind_of ProductCategory, category
+    end
+    assert_not_nil assigns(:category_type)
+    assert_equal "product", assigns(:category_type)
+    assert_not_nil assigns(:query)
+    assert !assigns(:categories).empty?
   end
 
   def test_new

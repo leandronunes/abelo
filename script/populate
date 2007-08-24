@@ -11,7 +11,7 @@ organization.save!
 
 ############Configuration#########################
 Configuration.destroy_all
-configuration = organization.configuration
+configuration = Configuration.new
 configuration.full_product = Product.available_fields
 configuration.lite_product = ['name', 'category_id','sell_price']
 configuration.full_worker = Worker.available_fields
@@ -19,6 +19,7 @@ configuration.lite_worker = ['name', 'category_id','address']
 configuration.full_supplier = Supplier.available_fields
 configuration.lite_supplier = ['name', 'category_id','address']
 configuration.save!
+organization.configuration = configuration
 
 ###########Categories###################################
 Category.destroy_all

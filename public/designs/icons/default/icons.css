@@ -21,3 +21,19 @@
 .password { background-image: url('password.png');}
 .go-jump { background-image: url('go-jump.png');}
 .system-log-out { background-image: url('system-log-out.png');}
+
+/*
+ * Menu Icons
+ * 
+ */
+
+.departments { background-image: url('departments.png');}
+.ledgers { background-image: url('ledgers.png');}
+.point_of_sale { background-image: url('point_of_sale.png');}
+.stock { background-image: url('stock.png');}
+.documents { background-image: url('documents.png');}
+.categories { background-image: url('categories.png');}
+.system_actors { background-image: url('system_actors.png');}
+.permissions { background-image: url('permissions.png');}
+.mass_mails { background-image: url('mass_mails.png');}
+.store { background-image: url('store.png');}

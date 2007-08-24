@@ -3,6 +3,7 @@ class DocumentItem < ActiveRecord::Base
   validates_presence_of :unitary_value
   validates_presence_of :document_section_id
   belongs_to :product
+  belongs_to :document_section
 
   def total_value
     quantity * unitary_value

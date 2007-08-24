@@ -10,8 +10,7 @@ organization.nickname = 'toca'
 organization.save!
 
 ############Configuration#########################
-Configuration.destroy_all
-configuration = Configuration.new
+configuration = organization.configuration
 configuration.full_product = Product.available_fields
 configuration.lite_product = ['name', 'category_id','sell_price']
 configuration.full_worker = Worker.available_fields
@@ -19,7 +18,6 @@ configuration.lite_worker = ['name', 'category_id','address']
 configuration.full_supplier = Supplier.available_fields
 configuration.lite_supplier = ['name', 'category_id','address']
 configuration.save!
-organization.configuration = configuration
 
 ###########Categories###################################
 Category.destroy_all
@@ -47,14 +45,14 @@ consumidor_empresa.name = 'consumidor empresa'
 consumidor_empresa.organization = organization
 consumidor_empresa.save
 
-vendedor = WorkerCategory.new
-vendedor.name = 'vendedor'
-vendedor.organization = organization
-vendedor.save
-gerente = WorkerCategory.new
-gerente.name = 'gerente'
-gerente.organization = organization
-gerente.save
+salesman_category = WorkerCategory.new
+salesman_category.name = 'salesman_category'
+salesman_category.organization = organization
+salesman_category.save
+manager_category = WorkerCategory.new
+manager_category.name = 'manager_category'
+manager_category.organization = organization
+manager_category.save
 
 ############Products#############################
 Product.destroy_all
@@ -151,8 +149,8 @@ monitor_img.save!
 
 ############Suppliers#############################
 Supplier.destroy_all
-hering = Supplier.create!(:name => 'Hering', :cnpj => '58178734000145', :organization_id => 1, :address => 'R Hermann Hering 1790 CEP: 89010900 Cidade: Blumenau UF: SC', :description => 'fornecedor de roupas', :email => 'contato@hering.com', :category_id => 3)
-mundo_prata = Supplier.create!(:name => 'Mundo das Pratas', :cpf => '39377825679', :organization_id => 1, :address => 'Rua: Fonte do Boi, 215 - Rio Vermelho', :birthday => '1980-05-12', :description => 'fornecedor de pratas', :email => 'contato@mundo_das_pratas.com', :category_id => 4)
+hering = Supplier.create!(:name => 'Hering', :cnpj => '58178734000145', :organization => organization, :address => 'R Hermann Hering 1790 CEP: 89010900 Cidade: Blumenau UF: SC', :description => 'fornecedor de roupas', :email => 'contato@hering.com', :category => fornecedor_vestuario)
+mundo_prata = Supplier.create!(:name => 'Mundo das Pratas', :cpf => '39377825679', :organization => organization, :address => 'Rua: Fonte do Boi, 215 - Rio Vermelho', :birthday => '1980-05-12', :description => 'fornecedor de pratas', :email => 'contato@mundo_das_pratas.com', :category => fornecedor_acessorio)
 
 ############Product Suppliers#####################
 camisa.add_suppliers(hering)
@@ -162,13 +160,15 @@ brinco.add_suppliers(mundo_prata)
 
 ############Stock Entries#########################
 StockEntry.destroy_all
-camisa_entrada = StockIn.create!(:supplier_id => '1', :ammount => 50, :price => '15.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => 1)
-calca_entrada = StockIn.create!(:supplier_id => '1', :ammount => 50, :price => '30.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => 2)
+camisa_entrada = StockIn.create!(:supplier => hering, :ammount => 50, :price => '15.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product => camisa)
+calca_entrada = StockIn.create!(:supplier => hering, :ammount => 50, :price => '30.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product => calca)
 
 ############People################################
 Person.destroy_all
-gerente = User.create!("salt"=>"7e3041ebc2fc05a40c60028e2c4901a81035d3cd", "updated_at"=>nil, "crypted_password"=>"00742970dc9e6319f8019fd54864d3ea740f04b1", "type"=>"User", "remember_token_expires_at"=>nil, "id"=>"1", "administrator"=>false, "remember_token"=>nil, "login"=>"quentin", "email"=>"quentin@example.com", "created_at"=>"2007-07-14 18:03:29")
-admin = User.create!("salt"=>"7e3041ebc2fc05a40c60028e2c4901a81035d3cd", "updated_at"=>nil, "crypted_password"=>"00742970dc9e6319f8019fd54864d3ea740f04b1", "type"=>"User", "remember_token_expires_at"=>nil, "id"=>"1", "administrator"=>true, "remember_token"=>nil, "login"=>"admin", "email"=>"admin@example.com", "created_at"=>"2007-07-14 18:03:29")
+gerente = User.create!("administrator"=>false, "login"=>"quentin", "email"=>"quentin@example.com", :password => 'test', :password_confirmation => 'test')
+another_gerente = User.create!("password"=>"juca", "password_confirmation" => 'juca', "administrator"=>false, "login"=>"juca", "email"=>"juca@example.com")
+test_user = User.create!("administrator"=>false, "login"=>"test", "email"=>"test@example.com", :password => 'test', :password_confirmation => 'test')
+admin = User.create!("administrator"=>true, "login"=>"admin", "email"=>"admin@example.com", :password => 'admin', :password_confirmation => 'admin' )
 
 ############User Profile##########################
 Profile.destroy_all
@@ -185,9 +185,9 @@ perfil_admin.save!
 
 ############Customers#############################
 Customer.destroy_all
-cliente_one = Customer.create!(:name => 'João da Silva', :email => 'joao@colibre.coop.br', :birthday => '1984-08-15', :address => 'Rua Pará, nº 221, Pituba', :cpf => '74676743920', :organization_id => 1, :category_id => 6)
-cliente_two = Customer.create!(:name => 'Alice Soares', :email => 'livia@localhost', :birthday => '1970-10-22', :address => 'Rua João das Botas, nº 15, Canela', :cpf => '93791122894', :organization_id => 1, :category_id => 5)
-cliente_one = Customer.create!(:name => 'Lívia Barreiros', :email => 'livinhaba@gmail.com', :birthday => '1982-03-05', :address => 'Rua Prado Valadares, nº 19, apt202, Nazaré', :cpf => '01652747516', :organization_id => 1, :category_id => 5)
+cliente_one = Customer.create!(:name => 'João da Silva', :email => 'joao@colibre.coop.br', :birthday => '1984-08-15', :address => 'Rua Pará, nº 221, Pituba', :cpf => '74676743920', :organization => organization, :category => consumidor_empresa)
+cliente_two = Customer.create!(:name => 'Alice Soares', :email => 'livia@localhost', :birthday => '1970-10-22', :address => 'Rua João das Botas, nº 15, Canela', :cpf => '93791122894', :organization => organization, :category => consumidor_pessoa)
+cliente_one = Customer.create!(:name => 'Lívia Barreiros', :email => 'livinhaba@gmail.com', :birthday => '1982-03-05', :address => 'Rua Prado Valadares, nº 19, apt202, Nazaré', :cpf => '01652747516', :organization => organization, :category => consumidor_pessoa)
 
 ############Contacts###############################
 Contact.destroy_all
@@ -196,8 +196,8 @@ Contact.destroy_all
 
 ############Workers################################
 Worker.destroy_all
-vendedor = Worker.create!(:name => 'José Fernandes', :cpf => '63358421813', :address => 'Rua do Timbó, nº 45, Itaigara', :birthday => '1975-06-14', :category_id => 7, :organization_id => 1, :email => 'jose@toca.com')
-gerente = Worker.create!(:name => 'Carla Alves', :cpf => '53170430424', :address => 'Alameda das Pintagueiras, nº 37, Caminho das Árvores', :birthday => '1979-07-18', :category_id => 8, :organization_id => 1, :email => 'carla@toca.com')
+vendedor = Worker.create!(:name => 'José Fernandes', :cpf => '63358421813', :address => 'Rua do Timbó, nº 45, Itaigara', :birthday => '1975-06-14', :category => salesman_category, :organization => organization, :email => 'jose@toca.com')
+gerente = Worker.create!(:name => 'Carla Alves', :cpf => '53170430424', :address => 'Alameda das Pintagueiras, nº 37, Caminho das Árvores', :birthday => '1979-07-18', :category => manager_category, :organization => organization, :email => 'carla@toca.com')
 
 ############Payments################################
 Payment.destroy_all
@@ -210,8 +210,8 @@ SaleItem.destroy_all
 
 ############Mass Mail###############################
 MassMail.destroy_all
-mail_one = MassMail.create!(:subject => 'Festa de Inauguração da Toca!', :body => 'Olá, a Toca o convida para a sua festa de inauguração. Não perca!', :organization_id => 1)
-mail_one = MassMail.create!(:subject => 'Conheça o site da Toca', :body => 'Olá, o site da Toca está disponível em http://www.consumidorsustentavel.com.br/http://www.consumidorsustentavel.com.br/.', :organization_id => 1)
+mail_one = MassMail.create!(:subject => 'Festa de Inauguração da Toca!', :body => 'Olá, a Toca o convida para a sua festa de inauguração. Não perca!', :organization => organization)
+mail_one = MassMail.create!(:subject => 'Conheça o site da Toca', :body => 'Olá, o site da Toca está disponível em http://www.consumidorsustentavel.com.br/http://www.consumidorsustentavel.com.br/.', :organization => organization)
 
 ############Historicals#############################
 Historical.destroy_all
@@ -221,20 +221,20 @@ Specification.destroy_all
 
 ############Departments###############################
 Department.destroy_all
-departamento_marketing = Department.create!(:name => 'Marketing', :organization_id => 1)
-departamento_vendas = Department.create!(:name => 'Vendas', :organization_id => 1)
+marketing_department = Department.create!(:name => 'Marketing', :organization => organization)
+departamento_vendas = Department.create!(:name => 'Vendas', :organization => organization)
 
 ############Document######################
 Document.destroy_all
-proposta_colivre = Document.create!(:name => 'Estruturação do espaço de eventos', :is_model => true, :organization_id => 1, :body => 'Parceria com a Colivre para estruturação do espaço para realização de cursos de sofware livre.', :department_ids => [1])
-
-############Document Items#################
-DocumentItem.destroy_all
-item_one = DocumentItem.create!(:document_section_id => 1, :quantity => '10', :unitary_value => 400.00,:product_id => 5)
+proposal = Document.create!(:name => 'Estruturação do espaço de eventos', :is_model => true, :organization => organization, :body => 'Parceria com a Colivre para estruturação do espaço para realização de cursos de sofware livre.', :departments => [marketing_department])
 
 ###########Document Section################
 DocumentSection.destroy_all
-section_one = DocumentSection.create!(:name => 'máquinas', :document_id => 1)
+section_one = DocumentSection.create!(:name => 'máquinas', :document => proposal)
+
+############Document Items#################
+DocumentItem.destroy_all
+item_one = DocumentItem.create!(:document_section => section_one, :quantity => '10', :unitary_value => 400.00,:product => monitor)
 
 ########### Bank ###################
 Bank.delete_all

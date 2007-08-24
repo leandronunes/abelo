@@ -12,6 +12,9 @@ class Configuration < ActiveRecord::Base
   serialize :full_supplier, Array
   serialize :lite_supplier, Array
 
+#TODO See a way to guarantee that a configuration cannot be created whithout an organization
+#  validates_presence_of :organization_id, :if => lambda { |conf| !conf.is_model?}
+  
   def validate
     self.errors.add('organization_id', _('You cannot associate a template to an organization') )   if self.is_model? and !self.organization.nil?
   end

@@ -6,7 +6,10 @@ class Organization < ActiveRecord::Base
     configuration.save!
   end
 
-  has_one :configuration
+#TODO See a way to guarantee that a organization cannot be created whithout a configuration
+
+
+  has_one :configuration, :dependent => :delete
 
   has_many :departments
   has_many :products

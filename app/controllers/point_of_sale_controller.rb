@@ -40,6 +40,13 @@ class PointOfSaleController < ApplicationController
     render :nothing => true
   end
 
+def test
+         send_data('testando algo',
+            :disposition => 'inline',
+            :type => 'printer/apy',
+            :filename => "printer.apy")
+#redirect_to :action => 'main'
+end
   def cancel
     @sale = @organization.sales.find(params[:id])
     if @sale.cancel!

@@ -5,20 +5,21 @@ require 'bank_accounts_controller'
 class BankAccountsController; def rescue_action(e) raise e end; end
 
 class BankAccountsControllerTest < Test::Unit::TestCase
-  fixtures :bank_accounts
+  fixtures :bank_accounts, :banks, :configurations, :organizations
+
+  under_organization :one
 
   def setup
     @controller = BankAccountsController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-
-    @first_id = bank_accounts(:first).id
+    login_as("quentin")
   end
 
   def test_index
     get :index
-    assert_response :success
-    assert_template 'list'
+    assert_response :redirect
+    assert_redirected_to :action => 'list'
   end
 
   def test_list

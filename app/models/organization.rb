@@ -66,7 +66,7 @@ class Organization < ActiveRecord::Base
 
   def ledgers_by_bank_account(bank_account = nil)
     bank_account = default_bank_account if bank_account.nil?
-    bank_account.ledgers
+    bank_account.nil? ? Array.new : bank_account.ledgers
   end
 
   def sum_foreseen_value_by_date(bank_account, date = Date.today)

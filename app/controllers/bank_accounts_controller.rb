@@ -22,7 +22,16 @@ class BankAccountsController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @bank_account_pages, @bank_accounts = paginate :bank_accounts, :per_page => 10
+    @query = params[:query]
+    @query ||= params[:product][:name] if params[:product]
+
+    if @query.nil?
+      @products = @organization.products
+      @product_pages, @products = paginate_by_collection @products
+    else
+      @products = @organization.products.full_text_search(@query)
+      @product_pages, @products = paginate_by_collection @products
+    end
   end
 
   def show

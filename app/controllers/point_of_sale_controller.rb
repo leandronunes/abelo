@@ -40,13 +40,17 @@ class PointOfSaleController < ApplicationController
     render :nothing => true
   end
 
-def test
-         send_data('testando algo',
-            :disposition => 'inline',
-            :type => 'printer/apy',
-            :filename => "printer.apy")
-#redirect_to :action => 'main'
-end
+  #TODO remove this when the printer test is finished
+  #The file sent to the desktop must be opened by the software
+  #test_printer
+  def test_printer
+     send_data('testando algo',
+          :disposition => 'inline',
+          :type => 'printer/apy',
+          :filename => "printer.apy")
+    redirect_to :action => 'main'
+  end
+
   def cancel
     @sale = @organization.sales.find(params[:id])
     if @sale.cancel!

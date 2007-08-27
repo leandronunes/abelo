@@ -19,9 +19,9 @@ one:
   - "description"
   full_category:
   - "name"
-  - "parent_id"
+  - "parent"
   lite_category:
   - "name"
-  - "parent_id"
+  - "parent"
 two:
   id: 2

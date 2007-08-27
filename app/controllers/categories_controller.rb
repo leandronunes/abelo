@@ -49,11 +49,16 @@ class CategoriesController < ApplicationController
 
   end
 
+  def show
+    @category = Category.find(params[:id])
+    @category_type = params[:category_type]
+  end
+
   def new
     @category_type = params[:category_type]
     if CATEGORY_TYPES.include?(@category_type)
       @category = Category.new
-      @category.parent_id = params[:parent_id]
+      @category.organization = @organization
       render :action => 'new'
     else 
       render_error(_("This type didn't exist"))
@@ -79,6 +84,7 @@ class CategoriesController < ApplicationController
 
   def edit
     @category = @organization.categories.find(params[:id])
+    @category_type = params[:category_type]
   end
 
   def update

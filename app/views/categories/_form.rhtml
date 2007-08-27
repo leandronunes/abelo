@@ -4,8 +4,8 @@
 <p><label for="category_name"> <%= _('Name') %> </label>
 <%= text_field 'category', 'name'  %></p>
 
-<%= hidden_field 'category', 'parent_id' %>
-<%= hidden_field_tag 'category_type', @category_type %>
+<p><label for="category_type"><%= _('Subcategory of') %></label>
+<%= select_parent_category('category', @category_type) %>
 
 <!--[eoform:product_category]-->
 

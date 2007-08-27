@@ -75,4 +75,7 @@ class SystemActor < ActiveRecord::Base
     _('Description')  
   end
 
+  def category
+  end
+
 end

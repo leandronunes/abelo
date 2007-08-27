@@ -12,13 +12,13 @@ organization.save!
 ############Configuration#########################
 configuration = organization.configuration
 configuration.full_product = Product.available_fields
-configuration.lite_product = ['name', 'category_id','sell_price']
+configuration.lite_product = [:name, :category, :sell_price]
 configuration.full_worker = Worker.available_fields
-configuration.lite_worker = ['name', 'category_id','address']
+configuration.lite_worker = [:name, :category, :address]
 configuration.full_supplier = Supplier.available_fields
-configuration.lite_supplier = ['name', 'category_id','address']
+configuration.lite_supplier = [:name, :category, :address]
 configuration.full_category = ProductCategory.available_fields
-configuration.lite_category = ['name', 'parent_id']
+configuration.lite_category = [:name, :parent]
 configuration.save!
 
 ###########Categories###################################

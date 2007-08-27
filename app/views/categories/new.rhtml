@@ -1,10 +1,10 @@
-<h2> <%= _('New Category') %> </h2>
+<%= title _('New Category') %>
 
-<%= start_form_tag :action => 'create' %>
+<% form_tag :action => 'create', :category_type => @category_type do %>
   <%= render :partial => 'form' %>
   <div class='button_bar'>
     <%= button 'save', _("Create"), :save %>
-    <%= button 'back', _('Back'), :back, :action => 'list' %>
+    <%= button 'back', _('Back'), :back, :action => 'list', :category_type => @category_type %>
   </div>
-<%= end_form_tag %>
+<% end %>
 

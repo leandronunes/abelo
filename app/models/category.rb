@@ -5,6 +5,7 @@ class Category < ActiveRecord::Base
   validates_presence_of :name, :organization_id
   belongs_to :organization
   acts_as_tree :order => 'name'
+  belongs_to :parent, :class_name => 'Category'
 
   def self.available_fields
     ['name', 'parent_id']
@@ -38,7 +39,7 @@ class Category < ActiveRecord::Base
     _('Name')
   end
 
-  def self.title_parent_id
+  def self.title_parent
     _('Related Category')
   end
 

@@ -56,6 +56,11 @@ class Configuration < ActiveRecord::Base
   def full_category
     self[:full_category] ||= Array.new
   end
+
+  alias :full_product_category :full_category
+  alias :full_customer_category :full_category
+  alias :full_worker_category :full_category
+  alias :full_supplier_category :full_category
  
   def lite_category
     self[:lite_category] ||= Array.new

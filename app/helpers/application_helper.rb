@@ -98,7 +98,13 @@ module ApplicationHelper
   def select_category(object, category_type)
     instance_object = self.instance_variable_get("@#{object}")
     categories = instance_object.organization.send("top_level_#{category_type}_categories")
-    select_tag("#{object}[category_id]", categories.map { |c| options_for_category(c,instance_object.send('category_id')) }.join('') )
+    select_tag("#{object}[category_id]", categories.map { |c| options_for_category(c,instance_object.send('category_id')) }.join(' ') )
+  end
+
+  def select_parent_category(object, category_type)
+    instance_object = self.instance_variable_get("@#{object}")
+    categories = instance_object.organization.send("top_level_#{category_type}_categories")
+    select_tag("#{object}[parent_id]", "<option value=""></option>" + categories.map { |c| options_for_category(c,c.id) }.join(' '), { :include_blank => true }) 
   end
 
 #TODO see

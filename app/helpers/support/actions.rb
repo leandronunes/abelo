@@ -158,7 +158,10 @@
     content = capture(object, &block)
     concat(
       content_tag(:div,
-        content,
+        [
+          content,
+         tag(:br, :style => 'clear: left;')
+        ].join("\n"),
         :id => 'info_form'
       ),
       block.binding
@@ -183,8 +186,14 @@
 
     info[:html_options] ||= Hash.new
 
-    info[:html_options][:class] = 'info_field ' +  info[:html_options][:class].to_s if !info[:html_options].empty?
-
+    if info[:html_options].blank?
+      info[:html_options][:class] = 'info_field'
+      info[:html_options][:style] = 'float: left;'
+    else
+      info[:html_options][:class] = 'info_field ' +  info[:html_options][:class].to_s
+      info[:html_options][:style] = 'float: left; ' +  info[:html_options][:style].to_s
+    end
+   
     content_tag(:div,
       [
        content_tag(:label, info[:title]),

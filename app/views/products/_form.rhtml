@@ -6,22 +6,19 @@
 
   <%= display_field_edit(item, 'name',
         :title => _('Name'),
-        :content => text_field('product', 'name'),  
-        :html_options => {:class => 'line_item'}
+        :content => text_field('product', 'name')
       )
   %>
   
   <%= display_field_edit(item, 'category_id',
         :title => _('Category'),
-        :content => select_category('product', 'product'),  
-        :html_options => {:class => 'line_item'}
+        :content => select_category('product', 'product')
       )
   %>
 
   <%= display_field_edit(item, 'suppliers',
         :title => _('Suppliers'),
-        :content => multiple_select('product', 'suppliers', @suppliers ),  
-        :html_options => {:class => 'line_item'}
+        :content => multiple_select('product', 'suppliers', @suppliers )
       )
   %>
 
@@ -45,8 +42,7 @@
 
   <%= display_field_edit(item, 'sell_price',
         :title => _('Sell Price'),
-        :content => text_field('product', 'sell_price'),
-        :html_options => {:class => 'line_item'}
+        :content => text_field('product', 'sell_price')
       )
   %>
 

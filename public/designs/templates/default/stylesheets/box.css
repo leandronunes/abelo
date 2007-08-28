@@ -12,7 +12,6 @@
 }
 
 #notice {
-  border: 1px solid #f00;
   position:absolute;
   background: url('../images/bgcenterbox.png') bottom center no-repeat;
   width:290px;
@@ -21,7 +20,7 @@
   left: 50%;
   text-align: center;
   overflow: none;
-  z-index: 1;
+  z-index: 50;
 }
 
 #errorExplanation {

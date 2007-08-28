@@ -31,12 +31,11 @@ module ApplicationHelper
       'div',
        [
          content_tag(
-           :p, 
-           msg
-         ),
-         javascript_tag(visual_effect(:toggle_slide, 'notice', :duration => 3))
-      ].join("\n"),
-      { :id => 'notice' }
+           :div, 
+           msg + javascript_tag(visual_effect(:toggle_slide, 'notice', :duration => 3)),
+             :id => 'notice' 
+         )
+      ].join("\n")
     )
   end
 

@@ -64,21 +64,36 @@ module ApplicationHelper
     link_to org.name, { :organization_nickname => org.nickname, :controller => 'main', :action => 'index' }, html_options
   end
 
-  def multiple_select(object, method, collection=[], title="", value_method=:id, text_method=:name)
+  def multiple_select(object, method, collection=[], title="", text_method=:name, value_method=:id)
     value_method = value_method.to_s
     text_method = text_method.to_s
     selected_options = controller.instance_variable_get("@#{object}").send(method)
     content_tag('p', 
-      {
-      content_tag('label', title),
-      collection.map do |c|
-        if selected_options.include? c
-          content_tag('input', c.send(text_method) , :name => "#{object}[#{method.singularize}_ids][]", :type => 'checkbox', :value => c.send(value_method) , :checked => 'checked' )
-        else
-          content_tag('input', c.send(text_method) , :name => "#{object}[#{method.singularize}_ids][]", :type => 'checkbox', :value => c.send(value_method) )
-        end
-      end
-      }
+      [
+        content_tag('label', title),
+        content_tag(:ul, 
+          [
+            collection.map do |c|
+              content_tag(:li,
+                if selected_options.include? c
+                  content_tag('input', 
+                           c.send(text_method) , 
+                           :name => "#{object}[#{method}][]", 
+                           :type => 'checkbox', :value => c.send(value_method) , 
+                           :checked => 'checked' 
+                  )
+                else
+                  content_tag('input', 
+                           c.send(text_method) , 
+                           :name => "#{object}[#{method}][]", 
+                           :type => 'checkbox', :value => c.send(value_method)
+                  )
+                end
+              )  
+            end
+          ].join("\n")
+        )
+      ].join("\n")
     )
   end
 

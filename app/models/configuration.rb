@@ -1,18 +1,9 @@
 class Configuration < ActiveRecord::Base
   belongs_to :organization
 
-  serialize :full_product, Array
-  serialize :lite_product, Array
-  serialize :full_department, Array
-  serialize :lite_department, Array
-  serialize :full_customer, Array
-  serialize :lite_customer, Array
-  serialize :full_worker, Array
-  serialize :lite_worker, Array
-  serialize :full_supplier, Array
-  serialize :lite_supplier, Array
-  serialize :full_category, Array
-  serialize :lite_category, Array
+  has_many :product_displays
+  has_many :supplier_displays
+  has_many :worker_displays
 
 #TODO See a way to guarantee that a configuration cannot be created whithout an organization
 #  validates_presence_of :organization_id, :if => lambda { |conf| !conf.is_model?}
@@ -21,78 +12,155 @@ class Configuration < ActiveRecord::Base
     self.errors.add('organization_id', _('You cannot associate a template to an organization') )   if self.is_model? and !self.organization.nil?
   end
 
-  def full_product
-    self[:full_product] ||= Array.new
-  end
- 
-  def lite_product
-    self[:lite_product] ||= Array.new
-  end
-
-  def full_customer
-    self[:full_customer] ||= Array.new
-  end
- 
-  def lite_customer
-    self[:lite_customer] ||= Array.new
-  end
-
-  def full_worker
-    self[:full_worker] ||= Array.new
-  end
- 
-  def lite_worker
-    self[:lite_worker] ||= Array.new
-  end
-
-  def full_supplier
-    self[:full_supplier] ||= Array.new
-  end
- 
-  def lite_supplier
-    self[:lite_supplier] ||= Array.new
-  end
-
-  def full_category
-    self[:full_category] ||= Array.new
-  end
-
-  alias :full_product_category :full_category
-  alias :full_customer_category :full_category
-  alias :full_worker_category :full_category
-  alias :full_supplier_category :full_category
- 
-  def lite_category
-    self[:lite_category] ||= Array.new
-  end
-
-  alias :lite_product_category :lite_category
-  alias :lite_customer_category :lite_category
-  alias :lite_worker_category :lite_category
-  alias :lite_supplier_category :lite_category
-
   def self.find_all_model
     Configuration.find(:all, :conditions => ['is_model = ?', true])
   end
 
-  def full_bank_account
-    ["owner", "bank", "agency", "variation", "account"]
+  #######################################
+  # Configuration Product Methods
+  #######################################
+ 
+  # Receives an array of permited fields of product object
+  # and create a ProductDisplay object to each field associated to 
+  # the current configuration object.
+  #
+  # The ProductDisplay object in this case is used to define wich field of the
+  # product object will be display on the edit and show actions
+  def product_display_fields= fields
+    set_fields(Product, fields)
   end
 
-  def lite_bank_account
-    ["owner", "bank", "agency", "variation", "account"]
+  # Receives an array of permited fields of product object
+  # and create a ProductDisplay object to each field associated to 
+  # the current configuration object.
+  #
+  # The ProductDisplay in this case object is used to define wich field of the
+  # product object will be display on the list action
+  #
+  # The diferrence of this method and the +product_display_fields=+ if
+  # that in this case the ProductDisplay object has a +true+ value on the 
+  # +display_in_list+ attribute 
+  def product_display_fields_in_list= fields
+    set_fields_in_list(Product, fields)
   end
 
-  def full_department
-    ['name']
+  # Return a list composed by the +field+ attribute of all ProductDisplay 
+  # object associated to the current object.
+  def product_display_fields
+    display_fields('product')
   end
 
-  def lite_department
-    ['name']
+  # Return a list composed by the +field+ attribute of all ProductDisplay 
+  # object associated to the current object, whose +display_in_list+ 
+  # attribute has a true value.
+  def product_display_fields_in_list
+    display_fields_in_list('product')
   end
 
-  def full_ledger
-   Ledger.column_names + ['date', 'value', 'schedule_repeat', 'schedule_periodicity', 'schedule_interval']
+  # Return a list of all ProductDisplay object associated to the current object.
+  def product_display
+    display('product')
   end
+
+  # Return a list of all ProductDisplay object associated to the current object, 
+  # whose +display_in_list+ attribute has a true value.
+  def product_display_in_list
+    display_in_list('product')
+  end
+
+  #######################################
+  # Configuration Supplier Methods
+  #######################################
+  
+  def supplier_display_fields= fields
+    set_fields(Supplier, fields)
+  end
+
+  def supplier_display_fields_in_list= fields
+    set_fields_in_list(Supplier, fields)
+  end
+
+
+  def supplier_display_fields
+    display_fields('supplier')
+  end
+
+  def supplier_display_fields_in_list
+    display_fields_in_list('supplier')
+  end
+
+  def supplier_display
+    display('supplier')
+  end
+
+  def supplier_display_in_list
+    display_in_list('supplier')
+  end
+
+  #######################################
+  # Configuration Worker Methods
+  #######################################
+  
+  def worker_display_fields= fields
+    set_fields(Worker, fields)
+  end
+
+  def worker_display_fields_in_list= fields
+    set_fields_in_list(Worker, fields)
+  end
+
+  def worker_display_fields
+    display_fields('worker')
+  end
+
+  def worker_display_fields_in_list
+    display_fields_in_list('worker')
+  end
+
+  def worker_display
+    display('worker')
+  end
+
+  def worker_display_in_list
+    display_in_list('worker')
+  end
+
+  private 
+
+  def display(object)
+    self.send("#{object}_displays")
+  end
+
+  def display_in_list(object)
+    self.send("#{object}_displays").select{|p| p.display_in_list? }
+  end
+
+  def display_fields(object)
+    display(object).collect{|o| o.field}
+  end
+
+  def display_fields_in_list(object)
+    display_in_list(object).collect{|d| d.field}
+  end
+
+  def set_fields(class_symbol, fields)
+    fields.each do |field|
+      if self.send("#{class_symbol.to_s.tableize.singularize}_displays").select{|o| o.field == field}.empty?
+        class_symbol.configuration_class.create(:field => field, :configuration => self)
+      end
+    end
+  end
+
+  def set_fields_in_list(class_symbol, fields)
+    fields.each do |field|
+      display_field = self.send("#{class_symbol.to_s.tableize.singularize}_displays").detect{|p| p.field == field}
+
+      unless display_field.nil?
+        display_field.display_in_list = true 
+        display_field.save
+      end
+    end
+  end
+
 
 end

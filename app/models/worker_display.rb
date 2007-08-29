@@ -1,0 +1,3 @@
+class WorkerDisplay < SystemActorDisplay
+
+end

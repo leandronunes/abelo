@@ -110,36 +110,6 @@ class Organization < ActiveRecord::Base
     LedgerCategory.find(:all, :conditions => ['organization_id = ?', self], :order => 'type_of, name ASC' )
   end
 
-  #TODO see if it's useful
-  def operational_entrances
-    return filter_historicals('t', TypeTransaction::CREDIT)
-  end
-
-  #TODO see if it's useful
-  def operational_exits
-    return filter_historicals('t', TypeTransaction::DEBIT)
-  end
-
-  #TODO see if it's useful
-  def not_operational_entrances
-    return filter_historicals('f', TypeTransaction::CREDIT)
-  end
-
-  #TODO see if it's useful
-  def not_operational_exits
-    return filter_historicals('f', TypeTransaction::DEBIT)
-  end
-
-  #TODO see if it's useful
-  def historical_total_value(id)
-    value = 0.0
-    self.cash_flows.each { |c|
-      if c.historical_id == id
-        value = value + c.value
-      end
-    }
-    return value
-  end
 
   def customers_by_products(list_products)
     customers = []
@@ -158,13 +128,6 @@ class Organization < ActiveRecord::Base
       end
     }
     return customers
-  end
-
-  private
-
-  #TODO see if it's useful
-  def filter_historicals(operational, type_transaction)
-    return self.historicals.find(:all, :conditions => "operational = '#{operational}' AND type_of = '#{type_transaction}'" )
   end
 
 end

@@ -1,0 +1,3 @@
+class SupplierDisplay < SystemActorDisplay
+
+end

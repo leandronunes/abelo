@@ -11,14 +11,12 @@ organization.save!
 
 ############Configuration#########################
 configuration = organization.configuration
-configuration.full_product = Product.available_fields
-configuration.lite_product = [:name, :category, :sell_price]
-configuration.full_worker = Worker.available_fields
-configuration.lite_worker = [:name, :category, :address]
-configuration.full_supplier = Supplier.available_fields
-configuration.lite_supplier = [:name, :category, :address]
-configuration.full_category = ProductCategory.available_fields
-configuration.lite_category = [:name, :parent]
+configuration.product_display_fields= ProductDisplay.available_fields 
+configuration.product_display_fields_in_list= ['name', 'size', 'category' ]
+configuration.worker_display_fields= WorkerDisplay.available_fields 
+configuration.worker_display_fields_in_list= ['name', 'description', 'email' ]
+configuration.supplier_display_fields= SupplierDisplay.available_fields 
+configuration.supplier_display_fields_in_list= ['name', 'description', 'email' ]
 configuration.save!
 
 ###########Categories###################################
@@ -202,7 +200,8 @@ vendedor = Worker.create!(:name => 'José Fernandes', :cpf => '63358421813', :ad
 gerente = Worker.create!(:name => 'Carla Alves', :cpf => '53170430424', :address => 'Alameda das Pintagueiras, nº 37, Caminho das Árvores', :birthday => '1979-07-18', :category => manager_category, :organization => organization, :email => 'carla@toca.com')
 
 ############Payments################################
-Payment.destroy_all
+#TODO see it's usefull
+#Payment.destroy_all
 
 ############Sales###################################
 Sale.destroy_all
@@ -214,12 +213,6 @@ SaleItem.destroy_all
 MassMail.destroy_all
 mail_one = MassMail.create!(:subject => 'Festa de Inauguração da Toca!', :body => 'Olá, a Toca o convida para a sua festa de inauguração. Não perca!', :organization => organization)
 mail_one = MassMail.create!(:subject => 'Conheça o site da Toca', :body => 'Olá, o site da Toca está disponível em http://www.consumidorsustentavel.com.br/http://www.consumidorsustentavel.com.br/.', :organization => organization)
-
-############Historicals#############################
-Historical.destroy_all
-
-############Specification###########################
-Specification.destroy_all
 
 ############Departments###############################
 Department.destroy_all

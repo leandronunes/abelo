@@ -9,35 +9,17 @@
    <%= text_field 'configuration', 'product_name'  %>
 </p>
 
-<p><label for="configuration_full_product"> <%= _('Product All Available Informations') %> </label>
-  <ul>
-  <% @product_informations.each do |pi|%>
-    <li>
-      <% if @configuration.full_product.include?(pi) %>
-        <%= check_box_tag("product_full_informations[#{pi}]",1, true ) %>
-      <% else %>
-        <%= check_box_tag("product_full_informations[#{pi}]",1, false ) %>
-      <% end %>
-        <%= Product.describe_field(pi) %>
-    </li>
-  <% end %>
-  </ul>
-</p>
+<%= multiple_select 'configuration', 'product_display_fields', @product_informations, _('Product All Available Informations'), :to_s, :to_s  %>
 
-<p><label for="configuration_lite_product"> <%= _('Product Limited Available Informations') %> </label>
-  <ul>
-  <% @product_informations.each do |pi|%>
-    <li>
-      <% if @configuration.lite_product.include?(pi) %>
-        <%= check_box_tag("product_lite_informations[#{pi}]",1, true ) %>
-      <% else %>
-        <%= check_box_tag("product_lite_informations[#{pi}]",1, false ) %>
-      <% end %>
-        <%= pi %>
-    </li>
-  <% end %>
-  </ul>
-</p>
+<%= multiple_select 'configuration', 'product_display_fields_in_list', @product_informations, _('Product All Available Informations'), :to_s, :to_s  %>
+
+<%= multiple_select 'configuration', 'worker_display_fields', @worker_informations, _('worker All Available Informations'), :to_s, :to_s  %>
+
+<%= multiple_select 'configuration', 'worker_display_fields_in_list', @worker_informations, _('worker All Available Informations'), :to_s, :to_s  %>
+
+<%= multiple_select 'configuration', 'supplier_display_fields', @supplier_informations, _('supplier All Available Informations'), :to_s, :to_s  %>
+
+<%= multiple_select 'configuration', 'supplier_display_fields_in_list', @supplier_informations, _('supplier All Available Informations'), :to_s, :to_s  %>
 
 <p><label for="configuration_department_name"> <%= _('Department Name') %> </label>
    <%= text_field 'configuration', 'department_name'  %>

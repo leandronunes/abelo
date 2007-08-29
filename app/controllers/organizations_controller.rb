@@ -123,19 +123,33 @@ class OrganizationsController < ApplicationController
   def show_configuration
     @organization = Organization.find(params[:id])
     @configuration = @organization.configuration
+    @product_display = @configuration.product_display_fields
+    @product_display_in_list = @configuration.product_display_fields_in_list
+    @supplier_display = @configuration.supplier_display_fields
+    @supplier_display_in_list = @configuration.supplier_display_fields_in_list
+    @worker_display = @configuration.worker_display_fields
+    @worker_display_in_list = @configuration.worker_display_fields_in_list
   end
 
   def edit_configuration
     @organization = Organization.find(params[:id])
     @configuration = @organization.configuration
-    @product_informations = Product.available_fields
+    @product_informations = ProductDisplay.available_fields
+    @product_display = @configuration.product_display_fields
+    @product_display_in_list = @configuration.product_display_fields_in_list
+    @worker_informations = WorkerDisplay.available_fields
+    @worker_display = @configuration.worker_display_fields
+    @worker_display_in_list = @configuration.worker_display_fields_in_list
+    @supplier_informations = SupplierDisplay.available_fields
+    @supplier_display = @configuration.supplier_display_fields
+    @supplier_display_in_list = @configuration.supplier_display_fields_in_list
   end
 
   def update_configuration
     @configuration = Configuration.find(params[:id])
     @organization = @configuration.organization
-    @configuration.full_product = params[:product_full_informations].nil? ? Array.new : params[:product_full_informations].keys
-    @configuration.lite_product = params[:product_lite_informations].nil? ? Array.new : params[:product_lite_informations].keys
+    @configuration.product_display_fields = params[:product_display_configurations].nil? ? Array.new : params[:product_display_configurations].keys
+    @configuration.product_display_fields_in_list = params[:product_display_configurations_in_list].nil? ? Array.new : params[:product_display_configurations_in_list].keys
 
     if @configuration.update_attributes(params[:configuration])
       flash[:notice] = _('The configurations was successfully updated.')

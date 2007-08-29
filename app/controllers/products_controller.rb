@@ -73,7 +73,8 @@ class ProductsController < ApplicationController
   end
 
   def update
-
+#render :text => params.inspect
+#return
     @product = @organization.products.find(params[:id])
     @product.supplier_ids = params[:suppliers].keys if params[:suppliers]
 

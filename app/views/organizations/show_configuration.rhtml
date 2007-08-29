@@ -5,13 +5,37 @@
 <p> <b><%= _('Product Name') %>:</b> <%= @configuration.product_name %></p>
 <p> <b><%= _('Product All Available Informations') %>:</b> </p>
 <ul>
-  <% @configuration.full_product.each do |field| %>
+  <% @product_display.each do |field| %>
     <li> <%= field %></li>
   <% end %>
 </ul>
 <p> <b><%= _('Product Limited Available Informations') %>:</b> </p>
 <ul>
-  <% @configuration.lite_product.each do |field| %>
+  <% @product_display_in_list.each do |field| %>
+    <li> <%= field %></li>
+  <% end %>
+</ul>
+<p> <b><%= _('Worker All Available Informations') %>:</b> </p>
+<ul>
+  <% @worker_display.each do |field| %>
+    <li> <%= field %></li>
+  <% end %>
+</ul>
+<p> <b><%= _('Worker Limited Available Informations') %>:</b> </p>
+<ul>
+  <% @worker_display_in_list.each do |field| %>
+    <li> <%= field %></li>
+  <% end %>
+</ul>
+<p> <b><%= _('Supplier All Available Informations') %>:</b> </p>
+<ul>
+  <% @supplier_display.each do |field| %>
+    <li> <%= field %></li>
+  <% end %>
+</ul>
+<p> <b><%= _('Supplier Limited Available Informations') %>:</b> </p>
+<ul>
+  <% @supplier_display_in_list.each do |field| %>
     <li> <%= field %></li>
   <% end %>
 </ul>

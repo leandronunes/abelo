@@ -5,7 +5,7 @@
       content.push(
         [
           display_collection_options(c, params),
-          display_info(c,html_options, 'lite' )
+          display_info(c,html_options, 'in_list' )
         ]
       )
     end
@@ -21,12 +21,9 @@
       )
   end
 
-  def display_info(object, html_options = {}, type = 'full')
-    if type == 'full'
-      fields = @organization.configuration.send("full_#{object.class.to_s.tableize.singularize}")
-    else
-      fields =  @organization.configuration.send("lite_#{object.class.to_s.tableize.singularize}")
-    end
+  def display_info(object, html_options = {}, type = '')
+    type = '_' + type unless type.blank?
+    fields = @organization.configuration.send("#{object.class.to_s.tableize.singularize}_display#{type}")
 
     fields.map do |f|
       content_tag(:div,
@@ -91,11 +88,11 @@
 
   # End Specific Block Methods Related
 
-  def display_field_info(object, field, html_options = {})
-    content = object.send("#{field}")
+  def display_field_info(object, display_field, html_options = {})
+    content = object.send("#{display_field.field}")
     content_tag(:div,
       [
-       content_tag(:strong, object.class.send("title_#{field}") + ": "),
+       content_tag(:strong, object.class.configuration_class.send("title_#{display_field.field}") + ": "),
        begin
          self.send("display_field_type_#{content.class.to_s.tableize.singularize}", content)
        rescue
@@ -168,10 +165,10 @@
     )
   end
 
-  def display_edit_info_options(object, html_options = {})
+  def display_edit_info_options(object, params = {}, html_options = {})
     content_tag(:div,
       [
-        button('back', _('Back'), :back, {:action => 'list'}),
+        button('back', _('Back'), :back, {:action => 'list'}.merge(params)),
         button('save', _('Save'), :save),
         button('reset', _('Reset'), :reset, {}, {:type => 'reset'} ),
       ].join("\n"),
@@ -179,9 +176,9 @@
     )
   end
 
-  def display_field_edit(item, field, info = {})
+  def display_field_edit(object, field, info = {})
     unless @organization.nil?
-      return '' unless @organization.configuration.send("full_#{item.class.to_s.tableize.singularize}").include?(field)
+      return '' unless @organization.configuration.send("#{object.class.to_s.tableize.singularize}_display_fields").include?(field)
     end
 
     info[:html_options] ||= Hash.new

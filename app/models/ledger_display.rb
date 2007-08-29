@@ -16,6 +16,9 @@ class LedgerDisplay < DisplayConfiguration
       bank_account_id
       is_foreseen
       schedule_ledger_id
+      schedule_repeat
+      schedule_periodicity
+      schedule_interval
      ]
   end
 

@@ -24,12 +24,13 @@ class SaleTest < Test::Unit::TestCase
     assert_equal @user, sale.user
   end
 
-  def test_relation_with_payments
-    sale = Sale.create(:date => '2007-08-04', :organization_id => @org.id, :user_id => @user.id)
-    pay = PaymentWithCash.new(:value => 50.00, :date => '2007-08-04', :received => true, :cash => 50.00)
-    sale.payments.concat(pay)
-    assert sale.payments.include?(pay)
-  end
+#TODO see it's usefull
+#  def test_relation_with_payments
+#    sale = Sale.create(:date => '2007-08-04', :organization_id => @org.id, :user_id => @user.id)
+#    pay = PaymentWithCash.new(:value => 50.00, :date => '2007-08-04', :received => true, :cash => 50.00)
+#    sale.payments.concat(pay)
+#    assert sale.payments.include?(pay)
+#  end
 
   def test_relation_with_items
     sale = Sale.create(:date => '2007-08-04', :organization_id => @org.id, :user_id => @user.id)

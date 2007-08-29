@@ -6,22 +6,5 @@ one:
   organization_name: "Organização"
   department_name: "Departamento"
   product_name: "Product"
-  full_product:
-  - "name"
-  - "size"
-  - "unit"
-  - "category_id"
-  - "color"
-  - "sell_price"
-  - "description"
-  lite_product:
-  - "name"
-  - "description"
-  full_category:
-  - "name"
-  - "parent"
-  lite_category:
-  - "name"
-  - "parent"
 two:
   id: 2

@@ -127,6 +127,34 @@ class Configuration < ActiveRecord::Base
   end
 
   #######################################
+  # Configuration Product Category Methods
+  #######################################
+
+  def product_category_display_fields= fields
+    set_fields(ProductCategory, fields)
+  end
+
+  def product_category_display_fields_in_list= fields
+    set_fields_in_list(ProductCategory, fields)
+  end
+
+  def product_category_display_fields
+    display_fields('product_category')
+  end
+
+  def product_category_display_fields_in_list
+    display_fields_in_list('product_category')
+  end
+
+  def product_category_display
+    display('product_category')
+  end
+
+  def product_category_display_in_list
+    display_in_list('product_category')
+  end
+
+  #######################################
   # Configuration Ledger Methods
   #######################################
   

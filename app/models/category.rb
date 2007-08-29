@@ -1,15 +1,11 @@
 class Category < ActiveRecord::Base
 
-  acts_as_ferret
-
   validates_presence_of :name, :organization_id
   belongs_to :organization
-  acts_as_tree :order => 'name'
-  belongs_to :parent, :class_name => 'Category'
+  belongs_to :parent, :class_name => 'Category', :foreign_key => 'parent_id'
 
-  def self.available_fields
-    ['name', 'parent_id']
-  end
+  acts_as_tree :order => 'name'
+  acts_as_ferret
 
   def self.full_text_search(q, options = {})
     default_options = {:limit => :all, :offset => 0}
@@ -33,14 +29,6 @@ class Category < ActiveRecord::Base
   
   def self.top_level_for(organization)
     self.find(:all, :conditions => ['parent_id is null and organization_id = ?', organization.id ])
-  end
-
-  def self.title_name
-    _('Name')
-  end
-
-  def self.title_parent
-    _('Related Category')
   end
 
 end

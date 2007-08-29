@@ -6,16 +6,34 @@ class CategoryTest < Test::Unit::TestCase
     @org = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :nickname => 'org')
   end
 
-  def test_mandatory_fields
+  def test_mandatory_field_name
     c = ProductCategory.new
-    assert !c.save
-    
-    c.name = 'Category for testing'
-    assert !c.save
-
     c.organization = @org
-    assert c.save
-    assert_equal ProductCategory, c.class
+    c.save
+    assert c.errors.invalid?(:name)
+  end
+
+  def test_mandatory_field_name
+    c = ProductCategory.new
+    c.name = 'product category for testing'
+    c.save
+    assert c.errors.invalid?(:organization_id)
+  end
+
+  def test_relation_with_organization
+    c = ProductCategory.create!(:name => 'product category for testing', :organization_id => @org.id)
+    assert_equal @org, c.organization
+  end
+
+  def test_relation_with_parent
+    parent_category = ProductCategory.create!(:name => 'parent category for testing', :organization_id => @org.id)
+    c = ProductCategory.create!(:name => 'product category for testing', :organization_id => @org.id, :parent_id => parent_category.id)
+    assert_equal parent_category, c.parent
+  end
+
+  def test_full_text_search
+    c = ProductCategory.create!(:name => 'product category for testing', :organization_id => @org.id)
+    assert @org.product_categories.full_text_search('product*').include?(c)
   end
 
   def test_category_full_name

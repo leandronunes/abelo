@@ -17,6 +17,8 @@ configuration.worker_display_fields= WorkerDisplay.available_fields
 configuration.worker_display_fields_in_list= ['name', 'description', 'email' ]
 configuration.supplier_display_fields= SupplierDisplay.available_fields 
 configuration.supplier_display_fields_in_list= ['name', 'description', 'email' ]
+configuration.product_display_fields= ProductDisplay.available_fields
+configuration.product_display_fields_in_list= ProductDisplay.available_fields
 configuration.ledger_display_fields= LedgerDisplay.available_fields 
 configuration.ledger_display_fields_in_list= LedgerDisplay.available_fields
 configuration.save!

@@ -3,6 +3,20 @@
 
 <p> <b><%= _('Organization Name') %>:</b> <%= @configuration.organization_name %></p>
 <p> <b><%= _('Product Name') %>:</b> <%= @configuration.product_name %></p>
+
+<p> <b><%= _('Ledger All Available Informations') %>:</b> </p>
+<ul>
+  <% @ledger_display.each do |field| %>
+    <li> <%= field %></li>
+  <% end %>
+</ul>
+<p> <b><%= _('Ledger Limited Available Informations') %>:</b> </p>
+<ul>
+  <% @ledger_display_in_list.each do |field| %>
+    <li> <%= field %></li>
+  <% end %>
+</ul>
+
 <p> <b><%= _('Product All Available Informations') %>:</b> </p>
 <ul>
   <% @product_display.each do |field| %>

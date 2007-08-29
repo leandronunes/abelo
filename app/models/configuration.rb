@@ -4,6 +4,7 @@ class Configuration < ActiveRecord::Base
   has_many :product_displays
   has_many :supplier_displays
   has_many :worker_displays
+  has_many :ledger_displays
 
 #TODO See a way to guarantee that a configuration cannot be created whithout an organization
 #  validates_presence_of :organization_id, :if => lambda { |conf| !conf.is_model?}
@@ -123,6 +124,34 @@ class Configuration < ActiveRecord::Base
 
   def worker_display_in_list
     display_in_list('worker')
+  end
+
+  #######################################
+  # Configuration Ledger Methods
+  #######################################
+  
+  def ledger_display_fields= fields
+    set_fields(Ledger, fields)
+  end
+
+  def ledger_display_fields_in_list= fields
+    set_fields_in_list(Ledger, fields)
+  end
+
+  def ledger_display_fields
+    display_fields('ledger')
+  end
+
+  def ledger_display_fields_in_list
+    display_fields_in_list('ledger')
+  end
+
+  def ledger_display
+    display('ledger')
+  end
+
+  def ledger_display_in_list
+    display_in_list('ledger')
   end
 
   private 

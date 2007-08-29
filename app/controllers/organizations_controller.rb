@@ -123,6 +123,8 @@ class OrganizationsController < ApplicationController
   def show_configuration
     @organization = Organization.find(params[:id])
     @configuration = @organization.configuration
+    @ledger_display = @configuration.ledger_display_fields
+    @ledger_display_in_list = @configuration.ledger_display_fields_in_list
     @product_display = @configuration.product_display_fields
     @product_display_in_list = @configuration.product_display_fields_in_list
     @supplier_display = @configuration.supplier_display_fields
@@ -134,12 +136,19 @@ class OrganizationsController < ApplicationController
   def edit_configuration
     @organization = Organization.find(params[:id])
     @configuration = @organization.configuration
+    
+    @ledger_informations = LedgerDisplay.available_fields
+    @ledger_display = @configuration.ledger_display_fields
+    @ledger_display_in_list = @configuration.ledger_display_fields_in_list
+
     @product_informations = ProductDisplay.available_fields
     @product_display = @configuration.product_display_fields
     @product_display_in_list = @configuration.product_display_fields_in_list
+
     @worker_informations = WorkerDisplay.available_fields
     @worker_display = @configuration.worker_display_fields
     @worker_display_in_list = @configuration.worker_display_fields_in_list
+
     @supplier_informations = SupplierDisplay.available_fields
     @supplier_display = @configuration.supplier_display_fields
     @supplier_display_in_list = @configuration.supplier_display_fields_in_list

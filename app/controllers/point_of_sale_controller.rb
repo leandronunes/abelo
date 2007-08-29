@@ -48,7 +48,7 @@ class PointOfSaleController < ApplicationController
           :disposition => 'inline',
           :type => 'printer/apy',
           :filename => "printer.apy")
-    redirect_to :action => 'main'
+#    redirect_to :action => 'main'
   end
 
   def cancel

@@ -15,6 +15,11 @@ class Ledger < ActiveRecord::Base
   validates_presence_of :foreseen_date
   validates_presence_of :effective_date, :if => lambda{|ledger| not ledger.is_foreseen? }
 
+
+  def self.configuration_class
+    LedgerDisplay
+  end
+
   def save
     if self[:type].blank? && !self.category.nil?
       self[:type] = self.category.income? ? 'CreditLedger' : 'DebitLedger'

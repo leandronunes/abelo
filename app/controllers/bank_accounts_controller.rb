@@ -23,14 +23,14 @@ class BankAccountsController < ApplicationController
 
   def list
     @query = params[:query]
-    @query ||= params[:product][:name] if params[:product]
+    @query ||= params[:bank_account][:name] if params[:bank_account]
 
     if @query.nil?
-      @products = @organization.products
-      @product_pages, @products = paginate_by_collection @products
+      @bank_accounts = @organization.bank_accounts
+      @bank_account_pages, @bank_accounts = paginate_by_collection @bank_accounts
     else
-      @products = @organization.products.full_text_search(@query)
-      @product_pages, @products = paginate_by_collection @products
+      @bank_accounts = @organization.bank_accounts.full_text_search(@query)
+      @bank_account_pages, @bank_accounts = paginate_by_collection @bank_accounts
     end
   end
 

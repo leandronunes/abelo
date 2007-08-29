@@ -1,9 +1,6 @@
 <%= title _('Adding New Bank Account') %>
 
 <% form_tag :action => 'create' do %>
-
   <%= render :partial => 'form' %>
-
-  <%= display_edit_info_options(@bank_account) %> 
-
+  <%= display_edit_info_options(@bank_account) %>
 <% end %>

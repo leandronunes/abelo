@@ -2,8 +2,8 @@
 
 <% form_tag( { :action => 'list' }, { :class => 'search_itens' } ) do %>
   <%= text_field 'bank_account', 'account', :class => 'filter_field' %>
-  <%= button( 'lupa', _('Search'), :search) %>
-  <%= button('add', _("New Account"), :new, :action => 'new' ) %>
+  <%= button( 'search', _('Search'), :search) %>
+  <%= button('add', _("New Bank Account"), :new, :action => 'new' ) %>
 <% end %>
 
 <div class="auto_complete" id="bank_account_account_auto_complete"></div>

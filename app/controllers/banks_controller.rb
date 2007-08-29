@@ -11,7 +11,7 @@ class BanksController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @bank_pages, @banks = paginate :banks, :per_page => 10
+    @bank_pages, @banks = paginate :banks, :per_page => 10  
   end
 
   def show

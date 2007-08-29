@@ -2,8 +2,5 @@
 
 <% form_tag :action => 'create' do %>
   <%= render :partial => 'form' %>
-<br/>
-  <div class='button_bar'>
-    <%= display_edit_info_options @product %> 
-  </div>
+  <%= display_edit_info_options @product %> 
 <% end %>

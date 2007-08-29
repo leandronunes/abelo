@@ -2,9 +2,7 @@
 <%= title(_('Editing product')) %>
 
 <% form_tag :action => 'update', :id => @product do %>
-    <%= render :partial => 'form' %>
-   
+    <%= render :partial => 'form' %>   
     <%= display_edit_info_options(@product) %>
-    <%= button 'image', _('Images'), :img, :action => 'images', :id => @product %>
-  </div>
+    <%= button 'image', _('Images'), :img, :action => 'images', :id => @product %>  
 <% end %>

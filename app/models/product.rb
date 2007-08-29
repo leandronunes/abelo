@@ -18,9 +18,6 @@ class Product < ActiveRecord::Base
     ProductDisplay
   end
 
-  def self.available_fields
-    ['name', 'size', 'color', 'description', 'sell_price', 'unit', 'category', 'suppliers']
-  end
 
   def self.full_text_search(q, options = {})
     default_options = {:limit => :all, :offset => 0}

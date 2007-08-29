@@ -4,6 +4,7 @@ class Configuration < ActiveRecord::Base
   has_many :product_displays
   has_many :supplier_displays
   has_many :worker_displays
+  has_many :bank_account_displays
   has_many :ledger_displays
   has_many :product_category_displays
 
@@ -82,7 +83,6 @@ class Configuration < ActiveRecord::Base
     set_fields_in_list(Supplier, fields)
   end
 
-
   def supplier_display_fields
     display_fields('supplier')
   end
@@ -97,6 +97,35 @@ class Configuration < ActiveRecord::Base
 
   def supplier_display_in_list
     display_in_list('supplier')
+  end
+
+
+  #######################################
+  # Configuration Bank Accounts Methods #
+  #######################################
+  
+  def bank_account_display_fields= fields
+    set_fields(BankAccount, fields)
+  end
+
+  def bank_account_display_fields_in_list= fields
+    set_fields_in_list(BankAccount, fields)
+  end
+
+  def bank_account_display_fields
+    display_fields('bank_account')
+  end
+
+  def bank_account_display_fields_in_list
+    display_fields_in_list('bank_account')
+  end
+  
+  def bank_account_display
+    display('bank_account')
+  end
+
+  def bank_account_display_in_list
+    display_in_list('bank_account')
   end
 
   #######################################

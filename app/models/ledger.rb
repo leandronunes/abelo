@@ -10,11 +10,11 @@ class Ledger < ActiveRecord::Base
 
   validates_presence_of :category_id
   validates_presence_of :foreseen_value
-  validates_presence_of :effective_value, :if => lambda{|ledger| not ledger.is_foreseen? }
+  validates_presence_of :effective_value, :if => lambda{ |ledger| not ledger.is_foreseen? }
 
   validates_presence_of :foreseen_date
-  validates_presence_of :effective_date, :if => lambda{|ledger| not ledger.is_foreseen? }
-
+  validates_presence_of :effective_date, :if => lambda{ |ledger| not ledger.is_foreseen? }
+  validates_presence_of :schedule_repeat, :if => lambda{ |l| not (l.schedule_periodicity.blank? and l.schedule_interval.blank?) }
 
   def self.configuration_class
     LedgerDisplay

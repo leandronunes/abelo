@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class LedgerTest < Test::Unit::TestCase
 
-  fixtures :bank_accounts, :categories, :ledgers
+  fixtures :bank_accounts, :categories, :ledgers, :periodicities
 
   def setup
     @ledger = Ledger.find(1)
@@ -13,6 +13,39 @@ class LedgerTest < Test::Unit::TestCase
     assert @ledger.valid?
   end
 
+  def test_presence_of_schedule_repeat_when_schedule_periodicity_and_schedule_interval_are_not_present
+    l = Ledger.new
+    l.valid?
+    assert !l.errors.invalid?(:schedule_repeat)
+  end
+
+  def test_presence_of_schedule_repeat_when_schedule_periodicity_is_present
+    l = Ledger.new
+    l.valid?
+    assert !l.errors.invalid?(:schedule_repeat)
+    l.schedule_periodicity = Periodicity.find(:first)
+    l.valid?
+    assert l.errors.invalid?(:schedule_repeat)
+  end
+
+  def test_presence_of_schedule_repeat_when_schedule_interval_is_present
+    l = Ledger.new
+    l.valid?
+    assert !l.errors.invalid?(:schedule_repeat)
+    l.schedule_interval = 1
+    l.valid?
+    assert l.errors.invalid?(:schedule_repeat)
+  end
+
+  def test_presence_of_schedule_repeat_when_schedule_interval_and_schedule_periodicity_are_present
+    l = Ledger.new
+    l.valid?
+    assert !l.errors.invalid?(:schedule_repeat)
+    l.schedule_interval = 1
+    l.schedule_periodicity = Periodicity.find(:first)
+    l.valid?
+    assert l.errors.invalid?(:schedule_repeat)
+  end
   def test_precense_of_category
     c = LedgerCategory.new(:name => 'Some category', :organization_id => 1, :type_of => 'I')
     c.save!
@@ -179,7 +212,5 @@ class LedgerTest < Test::Unit::TestCase
     ledger.valid?
     assert ledger.errors.invalid?(:schedule_repeat)
   end
-
-
 
 end

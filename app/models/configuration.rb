@@ -5,6 +5,7 @@ class Configuration < ActiveRecord::Base
   has_many :supplier_displays
   has_many :worker_displays
   has_many :ledger_displays
+  has_many :product_category_displays
 
 #TODO See a way to guarantee that a configuration cannot be created whithout an organization
 #  validates_presence_of :organization_id, :if => lambda { |conf| !conf.is_model?}

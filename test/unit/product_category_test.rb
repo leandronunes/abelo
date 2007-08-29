@@ -61,4 +61,8 @@ class ProductCategoryTest < Test::Unit::TestCase
 
   end
 
+  def test_configuration_class
+    assert_equal ProductCategoryDisplay, ProductCategory.configuration_class
+  end
+
 end

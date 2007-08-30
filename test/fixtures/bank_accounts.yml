@@ -1,23 +1,9 @@
-# == Schema Information
-# Schema version: 35
-#
-# Table name: bank_accounts
-#
-#    id                 :integer       not null, primary key
-#    owner_type         :string
-#    owner_id           :integer
-#    bank_id            :integer
-#    agency             :string
-#    variation          :string
-#    account            :string
-#    is_default         :boolean 
-#
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 one:
   id: 1
   bank_id: 1
   owner_type: 'Organization'
   owner_id: 1
+  is_default: true
 two:
   id: 2
   bank_id: 1

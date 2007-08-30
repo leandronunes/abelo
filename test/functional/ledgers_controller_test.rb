@@ -5,42 +5,36 @@ require 'ledgers_controller'
 class LedgersController; def rescue_action(e) raise e end; end
 
 class LedgersControllerTest < Test::Unit::TestCase
-  fixtures :ledgers, :ledger_categories, :configurations
+  fixtures :ledgers, :ledger_categories, :configurations, :bank_accounts
  
   under_organization :one
 
-  def test_true
-    assert true
+  def setup
+    @controller = LedgersController.new
+    @request    = ActionController::TestRequest.new
+    @response   = ActionController::TestResponse.new
+    login_as("quentin")
+    @ledger_category = LedgerCategory.create!(:name => 'Some Category', :type_of => 'I', :organization_id => 1 )
   end
 
-#TODO make this tests
+  def test_index
+    get :index
+    assert_response :redirect
+    assert_redirected_to :action => 'list'
+  end
 
-#  def setup
-#    @controller = LedgersController.new
-#    @request    = ActionController::TestRequest.new
-#    @response   = ActionController::TestResponse.new
-#    login_as("quentin")
-#    @ledger_category = LedgerCategory.create!(:name => 'Some Category', :type_of => 'I', :organization_id => 1 )
-#  end
-#
-#  def test_index
-#    get :index
-#    assert_response :redirect
-#    assert_redirected_to :action => 'list'
-#  end
-#
-#  def test_list
-#    get :list
-#
-#    assert_response :success
-#    assert_template 'list'
-#
-#    assert_not_nil assigns(:ledgers)
-#    assert_not_nil assigns(:ledgers_page)
-#    assert_not_nil assigns(:tags)
-#    assert_not_nil assigns(:budgets)
-#  end
-#
+  def test_list
+    get :list
+
+    assert_response :success
+    assert_template 'list'
+
+    assert_not_nil assigns(:ledgers)
+    assert_not_nil assigns(:ledger_pages)
+    assert_not_nil assigns(:tags)
+    assert_not_nil assigns(:bank_account)
+  end
+
 #  def test_new
 #    get :new
 #

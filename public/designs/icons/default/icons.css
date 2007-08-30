@@ -21,7 +21,16 @@
 .password { background-image: url('password.png');}
 .go-jump { background-image: url('go-jump.png');}
 .system-log-out { background-image: url('system-log-out.png');}
-
+.previous_page { 
+  background-image: url('previous_page.png'); 
+  width: 32px;
+  height: 32px;  
+}
+.next_page { 
+  background-image: url('next_page.png'); 
+  width: 32px;
+  height: 32px;  
+}
 /*
  * Menu Icons
  * 

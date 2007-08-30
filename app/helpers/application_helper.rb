@@ -121,23 +121,6 @@ module ApplicationHelper
     select_tag("#{object}[parent_id]", "<option value=""></option>" + categories.map { |c| options_for_category(c,c.id) }.join(' '), { :include_blank => true }) 
   end
 
-#TODO see
-  def to_currency(value)
-    value = 0.0 if value.nil?
-    number_to_currency(value, :unit => "", :delimiter => ".", :separator => ",")
-  end
-
-#TODO see
-  def sum_by_category(type, obj)
-    if type == :all
-      obj.sum {|l| l.value * (l.category.expense? ? -1 : 1) }
-    elsif type == :income
-      obj.select {|l| l.category.income? }.sum {|l| l.value }
-    elsif type == :expense
-      obj.select {|l| l.category.expense? }.sum {|l| l.value }
-    end
-  end
-
   def limit_string(s,tam=50)
     (!s.nil? && !s.empty? && s.size > tam) ? s.first(tam)+"..." : s
   end
@@ -164,28 +147,6 @@ module ApplicationHelper
     content_tag('h2', subtitle)
   end
 
-  #TODO Remove this in the future
-  #DEPRECATED
-  #Use display_collection method to make the same effect
-  def display_list(content, html_options = {})
-    content_tag(
-      'li', 
-      content.map{ |c|
-        if c.class == Hash 
-          content_tag(
-            'div',
-            content_tag('strong', c[:title]) + 
-            " " +
-            content_tag('span', c[:content]),
-            :class => "list_item_#{c[:option]}"
-          )
-        else
-          c
-        end
-      }.join("\n"),
-      :class => html_options[:li_options])
-  end
-
   def footer
     _("Copyrigth © 2007 %s. This software is under %s") % [link_to(_('Colivre'), 'http://www.colivre.coop.br', :alt => 'Cooperativa de Tecnologias Livres'), link_to(_('GPL'), 'http://www.gnu.org/licenses/licenses.html#GPL')]
   end
@@ -194,21 +155,6 @@ module ApplicationHelper
     text_method = text_method.to_s
     value_method = value_method.to_s
     select(object, method, collection.map{|c| [c.send(text_method).to_s, c.send(value_method).to_s]}, :include_blank => true) 
-  end
-
-
-  private 
-
-  #Used by select_category to generate the category options to be choosed by user
-  def options_for_category(cat, selected_value) 
-    if cat.leaf?
-      content_tag('option', cat.name, "value" => cat.id)
-    else
-      options = { :label => cat.name, :style => "padding-left: #{cat.level}em;" }
-      options.merge!(:selected => 'selected') if (selected_value == cat.id)
-      content = cat.children.map { |child| options_for_category(child, selected_value) }.join('')
-      content_tag("optgroup", content, options)
-    end
   end
 
 end

@@ -8,7 +8,6 @@ class Organization < ActiveRecord::Base
 
 #TODO See a way to guarantee that a organization cannot be created whithout a configuration
 
-
   has_one :configuration, :dependent => :delete
 
   has_many :departments

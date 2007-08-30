@@ -39,7 +39,7 @@ class BankAccountsController < ApplicationController
   end
 
   def new
-    @banks = Bank.options
+    @banks = Bank.find(:all)
     @bank_account = BankAccount.new
   end
 

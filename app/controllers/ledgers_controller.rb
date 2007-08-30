@@ -8,8 +8,50 @@ class LedgersController < ApplicationController
   verify :method => :post, :only => [ :find_ledgers, :save, :destroy, :find_budgets, :find_by_tag, :navigation ],
          :redirect_to => { :action => :index }
 
+  # Redirect to action list
   def index
     redirect_to :action => 'list'
+  end
+
+  # List all ledgers of an organization.
+  # The ledgers are of the bank account passed as parameter. If no bank account is passed
+  # as parameter the ledgers are of the default bank account of the organization.
+  def list
+    begin
+      @bank_account = @organization.bank_accounts.find(params[:bank_account_id])
+    rescue
+      @bank_account = @organization.default_bank_account
+    end
+    
+    @query = nil
+    ledgers = @organization.ledgers_by_bank_account(@bank_account)
+    @tags = ledgers
+    @ledger_pages, @ledgers = paginate_by_collection ledgers
+  end
+
+
+  # This method render a table with all ledgers of the bank account of
+  # organization. 
+  # If no bank account is passed as parameter it displays the ledgers
+  # of the default bank account.
+  def display_table
+    begin
+      @bank_account = @organization.bank_accounts.find(params[:bank_account_id])
+    rescue
+      @bank_account = @organization.default_bank_account
+    end
+    @query = nil
+    ledgers = @organization.ledgers_by_bank_account(@bank_account)
+    @tags = ledgers
+    @ledger_pages, @ledgers = paginate_by_collection ledgers
+    render :partial => 'display_table'
+  end
+
+
+  def new
+    @ledger = Ledger.new
+    @bank_accounts = @organization.bank_accounts
+    @ledger_categories =  @organization.ledger_categories_sorted
   end
 
   def get_periodicity_informations
@@ -31,12 +73,6 @@ class LedgersController < ApplicationController
     end
   end
 
-  def new
-    @ledger = Ledger.new
-    @bank_accounts = @organization.bank_accounts
-    @ledger_categories =  @organization.ledger_categories_sorted
-  end
-
   def create
     @ledger = Ledger.new(params[:ledger])
     
@@ -49,27 +85,6 @@ class LedgersController < ApplicationController
       @periodicities = @organization.periodicities
       render_action :new
     end
-  end
-
-  #TODO see it's usefull
-  def display_table
-    @bank_account = @organization.default_bank_account
-    @query = nil
-    parameters = {:order => 'ledgers.effective_date DESC, ledgers.id DESC', :per_page => 5, :conditions => ['bank_account_id = ?', @bank_account]}
-    get_tags
-    get_budgets
-    @ledger_pages, @ledgers = paginate :ledgers, parameters
-    render :partial => 'display_table'
-  end
-
-  #TODO see
-  def list
-    @bank_account = @organization.default_bank_account
-    @query = nil
-    parameters = {:order => 'ledgers.effective_date DESC, ledgers.id DESC', :per_page => 5, :conditions => ['bank_account_id = ?', @bank_account]}
-    get_tags
-    get_budgets
-    @ledger_pages, @ledgers = paginate :ledgers, parameters
   end
 
   #TODO move it to a block on a Desgin plugin
@@ -169,12 +184,4 @@ class LedgersController < ApplicationController
     get_budgets
   end
  
-  private
- 
-  #TODO see
-  def get_tags
-    @tags = @organization.ledgers_by_bank_account
-
-  end
-
 end

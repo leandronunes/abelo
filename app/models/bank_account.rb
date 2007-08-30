@@ -10,4 +10,7 @@ class BankAccount < ActiveRecord::Base
     BankAccountDisplay
   end
 
+  def name 
+    _("AG: + #{self.agency} + / CC: + #{self.account}")
+  end
 end

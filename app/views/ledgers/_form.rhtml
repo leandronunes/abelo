@@ -31,12 +31,15 @@
 
   <%= display_field_edit(item, 'schedule_repeat',
         :title => _('Repeat this foreseen ledger?'),
-        :content => check_box('ledger', 'schedule_repeat', {}, true, false ),
+        :content => check_box('ledger', 'schedule_repeat', {}, 'true', 'false' ),
         :html_options => {:class => 'line_item'}
       )
   %>
   
   <div id="repeat_informations">
+    <% if @ledger.schedule_repeat? %>
+      <%= render :partial => 'get_periodicity_informations' %> 
+    <% end %>
   </div>
 
   <%= observe_field('ledger_schedule_repeat',

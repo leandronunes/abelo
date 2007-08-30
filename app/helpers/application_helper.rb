@@ -284,8 +284,10 @@ module ApplicationHelper
     _("Copyrigth © 2007 %s. This software is under %s") % [link_to(_('Colivre'), 'http://www.colivre.coop.br', :alt => 'Cooperativa de Tecnologias Livres'), link_to(_('GPL'), 'http://www.gnu.org/licenses/licenses.html#GPL')]
   end
 
-  def select_item(object, method, collection=[])
-    select(object, method, collection) 
+  def select_item(object, method, collection=[], text_method=:name, value_method=:id )
+    text_method = text_method.to_s
+    value_method = value_method.to_s
+    select(object, method, collection.map{|c| [c.send(text_method).to_s, c.send(value_method).to_s]}, :include_blank => true) 
   end
 
 

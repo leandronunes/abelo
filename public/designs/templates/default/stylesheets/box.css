@@ -24,17 +24,15 @@
 }
 
 #errorExplanation {
-filter:alpha(opacity=50);
--moz-opacity:.50;
-opacity:.50;
-  position:relative;
+  filter:alpha(opacity=50);
+  -moz-opacity:.50;
+  opacity:.50;
   border: 2px solid red;
   padding-top: 7px;
   padding-left: 7px;
   padding-right: 7px;
   padding-bottom: 12px;
   margin-bottom: 20px;
-  width: 280px;
   background-color: #f0f0f0;
 }
 
@@ -67,7 +65,7 @@ opacity:1.0;
  list-style: square;
 }
 
-.fieldWithErrors{
-  background-color: blue;
-  width: 40px;
+.fieldWithErrors input{
+  background-color: #ff7171;
+  border: 2px solid red;
 }

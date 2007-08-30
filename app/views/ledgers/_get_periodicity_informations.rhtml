@@ -1,11 +1,15 @@
 <%= display_field_edit(@ledger, 'schedule_periodicity',
       :title => _('Periodicity?'),
-      :content => select('ledger', 'schedule_periodicity', [[_('None'), nil]].concat(@periodicities.map{|p| [p.name, p.id]})),
+      :content => select_item('ledger', 'schedule_periodicity', @periodicities),
       :html_options => {:class => 'line_item'}
     )
 %>
 
 <div id="periodicity_informations" >
+
+  <%  unless @ledger.schedule_periodicity.blank? %>
+    <%= render :partial => 'get_interval_informations' %>
+  <% end %>
 
 </div>
 

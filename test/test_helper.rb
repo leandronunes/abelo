@@ -44,5 +44,5 @@ class Test::Unit::TestCase
     raise "organization_nickname must be set!" unless extra_parameters[:organization_nickname]
   end
  
-
 end
+

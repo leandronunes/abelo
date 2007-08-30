@@ -33,23 +33,22 @@ class LedgersController < ApplicationController
 
   def new
     @ledger = Ledger.new
-    @bank_accounts = @organization.bank_accounts.map{|b| 
-       ["AG:" + b.agency + "/ CC:" + b.account, b.id]
-    }
+    @bank_accounts = @organization.bank_accounts
     @ledger_categories =  @organization.ledger_categories_sorted
   end
 
   def create
+#render :text => params.inspect
+#return 
     @ledger = Ledger.new(params[:ledger])
     
     if @ledger.save
       flash[:notice] = _('The ledger was successfully created')
       redirect_to :action => 'list'
     else
-      @bank_accounts = @organization.bank_accounts.map{|b| 
-         ["AG:" + b.agency + "/ CC:" + b.account, b.id]
-      }
+      @bank_accounts = @organization.bank_accounts
       @ledger_categories =  @organization.ledger_categories_sorted
+      @periodicities = @organization.periodicities
       render_action :new
     end
   end
@@ -57,7 +56,7 @@ class LedgersController < ApplicationController
   #TODO see
   def list
     default_bank_account = @organization.default_bank_account
-    parameters = {:order => 'ledgers.effective_date DESC, ledgers.id DESC', :per_page => 5, :conditions => ['bank_account_id = ?', default_bank_account]}
+    parameters = {:order => 'ledgers.effective_date DESC, ledgers.id DESC', :per_page => 15, :conditions => ['bank_account_id = ?', default_bank_account]}
     get_tags
     get_budgets
     @ledgers_page, @ledgers = paginate :ledgers, parameters

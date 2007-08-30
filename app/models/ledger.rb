@@ -12,16 +12,53 @@ class Ledger < ActiveRecord::Base
   validates_presence_of :foreseen_value
   validates_presence_of :effective_value, :if => lambda{ |ledger| not ledger.is_foreseen? }
 
+  validates_presence_of :bank_account_id
   validates_presence_of :foreseen_date
   validates_presence_of :effective_date, :if => lambda{ |ledger| not ledger.is_foreseen? }
-  validates_presence_of :schedule_repeat, :if => lambda{ |l| not (l.schedule_periodicity.blank? and l.schedule_interval.blank?) }
+  validates_presence_of :schedule_repeat, :if => lambda{ |l| !l.schedule_periodicity.blank? or  !l.schedule_interval.blank? }
+  validates_presence_of :schedule_periodicity, :if => lambda{ |l| l.schedule_repeat? or !l.schedule_interval.blank? }
+  validates_presence_of :schedule_interval, :if => lambda{ |l| l.schedule_repeat? or  !l.schedule_periodicity.blank? }
+
+
+  after_create do |l|
+    return unless l.valid?
+    transaction do 
+      if l.schedule_repeat?
+        sl = ScheduleLedger.create(:periodicity => l.schedule_periodicity_obj, :start_date => l.foreseen_date, :interval => l.schedule_interval)
+        (1..l.schedule_interval.to_i).each do |n|
+          ledger_schedule = Ledger.new()
+          ledger_schedule.is_foreseen = true
+          ledger_schedule.category = l.category
+          ledger_schedule.value = l.value
+          ledger_schedule.description = l.description
+          ledger_schedule.tag_list = l.tag_list
+          ledger_schedule.date = l.date + l.schedule_periodicity_obj.number_of_days * n
+          ledger_schedule.interests = l.interests
+          ledger_schedule.interests_days = l.interests_days
+          ledger_schedule.number_of_parcels = l.number_of_parcels
+          ledger_schedule.parcel_number = l.parcel_number
+          ledger_schedule.operational = l.operational
+          ledger_schedule.bank_account = l.bank_account
+          ledger_schedule.schedule_ledger = sl
+          ledger_schedule.save
+        end
+        l.schedule_ledger = sl
+      end  
+    end
+  end
+
+  def schedule_periodicity_obj
+    Periodicity.find(self.schedule_periodicity)
+  end
 
   def self.configuration_class
     LedgerDisplay
   end
 
   def save
-    if self[:type].blank? && !self.category.nil?
+    if self.category.nil?
+      self[:type] = nil
+    else    
       self[:type] = self.category.income? ? 'CreditLedger' : 'DebitLedger'
     end
     super
@@ -84,15 +121,11 @@ class Ledger < ActiveRecord::Base
 
     self.errors.add(:date, _("Date cannot be set" )) unless self[:date].nil?
 
-    if ((!self.schedule_periodicity.nil? or !self.schedule_interval.nil?) and !(self.schedule_repeat?))
-      self.errors.add(:schedule_repeat, _('You have to mark schedule repeat field to schedule a ledger')) 
-    end
-#TODO implements the scheduler ledger
-#    self.errors.add(:schedule_repeat, _('You have to mark schedule repeat field to schedule a ledger')) 
+    self.errors.add(:type, _("It's not a valid type" )) unless self[:type].nil? or self[:type] !='CreditLedger' or self[:type] != 'DebitLedger'
   end
 
   def type= value
-    errors.add(:type, _("You cannot set a type manually") )
+    errors.add(:type, _("You cannot set a type type manually") )
   end
 
 end

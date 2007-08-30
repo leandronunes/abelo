@@ -38,8 +38,6 @@ class LedgersController < ApplicationController
   end
 
   def create
-#render :text => params.inspect
-#return 
     @ledger = Ledger.new(params[:ledger])
     
     if @ledger.save
@@ -53,6 +51,17 @@ class LedgersController < ApplicationController
     end
   end
 
+  #TODO see it's usefull
+  def display_table
+    @bank_account = @organization.default_bank_account
+    @query = nil
+    parameters = {:order => 'ledgers.effective_date DESC, ledgers.id DESC', :per_page => 5, :conditions => ['bank_account_id = ?', @bank_account]}
+    get_tags
+    get_budgets
+    @ledger_pages, @ledgers = paginate :ledgers, parameters
+    render :partial => 'display_table'
+  end
+
   #TODO see
   def list
     @bank_account = @organization.default_bank_account
@@ -60,7 +69,7 @@ class LedgersController < ApplicationController
     parameters = {:order => 'ledgers.effective_date DESC, ledgers.id DESC', :per_page => 5, :conditions => ['bank_account_id = ?', @bank_account]}
     get_tags
     get_budgets
-    @ledgers_page, @ledgers = paginate :ledgers, parameters
+    @ledger_pages, @ledgers = paginate :ledgers, parameters
   end
 
   #TODO move it to a block on a Desgin plugin

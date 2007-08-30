@@ -138,23 +138,6 @@ module ApplicationHelper
     end
   end
 
-#TODO see
-  def navigator_for(pages, objs, flash, color='ligth_blue')
-    str  = "<div class='#{color} navigation' style='text-align:center'>"
-      if flash[:filter]
-        str += flash[:filter]
-        str += " [" + link_to_remote('limpar', :url => {:action => 'find_ledgers', :find => ''}) + "]"
-      elsif pages.length > 1
-        if pages.current.previous
-          str += "<div style='float:left; position:absolute'>" + link_to_remote("&lt;recentes", :url => { :action => 'navigation', :page => pages.current.previous }) + "</div>"
-        end
-        if pages.current.next
-          str += "<div style='float:right; display:table-cell'>" + link_to_remote('antigos&gt;', :url => { :action => 'navigation', :page => pages.current.next }) + "</div>"
-        end
-        str += "página #{pages.current.number} de #{pages.length}"
-      end
-    str  += "</div>"
-  end
 
   #TODO Remove this in the future
   #DEPRECATED

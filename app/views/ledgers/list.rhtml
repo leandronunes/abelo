@@ -1,21 +1,58 @@
-<div id="box_content_1">
-  <div id="tag">
-    <%= render :partial => 'tag' %>
-  </div>
 
-  <div id="budget" >
-    <%= render :partial => 'budget' %>
-  </div>
+<%= title _('Ledges of Account %s') % @bank_account.name %> 
 
+<% form_tag( { :action => 'list' }, { :class => 'search_itens' } ) do %>
+  <%= text_field 'ledger', 'date', {:class => 'filter_field', :value => @query} %>
+  <%= button('search', _('Search'), :search) %>
+  <%= button('add', _("New Ledger"), :new, :action => 'new' ) %>
+<% end %>
+
+<div class="auto_complete" id="ledger_date_auto_complete"></div>
+<%= auto_complete_field :ledger_date, :url => {:action => 'autocomplete_name' }, :indicator => 'auto_list'%>
+<div id="auto_list" style="display:none;">
 </div>
 
-<div id="box_content_2">
-  <p>
-  <%= link_to _('Add new ledger'), :action => 'new'%>
-  </p>
-   <%= navigator_for @ledgers_page, @ledgers, flash %>
 
-  <%= render :partial => 'list'%>
+<div id="financial_table">
+  <%= navigator_for @ledgers_page, @ledgers, flash %>
+  
+  <table>
+    <tr>
+      <th colspan='6'> <%= _('Tags') %> </th>
+    </tr>
+    <tr>
+      <td colspan='6'>
+        <% @tags.tag_counts.each do |t| %>
+          <%= link_to_remote(t.name, :url => {:action => 'find_by_tag', :tag => t.name }) + "(#{t.count})" %>
+        <% end %>
+      </td>
+    </tr>
+  
+    <tr>
+      <th> <%= _('Date') %> </th>
+      <th> <%= _('Category') %> </th>
+      <th> <%= _('Description') %> </th>
+      <th> <%= _('Income (R$)') %></th>
+  	<th><%= _('Expense (R$)') %></th>
+  	<th> <%= _('Operation') %></th>
+    </tr>
+    
+    <% for ledger in @ledgers %>
+      <tr id="list_ledger_<%=ledger.id %>">
+      <td><%= ledger.date.strftime('%d/%m/%Y') %></td>
+      <td> <%= ledger.category.name %></td>
+      <td> <%= ledger.description %></td>
+    	  <td><%= to_currency(ledger.value) if ledger.category.income? %></td>
+      <td><%= to_currency(ledger.value) if ledger.category.expense? %></td>
+      <td>
+        <%= link_to _('Edit'), :action => 'edit', :id => ledger %> <%= _('or') %>
+        <%= link_to_remote _('Remove'), :url => {:action => 'destroy', :id => ledger} %> 
+      </td>
+      </tr>
+    <% end %>
+  </table>
+
+  <%= navigator_for @ledgers_page, @ledgers, flash %>
+
 </div>
-
-<br class="clear"/>   
+  

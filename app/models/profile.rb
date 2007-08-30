@@ -83,6 +83,7 @@ class Profile < ActiveRecord::Base
       { :controller => 'main', :action => '*' },
       { :controller => 'products', :action => '*' },
       { :controller => 'bank_accounts', :action => '*' },
+      { :controller => 'interface', :action => '*' },
     ]
   }
 

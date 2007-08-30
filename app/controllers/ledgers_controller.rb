@@ -55,8 +55,9 @@ class LedgersController < ApplicationController
 
   #TODO see
   def list
-    default_bank_account = @organization.default_bank_account
-    parameters = {:order => 'ledgers.effective_date DESC, ledgers.id DESC', :per_page => 15, :conditions => ['bank_account_id = ?', default_bank_account]}
+    @bank_account = @organization.default_bank_account
+    @query = nil
+    parameters = {:order => 'ledgers.effective_date DESC, ledgers.id DESC', :per_page => 5, :conditions => ['bank_account_id = ?', @bank_account]}
     get_tags
     get_budgets
     @ledgers_page, @ledgers = paginate :ledgers, parameters
@@ -145,7 +146,20 @@ class LedgersController < ApplicationController
     end
   end
 
-  
+#
+#    @bank_account = @organization.default_bank_account
+#    @query = nil
+#    parameters = {:order => 'ledgers.effective_date DESC, ledgers.id DESC', :per_page => 15, :conditions => ['bank_account_id = ?', @bank_account]}
+#    get_tags
+#    get_budgets
+#    @ledgers_page, @ledgers = paginate :ledgers, parameters
+
+
+  #TODO remove this function when its block implementation be done
+  def test_budgets 
+    get_budgets
+  end
+ 
   private
  
   #TODO see

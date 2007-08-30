@@ -33,6 +33,9 @@ class LedgerCategory < ActiveRecord::Base
     value
   end
 
+  def name_with_sign
+    self.income? ? _("(+) %s") % self.name :  _("(-) %s") % self.name
+  end
 
 # TODO see if it's needed
   def value

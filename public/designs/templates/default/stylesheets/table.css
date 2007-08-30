@@ -1,25 +1,12 @@
-#box_content_1{
-  float: left;
-  width: 20%;
-  margin: 0px 10px 0px 0px;
-}
-
-#box_content_2{
-  float: left;
-  width: 70%;
-  margin: 0px 10px 0px 0px;
-}
-
-#box_content_2 p{
-  margin-left: 30px;
-}
-
-table {
+#financial_table table {
 text-align: left;
 margin: 0px;
 padding: 0px;
 border-spacing: 0;
-margin-left: 20px;
+margin-top: 20px;
+clear: left;
+width: 100%;
+
 }
 tr th {
 background: #f4edcf;

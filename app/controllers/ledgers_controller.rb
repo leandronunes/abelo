@@ -16,7 +16,8 @@ class LedgersController < ApplicationController
 
 
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
-  verify :method => :post, :only => [ :update, :create, :destroy, :find_by_tag, :display_table ],
+  verify :method => :post, :only => [ :update, :create, :destroy, :find_by_tag, 
+                                      :display_table, :get_periodicity_informations, :get_interval_informations ],
          :redirect_to => { :action => :index }
 
   # Redirect to action list
@@ -33,7 +34,7 @@ class LedgersController < ApplicationController
     @query ||= params[:ledger][:description] if params[:ledger]
 
     begin
-      @bank_account = @organization.bank_accounts.find(params[:bank_account_id])
+      @bank_account = @organization.bank_accounts.find(params[:bank_account])
     rescue
       @bank_account = @organization.default_bank_account
     end
@@ -57,11 +58,10 @@ class LedgersController < ApplicationController
   # of the default bank account.
   def display_table
     begin
-      @bank_account = @organization.bank_accounts.find(params[:bank_account_id])
+      @bank_account = @organization.bank_accounts.find(params[:bank_account])
     rescue
       @bank_account = @organization.default_bank_account
     end
-    @query = nil
     ledgers = @organization.ledgers_by_bank_account(@bank_account)
     @tags = ledgers
     @ledger_pages, @ledgers = paginate_by_collection ledgers
@@ -108,21 +108,19 @@ class LedgersController < ApplicationController
     end
   end
 
-  #TODO move it to a block on a Desgin plugin
-  def get_budgets
-    @date = params[:date].nil? ? Date.today : params[:date].to_time
-    @earlier_month = @date << 1
-    @last_month = @date >> 1
-    @categories = @organization.ledger_categories
-  end
-
-
-  #TODO see
   def edit
-    @ledger = @organization.ledgers.find(params[:id])
+#    begin
+#      @bank_account = @organization.bank_accounts.find(params[:bank_account])
+#    rescue
+#      @bank_account = @organization.default_bank_account
+#    end
+
+#    if @query.nil?
+#      ledgers = @organization.ledgers_by_bank_account(@bank_account)
+    @ledger = @organization.find_ledger(params[:id])
+
+    @bank_accounts = @organization.bank_accounts
     @ledger_categories =  @organization.ledger_categories_sorted
-    get_tags 
-    get_budgets
   end
 
   #TODO see
@@ -202,7 +200,10 @@ class LedgersController < ApplicationController
 
   #TODO remove this function when its block implementation be done
   def test_budgets 
-    get_budgets
+    @date = params[:date].nil? ? Date.today : params[:date].to_time
+    @earlier_month = @date << 1
+    @last_month = @date >> 1
+    @categories = @organization.ledger_categories
   end
  
 end

@@ -248,7 +248,8 @@ class Configuration < ActiveRecord::Base
   #######################################
   # Configuration Ledger Methods
   #######################################
-  
+ 
+
   def ledger_display_fields= fields
     set_fields(Ledger, fields)
   end
@@ -272,6 +273,8 @@ class Configuration < ActiveRecord::Base
   def ledger_display_in_list
     display_in_list('ledger')
   end
+
+  alias :debit_ledger_display_fields :ledger_display_fields
 
   private 
 

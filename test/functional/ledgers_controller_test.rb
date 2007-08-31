@@ -15,6 +15,11 @@ class LedgersControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
     login_as("quentin")
     @ledger_category = LedgerCategory.create!(:name => 'Some Category', :type_of => 'I', :organization_id => 1 )
+    @another_bank_account = BankAccount.find(2)
+  end
+
+  def test_setup
+    assert @another_bank_account.valid?
   end
 
   def test_index
@@ -23,55 +28,165 @@ class LedgersControllerTest < Test::Unit::TestCase
     assert_redirected_to :action => 'list'
   end
 
-#  def test_list
-#    get :list
-#
-#    assert_response :success
-#    assert_template 'list'
-#
-#    assert_not_nil assigns(:ledgers)
-#    assert_not_nil assigns(:ledger_pages)
-#    assert_not_nil assigns(:tags)
-#    assert_not_nil assigns(:bank_account)
-#  end
-#
-#  def test_new
-#    get :new
-#
-#    assert_response :success
-#    assert_template 'new'
-#
-#    assert_not_nil assigns(:ledger)
-#    assert_not_nil assigns(:ledger_categories)
-#    assert_not_nil assigns(:tags)
-#    assert_not_nil assigns(:budgets)
-#  end
-#
-#  def test_create_successfully
-#    post :create, :ledger => {:description => 'Something', :category_id => @ledger_category.id, :value => '3', :date => Time.now}
-#
-#    assert_not_nil assigns(:ledger)
-#    assert_response :redirect
-#    assert_redirected_to :action => 'list'
-#  end
-#
-#  def test_create_successfully_with_param_value_with_comma
-#    post :create, :ledger => {:description => 'Something', :category_id => @ledger_category.id, :value => '3,0', :date => Time.now}
-#
-#    assert_not_nil assigns(:ledger)
-#    assert_equal 3.0, assigns(:ledger).value 
-#  end
-#
-#  def test_create_unsuccessfully
-#    #Don't pass the param date needed 
-#    post :create, :ledger => {:description => 'Something', :category_id => @ledger_category.id, :value => '3'}
-#
-#    assert_not_nil assigns(:ledger)
-#    assert_not_nil assigns(:tags)
-#    assert_not_nil assigns(:budgets)
-#    assert_response :success
-#    assert_template 'new'
-#  end
+  def test_object_needed_by_view_are_instanciated
+    get :list
+
+    assert_response :success
+    assert_template 'list'
+
+    assert_not_nil assigns(:ledgers)
+    assert_not_nil assigns(:ledger_pages)
+    assert_not_nil assigns(:tags)
+    assert_not_nil assigns(:bank_account)
+  end
+
+  def test_list_with_default_bank_account
+    get :list
+
+    assert_response :success
+    assert_template 'list'
+
+    assert_not_equal @another_bank_account, assigns(:bank_account)
+    assert_equal assigns(:organization).default_bank_account, assigns(:bank_account)
+  end
+
+  def test_list_without_default_bank_account
+    get :list, :bank_account => @another_bank_account.id
+
+    assert_response :success
+    assert_template 'list'
+
+    assert_equal @another_bank_account, assigns(:bank_account)
+  end
+
+
+  def test_list_when_query_param_is_nil
+    get :list
+
+    assert_response :success
+    assert_template 'list'
+
+    assert_equal assigns(:ledgers).length, assigns(:organization).ledgers_by_bank_account.length
+  end
+
+  def test_list_when_query_param_not_nil
+    Ledger.delete_all
+    l = CreditLedger.new(:date => Date.today, :value => 34, :description => 'Some Description', :bank_account => @another_bank_account, :category => @ledger_category, :operational => false, :is_foreseen => false)
+    l.save!
+    l = DebitLedger.new(:date => Date.today, :value => 50, :description => 'Another Some Description', :bank_account => @another_bank_account, :category => @ledger_category, :operational => false, :is_foreseen => false)
+    l.save!
+    
+    get :list, :bank_account => @another_bank_account.id, :ledger => {:description => 'Another'}
+
+    assert_response :success
+    assert_template 'list'
+
+    assert_equal 1, assigns(:ledgers).length
+
+
+    get :list, :bank_account => @another_bank_account.id, :ledger => {:description => 'Description'}
+
+    assert_response :success
+    assert_template 'list'
+
+    assert_equal 2, assigns(:ledgers).length
+  end
+
+  def test_display_table_with_default_bank_account
+    post :display_table
+
+    assert_response :success
+    assert_template '_display_table'
+    
+    assert_not_nil assigns(:bank_account)
+    assert_not_nil assigns(:tags)
+    assert_not_nil assigns(:ledger_pages)
+    assert_not_nil assigns(:ledgers)
+    assert_equal assigns(:organization).default_bank_account, assigns(:bank_account)    
+  end
+
+  def test_display_table_without_default_bank_account
+    post :display_table, :bank_account => @another_bank_account.id
+
+    assert_response :success
+    assert_template '_display_table'
+
+    assert_not_nil assigns(:bank_account)
+    assert_not_nil assigns(:tags)
+    assert_not_nil assigns(:ledger_pages)
+    assert_not_nil assigns(:ledgers)
+    assert_equal @another_bank_account, assigns(:bank_account)
+  end
+
+  def test_new
+    get :new
+
+    assert_response :success
+    assert_template 'new'
+
+    assert_not_nil assigns(:ledger)
+    assert_not_nil assigns(:ledger_categories)
+    assert_not_nil assigns(:bank_accounts)
+  end
+
+  def test_get_periodicity_informations_when_value_param_is_true
+    post :get_periodicity_informations, :value => 'true'
+   
+    assert_response :success
+    assert_template '_get_periodicity_informations'
+
+    assert_not_nil assigns(:ledger)
+    assert_not_nil assigns(:periodicities)
+  end
+
+  def test_get_periodicity_informations_when_value_param_is_different_of_true
+    post :get_periodicity_informations
+   
+    assert_response :success
+    assert_template nil
+
+  end
+
+
+  def test_get_interval_informations_when_value_param_is_true
+    post :get_interval_informations, :value => 'true'
+   
+    assert_response :success
+    assert_template '_get_interval_informations'
+
+    assert_not_nil assigns(:ledger)
+  end
+
+  def test_get_interval_informations_when_value_param_is_different_of_true
+    post :get_interval_informations
+   
+    assert_response :success
+    assert_template nil
+
+  end
+
+
+
+  def test_create_successfully
+    post :create, :ledger => {:description => 'Something', :category => @ledger_category, :value => '3', :date => Time.now, :bank_account => @another_bank_account}
+
+    assert_not_nil assigns(:ledger)
+    assert_response :redirect
+    assert_redirected_to :action => 'list'
+  end
+
+  def test_create_unsuccessfully
+    #Don't pass the param date needed 
+    post :create, :ledger => {:description => 'Something', :category_id => @ledger_category.id, :value => '3'}
+
+    assert_not_nil assigns(:ledger)
+    assert_not_nil assigns(:ledger_categories)
+    assert_not_nil assigns(:periodicities)
+    assert_not_nil assigns(:bank_accounts)
+    assert_response :success
+    assert_template 'new'
+  end
+
 #
 #  def test_edit
 #    l = Ledger.find(1)

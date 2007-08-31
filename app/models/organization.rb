@@ -29,7 +29,7 @@ class Organization < ActiveRecord::Base
   has_many :users, :through => :profiles  
   has_many :contacts, :through => :customers
   has_many :bank_accounts, :as => :owner
-  has_many :ledgers, :through => :bank_accounts, :foreign_key => :organization_id
+#  has_many :ledgers, :through => :bank_accounts, :as => :owner TODO see a way to do this
   has_many :periodicities
 
   validates_presence_of :name, :cnpj, :nickname
@@ -38,6 +38,11 @@ class Organization < ActiveRecord::Base
   validates_format_of :nickname, :with => /^[a-z0-9_]*$/, :message => '%{fn} can only contain downcase letters, numbers and "_"'
 
   acts_as_design
+
+  def find_ledger(id)
+   ledgers = self.bank_accounts.map{|b| b.ledgers}
+   ledgers.flatten.detect{|l| l.id.to_s == id.to_s}
+  end
 
   def top_level_product_categories
     ProductCategory.top_level_for(self)

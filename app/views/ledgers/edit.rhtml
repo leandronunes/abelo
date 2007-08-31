@@ -1,20 +1,5 @@
-<div id="box_content_1">
-  <div id="tag">
-    <%= render :partial => 'tag' %>
-  </div>
+<% form_tag :action => 'update', :id => @ledger do %>
+  <%= render :partial => 'form'%>
+  <%= display_edit_info_options @ledger %>
+<% end %>
 
-  <div id="budget" >
-    <%= render :partial => 'budget' %>
-  </div>
-</div>
-
-<div id="box_content_2">
-  <% form_tag :action => 'update', :id => @ledger do %>
-    <%= render :partial => 'form'%>
-    <p>
-      <%= submit_tag _('Save') %>
-      <%= link_to_remote _('Clean'), :url => {:action => 'clean'} %>
-    </p>
-  <% end %>
-</div>
-<br class="clear"/>

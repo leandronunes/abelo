@@ -1,4 +1,4 @@
-class ProductCategoryDisplay < DisplayConfiguration
+class ProductCategoryDisplay < CategoryDisplay
 
   def self.available_fields
     ['name', 'parent']

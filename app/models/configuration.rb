@@ -2,11 +2,13 @@ class Configuration < ActiveRecord::Base
   belongs_to :organization
 
   has_many :product_displays
-  has_many :supplier_displays
   has_many :worker_displays
+  has_many :customer_displays
+  has_many :supplier_displays
   has_many :bank_account_displays
   has_many :ledger_displays
   has_many :product_category_displays
+  has_many :customer_category_displays
 
 #TODO See a way to guarantee that a configuration cannot be created whithout an organization
 #  validates_presence_of :organization_id, :if => lambda { |conf| !conf.is_model?}
@@ -72,6 +74,63 @@ class Configuration < ActiveRecord::Base
   end
 
   #######################################
+  # Configuration Worker Methods
+  #######################################
+  
+  def worker_display_fields= fields
+    set_fields(Worker, fields)
+  end
+
+  def worker_display_fields_in_list= fields
+    set_fields_in_list(Worker, fields)
+  end
+
+  def worker_display_fields
+    display_fields('worker')
+  end
+
+  def worker_display_fields_in_list
+    display_fields_in_list('worker')
+  end
+
+  def worker_display
+    display('worker')
+  end
+
+  def worker_display_in_list
+    display_in_list('worker')
+  end
+
+  #######################################
+  # Configuration Customer Methods
+  #######################################
+  
+  def customer_display_fields= fields
+    set_fields(Customer, fields)
+  end
+
+  def customer_display_fields_in_list= fields
+    set_fields_in_list(Customer, fields)
+  end
+
+  def customer_display_fields
+    display_fields('customer')
+  end
+
+  def customer_display_fields_in_list
+    display_fields_in_list('customer')
+  end
+
+  def customer_display
+    display('customer')
+  end
+
+  def customer_display_in_list
+    display_in_list('customer')
+  end
+
+
+  #######################################
   # Configuration Supplier Methods
   #######################################
   
@@ -129,34 +188,6 @@ class Configuration < ActiveRecord::Base
   end
 
   #######################################
-  # Configuration Worker Methods
-  #######################################
-  
-  def worker_display_fields= fields
-    set_fields(Worker, fields)
-  end
-
-  def worker_display_fields_in_list= fields
-    set_fields_in_list(Worker, fields)
-  end
-
-  def worker_display_fields
-    display_fields('worker')
-  end
-
-  def worker_display_fields_in_list
-    display_fields_in_list('worker')
-  end
-
-  def worker_display
-    display('worker')
-  end
-
-  def worker_display_in_list
-    display_in_list('worker')
-  end
-
-  #######################################
   # Configuration Product Category Methods
   #######################################
 
@@ -183,6 +214,36 @@ class Configuration < ActiveRecord::Base
   def product_category_display_in_list
     display_in_list('product_category')
   end
+
+
+  #######################################
+  # Configuration Customer Category Methods
+  #######################################
+
+  def customer_category_display_fields= fields
+    set_fields(CustomerCategory, fields)
+  end
+
+  def customer_category_display_fields_in_list= fields
+    set_fields_in_list(CustomerCategory, fields)
+  end
+
+  def customer_category_display_fields
+    display_fields('customer_category')
+  end
+
+  def customer_category_display_fields_in_list
+    display_fields_in_list('customer_category')
+  end
+
+  def customer_category_display
+    display('customer_category')
+  end
+
+  def customer_category_display_in_list
+    display_in_list('customer_category')
+  end
+
 
   #######################################
   # Configuration Ledger Methods

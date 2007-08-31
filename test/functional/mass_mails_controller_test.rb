@@ -13,6 +13,11 @@ class MassMailsControllerTest < Test::Unit::TestCase
   under_organization :one
 
 #TODO make this test
+  def test_true
+    assert true
+  end
+
+
 
 #  def setup
 #    @controller = MassMailsController.new

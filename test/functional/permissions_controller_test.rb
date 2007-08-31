@@ -9,7 +9,12 @@ class PermissionsControllerTest < Test::Unit::TestCase
   include TestingUnderOrganization
   fixtures :organizations
 
-#TODO make this test
+#TODO make these tests works
+  def test_true
+    assert true
+  end
+
+
 #  def setup
 #    @controller = PermissionsController.new
 #    @request    = ActionController::TestRequest.new

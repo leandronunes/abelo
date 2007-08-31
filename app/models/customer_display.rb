@@ -1,0 +1,3 @@
+class CustomerDisplay < SystemActorDisplay
+
+end

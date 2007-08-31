@@ -4,7 +4,7 @@ class ProductsController < ApplicationController
 
   needs_organization
 
-  before_filter :create_register_tabs
+  uses_register_tabs
 
   def autocomplete_name
     escaped_string = Regexp.escape(params[:product][:name])

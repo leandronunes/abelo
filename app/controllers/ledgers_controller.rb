@@ -1,11 +1,22 @@
 class LedgersController < ApplicationController
 
+  auto_complete_for :ledger, :description
+
   needs_organization
 
   uses_financial_tabs
 
+  def autocomplete_description
+    escaped_string = Regexp.escape(params[:ledger][:description])
+    re = Regexp.new(escaped_string, "i")
+    bank_account = @organization.bank_accounts.find(params[:bank_account])
+    @ledgers = bank_account.ledgers.select{ |l| l.description.match re}
+    render :layout=>false
+  end
+
+
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
-  verify :method => :post, :only => [ :find_ledgers, :save, :destroy, :find_budgets, :find_by_tag, :navigation ],
+  verify :method => :post, :only => [ :update, :create, :destroy, :find_by_tag, :display_table ],
          :redirect_to => { :action => :index }
 
   # Redirect to action list
@@ -17,16 +28,26 @@ class LedgersController < ApplicationController
   # The ledgers are of the bank account passed as parameter. If no bank account is passed
   # as parameter the ledgers are of the default bank account of the organization.
   def list
+
+    @query = params[:query]
+    @query ||= params[:ledger][:description] if params[:ledger]
+
     begin
       @bank_account = @organization.bank_accounts.find(params[:bank_account_id])
     rescue
       @bank_account = @organization.default_bank_account
     end
-    
-    @query = nil
-    ledgers = @organization.ledgers_by_bank_account(@bank_account)
-    @tags = ledgers
-    @ledger_pages, @ledgers = paginate_by_collection ledgers
+
+    if @query.nil?
+      ledgers = @organization.ledgers_by_bank_account(@bank_account)
+      @tags = ledgers
+      @ledger_pages, @ledgers = paginate_by_collection ledgers
+    else
+      ledgers = @organization.ledgers_by_bank_account(@bank_account)
+      @tags = ledgers
+      ledgers = ledgers.full_text_search(@query)
+      @ledger_pages, @ledgers = paginate_by_collection ledgers
+    end
   end
 
 

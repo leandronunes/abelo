@@ -2,6 +2,8 @@ class Ledger < ActiveRecord::Base
 
   acts_as_taggable
 
+  acts_as_ferret
+  
   attr_accessor :schedule_repeat, :schedule_periodicity, :schedule_interval
 
   belongs_to :category, :class_name => 'LedgerCategory',  :foreign_key => 'category_id'
@@ -46,6 +48,14 @@ class Ledger < ActiveRecord::Base
       end  
     end
   end
+
+  def self.full_text_search(q, options = {})
+    default_options = {:limit => :all, :offset => 0}
+    options = default_options.merge options
+    self.find_by_contents(q, options)
+  end
+
+
 
   def schedule_periodicity_obj
     Periodicity.find(self.schedule_periodicity)

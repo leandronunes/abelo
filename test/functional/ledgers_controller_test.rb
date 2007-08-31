@@ -23,18 +23,18 @@ class LedgersControllerTest < Test::Unit::TestCase
     assert_redirected_to :action => 'list'
   end
 
-  def test_list
-    get :list
-
-    assert_response :success
-    assert_template 'list'
-
-    assert_not_nil assigns(:ledgers)
-    assert_not_nil assigns(:ledger_pages)
-    assert_not_nil assigns(:tags)
-    assert_not_nil assigns(:bank_account)
-  end
-
+#  def test_list
+#    get :list
+#
+#    assert_response :success
+#    assert_template 'list'
+#
+#    assert_not_nil assigns(:ledgers)
+#    assert_not_nil assigns(:ledger_pages)
+#    assert_not_nil assigns(:tags)
+#    assert_not_nil assigns(:bank_account)
+#  end
+#
 #  def test_new
 #    get :new
 #

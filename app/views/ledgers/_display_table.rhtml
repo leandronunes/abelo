@@ -3,7 +3,7 @@
     <tr class='page'>
       <th>
         <% if @ledger_pages.current.previous %>
-          <%= button_remote( 'previous_page', _('Previous'),:back, :update => 'financial_table', :url => {:action => 'display_table', :page => @ledger_pages.current.previous }) %>
+          <%= button_remote( 'previous_page', _('Previous'),:back, :update => 'financial_table', :url => {:action => 'display_table', :page => @ledger_pages.current.previous, :bank_account => @bank_account.id }) %>
         <% end %>
       </th>
       <th colspan='4'>
@@ -11,7 +11,7 @@
       </th>
       <th>
         <% if @ledger_pages.current.next %>
-          <%= button_remote('next_page', _('Next'), :next, :update => 'financial_table', :url => {:action => 'display_table', :page => @ledger_pages.current.next }) %>
+          <%= button_remote('next_page', _('Next'), :next, :update => 'financial_table', :url => {:action => 'display_table', :page => @ledger_pages.current.next , :bank_account => @bank_account.id}) %>
         <% end %>
       </th>
     </tr>

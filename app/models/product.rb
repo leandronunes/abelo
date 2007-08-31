@@ -22,8 +22,7 @@ class Product < ActiveRecord::Base
   def self.full_text_search(q, options = {})
     default_options = {:limit => :all, :offset => 0}
     options = default_options.merge options
-    results = self.find_by_contents(q, options)
-    return results
+    self.find_by_contents(q, options)
   end
 
   def ammount_in_stock

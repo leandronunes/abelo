@@ -1,6 +1,6 @@
 class Color < ActiveRecord::Base
 
-  SIZE = {
+  COLOR = {
      nil =>  _('N/A'),
     '#F0F8FF' =>  _('Alice Blue'),
     '#FAEBD7' =>  _('Antique White'),
@@ -151,12 +151,29 @@ class Color < ActiveRecord::Base
     '#9ACD32' =>  _('Yellow Green'),
   }
 
-  def self.options
-    options = Array.new
-    SIZE.each do |k,v|
-      options.push([v,k])
+  def self.find(*args)
+    size_objects = Array.new
+
+    case args.first
+      when :first then ColorObject.new('#FFFFFF', COLOR['#FFFFFF'])
+      when :all then 
+        COLOR.each do |k,v|
+          size_objects.push(ColorObject.new(k, v))
+        end
+        size_objects
+      else ColorObject.new(args.first, COLOR[args.first])
     end
-    options
+  end
+
+end
+
+class ColorObject
+
+  attr_accessor :name, :id
+
+  def initialize(id, name)
+    self.id = id
+    self.name = name
   end
 
 end

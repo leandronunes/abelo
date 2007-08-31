@@ -1,16 +1,35 @@
 class Unit < ActiveRecord::Base
 
-  SIZE = {
+  UNIT = {
     'U' => _('Units'),
     'K' => _('Kilograms'),
   }
 
-  def self.options
-    options = Array.new
-    SIZE.each do |k,v|
-      options.push([v,k])
+  def self.find(*args)
+    size_objects = Array.new
+
+    case args.first
+      when :first then UnitObject.new('U', UNIT['U'])
+      when :all then 
+        UNIT.each do |k,v|
+          size_objects.push(UnitObject.new(k, v))
+        end
+        size_objects
+      else UnitObject.new(args.first, UNIT[args.first])
     end
-    options
+  end
+
+
+end
+
+class UnitObject
+
+  attr_accessor :name, :id
+
+  def initialize(id, name)
+    self.id = id
+    self.name = name
   end
 
 end
+

@@ -157,4 +157,19 @@ module ApplicationHelper
     select(object, method, collection.map{|c| [c.send(text_method).to_s, c.send(value_method).to_s]}, :include_blank => true) 
   end
 
+  private
+
+  #Used by select_category to generate the category options to be choosed by user
+  def options_for_category(cat, selected_value)
+    if cat.leaf?
+      content_tag('option', cat.name, "value" => cat.id)
+    else
+      options = { :label => cat.name, :style => "padding-left: #{cat.level}em;" }
+      options.merge!(:selected => 'selected') if (selected_value == cat.id)
+      content = cat.children.map { |child| options_for_category(child, selected_value) }.join('')
+      content_tag("optgroup", content, options)
+    end
+  end
+
+
 end

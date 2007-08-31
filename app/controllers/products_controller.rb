@@ -43,9 +43,9 @@ class ProductsController < ApplicationController
     @product = Product.new
     @product.organization = @organization
     @suppliers = @organization.suppliers
-    @sizes = Size.options
-    @colors = Color.options
-    @units = Unit.options
+    @sizes = Size.find(:all)
+    @colors = Color.find(:all)
+    @units = Unit.find(:all)
   end
 
   def create
@@ -57,9 +57,9 @@ class ProductsController < ApplicationController
       redirect_to :action => 'list'
     else
       @suppliers = @organization.suppliers
-      @sizes = Size.options
-      @colors = Color.options
-      @units = Unit.options
+      @sizes = Size.find(:all)
+      @colors = Color.find(:all)
+      @units = Unit.find(:all)
       render :action => 'new'
     end
   end
@@ -67,14 +67,12 @@ class ProductsController < ApplicationController
   def edit
     @product = @organization.products.find(params[:id])
     @suppliers = @organization.suppliers
-    @sizes = Size.options
-    @colors = Color.options
-    @units = Unit.options
+    @sizes = Size.find(:all)
+    @colors = Color.find(:all)
+    @units = Unit.find(:all)
   end
 
   def update
-#render :text => params.inspect
-#return
     @product = @organization.products.find(params[:id])
     @product.supplier_ids = params[:suppliers].keys if params[:suppliers]
 
@@ -83,9 +81,9 @@ class ProductsController < ApplicationController
       redirect_to :action => 'list'
     else
       @suppliers = @organization.suppliers
-      @sizes = Size.options
-      @colors = Color.options
-      @units = Unit.options
+      @sizes = Size.find(:all)
+      @colors = Color.find(:all)
+      @units = Unit.find(:all)
       render :action => 'edit'
     end
   end

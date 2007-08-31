@@ -1,16 +1,22 @@
   def main_menu
     menu_items = {
       'categories'                          => _('Configurations'),
-      'stock'                               => _('Stock'),
-      'store'                               => _('Store'),
-      'permissions'                         => _('User administration'),
+#TODO the commented menu items are the items that would be implemented on the next
+#version 0.3.1.
+#
+#Uncomment this when the version 0.3.1 be implemented
+#
+#
+#      'stock'                               => _('Stock'),
+#      'store'                               => _('Store'),
+#      'permissions'                         => _('User administration'),
       'system_actors'                       => _('Registers'),
-      'point_of_sale'                       => _('Point of sale'),
-      'mass_mails'                          => _('Mass mail'),
+#      'point_of_sale'                       => _('Point of sale'),
+#      'mass_mails'                          => _('Mass mail'),
       'ledgers'                             => _('Financial'),
-      'documents'                           => _('Documents'),
-      'departments'                         => _('Departments'),
-      'admin_configurations'                => _('Configurations'),
+#      'documents'                           => _('Documents'),
+#      'departments'                         => _('Departments'),
+#      'admin_configurations'                => _('Configurations'),
       'organizations'                       => _('Organizations'),
       'banks'                               => _('Banks'),
     }

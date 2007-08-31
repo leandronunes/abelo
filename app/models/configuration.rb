@@ -306,10 +306,11 @@ class Configuration < ActiveRecord::Base
   def set_fields_in_list(class_symbol, fields)
     fields.each do |field|
       display_field = self.send("#{class_symbol.to_s.tableize.singularize}_displays").detect{|p| p.field == field}
-
+      
       unless display_field.nil?
         display_field.display_in_list = true 
         display_field.save
+        self.send("#{class_symbol.to_s.tableize.singularize}_displays", true) #force reload of objects
       end
     end
   end

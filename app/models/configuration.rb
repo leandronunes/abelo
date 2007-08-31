@@ -296,8 +296,9 @@ class Configuration < ActiveRecord::Base
 
   def set_fields(class_symbol, fields)
     fields.each do |field|
-      if self.send("#{class_symbol.to_s.tableize.singularize}_displays").select{|o| o.field == field}.empty?
+      if self.send("#{class_symbol.to_s.tableize.singularize}_displays").detect{|o| o.field == field}.blank?
         class_symbol.configuration_class.create(:field => field, :configuration => self)
+        self.send("#{class_symbol.to_s.tableize.singularize}_displays")(true) #force reload of objects
       end
     end
   end

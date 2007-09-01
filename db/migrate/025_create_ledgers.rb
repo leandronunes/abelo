@@ -6,7 +6,6 @@ class CreateLedgers < ActiveRecord::Migration
       t.column :foreseen_value,         :float
       t.column :effective_value,        :float
       t.column :description,            :string, :default => ''
-      t.column :tag_list,               :string
       # The attribute date must be always nil it was created to solve a problema with date passed by view
       t.column :date,                   :date 
       t.column :foreseen_date,          :date

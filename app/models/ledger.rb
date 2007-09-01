@@ -4,7 +4,8 @@ class Ledger < ActiveRecord::Base
 
   acts_as_ferret
   
-  attr_accessor :schedule_repeat, :schedule_periodicity, :schedule_interval
+  attr_accessor :schedule_repeat, :schedule_interval
+  @schedule_periodicity
 
   belongs_to :category, :class_name => 'LedgerCategory',  :foreign_key => 'category_id'
   belongs_to :schedule_ledger
@@ -26,7 +27,7 @@ class Ledger < ActiveRecord::Base
     return unless l.valid?
     transaction do 
       if l.schedule_repeat?
-        sl = ScheduleLedger.create(:periodicity => l.schedule_periodicity_obj, :start_date => l.foreseen_date, :interval => l.schedule_interval)
+        sl = ScheduleLedger.create(:periodicity => l.schedule_periodicity, :start_date => l.foreseen_date, :interval => l.schedule_interval)
         (1..l.schedule_interval.to_i).each do |n|
           ledger_schedule = Ledger.new()
           ledger_schedule.is_foreseen = true
@@ -34,7 +35,7 @@ class Ledger < ActiveRecord::Base
           ledger_schedule.value = l.value
           ledger_schedule.description = l.description
           ledger_schedule.tag_list = l.tag_list
-          ledger_schedule.date = l.date + l.schedule_periodicity_obj.number_of_days * n
+          ledger_schedule.date = l.date + l.schedule_periodicity.number_of_days * n
           ledger_schedule.interests = l.interests
           ledger_schedule.interests_days = l.interests_days
           ledger_schedule.number_of_parcels = l.number_of_parcels
@@ -45,6 +46,7 @@ class Ledger < ActiveRecord::Base
           ledger_schedule.save
         end
         l.schedule_ledger = sl
+        l.save
       end  
     end
   end
@@ -54,11 +56,18 @@ class Ledger < ActiveRecord::Base
     options = default_options.merge options
     self.find_by_contents(q, options)
   end
+  
+  def schedule_periodicity= value
+    @schedule_periodicity = value.to_i
+  end
 
+  alias :schedule_periodicity_id= :schedule_periodicity=
+  def schedule_periodicity_id
+    @schedule_periodicity
+  end
 
-
-  def schedule_periodicity_obj
-    Periodicity.find(self.schedule_periodicity)
+  def schedule_periodicity
+    Periodicity.find(@schedule_periodicity) unless @schedule_periodicity.blank?
   end
 
   def self.configuration_class

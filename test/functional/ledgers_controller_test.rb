@@ -187,7 +187,7 @@ class LedgersControllerTest < Test::Unit::TestCase
     assert_template 'new'
   end
 
-#
+
 #  def test_edit
 #    l = Ledger.find(1)
 #    assert l.valid?

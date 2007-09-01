@@ -65,7 +65,12 @@ class ProductsController < ApplicationController
   end
 
   def edit
-    @product = @organization.products.find(params[:id])
+    begin
+      @product = @organization.products.find(params[:id])
+    rescue
+      @message = _('The product was not found')
+      render :template => 'shared/not_found'
+    end
     @suppliers = @organization.suppliers
     @sizes = Size.find(:all)
     @colors = Color.find(:all)

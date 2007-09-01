@@ -109,32 +109,25 @@ class LedgersController < ApplicationController
   end
 
   def edit
-#    begin
-#      @bank_account = @organization.bank_accounts.find(params[:bank_account])
-#    rescue
-#      @bank_account = @organization.default_bank_account
-#    end
-
-#    if @query.nil?
-#      ledgers = @organization.ledgers_by_bank_account(@bank_account)
+    #TODO change this if someone make the relationship organizatin has_many ledgers works
     @ledger = @organization.find_ledger(params[:id])
-
     @bank_accounts = @organization.bank_accounts
     @ledger_categories =  @organization.ledger_categories_sorted
   end
 
-  #TODO see
   def update
-    @ledger = @organization.ledgers.find(params[:id])
+    #TODO changue this if someone make the relationship organizatin has_many ledgers works
+    @ledger = @organization.find_ledger(params[:id])
     
     if @ledger.update_attributes(params[:ledger])
       flash[:notice] = _('The ledger was successfully created')
       redirect_to :action => 'list'
     else
       @ledger_categories =  @organization.ledger_categories_sorted
-      get_tags
-      get_budgets  
-      render_action :edit
+      @bank_accounts = @organization.bank_accounts
+      @ledger_categories =  @organization.ledger_categories_sorted
+      @periodicities = @organization.periodicities
+      render :action => 'edit'
     end
   end
 

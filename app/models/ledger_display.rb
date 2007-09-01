@@ -17,7 +17,7 @@ class LedgerDisplay < DisplayConfiguration
       is_foreseen
       schedule_ledger_id
       schedule_repeat
-      schedule_periodicity
+      schedule_periodicity_id
       schedule_interval
      ]
   end

@@ -275,6 +275,7 @@ class Configuration < ActiveRecord::Base
   end
 
   alias :debit_ledger_display_fields :ledger_display_fields
+  alias :credit_ledger_display_fields :ledger_display_fields
 
   private 
 

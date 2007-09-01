@@ -24,8 +24,9 @@ class ConfigurationTest < Test::Unit::TestCase
 
   def test_product_category_display_fields_in_list=
     configuration = @org.configuration
-    configuration.product_category_display_fields_in_list = ["name", "parent"]
-    assert_equal ["name", "parent"], configuration.product_category_display_fields_in_list    
+    configuration.product_category_display_fields = ['name', 'parent']
+    configuration.product_category_display_fields_in_list = ['name']
+    assert_equal ['name'], configuration.product_category_display_fields_in_list    
   end
 
   def test_product_category_display_fields
@@ -36,7 +37,8 @@ class ConfigurationTest < Test::Unit::TestCase
 
   def test_product_category_display_fields_in_list
     configuration = @org.configuration
-    configuration.product_category_display_fields_in_list = ["name", "parent"]
+    configuration.product_category_display_fields = ['name', 'parent']
+    configuration.product_category_display_fields_in_list = ['name']
     assert !configuration.product_category_display_fields_in_list.empty?
   end
 

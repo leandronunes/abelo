@@ -12,6 +12,11 @@ class SystemActorTest < Test::Unit::TestCase
     assert_equal @org, system_actor.organization
   end
 
+  def test_relation_with_category
+    system_actor= SystemActor.create(:name => 'system_actor', :email => 'test@test.com', :organization_id => @org.id, :type => 'customer', :category_id => @cat.id)
+    assert_equal @cat, CustomerCategory.find(system_actor.category_id)
+  end
+
   def test_relation_with_contact
     system_actor= SystemActor.new
     contact = Contact.new

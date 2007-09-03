@@ -3,7 +3,7 @@
 
 <% form_tag( { :action => 'list' }, { :class => 'search_itens' } ) do %>
   <%= text_field 'department', 'name', :class => 'filter_field' %>
-  <%= button( 'lupa', _('Search'), :search) %>
+  <%= button( 'search', _('Search'), :search) %>
   <%= button('add',_("New department"), :new, :action => 'new' ) %>
 <% end %>
 

@@ -12,7 +12,8 @@ class CategoriesControllerTest < Test::Unit::TestCase
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
 
-    @first_id = categories(:first).id
+    @first_id = Category.find(1)
+#    @first_id = categories(:first).id
   end
 
   def test_index

@@ -151,6 +151,7 @@
     )
   end
 
+
   def display_edit_info(object, html_options = {}, &block)
     content = capture(object, &block)
     concat(

@@ -9,6 +9,7 @@ class Configuration < ActiveRecord::Base
   has_many :ledger_displays
   has_many :product_category_displays
   has_many :customer_category_displays
+  has_many :mass_mail_displays
 
 #TODO See a way to guarantee that a configuration cannot be created whithout an organization
 #  validates_presence_of :organization_id, :if => lambda { |conf| !conf.is_model?}
@@ -243,6 +244,35 @@ class Configuration < ActiveRecord::Base
   def customer_category_display_in_list
     display_in_list('customer_category')
   end
+
+  #######################################
+  # Configuration Customer Category Methods
+  #######################################
+
+  def mass_mail_display_fields= fields
+    set_fields(MassMail, fields)
+  end
+
+  def mass_mail_display_fields_in_list= fields
+    set_fields_in_list(MassMail, fields)
+  end
+
+  def mass_mail_display_fields
+    display_fields('mass_mail')
+  end
+
+  def mass_mail_display_fields_in_list
+    display_fields_in_list('mass_mail')
+  end
+
+  def mass_mail_display
+    display('mass_mail')
+  end
+
+  def mass_mail_display_in_list
+    display_in_list('mass_mail')
+  end
+
 
 
   #######################################

@@ -39,13 +39,13 @@ class LedgersController < ApplicationController
       @bank_account = @organization.default_bank_account
     end
 
+    ledgers = @organization.ledgers_by_bank_account(@bank_account)
+    @tags = ledgers
+    @bank_accounts = @organization.bank_accounts
+
     if @query.nil?
-      ledgers = @organization.ledgers_by_bank_account(@bank_account)
-      @tags = ledgers
       @ledger_pages, @ledgers = paginate_by_collection ledgers
     else
-      ledgers = @organization.ledgers_by_bank_account(@bank_account)
-      @tags = ledgers
       ledgers = ledgers.full_text_search(@query)
       @ledger_pages, @ledgers = paginate_by_collection ledgers
     end

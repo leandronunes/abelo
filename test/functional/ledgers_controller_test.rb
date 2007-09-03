@@ -38,6 +38,7 @@ class LedgersControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:ledger_pages)
     assert_not_nil assigns(:tags)
     assert_not_nil assigns(:bank_account)
+    assert_not_nil assigns(:bank_accounts)
   end
 
   def test_list_with_default_bank_account

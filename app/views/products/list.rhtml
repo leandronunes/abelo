@@ -1,17 +1,7 @@
 
 <%= title _('Listing products') %>
 
-<% form_tag( { :action => 'list' }, { :class => 'search_itens' } ) do %>
-  <%= text_field 'product', 'name', {:class => 'filter_field', :value => @query} %>
-  <%= button('search', _('Search'), :search) %>
-  <%= button('add', _("New product"), :new, :action => 'new' ) %>
-  <%= button('reset', _('Reset search'), :list, :action => 'list') if @query %>
-<% end %>
-
-<div class="auto_complete" id="product_name_auto_complete"></div>
-<%= auto_complete_field :product_name, :url => {:action => 'autocomplete_name' }, :indicator => 'auto_list'%>
-<div id="auto_list" style="display:none;">
-</div>
+<%= display_list_options 'product', 'name' %>
 
 <%= display_collection @products %>
 

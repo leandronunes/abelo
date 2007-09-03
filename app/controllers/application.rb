@@ -63,6 +63,7 @@ class ApplicationController < ActionController::Base
     ]
   }
 
+
   def paginate_by_collection(collection, options = {})
     page = (params[:page] || 1).to_i
     items_per_page = options[:per_page].nil? ? 10 : options[:per_page].to_i
@@ -70,11 +71,6 @@ class ApplicationController < ActionController::Base
     document_pages = Paginator.new(self, collection.size, items_per_page, page)
     collection = collection[offset..(offset + items_per_page - 1)]
     return document_pages, collection
-  end
-
-  def flexible_template_owner
-    load_organization unless params[:organization_nickname].nil?
-
   end
 
   ####################################

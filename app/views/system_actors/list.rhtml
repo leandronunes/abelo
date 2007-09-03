@@ -1,21 +1,7 @@
 
 <%= title (_('Listing %s') % SystemActor.describe(@actor).downcase) %>
 
-<%= 
-#TODO fix it this filed cannot be called system_actor name
-%>
-
-<% form_tag({:action => 'list', :actor => @actor}, {:class => 'search_itens'} ) do %>
-  <%= text_field 'system_actor', 'name', :class => 'filter_field', :value => @query %>
-  <%= button('search', _('Search'), :search) %>
-  <%= button('add', _("New %s") % SystemActor.describe(@actor), :new, :action => 'new', :actor => @actor ) %> 
-  <%= button('reset', _('Reset search'), :list, :action => 'list', :actor => @actor ) if @query %>
-<% end %>
-
-<div class="auto_complete" id="system_actor_name_auto_complete"></div>
-<%= auto_complete_field :system_actor_name,  :url => {:action => 'autocomplete_name', :actor => @actor}, :indicator => 'auto_list'%>
-<div id="auto_list" style="display:none;">
-</div>
+<%= display_list_options 'system_actor', 'name', :actor => @actor %>
 
 <%= display_collection @system_actors, {:actor => @actor} %>
 

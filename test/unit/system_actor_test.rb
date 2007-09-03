@@ -8,8 +8,7 @@ class SystemActorTest < Test::Unit::TestCase
   end
 
   def test_relation_with_organization
-    system_actor= SystemActor.new
-    system_actor.organization = @org
+    system_actor= SystemActor.create(:name => 'system_actor', :email => 'test@test.com', :organization_id => @org.id, :category_id => @cat.id)
     assert_equal @org, system_actor.organization
   end
 

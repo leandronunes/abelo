@@ -35,6 +35,15 @@ class ProductsControllerTest < Test::Unit::TestCase
     assert_kind_of Array, assigns(:products)
   end
 
+  def test_autocomplete_name
+    Product.delete_all
+    product = Product.create!(:name => 'test product', :sell_price => 2.0, :unit => 'kg', :organization_id => 1, :category_id => 1)
+    get :autocomplete_name, :product => { :name => 'test'}
+    assert_not_nil assigns(:products)
+    assert_kind_of Array, assigns(:products)
+    assert_equal 1, assigns(:products).length
+  end
+
   def test_list_when_query_param_not_nil
     Product.delete_all
     Product.create!(:name => 'Some Product', :sell_price => '20', :unit => 'U', :organization_id => 1, :category_id => 1)
@@ -87,6 +96,8 @@ class ProductsControllerTest < Test::Unit::TestCase
   end
 
   def test_edit
+    Product.delete_all
+    Product.create!(:name => 'Some Product', :sell_price => '20', :unit => 'U', :organization_id => 1, :category_id => 1)
     get :edit, :id => 1
 
     assert_response :success
@@ -94,6 +105,15 @@ class ProductsControllerTest < Test::Unit::TestCase
 
     assert_not_nil assigns(:product)
     assert assigns(:product).valid?
+  end
+
+  def test_edit_product_not_found
+    Product.delete_all
+    Product.create!(:name => 'Some Product', :sell_price => '20', :unit => 'U', :organization_id => 1, :category_id => 1)
+    get :edit, :id => 2
+
+    assert_response :success
+    assert_template 'shared/not_found'
   end
 
   def test_update
@@ -161,6 +181,24 @@ class ProductsControllerTest < Test::Unit::TestCase
 
     assert_redirected_to :action => 'images'
     assert_equal images_count + 1, @organization.products.find(1).images.size
+  end
+
+  def test_add_image_not_saved
+
+    post :add_image, :id => 1, :image => {}
+
+    assert_response :success
+    assert_template 'images'
+  end
+
+  def test_remove_image
+    post :add_image, :id => 1, :image => { :description => 'a test image', :picture => File.open(File.join(RAILS_ROOT,'public/images/rails.png')) }
+    images_count = @organization.products.find(1).images.size
+
+    post :remove_image, :image_id => @organization.products.find(1).image.id
+
+    assert_redirected_to :action => 'images'
+    assert_equal images_count - 1, @organization.products.find(1).images.size
   end
 
 end

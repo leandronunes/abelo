@@ -99,19 +99,20 @@ class ProductsController < ApplicationController
   end
 
 #TODO It's not used yet
-  def reset
-    begin 
-      @product = Product.find(params[:id])
-    rescue
-      @product = Product.new
-    end
-    @product.organization = @organization
-    @suppliers = @organization.suppliers
-    @sizes = Size.options
-    @colors = Color.options
-    @units = Unit.options
-    render :partial => 'form'
-  end
+#
+#  def reset
+#    begin 
+#      @product = Product.find(params[:id])
+#    rescue
+#      @product = Product.new
+#    end
+#    @product.organization = @organization
+#    @suppliers = @organization.suppliers
+#    @sizes = Size.options
+#    @colors = Color.options
+#    @units = Unit.options
+#    render :partial => 'form'
+#  end
 
   def images
     @product = @organization.products.find(params[:id])

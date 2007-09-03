@@ -43,9 +43,16 @@ class ProductTest < Test::Unit::TestCase
     assert product.suppliers.include?(@supplier)
   end
 
-  def test_relation_with_stock
+  def test_relation_with_stock_in
     product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
     entry = StockIn.create!(:supplier_id => @supplier.id, :ammount => 50, :price => '15.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => product.id)
+    assert product.stock_entries.include?(entry)
+  end
+
+  def test_relation_with_stock_out
+    product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
+    entry = StockIn.create!(:supplier_id => @supplier.id, :ammount => 100, :price => '15.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => product.id)
+    entry = StockOut.create!(:supplier_id => @supplier.id, :ammount => -50, :price => '15.00', :purpose => 'sell', :date => '2007-07-02', :payment_status => true, :product_id => product.id)
     assert product.stock_entries.include?(entry)
   end
 

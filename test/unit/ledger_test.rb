@@ -5,12 +5,15 @@ class LedgerTest < Test::Unit::TestCase
   fixtures :bank_accounts, :categories, :ledgers, :periodicities, :ledger_categories
 
   def setup
-    @ledger = Ledger.find(1)
-    @periodicity = Periodicity.create!(:organization_id =>1, :name => 'Some', :number_of_days => 10)
+    @ledger = Ledger.find(:first)
+    @organization = Organization.find(:first)
+    @periodicity = Periodicity.create!(:organization => @organization, :name => 'Some', :number_of_days => 10)
   end
 
   def test_setup
     assert @ledger.valid?
+    assert @organization.valid?
+    assert @periodicity.valid?
   end
 
   def test_configuration_class

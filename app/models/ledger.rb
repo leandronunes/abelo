@@ -58,7 +58,7 @@ class Ledger < ActiveRecord::Base
   end
   
   def schedule_periodicity= value
-    @schedule_periodicity = value.to_i
+    @schedule_periodicity = value
   end
 
   alias :schedule_periodicity_id= :schedule_periodicity=

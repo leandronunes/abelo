@@ -157,6 +157,18 @@ module ApplicationHelper
     select(object, method, collection.map{|c| [c.send(text_method), c.send(value_method)]}, :include_blank => true) 
   end
 
+  def autocomplete_list(collection, method = 'name' )
+    content_tag(:ul,
+      collection.map do |c|
+        content_tag(:li, 
+          link_to(c.send(method), :action => 'show', :id => c.id),
+          :class => 'autocomplete_item'
+        )
+      end,
+      :class => 'autocomplete_list'
+    )
+  end
+
   private
 
   #Used by select_category to generate the category options to be choosed by user

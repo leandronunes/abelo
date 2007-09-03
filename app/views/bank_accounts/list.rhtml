@@ -7,11 +7,13 @@
 <% end %>
 
 <div class="auto_complete" id="bank_account_account_auto_complete"></div>
-<%= auto_complete_field :bank_account_account, :url => {:action => 'autocomplete_account' }, :indicator => 'auto_list'%>
+<%= auto_complete_field :bank_account_account, :url => {:action => 'autocomplete' }, :indicator => 'auto_list'%>
 <div id="auto_list" style="display:none;">
 </div>
 
+<div id="leo">
 <%= display_collection @bank_accounts %>
+</div>
 
 <%= button('reset', _('Reset search'), :list, :action => 'list') if @query %>
 

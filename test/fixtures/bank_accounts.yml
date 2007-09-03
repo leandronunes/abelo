@@ -4,8 +4,12 @@ one:
   owner_type: 'Organization'
   owner_id: 1
   is_default: true
+  account: 1111
+  agency: 22222
 two:
   id: 2
   bank_id: 1
   owner_type: 'Organization'
   owner_id: 1
+  account: 33333
+  agency: 444

@@ -34,7 +34,7 @@ class Ledger < ActiveRecord::Base
           ledger_schedule.category = l.category
           ledger_schedule.value = l.value
           ledger_schedule.description = l.description
-          ledger_schedule.tag_list = l.tag_list
+          ledger_schedule.tag_list = l.tag_list.names
           ledger_schedule.date = l.date + l.schedule_periodicity.number_of_days * n
           ledger_schedule.interests = l.interests
           ledger_schedule.interests_days = l.interests_days

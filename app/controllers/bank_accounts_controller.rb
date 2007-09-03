@@ -6,7 +6,7 @@ class BankAccountsController < ApplicationController
 
   uses_financial_tabs
 
-  def autocomplete_account
+  def autocomplete
     escaped_string = Regexp.escape(params[:bank_account][:account])
     re = Regexp.new(escaped_string, "i")
     @bank_accounts = @organization.bank_accounts.select { |ba| ba.account.match re}
@@ -23,7 +23,7 @@ class BankAccountsController < ApplicationController
 
   def list
     @query = params[:query]
-    @query ||= params[:bank_account][:name] if params[:bank_account]
+    @query ||= params[:bank_account][:account] if params[:bank_account]
 
     if @query.nil?
       @bank_accounts = @organization.bank_accounts
@@ -35,7 +35,13 @@ class BankAccountsController < ApplicationController
   end
 
   def show
-    @bank_account = @organization.bank_accounts.find(params[:id])
+    begin
+      @bank_account = @organization.bank_accounts.find(params[:id])
+    rescue
+      @message = _("Cannot show bank account id %s. It wasn't found") % params[:id]
+      render :template => 'shared/not_found'
+      return
+    end
   end
 
   def new
@@ -50,29 +56,47 @@ class BankAccountsController < ApplicationController
       flash[:notice] = 'BankAccount was successfully created.'
       redirect_to :action => 'list'
     else
-      @banks = Bank.options
+      @banks = Bank.find(:all)
       render :action => 'new'
     end
   end
 
   def edit
-    @banks = Bank.options
-    @bank_account = @organization.bank_accounts.find(params[:id])
+    @banks = Bank.find(:all)
+    begin
+      @bank_account = @organization.bank_accounts.find(params[:id])
+    rescue
+      @message = _("Cannot edit bank account. It wasn't found")
+      render :template => 'shared/not_found'
+      return
+    end
   end
 
   def update
-    @bank_account = @organization.bank_accounts.find(params[:id])
+    begin
+      @bank_account = @organization.bank_accounts.find(params[:id])
+    rescue
+      @message = _("Cannot upload this bank account. It wasn't found")
+      render :template => 'shared/not_found'
+      return
+    end
+
     if @bank_account.update_attributes(params[:bank_account])
       flash[:notice] = 'BankAccount was successfully updated.'
       redirect_to :action => 'list'
     else
-      @banks = Bank.options 
+      @banks = Bank.find(:all)
       render :action => 'edit'
     end
   end
 
   def destroy
-    BankAccount.find(params[:id]).destroy
-    redirect_to :action => 'list'
+    begin
+      BankAccount.find(params[:id]).destroy
+      redirect_to :action => 'list'
+    rescue
+      @message = _("Cannot upload this bank account. It wasn't found")
+      render :template => 'shared/not_found'
+    end
   end
 end

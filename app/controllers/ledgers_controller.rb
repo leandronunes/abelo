@@ -57,14 +57,26 @@ class LedgersController < ApplicationController
   # If no bank account is passed as parameter it displays the ledgers
   # of the default bank account.
   def display_table
+    @query = params[:query]
+    @query ||= params[:ledger][:description] if params[:ledger]
+
     begin
       @bank_account = @organization.bank_accounts.find(params[:bank_account])
     rescue
       @bank_account = @organization.default_bank_account
     end
-    ledgers = @organization.ledgers_by_bank_account(@bank_account)
-    @tags = ledgers
-    @ledger_pages, @ledgers = paginate_by_collection ledgers
+
+    if @query.nil?
+      ledgers = @organization.ledgers_by_bank_account(@bank_account)
+      @tags = ledgers
+      @ledger_pages, @ledgers = paginate_by_collection ledgers
+    else
+      ledgers = @organization.ledgers_by_bank_account(@bank_account)
+      @tags = ledgers
+      ledgers = ledgers.full_text_search(@query)
+      @ledger_pages, @ledgers = paginate_by_collection ledgers
+    end
+
     render :partial => 'display_table'
   end
 
@@ -110,15 +122,29 @@ class LedgersController < ApplicationController
 
   def edit
     #TODO change this if someone make the relationship organizatin has_many ledgers works
-    @ledger = @organization.find_ledger(params[:id])
+    begin
+      @ledger = @organization.find_ledger(params[:id])
+      raise "Couldnt find a ledger with id %s" % params[:id] if @ledger.blank?
+    rescue
+      @message = _('Cannot edit ledger with id %s') % params[:id]
+      render :template => 'shared/not_found'
+      return
+    end
     @bank_accounts = @organization.bank_accounts
     @ledger_categories =  @organization.ledger_categories_sorted
   end
 
   def update
     #TODO changue this if someone make the relationship organizatin has_many ledgers works
-    @ledger = @organization.find_ledger(params[:id])
-    
+    begin
+      @ledger = @organization.find_ledger(params[:id])
+      raise "Couldnt find a ledger with id %s" % params[:id] if @ledger.blank?
+    rescue
+      @message = _('Cannot edit ledger with id %s') % params[:id]
+      render :template => 'shared/not_found'
+      return
+    end
+
     if @ledger.update_attributes(params[:ledger])
       flash[:notice] = _('The ledger was successfully created')
       redirect_to :action => 'list'
@@ -131,65 +157,50 @@ class LedgersController < ApplicationController
     end
   end
 
-
-  #TODO see
-  def clean
-    @ledger_categories =  @organization.ledger_categories_sorted
-    @ledger = Ledger.new
-    render :update do |page|
-      page.replace_html 'form', :partial => 'form'
-    end
-  end
-
-#TODO how can I test page.remove?
   def destroy
-    @organization.ledgers.find(params[:id]).destroy
-    render :update do |page|
-      page.remove "list_ledger_#{params[:id]}"
+    begin
+      ledger = @organization.find_ledger(params[:id])
+      raise "Couldnt find a ledger with id %s" % params[:id] if ledger.blank?
+    rescue
+      @message = _("Cannot remove ledger with id %s it wasn't found") % params[:id]
+      render :template => 'shared/not_found'
+      return
     end
+    @bank_account = ledger.bank_account
+    ledger.destroy
+    ledgers = @organization.ledgers_by_bank_account(@bank_account)
+    @tags = ledgers
+    @ledger_pages, @ledgers = paginate_by_collection ledgers
+    render :partial => 'display_table'
   end
-  
 
-    #TODO see if it's useful
-  def navigation
-    get_ledgers
-    render :update do |page|
-      page.replace_html 'list', :partial => 'list'
-    end
-  end
-  
-    #TODO see if it's useful
-  def find_budgets
-    get_budgets
-    render :update do |page|
-      page.replace_html 'budget', :partial => 'budget'
-    end
-  end
-  
-    #TODO see if it's useful
-  def find_ledgers
-    flash[:filter] = nil
-  	get_ledgers
-    render_for :index, :success
-  end
-  
-    #TODO see if it's useful
   def find_by_tag
-    flash[:filter] = "Tag: #{params[:tag]}"
-    @ledgers = @organization.ledgers.find_tagged_with(params[:tag])
-    render :update do |page|
-      page.replace_html 'box_content_2', :partial => 'list'
+    @tag = params[:tag]
+    @query = params[:query]
+    @query ||= params[:ledger][:description] if params[:ledger]
+
+    begin
+      @bank_account = @organization.bank_accounts.find(params[:bank_account])
+    rescue
+      @bank_account = @organization.default_bank_account
     end
+
+    if @query.nil?
+      ledgers = @organization.ledgers_by_bank_account(@bank_account)
+      @tags = ledgers
+      @ledger_pages, @ledgers = paginate_by_collection ledgers.find_tagged_with(params[:tag])
+    else
+      ledgers = @organization.ledgers_by_bank_account(@bank_account)
+      @tags = ledgers
+      tag_ledgers = ledgers.find_tagged_with(params[:tag])
+      search_ledgers = ledgers.full_text_search(@query)
+      ledgers = tag_ledgers & search_ledgers
+      @ledger_pages, @ledgers = paginate_by_collection ledgers
+    end
+
+    render :partial => 'display_table'
+
   end
-
-#
-#    @bank_account = @organization.default_bank_account
-#    @query = nil
-#    parameters = {:order => 'ledgers.effective_date DESC, ledgers.id DESC', :per_page => 15, :conditions => ['bank_account_id = ?', @bank_account]}
-#    get_tags
-#    get_budgets
-#    @ledgers_page, @ledgers = paginate :ledgers, parameters
-
 
   #TODO remove this function when its block implementation be done
   def test_budgets 

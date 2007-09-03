@@ -9,6 +9,7 @@ class Configuration < ActiveRecord::Base
   has_many :ledger_displays
   has_many :product_category_displays
   has_many :customer_category_displays
+  has_many :department_displays
   has_many :mass_mail_displays
 
 #TODO See a way to guarantee that a configuration cannot be created whithout an organization
@@ -246,8 +247,36 @@ class Configuration < ActiveRecord::Base
   end
 
   #######################################
-  # Configuration Customer Category Methods
+  # Configuration Department Methods
   #######################################
+
+  def department_display_fields= fields
+    set_fields(Department, fields)
+  end 
+
+  def department_display_fields_in_list= fields
+    set_fields_in_list(Department, fields)
+  end
+
+  def department_display_fields
+    display_fields('department')
+  end
+
+  def department_display_fields_in_list
+    display_fields_in_list('department')
+  end
+
+  def department_display
+    display('department')
+  end
+
+  def department_display_in_list
+    display_in_list('department')
+  end
+
+  #########################################
+  # Configuration Customer Category Methods
+  #########################################
 
   def mass_mail_display_fields= fields
     set_fields(MassMail, fields)
@@ -273,12 +302,9 @@ class Configuration < ActiveRecord::Base
     display_in_list('mass_mail')
   end
 
-
-
   #######################################
   # Configuration Ledger Methods
   #######################################
- 
 
   def ledger_display_fields= fields
     set_fields(Ledger, fields)

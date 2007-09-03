@@ -11,6 +11,6 @@ class BankAccount < ActiveRecord::Base
   end
 
   def name 
-    _("AG: + #{self.agency} + / CC: + #{self.account}")
+    _("AG: #{self.agency} / CC: #{self.account}")
   end
 end

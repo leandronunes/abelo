@@ -50,6 +50,7 @@ class BankAccountsController < ApplicationController
       flash[:notice] = 'BankAccount was successfully created.'
       redirect_to :action => 'list'
     else
+      @banks = Bank.options
       render :action => 'new'
     end
   end
@@ -63,8 +64,9 @@ class BankAccountsController < ApplicationController
     @bank_account = @organization.bank_accounts.find(params[:id])
     if @bank_account.update_attributes(params[:bank_account])
       flash[:notice] = 'BankAccount was successfully updated.'
-      redirect_to :action => 'show', :id => @bank_account
+      redirect_to :action => 'list'
     else
+      @banks = Bank.options 
       render :action => 'edit'
     end
   end

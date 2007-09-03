@@ -32,7 +32,7 @@ class BankAccountsControllerTest < Test::Unit::TestCase
   end
 
   def test_show
-    get :show, :id => @first_id
+    get :show, :id => 1
 
     assert_response :success
     assert_template 'show'
@@ -50,10 +50,10 @@ class BankAccountsControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:bank_account)
   end
 
-  def test_create
+  def test_create_correct_params
     num_bank_accounts = BankAccount.count
 
-    post :create, :bank_account => {}
+    post :create, :bank_account => {:variation => '2', :account => '223', :agency => '221', :bank_id => 1 }
 
     assert_response :redirect
     assert_redirected_to :action => 'list'
@@ -61,8 +61,20 @@ class BankAccountsControllerTest < Test::Unit::TestCase
     assert_equal num_bank_accounts + 1, BankAccount.count
   end
 
+  def test_create_wrong_params
+    num_bank_accounts = BankAccount.count
+
+    post :create, :bank_account => {}
+
+    assert_response :success
+    assert_template  'new'
+
+    assert_equal num_bank_accounts, BankAccount.count
+  end
+   
+
   def test_edit
-    get :edit, :id => @first_id
+    get :edit, :id => 1
 
     assert_response :success
     assert_template 'edit'
@@ -72,22 +84,22 @@ class BankAccountsControllerTest < Test::Unit::TestCase
   end
 
   def test_update
-    post :update, :id => @first_id
+    post :update, :id => 1
     assert_response :redirect
-    assert_redirected_to :action => 'show', :id => @first_id
+    assert_redirected_to :action => 'list' 
   end
 
   def test_destroy
     assert_nothing_raised {
-      BankAccount.find(@first_id)
+      BankAccount.find(1)
     }
 
-    post :destroy, :id => @first_id
+    post :destroy, :id => 1
     assert_response :redirect
     assert_redirected_to :action => 'list'
 
     assert_raise(ActiveRecord::RecordNotFound) {
-      BankAccount.find(@first_id)
+      BankAccount.find(1)
     }
   end
 end

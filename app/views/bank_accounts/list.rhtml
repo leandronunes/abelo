@@ -13,5 +13,7 @@
 
 <%= display_collection @bank_accounts %>
 
+<%= button('reset', _('Reset search'), :list, :action => 'list') if @query %>
+
 <%= pagination_links(@bank_account_pages, :params => {:query => @query}) %> 
 

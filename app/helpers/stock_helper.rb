@@ -17,4 +17,36 @@ module StockHelper
     select(object, method, StockEntry.valid_purposes.map { |k,v| [v, k] })
   end
 
+  def display_stock_collection(collection = Array.new, params = {}, html_options = {})
+    content = Array.new
+    collection.each do |c|
+      content.push(
+        [
+          display_stock_collection_options(c, params),
+          display_info(c,html_options, 'lite' )
+        ]
+      )
+    end
+    item_class = []
+    item_class.push(html_options[:item_class]) unless item_class.include?(html_options[:item_class])
+    collection_class = ['info_list']
+    collection_class.push(html_options[:collection_class]) unless collection_class.include?(html_options[:collection_class])
+      content_tag(:ul,
+        content.map{|c|
+          content_tag(:li, c.to_s + tag(:br, :style => 'clear:both;'), :class => item_class.join(' '))
+        },
+        :class => collection_class.join(' ')
+      )
+  end
+
+  def display_stock_collection_options(item, params ={})
+    content_tag(:div,
+      [
+        button('new_entry', _('New entry'), :new_entry, {:action => 'new', :id => item.id}.merge(params)),
+        button('history', _('History'), :history, {:action => 'history', :id => item.id}.merge(params))
+      ].join("\n"),
+      :class => 'list_item_button'
+    )
+  end
+
 end

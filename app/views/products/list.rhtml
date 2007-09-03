@@ -5,6 +5,7 @@
   <%= text_field 'product', 'name', {:class => 'filter_field', :value => @query} %>
   <%= button('search', _('Search'), :search) %>
   <%= button('add', _("New product"), :new, :action => 'new' ) %>
+  <%= button('reset', _('Reset search'), :list, :action => 'list') if @query %>
 <% end %>
 
 <div class="auto_complete" id="product_name_auto_complete"></div>
@@ -13,7 +14,5 @@
 </div>
 
 <%= display_collection @products %>
-
-<%= button('reset', _('Reset search'), :list, :action => 'list') if @query %>
 
 <%= pagination_links(@product_pages, :params => {:query => @query}) %>

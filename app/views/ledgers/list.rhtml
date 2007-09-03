@@ -1,18 +1,7 @@
 
 <%= title _('Ledges of Account %s') % @bank_account.name %> 
 
-<% form_tag( { :action => 'list' }, { :class => 'search_itens' } ) do %>
-  <%= text_field 'ledger', 'description', {:class => 'filter_field', :value => @query} %>
-  <%= hidden_field_tag 'bank_account', @bank_account.id  %>
-  <%= button('search', _('Search'), :search) %>
-  <%= button('add', _("New Ledger"), :new, :action => 'new' ) %>
-<% end %>
-
-<div class="auto_complete" id="ledger_description_auto_complete"></div>
-<%= auto_complete_field :ledger_description, :url => {:action => 'autocomplete_description', :bank_account => @bank_account.id }, :indicator => 'auto_list'%>
-<div id="auto_list" style="display:none;">
-</div>
-
+<%= display_list_options 'ledger', 'description', :bank_account => @bank_account.id %>
 
 <div id="financial_table">
   <%= render :partial => 'display_table' %>

@@ -40,13 +40,8 @@ class BankAccountsControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:bank_accounts)
   end
 
-<<<<<<< .mine
   def test_object_needed_by_view_list_are_instanciated
     get :list
-=======
-  def test_show
-    get :show, :id => 1
->>>>>>> .r665
 
     assert_response :success
     assert_template 'list'
@@ -118,18 +113,10 @@ class BankAccountsControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:banks)
   end
 
-<<<<<<< .mine
   def test_create_with_correct_params
-=======
-  def test_create_correct_params
->>>>>>> .r665
     num_bank_accounts = BankAccount.count
 
-<<<<<<< .mine
     post :create, :bank_account => {:bank => @bank, :account => 333, :agency => 234}
-=======
-    post :create, :bank_account => {:variation => '2', :account => '223', :agency => '221', :bank_id => 1 }
->>>>>>> .r665
 
     assert_response :redirect
     assert_redirected_to :action => 'list'
@@ -138,25 +125,8 @@ class BankAccountsControllerTest < Test::Unit::TestCase
     assert_equal num_bank_accounts + 1, BankAccount.count
   end
 
-<<<<<<< .mine
   def test_create_without_correct_params
     num_bank_accounts = BankAccount.count
-=======
-  def test_create_wrong_params
-    num_bank_accounts = BankAccount.count
-
-    post :create, :bank_account => {}
-
-    assert_response :success
-    assert_template  'new'
-
-    assert_equal num_bank_accounts, BankAccount.count
-  end
-   
-
-  def test_edit
-    get :edit, :id => 1
->>>>>>> .r665
 
     # The bank cannot be nil on bank account model
     post :create, :bank_account => {:bank => nil, :account => 333, :agency => 234}
@@ -180,7 +150,6 @@ class BankAccountsControllerTest < Test::Unit::TestCase
     assert assigns(:bank_account).valid?
   end
 
-<<<<<<< .mine
   def test_edit_with_an_unexist_bank_account
     unexisting_bank_account_id = 1000
     assert_raise(ActiveRecord::RecordNotFound){BankAccount.find(unexisting_bank_account_id)}
@@ -192,17 +161,9 @@ class BankAccountsControllerTest < Test::Unit::TestCase
 
   def test_update_with_an_existing_bank_account_and_correct_params
     post :update, :id => @bank_account.id, :bank_account => {:bank => @bank }
-=======
-  def test_update
-    post :update, :id => 1
->>>>>>> .r665
     assert_response :redirect
-<<<<<<< .mine
-    assert_redirected_to :action => 'show'
+    assert_redirected_to :action => 'list'
     assert_not_nil assigns(:bank_account)
-=======
-    assert_redirected_to :action => 'list' 
->>>>>>> .r665
   end
 
   def test_update_with_an_existing_bank_account_and_wrong_params
@@ -225,27 +186,15 @@ class BankAccountsControllerTest < Test::Unit::TestCase
 
   def test_destroy_with_an_existing_bank_account
     assert_nothing_raised {
-<<<<<<< .mine
       BankAccount.find(@bank_account)
-=======
-      BankAccount.find(1)
->>>>>>> .r665
     }
 
-<<<<<<< .mine
     post :destroy, :id => @bank_account.id
-=======
-    post :destroy, :id => 1
->>>>>>> .r665
     assert_response :redirect
     assert_redirected_to :action => 'list'
 
     assert_raise(ActiveRecord::RecordNotFound) {
-<<<<<<< .mine
       BankAccount.find(@bank_account.id)
-=======
-      BankAccount.find(1)
->>>>>>> .r665
     }
   end
 

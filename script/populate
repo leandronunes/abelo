@@ -25,8 +25,8 @@ configuration.ledger_display_fields= LedgerDisplay.available_fields
 configuration.ledger_display_fields_in_list= LedgerDisplay.available_fields
 configuration.bank_account_display_fields= ['bank','agency','variation','account','owner' ]
 configuration.bank_account_display_fields_in_list= ['bank','agency','variation','account','owner']
-configuration.department_display_fields= ['name']
-configuration.department_display_fields_in_list= ['name']
+#configuration.department_display_fields= ['name']
+#configuration.department_display_fields_in_list= ['name']
 configuration.save!
 
 ###########Categories###################################

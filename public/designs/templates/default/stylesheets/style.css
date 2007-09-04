@@ -44,6 +44,9 @@ margin-right: 5px;
 position: absolute;
 top: 2px;
 right: 5px;
+background: url('../images/bannerabelo_160x75.jpg');
+width: 160px;
+height: 75px;
 }
 
 #footer {

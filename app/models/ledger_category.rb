@@ -1,20 +1,28 @@
 class LedgerCategory < ActiveRecord::Base
+
   has_many :ledgers, :foreign_key => 'category_id', :dependent => :delete_all
+  belongs_to :organization
   
   TYPE_OF = {'I' => _('Income'), 'O' => _('Expense')}
+  
+  # Constant used to identifier income financial ledgers  
   TYPE_OF_INCOME = 'I'
+
+  # Constant used to identifier expense financial ledgers  
   TYPE_OF_EXPENSE = 'O'
 
-  validates_presence_of :name, :type_of, :organization_id
+  validates_presence_of :name
+  validates_presence_of :type_of
+  validates_presence_of :organization_id
   validates_uniqueness_of :name
-  validates_length_of :name, :maximum=>15
   validates_inclusion_of :type_of, :in => TYPE_OF.keys
-  belongs_to :organization
 
+  # Check if the current ledger is a income
   def income?
     self.type_of == 'I'
   end
 
+  # Check if the current ledger is a expense
   def expense?
     type_of == 'O'
   end

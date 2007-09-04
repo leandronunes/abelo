@@ -91,7 +91,4 @@ class LedgerCategoryTest < Test::Unit::TestCase
 
   end
 
-  def test_effective_value_by_date
-  end
-
 end

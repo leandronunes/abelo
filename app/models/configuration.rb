@@ -8,6 +8,8 @@ class Configuration < ActiveRecord::Base
   has_many :bank_account_displays
   has_many :ledger_displays
   has_many :product_category_displays
+  has_many :worker_category_displays
+  has_many :supplier_category_displays
   has_many :customer_category_displays
   has_many :department_displays
   has_many :mass_mail_displays
@@ -216,6 +218,63 @@ class Configuration < ActiveRecord::Base
   def product_category_display_in_list
     display_in_list('product_category')
   end
+
+  #######################################
+  # Configuration worker Category Methods
+  #######################################
+
+  def worker_category_display_fields= fields
+    set_fields(workerCategory, fields)
+  end
+
+  def worker_category_display_fields_in_list= fields
+    set_fields_in_list(workerCategory, fields)
+  end
+
+  def worker_category_display_fields
+    display_fields('worker_category')
+  end
+
+  def worker_category_display_fields_in_list
+    display_fields_in_list('worker_category')
+  end
+
+  def worker_category_display
+    display('worker_category')
+  end
+
+  def worker_category_display_in_list
+    display_in_list('worker_category')
+  end
+
+  #######################################
+  # Configuration supplier Category Methods
+  #######################################
+
+  def supplier_category_display_fields= fields
+    set_fields(supplierCategory, fields)
+  end
+
+  def supplier_category_display_fields_in_list= fields
+    set_fields_in_list(supplierCategory, fields)
+  end
+
+  def supplier_category_display_fields
+    display_fields('supplier_category')
+  end
+
+  def supplier_category_display_fields_in_list
+    display_fields_in_list('supplier_category')
+  end
+
+  def supplier_category_display
+    display('supplier_category')
+  end
+
+  def supplier_category_display_in_list
+    display_in_list('supplier_category')
+  end
+
 
 
   #######################################

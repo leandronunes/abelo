@@ -24,15 +24,14 @@
 
   <%= display_field_edit(item, 'is_foreseen',
         :title => _('Is it a foreseen?'),
-        :content => check_box('ledger', 'is_foreseen', {}, true, false ),
-        :html_options => {:class => 'line_item'}
+        :content => check_box('ledger', 'is_foreseen', {}, true, false )
       )
   %>
 
   <%= display_field_edit(item, 'schedule_repeat',
         :title => _('Repeat this foreseen ledger?'),
         :content => check_box('ledger', 'schedule_repeat', {}, 'true', 'false' ),
-        :html_options => {:class => 'line_item'}
+        :html_options => {:style => 'clear: left;'}
       )
   %>
   
@@ -51,7 +50,8 @@
   
   <%= display_field_edit(item, 'description',
         :title => _('Description:'),
-        :content => text_area('ledger', 'description', :rows => 4)
+        :content => text_area('ledger', 'description', :rows => 4),
+        :html_options => {:style => 'clear: left;'}
       )
   %>
 

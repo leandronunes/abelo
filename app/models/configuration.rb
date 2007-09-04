@@ -224,11 +224,11 @@ class Configuration < ActiveRecord::Base
   #######################################
 
   def worker_category_display_fields= fields
-    set_fields(workerCategory, fields)
+    set_fields(WorkerCategory, fields)
   end
 
   def worker_category_display_fields_in_list= fields
-    set_fields_in_list(workerCategory, fields)
+    set_fields_in_list(WorkerCategory, fields)
   end
 
   def worker_category_display_fields
@@ -252,11 +252,11 @@ class Configuration < ActiveRecord::Base
   #######################################
 
   def supplier_category_display_fields= fields
-    set_fields(supplierCategory, fields)
+    set_fields(SupplierCategory, fields)
   end
 
   def supplier_category_display_fields_in_list= fields
-    set_fields_in_list(supplierCategory, fields)
+    set_fields_in_list(SupplierCategory, fields)
   end
 
   def supplier_category_display_fields

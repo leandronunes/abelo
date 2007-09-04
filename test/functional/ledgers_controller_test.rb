@@ -16,10 +16,13 @@ class LedgersControllerTest < Test::Unit::TestCase
     login_as("quentin")
     @ledger_category = LedgerCategory.create!(:name => 'Some Category', :type_of => 'I', :organization_id => 1 )
     @another_bank_account = BankAccount.find(2)
+    @default_bank_account = BankAccount.find(1)
   end
 
   def test_setup
     assert @another_bank_account.valid?
+    assert @default_bank_account.valid?
+    assert @default_bank_account.is_default
   end
 
   def test_index
@@ -28,7 +31,7 @@ class LedgersControllerTest < Test::Unit::TestCase
     assert_redirected_to :action => 'list'
   end
 
-  def test_object_needed_by_view_are_instanciated
+  def test_object_needed_by_view_list_are_instanciated
     get :list
 
     assert_response :success
@@ -37,8 +40,12 @@ class LedgersControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:ledgers)
     assert_not_nil assigns(:ledger_pages)
     assert_not_nil assigns(:tags)
-    assert_not_nil assigns(:bank_account)
+    assert_not_nil assigns(:chosen_accounts)
+    assert_not_nil assigns(:chosen_categories)
+    assert_not_nil assigns(:chosen_tags)
     assert_not_nil assigns(:bank_accounts)
+    assert_not_nil assigns(:ledger_categories)
+    assert_not_nil assigns(:tags)
   end
 
   def test_list_with_default_bank_account
@@ -47,17 +54,17 @@ class LedgersControllerTest < Test::Unit::TestCase
     assert_response :success
     assert_template 'list'
 
-    assert_not_equal @another_bank_account, assigns(:bank_account)
-    assert_equal assigns(:organization).default_bank_account, assigns(:bank_account)
+    assert_not_equal [@another_bank_account], assigns(:chosen_accounts)
+    assert_equal assigns(:organization).default_bank_account, assigns(:chosen_accounts)
   end
 
   def test_list_without_default_bank_account
-    get :list, :bank_account => @another_bank_account.id
+    get :list, :accounts => @another_bank_account.id
 
     assert_response :success
     assert_template 'list'
 
-    assert_equal @another_bank_account, assigns(:bank_account)
+    assert_equal [@another_bank_account], assigns(:chosen_accounts)
   end
 
 
@@ -67,7 +74,7 @@ class LedgersControllerTest < Test::Unit::TestCase
     assert_response :success
     assert_template 'list'
 
-    assert_equal assigns(:ledgers).length, assigns(:organization).ledgers_by_bank_account.length
+    assert_equal assigns(:ledgers).length, assigns(:organization).ledgers_by_bank_account([@default_bank_account]).length
   end
 
   def test_list_when_query_param_not_nil
@@ -77,7 +84,7 @@ class LedgersControllerTest < Test::Unit::TestCase
     l = DebitLedger.new(:date => Date.today, :value => 50, :description => 'Another Some Description', :bank_account => @another_bank_account, :category => @ledger_category, :operational => false, :is_foreseen => false)
     l.save!
     
-    get :list, :bank_account => @another_bank_account.id, :ledger => {:description => 'Another'}
+    get :list, :accounts => @another_bank_account.id, :ledger => {:description => 'Another'}
 
     assert_response :success
     assert_template 'list'
@@ -85,7 +92,7 @@ class LedgersControllerTest < Test::Unit::TestCase
     assert_equal 1, assigns(:ledgers).length
 
 
-    get :list, :bank_account => @another_bank_account.id, :ledger => {:description => 'Description'}
+    get :list, :accounts => @another_bank_account.id, :ledger => {:description => 'Description'}
 
     assert_response :success
     assert_template 'list'
@@ -94,29 +101,37 @@ class LedgersControllerTest < Test::Unit::TestCase
   end
 
   def test_display_table_with_default_bank_account
-    post :display_table
+    post :display_table, :accounts => @default_bank_account.id
 
     assert_response :success
     assert_template '_display_table'
     
-    assert_not_nil assigns(:bank_account)
+    assert_not_nil assigns(:chosen_accounts)
+    assert_not_nil assigns(:chosen_categories)
+    assert_not_nil assigns(:chosen_tags)
+    assert_not_nil assigns(:bank_accounts)
+    assert_not_nil assigns(:ledger_categories)
     assert_not_nil assigns(:tags)
     assert_not_nil assigns(:ledger_pages)
     assert_not_nil assigns(:ledgers)
-    assert_equal assigns(:organization).default_bank_account, assigns(:bank_account)    
+    assert_equal assigns(:organization).default_bank_account, assigns(:chosen_accounts)    
   end
 
   def test_display_table_without_default_bank_account
-    post :display_table, :bank_account => @another_bank_account.id
+    post :display_table, :accounts => @another_bank_account.id
 
     assert_response :success
     assert_template '_display_table'
 
-    assert_not_nil assigns(:bank_account)
+    assert_not_nil assigns(:chosen_accounts)
+    assert_not_nil assigns(:chosen_categories)
+    assert_not_nil assigns(:chosen_tags)
+    assert_not_nil assigns(:bank_accounts)
+    assert_not_nil assigns(:ledger_categories)
     assert_not_nil assigns(:tags)
     assert_not_nil assigns(:ledger_pages)
     assert_not_nil assigns(:ledgers)
-    assert_equal @another_bank_account, assigns(:bank_account)
+    assert_equal [@another_bank_account], assigns(:chosen_accounts)
   end
 
   def test_new
@@ -354,7 +369,9 @@ class LedgersControllerTest < Test::Unit::TestCase
    
     post :destroy, :id => l.id
     assert_response :success
-    assert assigns(:bank_account)
+    assert assigns(:chosen_accounts)
+    assert assigns(:bank_accounts)
+    assert assigns(:ledger_categories)
     assert assigns(:tags)
     assert assigns(:ledgers)
     assert assigns(:ledger_pages)

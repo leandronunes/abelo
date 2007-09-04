@@ -57,9 +57,9 @@ class LedgersController < ApplicationController
     @ledger_categories = @organization.ledger_categories
     @tags = @organization.tags_by_bank_account(@chosen_accounts)
 
-    ledgers = @organization.ledgers_by_all(@chosen_accounts, @chosen_tags, @chosen_categories, @query)
+    @leo_ledgers = @organization.ledgers_by_all(@chosen_accounts, @chosen_tags, @chosen_categories, @query)
 
-    @ledger_pages, @ledgers = paginate_by_collection ledgers
+    @ledger_pages, @ledgers = paginate_by_collection @leo_ledgers
 
   end
 
@@ -184,41 +184,20 @@ class LedgersController < ApplicationController
       render :template => 'shared/not_found'
       return
     end
-    @bank_account = ledger.bank_account
+
+    @chosen_categories = Array.new
+    @chosen_tags = Array.new 
+
+    @chosen_accounts = [ledger.bank_account]
     ledger.destroy
-    ledgers = @organization.ledgers_by_bank_account(@bank_account)
-    @tags = ledgers
+    ledgers = @organization.ledgers_by_bank_account(@chosen_accounts)
     @ledger_pages, @ledgers = paginate_by_collection ledgers
-    render :partial => 'display_table'
-  end
 
-  def find_by_tag
-    @chosen_tags = params[:tag].split(',')
-    @chosen_tags.delete(params[:tag_chosen])
-    @query = params[:query]
-    @query ||= params[:ledger][:description] if params[:ledger]
-
-    begin
-      @bank_account = @organization.bank_accounts.find(params[:bank_account])
-    rescue
-      @bank_account = @organization.default_bank_account
-    end
-
-    if @query.nil?
-      ledgers = @organization.ledgers_by_bank_account(@bank_account)
-      @tags = ledgers
-      @ledger_pages, @ledgers = paginate_by_collection ledgers.find_tagged_with(@chosen_tags)
-    else
-      ledgers = @organization.ledgers_by_bank_account(@bank_account)
-      @tags = ledgers
-      tag_ledgers = ledgers.find_tagged_with(params[:tag])
-      search_ledgers = ledgers.full_text_search(@query)
-      ledgers = tag_ledgers & search_ledgers
-      @ledger_pages, @ledgers = paginate_by_collection ledgers
-    end
+    @bank_accounts = @organization.bank_accounts
+    @ledger_categories = @organization.ledger_categories
+    @tags = @organization.tags_by_bank_account(@chosen_accounts)
 
     render :partial => 'display_table'
-
   end
 
   #TODO remove this function when its block implementation be done

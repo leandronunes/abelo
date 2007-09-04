@@ -69,7 +69,11 @@ class Organization < ActiveRecord::Base
   end
 
   def ledgers_by_bank_account(bank_accounts = [])
-    bank_accounts.collect{ |b| b.ledgers}.flatten
+    if bank_accounts.class == Array
+      bank_accounts.collect{ |b| b.ledgers}.flatten
+    else
+      self.bank_accounts.find(bank_accounts).ledgers
+    end
   end
 
   def tags_by_bank_account(bank_accounts = [])
@@ -83,16 +87,19 @@ class Organization < ActiveRecord::Base
     ledger_tags = bank_accounts.collect{ |b| b.ledgers.find_tagged_with(tags) }.flatten
     condition_ids = Array.new
     condition_string = ''
-    categories = self.ledger_categories if categories.blank?
-    categories.each do |c|
-      condition_string = condition_string.blank? ? condition_string + "category_id = #{c.id}" : condition_string + " or category_id = #{c.id}"
-    end
-    ledger_categories = bank_accounts.collect{ |b| b.ledgers.find(:all, :conditions => [ condition_string]) }.flatten
 
+    unless categories.blank? 
+      categories.each do |c|
+        condition_string = condition_string.blank? ? condition_string + "category_id = #{c.id}" : condition_string + " or category_id = #{c.id}"
+      end
+      ledger_categories = bank_accounts.collect{ |b| b.ledgers.find(:all, :conditions => [ condition_string]) }.flatten
+    end
     ledger_search = bank_accounts.collect{ |b| b.ledgers.full_text_search(query) }.flatten unless query.nil?
 
-    all_leders = ledger_banks & ledger_tags & ledger_categories
-    all_leders = all_leders & ledger_search if ledger_search
+    all_leders = ledger_banks 
+    all_leders = all_leders & ledger_tags unless ledger_tags.blank?
+    all_leders = all_leders & ledger_categories unless ledger_categories.blank?
+    all_leders = all_leders & ledger_search unless ledger_search.blank?
     all_leders
   end
 

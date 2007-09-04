@@ -38,7 +38,8 @@ configuration.supplier_category_display_fields_in_list= SupplierCategoryDisplay.
 LedgerDisplay.delete_all
 configuration.ledger_display_fields= LedgerDisplay.available_fields 
 configuration.ledger_display_fields_in_list= LedgerDisplay.available_fields
-configuration.bank_account_display_fields= ['bank','agency','variation','account','owner' ]
+BankAccount.delete_all
+configuration.bank_account_display_fields= BankAccount.available_fields
 configuration.bank_account_display_fields_in_list= ['bank','agency','variation','account','owner']
 #configuration.department_display_fields= ['name']
 #configuration.department_display_fields_in_list= ['name']

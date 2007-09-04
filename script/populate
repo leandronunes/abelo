@@ -11,22 +11,31 @@ organization.save!
 
 ############Configuration#########################
 configuration = organization.configuration
+ProductDisplay.delete_all
 configuration.product_display_fields= ProductDisplay.available_fields 
 configuration.product_display_fields_in_list= ['name', 'size', 'category' ]
+WorkerDisplay.delete_all
 configuration.worker_display_fields= WorkerDisplay.available_fields 
 configuration.worker_display_fields_in_list= ['name', 'description', 'email' ]
+CustomerDisplay.delete_all
 configuration.customer_display_fields= CustomerDisplay.available_fields 
 configuration.customer_display_fields_in_list= ['name', 'description', 'email' ]
+SupplierDisplay.delete_all
 configuration.supplier_display_fields= SupplierDisplay.available_fields 
 configuration.supplier_display_fields_in_list= ['name', 'description', 'email' ]
+ProductCategoryDisplay.delete_all
 configuration.product_category_display_fields= ProductCategoryDisplay.available_fields
 configuration.product_category_display_fields_in_list= ProductCategoryDisplay.available_fields
+CustomerCategoryDisplay.delete_all
 configuration.customer_category_display_fields= CustomerCategoryDisplay.available_fields
 configuration.customer_category_display_fields_in_list= CustomerCategoryDisplay.available_fields
+WorkerCategoryDisplay.delete_all
 configuration.worker_category_display_fields= WorkerCategoryDisplay.available_fields
 configuration.worker_category_display_fields_in_list= WorkerCategoryDisplay.available_fields
+SupplierCategoryDisplay.delete_all
 configuration.supplier_category_display_fields= SupplierCategoryDisplay.available_fields
 configuration.supplier_category_display_fields_in_list= SupplierCategoryDisplay.available_fields
+LedgerDisplay.delete_all
 configuration.ledger_display_fields= LedgerDisplay.available_fields 
 configuration.ledger_display_fields_in_list= LedgerDisplay.available_fields
 configuration.bank_account_display_fields= ['bank','agency','variation','account','owner' ]

@@ -1,48 +1,32 @@
 
-#TODO remove it
-#This is specific to anhetegua
-.back { 
-  width: 24px;
-  height: 24px;
-  background-image: url('back.png');
-}
+.none_add   { background-image: url('none.png') }
+.add        { background-image: url('add.png') }
+.search     { background-image: url('search.png') }
+.edit_small { background-image: url('edit_small.png') }
+.view_small { background-image: url('view_small.png') }
+.del_small  { background-image: url('del_small.png') }
+.edit       { background-image: url('edit.png') }
+.save       { background-image: url('save.png') }
+.back       { background-image: url('back.png') }
+.reset      { background-image: url('reset.png') }
+.image      { background-image: url('image.png') }
+.password   { background-image: url('password.png') }
+.go-jump    { background-image: url('go-jump.png') }
+.system-log-out { background-image: url('system-log-out.png') }
+.previous_page  { background-image: url('go-previous.png') }
+.next_page      { background-image: url('go-next.png') }
 
-.none_add { background-image: url('none.png');}
-.add { background-image: url('add.png');}
-.search { background-image: url('search.png');}
-.edit_small { background-image: url('edit_small.png');}
-.view_small { background-image: url('view_small.png');}
-.del_small { background-image: url('del_small.png');}
-.edit { background-image: url('edit.png');}
-.save { background-image: url('save.png');}
-.back { background-image: url('back.png');}
-.reset { background-image: url('reset.png');}
-.image { background-image: url('image.png');}
-.password { background-image: url('password.png');}
-.go-jump { background-image: url('go-jump.png');}
-.system-log-out { background-image: url('system-log-out.png');}
-.previous_page { 
-  background-image: url('previous_page.png'); 
-  width: 32px;
-  height: 32px;  
-}
-.next_page { 
-  background-image: url('next_page.png'); 
-  width: 32px;
-  height: 32px;  
-}
-/*
- * Menu Icons
- * 
- */
 
-.departments { background-image: url('departments.png');}
-.ledgers { background-image: url('ledgers.png');}
-.point_of_sale { background-image: url('point_of_sale.png');}
-.stock { background-image: url('stock.png');}
-.documents { background-image: url('documents.png');}
-.categories { background-image: url('categories.png');}
-.system_actors { background-image: url('system_actors.png');}
-.permissions { background-image: url('permissions.png');}
-.mass_mails { background-image: url('mass_mails.png');}
-.store { background-image: url('store.png');}
+/* * * Menu Icons * * */
+
+.departments   { background-image: url('departments.png') }
+.ledgers       { background-image: url('ledgers.png') }
+.point_of_sale { background-image: url('point_of_sale.png') }
+.stock         { background-image: url('stock.png') }
+.documents     { background-image: url('documents.png') }
+.categories    { background-image: url('categories.png') }
+.system_actors { background-image: url('system_actors.png') }
+.permissions   { background-image: url('permissions.png') }
+.mass_mails    { background-image: url('mass_mails.png') }
+.store         { background-image: url('store.png') }
+

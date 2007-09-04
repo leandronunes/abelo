@@ -16,12 +16,15 @@
         <%= main_menu %>
 
         <div id="header">
-          <%= image_tag 'org_toca', :height => '75px', :width => '75px', :id => 'logo_org' %>
+          <!-- 
+          <%= image_tag 'org_toca', :height => '75px', :width => '75px', :id => 'logo_org' %> -->
+          <div style="background-image: url(<%=image_path('org_toca')%>)"
+               id="logo_org"><span>Logo</span></div>
           <div id="info_org">
             <span><%= @organization.name %></span><br />
             <%= _('CNPJ')%>: <%= @organization.cnpj %>
           </div>
-          <%= image_tag 'bannerabelo_160x75', :id => "banner_top", :height => "75px", :width => "160px" %>
+          <div id="banner_top"><span>Abelo</span></div>
           <div id="userbar">
             <div class="login_bar">
               <%= design_display_button( 'go-jump' , _('Go to'), {}, {:id => "goto", :accesskey => "g", :onclick => visual_effect(:toggle_slide, 'menu')}, true ) %>

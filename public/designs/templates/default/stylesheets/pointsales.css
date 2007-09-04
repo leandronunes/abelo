@@ -191,6 +191,9 @@ border: 1px solid #545454;
 }
 
 #banner_bottom {
+background: url('../images/bannerabelo_160x50.png') 50% no-repeat;
+width: 160px;
+height: 75px;
 position: absolute;
 left: 0;
 }

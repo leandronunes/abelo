@@ -2,6 +2,8 @@
 # Likewise, all the methods added will be available for all controllers.
 class ApplicationController < ActionController::Base
 
+  require 'extended_array'
+
   uses_tabbed_navigation
 
   design :holder => 'organization'
@@ -110,19 +112,19 @@ class ApplicationController < ActionController::Base
     end
     t.named _('Supplier categories')
 
-    t = add_tab do
-      links_to :controller => 'interface'
-      in_set 'first'
-      highlights_on :controller => 'interface'
-    end
-    t.named _('Interface')
+#    t = add_tab do
+#      links_to :controller => 'interface'
+#      in_set 'first'
+#      highlights_on :controller => 'interface'
+#    end
+#    t.named _('Interface')
 
-    t = add_tab do
-      links_to :controller => 'organization_configuration'
-      in_set 'first'
-      highlights_on :controller => 'organization_configuration'
-    end
-    t.named _('Field Configuration')
+#    t = add_tab do
+#      links_to :controller => 'organization_configuration'
+#      in_set 'first'
+#      highlights_on :controller => 'organization_configuration'
+#    end
+#    t.named _('Field Configuration')
   end
 
   def self.uses_register_tabs

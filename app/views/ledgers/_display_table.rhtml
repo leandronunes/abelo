@@ -1,37 +1,94 @@
-
   <table>
     <tr class='page'>
       <th>
-        <% if @ledger_pages.current.previous and @tag.nil? %>
-          <%= button_remote( 'previous_page', _('Previous'),:back, :update => 'financial_table', :url => {:action => 'display_table', :page => @ledger_pages.current.previous, :bank_account => @bank_account.id, :query => @query }) %>
-        <% end %>
-
-        <% if @ledger_pages.current.previous and !@tag.nil? %>
-          <%= button_remote('previous_page', _('Previous'), :back, :update => 'financial_table', :url => {:action => 'find_by_tag', :tag => @tag, :page => @ledger_pages.current.previous , :bank_account => @bank_account.id, :query => @query}) %>
+        <% if @ledger_pages.current.previous%>
+          <%= button_remote( 'previous_page', _('Previous'),:back, :update => 'financial_table', :url => {:action => 'display_table', :page => @ledger_pages.current.previous, :accounts => @chosen_accounts.ids, :query => @query, :tags => @chosen_tags.join(','), :categories => @chosen_categories.ids }) %>
         <% end %>
       </th>
       <th colspan='4'>
         <%= _('Page %s of %s') % [@ledger_pages.current.number, @ledger_pages.length] %> 
         <% unless @query.nil? and @tag.nil? %>
-          <%= _('[%s]') % link_to(_('Clean'), :url => {:action => 'list', :bank_account => @bank_account.id}) %> 
+          <%= _('[%s]') % link_to(_('Clean'), :url => {:action => 'list', :accounts => @chosen_accounts.ids}) %> 
         <% end %>
       </th>
       <th>
-        <% if @ledger_pages.current.next and @tag.nil? %>
-          <%= button_remote('next_page', _('Next'), :next, :update => 'financial_table', :url => {:action => 'display_table', :page => @ledger_pages.current.next , :bank_account => @bank_account.id, :query => @query}) %>
-        <% end %>
-        <% if @ledger_pages.current.next and !@tag.nil? %>
-          <%= button_remote('next_page', _('Next'), :next, :update => 'financial_table', :url => {:action => 'find_by_tag', :tag => @tag, :page => @ledger_pages.current.next , :bank_account => @bank_account.id, :query => @query}) %>
+        <% if @ledger_pages.current.next %>
+          <%= button_remote('next_page', _('Next'), :next, :update => 'financial_table', :url => {:action => 'display_table', :page => @ledger_pages.current.next , :accounts => @chosen_accounts.ids, :query => @query, :tags => @chosen_tags.join(','), :categories => @chosen_categories.ids }) %>
         <% end %>
       </th>
     </tr>
+
+    <tr>
+      <th colspan='3'> <%= _('Bank Account') %> </th>
+      <th colspan='3'> <%= _('Ledger Category') %> </th>
+    </tr>
+    <tr>
+      <td colspan='3'>
+        <% @bank_accounts.each do |b| %>
+          <% if @chosen_accounts.include?(b) %>
+          <%= link_to_remote(b.name,
+                {
+                  :update => 'financial_table', 
+                  :url => {:action => 'display_table', :chosen_account => b.id, :query => @query, :accounts => @chosen_accounts.ids, :tags => @chosen_tags.join(','), :categories => @chosen_categories.ids }
+                },
+                :class => 'detach'
+              ) %> 
+          <% else %>
+          <%= link_to_remote(b.name, 
+                  {
+                  :update => 'financial_table', 
+                  :url => {:action => 'display_table', :accounts => "#{b.id},#{@chosen_accounts.ids}", :query => @query, :tags => @chosen_tags.join(','), :categories => @chosen_categories }
+                  }
+              ) %> 
+          <% end %>
+        <% end %>
+      </td>
+
+      <td colspan='3'>
+        <% @ledger_categories.each do |l| %>
+          <% if @chosen_categories.include?(l) %>
+          <%= link_to_remote(l.name,
+                {
+                  :update => 'financial_table', 
+                  :url => {:action => 'display_table', :chosen_category => l.id, :categories => @chosen_categories.ids, :query => @query, :accounts => @chosen_accounts.ids, :tags => @chosen_tags.join(',') }
+                },
+                :class => 'detach'
+              ) %> 
+          <% else %>
+          <%= link_to_remote(l.name, 
+                  {
+                  :update => 'financial_table', 
+                  :url => {:action => 'display_table', :categories => "#{l.id},#{@chosen_categories.ids}", :query => @query, :accounts => @chosen_accounts.ids, :tags => @chosen_tags.join(',') }
+                  }
+              ) %> 
+          <% end %>
+        <% end %>
+      </td>
+    </tr>
+  
     <tr>
       <th colspan='6'> <%= _('Tags') %> </th>
     </tr>
     <tr>
       <td colspan='6'>
-        <% @tags.tag_counts.each do |t| %>
-          <%= link_to_remote(t.name, :update => 'financial_table', :url => {:action => 'find_by_tag', :tag => t.name, :query => @query, :bank_account => @bank_account }) + "(#{t.count})" %>
+        <% @tags.each do |t| %>
+          <% if @chosen_tags.include?(t.name) %>
+          <%= link_to_remote(t.name,
+                {
+                  :update => 'financial_table', 
+                  :url => {:action => 'display_table', :chosen_tag => t.name, :tags => @chosen_tags.join(','), :query => @query, :accounts => @chosen_accounts.ids, :categories => @chosen_categories.ids }
+                },
+                :class => 'detach'
+              ) %> 
+          <% else %>
+          <%= link_to_remote(t.name, 
+                  {
+                  :update => 'financial_table', 
+                  :url => {:action => 'display_table', :tags => "#{t.name},#{@chosen_tags.join(',')}", :query => @query, :accounts => @chosen_accounts.ids, :categories => @chosen_categories.ids }
+                  }
+              ) %> 
+          <% end %>
+          <%= "(#{t.count})" %>
         <% end %>
       </td>
     </tr>

@@ -9,8 +9,8 @@ class LedgersController < ApplicationController
   def autocomplete_description
     escaped_string = Regexp.escape(params[:ledger][:description])
     re = Regexp.new(escaped_string, "i")
-    bank_account = @organization.bank_accounts.find(params[:bank_account])
-    @ledgers = bank_account.ledgers.select{ |l| l.description.match re}
+    bank_accounts = @organization.bank_accounts(params[:chosen_accounts])
+    @ledgers = @organization.ledgers_by_bank_account(bank_accounts).select{|l| l.description.match re}
     render :layout=>false
   end
 
@@ -29,53 +29,71 @@ class LedgersController < ApplicationController
   # The ledgers are of the bank account passed as parameter. If no bank account is passed
   # as parameter the ledgers are of the default bank account of the organization.
   def list
+    @chosen_categories = params[:categories].blank? ? Array.new : params[:categories].split(',') 
+    @chosen_categories.delete(params[:chosen_category])
+
+    @chosen_tags = params[:tags].blank? ? Array.new : params[:tags].split(',') 
+    @chosen_tags.delete(params[:chosen_tag])
+
 
     @query = params[:query]
     @query ||= params[:ledger][:description] if params[:ledger]
 
     begin
-      @bank_account = @organization.bank_accounts.find(params[:bank_account])
+      @chosen_accounts = params[:accounts].split(',')
+      @chosen_accounts.delete(params[:chosen_account])
+      @chosen_accounts = @organization.bank_accounts.find(@chosen_accounts)
     rescue
-      @bank_account = @organization.default_bank_account
+      @chosen_accounts = @organization.default_bank_account
+    end
+    
+    begin
+      @chosen_categories = @organization.ledger_categories.find(@chosen_categories)
+    rescue
+      @chosen_categories = Array.new
     end
 
-    ledgers = @organization.ledgers_by_bank_account(@bank_account)
-    @tags = ledgers
     @bank_accounts = @organization.bank_accounts
+    @ledger_categories = @organization.ledger_categories
+    @tags = @organization.tags_by_bank_account(@chosen_accounts)
 
-    if @query.nil?
-      @ledger_pages, @ledgers = paginate_by_collection ledgers
-    else
-      ledgers = ledgers.full_text_search(@query)
-      @ledger_pages, @ledgers = paginate_by_collection ledgers
-    end
+    ledgers = @organization.ledgers_by_all(@chosen_accounts, @chosen_tags, @chosen_categories, @query)
+
+    @ledger_pages, @ledgers = paginate_by_collection ledgers
+
   end
-
 
   # This method render a table with all ledgers of the bank account of
   # organization. 
   # If no bank account is passed as parameter it displays the ledgers
   # of the default bank account.
   def display_table
+    @chosen_categories = params[:categories].blank? ? Array.new : params[:categories].split(',') 
+    @chosen_categories.delete(params[:chosen_category])
+
+    @chosen_tags = params[:tags].blank? ? Array.new : params[:tags].split(',') 
+    @chosen_tags.delete(params[:chosen_tag])
+
+    @chosen_accounts = params[:accounts].split(',')
+    @chosen_accounts.delete(params[:chosen_account])
     @query = params[:query]
-    @query ||= params[:ledger][:description] if params[:ledger]
 
     begin
-      @bank_account = @organization.bank_accounts.find(params[:bank_account])
+      @chosen_accounts = @organization.bank_accounts.find(@chosen_accounts)
+      @chosen_categories = @organization.ledger_categories.find(@chosen_categories)
     rescue
-      @bank_account = @organization.default_bank_account
+      @chosen_categories = Array.new
+      @chosen_accounts = Array.new
     end
+    
 
-    if @query.nil?
-      ledgers = @organization.ledgers_by_bank_account(@bank_account)
-      @tags = ledgers
-      @ledger_pages, @ledgers = paginate_by_collection ledgers
-    else
-      ledgers = @organization.ledgers_by_bank_account(@bank_account)
-      @tags = ledgers
-      ledgers = ledgers.full_text_search(@query)
-      @ledger_pages, @ledgers = paginate_by_collection ledgers
-    end
+    @bank_accounts = @organization.bank_accounts
+    @ledger_categories = @organization.ledger_categories
+    @tags = @organization.tags_by_bank_account(@chosen_accounts)
+
+    ledgers = @organization.ledgers_by_all(@chosen_accounts, @chosen_tags, @chosen_categories, @query)
+
+    @ledger_pages, @ledgers = paginate_by_collection ledgers
 
     render :partial => 'display_table'
   end
@@ -175,7 +193,8 @@ class LedgersController < ApplicationController
   end
 
   def find_by_tag
-    @tag = params[:tag]
+    @chosen_tags = params[:tag].split(',')
+    @chosen_tags.delete(params[:tag_chosen])
     @query = params[:query]
     @query ||= params[:ledger][:description] if params[:ledger]
 
@@ -188,7 +207,7 @@ class LedgersController < ApplicationController
     if @query.nil?
       ledgers = @organization.ledgers_by_bank_account(@bank_account)
       @tags = ledgers
-      @ledger_pages, @ledgers = paginate_by_collection ledgers.find_tagged_with(params[:tag])
+      @ledger_pages, @ledgers = paginate_by_collection ledgers.find_tagged_with(@chosen_tags)
     else
       ledgers = @organization.ledgers_by_bank_account(@bank_account)
       @tags = ledgers

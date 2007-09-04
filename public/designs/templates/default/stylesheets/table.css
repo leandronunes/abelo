@@ -1,4 +1,4 @@
-#financial_table table {
+table {
 text-align: left;
 margin: 0px;
 padding: 0px;
@@ -21,6 +21,7 @@ tr td {
 background: #f9f5e6;
 width: 30px;
 height: 30px;
+text-align: center;
 }
 tr.even td {
 background: #f9f5e6;
@@ -46,90 +47,3 @@ border-right: 2px solid #f4edcf;
 td.endrow {
 border-bottom: 2px solid #f4edcf;
 }
-td.number {
-width: 100px;
-border-left: 2px solid #f4edcf;
-padding-right: 5px;
-text-align: right;
-}
-
-td.value {
-width: 80px;
-border-left: 2px solid #f4edcf;
-padding-right: 5px;
-text-align: right;
-}
-td.stock {
-width: 100px;
-border-left: 2px solid #f4edcf;
-padding-right: 5px;
-text-align: right;
-}
-
-td.date {
-border-left: 2px solid #f4edcf;
-width: 100px;
-text-align: center;
-}td.text {
-border-left: 2px solid #f4edcf;
-width: 200px;
-padding-left: 5px;
-text-align: left;
-}
-
-td.name {
-border-left: 2px solid #f4edcf;
-width: 250px;
-padding-left: 5px;
-text-align: left;
-}
-
-td.option {
-border: 0px !important;
-background: transparent;
-}
-td.true {
-color: green !important;
-text-align: center;
-}
-
-td.false {
-color: red !important;
-text-align: center;
-}
-td.true {
-background: transparent url('../images/icon_true_15px.png') center no-repeat !important;
-}
-td.false {
-background: transparent url('../images/icon_false_15px.png') center no-repeat !important;
-}
-
-/* Options Icon TD */
-tr td.option a, tr td.option span {
-display: none;
-}
-
-tr:hover td.option a {
-position: relative;
-display: block;
-width: 28px;
-height: 28px;
-}
-
-td.option a.tdshow {
-background: url('../images/icon_show_30px.png') bottom no-repeat;
-}
-td.option a.tdedit {
-background: url('../images/icon_edit_30px.png') bottom no-repeat;
-}
-td.option a.tddestroy {
-background: url('../images/icon_destroy_30px.png') bottom no-repeat;
-}
-
-td.option a:hover {
-background-position: top !important;
-}
-
-
-
-

@@ -65,12 +65,35 @@ class Organization < ActiveRecord::Base
   end
 
   def default_bank_account
-    self.bank_accounts.find(:first, :conditions => ['is_default = ?', true])
+    [self.bank_accounts.find(:first, :conditions => ['is_default = ?', true])]
   end
 
-  def ledgers_by_bank_account(bank_account = nil)
-    bank_account = default_bank_account if bank_account.nil?
-    bank_account.nil? ? Array.new : bank_account.ledgers
+  def ledgers_by_bank_account(bank_accounts = [])
+    bank_accounts.collect{ |b| b.ledgers}.flatten
+  end
+
+  def tags_by_bank_account(bank_accounts = [])
+    bank_accounts.collect{ |b| b.ledgers.tag_counts }.flatten
+  end
+
+  def ledgers_by_all(bank_accounts, tags, categories, query = nil)
+    bank_accounts = default_bank_account if bank_accounts.blank?
+    ledger_banks = bank_accounts.collect{ |b| b.ledgers }.flatten
+    tags = tags_by_bank_account(bank_accounts).collect{|t| t.name}.join(',') if tags.blank?
+    ledger_tags = bank_accounts.collect{ |b| b.ledgers.find_tagged_with(tags) }.flatten
+    condition_ids = Array.new
+    condition_string = ''
+    categories = self.ledger_categories if categories.blank?
+    categories.each do |c|
+      condition_string = condition_string.blank? ? condition_string + "category_id = #{c.id}" : condition_string + " or category_id = #{c.id}"
+    end
+    ledger_categories = bank_accounts.collect{ |b| b.ledgers.find(:all, :conditions => [ condition_string]) }.flatten
+
+    ledger_search = bank_accounts.collect{ |b| b.ledgers.full_text_search(query) }.flatten unless query.nil?
+
+    all_leders = ledger_banks & ledger_tags & ledger_categories
+    all_leders = all_leders & ledger_search if ledger_search
+    all_leders
   end
 
   def sum_foreseen_value_by_date(bank_account, date = Date.today)

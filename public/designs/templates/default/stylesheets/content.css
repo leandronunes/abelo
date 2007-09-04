@@ -30,5 +30,8 @@ text-decoration: blink;
 color: #545454;
 }
 
+#content a.detach {
+color: red;
+}
 
 

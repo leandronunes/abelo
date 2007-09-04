@@ -85,13 +85,6 @@ class ApplicationController < ActionController::Base
 
   def create_configurations_tabs
     t = add_tab do
-      links_to :controller => 'categories', :action => 'list', :category_type => 'product'
-      in_set 'first'
-      highlights_on :controller => 'categories', :category_type => 'product'
-    end
-    t.named _('Product categories')
-
-    t = add_tab do
       links_to :controller => 'categories', :action => 'list', :category_type => 'customer'
       in_set 'first'
       highlights_on :controller => 'categories', :category_type => 'customer'
@@ -111,6 +104,14 @@ class ApplicationController < ActionController::Base
       highlights_on :controller => 'categories', :category_type => 'supplier'
     end
     t.named _('Supplier categories')
+
+    t = add_tab do
+      links_to :controller => 'categories', :action => 'list', :category_type => 'product'
+      in_set 'first'
+      highlights_on :controller => 'categories', :category_type => 'product'
+    end
+    t.named _('Product categories')
+
 
 #    t = add_tab do
 #      links_to :controller => 'interface'

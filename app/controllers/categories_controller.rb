@@ -15,7 +15,7 @@ class CategoriesController < ApplicationController
 
   # Show all available categories of the system
   def index
-    redirect_to :action => 'list', :category_type => 'product'
+    redirect_to :action => 'list', :category_type => 'customer'
   end
 
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)

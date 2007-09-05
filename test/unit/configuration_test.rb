@@ -144,50 +144,50 @@ class ConfigurationTest < Test::Unit::TestCase
     assert_equal configuration.supplier_category_displays, configuration.supplier_category_display_in_list
   end
 
-  def test_relation_with_product_category_displays
+  def test_relation_with_worker_category_displays
     configuration = @org.configuration
     id = configuration.id
     configuration = Configuration.find(id)
-    prod_cat = ProductCategoryDisplay.new
-    prod_cat.configuration = configuration
-    assert prod_cat.save
-    assert configuration.product_category_displays.include?(prod_cat)
+    worker_cat = WorkerCategoryDisplay.new
+    worker_cat.configuration = configuration
+    assert worker_cat.save
+    assert configuration.worker_category_displays.include?(worker_cat)
   end
 
-  def test_product_category_display_fields=
+  def test_worker_category_display_fields=
     configuration = @org.configuration 
-    configuration.product_category_display_fields = ["name", "parent"]
-    assert_equal ["name", "parent"], configuration.product_category_display_fields
+    configuration.worker_category_display_fields = ["name", "parent"]
+    assert_equal ["name", "parent"], configuration.worker_category_display_fields
   end
 
-  def test_product_category_display_fields_in_list=
+  def test_worker_category_display_fields_in_list=
     configuration = @org.configuration
-    configuration.product_category_display_fields = ['name', 'parent']
-    configuration.product_category_display_fields_in_list = ['name']
-    assert_equal ['name'], configuration.product_category_display_fields_in_list    
+    configuration.worker_category_display_fields = ['name', 'parent']
+    configuration.worker_category_display_fields_in_list = ['name']
+    assert_equal ['name'], configuration.worker_category_display_fields_in_list    
   end
 
-  def test_product_category_display_fields
+  def test_worker_category_display_fields
     configuration = @org.configuration 
-    configuration.product_category_display_fields = ["name", "parent"]
-    assert !configuration.product_category_display_fields.empty?
+    configuration.worker_category_display_fields = ["name", "parent"]
+    assert !configuration.worker_category_display_fields.empty?
   end
 
-  def test_product_category_display_fields_in_list
+  def test_worker_category_display_fields_in_list
     configuration = @org.configuration
-    configuration.product_category_display_fields = ['name', 'parent']
-    configuration.product_category_display_fields_in_list = ['name']
-    assert !configuration.product_category_display_fields_in_list.empty?
+    configuration.worker_category_display_fields = ['name', 'parent']
+    configuration.worker_category_display_fields_in_list = ['name']
+    assert !configuration.worker_category_display_fields_in_list.empty?
   end
 
-  def test_product_category_display
+  def test_worker_category_display
     configuration = @org.configuration
-    assert_equal configuration.product_category_displays, configuration.product_category_display
+    assert_equal configuration.worker_category_displays, configuration.worker_category_display
   end
 
-  def test_product_category_display_in_list
+  def test_worker_category_display_in_list
     configuration = @org.configuration
-    assert_equal configuration.product_category_displays, configuration.product_category_display_in_list
+    assert_equal configuration.worker_category_displays, configuration.worker_category_display_in_list
   end
 
 end

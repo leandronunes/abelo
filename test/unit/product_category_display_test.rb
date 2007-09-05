@@ -23,14 +23,6 @@ class ProductCategoryDisplayTest < Test::Unit::TestCase
     end 
   end
 
-  def test_available_fields_are_invalids
-    cat_prod = ProductCategory.new(:name => 'Category for testing', :organization_id => @org.id)
-    ProductCategoryDisplay.stubs(:available_fields).returns(['unknow_field'])
-    ProductCategoryDisplay.available_fields.each do |field|
-      assert_raise(NoMethodError){ cat_prod.send("#{field}")}
-    end
-  end
-
   def test_title_name
     assert_kind_of String, ProductCategoryDisplay.title_name
   end

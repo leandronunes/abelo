@@ -192,6 +192,9 @@ module ApplicationHelper
     )
   end
 
+  ###############################
+  # Display Methods 
+  ###############################
 
   def display_collection(collection = Array.new, params = {}, html_options = {})
     content = Array.new
@@ -295,6 +298,14 @@ module ApplicationHelper
       ].join("\n"),
      html_options
     )
+  end
+
+  def display_field_type_false_class(content=nil)
+    _('False')
+  end
+
+  def display_field_type_true_class(content=nil)
+    _('True')
   end
 
   def display_field_type_nil_class(content=nil)

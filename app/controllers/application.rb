@@ -4,6 +4,10 @@ class ApplicationController < ActionController::Base
 
   require 'extended_array'
 
+#  def rescue_action(e)
+#    render_error :text => e
+#  end
+
   uses_tabbed_navigation
 
   design :holder => 'organization'

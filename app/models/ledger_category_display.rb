@@ -16,6 +16,10 @@ class LedgerCategoryDisplay < DisplayConfiguration
     _('Days of Interests')
   end
 
+  def self.title_number_of_parcels
+    _('Number of parcels?')
+  end
+
   def self.title_is_operational
     _('Is operational?')
   end

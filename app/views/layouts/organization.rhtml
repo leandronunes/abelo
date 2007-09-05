@@ -17,8 +17,8 @@
 
         <div id="header">
           <!-- 
-          <%= image_tag 'org_toca', :height => '75px', :width => '75px', :id => 'logo_org' %> -->
-          <div style="background-image: url(<%=image_path('org_toca')%>)"
+          <%= image_tag 'org_toca.png', :height => '75px', :width => '75px', :id => 'logo_org' %> -->
+          <div style="background-image: url(<%=image_path("org_#{@organization.nickname}.png")%>)"
                id="logo_org"><span>Logo</span></div>
           <div id="info_org">
             <span><%= @organization.name %></span><br />

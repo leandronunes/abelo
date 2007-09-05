@@ -3,8 +3,7 @@ class ProductCategoriesController < ApplicationController
   needs_organization
 
   def index
-    list
-    render :action => 'list'
+    redirect_to :action => 'list'
   end
 
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)

@@ -7,6 +7,8 @@ class Configuration < ActiveRecord::Base
   has_many :supplier_displays
   has_many :bank_account_displays
   has_many :ledger_displays
+  has_many :debit_ledger_displays
+  has_many :credit_ledger_displays
   has_many :product_category_displays
   has_many :worker_category_displays
   has_many :supplier_category_displays
@@ -25,372 +27,86 @@ class Configuration < ActiveRecord::Base
     Configuration.find(:all, :conditions => ['is_model = ?', true])
   end
 
+  CONFIGURATION_ITEMS = %w[
+    product
+    worker
+    customer
+    supplier
+    bank_account
+    product_category
+    worker_category
+    customer_category
+    supplier_category
+    department
+    mass_mail
+    ledger
+    credit_ledger
+    debit_ledger
+  ]
+
   #######################################
-  # Configuration Product Methods
+  # Configuration Object Methods
   #######################################
  
-  # Receives an array of permited fields of product object
-  # and create a ProductDisplay object to each field associated to 
+  # Receives an array of permited fields in the object defined by CONFIGURATION_ITEMS
+  # and create a ObjetcDisplay object to each field associated to 
   # the current configuration object.
   #
-  # The ProductDisplay object in this case is used to define wich field of the
-  # product object will be display on the edit and show actions
-  def product_display_fields= fields
-    set_fields(Product, fields)
+  # The ObjectDisplay object in this case is used to define wich field of the
+  # ObjetcDisplay object will be display on the edit and show actions
+  CONFIGURATION_ITEMS.each do |item|
+    define_method("#{item}_display_fields=") do |fields|
+      set_fields(eval(item.camelize), fields)
+    end
   end
 
-  # Receives an array of permited fields of product object
-  # and create a ProductDisplay object to each field associated to 
-  # the current configuration object.
+  # Receives an array of permited fields in the object defined by CONFIGURATION_ITEMS
+  # and create a ObjectDisplay object to each field associated to the current configuration 
+  # object.
   #
-  # The ProductDisplay in this case object is used to define wich field of the
-  # product object will be display on the list action
+  # The ObjectDisplay in this case is used to define wich field of the object 
+  # will be display on the list action
   #
-  # The diferrence of this method and the +product_display_fields=+ if
-  # that in this case the ProductDisplay object has a +true+ value on the 
+  # The diferrence of this method and the +item_display_fields=+ is
+  # that in this case the ObjectDisplay object has a +true+ value on the 
   # +display_in_list+ attribute 
-  def product_display_fields_in_list= fields
-    set_fields_in_list(Product, fields)
+  CONFIGURATION_ITEMS.each do |item|
+    define_method("#{item}_display_fields_in_list=") do |fields|
+      set_fields_in_list(eval(item.camelize), fields)
+    end
   end
 
-  # Return a list composed by the +field+ attribute of all ProductDisplay 
-  # object associated to the current object.
-  def product_display_fields
-    display_fields('product')
+  # Return a list composed by the +field+ attribute of all objects (ObjetcDisplay) defined by
+  # CONFIGURATION_ITEMS associated to the current object.
+  CONFIGURATION_ITEMS.each do |item|
+    define_method("#{item}_display_fields") do
+      display_fields(item)
+    end
   end
 
-  # Return a list composed by the +field+ attribute of all ProductDisplay 
-  # object associated to the current object, whose +display_in_list+ 
+  # Return a list composed by the +field+ attribute of all ObjectDisplay 
+  # object associated to the current Configuration, whose +display_in_list+ 
   # attribute has a true value.
-  def product_display_fields_in_list
-    display_fields_in_list('product')
+  CONFIGURATION_ITEMS.each do |item|
+    define_method("#{item}_display_fields_in_list") do
+      display_fields_in_list(item)
+    end
   end
 
-  # Return a list of all ProductDisplay object associated to the current object.
-  def product_display
-    display('product')
+  # Return a list of all ObjectDisplay object associated to the current Configuration.
+  CONFIGURATION_ITEMS.each do |item|
+    define_method("#{item}_display") do
+      display(item)
+    end
   end
 
-  # Return a list of all ProductDisplay object associated to the current object, 
+  # Return a list of all ObjectDisplay object associated to the current object, 
   # whose +display_in_list+ attribute has a true value.
-  def product_display_in_list
-    display_in_list('product')
+  CONFIGURATION_ITEMS.each do |item|
+    define_method("#{item}_display_in_list") do
+      display_in_list(item)
+    end
   end
-
-  #######################################
-  # Configuration Worker Methods
-  #######################################
-  
-  def worker_display_fields= fields
-    set_fields(Worker, fields)
-  end
-
-  def worker_display_fields_in_list= fields
-    set_fields_in_list(Worker, fields)
-  end
-
-  def worker_display_fields
-    display_fields('worker')
-  end
-
-  def worker_display_fields_in_list
-    display_fields_in_list('worker')
-  end
-
-  def worker_display
-    display('worker')
-  end
-
-  def worker_display_in_list
-    display_in_list('worker')
-  end
-
-  #######################################
-  # Configuration Customer Methods
-  #######################################
-  
-  def customer_display_fields= fields
-    set_fields(Customer, fields)
-  end
-
-  def customer_display_fields_in_list= fields
-    set_fields_in_list(Customer, fields)
-  end
-
-  def customer_display_fields
-    display_fields('customer')
-  end
-
-  def customer_display_fields_in_list
-    display_fields_in_list('customer')
-  end
-
-  def customer_display
-    display('customer')
-  end
-
-  def customer_display_in_list
-    display_in_list('customer')
-  end
-
-
-  #######################################
-  # Configuration Supplier Methods
-  #######################################
-  
-  def supplier_display_fields= fields
-    set_fields(Supplier, fields)
-  end
-
-  def supplier_display_fields_in_list= fields
-    set_fields_in_list(Supplier, fields)
-  end
-
-  def supplier_display_fields
-    display_fields('supplier')
-  end
-
-  def supplier_display_fields_in_list
-    display_fields_in_list('supplier')
-  end
-
-  def supplier_display
-    display('supplier')
-  end
-
-  def supplier_display_in_list
-    display_in_list('supplier')
-  end
-
-
-  #######################################
-  # Configuration Bank Accounts Methods #
-  #######################################
-  
-  def bank_account_display_fields= fields
-    set_fields(BankAccount, fields)
-  end
-
-  def bank_account_display_fields_in_list= fields
-    set_fields_in_list(BankAccount, fields)
-  end
-
-  def bank_account_display_fields
-    display_fields('bank_account')
-  end
-
-  def bank_account_display_fields_in_list
-    display_fields_in_list('bank_account')
-  end
-  
-  def bank_account_display
-    display('bank_account')
-  end
-
-  def bank_account_display_in_list
-    display_in_list('bank_account')
-  end
-
-  #######################################
-  # Configuration Product Category Methods
-  #######################################
-
-  def product_category_display_fields= fields
-    set_fields(ProductCategory, fields)
-  end
-
-  def product_category_display_fields_in_list= fields
-    set_fields_in_list(ProductCategory, fields)
-  end
-
-  def product_category_display_fields
-    display_fields('product_category')
-  end
-
-  def product_category_display_fields_in_list
-    display_fields_in_list('product_category')
-  end
-
-  def product_category_display
-    display('product_category')
-  end
-
-  def product_category_display_in_list
-    display_in_list('product_category')
-  end
-
-  #######################################
-  # Configuration worker Category Methods
-  #######################################
-
-  def worker_category_display_fields= fields
-    set_fields(WorkerCategory, fields)
-  end
-
-  def worker_category_display_fields_in_list= fields
-    set_fields_in_list(WorkerCategory, fields)
-  end
-
-  def worker_category_display_fields
-    display_fields('worker_category')
-  end
-
-  def worker_category_display_fields_in_list
-    display_fields_in_list('worker_category')
-  end
-
-  def worker_category_display
-    display('worker_category')
-  end
-
-  def worker_category_display_in_list
-    display_in_list('worker_category')
-  end
-
-  #######################################
-  # Configuration supplier Category Methods
-  #######################################
-
-  def supplier_category_display_fields= fields
-    set_fields(SupplierCategory, fields)
-  end
-
-  def supplier_category_display_fields_in_list= fields
-    set_fields_in_list(SupplierCategory, fields)
-  end
-
-  def supplier_category_display_fields
-    display_fields('supplier_category')
-  end
-
-  def supplier_category_display_fields_in_list
-    display_fields_in_list('supplier_category')
-  end
-
-  def supplier_category_display
-    display('supplier_category')
-  end
-
-  def supplier_category_display_in_list
-    display_in_list('supplier_category')
-  end
-
-
-
-  #######################################
-  # Configuration Customer Category Methods
-  #######################################
-
-  def customer_category_display_fields= fields
-    set_fields(CustomerCategory, fields)
-  end
-
-  def customer_category_display_fields_in_list= fields
-    set_fields_in_list(CustomerCategory, fields)
-  end
-
-  def customer_category_display_fields
-    display_fields('customer_category')
-  end
-
-  def customer_category_display_fields_in_list
-    display_fields_in_list('customer_category')
-  end
-
-  def customer_category_display
-    display('customer_category')
-  end
-
-  def customer_category_display_in_list
-    display_in_list('customer_category')
-  end
-
-  #######################################
-  # Configuration Department Methods
-  #######################################
-
-  def department_display_fields= fields
-    set_fields(Department, fields)
-  end 
-
-  def department_display_fields_in_list= fields
-    set_fields_in_list(Department, fields)
-  end
-
-  def department_display_fields
-    display_fields('department')
-  end
-
-  def department_display_fields_in_list
-    display_fields_in_list('department')
-  end
-
-  def department_display
-    display('department')
-  end
-
-  def department_display_in_list
-    display_in_list('department')
-  end
-
-  #########################################
-  # Configuration Customer Category Methods
-  #########################################
-
-  def mass_mail_display_fields= fields
-    set_fields(MassMail, fields)
-  end
-
-  def mass_mail_display_fields_in_list= fields
-    set_fields_in_list(MassMail, fields)
-  end
-
-  def mass_mail_display_fields
-    display_fields('mass_mail')
-  end
-
-  def mass_mail_display_fields_in_list
-    display_fields_in_list('mass_mail')
-  end
-
-  def mass_mail_display
-    display('mass_mail')
-  end
-
-  def mass_mail_display_in_list
-    display_in_list('mass_mail')
-  end
-
-  #######################################
-  # Configuration Ledger Methods
-  #######################################
-
-  def ledger_display_fields= fields
-    set_fields(Ledger, fields)
-  end
-
-  def ledger_display_fields_in_list= fields
-    set_fields_in_list(Ledger, fields)
-  end
-
-  def ledger_display_fields
-    display_fields('ledger')
-  end
-
-  def ledger_display_fields_in_list
-    display_fields_in_list('ledger')
-  end
-
-  def ledger_display
-    display('ledger')
-  end
-
-  def ledger_display_in_list
-    display_in_list('ledger')
-  end
-
-  alias :debit_ledger_display_fields :ledger_display_fields
-  alias :credit_ledger_display_fields :ledger_display_fields
 
   private 
 

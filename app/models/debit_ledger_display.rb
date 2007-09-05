@@ -1,0 +1,3 @@
+class DebitLedgerDisplay < LedgerDisplay
+
+end

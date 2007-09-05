@@ -6,15 +6,14 @@ class ProductsController; def rescue_action(e) raise e end; end
 
 class ProductsControllerTest < Test::Unit::TestCase
 
-  include TestingUnderOrganization
+  fixtures :products, :system_actors, :categories
 
-  fixtures :organizations, :products, :system_actors, :categories
+  under_organization :one
 
   def setup
     @controller = ProductsController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-    @organization_nickname = 'one'
     @organization = Organization.find_by_nickname 'one'
     @category = ProductCategory.find(1)
     login_as("quentin")

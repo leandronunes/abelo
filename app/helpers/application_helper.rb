@@ -30,7 +30,7 @@ module ApplicationHelper
         button('search', _('Search'), :search),
         button('add', _("Add New"), :new, {:action => 'new'}.merge(params) ),
         button('reset', _('Reset search'), :list, {:action => 'list'}.merge(params)),
-      end_form_tag,
+      '</form>',
       display_list_autocomplete_options(object, method, params)
     ].join("\n")
     

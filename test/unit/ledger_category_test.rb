@@ -91,4 +91,42 @@ class LedgerCategoryTest < Test::Unit::TestCase
 
   end
 
+
+  def test_effective_value_by_date
+    Ledger.delete_all
+    l = Ledger.new(:date => Date.today, :value => 10, :category => @ledger_category, :bank_account => @bank_account, :operational => false)
+    assert l.save
+    
+    l = Ledger.new(:date => Date.today, :value => 240.43, :category => @ledger_category, :bank_account => @bank_account, :operational => false)
+    assert l.save
+
+    l = Ledger.new(:date => Date.today, :value => 20, :category => @ledger_category, :bank_account => @bank_account, :operational => false, :is_foreseen => true )
+    assert l.save
+
+    assert_equal 250.43, @ledger_category.effective_value_by_date
+
+  end
+
+  def test_name_with_sign_plus
+    l = LedgerCategory.new(:type_of => 'I')
+    assert l.name_with_sign.match('.*\+.*')
+  end
+
+  def test_name_with_sign_minus
+    l = LedgerCategory.new(:type_of => 'O')
+    assert l.name_with_sign.match('.*\-.*')
+  end
+
+  def test_count_ledgers
+    Ledger.delete_all
+    l = Ledger.new(:date => Date.today, :value => 10, :category => @ledger_category, :bank_account => @bank_account, :operational => false)
+    assert l.save
+    
+    l = Ledger.new(:date => Date.today, :value => 240.43, :category => @ledger_category, :bank_account => @bank_account, :operational => false)
+    assert l.save
+
+    assert_equal 2, @ledger_category.count_ledgers
+
+  end
+
 end

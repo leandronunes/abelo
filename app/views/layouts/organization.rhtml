@@ -16,10 +16,8 @@
         <%= main_menu %>
 
         <div id="header">
-          <!-- 
-          <%= image_tag 'org_toca.png', :height => '75px', :width => '75px', :id => 'logo_org' %> -->
-          <div style="background-image: url(<%=image_path("org_#{@organization.nickname}.png")%>)"
-               id="logo_org"><span>Logo</span></div>
+          <div style="background-image: url(<%= image_path('org_toca.png') %>)"
+               id="logo_org"><span <%= _('Organization Logo') %></span></div>
           <div id="info_org">
             <span><%= @organization.name %></span><br />
             <%= _('CNPJ')%>: <%= @organization.cnpj %>

@@ -45,16 +45,6 @@ class LedgerCategory < ActiveRecord::Base
     self.income? ? _("(+) %s") % self.name :  _("(-) %s") % self.name
   end
 
-# TODO see if it's needed
-  def value
-    0
-  end
-
-  def sum_ledgers
-#    ledgers.sum('value')
-    30
-  end
-
   def count_ledgers
     self.ledgers.count
   end

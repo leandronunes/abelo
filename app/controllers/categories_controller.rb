@@ -34,19 +34,18 @@ class CategoriesController < ApplicationController
   def list
     @query = params[:query]
     @query ||= params[:category][:name] if params[:category]
-    
-    @category_type = params[:category_type] if CATEGORY_TYPES.include?(params[:category_type])
-    render_access_denied_screen if @category_type.blank?
-
-
-    if @query.nil?
-      @categories = @organization.send("#{@category_type}_categories")
-      @category_pages, @categories = paginate_by_collection @categories
+    @category_type = params[:category_type]    
+    if CATEGORY_TYPES.include?(@category_type)
+      if @query.nil?
+        @categories = @organization.send("#{@category_type}_categories")
+        @category_pages, @categories = paginate_by_collection @categories
+      else
+        @categories = @organization.send("#{@category_type}_categories").full_text_search(@query)
+        @category_pages, @categories = paginate_by_collection @categories
+      end
     else
-      @categories = @organization.send("#{@category_type}_categories").full_text_search(@query)
-      @category_pages, @categories = paginate_by_collection @categories
+      render_error(_("This type didn't exist"))
     end
-
   end
 
   def show
@@ -66,20 +65,20 @@ class CategoriesController < ApplicationController
   end
 
   def create
-    @category_type = params[:category_type] if CATEGORY_TYPES.include?(params[:category_type])
-    if @category_type.blank?
+    @category_type = params[:category_type]
+    if CATEGORY_TYPES.include?(@category_type)
+      @category = eval("#{@category_type.camelize}Category").new(params[:category])
+      @category.organization = @organization
+      if @category.save
+        flash[:notice] = _('Category was successfully created.')
+        redirect_to :action => 'list', :category_type => @category_type
+      else
+        render :action => 'new' 
+      end
+    else
       render_error(_("This type didn't exist"))
-      return
     end
 
-    @category = eval("#{@category_type.camelize}Category").new(params[:category])
-    @category.organization = @organization
-    if @category.save
-      flash[:notice] = _('Category was successfully created.')
-      redirect_to :action => 'list', :category_type => @category_type
-    else
-      render :action => 'new'
-    end
   end
 
   def edit
@@ -88,6 +87,7 @@ class CategoriesController < ApplicationController
   end
 
   def update
+    @category_type = params[:category_type]
     @category = @organization.categories.find(params[:id])
     if @category.update_attributes(params[:category])
       flash[:notice] = _('Category was successfully updated.')

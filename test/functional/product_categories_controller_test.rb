@@ -23,9 +23,18 @@ class ProductCategoriesControllerTest < Test::Unit::TestCase
   def test_index
     get :index
     assert_response :redirect
-    assert_redirected_to :action => 'list', :category_type => 'product'
+    assert_redirected_to :action => 'list', :category_type => 'customer'
   end
 
+  def test_autocomplete_name
+    ProductCategory.delete_all
+    cat_prod = ProductCategory.create(:name => 'Category for testing', :organization => @organization)
+    get :autocomplete_name, :category => { :name => 'test'}, :category_type => 'product'
+    assert_not_nil assigns(:categories)
+    assert_kind_of Array, assigns(:categories)
+    assert_equal 1, assigns(:categories).length
+  end
+ 
   def test_list_query_nil
     get :list, :category_type => 'product'
 
@@ -56,6 +65,19 @@ class ProductCategoriesControllerTest < Test::Unit::TestCase
     assert !assigns(:categories).empty?
   end
 
+  def test_list_error
+    get :list, :category_type => 'bli', :category => {'name' => 'product*'}    
+    assert_response :success
+  end
+
+  def test_show
+    get :show, :id => 1, :category_type => 'product'
+    assert_response :success
+    assert_template 'show'
+    assert_not_nil assigns(:category)
+    assert_not_nil assigns(:category_type)
+  end
+
   def test_new
     get :new, :category_type => 'product'
 
@@ -65,6 +87,11 @@ class ProductCategoriesControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:category)
   end
 
+  def test_new_fails
+    get :new, :category_type => 'bli'
+    assert_response :success
+  end
+  
   def test_create_top_level
     num_product_categories = @organization.product_categories.count
 
@@ -87,6 +114,17 @@ class ProductCategoriesControllerTest < Test::Unit::TestCase
     assert_equal num_product_categories + 1, @organization.product_categories.count
   end
 
+  def test_create_not_save
+    post :create, :category_type => 'product', :category => {}
+    assert_response :success
+    assert_template 'new'
+  end
+
+  def test_create_category_not_exist
+    post :create, :category_type => 'bli', :category => { :name => 'Top level test category' }
+    assert_response :success
+  end
+
   def test_edit
     get :edit, :id => 1, :category_type => 'product'
 
@@ -102,6 +140,16 @@ class ProductCategoriesControllerTest < Test::Unit::TestCase
     post :update, :id => 1
     assert_response :redirect
     assert_redirected_to :action => 'list'
+  end
+
+  def test_update_fails
+    cat_prod = ProductCategory.new
+    cat_prod.name = 'Category for testing'
+    cat_prod.organization = @organization
+    assert cat_prod.save
+    post :update, :id => cat_prod.id, :category => {:name => ''}, :category_type => 'product'
+    assert_response :success
+    assert_template 'edit'
   end
 
   def test_destroy

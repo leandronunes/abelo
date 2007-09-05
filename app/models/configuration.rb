@@ -13,6 +13,7 @@ class Configuration < ActiveRecord::Base
   has_many :worker_category_displays
   has_many :supplier_category_displays
   has_many :customer_category_displays
+  has_many :ledger_category_displays
   has_many :department_displays
   has_many :mass_mail_displays
 
@@ -37,6 +38,7 @@ class Configuration < ActiveRecord::Base
     worker_category
     customer_category
     supplier_category
+    ledger_category
     department
     mass_mail
     ledger

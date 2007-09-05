@@ -35,14 +35,17 @@ configuration.worker_category_display_fields_in_list= WorkerCategoryDisplay.avai
 SupplierCategoryDisplay.delete_all
 configuration.supplier_category_display_fields= SupplierCategoryDisplay.available_fields
 configuration.supplier_category_display_fields_in_list= SupplierCategoryDisplay.available_fields
+LedgerCategoryDisplay.delete_all
+configuration.ledger_category_display_fields= LedgerCategoryDisplay.available_fields
+configuration.ledger_category_display_fields_in_list= LedgerCategoryDisplay.available_fields
 LedgerDisplay.delete_all
 configuration.ledger_display_fields= LedgerDisplay.available_fields 
 configuration.ledger_display_fields_in_list= LedgerDisplay.available_fields
 BankAccount.delete_all
 configuration.bank_account_display_fields= BankAccountDisplay.available_fields
 configuration.bank_account_display_fields_in_list= ['bank','agency','variation','account','owner']
-#configuration.department_display_fields= ['name']
-#configuration.department_display_fields_in_list= ['name']
+configuration.department_display_fields= DepartmentDisplay.available_fields
+configuration.department_display_fields_in_list= ['name']
 configuration.save!
 
 ###########Categories###################################

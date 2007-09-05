@@ -1,26 +1,8 @@
-<%= _('All Categories')%>
-<%= link_to _('New'), :action => 'new'%>
+<%= title _('All Categories') %>
 
-<table class="tablelist" width="100%" cellpadding=0 cellmargin=0>
-    <thead>
-        <th><%= _('Type') %> </th>
-        <th> <%= _('Name') %> </th>
-        <th><%= _('Ledgers Quantity') %> </th>
-        <th><%= _('Operations')%></th>
-    </thead>
-    
-    <tbody class="ligth_gray">
-        <% for category in @categories %>
-        <tr id="list_category_<%=category.id %>">
-            <td> <%= type_of_ledger_category(category.type_of) %></td>
-            <td> <%= category.name %></td>
-            <td> <%= category.count_ledgers%></td>
-            <td> 
-              <%= link_to _('Edit'), :action => 'edit', :id => category %> 
-              <%= _('or') %>  
-              <%= link_to_remote _('Remove'), :url =>{:action => 'destroy', :id => category}, :confirm => _('Are you sure?') %>
-            </td>
-        </tr>
-        <% end %>
-    </tbody>
-</table>
+<%= display_list_options 'category', 'name' %>
+
+<%= display_collection @categories %>
+
+<%= pagination_links(@category_pages, :params => {:query => @query}) %>
+

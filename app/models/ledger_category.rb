@@ -17,6 +17,11 @@ class LedgerCategory < ActiveRecord::Base
   validates_uniqueness_of :name
   validates_inclusion_of :type_of, :in => TYPE_OF.keys
 
+  def self.configuration_class
+    LedgerCategoryDisplay
+  end
+
+
   # Check if the current ledger is a income
   def income?
     self.type_of == 'I'

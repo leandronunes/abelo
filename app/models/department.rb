@@ -11,7 +11,7 @@ class Department < ActiveRecord::Base
   acts_as_ferret
   
   def self.configuration_class
-    Department
+    DepartmentDisplay
   end
 
   def self.full_text_search(q, options = {})

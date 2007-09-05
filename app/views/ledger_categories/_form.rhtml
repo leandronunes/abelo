@@ -1,32 +1,67 @@
-<!--[form:category]-->
 <%= error_messages_for 'category' %>
-<div id="form">
 
-<p> <label for="category_type_of"> <%= _('Type') %> </label><br/>
-<%= radio_button 'category', 'type_of', 'I', :checked => true %>
-<label for="category_type_of_income"><%= type_of_ledger_category('I')%></label>
-<%= radio_button 'category', 'type_of', 'O' %>
-<label for="category_type_of_expense"><%= type_of_ledger_category('O')%></label>
-</p>
+<!--[form:category]-->
 
-<p><label for="category_name"> <%= _('Name')%> </label><br/>
-<%= text_field 'category', 'name'%></p>
+<% display_edit_info @category do |item| %>
 
-<p><label for="category_interests"> <%= _('Interests') %> </label><br/>
-<%= text_field 'category', 'interests'%></p>
+  <%= display_field_edit(item, 'type_of',
+        :title => _('Type')
+      )
+  %>
 
-<p><label for="category_interests_days"> <%= _('Interests days') %> </label><br/>
-<%= text_field 'category', 'interests_days'%></p>
+  <%= display_field_edit(item, 'type_of',
+        :title => type_of_ledger_category('I'),
+        :content => radio_button('category', 'type_of', 'I'),
+        :html_options => {:style => 'clear: left;'}
+      )
+  %>
+  
+  <%= display_field_edit(item, 'type_of',
+        :title => type_of_ledger_category('O'),
+        :content => radio_button('category', 'type_of', 'O')
+      )
+  %>
+  
+  
+  <%= display_field_edit(item, 'name',
+        :title => _('Name'),
+        :content => text_field('category', 'name'),
+        :html_options => {:style => 'clear: left;'}
+      )
+  %>
 
-<p><label for="category_number_of_parcels"> <%= _('Number of parcels')%> </label><br/>
-<%= text_field 'category', 'number_of_parcels'%></p>
+  <%= display_field_edit(item, 'interests',
+        :title => _('Interests'),
+        :content => text_field('category', 'interests')
+      )
+  %>
 
-<p><label for="category_operational"> <%= _('Is operational?') %></label>
-<%= check_box 'category', 'is_operational' %></p> 
+  <%= display_field_edit(item, 'interests_days',
+        :title => _('Interests days'),
+        :content => text_field('category', 'interests_days')
+      )
+  %>
 
-<p><label for="category_operational"> <%= _('Is operation of store?') %></label>
-<%= check_box 'category', 'is_store' %></p> 
+  <%= display_field_edit(item, 'number_of_parcels',
+        :title => _('Number of parcels'),
+        :content => text_field('category', 'number_of_parcels')
+      )
+  %>
 
+  <%= display_field_edit(item, 'is_operational',
+        :title => _('Is operational?'),
+        :content => check_box('category', 'is_operational'),
+        :html_options => {:style => 'clear: left;'}
+      )
+  %>
 
-</div>
-<!--[eoform:category]-->
+  <%= display_field_edit(item, 'is_store',
+        :title => _('Is operation of store'),
+        :content => check_box('category', 'is_store')
+      )
+  %>
+
+<% end %>
+
+<!--[eoform:product]-->
+

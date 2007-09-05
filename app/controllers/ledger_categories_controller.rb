@@ -1,8 +1,17 @@
 class LedgerCategoriesController < ApplicationController
 
+  auto_complete_for :category, :name
+
   needs_organization
 
   uses_financial_tabs
+
+  def autocomplete_name
+    escaped_string = Regexp.escape(params[:category][:name])
+    re = Regexp.new(escaped_string, "i")
+    @categories = @organization.ledger_categories.select { |lc| lc.name.match re}
+    render :layout=>false
+  end
 
   def index
     redirect_to :action => 'list'
@@ -13,7 +22,8 @@ class LedgerCategoriesController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @categories = @organization.ledger_categories
+    categories = @organization.ledger_categories
+    @category_pages, @categories = paginate_by_collection categories
   end
 
   def new

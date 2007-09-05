@@ -21,4 +21,8 @@ class CustomerCategoryTest < Test::Unit::TestCase
     assert cust_cat_2.errors.invalid?(:name)
   end
 
+  def test_configuration_class
+    assert_equal CustomerCategoryDisplay, CustomerCategory.configuration_class
+  end
+
 end

@@ -190,4 +190,50 @@ class ConfigurationTest < Test::Unit::TestCase
     assert_equal configuration.worker_category_displays, configuration.worker_category_display_in_list
   end
 
+  #test for mass mail configurantion
+  def test_relation_with_mass_mail_displays
+    configuration = @org.configuration
+    id = configuration.id
+    configuration = Configuration.find(id)
+    mass_mail = MassMailDisplay.new
+    mass_mail.configuration = configuration
+    assert mass_mail.save
+    assert configuration.mass_mail_displays.include?(mass_mail)
+  end
+
+  def test_mass_mail_display_fields=
+    configuration = @org.configuration 
+    configuration.mass_mail_display_fields = ["subject", "body"]
+    assert_equal ["subject", "body"], configuration.mass_mail_display_fields
+  end
+
+  def test_mass_mail_display_fields_in_list=
+    configuration = @org.configuration
+    configuration.mass_mail_display_fields = ['subject', 'body']
+    configuration.mass_mail_display_fields_in_list = ['subject']
+    assert_equal ['subject'], configuration.mass_mail_display_fields_in_list    
+  end
+
+  def test_mass_mail_display_fields
+    configuration = @org.configuration 
+    configuration.mass_mail_display_fields = ["subject", "body"]
+    assert !configuration.mass_mail_display_fields.empty?
+  end
+
+  def test_mass_mail_display_fields_in_list
+    configuration = @org.configuration
+    configuration.mass_mail_display_fields = ['subject', 'body']
+    configuration.mass_mail_display_fields_in_list = ['subject']
+    assert !configuration.mass_mail_display_fields_in_list.empty?
+  end
+
+  def test_mass_mail_display
+    configuration = @org.configuration
+    assert_equal configuration.mass_mail_displays, configuration.mass_mail_display
+  end
+
+  def test_mass_mail_display_in_list
+    configuration = @org.configuration
+    assert_equal configuration.mass_mail_displays, configuration.mass_mail_display_in_list
+  end
 end

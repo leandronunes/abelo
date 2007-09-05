@@ -5,11 +5,11 @@ class MassMailDisplay < DisplayConfiguration
   end
 
   def self.title_subject
-    _('Size')
+    _('Subject')
   end
 
   def self.title_body
-    _('Color')
+    _('Body')
   end
 
 end

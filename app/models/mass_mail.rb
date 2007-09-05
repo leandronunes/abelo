@@ -4,4 +4,8 @@ class MassMail < ActiveRecord::Base
   has_many :attachments
   validates_presence_of :organization_id
 
+  def self.configuration_class
+    MassMailDisplay
+  end
+
 end

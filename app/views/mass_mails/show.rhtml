@@ -11,6 +11,7 @@
 <%= _("Send to: ") %>
 <%= link_to _("Filter customers"), :action => "filter_categories", :id => @mass_mail.id %>
 
+<br><br>
 
-
-
+<%= button('edit', _('Edit'), :list, :action => 'edit', :id => @mass_mail.id) %>
+<%= button('back', _('Back'), :list, :action => 'list' ) %>

@@ -1,0 +1,25 @@
+<h2><%= _('Adding attachments') %> <h2>
+
+<% form_tag ({:controller => "mass_mails", :action => "add_attachment", :id => @mass_mail}, :multipart => true ) do %>
+  <p>
+    <label for='image_picture'><%= _('Image file') %></label>
+  <%= file_column_field('attachment', 'file') %>
+  </p>
+  <div class='button_bar'>
+    <%= button 'add',_('Add'), :save %>
+    <%= button 'back',_('Back'), :back, :action => 'list' %>
+  </div>
+<% end %>
+
+<div id="files">
+  <%= render :partial => 'file_list' %>
+</div>
+
+
+<!--  < %= submit_tag _('Add') %>
+< %= end_form_tag %> -->
+
+  <!--
+<div id="files">
+  < %= render :partial => 'file_list' %>
+</div> -->

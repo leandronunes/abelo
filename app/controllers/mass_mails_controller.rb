@@ -40,12 +40,23 @@ class MassMailsController < ApplicationController
   def edit
     @mass_mail = @organization.mass_mails.find(params[:id])
     @attachment = Attachment.new
+    @files = @mass_mail.attachments
+#    @attachment = Attachment.new
   end
 
   def update
     @mass_mail = MassMail.find(params[:id])
-    
-#    params[:file].each{ |file|
+
+#    attach
+
+
+#    @attachment = Attachment.new(params[:attachment])
+#    @attachment.mass_mail_id = params[:id]
+#    if @attachment.save
+#      @mass_mail.attachments.push(@attachment)
+#    end
+
+    #    params[:file].each{ |file|
 #      @attachment = Attachment.new
 #      @attachment.file = file
 #      @attachment.mass_mail = @mass_mail
@@ -54,13 +65,41 @@ class MassMailsController < ApplicationController
 
     if @mass_mail.update_attributes(params[:mass_mail])
       flash[:notice] = 'MassMail was successfully updated.'
-      redirect_to :action => 'list'
+      render :action => 'list'
     else
       render :action => 'edit'
     end
   end
 
+  def attach
+    @attachment = Attachment.new
+    @mass_mail = MassMail.find(params[:id])    
+  end
+
+  def add_attachment
+    @attachment = Attachment.new(params[:attachment])
+    @attachment.mass_mail_id = params[:id]
+    @mass_mail = MassMail.find(params[:id])
+    if @attachment.save
+      @mass_mail.attachments.push(@attachment)
+      flash[:notice] = _('Attachment was successfully added.')
+      redirect_to :action => 'attach', :id => @mass_mail
+    else
+      render :action => 'edit', :id => @mass_mail
+    end
+
+#      @files = @mass_mail.attachments
+#      render :update do |page|       
+#        page.replace_html 'files', :partial => 'file_list'
+#        page.replace_html 'new_file', :partial => 'attach'
+#      end
+
+#      render :partial => "file_list"
+#     render :action => "edit", :id => @mass_mail.id
+  end
+
   def destroy
+    Attachment.find(:all, :conditions => ["mass_mail_id = ?", params[:id]]).map { |e| e.destroy }
     @organization.mass_mails.find(params[:id]).destroy
     redirect_to :action => 'list'
   end
@@ -120,7 +159,7 @@ class MassMailsController < ApplicationController
     @attachment = Attachment.new
   end
 
-  def add_attachment
+  def add_attachment_2
     @mass_mail = @organization.mass_mails.find(params[:id])
     @attachment = Attachment.new(:params[:attachment])
     @attachment.mass_mail = @mass_mail
@@ -132,8 +171,10 @@ class MassMailsController < ApplicationController
   end
 
   def remove_attachment
-    Attachment.find(params[:attchment_id]).destroy
-    redirect_to :action => 'attchments', :id => params[:mass_mail_id]  #verificar depois para permanecer na tela
+    Attachment.find(params[:id]).destroy
+    render :update do |page|
+      page.remove "list_attachment_#{params[:id]}"
+    end
   end
 
 

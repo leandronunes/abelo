@@ -23,14 +23,6 @@ class WorkerCategoryDisplayTest < Test::Unit::TestCase
     end 
   end
 
-  def test_available_fields_are_invalids
-    cat_worker = WorkerCategory.new(:name => 'Category for testing', :organization_id => @org.id)
-    WorkerCategoryDisplay.stubs(:available_fields).returns(['unknow_field'])
-    WorkerCategoryDisplay.available_fields.each do |field|
-      assert_raise(NoMethodError){ cat_worker.send("#{field}")}
-    end
-  end
-
   def test_title_name
     assert_kind_of String, WorkerCategoryDisplay.title_name
   end

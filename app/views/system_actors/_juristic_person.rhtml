@@ -1,0 +1,13 @@
+  <%= display_field_edit(@system_actor, 'cnpj',
+        :title => _('CNPJ'),
+        :content => text_field('system_actor', 'cnpj'),
+        :html_options => {:style => 'clear: left;'}
+      )
+  %>
+  <%= observe_field('system_actor_person_type_natural',
+          :update => 'person_type_choosen',
+          :url => {:action => 'get_person_type'},
+          :with => "'value=' +  escape(value) + '&actor=' + escape('#{@actor}')"
+        )
+      %>
+

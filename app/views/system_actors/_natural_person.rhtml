@@ -1,0 +1,20 @@
+<%= display_field_edit( @system_actor, 'cpf',
+      :title => _('CPF'),
+      :content => text_field('system_actor', 'cpf'),
+       :html_options => {:style => 'clear: left;'}
+    )
+%>
+
+<%= display_field_edit(@system_actor, 'rg',
+      :title => _('RG'),
+      :content => text_field('system_actor', 'rg')
+    )
+%>
+
+  <%= observe_field('system_actor_person_type_juristic',
+          :update => 'person_type_choosen',
+          :url => {:action => 'get_person_type'},
+          :with => "'value=' +  escape(value) + '&actor=' + escape('#{@actor}')"
+        )
+      %>
+

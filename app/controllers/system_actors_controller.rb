@@ -111,15 +111,15 @@ class SystemActorsController < ApplicationController
     redirect_to :action => 'list', :actor => @actor 
   end
 
-  def reset
+  def get_person_type
     @actor = params[:actor] if SYSTEM_ACTORS.include?(params[:actor])
-    if @actor.blank?
-      render_error(_("This actor it's not valid"))
-      return
+    render_access_denied_screen if @actor.blank?
+    @system_actor =  eval("#{@actor.camelize}").new(params[:system_actor])
+    if params[:value] == 'juristic'
+      render :partial => 'juristic_person'
+    else
+      render :partial => 'natural_person'
     end
-    @system_actor =  eval("#{@actor.camelize}").new()
-    @system_actor.organization = @organization
-    render :partial => 'form'
   end
 
 end

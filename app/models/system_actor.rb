@@ -4,18 +4,30 @@ class SystemActor < ActiveRecord::Base
   belongs_to :organization
   has_many :contacts 
 
+  attr_accessor :type_person
+
   acts_as_ferret :fields => ['name', 'description']
 
   #validations
   validates_presence_of :name, :organization_id, :category_id,:email    
   validates_as_cnpj :cnpj
   validates_as_cpf :cpf
+  validates_presence_of :cnpj, :scope => :organization_id, :if  => lambda { |actor| actor.person_type == 'juristic' }, :message => _('This %{fn} already exist')
+  validates_presence_of :cpf, :scope => :organization_id, :if  => lambda { |actor| actor.person_type == 'natural' }, :message => _('This %{fn} already exist')
   validates_uniqueness_of :cnpj, :scope => :organization_id, :if => lambda { |user| ! user.cnpj.blank? }, :message => _('This %{fn} already exist')
   validates_uniqueness_of :cpf, :scope => :organization_id, :if => lambda { |user| ! user.cpf.blank? }, :message => _('This %{fn} already exist')
 
+  def person_type 
+    self.type_person ||= self.cnpj.nil? ? 'natural' : 'juristic'
+  end
+
+  def person_type= type
+    self.type_person = type
+  end
+
   def validate
-    if ((! self.cpf.blank?) && (! self.cnpj.blank?)) || (self.cpf.blank? && self.cnpj.blank?)
-      errors.add('cnpj', 'Either %{fn} or CPF must be filled, and they cannot be filled at the same time.')
+    if (self.cpf.blank? && self.cnpj.blank?)
+      errors.add('person_type', 'Either %{fn} or CPF must be filled, and they cannot be filled at the same time.')
     end
   end
 

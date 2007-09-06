@@ -12,27 +12,44 @@
       )
   %>
 
-  <%= display_field_edit(item, 'cpf',
-        :title => _('CPF'),
-        :content => text_field('system_actor', 'cpf')
+  <%= display_field_edit(item, 'person_type',
+        :title => _('Natural Person'),
+        :content => radio_button('system_actor', 'person_type', 'natural'),
+        :html_options => {:style => 'clear: left;'}
       )
   %>
 
-  <%= display_field_edit(item, 'rg',
-        :title => _('RG'),
-        :content => text_field('system_actor', 'rg')
+  <%= display_field_edit(item, 'person_type',
+        :title => _('Juristic Person'),
+        :content => radio_button('system_actor', 'person_type', 'juristic')
       )
   %>
 
-  <%= display_field_edit(item, 'cnpj',
-        :title => _('CNPJ'),
-        :content => text_field('system_actor', 'cnpj')
-      )
-  %>
+  <%= observe_field('system_actor_person_type_natural',
+          :update => 'person_type_choosen',
+          :url => {:action => 'get_person_type'},
+          :with => "'value=' +  escape(value) + '&actor=' + escape('#{@actor}')"
+        )
+      %>
+  <%= observe_field('system_actor_person_type_juristic',
+          :update => 'person_type_choosen',
+          :url => {:action => 'get_person_type'},
+          :with => "'value=' +  escape(value) + '&actor=' + escape('#{@actor}')"
+        )
+      %>
+
+  <div id='person_type_choosen'>
+  <% if @system_actor.person_type == 'natural' %>
+   <%= render :partial => 'natural_person' %>
+  <% elsif @system_actor.person_type == 'juristic' %>
+   <%= render :partial => 'juristic_person' %>
+  <% end %>
+  </div>
 
   <%= display_field_edit(item, 'address',
         :title => _('Address'),
-        :content => text_field('system_actor', 'address')
+        :content => text_field('system_actor', 'address'),
+        :html_options => {:style => 'clear: left;'}
       )
   %>
 
@@ -50,7 +67,7 @@
 
   <%= display_field_edit(item, 'category',
         :title => _('Category'),
-        :content => text_field('system_actor', 'category')
+        :content => select_category('system_actor', @actor)
       )
   %>
 

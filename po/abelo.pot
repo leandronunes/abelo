@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: abelo 0.3.0\n"
-"POT-Creation-Date: 2007-09-04 15:43-0300\n"
+"POT-Creation-Date: 2007-09-05 22:00-0300\n"
 "PO-Revision-Date: 2007-01-06 10:39-0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,7 +22,7 @@ msgid "Customer"
 msgstr "Cliente"
 
 #: app/controllers/system_actors_controller.rb:5
-#: app/controllers/application.rb:140
+#: app/controllers/application.rb:145
 msgid "Workers"
 msgstr "Trabalhadores"
 
@@ -87,24 +87,25 @@ msgstr "Perfil atualizado com sucesso."
 msgid "Profile successfully created."
 msgstr "Perfil criado com sucesso."
 
-#: app/controllers/ledger_categories_controller.rb:29
+#: app/controllers/ledger_categories_controller.rb:42
 msgid "Ledger category was successfully created."
 msgstr ""
 
-#: app/controllers/ledger_categories_controller.rb:45
+#: app/controllers/ledger_categories_controller.rb:57
 msgid "Ledger category was successfully updated."
 msgstr ""
 
-#: app/controllers/categories_controller.rb:64
-#: app/controllers/categories_controller.rb:71
+#: app/controllers/categories_controller.rb:46
+#: app/controllers/categories_controller.rb:62
+#: app/controllers/categories_controller.rb:78
 msgid "This type didn't exist"
 msgstr "Este tipo não existe."
 
-#: app/controllers/categories_controller.rb:78
+#: app/controllers/categories_controller.rb:72
 msgid "Category was successfully created."
 msgstr "Categoria criada com sucesso."
 
-#: app/controllers/categories_controller.rb:93
+#: app/controllers/categories_controller.rb:92
 msgid "Category was successfully updated."
 msgstr "Categoria atualizada com sucesso."
 
@@ -142,7 +143,8 @@ msgstr "Item do documento atualizado com sucesso."
 msgid "Document section was successfuly updated."
 msgstr "Seção do documento atualizado com sucesso."
 
-#: app/controllers/mass_mails_controller.rb:129
+#: app/controllers/mass_mails_controller.rb:85
+#: app/controllers/mass_mails_controller.rb:168
 msgid "Attachment was successfully added."
 msgstr "Imagem adicionada com sucesso."
 
@@ -164,7 +166,7 @@ msgid "Stock control"
 msgstr "Controle de Estoque"
 
 #: app/controllers/organizations_controller.rb:17
-#: app/helpers/support/actions.rb:210
+#: app/helpers/support/actions.rb:210 app/helpers/application_helper.rb:415
 #: app/views/organizations/list_configuration.rhtml:20
 #: app/views/documents/list.rhtml:20 app/views/documents/edit.rhtml:8
 #: app/views/configuration/_list.rhtml:16
@@ -172,7 +174,7 @@ msgid "Show"
 msgstr ""
 
 #: app/controllers/organizations_controller.rb:26
-#: app/controllers/application.rb:214 app/helpers/support/menu.rb:3
+#: app/controllers/application.rb:219 app/helpers/support/menu.rb:3
 msgid "Configurations"
 msgstr "Configurações"
 
@@ -223,115 +225,113 @@ msgstr "Usuáro criado com sucesso"
 msgid "User was successfully updated."
 msgstr "Usuário atualizado com sucesso"
 
-#: app/controllers/product_categories_controller.rb:27
-msgid "Product Category was successfully created."
-msgstr "Categoria de produto criada com sucesso."
-
-#: app/controllers/application.rb:92
-msgid "Product categories"
-msgstr "Categorias de Produtos"
-
-#: app/controllers/application.rb:99
+#: app/controllers/application.rb:96
 msgid "Customer categories"
 msgstr "Categorias de Consumidores"
 
-#: app/controllers/application.rb:106
+#: app/controllers/application.rb:103
 msgid "Worker categories"
 msgstr "Categorias de Trabalhadores"
 
-#: app/controllers/application.rb:113
+#: app/controllers/application.rb:110
 msgid "Supplier categories"
 msgstr "Categorias de Fornecedores"
 
-#: app/controllers/application.rb:147
+#: app/controllers/application.rb:117
+msgid "Product categories"
+msgstr "Categorias de Produtos"
+
+#: app/controllers/application.rb:152
 #: app/views/mass_mails/filter_customers.rhtml:2
 msgid "Customers"
 msgstr "Consumidores"
 
-#: app/controllers/application.rb:154 app/models/ledger_display.rb:46
+#: app/controllers/application.rb:159 app/models/ledger_display.rb:46
 #: app/models/product_display.rb:28 app/views/products/_form.rhtml:20
 msgid "Suppliers"
 msgstr "Fornecedores"
 
-#: app/controllers/application.rb:161
+#: app/controllers/application.rb:166
 msgid "Products"
 msgstr "Produtos"
 
-#: app/controllers/application.rb:173 app/views/categories/index.rhtml:7
+#: app/controllers/application.rb:178 app/views/categories/index.rhtml:7
 msgid "Ledgers"
 msgstr "Livro Caixa"
 
-#: app/controllers/application.rb:179
+#: app/controllers/application.rb:184
 msgid "Bank Accounts"
 msgstr ""
 
-#: app/controllers/application.rb:185
+#: app/controllers/application.rb:190
 #: app/views/ledgers/_display_table.rhtml:23
 #, fuzzy
 msgid "Ledger Category"
 msgstr "Categorias de Livro Caixa"
 
-#: app/controllers/application.rb:213
+#: app/controllers/application.rb:218
 msgid "Register"
 msgstr "Cadastro"
 
-#: app/controllers/application.rb:215 app/models/profile.rb:118
+#: app/controllers/application.rb:220 app/models/profile.rb:118
 #: app/helpers/support/menu.rb:16
 msgid "Financial"
 msgstr "Financeiro"
 
-#: app/controllers/application.rb:216
+#: app/controllers/application.rb:221
 msgid "Stock"
 msgstr "Estoque"
 
-#: app/controllers/application.rb:217
+#: app/controllers/application.rb:222
 msgid "Mass mail"
 msgstr "Mala direta"
 
-#: app/controllers/application.rb:218
+#: app/controllers/application.rb:223
 msgid "Project"
 msgstr "Projeto"
 
-#: app/controllers/application.rb:219
+#: app/controllers/application.rb:224
 msgid "Education"
 msgstr "Educação"
 
-#: app/controllers/application.rb:220
+#: app/controllers/application.rb:225
 msgid "Web"
 msgstr "Web"
 
-#: app/controllers/application.rb:221
+#: app/controllers/application.rb:226
 msgid "Commercial proposals"
 msgstr ""
 
-#: app/controllers/application.rb:222 app/views/users/list.rhtml:1
+#: app/controllers/application.rb:227 app/views/users/list.rhtml:1
 msgid "Users"
 msgstr "Usuários"
 
-#: app/controllers/application.rb:223
+#: app/controllers/application.rb:228
 msgid "Store"
 msgstr "Loja"
 
-#: app/controllers/application.rb:224
+#: app/controllers/application.rb:229
 msgid "Administration of users"
 msgstr ""
 
-#: app/controllers/application.rb:225 app/views/point_of_sale/index.rhtml:1
+#: app/controllers/application.rb:230 app/views/point_of_sale/index.rhtml:1
 msgid "Point of sale"
 msgstr ""
 
-#: app/controllers/application.rb:226 app/views/documents/new.rhtml:11
+#: app/controllers/application.rb:231 app/views/documents/new.rhtml:11
 #: app/views/documents/_form.rhtml:4
 msgid "Departments"
 msgstr ""
 
-#: app/controllers/application.rb:272
+#: app/controllers/application.rb:277
 msgid "There is no organization with nickname %s"
 msgstr "Não existe organização com apelido %s"
 
-#: app/controllers/application.rb:281
-msgid "Access error"
-msgstr "Erro de acesso"
+#: app/controllers/application.rb:286
+msgid ""
+"This system didn't works correctly. Please contact the administrator and "
+"inform the message below."
+msgstr ""
 
 #: app/models/product.rb:- app/views/document_items/_form.rhtml:1
 msgid "product"
@@ -382,12 +382,12 @@ msgstr ""
 #: app/models/worker_category_display.rb:8
 #: app/models/costumer_category_display.rb:8
 #: app/models/product_category_display.rb:8 app/models/category_display.rb:8
+#: app/models/ledger_category_display.rb:8
 #: app/models/system_actor_display.rb:9 app/models/display_configuration.rb:9
 #: app/models/supplier_category_display.rb:8
 #: app/models/department_display.rb:8 app/helpers/point_of_sale_helper.rb:9
 #: app/views/ledgers/test_budgets.rhtml:15 app/views/ledgers/_budget.rhtml:15
-#: app/views/ledger_categories/_form.rhtml:12
-#: app/views/ledger_categories/list.rhtml:7
+#: app/views/ledger_categories/_form.rhtml:28
 #: app/views/customer_categories/list.rhtml:5
 #: app/views/organizations/_form.rhtml:5
 #: app/views/organizations/new_configuration.rhtml:7
@@ -437,12 +437,12 @@ msgid "The name %{fn} for customer category was already taken."
 msgstr ""
 
 #: app/models/ledger_display.rb:26 app/models/product_display.rb:8
-#: app/models/mass_mail_display.rb:8 app/views/products/_form.rhtml:26
+#: app/views/products/_form.rhtml:26
 msgid "Size"
 msgstr ""
 
 #: app/models/ledger_display.rb:30 app/models/product_display.rb:12
-#: app/models/mass_mail_display.rb:12 app/views/products/_form.rhtml:38
+#: app/views/products/_form.rhtml:38
 msgid "Color"
 msgstr ""
 
@@ -561,7 +561,7 @@ msgstr "Configurações"
 msgid "Configuration|Organization name"
 msgstr "Posição"
 
-#: app/models/configuration.rb:21
+#: app/models/configuration.rb:24
 msgid "You cannot associate a template to an organization"
 msgstr ""
 
@@ -1297,6 +1297,33 @@ msgstr ""
 msgid "Yellow Green"
 msgstr ""
 
+#: app/models/ledger_category_display.rb:12
+#: app/views/ledger_categories/_form.rhtml:35
+msgid "Interests"
+msgstr ""
+
+#: app/models/ledger_category_display.rb:16
+#, fuzzy
+msgid "Days of Interests"
+msgstr "Juros"
+
+#: app/models/ledger_category_display.rb:20
+msgid "Number of parcels?"
+msgstr ""
+
+#: app/models/ledger_category_display.rb:24
+#: app/views/ledger_categories/_form.rhtml:53
+msgid "Is operational?"
+msgstr ""
+
+#: app/models/ledger_category_display.rb:28
+msgid "It's to Store?"
+msgstr ""
+
+#: app/models/ledger_category_display.rb:32
+msgid "Type of"
+msgstr ""
+
 #: app/models/supplier_category.rb:4
 msgid "The name %{fn} for supplier category was already taken."
 msgstr ""
@@ -1530,7 +1557,7 @@ msgid "Category"
 msgstr "Categoria"
 
 #: app/models/system_actor_display.rb:25
-#: app/views/layouts/organization.rhtml:22
+#: app/views/layouts/organization.rhtml:23
 #: app/views/organizations/show.rhtml:5
 msgid "CNPJ"
 msgstr ""
@@ -1588,6 +1615,15 @@ msgstr ""
 
 #: app/models/bank.rb:-
 msgid "Bank|Site"
+msgstr ""
+
+#: app/models/mass_mail_display.rb:8
+msgid "Subject"
+msgstr ""
+
+#: app/models/mass_mail_display.rb:12 app/views/documents/_form.rhtml:9
+#: app/views/documents/show.rhtml:8 app/views/mass_mails/_form.rhtml:17
+msgid "Body"
 msgstr ""
 
 #: app/models/document.rb:-
@@ -1929,11 +1965,11 @@ msgstr ""
 msgid "Expense"
 msgstr ""
 
-#: app/models/ledger_category.rb:45
+#: app/models/ledger_category.rb:50
 msgid "(+) %s"
 msgstr ""
 
-#: app/models/ledger_category.rb:45
+#: app/models/ledger_category.rb:50
 msgid "(-) %s"
 msgstr ""
 
@@ -1941,7 +1977,7 @@ msgstr ""
 msgid "Rg"
 msgstr ""
 
-#: app/helpers/point_of_sale_helper.rb:11 app/helpers/application_helper.rb:32
+#: app/helpers/point_of_sale_helper.rb:11 app/helpers/application_helper.rb:30
 #: app/views/stock/index.rhtml:5 app/views/organizations/list.rhtml:5
 #: app/views/organizations/list_configuration.rhtml:5
 #: app/views/documents/list.rhtml:6 app/views/departments/list.rhtml:6
@@ -1950,14 +1986,17 @@ msgid "Search"
 msgstr ""
 
 #: app/helpers/stock_helper.rb:45 app/helpers/support/actions.rb:224
+#: app/helpers/application_helper.rb:429
 msgid "New entry"
 msgstr "Nova entrada"
 
 #: app/helpers/stock_helper.rb:46 app/helpers/support/actions.rb:225
+#: app/helpers/application_helper.rb:430
 msgid "History"
 msgstr "Histórico"
 
 #: app/helpers/support/actions.rb:147 app/helpers/support/actions.rb:172
+#: app/helpers/application_helper.rb:352 app/helpers/application_helper.rb:377
 #: app/views/organizations/new.rhtml:7
 #: app/views/organizations/edit_configuration.rhtml:5
 #: app/views/organizations/new_configuration.rhtml:20
@@ -1965,18 +2004,19 @@ msgstr "Histórico"
 #: app/views/documents/new.rhtml:12 app/views/documents/show.rhtml:10
 #: app/views/documents/edit.rhtml:9 app/views/configuration/_show.rhtml:8
 #: app/views/departments/edit.rhtml:6 app/views/products/images.rhtml:16
+#: app/views/mass_mails/show.rhtml:17
 #: app/views/mass_mails/filter_categories.rhtml:8
-#: app/views/categories/new.rhtml:7 app/views/categories/edit.rhtml:7
+#: app/views/mass_mails/attach.rhtml:10 app/views/categories/new.rhtml:7
+#: app/views/categories/edit.rhtml:7
 msgid "Back"
 msgstr ""
 
 #: app/helpers/support/actions.rb:148 app/helpers/support/actions.rb:211
+#: app/helpers/application_helper.rb:353 app/helpers/application_helper.rb:416
 #: app/views/stock/history.rhtml:8 app/views/users/list.rhtml:11
 #: app/views/layouts/organization.rhtml:29
-#: app/views/layouts/administration.rhtml:29
+#: app/views/layouts/administration.rhtml:30
 #: app/views/ledgers/_display_table.rhtml:113
-#: app/views/ledger_categories/list.rhtml:19
-#: app/views/ledger_categories/edit.rhtml:5
 #: app/views/document_items/_list.rhtml:5
 #: app/views/customer_categories/_list.rhtml:4
 #: app/views/organizations/show_configuration.rhtml:59
@@ -1988,12 +2028,12 @@ msgstr ""
 #: app/views/configuration/_list.rhtml:17
 #: app/views/contact_positions/list.rhtml:15
 #: app/views/product_categories/_list.rhtml:4
-#: app/views/categories/_list.rhtml:4
+#: app/views/mass_mails/show.rhtml:16 app/views/categories/_list.rhtml:4
 msgid "Edit"
 msgstr ""
 
-#: app/helpers/support/actions.rb:173 app/views/users/new.rhtml:5
-#: app/views/users/edit.rhtml:5
+#: app/helpers/support/actions.rb:173 app/helpers/application_helper.rb:378
+#: app/views/users/new.rhtml:5 app/views/users/edit.rhtml:5
 #: app/views/permissions/new_with_template.rhtml:14
 #: app/views/permissions/select_template.rhtml:8
 #: app/views/document_items/_edit.rhtml:9
@@ -2002,20 +2042,20 @@ msgstr ""
 #: app/views/organizations/edit.rhtml:6 app/views/departments/_edit.rhtml:8
 #: app/views/departments/edit.rhtml:7 app/views/contact_positions/edit.rhtml:6
 #: app/views/product_categories/edit.rhtml:6
-#: app/views/document_sections/edit.rhtml:12 app/views/mass_mails/edit.rhtml:6
+#: app/views/document_sections/edit.rhtml:12 app/views/mass_mails/edit.rhtml:8
 #: app/views/system_actors/_edit.rhtml:10 app/views/categories/edit.rhtml:6
 msgid "Save"
 msgstr ""
 
-#: app/helpers/support/actions.rb:174 app/views/stock/_new.rhtml:9
-#: app/views/departments/new.rhtml:8 app/views/departments/_new.rhtml:9
-#: app/views/products/_new.rhtml:9 app/views/system_actors/new.rhtml:8
-#: app/views/system_actors/_new.rhtml:10
+#: app/helpers/support/actions.rb:174 app/helpers/application_helper.rb:379
+#: app/views/stock/_new.rhtml:9 app/views/departments/new.rhtml:8
+#: app/views/departments/_new.rhtml:9 app/views/products/_new.rhtml:9
+#: app/views/system_actors/new.rhtml:8 app/views/system_actors/_new.rhtml:10
 msgid "Reset"
 msgstr ""
 
-#: app/helpers/support/actions.rb:212 app/views/stock/history.rhtml:9
-#: app/views/permissions/index.rhtml:10
+#: app/helpers/support/actions.rb:212 app/helpers/application_helper.rb:417
+#: app/views/stock/history.rhtml:9 app/views/permissions/index.rhtml:10
 #: app/views/customer_categories/_list.rhtml:5
 #: app/views/organizations/list_configuration.rhtml:22
 #: app/views/documents/list.rhtml:22 app/views/configuration/_list.rhtml:18
@@ -2025,9 +2065,8 @@ msgstr ""
 msgid "Destroy"
 msgstr ""
 
-#: app/helpers/support/actions.rb:213 app/views/stock/history.rhtml:9
-#: app/views/ledger_categories/list.rhtml:21
-#: app/views/customer_categories/_list.rhtml:5
+#: app/helpers/support/actions.rb:213 app/helpers/application_helper.rb:418
+#: app/views/stock/history.rhtml:9 app/views/customer_categories/_list.rhtml:5
 #: app/views/documents/list.rhtml:24 app/views/contact_positions/list.rhtml:16
 #: app/views/product_categories/_list.rhtml:5
 #: app/views/products/images.rhtml:30 app/views/categories/_list.rhtml:5
@@ -2073,31 +2112,40 @@ msgstr ""
 msgid "Mês"
 msgstr ""
 
-#: app/helpers/application_helper.rb:16
+#: app/helpers/application_helper.rb:14
 msgid "%{year}/%{month}/%{day}"
 msgstr ""
 
-#: app/helpers/application_helper.rb:33
+#: app/helpers/application_helper.rb:31
 msgid "Add New"
 msgstr ""
 
-#: app/helpers/application_helper.rb:34 app/views/bank_accounts/list.rhtml:18
+#: app/helpers/application_helper.rb:32 app/views/bank_accounts/list.rhtml:18
 #, fuzzy
 msgid "Reset search"
 msgstr "Cadastro"
 
-#: app/helpers/application_helper.rb:176
+#: app/helpers/application_helper.rb:174
 msgid "Copyrigth © 2007 %s. This software is under %s"
 msgstr ""
 
-#: app/helpers/application_helper.rb:176
+#: app/helpers/application_helper.rb:174
 #: app/views/layouts/administration.rhtml:17
 #: app/views/layouts/administration.rhtml:19
 msgid "Colivre"
 msgstr ""
 
-#: app/helpers/application_helper.rb:176
+#: app/helpers/application_helper.rb:174
 msgid "GPL"
+msgstr ""
+
+#: app/helpers/application_helper.rb:304
+#, fuzzy
+msgid "False"
+msgstr "venda"
+
+#: app/helpers/application_helper.rb:308
+msgid "True"
 msgstr ""
 
 #: app/helpers/store_helper.rb:16
@@ -2133,8 +2181,7 @@ msgstr "Nova entrada de estoque para %s"
 msgid "New stock entry"
 msgstr ""
 
-#: app/views/stock/_new.rhtml:8 app/views/ledger_categories/new.rhtml:5
-#: app/views/customer_categories/new.rhtml:6
+#: app/views/stock/_new.rhtml:8 app/views/customer_categories/new.rhtml:6
 #: app/views/organizations/new.rhtml:8
 #: app/views/organizations/new_configuration.rhtml:21
 #: app/views/departments/new.rhtml:6 app/views/departments/_new.rhtml:8
@@ -2208,7 +2255,7 @@ msgstr "Novo produto"
 #: app/views/contact_positions/new.rhtml:7
 #: app/views/contact_positions/edit.rhtml:7
 #: app/views/product_categories/new.rhtml:7
-#: app/views/product_categories/edit.rhtml:7 app/views/mass_mails/edit.rhtml:7
+#: app/views/product_categories/edit.rhtml:7 app/views/mass_mails/edit.rhtml:9
 #: app/views/system_actors/new.rhtml:7 app/views/system_actors/_edit.rhtml:11
 msgid "Cancel"
 msgstr ""
@@ -2262,19 +2309,24 @@ msgstr ""
 msgid "Abelo"
 msgstr ""
 
+#: app/views/layouts/organization.rhtml:20
+#, fuzzy
+msgid "Organization Logo"
+msgstr "organização"
+
 #: app/views/layouts/organization.rhtml:28
-#: app/views/layouts/administration.rhtml:27
+#: app/views/layouts/administration.rhtml:28
 msgid "Go to"
 msgstr ""
 
 #: app/views/layouts/organization.rhtml:30
-#: app/views/layouts/administration.rhtml:30
+#: app/views/layouts/administration.rhtml:31
 #: app/views/layouts/point_of_sale.rhtml:21
 msgid "Logout"
 msgstr ""
 
 #: app/views/layouts/organization.rhtml:30
-#: app/views/layouts/administration.rhtml:30
+#: app/views/layouts/administration.rhtml:31
 #: app/views/layouts/point_of_sale.rhtml:21
 msgid "Exit from system?"
 msgstr ""
@@ -2330,8 +2382,6 @@ msgid "[%s]"
 msgstr ""
 
 #: app/views/ledgers/_display_table.rhtml:11
-#: app/views/ledger_categories/new.rhtml:6
-#: app/views/ledger_categories/edit.rhtml:6
 msgid "Clean"
 msgstr ""
 
@@ -2361,12 +2411,10 @@ msgid "Operation"
 msgstr ""
 
 #: app/views/ledgers/_display_table.rhtml:113
-#: app/views/ledger_categories/list.rhtml:20
 msgid "or"
 msgstr ""
 
 #: app/views/ledgers/_display_table.rhtml:114
-#: app/views/ledger_categories/list.rhtml:21
 #: app/views/document_items/_list.rhtml:6
 #: app/views/document_sections/_list.rhtml:10
 msgid "Remove"
@@ -2416,48 +2464,31 @@ msgstr ""
 msgid "New Ledger Category"
 msgstr ""
 
-#: app/views/ledger_categories/_form.rhtml:5
-#: app/views/ledger_categories/list.rhtml:6
+#: app/views/ledger_categories/_form.rhtml:8
 #: app/views/configuration/_form_historical.rhtml:6
 msgid "Type"
 msgstr ""
 
-#: app/views/ledger_categories/_form.rhtml:15
-msgid "Interests"
-msgstr ""
-
-#: app/views/ledger_categories/_form.rhtml:18
+#: app/views/ledger_categories/_form.rhtml:41
 msgid "Interests days"
 msgstr ""
 
-#: app/views/ledger_categories/_form.rhtml:21
+#: app/views/ledger_categories/_form.rhtml:47
 msgid "Number of parcels"
 msgstr ""
 
-#: app/views/ledger_categories/_form.rhtml:24
-msgid "Is operational?"
-msgstr ""
-
-#: app/views/ledger_categories/_form.rhtml:27
-msgid "Is operation of store?"
+#: app/views/ledger_categories/_form.rhtml:60
+msgid "Is operation of store"
 msgstr ""
 
 #: app/views/ledger_categories/list.rhtml:1
 msgid "All Categories"
 msgstr ""
 
-#: app/views/ledger_categories/list.rhtml:2
-#: app/views/permissions/index.rhtml:17
-msgid "New"
-msgstr ""
-
-#: app/views/ledger_categories/list.rhtml:8
-msgid "Ledgers Quantity"
-msgstr ""
-
-#: app/views/ledger_categories/list.rhtml:9
-msgid "Operations"
-msgstr ""
+#: app/views/ledger_categories/show.rhtml:2
+#, fuzzy
+msgid "Ledger Category %s"
+msgstr "Categorias de Livro Caixa"
 
 #: app/views/ledger_categories/edit.rhtml:1
 msgid "Edit Ledger Category"
@@ -2532,6 +2563,10 @@ msgstr ""
 msgid ""
 "Are you sure you want to remove this userprofile ? He(she) will not be able "
 "to access the system anymore, unless he(she) has another profile."
+msgstr ""
+
+#: app/views/permissions/index.rhtml:17
+msgid "New"
 msgstr ""
 
 #: app/views/document_items/_new.rhtml:3
@@ -2709,11 +2744,6 @@ msgstr ""
 msgid "New section"
 msgstr ""
 
-#: app/views/documents/_form.rhtml:9 app/views/documents/show.rhtml:8
-#: app/views/mass_mails/_form.rhtml:8
-msgid "Body"
-msgstr ""
-
 #: app/views/documents/list.rhtml:6
 #, fuzzy
 msgid "Search document"
@@ -2794,7 +2824,7 @@ msgstr "departamento"
 msgid "Editing Department"
 msgstr "departamento"
 
-#: app/views/shared/access_error.rhtml:1
+#: app/views/shared/error.rhtml:1
 msgid "Access Error"
 msgstr ""
 
@@ -2850,11 +2880,11 @@ msgstr ""
 msgid "Add Image"
 msgstr ""
 
-#: app/views/products/images.rhtml:11
+#: app/views/products/images.rhtml:11 app/views/mass_mails/attach.rhtml:5
 msgid "Image file"
 msgstr ""
 
-#: app/views/products/images.rhtml:15
+#: app/views/products/images.rhtml:15 app/views/mass_mails/attach.rhtml:9
 msgid "Add"
 msgstr ""
 
@@ -2909,11 +2939,15 @@ msgstr ""
 msgid "Has been sent successfully!"
 msgstr ""
 
+#: app/views/mass_mails/_file_list.rhtml:4
+msgid "remove"
+msgstr ""
+
 #: app/views/mass_mails/list.rhtml:1
 msgid "Listing mass mail"
 msgstr ""
 
-#: app/views/mass_mails/list.rhtml:6
+#: app/views/mass_mails/list.rhtml:28
 msgid "New mass mail"
 msgstr ""
 
@@ -2944,7 +2978,6 @@ msgid "Filter"
 msgstr ""
 
 #: app/views/mass_mails/_attachments.rhtml:5
-#: app/views/mass_mails/edit.rhtml:11
 msgid "Attach a file "
 msgstr ""
 
@@ -2952,6 +2985,16 @@ msgstr ""
 #, fuzzy
 msgid "Editing mass mail"
 msgstr "Mala direta"
+
+#: app/views/mass_mails/edit.rhtml:15
+#, fuzzy
+msgid "Attach"
+msgstr "departamento"
+
+#: app/views/mass_mails/attach.rhtml:1
+#, fuzzy
+msgid "Adding attachments"
+msgstr "departamento"
 
 #: app/views/system_actors/_show.rhtml:3
 msgid "Birthday:"
@@ -3021,6 +3064,12 @@ msgstr ""
 msgid "Product"
 msgstr ""
 
+#~ msgid "Product Category was successfully created."
+#~ msgstr "Categoria de produto criada com sucesso."
+
+#~ msgid "Access error"
+#~ msgstr "Erro de acesso"
+
 #~ msgid "Listing objects of configuration"
 #~ msgstr "Lista de objetos de configuração"
 
@@ -3036,10 +3085,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Field Configuration"
 #~ msgstr "Configurações"
-
-#, fuzzy
-#~ msgid "Organization"
-#~ msgstr "organização"
 
 #, fuzzy
 #~ msgid "Configuration|Full product"
@@ -3101,9 +3146,6 @@ msgstr ""
 
 #~ msgid "Payment|Credit card owner name"
 #~ msgstr "Nome do propietário do cartão de crédito"
-
-#~ msgid "Payment|Interests"
-#~ msgstr "Juros"
 
 #~ msgid "Payment|Check bank"
 #~ msgstr "Banco do cheque"

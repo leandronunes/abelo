@@ -73,3 +73,14 @@ height: 50px;
   margin-right: 220px;
 }
 
+.error{
+  position: absolute;
+  border: 2px solid red;
+  background-color: white;
+  width: 300px;
+  padding: 40px;
+  left: 50%;
+  margin-left: -150px;
+}
+
+

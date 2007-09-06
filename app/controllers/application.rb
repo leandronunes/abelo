@@ -4,9 +4,9 @@ class ApplicationController < ActionController::Base
 
   require 'extended_array'
 
-#  def rescue_action(e)
-#    render_error :text => e
-#  end
+  def rescue_action(e)
+    render_error('', e)
+  end
 
   uses_tabbed_navigation
 
@@ -282,9 +282,10 @@ class ApplicationController < ActionController::Base
     render :template => 'users/access_denied', :status => 403, :layout => false
   end
 
-  def render_error(message = nil)
-    @message = message.nil? ? _('Access error') : message
-    render :template => 'shared/access_error'
+  def render_error(message = nil, error = nil)
+    @message = _("This system didn't works correctly. Please contact the administrator and inform the message below.")
+    @error = error
+    render :template => 'shared/error'
   end
 
 end

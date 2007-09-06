@@ -26,6 +26,10 @@ class LedgerCategoriesController < ApplicationController
     @category_pages, @categories = paginate_by_collection categories
   end
 
+  def show
+    @category = LedgerCategory.find(params[:id])
+  end
+
   def new
     @category = LedgerCategory.new
   end
@@ -60,7 +64,7 @@ class LedgerCategoriesController < ApplicationController
 
   def destroy
     @organization.ledger_categories.find(params[:id]).destroy
-    render_for :destroy, :success, "list_category_#{params[:id]}"
+    redirect_to :action => 'list'
   end
 
 end

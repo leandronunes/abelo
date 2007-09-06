@@ -52,6 +52,8 @@ class CustomerCategoriesControllerTest < Test::Unit::TestCase
   end
 
   def test_list_query_not_nil
+    CustomerCategory.delete_all
+    CustomerCategory.create(:name => 'customer testing', :organization => @organization)
     get :list, :category_type => 'customer', :category => {'name' => 'customer*'}
     assert_response :success
     assert_template 'list'

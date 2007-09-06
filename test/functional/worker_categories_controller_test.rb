@@ -6,17 +6,15 @@ class CategoriesController; def rescue_action(e) raise e end; end
 
 class WorkerCategoriesControllerTest < Test::Unit::TestCase
 
-  include TestingUnderOrganization
-
   fixtures :categories, :organizations, :configurations
+
+  under_organization :one
 
   def setup
     @controller = CategoriesController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-    @organization_nickname = 'one'
     @organization = Organization.find_by_nickname 'one'
-    @organization.configuration = Configuration.find(1)
     @worker_cat = WorkerCategory.find(:first)
     login_as("quentin")
   end
@@ -52,6 +50,8 @@ class WorkerCategoriesControllerTest < Test::Unit::TestCase
   end
 
   def test_list_query_not_nil
+    WorkerCategory.delete_all
+    WorkerCategory.create(:name => 'worker testing', :organization => @organization)
     get :list, :category_type => 'worker', :category => {'name' => 'worker*'}
     assert_response :success
     assert_template 'list'

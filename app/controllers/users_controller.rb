@@ -45,7 +45,7 @@ class UsersController < ApplicationController
         cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }
       end
       flash[:notice] = _("Logged in successfully")
-      if self.current_user.organizations_count == 1
+      if self.current_user.organizations.count == 1
         redirect_to :controller => 'main', :organization_nickname => self.current_user.organizations.find(:first).nickname
       elsif self.current_user.administrator
         redirect_to :controller => 'organizations'

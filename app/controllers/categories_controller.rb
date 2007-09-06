@@ -3,12 +3,11 @@ class CategoriesController < ApplicationController
   needs_organization
 
   CATEGORY_TYPES = %w[
-    product
     customer
-    contact
     worker
     supplier
-    ledger
+    product
+    contact
   ]
 
   before_filter :create_configurations_tabs

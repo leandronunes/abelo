@@ -115,3 +115,9 @@ supplier_categoryA:
   name: 'supplier category A'
   type: 'SupplierCategory'
   organization_id: 1
+# Worker categories
+worker_category_A:
+  id: 22
+  name: 'worker category A'
+  type: 'WorkerCategory'
+  organization_id: 1

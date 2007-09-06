@@ -41,9 +41,16 @@ configuration.ledger_category_display_fields_in_list= LedgerCategoryDisplay.avai
 LedgerDisplay.delete_all
 configuration.ledger_display_fields= LedgerDisplay.available_fields 
 configuration.ledger_display_fields_in_list= LedgerDisplay.available_fields
+CreditLedgerDisplay.delete_all
+configuration.credit_ledger_display_fields= CreditLedgerDisplay.available_fields 
+configuration.credit_ledger_display_fields_in_list= CreditLedgerDisplay.available_fields
+DebitLedgerDisplay.delete_all
+configuration.debit_ledger_display_fields= DebitLedgerDisplay.available_fields 
+configuration.debit_ledger_display_fields_in_list= DebitLedgerDisplay.available_fields
 BankAccount.delete_all
 configuration.bank_account_display_fields= BankAccountDisplay.available_fields
 configuration.bank_account_display_fields_in_list= ['bank','agency','variation','account','owner']
+DepartmentDisplay.delete_all
 configuration.department_display_fields= DepartmentDisplay.available_fields
 configuration.department_display_fields_in_list= ['name']
 configuration.save!

@@ -381,4 +381,22 @@ class LedgersControllerTest < Test::Unit::TestCase
     }
   end
 
+  #TODO make this test
+  def test_ledgers_by_period
+  end
+
+  #TODO make this test
+  def test_ledgers_by_bank_account
+  end
+
+  #TODO make this test
+  def test_ledgers_by_ledger_category
+  end
+
+  #TODO make this test
+  def test_ledgers_by_tag
+  end
+
+
+
 end

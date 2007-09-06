@@ -1,21 +1,8 @@
 <%= title _('Listing Bank Accounts') %>
 
-<% form_tag( { :action => 'list' }, { :class => 'search_itens' } ) do %>
-  <%= text_field 'bank_account', 'account', :class => 'filter_field' %>
-  <%= button( 'search', _('Search'), :search) %>
-  <%= button('add', _("New Bank Account"), :new, :action => 'new' ) %>
-<% end %>
+<%= display_list_options 'bank_account', 'account' %>
 
-<div class="auto_complete" id="bank_account_account_auto_complete"></div>
-<%= auto_complete_field :bank_account_account, :url => {:action => 'autocomplete' }, :indicator => 'auto_list'%>
-<div id="auto_list" style="display:none;">
-</div>
-
-<div id="leo">
 <%= display_collection @bank_accounts %>
-</div>
-
-<%= button('reset', _('Reset search'), :list, :action => 'list') if @query %>
 
 <%= pagination_links(@bank_account_pages, :params => {:query => @query}) %> 
 

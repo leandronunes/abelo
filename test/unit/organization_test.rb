@@ -191,4 +191,20 @@ class OrganizationTest < Test::Unit::TestCase
     assert @organization.documents_not_model.include?(doc) 
   end
 
+  #TODO make this test
+  def test_ledgers_by_bank_account
+  end
+
+  #TODO make this test
+  def test_ledgers_by_period
+  end
+
+  #TODO make this test
+  def test_ledgers_by_ledger_category
+  end
+
+  #TODO make this test
+  def test_ledgers_by_tags
+  end
+
 end

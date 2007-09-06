@@ -12,6 +12,10 @@ module ApplicationHelper
 
   def show_date(date)
     _('%{year}/%{month}/%{day}') % {:day => '%02d' % date.day, :month => '%02d' % date.month, :year => '%04d' % date.year}
+  end  
+
+  def select_month_abelo(date = Date.today, options ={})
+    select_month(date,{:include_blank => true, :use_month_numbers => true}.merge(options))
   end
 
   def show_image(image, size = "50x50")
@@ -384,7 +388,7 @@ module ApplicationHelper
 
   def display_field_edit(object, field, info = {})
     unless @organization.nil?
-      return '' unless @organization.configuration.send("#{object.class.to_s.tableize.singularize}_display_fields").include?(field)
+      return 'leo' unless @organization.configuration.send("#{object.class.to_s.tableize.singularize}_display_fields").include?(field)
     end
 
     info[:html_options] ||= Hash.new
@@ -409,7 +413,7 @@ module ApplicationHelper
   private 
 
   #Display a set of options available generally on list methods
-  def display_collection_options(item, params = {})
+  def display_collection_options(item, params = {}, html_options = {})
     content_tag(:div,
       [
         button('view_small', _('Show'), :show, {:action => 'show', :id => item.id}.merge(params)),

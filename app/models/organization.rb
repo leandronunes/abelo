@@ -80,11 +80,13 @@ class Organization < ActiveRecord::Base
     bank_accounts.collect{ |b| b.ledgers.tag_counts }.flatten
   end
 
-  def ledgers_by_all(bank_accounts, tags, categories, query = nil)
+  def ledgers_by_all(bank_accounts, tags, categories, start_date, end_date, query = nil)
     bank_accounts = default_bank_account if bank_accounts.blank?
     ledger_banks = bank_accounts.collect{ |b| b.ledgers }.flatten
     tags = tags_by_bank_account(bank_accounts).collect{|t| t.name}.join(',') if tags.blank?
     ledger_tags = bank_accounts.collect{ |b| b.ledgers.find_tagged_with(tags) }.flatten
+    ledger_dates = bank_accounts.collect{|b| b.ledgers.find(:all, :conditions => ['(effective_date > ?) and (effective_date < ?)', start_date, end_date])}.flatten
+
     condition_ids = Array.new
     condition_string = ''
 
@@ -100,6 +102,7 @@ class Organization < ActiveRecord::Base
     all_leders = all_leders & ledger_tags unless ledger_tags.blank?
     all_leders = all_leders & ledger_categories unless ledger_categories.blank?
     all_leders = all_leders & ledger_search unless ledger_search.blank?
+    all_leders = all_leders & ledger_dates 
     all_leders
   end
 

@@ -3,7 +3,9 @@
 class ApplicationController < ActionController::Base
 
   require 'extended_array'
+  require 'extended_date'
 
+#TODO uncomment this when needed
   def rescue_action(e)
     render_error('', e)
   end

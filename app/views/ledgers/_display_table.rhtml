@@ -19,11 +19,12 @@
     </tr>
 
     <tr>
-      <th colspan='3'> <%= _('Bank Account') %> </th>
-      <th colspan='3'> <%= _('Ledger Category') %> </th>
+      <th colspan='2'> <%= _('Bank Account') %> </th>
+      <th colspan='2'> <%= _('Period') %> </th>
+      <th colspan='2'> <%= _('Ledger Category') %> </th>
     </tr>
     <tr>
-      <td colspan='3'>
+      <td colspan='2'>
         <% @bank_accounts.each do |b| %>
           <% if @chosen_accounts.include?(b) %>
           <%= link_to_remote(b.name,
@@ -44,7 +45,57 @@
         <% end %>
       </td>
 
-      <td colspan='3'>
+      <td colspan='2'>
+        <%= select_day @start_date_day, :field_name => 'start_date_day' %> 
+        <%= observe_field('date_start_date_day',
+          :update => 'financial_table',
+          :url => {:action => 'display_table' },
+          :with => "'start_date_day=' +  escape(value) + '&start_date_month=' + escape('#{@start_date_month}') + '&start_date_year=' + escape('#{@start_date_year}') + '&accounts=' + escape('#{@chosen_accounts.ids}')"
+          )
+        %>
+        <%= select_month_abelo @start_date_month, :field_name => 'start_date_month' %> 
+        <%= observe_field('date_start_date_month',
+          :update => 'financial_table',
+          :url => {:action => 'display_table' },
+          :with => "'start_date_day=' +  escape('#{@start_date_day}') + '&start_date_month=' + escape(value) + '&start_date_year=' + escape('#{@start_date_year}') + '&accounts=' + escape('#{@chosen_accounts.ids}')"
+          )
+        %>
+
+        <%= select_year @start_date_year, :field_name => 'start_date_year' %> <%= _('to') %>
+        <%= observe_field('date_start_date_year',
+          :update => 'financial_table',
+          :url => {:action => 'display_table' },
+          :with => "'start_date_day=' +  escape('#{@start_date_day}') + '&start_date_month=' + escape('#{@start_date_month}') + '&start_date_year=' + escape(value) + '&accounts=' + escape('#{@chosen_accounts.ids}')"
+          )
+        %>
+
+        <%= select_day @end_date_day, :field_name => 'end_date_day' %> 
+        <%= observe_field('date_end_date_day',
+          :update => 'financial_table',
+          :url => {:action => 'display_table' },
+          :with => "'start_date_day=' + escape('#{@start_date_day}') + '&start_date_month=' + escape('#{@start_date_month}') + '&start_date_year=' + escape('#{@start_date_year}') + '&end_date_day=' +  escape(value) + '&end_date_month=' + escape('#{@end_date_month}') + '&end_date_year=' + escape('#{@end_date_year}') + '&accounts=' + escape('#{@chosen_accounts.ids}')"
+          )
+        %>
+
+        <%= select_month_abelo @end_date_month, :field_name => 'end_date_month' %> 
+        <%= observe_field('date_end_date_month',
+          :update => 'financial_table',
+          :url => {:action => 'display_table' },
+          :with => "'start_date_day=' + escape('#{@start_date_day}') + '&start_date_month=' + escape('#{@start_date_month}') + '&start_date_year=' + escape('#{@start_date_year}') + '&end_date_day=' +  escape('#{@end_date_day}') + '&end_date_month=' + escape(value) + '&end_date_year=' + escape('#{@end_date_year}') + '&accounts=' + escape('#{@chosen_accounts.ids}')"
+          )
+        %>
+
+        <%= select_year @end_date_year, :field_name => 'end_date_year' %>
+        <%= observe_field('date_end_date_year',
+          :update => 'financial_table',
+          :url => {:action => 'display_table' },
+          :with => "'start_date_day=' + escape('#{@start_date_day}') + '&start_date_month=' + escape('#{@start_date_month}') + '&start_date_year=' + escape('#{@start_date_year}') + '&end_date_day=' +  escape('#{@end_date_day}') + '&end_date_month=' + escape('#{@end_date_month}') + '&end_date_year=' + escape(value) + '&accounts=' + escape('#{@chosen_accounts.ids}')"
+          )
+        %>
+
+      </td>
+
+      <td colspan='2'>
         <% @ledger_categories.each do |l| %>
           <% if @chosen_categories.include?(l) %>
           <%= link_to_remote(l.name,
@@ -110,8 +161,9 @@
     	  <td><%= ledger.value if ledger.category.income? %></td>
         <td><%= ledger.value if ledger.category.expense? %></td>
         <td>
-          <%= link_to _('Edit'), :action => 'edit', :id => ledger %> <%= _('or') %>
-          <%= link_to_remote _('Remove'), :update => 'financial_table', :url => {:action => 'destroy', :id => ledger.id} %> 
+          <%= button 'view_small', _('Show'), :show, :action => 'show', :id => ledger %>
+          <%= button 'edit_small', _('Edit'), :edit, :action => 'edit', :id => ledger %>
+          <%= button_remote 'del_small', _('Remove'), :detroy, {:update => 'financial_table', :url => {:action => 'destroy', :id => ledger} } %>
         </td>
       </tr>
     <% end %>

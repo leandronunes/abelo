@@ -4,6 +4,8 @@
 <%= @message %>
 </p>
 
+<% unless @erro.blank? %>
 <div class="error">
   <%= @error %>
 </div>
+<% end %>

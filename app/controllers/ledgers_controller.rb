@@ -52,12 +52,22 @@ class LedgersController < ApplicationController
     rescue
       @chosen_categories = Array.new
     end
+    
+    start_date = Date.new(Date.today.year, Date.today.month, 1)
+    @start_date_day = start_date.day
+    @start_date_month = start_date.month
+    @start_date_year = start_date.year
+
+    end_date = Date.end_of_month(start_date)
+    @end_date_day = end_date.day
+    @end_date_month = end_date.month
+    @end_date_year = end_date.year
 
     @bank_accounts = @organization.bank_accounts
     @ledger_categories = @organization.ledger_categories
     @tags = @organization.tags_by_bank_account(@chosen_accounts)
 
-    @leo_ledgers = @organization.ledgers_by_all(@chosen_accounts, @chosen_tags, @chosen_categories, @query)
+    @leo_ledgers = @organization.ledgers_by_all(@chosen_accounts, @chosen_tags, @chosen_categories, start_date, end_date, @query)
 
     @ledger_pages, @ledgers = paginate_by_collection @leo_ledgers
 
@@ -76,6 +86,21 @@ class LedgersController < ApplicationController
 
     @chosen_accounts = params[:accounts].split(',')
     @chosen_accounts.delete(params[:chosen_account])
+   
+    begin 
+      end_date = Date.new(params[:end_date_year].to_i, params[:end_date_month].to_i, params[:end_date_day].to_i)
+    rescue
+      end_date = Date.new()
+    end
+    start_date = Date.new(params[:start_date_year].to_i, params[:start_date_month].to_i, params[:start_date_day].to_i)
+    end_date = Date.end_of_month(start_date) if end_date < start_date 
+    @start_date_day = start_date.day
+    @start_date_month = start_date.month
+    @start_date_year = start_date.year
+
+    @end_date_day = end_date.day
+    @end_date_month = end_date.month
+    @end_date_year = end_date.year
     @query = params[:query]
 
     begin
@@ -91,7 +116,7 @@ class LedgersController < ApplicationController
     @ledger_categories = @organization.ledger_categories
     @tags = @organization.tags_by_bank_account(@chosen_accounts)
 
-    ledgers = @organization.ledgers_by_all(@chosen_accounts, @chosen_tags, @chosen_categories, @query)
+    ledgers = @organization.ledgers_by_all(@chosen_accounts, @chosen_tags, @chosen_categories, start_date, end_date, @query)
 
     @ledger_pages, @ledgers = paginate_by_collection ledgers
 
@@ -140,14 +165,8 @@ class LedgersController < ApplicationController
 
   def edit
     #TODO change this if someone make the relationship organizatin has_many ledgers works
-    begin
-      @ledger = @organization.find_ledger(params[:id])
-      raise "Couldnt find a ledger with id %s" % params[:id] if @ledger.blank?
-    rescue
-      @message = _('Cannot edit ledger with id %s') % params[:id]
-      render :template => 'shared/not_found'
-      return
-    end
+    @ledger = @organization.find_ledger(params[:id])
+#    @ledger = Ledger.new
     @bank_accounts = @organization.bank_accounts
     @ledger_categories =  @organization.ledger_categories_sorted
   end

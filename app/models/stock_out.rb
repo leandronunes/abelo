@@ -11,4 +11,8 @@ class StockOut < StockEntry
     end
   end
 
+  def self.configuration_class
+    StockOutDisplay
+  end
+
 end

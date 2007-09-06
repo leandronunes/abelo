@@ -16,6 +16,8 @@ class Configuration < ActiveRecord::Base
   has_many :ledger_category_displays
   has_many :department_displays
   has_many :mass_mail_displays
+  has_many :stock_in_displays
+  has_many :stock_out_displays
 
 #TODO See a way to guarantee that a configuration cannot be created whithout an organization
 #  validates_presence_of :organization_id, :if => lambda { |conf| !conf.is_model?}
@@ -44,6 +46,8 @@ class Configuration < ActiveRecord::Base
     ledger
     credit_ledger
     debit_ledger
+    stock_in
+    stock_out
   ]
 
   #######################################

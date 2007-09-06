@@ -1,16 +1,7 @@
 <%= title _('Stock control') %>
 
-<% form_tag({:action => 'index'}, {:class => 'search_itens'} ) do %>
-<%= text_field 'product', 'name', :class => 'filter_field'  %>
-<%= button('lupa', _('Search'), :search) %>
-<%= button('add', _("New product"), :new, {:controller => 'products', :action => 'new'}) %>
-<% end %>
+<%= display_list_options 'product', 'name' %>
 
-<div class="auto_complete" id="product_name_auto_complete"></div>
-<%= auto_complete_field :product_name,  :url => {:controller => 'products', :action => 'autocomplete_name'}, :indicator => 'auto_list'%>
-<div id="auto_list" style="display:none;">
-</div>
-
-<%= display_collection @products %>
+<%= display_stock_collection @products %>
 
 <%= pagination_links(@product_pages, :params => {:query => @query}) %>

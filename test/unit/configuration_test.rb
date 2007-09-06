@@ -22,6 +22,8 @@ class ConfigurationTest < Test::Unit::TestCase
     ledger
     credit_ledger
     debit_ledger
+    stock_in
+    stock_out
   ]
 
   def test_find_all_model

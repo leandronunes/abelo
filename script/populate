@@ -53,6 +53,12 @@ configuration.bank_account_display_fields_in_list= ['bank','agency','variation',
 DepartmentDisplay.delete_all
 configuration.department_display_fields= DepartmentDisplay.available_fields
 configuration.department_display_fields_in_list= ['name']
+StockInDisplay.delete_all
+configuration.stock_in_display_fields= StockInDisplay.available_fields
+configuration.stock_in_display_fields_in_list= ['date', 'ammount', 'price', 'supplier']
+StockOutDisplay.delete_all
+configuration.stock_out_display_fields= StockOutDisplay.available_fields
+configuration.stock_out_display_fields_in_list= ['date', 'ammount', 'price']
 configuration.save!
 
 ###########Categories###################################

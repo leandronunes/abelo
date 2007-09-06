@@ -9,4 +9,12 @@ class StockIn < StockEntry
     self.ammount * self.price
   end
 
+  def supplier_name
+    self.supplier.name
+  end
+
+  def self.configuration_class
+    StockInDisplay
+  end
+
 end

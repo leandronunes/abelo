@@ -1,7 +1,7 @@
 class ProductDisplay < DisplayConfiguration
 
   def self.available_fields
-    ['name', 'size', 'color', 'description', 'sell_price', 'unit', 'category', 'suppliers', 'minimum_amount']
+    ['name', 'size', 'color', 'description', 'sell_price', 'unit', 'category', 'suppliers', 'ammount_in_stock', 'minimum_amount']
   end
 
 

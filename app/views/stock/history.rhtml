@@ -1,18 +1,7 @@
 <%= title _('Stock history for %s') % @product.name %>
 
-<ul class="info_list history">
-<% @entries.sort_by{|entry| entry.date}.map do |e| %>
-<%= display_list(
-  [
-    {:content => [
-      button('edit_small', _('Edit'), :edit, :action => 'edit', :id => e, :product_id => @product.id),
-      button('del_small', _('Destroy'), :destroy, {:action => 'destroy', :id => e, :product_id => @product.id}, :confirm => _('Are you sure?'), :method => 'post' )], :option => 'button'},
-    {:title => _('Date:'), :content => show_date(e.date), :option => 'date'},
-    {:title => _('Ammount:'), :content => e.ammount},
-    {:title => _('Price:'), :content => e.price},
-    if e.class == StockIn then e.supplier.nil? ? "":  {:title => _('Supplier:'), :content => e.supplier.name, :option => 'supplier'} end,
-    '<br style="clear:both"/>'
-  ]  
-)%>
-<% end %>
-</ul>
+<%= display_list_options 'product', 'name' %>
+
+<%= display_collection @entries %>
+
+<%= pagination_links(@product_pages, :params => {:query => @query}) %>

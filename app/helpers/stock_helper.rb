@@ -23,7 +23,7 @@ module StockHelper
       content.push(
         [
           display_stock_collection_options(c, params),
-          display_info(c,html_options, 'lite' )
+          display_info(c,html_options, 'in_list' )
         ]
       )
     end
@@ -47,6 +47,18 @@ module StockHelper
       ].join("\n"),
       :class => 'list_item_button'
     )
+  end
+
+  def display_stock_info(object, html_options = {}, type = '')
+    type = '_' + type unless type.blank?
+    fields = @organization.configuration.send("stock_entry_display#{type}")
+
+    fields.map do |f|
+      content_tag(:div,
+        display_field_info(object, f),
+        html_options
+      )
+    end.join("\n")
   end
 
 end

@@ -1,0 +1,8 @@
+
+<%= title _('Listing permissions') %>
+
+<%= display_list_options 'profile', 'name' %>
+
+<%= display_collection @profiles %>
+
+<%= pagination_links(@profile_pages, :params => {:query => @query }) %>

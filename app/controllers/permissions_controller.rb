@@ -3,12 +3,33 @@ class PermissionsController < ApplicationController
   needs_organization
   # before_filter :check_admin_rights
 
-  verify :method => :post, :only => [ :destroy, :create_with_template, :update_template ], :redirect_to => { :action => :index }
 
   before_filter :create_tabs
 
   def index
-    @profiles = @organization.profiles
+    list
+    render :action => 'list'
+#    @profiles = @organization.profiles
+  end
+
+  verify :method => :post, :only => [ :destroy, :create_with_template, :update_template ], 
+         :redirect_to => { :action => :list }
+
+
+  def list
+
+    @query = params[:query]
+    @query ||= params[:profile][:name] if params[:profile]
+#   render :text => params.inspect
+#   return
+
+    if @query.nil?
+      @profiles = @organization.profiles
+      @profile_pages, @profiles = paginate_by_collection @profiles
+    else
+      @profiles = @organization.profiles.full_text_search(@query)
+      @profile_pages, @profiles = paginate_by_collection @profiles
+    end
   end
 
   def select_template
@@ -25,7 +46,7 @@ class PermissionsController < ApplicationController
     end
   end
 
-  def new_with_template
+  def new
     permissions = Array.new
     @user_profile = Profile.new
     @user_profile.permissions = permissions
@@ -47,7 +68,7 @@ class PermissionsController < ApplicationController
     redirect_to :action => 'index'
   end
 
-   def create_tabs
+  def create_tabs
     add_tab do
       named 'Users and permissions'
       links_to :controller => 'permissions', :action => 'list'

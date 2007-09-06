@@ -1,15 +1,6 @@
 <%= title _('Listing categories') %>
 
-<% form_tag( { :action => 'list', :category_type => @category_type }, { :class => 'search_itens' } ) do %>
-  <%= text_field 'category', 'name', :class => 'filter_field' %>
-  <%= button('lupa', _('Search'), :search) %>
-  <%= button('add', _("New category"), :new, :action => 'new', :category_type => @category_type) %>
-<% end %>
-
-<div class="auto_complete" id="category_name_auto_complete"></div>
-<%= auto_complete_field :category_name, :url => {:action => 'autocomplete_name', :category_type => @category_type }, :indicator => 'auto_list'%>
-<div id="auto_list" style="display:none;">
-</div>
+<%= display_list_options 'category', 'name', :category_type => @category_type %>
 
 <%= display_collection @categories, {:category_type => @category_type} %>
 

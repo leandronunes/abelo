@@ -25,19 +25,18 @@ class StockControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:products)
   end
   
-#TODO make this test works
-#  def test_history
-#    get :history, :id => 1
-#
-#    assert_not_nil assigns(:product)
-#    assert_equal 1, assigns(:product).id
-#
-#    assert_not_nil assigns(:entries)
-#    assert_kind_of Array, assigns(:entries)
-#
-#    assert_response :success
-#    assert_template 'history'
-#  end
+  def test_history
+    get :history, :id => 1
+
+    assert_not_nil assigns(:product)
+    assert_equal 1, assigns(:product).id
+
+    assert_not_nil assigns(:entries)
+    assert_kind_of Array, assigns(:entries)
+
+    assert_response :success
+    assert_template 'history'
+  end
 
   def test_new
     get :new, :id => 1

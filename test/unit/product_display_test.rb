@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 class ProductDisplayTest < Test::Unit::TestCase
 
   def test_available_fields
-    assert_equal ['name', 'size', 'color', 'description', 'sell_price', 'unit', 'category', 'suppliers'], ProductDisplay.available_fields
+    assert_equal ['name', 'size', 'color', 'description', 'sell_price', 'unit', 'category', 'suppliers', 'minimum_amount'], ProductDisplay.available_fields
   end
 
   def test_title_size

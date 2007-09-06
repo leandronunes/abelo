@@ -11,8 +11,4 @@ class StockOut < StockEntry
     end
   end
 
-  def total_cost
-    0.0
-  end
-
 end

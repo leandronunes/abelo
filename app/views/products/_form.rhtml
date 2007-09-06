@@ -52,6 +52,11 @@
       )
   %>
   
+  <%= display_field_edit(item, 'minimum_amount',
+        :title => _('Minimum Amount'),
+        :content => text_field('product', 'minimum_amount')  
+      )
+  %>
 
 <% end %>
 

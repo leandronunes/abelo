@@ -81,6 +81,10 @@ class ProductTest < Test::Unit::TestCase
     assert product.errors.invalid?(:category_id)
   end
 
+  def test_configuration_class
+    assert_equal ProductDisplay, Product.configuration_class 
+  end
+
   def test_full_text_search
     Product.delete_all
     product1 = Product.create!(:name => 'test product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
@@ -104,6 +108,24 @@ class ProductTest < Test::Unit::TestCase
 
     assert_equal total_ammount, product.ammount_in_stock
     assert_in_delta total_cost, product.total_cost, 0.01
+  end
+
+  def test_image
+    product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
+    img = Image.new 
+    stream = StringIO.new(File.read("#{RAILS_ROOT}/public/images/rails.png"))
+    def stream.original_filename
+      'rails.png'
+    end
+    def stream.content_type
+      'image/png'
+    end
+    img.description = ('Image for testing')
+    img.picture = stream
+    img.product = product
+    img.save
+    
+    assert_equal img,  product.image
   end
   
 end

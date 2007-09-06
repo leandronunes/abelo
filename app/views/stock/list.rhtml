@@ -1,0 +1,7 @@
+<%= title _('Stock control') %>
+
+<%= display_list_options 'product', 'name' %>
+
+<%= display_stock_collection @products %>
+
+<%= pagination_links(@product_pages, :params => {:query => @query}) %>

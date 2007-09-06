@@ -8,7 +8,12 @@ class StockController < ApplicationController
   verify :method => :post, :only => [ :destroy, :create, :update ],
          :redirect_to => { :action => :list }
 
+
   def index
+    redirect_to :action => 'list'
+  end
+
+  def list
     search_param = params[:product].nil? ? nil : params[:product][:name]
     @products = search_param.nil? ? @organization.products : @organization.products.find_by_contents(search_param)
     @product_pages, @products = paginate_by_collection @products

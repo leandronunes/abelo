@@ -13,8 +13,4 @@ class StockIn < StockEntry
     self.supplier.name
   end
 
-  def self.configuration_class
-    StockInDisplay
-  end
-
 end

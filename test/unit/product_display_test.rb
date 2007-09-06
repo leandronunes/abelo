@@ -11,9 +11,10 @@ class ProductDisplayTest < Test::Unit::TestCase
       unit
       category
       suppliers
+      ammount_in_stock
       minimum_amount
   ]
-  def test_availavle_fields
+  def test_available_fields
     assert_equal AVAILABLE_FIELDS_TEST, ProductDisplay.available_fields
   end
   

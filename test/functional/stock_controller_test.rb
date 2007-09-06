@@ -18,11 +18,13 @@ class StockControllerTest < Test::Unit::TestCase
     login_as("quentin")
   end
 
+#TODO make this test
   def test_index
     get :index
-    assert_template 'index'
-    assert_nil assigns(:search_param)
-    assert_not_nil assigns(:products)
+#    assert_nil assigns(:search_param)
+#    assert_not_nil assigns(:products)
+    assert_response :redirect
+    assert_redirected_to :action => 'list'
   end
   
   def test_history

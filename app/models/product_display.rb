@@ -14,6 +14,7 @@ class ProductDisplay < DisplayConfiguration
       'unit' => _('Unit'),
       'category' => _('Category'),
       'suppliers' => _('Suppliers'),
+      'ammount_in_stock' => _('Amount in Stock') ,
       'minimum_amount' => _('Minimum Amount') ,
     }[field] || field
   end

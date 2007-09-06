@@ -203,6 +203,7 @@ brinco.add_suppliers(mundo_prata)
 ############Stock Entries#########################
 StockEntry.destroy_all
 camisa_entrada = StockIn.create!(:supplier => hering, :ammount => 50, :price => '15.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product => camisa)
+camisa_entrada = StockIn.create!(:supplier => hering, :ammount => 40, :price => '13.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product => camisa)
 calca_entrada = StockIn.create!(:supplier => hering, :ammount => 50, :price => '30.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product => calca)
 
 ############People################################

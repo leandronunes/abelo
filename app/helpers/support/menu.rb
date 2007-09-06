@@ -15,7 +15,7 @@
 #      'mass_mails'                          => _('Mass mail'),
       'ledgers'                             => _('Financial'),
 #      'documents'                           => _('Documents'),
-#      'departments'                         => _('Departments'),
+      'departments'                         => _('Departments'),
 #      'admin_configurations'                => _('Configurations'),
       'organizations'                       => _('Organizations'),
       'banks'                               => _('Banks'),

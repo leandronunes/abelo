@@ -23,6 +23,8 @@ class StockController < ApplicationController
 
     @entry = StockIn.new
     @entry.product = @product
+
+    @entry_pages, @entries = paginate_by_collection @entries
   end
 
   def new

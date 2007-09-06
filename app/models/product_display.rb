@@ -4,7 +4,6 @@ class ProductDisplay < DisplayConfiguration
     ['name', 'size', 'color', 'description', 'sell_price', 'unit', 'category', 'suppliers', 'ammount_in_stock', 'minimum_amount']
   end
 
-
   def self.describe(field)
     {
       'name' =>  _('Name'),

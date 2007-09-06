@@ -1,7 +1,7 @@
 <%= title _('Stock history for %s') % @product.name %>
 
-<%= display_list_options 'product', 'name' %>
+<%= display_list_options 'stock', 'supplier', :id => @product.id %>
 
 <%= display_collection @entries %>
 
-<%= pagination_links(@product_pages, :params => {:query => @query}) %>
+<%= pagination_links(@entry_pages, :params => {:query => @query}) %>

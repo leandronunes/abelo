@@ -97,13 +97,8 @@ class UsersControllerTest < Test::Unit::TestCase
   def test_index
     login_as :quentin
     get :index
-    assert_response :success
-    assert_template 'index'
-    assert_not_nil assigns(:organizations)
-    assert_kind_of Array, assigns(:organizations)
-    assigns(:organizations).each { |o|
-      assert_kind_of Organization, o
-    }
+    assert_response :redirect
+    assert_redirected_to :controller => 'public'
   end
 
   def test_list

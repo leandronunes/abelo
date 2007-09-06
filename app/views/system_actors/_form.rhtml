@@ -24,6 +24,12 @@
       )
   %>
 
+  <%= display_field_edit(item, 'cnpj',
+        :title => _('CNPJ'),
+        :content => text_field('system_actor', 'cnpj')
+      )
+  %>
+
   <%= display_field_edit(item, 'address',
         :title => _('Address'),
         :content => text_field('system_actor', 'address')

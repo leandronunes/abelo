@@ -29,8 +29,7 @@ class UsersController < ApplicationController
         return
       end
     end
-
-    @organizations = current_user.organizations
+    redirect_to :controller => 'public'
   end
 
   #Sets the layout used by the system
@@ -50,7 +49,7 @@ class UsersController < ApplicationController
       elsif self.current_user.administrator
         redirect_to :controller => 'organizations'
       else
-        redirect_to :controller => 'organizations', :action => 'none_organization'
+        redirect_to :controller => 'public'
       end
     end
   end
@@ -60,7 +59,7 @@ class UsersController < ApplicationController
     return unless request.post?
     @user.save!
     self.current_user = @user
-    redirect_back_or_default(:controller => '/users', :action => 'index')
+    redirect_back_or_default(:controller => 'public')
     flash[:notice] = _("Thanks for signing up!")
     Notifier::deliver_signup_thanks(@user)
     rescue ActiveRecord::RecordInvalid

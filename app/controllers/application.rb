@@ -260,6 +260,14 @@ class ApplicationController < ActionController::Base
   def self.needs_administrator
     skip_before_filter :check_access_control
     before_filter :check_admin_rights
+    non_organization_layout
+  end
+
+  def self.public_layout
+    non_organization_layout
+  end
+
+  def self.non_organization_layout
     layout 'administration'
 
     design :fixed => {

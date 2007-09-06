@@ -35,5 +35,4 @@ class SystemActor < ActiveRecord::Base
     }[actor]
   end
 
-
 end

@@ -6,6 +6,38 @@ class ConfigurationTest < Test::Unit::TestCase
     @org = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :nickname => 'org')
   end
 
+  CONFIGURATION_ITEMS_TEST = %w[
+    product
+    worker
+    customer
+    supplier
+    bank_account
+    product_category
+    worker_category
+    customer_category
+    supplier_category
+    ledger_category
+    department
+    mass_mail
+    ledger
+    credit_ledger
+    debit_ledger
+  ]
+
+  def test_find_all_model
+    Configuration.delete_all
+    Configuration.create(:is_model => true)
+    Configuration.create(:is_model => true)
+    Configuration.create(:is_model => false)
+    assert_equal 2, Configuration.find_all_model.length
+  end
+
+  def test_configuration_itens_array
+    Configuration::CONFIGURATION_ITEMS.each do |item|
+      assert CONFIGURATION_ITEMS_TEST.include?(item)
+    end
+  end
+
   def test_relation_with_product_category_displays
     configuration = @org.configuration
     id = configuration.id
@@ -16,40 +48,52 @@ class ConfigurationTest < Test::Unit::TestCase
     assert configuration.product_category_displays.include?(prod_cat)
   end
 
-  def test_product_category_display_fields=
-    configuration = @org.configuration 
-    configuration.product_category_display_fields = ["name", "parent"]
-    assert_equal ["name", "parent"], configuration.product_category_display_fields
+  CONFIGURATION_ITEMS_TEST.each do |item|
+    define_method("test_#{item}_display_fields=") do    
+      eval("#{item.camelize}Display").delete_all
+      configuration = @org.configuration 
+      configuration.send("#{item}_display_fields=", ["name"])
+      assert_equal ["name"], configuration.send("#{item}_display_fields")
+    end
   end
 
-  def test_product_category_display_fields_in_list=
-    configuration = @org.configuration
-    configuration.product_category_display_fields = ['name', 'parent']
-    configuration.product_category_display_fields_in_list = ['name']
-    assert_equal ['name'], configuration.product_category_display_fields_in_list    
+  CONFIGURATION_ITEMS_TEST.each do |item|
+    define_method("test_#{item}_display_fields_in_list=") do   
+      eval("#{item.camelize}Display").delete_all
+      configuration = @org.configuration 
+      configuration.send("#{item}_display_fields=", ["name"])
+      configuration.send("#{item}_display_fields_in_list=", ["name"])
+      assert_equal ["name"], configuration.send("#{item}_display_fields_in_list")
+    end
   end
 
-  def test_product_category_display_fields
-    configuration = @org.configuration 
-    configuration.product_category_display_fields = ["name", "parent"]
-    assert !configuration.product_category_display_fields.empty?
+  CONFIGURATION_ITEMS_TEST.each do |item|
+    define_method("test_#{item}_display_fields") do   
+      eval("#{item.camelize}Display").delete_all
+      configuration = @org.configuration 
+      configuration.send("#{item}_display_fields=", ["name"])
+      configuration.send("#{item}_display_fields_in_list=", ["name"])
+      assert_equal ["name"], configuration.send("#{item}_display_fields")
+    end
   end
 
-  def test_product_category_display_fields_in_list
-    configuration = @org.configuration
-    configuration.product_category_display_fields = ['name', 'parent']
-    configuration.product_category_display_fields_in_list = ['name']
-    assert !configuration.product_category_display_fields_in_list.empty?
+  CONFIGURATION_ITEMS_TEST.each do |item|
+    define_method("test_#{item}_display_fields_in_list") do   
+      eval("#{item.camelize}Display").delete_all
+      configuration = @org.configuration 
+      configuration.send("#{item}_display_fields=", ["name"])
+      configuration.send("#{item}_display_fields_in_list=", ["name"])
+      assert_equal ["name"], configuration.send("#{item}_display_fields_in_list")
+    end
   end
 
-  def test_product_category_display
-    configuration = @org.configuration
-    assert_equal configuration.product_category_displays, configuration.product_category_display
-  end
-
-  def test_product_category_display_in_list
-    configuration = @org.configuration
-    assert_equal configuration.product_category_displays, configuration.product_category_display_in_list
+  CONFIGURATION_ITEMS_TEST.each do |item|
+    define_method("test_#{item}_display") do   
+      eval("#{item.camelize}Display").delete_all
+      configuration = @org.configuration 
+      configuration.send("#{item}_display", ["name"])
+      assert_equal configuration.send("#{item}_displays"), configuration.send("#{item}_display")
+    end
   end
 
   def test_relation_with_customer_category_displays
@@ -62,42 +106,6 @@ class ConfigurationTest < Test::Unit::TestCase
     assert configuration.customer_category_displays.include?(cust_cat)
   end
 
-  def test_customer_category_display_fields=
-    configuration = @org.configuration 
-    configuration.customer_category_display_fields = ["name", "parent"]
-    assert_equal ["name", "parent"], configuration.customer_category_display_fields
-  end
-
-  def test_customer_category_display_fields_in_list=
-    configuration = @org.configuration
-    configuration.customer_category_display_fields = ['name', 'parent']
-    configuration.customer_category_display_fields_in_list = ['name']
-    assert_equal ['name'], configuration.customer_category_display_fields_in_list    
-  end
-
-  def test_customer_category_display_fields
-    configuration = @org.configuration 
-    configuration.customer_category_display_fields = ["name", "parent"]
-    assert !configuration.customer_category_display_fields.empty?
-  end
-
-  def test_customer_category_display_fields_in_list
-    configuration = @org.configuration
-    configuration.customer_category_display_fields = ['name', 'parent']
-    configuration.customer_category_display_fields_in_list = ['name']
-    assert !configuration.customer_category_display_fields_in_list.empty?
-  end
-
-  def test_customer_category_display
-    configuration = @org.configuration
-    assert_equal configuration.customer_category_displays, configuration.customer_category_display
-  end
-
-  def test_customer_category_display_in_list
-    configuration = @org.configuration
-    assert_equal configuration.customer_category_displays, configuration.customer_category_display_in_list
-  end
-
   def test_relation_with_supplier_category_displays
     configuration = @org.configuration
     id = configuration.id
@@ -108,42 +116,6 @@ class ConfigurationTest < Test::Unit::TestCase
     assert configuration.supplier_category_displays.include?(supp_cat)
   end
 
-  def test_supplier_category_display_fields=
-    configuration = @org.configuration 
-    configuration.supplier_category_display_fields = ["name", "parent"]
-    assert_equal ["name", "parent"], configuration.supplier_category_display_fields
-  end
-
-  def test_supplier_category_display_fields_in_list=
-    configuration = @org.configuration
-    configuration.supplier_category_display_fields = ['name', 'parent']
-    configuration.supplier_category_display_fields_in_list = ['name']
-    assert_equal ['name'], configuration.supplier_category_display_fields_in_list    
-  end
-
-  def test_supplier_category_display_fields
-    configuration = @org.configuration 
-    configuration.supplier_category_display_fields = ["name", "parent"]
-    assert !configuration.supplier_category_display_fields.empty?
-  end
-
-  def test_supplier_category_display_fields_in_list
-    configuration = @org.configuration
-    configuration.supplier_category_display_fields = ['name', 'parent']
-    configuration.supplier_category_display_fields_in_list = ['name']
-    assert !configuration.supplier_category_display_fields_in_list.empty?
-  end
-
-  def test_supplier_category_display
-    configuration = @org.configuration
-    assert_equal configuration.supplier_category_displays, configuration.supplier_category_display
-  end
-
-  def test_supplier_category_display_in_list
-    configuration = @org.configuration
-    assert_equal configuration.supplier_category_displays, configuration.supplier_category_display_in_list
-  end
-
   def test_relation_with_worker_category_displays
     configuration = @org.configuration
     id = configuration.id
@@ -152,42 +124,6 @@ class ConfigurationTest < Test::Unit::TestCase
     worker_cat.configuration = configuration
     assert worker_cat.save
     assert configuration.worker_category_displays.include?(worker_cat)
-  end
-
-  def test_worker_category_display_fields=
-    configuration = @org.configuration 
-    configuration.worker_category_display_fields = ["name", "parent"]
-    assert_equal ["name", "parent"], configuration.worker_category_display_fields
-  end
-
-  def test_worker_category_display_fields_in_list=
-    configuration = @org.configuration
-    configuration.worker_category_display_fields = ['name', 'parent']
-    configuration.worker_category_display_fields_in_list = ['name']
-    assert_equal ['name'], configuration.worker_category_display_fields_in_list    
-  end
-
-  def test_worker_category_display_fields
-    configuration = @org.configuration 
-    configuration.worker_category_display_fields = ["name", "parent"]
-    assert !configuration.worker_category_display_fields.empty?
-  end
-
-  def test_worker_category_display_fields_in_list
-    configuration = @org.configuration
-    configuration.worker_category_display_fields = ['name', 'parent']
-    configuration.worker_category_display_fields_in_list = ['name']
-    assert !configuration.worker_category_display_fields_in_list.empty?
-  end
-
-  def test_worker_category_display
-    configuration = @org.configuration
-    assert_equal configuration.worker_category_displays, configuration.worker_category_display
-  end
-
-  def test_worker_category_display_in_list
-    configuration = @org.configuration
-    assert_equal configuration.worker_category_displays, configuration.worker_category_display_in_list
   end
 
   #test for mass mail configurantion
@@ -201,39 +137,4 @@ class ConfigurationTest < Test::Unit::TestCase
     assert configuration.mass_mail_displays.include?(mass_mail)
   end
 
-  def test_mass_mail_display_fields=
-    configuration = @org.configuration 
-    configuration.mass_mail_display_fields = ["subject", "body"]
-    assert_equal ["subject", "body"], configuration.mass_mail_display_fields
-  end
-
-  def test_mass_mail_display_fields_in_list=
-    configuration = @org.configuration
-    configuration.mass_mail_display_fields = ['subject', 'body']
-    configuration.mass_mail_display_fields_in_list = ['subject']
-    assert_equal ['subject'], configuration.mass_mail_display_fields_in_list    
-  end
-
-  def test_mass_mail_display_fields
-    configuration = @org.configuration 
-    configuration.mass_mail_display_fields = ["subject", "body"]
-    assert !configuration.mass_mail_display_fields.empty?
-  end
-
-  def test_mass_mail_display_fields_in_list
-    configuration = @org.configuration
-    configuration.mass_mail_display_fields = ['subject', 'body']
-    configuration.mass_mail_display_fields_in_list = ['subject']
-    assert !configuration.mass_mail_display_fields_in_list.empty?
-  end
-
-  def test_mass_mail_display
-    configuration = @org.configuration
-    assert_equal configuration.mass_mail_displays, configuration.mass_mail_display
-  end
-
-  def test_mass_mail_display_in_list
-    configuration = @org.configuration
-    assert_equal configuration.mass_mail_displays, configuration.mass_mail_display_in_list
-  end
 end

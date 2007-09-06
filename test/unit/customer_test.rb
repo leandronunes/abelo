@@ -7,6 +7,10 @@ class CustomerTest < Test::Unit::TestCase
     @cat = CustomerCategory.create(:name => 'Category for testing', :organization_id => @org.id)
   end
 
+  def test_configuration_class
+    assert_equal CustomerDisplay, Customer.configuration_class
+  end
+
   def test_relation_with_organization
     customer= Customer.new
     customer.organization = @org

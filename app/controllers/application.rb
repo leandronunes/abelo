@@ -6,9 +6,9 @@ class ApplicationController < ActionController::Base
   require 'extended_date'
 
 #TODO uncomment this when needed
-  def rescue_action(e)
-    render_error('', e)
-  end
+#  def rescue_action(e)
+#    render_error('', e)
+#  end
 
   uses_tabbed_navigation
 

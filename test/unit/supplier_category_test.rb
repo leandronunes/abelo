@@ -21,8 +21,4 @@ class SupplierCategoryTest < Test::Unit::TestCase
     assert supp_cat_2.errors.invalid?(:name)
   end
 
-  def test_configuration_class
-    assert_equal SupplierCategoryDisplay, SupplierCategory.configuration_class
-  end
-
 end

@@ -58,7 +58,7 @@ class Configuration < ActiveRecord::Base
   # ObjetcDisplay object will be display on the edit and show actions
   CONFIGURATION_ITEMS.each do |item|
     define_method("#{item}_display_fields=") do |fields|
-      set_fields(eval(item.camelize), fields)
+      set_fields(item, fields)
     end
   end
 
@@ -74,7 +74,7 @@ class Configuration < ActiveRecord::Base
   # +display_in_list+ attribute 
   CONFIGURATION_ITEMS.each do |item|
     define_method("#{item}_display_fields_in_list=") do |fields|
-      set_fields_in_list(eval(item.camelize), fields)
+      set_fields_in_list(item, fields)
     end
   end
 
@@ -128,23 +128,23 @@ class Configuration < ActiveRecord::Base
     display_in_list(object).collect{|d| d.field}
   end
 
-  def set_fields(class_symbol, fields)
+  def set_fields(class_name, fields)
     fields.each do |field|
-      if self.send("#{class_symbol.to_s.tableize.singularize}_displays").detect{|o| o.field == field}.blank?
-        display = class_symbol.configuration_class.new(:field => field)
-        self.send("#{class_symbol.to_s.tableize.singularize}_displays").concat(display)
+      if self.send("#{class_name.to_s.tableize.singularize}_displays").detect{|o| o.field == field}.blank?
+        display = eval(class_name.camelize + 'Display').new(:field => field)
+        self.send("#{class_name.to_s.tableize.singularize}_displays").concat(display)
       end
     end
   end
 
-  def set_fields_in_list(class_symbol, fields)
+  def set_fields_in_list(class_name, fields)
     fields.each do |field|
-      display_field = self.send("#{class_symbol.to_s.tableize.singularize}_displays").detect{|p| p.field == field}
+      display_field = self.send("#{class_name.to_s.tableize.singularize}_displays").detect{|p| p.field == field}
       
       unless display_field.nil?
         display_field.display_in_list = true 
         display_field.save
-        self.send("#{class_symbol.to_s.tableize.singularize}_displays", true) #force reload of objects
+        self.send("#{class_name.to_s.tableize.singularize}_displays", true) #force reload of objects
       end
     end
   end

@@ -1,3 +1,4 @@
 class CreditLedgerDisplay < LedgerDisplay
 
+
 end

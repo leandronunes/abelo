@@ -21,8 +21,4 @@ class WorkerCategoryTest < Test::Unit::TestCase
     assert worker_cat_2.errors.invalid?(:name)
   end
 
-  def test_configuration_class
-    assert_equal WorkerCategoryDisplay, WorkerCategory.configuration_class
-  end
-
 end

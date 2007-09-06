@@ -15,41 +15,33 @@ class LedgerDisplay < DisplayConfiguration
       operational
       bank_account_id
       is_foreseen
-      schedule_ledger_id
       schedule_repeat
       schedule_periodicity_id
       schedule_interval
      ]
   end
 
-  def self.title_size
-    _('Size')
+  def self.describe(field)
+    {
+      'type' => _('Type'),
+      'category_id' => _('Category'),
+      'value' => _('valeu'),
+      'description' => _('Description'),
+      'tag_list' => _('Tag List'),
+      'date' => _('Date'),
+      'interests' => _('Interests'),
+      'interests_days' => _('Periodicity of Intersts'),
+      'number_of_parcels' => _('Number of Parcels'),
+      'parcel_number' => _('Number of Parcels'),
+      'operational' => _('Is Operational?'),
+      'bank_account_id' => _('Bank Account'),
+      'is_foreseen' => _('Is foreseen'),
+      'schedule_repeat' => _('Repeat Schedule?'),
+      'schedule_periodicity_id' => _('Periodicity of Schedule'),
+      'schedule_interval' => _('Interval fo Schedule'),
+      'CreditLedger' => _('Credit'),
+      'F' => _('No'),
+    }[field] || field
   end
-
-  def self.title_color
-    _('Color')
-  end
-
-  def self.title_description
-    _('Description')
-  end
-
-  def self.title_sell_price
-    _('Sell Price')
-  end
-
-  def self.title_unit
-    _('Unit')
-  end
-  
-  def self.title_suppliers
-    _('Suppliers')
-  end
-  
-  def self.title_image
-    ''
-  end
-
-
 
 end

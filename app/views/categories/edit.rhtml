@@ -2,9 +2,6 @@
 
 <% form_tag :action => 'update', :id => @category, :category_type => @category_type  do %>
   <%= render :partial => 'form' %>
-  <div class='button_bar'>
-    <%= button 'save', _('Save'), :save %>
-    <%= button 'back', _('Back'), :back, {:action => 'list', :category_type => @category_type} %>
-  </div>
+  <%= display_edit_info_options(@category, :category_type => @category_type) %>
 <% end %>
 

@@ -8,10 +8,6 @@ class BankAccount < ActiveRecord::Base
 
   acts_as_ferret
 
-  def self.configuration_class
-    BankAccountDisplay
-  end
-
   def name 
     _("AG: #{self.agency} / CC: #{self.account}")
   end

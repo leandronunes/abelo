@@ -15,20 +15,18 @@ class CustomerCategoryDisplayTest < Test::Unit::TestCase
     end
   end
 
-  def test_available_fields_have_title_method
-    parent = CustomerCategory.new(:name => 'Category for testing', :organization_id => @org)
-    cat_cust = CustomerCategory.new(:name => 'Category for testing', :organization_id => @org.id, :parent => parent)
-    CustomerCategoryDisplay.available_fields.each do |field|
-      assert CustomerCategoryDisplay.methods.include?("title_#{field}")
-    end 
+  AVAILABLE_FIELDS_TEST = %w[
+      name 
+      parent
+  ] 
+  def test_available_fields
+    assert_equal AVAILABLE_FIELDS_TEST, CustomerCategoryDisplay.available_fields
   end
 
-  def test_title_name
-    assert_kind_of String, CustomerCategoryDisplay.title_name
-  end
-
-  def test_title_parent
-    assert_kind_of String, CustomerCategoryDisplay.title_parent
+  def test_describe
+    AVAILABLE_FIELDS_TEST.each do |field|
+      assert_not_equal field, CustomerCategoryDisplay.describe(field)
+    end
   end
 
 end

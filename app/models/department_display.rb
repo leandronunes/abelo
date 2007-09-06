@@ -4,8 +4,10 @@ class DepartmentDisplay < DisplayConfiguration
     ['name']
   end
 
-  def self.title_name
-    _('Name')
+  def self.describe(field)
+    {
+      'name' =>  _('Name'),
+    }[field] || field
   end
 
 end

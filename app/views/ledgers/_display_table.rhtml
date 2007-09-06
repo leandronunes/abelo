@@ -30,7 +30,7 @@
           <%= link_to_remote(b.name,
                 {
                   :update => 'financial_table', 
-                  :url => {:action => 'display_table', :chosen_account => b.id, :query => @query, :accounts => @chosen_accounts.ids, :tags => @chosen_tags.join(','), :categories => @chosen_categories.ids }
+                  :url => {:action => 'display_table', :chosen_account => b.id, :query => @query, :accounts => @chosen_accounts.ids, :tags => @chosen_tags.join(','), :categories => @chosen_categories.ids, :start_date_day => @start_date_day, :start_date_month => @start_date_month, :start_date_year => @start_date_year, :end_date_day => @end_date_day, :end_date_month => @end_date_month, :end_date_year => @end_date_year }
                 },
                 :class => 'detach'
               ) %> 
@@ -38,7 +38,7 @@
           <%= link_to_remote(b.name, 
                   {
                   :update => 'financial_table', 
-                  :url => {:action => 'display_table', :accounts => "#{b.id},#{@chosen_accounts.ids}", :query => @query, :tags => @chosen_tags.join(','), :categories => @chosen_categories }
+                  :url => {:action => 'display_table', :accounts => "#{b.id},#{@chosen_accounts.ids}", :query => @query, :tags => @chosen_tags.join(','), :categories => @chosen_categories.ids, :start_date_day => @start_date_day, :start_date_month => @start_date_month, :start_date_year => @start_date_year, :end_date_day => @end_date_day, :end_date_month => @end_date_month, :end_date_year => @end_date_year }
                   }
               ) %> 
           <% end %>
@@ -101,7 +101,7 @@
           <%= link_to_remote(l.name,
                 {
                   :update => 'financial_table', 
-                  :url => {:action => 'display_table', :chosen_category => l.id, :categories => @chosen_categories.ids, :query => @query, :accounts => @chosen_accounts.ids, :tags => @chosen_tags.join(',') }
+                  :url => {:action => 'display_table', :chosen_category => l.id, :categories => @chosen_categories.ids, :query => @query, :accounts => @chosen_accounts.ids, :tags => @chosen_tags.join(','), :start_date_day => @start_date_day, :start_date_month => @start_date_month, :start_date_year => @start_date_year, :end_date_day => @end_date_day, :end_date_month => @end_date_month, :end_date_year => @end_date_year }
                 },
                 :class => 'detach'
               ) %> 
@@ -109,7 +109,7 @@
           <%= link_to_remote(l.name, 
                   {
                   :update => 'financial_table', 
-                  :url => {:action => 'display_table', :categories => "#{l.id},#{@chosen_categories.ids}", :query => @query, :accounts => @chosen_accounts.ids, :tags => @chosen_tags.join(',') }
+                  :url => {:action => 'display_table', :categories => "#{l.id},#{@chosen_categories.ids}", :query => @query, :accounts => @chosen_accounts.ids, :tags => @chosen_tags.join(','), :start_date_day => @start_date_day, :start_date_month => @start_date_month, :start_date_year => @start_date_year, :end_date_day => @end_date_day, :end_date_month => @end_date_month, :end_date_year => @end_date_year}
                   }
               ) %> 
           <% end %>
@@ -127,7 +127,7 @@
           <%= link_to_remote(t.name,
                 {
                   :update => 'financial_table', 
-                  :url => {:action => 'display_table', :chosen_tag => t.name, :tags => @chosen_tags.join(','), :query => @query, :accounts => @chosen_accounts.ids, :categories => @chosen_categories.ids }
+                  :url => {:action => 'display_table', :chosen_tag => t.name, :tags => @chosen_tags.join(','), :query => @query, :accounts => @chosen_accounts.ids, :categories => @chosen_categories.ids, :start_date_day => @start_date_day, :start_date_month => @start_date_month, :start_date_year => @start_date_year, :end_date_day => @end_date_day, :end_date_month => @end_date_month, :end_date_year => @end_date_year }
                 },
                 :class => 'detach'
               ) %> 
@@ -135,7 +135,7 @@
           <%= link_to_remote(t.name, 
                   {
                   :update => 'financial_table', 
-                  :url => {:action => 'display_table', :tags => "#{t.name},#{@chosen_tags.join(',')}", :query => @query, :accounts => @chosen_accounts.ids, :categories => @chosen_categories.ids }
+                  :url => {:action => 'display_table', :tags => "#{t.name},#{@chosen_tags.join(',')}", :query => @query, :accounts => @chosen_accounts.ids, :categories => @chosen_categories.ids, :start_date_day => @start_date_day, :start_date_month => @start_date_month, :start_date_year => @start_date_year, :end_date_day => @end_date_day, :end_date_month => @end_date_month, :end_date_year => @end_date_year }
                   }
               ) %> 
           <% end %>

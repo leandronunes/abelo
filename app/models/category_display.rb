@@ -4,12 +4,11 @@ class CategoryDisplay < DisplayConfiguration
     ['name', 'parent']
   end
 
-  def self.title_name
-    _('Name')
-  end
-
-  def self.title_parent
-    _('Related Category')
+  def self.describe(field)
+    {
+      'name' =>  _('Name'),
+      'parent' => _('Related Category'),
+    }[field] || field
   end
 
 end

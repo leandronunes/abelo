@@ -273,6 +273,7 @@ module ApplicationHelper
     )
   end
 
+#TODO remove this
   def display_field_full(item, field, info = {})
     unless @organization.nil?
       return '' unless @organization.configuration.send("full_#{item.class.to_s.tableize.singularize}").include?(field)
@@ -291,16 +292,25 @@ module ApplicationHelper
 
   def display_field_info(object, display_field, html_options = {})
     content = object.send("#{display_field.field}")
+    configuration_class = eval(object.class.to_s + 'Display')
     content_tag(:div,
       [
-       content_tag(:strong, object.class.configuration_class.send("title_#{display_field.field}") + ": "),
+       content_tag(:strong, configuration_class.describe(display_field.field) + ": "),
        begin
          self.send("display_field_type_#{content.class.to_s.tableize.singularize}", content)
        rescue
-         content.name
+         configuration_class.describe(content.name)
        end
       ].join("\n"),
      html_options
+    )
+  end
+
+  def display_field_type_tag_list(content)
+    content_tag(:ul,
+      content.names.map do |tag|
+        content_tag(:li, tag )
+      end
     )
   end
 
@@ -386,9 +396,11 @@ module ApplicationHelper
     )
   end
 
+  alias :display_new_info_options :display_edit_info_options 
+
   def display_field_edit(object, field, info = {})
     unless @organization.nil?
-      return 'leo' unless @organization.configuration.send("#{object.class.to_s.tableize.singularize}_display_fields").include?(field)
+      return '' unless @organization.configuration.send("#{object.class.to_s.tableize.singularize}_display_fields").include?(field)
     end
 
     info[:html_options] ||= Hash.new

@@ -90,9 +90,15 @@ class LedgersController < ApplicationController
     begin 
       end_date = Date.new(params[:end_date_year].to_i, params[:end_date_month].to_i, params[:end_date_day].to_i)
     rescue
-      end_date = Date.new()
+      end_date = Date.new
     end
-    start_date = Date.new(params[:start_date_year].to_i, params[:start_date_month].to_i, params[:start_date_day].to_i)
+     
+    begin
+      start_date = Date.new(params[:start_date_year].to_i, params[:start_date_month].to_i, params[:start_date_day].to_i)
+    rescue
+      start_date = Date.new
+    end
+
     end_date = Date.end_of_month(start_date) if end_date < start_date 
     @start_date_day = start_date.day
     @start_date_month = start_date.month
@@ -123,6 +129,11 @@ class LedgersController < ApplicationController
     render :partial => 'display_table'
   end
 
+  def show
+    @ledger = @organization.find_ledger(params[:id])
+    @bank_accounts = @organization.bank_accounts
+    @ledger_categories =  @organization.ledger_categories_sorted
+  end
 
   def new
     @ledger = Ledger.new
@@ -166,7 +177,6 @@ class LedgersController < ApplicationController
   def edit
     #TODO change this if someone make the relationship organizatin has_many ledgers works
     @ledger = @organization.find_ledger(params[:id])
-#    @ledger = Ledger.new
     @bank_accounts = @organization.bank_accounts
     @ledger_categories =  @organization.ledger_categories_sorted
   end

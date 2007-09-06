@@ -17,8 +17,4 @@ class ProductCategory < Category
     images
   end
 
-  def self.configuration_class
-    ProductCategoryDisplay
-  end
-
 end

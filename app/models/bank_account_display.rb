@@ -1,27 +1,17 @@
 class BankAccountDisplay < DisplayConfiguration
 
   def self.available_fields
-    ['bank','agency','variation','account','owner' ]
+    ['bank','agency','variation','account']
   end
 
-  def self.title_bank
-    _('Bank')
-  end
 
-  def self.title_agency
-    _('Agency')
-  end
-
-  def self.title_variation
-    _('Variation')
-  end
-
-  def self.title_account
-    _('Account')
-  end
-
-  def self.title_owner
-    _('Owner')
+  def self.describe(field)
+    {
+      'bank' =>  _('Bank'),
+      'agency' => _('Agency'),
+      'variation' => _('Variation'),
+      'account' => _('Account'),
+    }[field] || field
   end
 
 end

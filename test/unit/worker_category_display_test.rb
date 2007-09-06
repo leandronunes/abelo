@@ -15,20 +15,19 @@ class WorkerCategoryDisplayTest < Test::Unit::TestCase
     end
   end
 
-  def test_available_fields_have_title_method
-    parent = WorkerCategory.new(:name => 'Category for testing', :organization_id => @org)
-    cat_worker = WorkerCategory.new(:name => 'Category for testing', :organization_id => @org.id, :parent => parent)
-    WorkerCategoryDisplay.available_fields.each do |field|
-      assert WorkerCategoryDisplay.methods.include?("title_#{field}")
-    end 
+  AVAILABLE_FIELDS_TEST = %w[
+      name 
+      parent
+  ]
+  def test_available_fields
+    assert_equal AVAILABLE_FIELDS_TEST, WorkerCategoryDisplay.available_fields
   end
 
-  def test_title_name
-    assert_kind_of String, WorkerCategoryDisplay.title_name
+  def test_describe
+    AVAILABLE_FIELDS_TEST.each do |field|
+      assert_not_equal field, WorkerCategoryDisplay.describe(field)
+    end
   end
 
-  def test_title_parent
-    assert_kind_of String, WorkerCategoryDisplay.title_parent
-  end
 
 end

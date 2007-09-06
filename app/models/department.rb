@@ -9,10 +9,6 @@ class Department < ActiveRecord::Base
   has_and_belongs_to_many :documents
 
   acts_as_ferret
-  
-  def self.configuration_class
-    DepartmentDisplay
-  end
 
   def self.full_text_search(q, options = {})
     default_options = {:limit => :all, :offset => 0}

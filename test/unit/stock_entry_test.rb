@@ -17,34 +17,34 @@ class StockEntryTest < Test::Unit::TestCase
   end
 
   def test_relation_with_organization
-    entry = StockIn.create(:supplier_id => @supplier.id, :ammount => 5, :price => '1.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => @product.id)
+    entry = StockIn.create(:supplier_id => @supplier.id, :amount => 5, :price => '1.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => @product.id)
     entry.organization = @org
     assert_equal @org, entry.organization
   end
 
   def test_mandatory_field_product_id
-    entry = StockIn.create(:supplier_id => @supplier.id, :ammount => 5, :price => '1.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true)
+    entry = StockIn.create(:supplier_id => @supplier.id, :amount => 5, :price => '1.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true)
     assert entry.errors.invalid?(:product_id)    
   end
 
   def test_mandatory_field_purpose
-    entry = StockIn.create(:supplier_id => @supplier.id, :ammount => 5, :price => '1.00', :date => '2007-07-01', :payment_status => true, :product_id => @product.id)
+    entry = StockIn.create(:supplier_id => @supplier.id, :amount => 5, :price => '1.00', :date => '2007-07-01', :payment_status => true, :product_id => @product.id)
     assert entry.errors.invalid?(:purpose)    
   end
 
   def test_mandatory_field_date
-    entry = StockIn.create(:supplier_id => @supplier.id, :ammount => 5, :price => '1.00', :purpose => 'sell', :payment_status => true, :product_id => @product.id)
+    entry = StockIn.create(:supplier_id => @supplier.id, :amount => 5, :price => '1.00', :purpose => 'sell', :payment_status => true, :product_id => @product.id)
     assert entry.errors.invalid?(:date)    
   end
 
-  def test_mandatory_field_ammount
+  def test_mandatory_field_amount
     entry = StockIn.create(:supplier_id => @supplier.id, :price => '1.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => @product.id)
-    assert entry.errors.invalid?(:ammount)
+    assert entry.errors.invalid?(:amount)
   end
   
-  def test_invalid_field_ammount
-    entry = StockIn.create(:supplier_id => @supplier.id, :price => '1.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => @product.id, :ammount => 'not_numerical')
-    assert entry.errors.invalid?(:ammount)
+  def test_invalid_field_amount
+    entry = StockIn.create(:supplier_id => @supplier.id, :price => '1.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => @product.id, :amount => 'not_numerical')
+    assert entry.errors.invalid?(:amount)
   end
 
   def test_valid_purpose
@@ -52,7 +52,7 @@ class StockEntryTest < Test::Unit::TestCase
     entry = StockIn.create({
       :product_id => 1,
       :supplier_id => 1,
-      :ammount => 1,
+      :amount => 1,
       :price => 1.99,
       :purpose => 'sell',
       :date =>  '2007-01-01',
@@ -65,7 +65,7 @@ class StockEntryTest < Test::Unit::TestCase
     entry = StockIn.create({
       :product_id => 1,
       :supplier_id => 1,
-      :ammount => 1,
+      :amount => 1,
       :price => 1.99,
       :purpose => 'blabalble', # invalid purpose
       :date =>  '2007-01-01',
@@ -80,7 +80,7 @@ class StockEntryTest < Test::Unit::TestCase
     entry = StockIn.create({
       :product_id => 1,
       :supplier_id => 1,
-      :ammount => 1,
+      :amount => 1,
       :price => 1.99,
       :purpose => 'blabalble', # invalid purpose
       :date =>  '2007-01-01',

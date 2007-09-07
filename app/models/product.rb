@@ -25,12 +25,12 @@ class Product < ActiveRecord::Base
     self.find_by_contents(q, options)
   end
 
-  def ammount_in_stock
-    self.connection.select_value('select sum(ammount) from stock_entries where product_id = %d' % self.id).to_f
+  def amount_in_stock
+    self.connection.select_value('select sum(amount) from stock_entries where product_id = %d' % self.id).to_f
   end
 
   def total_cost
-    self.connection.select_value('select sum(ammount * price) from stock_entries where product_id = %d' % self.id).to_f
+    self.connection.select_value('select sum(amount * price) from stock_entries where product_id = %d' % self.id).to_f
   end
 
   def image

@@ -3,8 +3,8 @@ class StockEntry < ActiveRecord::Base
   belongs_to :product
   belongs_to :organization, :include => :product
   delegate :organization, :organization=, :to => :product
-  validates_presence_of :product_id, :purpose, :date, :ammount
-  validates_numericality_of :ammount
+  validates_presence_of :product_id, :purpose, :date, :amount
+  validates_numericality_of :amount
 
   @valid_purposes = {
     'sell' => _('Sell'),

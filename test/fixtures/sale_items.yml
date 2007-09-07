@@ -6,7 +6,7 @@
 #  id            :integer       not null, primary key
 #  sale_id       :integer       not null
 #  product_id    :integer       not null
-#  ammount       :float         not null
+#  amount       :float         not null
 #  unitary_price :float         not null
 #
 
@@ -15,23 +15,23 @@ first:
   id: 1
   sale_id: 1
   product_id: 1
-  ammount: 2
+  amount: 2
   unitary_price: 5.0
 another:
   id: 2
   sale_id: 1
   product_id: 2
-  ammount: 5
+  amount: 5
   unitary_price: 7.0
 item1 for sale two:
   id: 3
   sale_id: 4
   product_id: 1
-  ammount: 2
+  amount: 2
   unitary_price: 5.0
 item2 for sale two:
   id: 4
   sale_id: 4
   product_id: 1
-  ammount: 2
+  amount: 2
   unitary_price: 5.0

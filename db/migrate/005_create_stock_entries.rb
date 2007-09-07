@@ -16,7 +16,7 @@ class CreateStockEntries < ActiveRecord::Migration
       # the product that is entering/exiting the stock
       t.column :product_id, :integer, :null => false
       # how much of it
-      t.column :ammount, :float, :null => false
+      t.column :amount, :float, :null => false
       # the purpose of this entry. Can be 'sell' (indicating the products are
       # entering/leaving the stock for being sold), or 'production' (meaning
       # that the item are getting into the stock to be used in a production

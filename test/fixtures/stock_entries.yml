@@ -3,7 +3,7 @@ in1:
   id: 1
   type: 'StockIn'
   product_id: 1
-  ammount: 5
+  amount: 5
   supplier_id: 3
   purpose: 'sell'
   price: 1.99
@@ -13,7 +13,7 @@ in2:
   id: 2
   type: 'StockIn'
   product_id: 1
-  ammount: 10
+  amount: 10
   supplier_id: 3
   purpose: 'sell'
   price: 2.05
@@ -23,7 +23,7 @@ in3:
   id: 3
   type: 'StockIn'
   product_id: 1
-  ammount: 12
+  amount: 12
   supplier_id: 1
   purpose: 'sell'
   price: 1.97
@@ -33,14 +33,14 @@ out1:
   id: 4
   type: 'StockOut'
   product_id: 1
-  ammount: -10
+  amount: -10
   date: '2006-04-01'
   purpose: 'sell'
 in4:
   id: 5
   type: 'StockIn'
   product_id: 2
-  ammount: 5
+  amount: 5
   supplier_id: 2
   purpose: 'production'
   price: 1.99
@@ -50,7 +50,7 @@ in5:
   id: 6
   type: 'StockIn'
   product_id: 3
-  ammount: 10
+  amount: 10
   supplier_id: 2
   purpose: 'production'
   price: 2.05
@@ -60,7 +60,7 @@ in6:
   id: 7
   type: 'StockIn'
   product_id: 4
-  ammount: 12
+  amount: 12
   supplier_id: 3
   purpose: 'production'
   price: 1.97
@@ -70,6 +70,6 @@ out2:
   id: 8
   type: 'StockOut'
   product_id: 4
-  ammount: -10
+  amount: -10
   date: '2006-08-01'
   purpose: 'production'

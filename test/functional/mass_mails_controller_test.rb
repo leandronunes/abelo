@@ -54,7 +54,7 @@ class MassMailsControllerTest < Test::Unit::TestCase
 #    @sale_item = SaleItem.new
 #    @sale_item.sale_id = 1
 #    @sale_item.product_id = 1
-#    @sale_item.ammount = 15
+#    @sale_item.amount = 15
 ##    @sale_item.unitary_price = 12
 #    assert @sale_item.save
 #

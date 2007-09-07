@@ -1,6 +1,6 @@
 <%= title _('Stock control') %>
 
-<%= display_list_options 'product', 'name' %>
+<%= display_list_options 'product', 'name', :controller => 'products'  %>
 
 <%= display_stock_collection @products %>
 

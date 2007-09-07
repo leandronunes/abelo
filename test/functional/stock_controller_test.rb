@@ -56,7 +56,7 @@ class StockControllerTest < Test::Unit::TestCase
   def test_create
     count = StockIn.count
 
-    post :create, :id => 1, :entry => { :supplier_id => 3, :ammount => 1, :price => 1.99, :purpose => 'sell', :date => '2007-01-01' }
+    post :create, :id => 1, :entry => { :supplier_id => 3, :amount => 1, :price => 1.99, :purpose => 'sell', :date => '2007-01-01' }
 
     assert_redirected_to :action => 'history', :id => 1
     assert_equal count + 1, StockIn.count
@@ -79,7 +79,7 @@ class StockControllerTest < Test::Unit::TestCase
   end
 
   def test_update
-    post :update, :product_id => 1, :id => 1, :entry => { :supplier_id => 3, :ammount => 1, :price => 1.99, :purpose => 'sell', :date => '2007-01-01' }
+    post :update, :product_id => 1, :id => 1, :entry => { :supplier_id => 3, :amount => 1, :price => 1.99, :purpose => 'sell', :date => '2007-01-01' }
 
     assert_response :redirect
     assert_redirected_to :action => 'history', :id => 1
@@ -88,7 +88,7 @@ class StockControllerTest < Test::Unit::TestCase
   def test_update_fails
     entry = StockIn.new
     entry.supplier = Supplier.find(3)
-    entry.ammount = 1
+    entry.amount = 1
     entry.price = 2
     entry.purpose = 'sell'
     entry.product = Product.find(1)

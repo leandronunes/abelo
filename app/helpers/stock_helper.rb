@@ -1,6 +1,6 @@
 module StockHelper
 
-  def show_ammount(n)
+  def show_amount(n)
     klass = (n > 0) ? ('positive') : ('negative')
     (content_tag 'span', '%2.2f' % n, :class => klass)
   end
@@ -15,6 +15,10 @@ module StockHelper
 
   def select_purpose(object, method)
     select(object, method, StockEntry.valid_purposes.map { |k,v| [v, k] })
+  end
+
+  def select_supplier(object, method, product)
+    select( object, method, product.suppliers.map { |s| [ s.name, s.id] } )
   end
 
   def display_stock_collection(collection = Array.new, params = {}, html_options = {})

@@ -8,7 +8,7 @@
   <% @sale.items.each do |item| %>
   <tr>
     <td class="cell_desc"><%= item.product.description %></td>
-    <td class="cell_amount">X <%= item.ammount %></td>
+    <td class="cell_amount">X <%= item.amount %></td>
     <td class="cell_un_price"><%= item.unitary_price %></td>
     <td class="cell_price"><%= item.price %></td>
   </tr>

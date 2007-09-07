@@ -23,7 +23,7 @@ class StockController < ApplicationController
     @product = @organization.products.find(params[:id])
     @entries = @product.stock_entries
 
-    @total_ammount = @product.ammount_in_stock
+    @total_amount = @product.amount_in_stock
     @total_cost = @product.total_cost
 
     @entry = StockIn.new

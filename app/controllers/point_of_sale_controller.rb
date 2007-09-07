@@ -24,7 +24,7 @@ class PointOfSaleController < ApplicationController
       @sale = @organization.sales.find(params[:id])
       item = SaleItem.new
       item.product = @organization.products.find(params[:product_id])
-      item.ammount = params[:ammount]
+      item.amount = params[:amount]
       @sale.items << item
       @total = @sale.total_value
       render :partial => 'table', :locals => { :item => item }

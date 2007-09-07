@@ -11,7 +11,7 @@ class ProductDisplayTest < Test::Unit::TestCase
       unit
       category
       suppliers
-      ammount_in_stock
+      amount_in_stock
       minimum_amount
   ]
   def test_available_fields

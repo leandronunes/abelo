@@ -36,7 +36,7 @@ class SaleTest < Test::Unit::TestCase
     sale = Sale.create(:date => '2007-08-04', :organization_id => @org.id, :user_id => @user.id)
     cat_prod = ProductCategory.create(:name => 'Category for testing', :organization_id => @org.id)
     product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => cat_prod.id)
-    item = SaleItem.create(:sale_id => sale.id, :product_id => product.id, :ammount => 2)
+    item = SaleItem.create(:sale_id => sale.id, :product_id => product.id, :amount => 2)
     assert sale.items.include?(item)
   end
  
@@ -92,7 +92,7 @@ class SaleTest < Test::Unit::TestCase
     sale = Sale.create(:date => '2007-08-04', :organization_id => @org.id, :user_id => @user.id, :status => Sale::STATUS_OPEN)
     cat_prod = ProductCategory.create(:name => 'Category for testing', :organization_id => @org.id)
     product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => cat_prod.id)
-    item = SaleItem.create(:sale_id => sale.id, :product_id => product.id, :ammount => 2)
+    item = SaleItem.create(:sale_id => sale.id, :product_id => product.id, :amount => 2)
     sale.cancel!
     assert_equal Sale::STATUS_CANCELLED, sale.status
   end
@@ -103,7 +103,7 @@ class SaleTest < Test::Unit::TestCase
     sale = Sale.create(:date => '2007-08-04', :organization_id => @org.id, :user_id => @user.id)
     cat_prod = ProductCategory.create(:name => 'Category for testing', :organization_id => @org.id)
     product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => cat_prod.id)
-    item = SaleItem.create(:sale_id => sale.id, :product_id => product.id, :ammount => 2)
+    item = SaleItem.create(:sale_id => sale.id, :product_id => product.id, :amount => 2)
     sale.customer = customer
     assert cat_prod.save
     assert item.save

@@ -17,27 +17,27 @@ class StockInTest < Test::Unit::TestCase
   end
 
   def test_mandatory_field_supplier_id
-    entry = StockIn.create(:ammount => 5, :price => '1.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => @product.id)
+    entry = StockIn.create(:amount => 5, :price => '1.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => @product.id)
     assert entry.errors.invalid?(:supplier_id)
   end
 
   def test_mandatory_field_price
-    entry = StockIn.create(:ammount => 5, :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => @product.id)
+    entry = StockIn.create(:amount => 5, :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => @product.id)
     assert entry.errors.invalid?(:price) 
   end
 
   def test_price_not_numerical
-    entry = StockIn.create(:ammount => 5, :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => @product.id, :price => 'not_numerical')
+    entry = StockIn.create(:amount => 5, :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => @product.id, :price => 'not_numerical')
     assert entry.errors.invalid?(:price) 
   end
 
   def test_amount_not_positive
-    entry = StockIn.create(:ammount => -5, :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => @product.id, :price => 10.00)
-    assert entry.errors.invalid?(:ammount) 
+    entry = StockIn.create(:amount => -5, :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => @product.id, :price => 10.00)
+    assert entry.errors.invalid?(:amount) 
   end
 
   def test_total_cost
-    entry = StockIn.create(:ammount => 5, :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => @product.id, :price => 10.00)
+    entry = StockIn.create(:amount => 5, :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => @product.id, :price => 10.00)
     assert_in_delta 50, entry.total_cost, 0.01
   end
 

@@ -11,13 +11,13 @@ class StockOutTest < Test::Unit::TestCase
   end
 
   def test_amount_not_negative
-    entry = StockOut.create(:ammount => 5, :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => @product.id, :price => 10.00)
-    assert entry.errors.invalid?(:ammount) 
+    entry = StockOut.create(:amount => 5, :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => @product.id, :price => 10.00)
+    assert entry.errors.invalid?(:amount) 
   end
  
   def test_validate
-    entry = StockOut.create(:ammount => -5, :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => @product.id, :price => 10.00)
-    assert entry.errors.invalid?(:ammount)
+    entry = StockOut.create(:amount => -5, :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => @product.id, :price => 10.00)
+    assert entry.errors.invalid?(:amount)
   end
 
 end

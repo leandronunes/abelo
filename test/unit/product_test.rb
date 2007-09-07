@@ -45,14 +45,14 @@ class ProductTest < Test::Unit::TestCase
 
   def test_relation_with_stock_in
     product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
-    entry = StockIn.create!(:supplier_id => @supplier.id, :ammount => 50, :price => '15.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => product.id)
+    entry = StockIn.create!(:supplier_id => @supplier.id, :amount => 50, :price => '15.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => product.id)
     assert product.stock_entries.include?(entry)
   end
 
   def test_relation_with_stock_out
     product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
-    entry = StockIn.create!(:supplier_id => @supplier.id, :ammount => 100, :price => '15.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => product.id)
-    entry = StockOut.create!(:supplier_id => @supplier.id, :ammount => -50, :price => '15.00', :purpose => 'sell', :date => '2007-07-02', :payment_status => true, :product_id => product.id)
+    entry = StockIn.create!(:supplier_id => @supplier.id, :amount => 100, :price => '15.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => product.id)
+    entry = StockOut.create!(:supplier_id => @supplier.id, :amount => -50, :price => '15.00', :purpose => 'sell', :date => '2007-07-02', :payment_status => true, :product_id => product.id)
     assert product.stock_entries.include?(entry)
   end
 
@@ -98,15 +98,15 @@ class ProductTest < Test::Unit::TestCase
     product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
 
     # generate 10 stock ins
-    total_ammount = 0.0
+    total_amount = 0.0
     total_cost = 0.0
     (1..10).each { |n|
-      entry = StockIn.create!(:supplier_id => @supplier.id, :ammount => 5, :price => '1.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => product.id)
-      total_ammount += entry.ammount
-      total_cost += entry.price * entry.ammount
+      entry = StockIn.create!(:supplier_id => @supplier.id, :amount => 5, :price => '1.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product_id => product.id)
+      total_amount += entry.amount
+      total_cost += entry.price * entry.amount
     }
 
-    assert_equal total_ammount, product.ammount_in_stock
+    assert_equal total_amount, product.amount_in_stock
     assert_in_delta total_cost, product.total_cost, 0.01
   end
 

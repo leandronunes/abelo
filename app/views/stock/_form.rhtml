@@ -1,35 +1,45 @@
 <%= error_messages_for :entry %>
 
-<p>
-<label for='entry_suplier_id'><%= _('Supplier') %></label><br/>
-<span><%= select 'entry', 'supplier_id', @product.suppliers.map { |s| [ s.name, s.id] } %></span>
-</p>
+<!--[form:stock_entry]-->
 
-<p>
-<label for='entry_ammount'><%= _('Ammount') %></label><br/>
-<span><%= text_field 'entry', 'ammount' %></span>
-</p>
+<% display_edit_info @entry, :class => 'view_data' do |item | %>
 
-<p>
-<label for='entry_price'><%= _('Buy Price') %></label><br/>
-<span><%= text_field 'entry', 'price' %></span>
-</p>
+  <%= display_field_edit( item, 'supplier_name',
+        :title => _('Supplier'),
+        :content => select_supplier('entry', 'supplier', @product )
+    )
+  %>
 
-<p>
-<label for='entry_purpose'><%= _('Purpose') %></label><br/>
-<span><%= select_purpose 'entry', 'purpose' %></span>
-</p>
+  <%= display_field_edit( item, 'amount',
+        :title => _('Amount'),
+        :content => text_field( 'entry', 'amount' )
+    )
+  %>
 
-<p>
-<label for='entry_date'><%= _('Date') %></label><br/>
-<span><%= date_select 'entry', 'date' %></span>
-</p>
+  <%= display_field_edit( item, 'price',
+        :title => _('Buy Price'),
+        :content => text_field( 'entry', 'price' )
+    )
+  %>
 
-<p>
-<label for='entry_validity'><%= _('Validity') %></label><br/>
-<span><%= date_select 'entry', 'validity', :include_blank => true %></span>
-</p>
+  <%= display_field_edit( item, 'date',
+        :title => _('Date'),
+        :content => date_select( 'entry', 'date' )
+    )
+  %>
 
-<p>
-<label for='entry_payment_status'><%= _('Payment status ok?') %></label><br/>
-<span><%= check_box 'entry', 'payment_status' %></span>
+  <%= display_field_edit( item, 'validity',
+        :title => _('Validity'),
+        :content => date_select( 'entry', 'validity', :include_blank => true )
+    )
+  %>
+
+  <%= display_field_edit( item, 'payment_status',
+        :title => _('Payment status ok?'),
+        :content => check_box( 'entry', 'payment_status' )
+    )
+  %>
+
+  <% end %>
+
+<!--[eoform:stock_entry]-->

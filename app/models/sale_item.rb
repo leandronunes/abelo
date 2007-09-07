@@ -3,7 +3,7 @@ class SaleItem < ActiveRecord::Base
   belongs_to :sale
   belongs_to :product
 
-  validates_presence_of :sale_id, :product_id, :ammount
+  validates_presence_of :sale_id, :product_id, :amount
 
   alias :active_record_set_product :product=
 
@@ -27,7 +27,7 @@ class SaleItem < ActiveRecord::Base
   end
 
   def price
-    self.unitary_price * self.ammount
+    self.unitary_price * self.amount
   end
   
 end

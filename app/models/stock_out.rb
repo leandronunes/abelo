@@ -1,12 +1,12 @@
 class StockOut < StockEntry
 
-  validates_inclusion_of :ammount, :in => InfiniteSet::NEGATIVES, :if => lambda { |entry| !entry.ammount.nil? }
+  validates_inclusion_of :amount, :in => InfiniteSet::NEGATIVES, :if => lambda { |entry| !entry.amount.nil? }
 
   def validate
-    if self.product && self.ammount
-      total = self.product.ammount_in_stock || 0
-      if self.ammount.abs > total
-        self.errors.add('ammount', '%{fn} must not be larger than the total ammount of this product in stock (which is %d).' % total)
+    if self.product && self.amount
+      total = self.product.amount_in_stock || 0
+      if self.amount.abs > total
+        self.errors.add('amount', '%{fn} must not be larger than the total amount of this product in stock (which is %d).' % total)
       end
     end
   end

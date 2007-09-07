@@ -55,10 +55,10 @@ configuration.department_display_fields= DepartmentDisplay.available_fields
 configuration.department_display_fields_in_list= ['name']
 StockInDisplay.delete_all
 configuration.stock_in_display_fields= StockInDisplay.available_fields
-configuration.stock_in_display_fields_in_list=  ['date', 'amount', 'price']
+configuration.stock_in_display_fields_in_list=  ['date', 'amount', 'price', 'supplier', 'type_of']
 StockOutDisplay.delete_all
 configuration.stock_out_display_fields= StockOutDisplay.available_fields
-configuration.stock_out_display_fields_in_list= ['date', 'amount', 'price']
+configuration.stock_out_display_fields_in_list= ['date', 'amount', 'price', 'type_of']
 configuration.save!
 
 ###########Categories###################################
@@ -205,6 +205,7 @@ StockEntry.destroy_all
 camisa_entrada = StockIn.create!(:supplier => hering, :amount => 50, :price => '15.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product => camisa)
 camisa_entrada = StockIn.create!(:supplier => hering, :amount => 40, :price => '13.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product => camisa)
 calca_entrada = StockIn.create!(:supplier => hering, :amount => 50, :price => '30.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product => calca)
+camisa_saida = StockIn.create!(:supplier => hering, :amount => 10, :price => '30.00', :purpose => 'sell', :date => '2007-07-05', :payment_status => true, :product => camisa)
 
 ############People################################
 Person.destroy_all

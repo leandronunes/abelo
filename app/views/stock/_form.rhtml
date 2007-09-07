@@ -4,7 +4,7 @@
 
 <% display_edit_info @entry, :class => 'view_data' do |item | %>
 
-  <%= display_field_edit( item, 'supplier_name',
+  <%= display_field_edit( item, 'supplier',
         :title => _('Supplier'),
         :content => select_supplier('entry', 'supplier', @product )
     )

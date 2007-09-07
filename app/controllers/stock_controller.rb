@@ -18,6 +18,11 @@ class StockController < ApplicationController
     @products = search_param.nil? ? @organization.products : @organization.products.find_by_contents(search_param)
     @product_pages, @products = paginate_by_collection @products
   end
+
+  def show
+    @entry = StockEntry.find(params[:id])
+    @product = @entry.product
+  end
   
   def history
     @product = @organization.products.find(params[:id])
@@ -51,8 +56,8 @@ class StockController < ApplicationController
   end
   
   def edit
-    @product = @organization.products.find(params[:product_id])
     @entry = StockEntry.find(params[:id])
+    @product = @entry.product
   end
 
   def update

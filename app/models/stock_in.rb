@@ -9,8 +9,4 @@ class StockIn < StockEntry
     self.amount * self.price
   end
 
-  def supplier_name
-    self.supplier.name
-  end
-
 end

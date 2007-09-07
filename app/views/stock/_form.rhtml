@@ -6,7 +6,7 @@
 
   <%= display_field_edit( item, 'supplier',
         :title => _('Supplier'),
-        :content => select_supplier('entry', 'supplier', @product )
+        :content => select( 'entry', 'supplier_id', @product.suppliers.map { |s| [ s.name, s.id] } ) 
     )
   %>
 

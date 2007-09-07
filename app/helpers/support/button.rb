@@ -2,6 +2,10 @@
 
   def button(button, title, type, url_options = {}, html_options = {})
     html_options[:class] ||= "button button_#{type}"
+    if html_options[:addclass] then
+      html_options[:class] += " " + html_options[:addclass]
+      html_options[:addclass] = nil
+    end
     html_options[:title] ||= title
     if [:save, :search, :reset ].include? type
       design_display_button_submit button, ( (html_options[:class]['with_text'])? title : '' ), html_options

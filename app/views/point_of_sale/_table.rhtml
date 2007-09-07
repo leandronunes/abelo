@@ -1,19 +1,19 @@
 <table>
   <tr>
-    <th><%= _('Description') %></th>
-    <th><%= _('Amount') %></th>
-    <th><%= _('Unitary price') %></th>
-    <th><%= _('Price') %></th>
+    <th class="cell_desc"><div><%= _('Description') %><div>&nbsp;</div></div></th>
+    <th class="cell_amount"><div><%= _('Amount') %><div>&nbsp;</div></div></th>
+    <th class="cell_un_price"><div><%= _('Unitary price') %><div>&nbsp;</div></div></th>
+    <th class="cell_price"><div><%= _('Price') %><div>&nbsp;</div></div></th>
   </tr>
   <% @sale.items.each do |item| %>
   <tr>
-    <td><%= item.product.description %></td>
-    <td>X <%= item.ammount %></td>
-    <td><%= item.unitary_price %></td>
-    <td><%= item.price %></td>
+    <td class="cell_desc"><%= item.product.description %></td>
+    <td class="cell_amount">X <%= item.ammount %></td>
+    <td class="cell_un_price"><%= item.unitary_price %></td>
+    <td class="cell_price"><%= item.price %></td>
   </tr>
   <% end %>
-  <tr> <td colspan=4>Total: <%= @total %> </td></tr>
+  <tr> <td colspan="4" class="cell_tot">Total: <%= @total %> </td></tr>
 </table>
 
 

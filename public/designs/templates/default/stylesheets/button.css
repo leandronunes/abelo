@@ -11,6 +11,11 @@
   background-position: 50% 50%;
 }
 
+.bt_small {
+  width: 16px;
+  height: 16px;
+}
+
 .button:hover {
   opacity: 1;
 }
@@ -29,9 +34,12 @@
 .with_text {
   padding: 3px 0px;
   padding-left: 24px;
-  background-position: 0px -1px;
+  background-position: 0px 50%;
   width: inherit !important;
   display: inline !important;
+}
+.bt_small.with_text {
+  padding-left: 18px;
 }
 input.with_text {
   background-position: 0px 50%;

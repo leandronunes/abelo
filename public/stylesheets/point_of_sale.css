@@ -1,0 +1,323 @@
+/* Autor: Valessio S Brito <valessio@colivre.coop.br>  */
+
+@import url("/designs/templates/default/stylesheets/button.css");
+
+body {
+  margin: 0px;
+  padding: 0px;
+  background: #FFFAF0 url("/designs/templates/default/images/bgbody.png") top right repeat-y;
+}
+
+a {
+  text-decoration: none;
+}
+
+#user_bar {
+  padding: 5px 10px 21px 10px;
+}
+
+#login_bar {
+  float: right;
+  font-size: 10px;
+}
+#login_bar a {
+  margin-top: -1px;
+  margin-right: 8px;
+}
+
+#org_link {
+  float: left;
+}
+#org_link a {
+  color: #A86;
+}
+
+#salesman {
+  float: left;
+  margin-left: 20px;
+  color: #D0B8A0;
+}
+#salesman i {
+  color: #A75;
+}
+
+#header h1.status {
+  text-align: center;
+  height: 60px;
+  max-height:46px;
+  padding: 7px 0px;
+  font-size: 40px;
+  color: #FFF;
+  background: url("/designs/templates/default/images/fundo-status.png") 13px 0px;
+  margin: 0px;
+}
+
+
+#cumpom_bar {
+  float: right;
+  padding-right: 2px;
+}
+
+#cumpom_bar span {
+  font-weight: bold;
+  font-size: 12px;
+  display: table-cell;
+  height: 47px;
+  vertical-align: middle;
+  padding-left: 48px;
+}
+
+#payment {
+  float: right;
+  display: block;
+  background: url('/designs/templates/default/images/icon_sangria.png') bottom left no-repeat;
+  height: 47px;
+  margin-left: 10px;
+}
+
+#cancel_sale {
+  float: right;
+  display: block;
+  background: url('/designs/templates/default/images/icon_sangria.png') top left no-repeat;
+  height: 47px;
+  margin-left: 10px;
+}
+
+#cumpom_sales {
+  background: url('/designs/templates/default/images/bgcumpom.png') 0% repeat-y;
+  /* border: 1px solid #642; */
+  border-left: none;
+  border-right: none;
+  height: 300px;
+  width: 304px;
+  overflow: auto;
+}
+
+#items_table table {
+  margin-left: 10px;
+  width: 254px;
+}
+
+th.cell_amount div,
+th.cell_un_price div,
+th.cell_price div {
+  width: 40px;
+  overflow: hidden;
+  position: relative;
+}
+th.cell_amount div div,
+th.cell_un_price div div,
+th.cell_price div div{
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background: url('/designs/templates/default/images/esconde-nome.png') top right repeat-y;
+}
+td.cell_amount,
+td.cell_un_price,
+td.cell_price {
+  width: 40px;
+  text-align: right;
+}
+.cell_tot {
+  text-align: right;
+  font-weight: 800;
+}
+
+/*******  daqui pra baixo, não avaliado ********************/
+
+#add_item_panel h1 {
+  color: #204A87;
+}
+
+#insert_ammount h1 {
+  text-align: left;
+  font-size: 20px;
+  margin: 5px;
+}
+
+#insert_ammount {
+  padding: 5px;
+  margin: 5px;
+  background: url('/designs/templates/default/images/x.png') 170px center no-repeat;
+}
+
+#cumpom_sales td, #cumpom_sales tr, #cumpom_sales th {
+  border: 0px;
+  margin: 0px;
+  padding: 2px;
+  font-size: 10px;
+  color: black;
+  background: transparent;
+}
+
+
+#sale_details { 
+  margin-right: 300px;
+}
+
+#product_identification {
+  display: block;
+  vertical-align: middle;
+  height: 45px;
+  width: auto;
+  background: #fef4b9;
+  overflow: hidden;
+  font-size: 2em;
+  text-align: center;
+}
+
+#search_product a {
+  display: block;
+  margin-top: 40px;
+  background: url('/designs/templates/default/images/icon_search_product.png') bottom no-repeat !important;
+  width: 41px;
+  height: 41px;
+  margin-bottom: 20px;
+  margin-left: 20px;	
+}
+
+#search_product a:hover, #search_product a:focus {
+  background: url('/designs/templates/default/images/icon_search_product.png') top no-repeat !important;
+}
+
+#button_add_product {
+  display: block;
+  margin-top: 15px;
+  width: 41px;
+  height: 41px;
+  float: right;
+  border: none !important;
+  background: url('/designs/templates/default/images/icon_add_product.png') bottom no-repeat !important;
+  margin: 10px;
+}
+
+#button_add_product input:hover, #button_add_product input:focus {
+  background: url('/designs/templates/default/images/icon_add_product.png') top no-repeat !important;
+}
+
+#search_product span, #pointsales_bar span {
+  display: none;
+}
+
+#add_item_panel {
+  position: relative;
+  border: 1px solid transparent;
+  text-align: left;
+}
+
+#code_product {
+  position: absolute; 
+  top: 0;
+  margin-left: 80px;
+}
+
+  input#product_id {
+  font-weight: bold;
+  font-size: 40px;
+  width: 370px;
+  text-align: right;
+}
+
+  input#ammount {
+  font-weight: bold;
+  font-size: 25px;
+  width: 150px;
+  text-align: right;
+}
+
+  input#money_in {
+  font-weight: bold;
+  font-size: 30px;
+  width: 200px;
+  color: green !important;
+  background: #d8f3b1 !important;
+  text-align: right;
+}
+
+  div#money_in {
+  padding: 10px;
+}
+
+#money_in h1, #money_in label {
+  text-align: left;
+  font-size: 20px;
+  color: #4e9a06 !important;
+  margin: 5px;
+}
+
+#result_ammount {
+  float: right;
+  font-weight: bold;
+  font-size: 20px;
+  padding: 5px;
+  width: 200px;
+  text-align: left;
+}
+
+#change_money {
+  float: right;
+  font-weight: bold;
+  font-size: 30px;
+  width: 200px;
+  color: green !important;
+  text-align: left;
+}
+
+#add_item_panel input {
+  background: #cfdbe5;
+  color: #204a87;
+  border: 1px solid transparent;
+}
+
+#add_item_panel input:focus, #add_item_panel input:hover {
+  background: #e7ebeb;
+  color: #545454;
+  border: 1px solid #545454;
+}
+
+#banner_bottom {
+  background: url('/designs/templates/default/images/bannerabelo_160x50.png') 50% no-repeat;
+  width: 160px;
+  height: 75px;
+  position: absolute;
+  left: 0;
+}
+
+#pointsales_bar ul {
+  display: inline;
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+#pointsales_bar li {
+  float: right;
+  list-style: none;
+}
+
+#button_reforco {
+  display: block;
+  background: url('/designs/templates/default/images/icon_reforco.png') top no-repeat !important;
+  width: 47px;
+  height: 47px;
+  margin-left: 10px;
+}
+
+#button_reforco:hover {
+  background: url('/designs/templates/default/images/icon_reforco.png') bottom no-repeat !important;
+}
+
+#button_sangria {
+  display: block;
+  background: url('/designs/templates/default/images/icon_sangria.png') top no-repeat !important;
+  width: 47px;
+  height: 47px;
+  margin-left: 10px;
+}
+
+#button_sangria:hover {
+  background: url('/designs/templates/default/images/icon_sangria.png') bottom no-repeat !important;
+}
+  

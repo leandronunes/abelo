@@ -38,6 +38,10 @@ input.button_login:hover, input.button_save:hover {
   color: #000;
 }
 
+a.with_text {
+  background-position: 0px -1px !important;
+}
+
 #center_box input#user_administrator {
   width: 20px;
   height: 20px;

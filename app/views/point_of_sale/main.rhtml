@@ -2,14 +2,16 @@
 
 <%=error_messages_for 'sale' %>
 
-  <div id='product_identification'>
+  <div id="product_identification">
     <%= @product.name unless @product.nil? %>
   </div>
 
-  <div id='add_item_panel'>
-    <div id="search_product"><%= link_to content_tag('span', 'Search product'), {}, :class => "button button_search", :accesskey => "p" %>
+  <div id="add_item_panel">
+
+    <div id="search_product">
+      <%= link_to content_tag('span', 'Search product'), {}, :class => "button button_search", :accesskey => "p" %>
     </div>
-    
+
     <% form_remote_tag :url => { :controller => 'point_of_sale', :action => 'add_item', :id => @sale },
            :update => { :success => 'items_table' },  
            :success => 'document.forms["add_item_form"].reset(); document.forms["add_item_form"].elements[0].focus()',
@@ -26,29 +28,30 @@
     <div id="insert_amount">
       <div id="result_amount">
         <h1><%= _('Unitary Value') %></h1>
-        <div id="valeu_product">
+        <div id="value_product">&nbsp;
         </div>
       </div>
-      <h1><%= _('amount') %></h1>
-        <%= text_field_tag('amount', nil, :id => 'amount') %>
+      <h1><%= _('Amount') %></h1>
+      <%= text_field_tag('amount', nil, :id => 'amount') %>
     </div>
-          
 
+    <% end %>
 
-  <% end %>
-  
-  <div id="money_in">
-    <div id="change_money">
-      <h1>Troco</h1>
-        <div class="valeu_change">
+    <div id="money_in_change">
+      <div id="money_in">
+        <h1>Valor Recebido</h1>
+        <label for="money_in">R$</label><input id="money_in" accesskey="q" name="money_in" type="text" />
+      </div>
+      <div id="change_money">
+        <h1>Troco</h1>
+        <div id="value_change">
         </div>
-    </div>
-    <h1>Valor Recebido</h1>
-      <label for="money_in">R$ </label><input id="money_in" accesskey="q" name="money_in" type="text" />
-  </div>
+      </div>
+    </div><!--money_in_change -->
 
-</div>
+  </div><!-- add_item_panel -->
 
+</div><!-- sale_details -->
 
   <!-- Falta criar layout
   <div>

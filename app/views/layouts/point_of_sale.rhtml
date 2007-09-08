@@ -4,11 +4,28 @@
 <head>
   <title>Abelo &rarr; <%= @organization.name %> &rarr; <%= @controller.controller_name  %> </title>
   <%= javascript_include_tag :defaults %>
+  <%= javascript_include_tag 'showAccessKeys' %>
   <%= stylesheet_link_tag 'point_of_sale' %>
   <%= design_icon_theme_stylesheet_link_tags %>
+  <script type="text/javascript">
+
+    document.onkeyup = function(ev) {
+      if ( ev.keyCode == 13 && !ev.target.form ) document.forms[0].onsubmit();
+      ev.stopPropagation();
+    }
+
+    function scroolItemsTable() {
+      var div = $("cumpom_sales");
+      if ( ( div.scrollTop + div.clientHeight ) < div.scrollHeight ) {
+        div.scrollTop++;
+        setTimeout("scroolItemsTable()",50);
+      }
+    }
+
+  </script>
 </head>
 
-<body onload='if (document.forms[0] != null) { document.forms[0].elements[0].focus(); }'>
+<body onload="setInterval('scroolItemsTable()',1000)">
 
 <div id="header">
 
@@ -19,9 +36,10 @@
       <%= button( 'system-log-out', _('Logout'), :logout, {:controller => 'users', :action => 'logout'}, :id => "logout", :accesskey => "q", :confirm => _('Exit from system?'), :method => 'post', :addclass => "bt_small") %>
     </div> <!-- login_bar -->
     
-    <div id="org_link"> <%= link_to_organization @organization %> </div>
-    
-    <div id="salesman"> <%= _('Salesman: <i>%s</i>') % self.current_user.login %> </div>
+    <div id="org_bar">
+      <div id="org_link"> <%= link_to_organization @organization %> </div>
+      <div id="salesman"> <%= _('Salesman: <i>%s</i>') % self.current_user.login %> </div>
+    </div> <!-- org_bar -->
 
   </div><!-- user_bar -->
 
@@ -62,6 +80,8 @@
 <div id="banner_bottom"><span>Abelo</span></div>
 
 </div><!-- footer -->
+
+<a href="javascript:showAccessKeys({intro:'<%= _('This are the access keys on this page:') %>'})" id="show_access_keys" class="button help" accesskey="h" title="<%= _('Access Keys Help') %>"><span><%= _('Access Keys Help') %></span></a>
 
 </body>
 

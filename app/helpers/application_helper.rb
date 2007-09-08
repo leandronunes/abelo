@@ -10,6 +10,8 @@ module ApplicationHelper
 
   require 'support/menu'
 
+  require 'support/number_to_currency'
+
   def show_date(date)
     _('%{year}/%{month}/%{day}') % {:day => '%02d' % date.day, :month => '%02d' % date.month, :year => '%04d' % date.year}
   end  

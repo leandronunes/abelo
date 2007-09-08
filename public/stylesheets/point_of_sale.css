@@ -2,10 +2,20 @@
 
 @import url("/designs/templates/default/stylesheets/button.css");
 
-body {
+html {
+  height: 100%;
   margin: 0px;
   padding: 0px;
-  background: #FFFAF0 url("/designs/templates/default/images/bgbody.png") top right repeat-y;
+  background: #FFFAF0 url("/designs/templates/default/images/bgbody.png") repeat-y;
+  background-position: right 3px;
+}
+
+body {
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  background: url("/designs/templates/default/images/bgcumpom.png") repeat-y;
+  background-position: 10px 0px;
 }
 
 a {
@@ -13,12 +23,24 @@ a {
 }
 
 #user_bar {
-  padding: 5px 10px 21px 10px;
+  padding: 5px 10px 16px 10px;
+}
+
+#org_bar {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  padding: 3px 10px 20px 10px;
+  min-width: 300px;
+  background: #FFFAF0;
+  z-index: 1;
 }
 
 #login_bar {
   float: right;
   font-size: 10px;
+  position: relative;
+  z-index: 20;
 }
 #login_bar a {
   margin-top: -1px;
@@ -50,17 +72,29 @@ a {
   color: #FFF;
   background: url("/designs/templates/default/images/fundo-status.png") 13px 0px;
   margin: 0px;
+  position: relative;
+  z-index: 10;
 }
 
+#content {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  float: left;
+}
 
 #cumpom_bar {
-  float: right;
+  position: absolute;
+  right: 10px;
+  margin-top: 75px;
   padding-right: 2px;
 }
 
 #cumpom_bar span {
   font-weight: bold;
   font-size: 12px;
+  color: #642;
   display: table-cell;
   height: 47px;
   vertical-align: middle;
@@ -70,9 +104,12 @@ a {
 #payment {
   float: right;
   display: block;
-  background: url('/designs/templates/default/images/icon_sangria.png') bottom left no-repeat;
+  background: url('/designs/templates/default/images/icon_sangria.png') top left no-repeat;
   height: 47px;
   margin-left: 10px;
+}
+#payment:hover {
+  background: url('/designs/templates/default/images/icon_sangria.png') bottom left no-repeat;
 }
 
 #cancel_sale {
@@ -82,20 +119,29 @@ a {
   height: 47px;
   margin-left: 10px;
 }
+#cancel_sale:hover {
+  background: url('/designs/templates/default/images/icon_sangria.png') bottom left no-repeat;
+}
 
 #cumpom_sales {
-  background: url('/designs/templates/default/images/bgcumpom.png') 0% repeat-y;
-  /* border: 1px solid #642; */
-  border-left: none;
-  border-right: none;
-  height: 300px;
-  width: 304px;
+  height: 100%;
+  margin-left: 18px;
+  width: 285px;
   overflow: auto;
 }
 
 #items_table table {
-  margin-left: 10px;
-  width: 254px;
+  margin-top: 100px;
+  width: 256px;
+}
+
+#cumpom_sales td, #cumpom_sales tr, #cumpom_sales th {
+  border: 0px;
+  margin: 0px;
+  padding: 2px;
+  font-size: 10px;
+  color: black;
+  background: transparent;
 }
 
 th.cell_amount div,
@@ -114,155 +160,62 @@ th.cell_price div div{
   right: 0px;
   background: url('/designs/templates/default/images/esconde-nome.png') top right repeat-y;
 }
+th.cell_desc {
+  text-align: left;
+}
+th.cell_desc div div {
+  display: none;
+}
 td.cell_amount,
 td.cell_un_price,
 td.cell_price {
   width: 40px;
   text-align: right;
 }
-.cell_tot {
+#cumpom_sales td.cell_tot {
   text-align: right;
   font-weight: 800;
-}
-
-/*******  daqui pra baixo, não avaliado ********************/
-
-#add_item_panel h1 {
-  color: #204A87;
-}
-
-#insert_ammount h1 {
-  text-align: left;
   font-size: 20px;
-  margin: 5px;
 }
 
-#insert_ammount {
-  padding: 5px;
-  margin: 5px;
-  background: url('/designs/templates/default/images/x.png') 170px center no-repeat;
-}
-
-#cumpom_sales td, #cumpom_sales tr, #cumpom_sales th {
-  border: 0px;
-  margin: 0px;
-  padding: 2px;
-  font-size: 10px;
-  color: black;
-  background: transparent;
-}
-
-
-#sale_details { 
-  margin-right: 300px;
+#sale_details {
+  margin: 40px 10px 0px 315px;
 }
 
 #product_identification {
+  -moz-border-radius: 40px;
   display: block;
-  vertical-align: middle;
   height: 45px;
-  width: auto;
-  background: #fef4b9;
+  font-size: 35px;
+  background: #FFF4B8;
   overflow: hidden;
-  font-size: 2em;
   text-align: center;
 }
 
-#search_product a {
-  display: block;
-  margin-top: 40px;
-  background: url('/designs/templates/default/images/icon_search_product.png') bottom no-repeat !important;
-  width: 41px;
-  height: 41px;
-  margin-bottom: 20px;
-  margin-left: 20px;	
-}
 
-#search_product a:hover, #search_product a:focus {
-  background: url('/designs/templates/default/images/icon_search_product.png') top no-repeat !important;
-}
 
-#button_add_product {
-  display: block;
-  margin-top: 15px;
-  width: 41px;
-  height: 41px;
-  float: right;
-  border: none !important;
-  background: url('/designs/templates/default/images/icon_add_product.png') bottom no-repeat !important;
-  margin: 10px;
+#banner_bottom {
+  background: url('/designs/templates/default/images/bannerabelo_100x33.png') no-repeat;
+  width: 100px;
+  height: 33px;
+  position: absolute;
+  right: 5px;
+  bottom: 0px;
 }
-
-#button_add_product input:hover, #button_add_product input:focus {
-  background: url('/designs/templates/default/images/icon_add_product.png') top no-repeat !important;
-}
-
-#search_product span, #pointsales_bar span {
+#banner_bottom span {
   display: none;
 }
 
+
 #add_item_panel {
   position: relative;
-  border: 1px solid transparent;
   text-align: left;
 }
 
-#code_product {
-  position: absolute; 
-  top: 0;
-  margin-left: 80px;
-}
-
-  input#product_id {
-  font-weight: bold;
-  font-size: 40px;
-  width: 370px;
-  text-align: right;
-}
-
-  input#ammount {
-  font-weight: bold;
-  font-size: 25px;
-  width: 150px;
-  text-align: right;
-}
-
-  input#money_in {
-  font-weight: bold;
-  font-size: 30px;
-  width: 200px;
-  color: green !important;
-  background: #d8f3b1 !important;
-  text-align: right;
-}
-
-  div#money_in {
-  padding: 10px;
-}
-
-#money_in h1, #money_in label {
-  text-align: left;
+#add_item_panel h1 {
+  color: #204A87;
   font-size: 20px;
-  color: #4e9a06 !important;
-  margin: 5px;
-}
-
-#result_ammount {
-  float: right;
-  font-weight: bold;
-  font-size: 20px;
-  padding: 5px;
-  width: 200px;
-  text-align: left;
-}
-
-#change_money {
-  float: right;
-  font-weight: bold;
-  font-size: 30px;
-  width: 200px;
-  color: green !important;
-  text-align: left;
+  margin: 0px;
 }
 
 #add_item_panel input {
@@ -277,25 +230,104 @@ td.cell_price {
   border: 1px solid #545454;
 }
 
-#banner_bottom {
-  background: url('/designs/templates/default/images/bannerabelo_160x50.png') 50% no-repeat;
-  width: 160px;
-  height: 75px;
-  position: absolute;
-  left: 0;
+
+#search_product a {
+  float: right;
+  clear: right;
+  display: block;
+  margin: 10px 10px 0px 0px;
+  background: url('/designs/templates/default/images/icon_search_product.png') bottom no-repeat;
+  width: 41px;
+  height: 41px;
 }
 
-#pointsales_bar ul {
-  display: inline;
-  list-style: none;
+#search_product a:hover, #search_product a:focus {
+  background: url('/designs/templates/default/images/icon_search_product.png') top no-repeat !important;
+}
+
+#search_product span {
+  display: none;
+}
+
+
+#button_add_product {
+  display: block;
+  margin: 5px 10px 0px 0px;
+  width: 41px;
+  height: 41px;
+  float: right;
+  clear: right;
+  border: none !important;
+  background: url('/designs/templates/default/images/icon_add_product.png') bottom no-repeat !important;
+  margin: 10px;
+}
+
+#button_add_product:hover, #button_add_product:focus {
+  background: url('/designs/templates/default/images/icon_add_product.png') top no-repeat !important;
+}
+
+#code_product {
+  margin: 5px 60px 5px 0px;
+}
+
+input#product_id {
+  font-weight: bold;
+  font-size: 30px;
+  width: 99%;
+  text-align: right;
+}
+
+#insert_amount {
+  margin-right: 60px;
+  background: url('/designs/templates/default/images/x.png') center 25px no-repeat;
+}
+
+#insert_amount h1 {
+  text-align: left;
+  font-size: 20px;
   margin: 0px;
+}
+
+#result_amount {
+  float: left;
+  width: 55%;
+  font-weight: bold;
+  font-size: 20px;
+  text-align: left;
+}
+
+input#amount {
+  font-weight: bold;
+  font-size: 30px;
+  width: 44%;
+  text-align: right;
+}
+
+#value_product {
+  font-size: 30px;
+}
+
+
+
+#pointsales_bar ul {
+  margin: 0px 0px 0px 330px;
   padding: 0px;
+  position: absolute;
+  bottom: 0px;
 }
 
 #pointsales_bar li {
-  float: right;
+  float: left;
+  margin: 0px;
+  padding: 0px;
   list-style: none;
+  position: relative;
 }
+
+#pointsales_bar span {
+  display: none;
+}
+
 
 #button_reforco {
   display: block;
@@ -304,7 +336,6 @@ td.cell_price {
   height: 47px;
   margin-left: 10px;
 }
-
 #button_reforco:hover {
   background: url('/designs/templates/default/images/icon_reforco.png') bottom no-repeat !important;
 }
@@ -316,8 +347,48 @@ td.cell_price {
   height: 47px;
   margin-left: 10px;
 }
-
 #button_sangria:hover {
   background: url('/designs/templates/default/images/icon_sangria.png') bottom no-repeat !important;
 }
+
+#money_in_change {
+  margin-top: 10px;
+}
+
+#money_in{
+  float: left;
+  width: 50%;
+}
+#money_in h1, #money_in label {
+  text-align: left;
+  font-size: 20px;
+  color: #4e9a06 !important;
+}
+#money_in label {
+  float: left;
+  padding-right: 5px;
+}
+input#money_in {
+  font-weight: bold;
+  font-size: 30px;
+  width: 80%;
+  color: green !important;
+  background: #d8f3b1 !important;
+  text-align: right;
+}
   
+#change_money {
+  font-weight: bold;
+  font-size: 30px;
+  margin-left: 50%;
+  color: green !important;
+  text-align: left;
+}
+
+
+#show_access_keys {
+  position: absolute;
+  top: 1px;
+  right: 100px;
+}
+

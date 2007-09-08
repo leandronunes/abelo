@@ -1,19 +1,19 @@
 <table>
   <tr>
-    <th class="cell_desc"><div><%= _('Description') %><div>&nbsp;</div></div></th>
-    <th class="cell_amount"><div><%= _('Amount') %><div>&nbsp;</div></div></th>
+    <th class="cell_desc"><div><%= _('Product') %><div>&nbsp;</div></div></th>
     <th class="cell_un_price"><div><%= _('Unitary price') %><div>&nbsp;</div></div></th>
+    <th class="cell_amount"><div><%= _('Amount') %><div>&nbsp;</div></div></th>
     <th class="cell_price"><div><%= _('Price') %><div>&nbsp;</div></div></th>
   </tr>
   <% @sale.items.each do |item| %>
   <tr>
     <td class="cell_desc"><%= item.product.description %></td>
-    <td class="cell_amount">X <%= item.amount %></td>
-    <td class="cell_un_price"><%= item.unitary_price %></td>
-    <td class="cell_price"><%= item.price %></td>
+    <td class="cell_un_price"><%= num_to_currency item.unitary_price %></td>
+    <td class="cell_amount">&times; <%= item.amount.round %></td>
+    <td class="cell_price"><%= num_to_currency item.price %></td>
   </tr>
   <% end %>
-  <tr> <td colspan="4" class="cell_tot">Total: <%= @total %> </td></tr>
+  <tr> <td colspan="4" class="cell_tot">Total: <%= num_to_currency @total %> </td></tr>
 </table>
 
 

@@ -1,4 +1,21 @@
-<p>
-<label for='user_profile_template'><%= _('Template') %></label>
-<span><%= select_template 'user_profile', 'template' %></span>
-</p>
+<%= error_messages_for 'user_profile' %>
+
+<!--[form:user_profile]-->
+
+<% display_edit_info @user, :class => 'view_data' do |item| %>
+
+  <%= display_field_edit(item, 'login',
+        :title => _('Login'),
+        :content => text_field('user', 'login')
+      )
+  %>
+
+  <%= display_field_edit(item, 'email',
+        :title => _('E-mail'),
+        :content => text_field('user', 'email')
+      )
+  %>
+
+
+<% end %>
+

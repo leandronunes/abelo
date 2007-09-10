@@ -19,16 +19,16 @@ class PermissionsController < ApplicationController
   def list
 
     @query = params[:query]
-    @query ||= params[:profile][:name] if params[:profile]
+    @query ||= params[:users][:name] if params[:users]
 #   render :text => params.inspect
 #   return
 
     if @query.nil?
-      @profiles = @organization.profiles
-      @profile_pages, @profiles = paginate_by_collection @profiles
+      @users = @organization.users
+      @user_pages, @users = paginate_by_collection @users
     else
-      @profiles = @organization.profiles.full_text_search(@query)
-      @profile_pages, @profiles = paginate_by_collection @profiles
+      @users = @organization.users.full_text_search(@query)
+      @user_pages, @users = paginate_by_collection @users
     end
   end
 
@@ -48,20 +48,36 @@ class PermissionsController < ApplicationController
 
   def new
     permissions = Array.new
+    @user = User.new
     @user_profile = Profile.new
+    @profiles = Profile.find(:all)
     @user_profile.permissions = permissions
   end
 
-  def create_with_template
+  #TODO: save a user in the system
+  def create
+
+    @user = User.new(params[:user])
     @user_profile = Profile.new(params[:user_profile])
     @user_profile.organization = @organization
-    if @user_profile.save
+    if @user.save
       flash[:notice] = _('Profile successfully created.')
-      redirect_to :action => 'index'
+      redirect_to :action => 'list'
     else
-      render :action => 'new_with_template'
+
+#   render :text => params.inspect
+#   return
+
+      @profiles = Profile.find(:all)
+      render :action => 'new'
     end
   end
+
+
+  def show
+    @user = @organization.users.find(params[:id])
+  end
+
 
   def destroy
     @organization.profiles.find(params[:id]).destroy

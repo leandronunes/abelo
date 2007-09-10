@@ -19,6 +19,7 @@ class Configuration < ActiveRecord::Base
   has_many :stock_in_displays
   has_many :stock_out_displays
   has_many :profile_displays
+  has_many :user_displays
 
 #TODO See a way to guarantee that a configuration cannot be created whithout an organization
 #  validates_presence_of :organization_id, :if => lambda { |conf| !conf.is_model?}
@@ -50,6 +51,7 @@ class Configuration < ActiveRecord::Base
     stock_in
     stock_out
     profile
+    user
   ]
 
   #######################################

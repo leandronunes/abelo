@@ -6,6 +6,11 @@ class User < Person
   has_many :organizations, :through => :profiles
   has_many :ledgers
 
+  def self.configuration_class
+    UserDisplay 
+  end
+
+
   # Tells if this user has access to the <tt>location</tt> passed as parameter
   # (as a URL hash, just like everywhere in Rails).
   #

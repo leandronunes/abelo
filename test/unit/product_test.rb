@@ -81,10 +81,6 @@ class ProductTest < Test::Unit::TestCase
     assert product.errors.invalid?(:category_id)
   end
 
-  def test_configuration_class
-    assert_equal ProductDisplay, Product.configuration_class 
-  end
-
   def test_full_text_search
     Product.delete_all
     product1 = Product.create!(:name => 'test product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)

@@ -11,6 +11,13 @@
     )
 %>
 
+<%= display_field_edit(@system_actor, 'birthday',
+      :title => _('Born Day'),
+      :content => date_select_abelo('system_actor', 'birthday', :start_year => Date.today.year - 100)
+    )
+%>
+
+
   <%= observe_field('system_actor_person_type_juristic',
           :update => 'person_type_choosen',
           :url => {:action => 'get_person_type'},

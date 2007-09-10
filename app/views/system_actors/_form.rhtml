@@ -59,12 +59,6 @@
       )
   %>
 
-  <%= display_field_edit(item, 'birthday',
-        :title => _('Born Day'),
-        :content => text_field('system_actor', 'birthday')
-      )
-  %>
-
   <%= display_field_edit(item, 'category',
         :title => _('Category'),
         :content => select_category('system_actor', @actor)

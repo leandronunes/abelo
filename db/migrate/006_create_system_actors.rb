@@ -11,10 +11,10 @@ class CreateSystemActors < ActiveRecord::Migration
       t.column :category_id,     :integer, :null => false
 
       #organizations specific
-      t.column :cnpj, :string,   :limit => 14
+      t.column :cnpj, :string
 
       #people specific
-      t.column :cpf,             :string, :limit => 11
+      t.column :cpf,             :string
       t.column :rg,              :string
       t.column :birthday,        :date
     end

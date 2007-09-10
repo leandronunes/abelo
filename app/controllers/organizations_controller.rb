@@ -45,9 +45,6 @@ class OrganizationsController < ApplicationController
 
   end
 
-  def none_organization
-  end
-
   def index
     redirect_to :action => 'list'
   end

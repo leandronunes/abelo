@@ -24,6 +24,7 @@ class ConfigurationTest < Test::Unit::TestCase
     debit_ledger
     stock_in
     stock_out
+    profile
   ]
 
   def test_find_all_model

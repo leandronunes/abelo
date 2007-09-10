@@ -14,11 +14,6 @@ class Product < ActiveRecord::Base
 
   acts_as_ferret
 
-  def self.configuration_class
-    ProductDisplay
-  end
-
-
   def self.full_text_search(q, options = {})
     default_options = {:limit => :all, :offset => 0}
     options = default_options.merge options

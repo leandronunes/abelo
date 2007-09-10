@@ -51,9 +51,8 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(params[:product])
     @product.organization = @organization
-    @product.supplier_ids = params[:suppliers].keys if params[:suppliers]
     if @product.save
-      flash[:notice] = 'Product was successfully created.'
+      flash[:notice] = _('The product was successfully created.')
       redirect_to :action => 'list'
     else
       @suppliers = @organization.suppliers

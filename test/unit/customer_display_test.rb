@@ -7,11 +7,12 @@ class CustomerDisplayTest < Test::Unit::TestCase
       address
       description
       email
-      category_id
+      category
       cnpj
       cpf
       rg
       birthday
+      person_type
   ]
   def test_availavle_fields
     assert_equal AVAILABLE_FIELDS_TEST, CustomerDisplay.available_fields

@@ -15,8 +15,13 @@ class ProductsControllerTest < Test::Unit::TestCase
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     @organization = Organization.find_by_nickname 'one'
-    @category = ProductCategory.find(1)
+    @category = ProductCategory.find(:first)
     login_as("quentin")
+  end
+
+  def test_setup
+    assert @organization.valid?
+    assert @category.valid?
   end
 
   def test_index
@@ -81,8 +86,12 @@ class ProductsControllerTest < Test::Unit::TestCase
 
   def test_create
     count = Product.count
+    supplier = Supplier.find(:first)
+    assert supplier.valid?
 
-    post :create, :id => 1, :product => {:name => 'Some Product', :sell_price => '20', :unit => 'U', :organization_id => 1, :category_id => 1 }
+    post :create, :id => 1, :product => {:name => 'Some Product', :sell_price => '20', :unit => 'U', :organization_id => 1, :category_id => 1, :supplier_ids => [supplier.id.to_s] }
+    assert_response :redirect
+    assert_redirected_to :action => 'list'
   end
   
   def test_create_wrong_params

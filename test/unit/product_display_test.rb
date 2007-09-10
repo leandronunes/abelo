@@ -10,7 +10,7 @@ class ProductDisplayTest < Test::Unit::TestCase
       sell_price 
       unit
       category
-      suppliers
+      supplier_ids
       amount_in_stock
       minimum_amount
   ]

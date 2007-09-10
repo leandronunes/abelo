@@ -238,7 +238,7 @@ msgstr "Categorias de Fornecedores"
 
 #: app/controllers/application.rb:119
 msgid "Product categories"
-msgstr "Produto|categorias"
+msgstr "categorias"
 
 #: app/controllers/application.rb:154
 #: app/views/mass_mails/filter_customers.rhtml:2
@@ -339,40 +339,39 @@ msgstr "produto"
 
 #: app/models/product.rb:-
 msgid "Product|Name"
-msgstr "Produto|Nome"
+msgstr "Nome"
 
 #: app/models/product.rb:-
 msgid "Product|Size"
-msgstr "Produto|Tamanho"
+msgstr "Tamanho"
 
 #: app/models/product.rb:-
 msgid "Product|Color"
-msgstr "Produto|Cor"
+msgstr "Cor"
 
 #: app/models/product.rb:-
 msgid "Product|Description"
-msgstr "Produto|Descrição"
+msgstr "Descrição"
 
 #: app/models/product.rb:-
 msgid "Product|Sell price"
-msgstr "Produto|Preço de venda"
+msgstr "Preço de venda"
 
 #: app/models/product.rb:-
 msgid "Product|Unit"
-msgstr "Produto|Unidade"
+msgstr "Unidade"
 
 #: app/models/product.rb:-
 msgid "Product|Organization"
-msgstr "Produto|Organização"
+msgstr "Organização"
 
 #: app/models/product.rb:-
 msgid "Product|Category"
-msgstr "Produto|categoria"
+msgstr "categoria"
 
 #: app/models/product.rb:-
-#, fuzzy
 msgid "Product|Minimum amount"
-msgstr "Produto|Unidade"
+msgstr "Quantidade Mínima"
 
 #: app/models/product.rb:11
 msgid "Products must be associated to an organization"

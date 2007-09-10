@@ -103,13 +103,4 @@ class CustomersControllerTest < Test::Unit::TestCase
     }
   end
 
-   def test_reset
-     get :reset, :actor => 'customer'
-     assert_response :success
-     assert_template '_form'
-     assert_not_nil assigns(:system_actor)
-     assert_kind_of Customer, assigns(:system_actor)
-     assert_not_nil assigns(:actor)
-   end
-
 end

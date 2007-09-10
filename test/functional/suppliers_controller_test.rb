@@ -102,13 +102,4 @@ class SuppliersControllerTest < Test::Unit::TestCase
     }
   end
 
-   def test_reset
-     get :reset, :actor => 'supplier'
-     assert_response :success
-     assert_template '_form'
-     assert_not_nil assigns(:system_actor)
-     assert_kind_of Supplier, assigns(:system_actor)
-     assert_not_nil assigns(:actor)
-   end
-
 end

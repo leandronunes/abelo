@@ -104,7 +104,7 @@ module ApplicationHelper
           [
             collection.map do |c|
               content_tag(:li,
-                if selected_options.include? c
+                if selected_options.include?(c === String ? c : c.id)
                   content_tag('input', 
                            c.send(text_method) , 
                            :name => "#{object}[#{method}][]", 

@@ -7,11 +7,12 @@ class WorkerDisplayTest < Test::Unit::TestCase
       address
       description
       email
-      category_id
+      category
       cnpj
       cpf
       rg
       birthday
+      person_type
   ]
   def test_available_fields
     assert_equal AVAILABLE_FIELDS_TEST, WorkerDisplay.available_fields

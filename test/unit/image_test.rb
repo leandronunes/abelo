@@ -4,7 +4,7 @@ class ImageTest < Test::Unit::TestCase
   fixtures :images, :products
 
   def setup
-    @org = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :nickname => 'org')
+    @org = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :identifier => 'org')
   end
 
   def test_mandatory_field_description

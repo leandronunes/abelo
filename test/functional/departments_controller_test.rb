@@ -9,11 +9,6 @@ class DepartmentsControllerTest < Test::Unit::TestCase
 
   fixtures :departments, :organizations, :configurations
 
-  #TODO make this test works
-  def test_true
-    assert true
-  end
-
   def setup
     @controller = DepartmentsController.new
     @request    = ActionController::TestRequest.new

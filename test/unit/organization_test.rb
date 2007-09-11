@@ -6,7 +6,7 @@ class OrganizationTest < Test::Unit::TestCase
     @organization = Organization.new
     @organization.name = 'organization for testing'
     @organization.cnpj = '19900000002462'
-    @organization.nickname = 'test_organization'
+    @organization.identifier = 'test_organization'
     @organization.save
     
     @cat_prod = ProductCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
@@ -112,40 +112,41 @@ class OrganizationTest < Test::Unit::TestCase
   end
 
   def test_mandatory_field_name
-    org = Organization.create(:cnpj => '63182452000151', :nickname => 'org')
+    org = Organization.create(:cnpj => '63182452000151', :identifier => 'org')
     assert org.errors.invalid?(:name) 
   end
 
   def test_mandatory_field_cnpj
-    org = Organization.create(:name => 'Organization for testing', :nickname => 'org')
+    org = Organization.create(:name => 'Organization for testing', :identifier => 'org')
     assert org.errors.invalid?(:cnpj) 
   end
   
-  def test_mandatory_field_nickname
+  def test_mandatory_field_identifier
     org = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151')
-    assert org.errors.invalid?(:nickname)
+    assert org.errors.invalid?(:identifier)
   end
 
   def test_uniqueness_name
-    org_1 = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :nickname => 'org_1')
-    org_2 = Organization.create(:name => 'Organization for testing', :cnpj => '67444545000168', :nickname => 'org_2')
+    org_1 = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :identifier => 'org_1')
+    org_2 = Organization.create(:name => 'Organization for testing', :cnpj => '67444545000168', :identifier => 'org_2')
     assert org_2.errors.invalid?(:name) 
   end
 
   def test_uniqueness_cnpj
-    org_1 = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :nickname => 'org_1')
-    org_2 = Organization.create(:name => 'Organization for testing 2', :cnpj => '63182452000151', :nickname => 'org_2')
+    org_1 = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :identifier => 'org_1')
+    org_2 = Organization.create(:name => 'Organization for testing 2', :cnpj => '63182452000151', :identifier => 'org_2')
     assert org_2.errors.invalid?(:cnpj) 
   end
 
-  def test_uniqueness_nickname
-    org_1 = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :nickname => 'org')
-    org_2 = Organization.create(:name => 'Organization for testing 2', :cnpj => '67444545000168', :nickname => 'org')
-    assert org_2.errors.invalid?(:nickname) 
+  def test_uniqueness_identifier
+    org_1 = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :identifier => 'org')
+    org_2 = Organization.new(:name => 'Organization for testing 2', :cnpj => '67444545000168', :identifier => 'org')
+    org_2.valid?
+    assert org_2.errors.invalid?(:identifier) 
   end
 
   def test_cnpj_format
-    org = Organization.new(:name => 'Organization for testing', :nickname => 'org')
+    org = Organization.new(:name => 'Organization for testing', :identifier => 'org')
     org.cnpj = 'bli'
     assert(!org.save)
     org.cnpj = '12121212121212'
@@ -154,11 +155,11 @@ class OrganizationTest < Test::Unit::TestCase
     assert(org.save)
   end
 
-  def test_nickname_format
+  def test_identifier_format
     org = Organization.new(:name => 'Organization for testing', :cnpj => '63182452000151')
-    org.nickname = 'invalid nickname'
+    org.identifier = 'invalid identifier'
     assert(!org.save)
-    org.nickname = 'valid_nickname'
+    org.identifier = 'valid_identifier'
     assert(org.save)
   end
 

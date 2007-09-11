@@ -94,7 +94,7 @@ module ApplicationHelper
   end
 
   def link_to_organization(org, html_options = {})
-    link_to org.name, { :organization_nickname => org.nickname, :controller => 'main', :action => 'index' }, html_options
+    link_to org.name, { :organization_nickname => org.identifier, :controller => 'main', :action => 'index' }, html_options
   end
 
   def multiple_select(object, method, collection=[], title="", text_method=:name, value_method=:id)

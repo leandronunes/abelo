@@ -1,10 +1,8 @@
-# A Profile is the representation and web-presence of an individual or an
-# organization. Every Profile is attached to its VirtualCommunity of origin,
-# which by default is the one returned by VirtualCommunity:default.
 class Profile < ActiveRecord::Base
 
   belongs_to :organization
   belongs_to :user
+  belongs_to :virtual_community
 
   validates_presence_of :user_id
 
@@ -35,7 +33,7 @@ class Profile < ActiveRecord::Base
   #   profile.allows(:controller => 'main', :action => 'index')   => true
   #   profile.allows(:controller => 'main', :action => 'edit')    => false
   def allows?(location)
-    return false unless  self.organization.nil? or (location[:organization_nickname] = self.organization.nickname)
+    return false unless  self.organization.nil? or (location[:organization_nickname] = self.organization.identifier)
     test = location.reject { |key,value| key == :organization_nickname }
     self.permissions.any? do |permission|
       test.all? do |key,value|
@@ -84,6 +82,7 @@ class Profile < ActiveRecord::Base
       { :controller => 'products', :action => '*' },
       { :controller => 'bank_accounts', :action => '*' },
       { :controller => 'interface', :action => '*' },
+      { :controller => 'content_viewer', :action => '*' },
     ]
   }
 

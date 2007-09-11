@@ -14,7 +14,7 @@ class BankAccountsControllerTest < Test::Unit::TestCase
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     login_as("quentin")
-    @organization = Organization.find_by_nickname('one')
+    @organization = Organization.find_by_identifier('one')
     @bank_account = BankAccount.find(:first)
     @bank = Bank.find(:first)
   end

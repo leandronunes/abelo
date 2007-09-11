@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 class ProductCategoryTest < Test::Unit::TestCase
 
   def setup
-    @org = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :nickname => 'org')
+    @org = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :identifier => 'org')
   end
 
   def test_relation_with_products

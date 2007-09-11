@@ -6,7 +6,7 @@ Organization.destroy_all
 organization = Organization.new
 organization.name = 'Toca'
 organization.cnpj = '05359933000193'
-organization.nickname = 'toca'
+organization.identifier = 'toca'
 organization.save!
 
 ############Configuration#########################

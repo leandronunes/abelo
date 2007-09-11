@@ -13,7 +13,7 @@ module Blog
   end
 
   class User < ActionWebService::Struct
-    member :nickname,  :string
+    member :identifier,  :string
     member :userid,    :string
     member :url,       :string
     member :email,     :string

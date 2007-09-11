@@ -14,7 +14,7 @@ class WorkerCategoriesControllerTest < Test::Unit::TestCase
     @controller = CategoriesController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-    @organization = Organization.find_by_nickname 'one'
+    @organization = Organization.find_by_identifier 'one'
     @worker_cat = WorkerCategory.find(:first)
     login_as("quentin")
   end

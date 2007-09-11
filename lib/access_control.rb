@@ -8,7 +8,7 @@ module AccessControl
         self.current_user.allowed_to?(where)
       else
         location = { :controller => self.controller_name, :action => where.to_s }
-        location[:organization_nickname] = @organization.nickname if @organization
+        location[:organization_nickname] = @organization.identifier if @organization
         self.current_user.allowed_to?(location)
       end
     end

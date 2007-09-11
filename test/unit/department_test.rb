@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 class DepartmentTest < Test::Unit::TestCase
 
   def setup
-    @org = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :nickname => 'org')
+    @org = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :identifier => 'org')
   end
 
   def test_full_test_search
@@ -39,10 +39,11 @@ class DepartmentTest < Test::Unit::TestCase
   def test_destroy
     Department.delete_all
     dept = Department.create(:name => 'Department for testing', :organization_id => @org.id)
+    id = dept.id
     dept.destroy
     assert_equal 0, Department.count
     assert_raise(ActiveRecord::RecordNotFound) {
-      Department.find(1)
+      Department.find(id)
     }
   end
 

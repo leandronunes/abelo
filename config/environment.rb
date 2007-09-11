@@ -55,7 +55,35 @@ end
 require 'jcode'
 $KCODE = 'u'
 require 'gettext/rails'
-  
+
+Comatose.configure do |config|
+  config.admin_get_root_page do
+    Comatose::Page.find_by_path(request.parameters[:organization_nickname])
+  end
+  config.admin_authorization do |config|
+    true
+#    Profile.exists?(:identifier => request.parameters[:organization_nickname])
+    # FIXME: also check permissions
+  end
+  config.admin_includes << :authenticated_system
+  config.admin_helpers << :application_helper
+  config.admin_helpers << :document_helper
+end
+Comatose::AdminController.design :holder => 'virtual_community'
+Comatose::AdminController.before_filter do |controller|
+  # TODO: copy/paste; extract this into a method (see
+  # app/controllers/application.rb)
+  domain = Domain.find_by_name(controller.request.host)
+  if domain.nil?
+    virtual_community = Organization.find_by_identifier(controller.params[:organization_nickname])
+  else
+    virtual_community = domain.virtual_community
+    profile = domain.profile
+  end
+  controller.instance_variable_set('@virtual_community', virtual_community)
+end
+ 
+ 
 ActionMailer::Base.delivery_method = :sendmail
 
 #  # Configuration for ActionMailer

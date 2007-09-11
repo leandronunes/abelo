@@ -3,7 +3,7 @@
 
 <p> <b><%= _('Name') %>:</b> <%= @organization.name %></p>
 <p> <b><%= _('CNPJ') %>:</b> <%= @organization.cnpj %></p>
-<p> <b><%= _('Nickname') %>:</b> <%= @organization.nickname %></p>
+<p> <b><%= _('Nickname') %>:</b> <%= @organization.identifier %></p>
 
 <%= button('back', _('Back'), :list, :action => 'list' ) %>
 <%= button('edit', _('Edit'), :list, :action => 'edit', :id => @organization) %> 

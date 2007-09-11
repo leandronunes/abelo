@@ -29,6 +29,6 @@ class BloggerService < ActionWebService::Base
 
   def getUserInfo(key, user, pw)
     $stderr.puts "getting user info for #{user}"
-    Blog::User.new(:nickname => 'user', :email => 'user@test.com')
+    Blog::User.new(:identifier => 'user', :email => 'user@test.com')
   end
 end

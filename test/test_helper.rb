@@ -27,7 +27,7 @@ class Test::Unit::TestCase
 
   # Add more helper methods to be used by all tests here...
   include AuthenticatedTestHelper
-  fixtures :people, :profiles, :organizations
+  fixtures :people, :profiles, :organizations, :virtual_communities
 
   def self.extra_parameters
     @extra_parameters

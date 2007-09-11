@@ -4,12 +4,43 @@ class Organization < ActiveRecord::Base
     configuration = Configuration.new
     configuration.organization = organization
     configuration.save!
+
+    homepage = Article.new
+    homepage.title = organization.name
+    homepage.parent = Comatose::Page.root
+    homepage.slug = organization.identifier
+    homepage.save!
+
+    virtual_community = VirtualCommunity.new
+    virtual_community.owner = organization
+    virtual_community.name = organization.identifier
+    virtual_community.save!
   end
+
+  after_destroy do |organization|
+    Article.find_by_path(organization.identifier).destroy
+  end
+
+  # Valid identifiers must match this format.
+  IDENTIFIER_FORMAT = /^[a-z][a-z0-9_]*[a-z0-9]$/
+
+  # These names cannot be used as identifiers for Organizations
+  RESERVED_IDENTIFIERS = %w[
+  admin
+  system
+  myprofile
+  profile
+  cms
+  community
+  homepage
+  test
+  ]
+
 
 #TODO See a way to guarantee that a organization cannot be created whithout a configuration
 
-  has_one :configuration, :dependent => :delete
-
+  has_one  :configuration, :dependent => :delete
+  has_one  :virtual_community, :as => :owner
   has_many :departments
   has_many :products
   has_many :sales
@@ -32,10 +63,32 @@ class Organization < ActiveRecord::Base
 #  has_many :ledgers, :through => :bank_accounts, :as => :owner TODO see a way to do this
   has_many :periodicities
 
-  validates_presence_of :name, :cnpj, :nickname
-  validates_uniqueness_of :name, :cnpj, :nickname
+  validates_presence_of :name, :cnpj
+  validates_uniqueness_of :name, :cnpj
   validates_as_cnpj :cnpj
-  validates_format_of :nickname, :with => /^[a-z0-9_]*$/, :message => '%{fn} can only contain downcase letters, numbers and "_"'
+
+  # One VirtualCommunity can be reached by many domains
+  has_many :domains, :as => :owner
+
+  # Sets the identifier for this profile. Raises an exception when called on a
+  # existing profile (since profiles cannot be renamed)
+  def identifier=(value)
+    unless self.new_record?
+      raise ArgumentError.new(_('An existing organization cannot be renamed.'))
+    end
+    self[:identifier] = value
+  end
+
+
+  validates_presence_of :identifier, :name
+  validates_uniqueness_of :identifier
+  validates_format_of :identifier, :with => IDENTIFIER_FORMAT
+  validates_exclusion_of :identifier, :in => RESERVED_IDENTIFIERS
+
+  def homepage(reload = false)
+    @homepage = nil if reload
+    @homepage ||= Article.find_by_path(self.identifier)
+  end
 
   acts_as_design
 

@@ -14,6 +14,9 @@ ActionController::Routing::Routes.draw do |map|
   map.connect '', :controller => 'users'
   map.connect 'public', :controller => 'public'
 
+  # content administration 
+  map.cms 'cms/:organization_nickname/:action/:id', :controller => 'cms'
+
   map.connect ':organization_nickname/:controller/:action/:id'
   map.connect 'admin/organizations/:action/:id', :controller => 'organizations'
 
@@ -27,4 +30,7 @@ ActionController::Routing::Routes.draw do |map|
   # documentation browser
   map.connect 'doc', :controller => 'doc'
 
+  # *content viewing*
+  # XXX this route must come last so other tasks have priority over it.
+  map.homepage '/homepage/:organization_nickname/*page', :controller => 'content_viewer', :action => 'view_page'
 end

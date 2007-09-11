@@ -15,7 +15,7 @@ class SuppliersControllerTest < Test::Unit::TestCase
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     @organization_nickname = 'one'
-    @organization = Organization.find_by_nickname 'one'
+    @organization = Organization.find_by_identifier 'one'
     login_as("quentin")
     @system_actor = Supplier.create!(:name => "Another Name to Test", :cpf => '874.923.844-24', :category_id => '20', :email => 'test@test.com', :organization_id => 1)
   end

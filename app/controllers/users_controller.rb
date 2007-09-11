@@ -45,7 +45,7 @@ class UsersController < ApplicationController
       end
       flash[:notice] = _("Logged in successfully")
       if self.current_user.organizations.count == 1
-        redirect_to :controller => 'main', :organization_nickname => self.current_user.organizations.find(:first).nickname
+        redirect_to :controller => 'main', :organization_nickname => self.current_user.organizations.find(:first).identifier
       elsif self.current_user.administrator
         redirect_to :controller => 'organizations'
       else

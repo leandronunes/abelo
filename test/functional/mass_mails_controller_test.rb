@@ -24,7 +24,7 @@ class MassMailsControllerTest < Test::Unit::TestCase
 #    @request    = ActionController::TestRequest.new
 #    @response   = ActionController::TestResponse.new
 #    @organization_nickname = 'one'
-#    @organization = Organization.find_by_nickname 'one' 
+#    @organization = Organization.find_by_identifier 'one' 
 #
 #    @category1 = CustomerCategory.create!(:name => 'category test 1', :organization_id => 1)
 #    @category2 = CustomerCategory.create!(:name => 'category test 2', :organization_id => 1)

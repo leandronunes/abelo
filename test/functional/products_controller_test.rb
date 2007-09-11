@@ -14,7 +14,7 @@ class ProductsControllerTest < Test::Unit::TestCase
     @controller = ProductsController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-    @organization = Organization.find_by_nickname 'one'
+    @organization = Organization.find_by_identifier 'one'
     @category = ProductCategory.find(:first)
     login_as("quentin")
   end

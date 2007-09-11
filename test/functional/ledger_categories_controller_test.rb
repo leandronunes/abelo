@@ -14,7 +14,7 @@ class LedgerCategoriesControllerTest < Test::Unit::TestCase
     @controller = LedgerCategoriesController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-    @organization = Organization.find_by_nickname('one')
+    @organization = Organization.find_by_identifier('one')
     @ledger_category = LedgerCategory.find(:first)
     login_as('quentin')
   end

@@ -15,7 +15,7 @@ class SupplierCategoriesControllerTest < Test::Unit::TestCase
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     @organization_nickname = 'one'
-    @organization = Organization.find_by_nickname 'one'
+    @organization = Organization.find_by_identifier 'one'
     @organization.configuration = Configuration.find(1)
     @supp_cat = SupplierCategory.find(:first)
     login_as("quentin")

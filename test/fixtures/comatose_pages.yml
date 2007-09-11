@@ -1,0 +1,20 @@
+first:
+  id: 1
+  slug: 'one'
+  title: 'some 1'
+second:
+  id: 2
+  slug: 'two'
+  title: 'some 2'
+three:
+  id: 3 
+  slug: 'three'
+  title: 'some 3'
+four:
+  id: 4
+  slug: 'four'
+  title: 'some 4'
+five:
+  id: 5
+  slug: 'five'
+  title: 'some 5'

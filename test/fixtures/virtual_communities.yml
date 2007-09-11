@@ -1,0 +1,12 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+colivre_net:
+  id: 1
+  owner_type: 'Organization'
+  owner_id: 1
+  name: 'toca.net'
+anhetegua_net:
+  id: 2
+  owner_type: 'Organization'
+  owner_id: 2
+  owner_type: 'Organization'
+  name: 'colivre.coop'

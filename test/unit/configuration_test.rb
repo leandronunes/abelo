@@ -25,6 +25,7 @@ class ConfigurationTest < Test::Unit::TestCase
     stock_in
     stock_out
     profile
+    user
   ]
 
   def test_find_all_model

@@ -50,7 +50,7 @@ class PermissionsController < ApplicationController
     permissions = Array.new
     @user = User.new
     @user_profile = Profile.new
-    @profiles = Profile.find(:all)
+    @profiles = @organization.profiles
     @user_profile.permissions = permissions
   end
 

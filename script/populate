@@ -61,7 +61,7 @@ configuration.stock_out_display_fields= StockOutDisplay.available_fields
 configuration.stock_out_display_fields_in_list= ['date', 'amount', 'price', 'type_of']
 UserDisplay.delete_all
 configuration.user_display_fields= UserDisplay.available_fields
-configuration.user_display_fields_in_list= ['login', 'email'] 
+configuration.user_display_fields_in_list= ['login', 'email', 'profiles'] 
 configuration.save!
 
 ###########Categories###################################
@@ -220,10 +220,18 @@ admin = User.create!("administrator"=>true, "login"=>"admin", "email"=>"admin@ex
 ############User Profile##########################
 Profile.destroy_all
 perfil_organization = Profile.new
+perfil_organization.name = 'Gerente da Organização'
 perfil_organization.organization = organization
 perfil_organization.user = gerente
 perfil_organization.template = 'organization_management'
 perfil_organization.save!
+
+perfil_financial = Profile.new
+perfil_financial.name = 'Financeiro'
+perfil_financial.organization = organization
+perfil_financial.user = another_gerente
+perfil_financial.template = 'financial'
+perfil_financial.save!
 
 perfil_admin = Profile.new
 perfil_admin.user = admin

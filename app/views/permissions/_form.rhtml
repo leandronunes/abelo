@@ -16,6 +16,23 @@
       )
   %>
 
+  <%= display_field_edit(item, 'password',
+        :title => _('Password'),
+        :content => password_field('user', 'password')
+      )
+  %>
+
+  <%= display_field_edit(item, 'password_confirmation',
+        :title => _('Confirm Password'),
+        :content => password_field('user', 'password_confirmation')
+      )
+  %>
+
+
+  <%= display_field_edit(item, 'profiles',
+        :title => _('Profiles'),
+        :content => multiple_select('user', 'profile_ids', @profiles) 
+      )
+  %>
 
 <% end %>
-

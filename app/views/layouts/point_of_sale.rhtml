@@ -9,11 +9,6 @@
   <%= design_icon_theme_stylesheet_link_tags %>
   <script type="text/javascript">
 
-    document.onkeyup = function(ev) {
-      if ( ev.keyCode == 13 && !ev.target.form ) document.forms[0].onsubmit();
-      ev.stopPropagation();
-    }
-
     function scroolItemsTable() {
       var div = $("cumpom_sales");
       if ( ( div.scrollTop + div.clientHeight ) < div.scrollHeight ) {

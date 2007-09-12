@@ -14,7 +14,7 @@
 
     <% form_remote_tag :url => { :controller => 'point_of_sale', :action => 'add_item', :id => @sale },
            :update => { :success => 'items_table' },  
-           :success => 'document.forms["add_item_form"].reset(); document.forms["add_item_form"].elements[0].focus()',
+           :success => 'document.forms["add_item_form"].reset(); $("product_id").focus()',
            :failure => ("alert('%s' + \"\\n\\n\"  + request.responseText);" % _('An error occurred when adding the item to this sale:')),
            :html => { :name => 'add_item_form' }   do %>
     
@@ -32,7 +32,7 @@
         </div>
       </div>
       <h1><%= _('Amount') %></h1>
-      <%= text_field_tag('amount', nil, :id => 'amount') %>
+      <%= text_field_tag('amount', nil, :id => 'amount', :value => '1') %>
     </div>
 
     <% end %>
@@ -67,3 +67,24 @@
     </div>
   </div>
   -->
+
+<script type="text/javascript">
+
+  document.onkeyup = function(ev) {
+    if ( ev.keyCode == 13  &&  !ev.target.form ) {
+      document.forms[0].onsubmit()
+    }
+    ev.stopPropagation();
+  }
+  
+  $("amount").onkeypress = function(ev) {
+    if ( ev.keyCode == 9 ) {
+      setTimeout('$("product_id").focus()', 10)
+    }
+  }
+
+  $("product_id").focus();
+  $("amount").value = 1;
+
+</script>
+

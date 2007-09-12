@@ -14,8 +14,8 @@
   height: 100px;
 }
 
-input#password , input#login, input#user_login,
-input#user_email, input#user_password, input#user_password_confirmation {
+#loginform input#password ,#loginform  input#login,#loginform  input#user_login,
+#loginform input#user_email,#loginform  input#user_password,#loginform  input#user_password_confirmation {
   background: url('../images/bginput.png'); no-repeat;
   overflow: hidden;
   border: 0px;

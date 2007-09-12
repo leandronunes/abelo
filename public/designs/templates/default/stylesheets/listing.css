@@ -37,6 +37,7 @@
 .product_image {
   float: left;
 }
+
 .info_list .product_image img {
   float: left;
   margin: 0px 8px 0px -6px;

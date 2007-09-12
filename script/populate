@@ -13,7 +13,7 @@ organization.save!
 configuration = organization.configuration
 ProductDisplay.delete_all
 configuration.product_display_fields= ProductDisplay.available_fields 
-configuration.product_display_fields_in_list= ['name', 'size', 'category' ]
+configuration.product_display_fields_in_list= ['name', 'size', 'category', 'image']
 WorkerDisplay.delete_all
 configuration.worker_display_fields= WorkerDisplay.available_fields 
 configuration.worker_display_fields_in_list= ['name', 'description', 'email' ]

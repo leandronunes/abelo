@@ -301,7 +301,9 @@ module ApplicationHelper
     configuration_class = eval(object.class.to_s + 'Display')
     content_tag(:div,
       [
-       content_tag(:strong, configuration_class.describe(display_field.field) + ": "),
+       unless configuration_class.describe(display_field.field).empty?
+       content_tag(:strong, configuration_class.describe(display_field.field) + ": ")
+       end,
        begin
          self.send("display_field_type_#{content.class.to_s.tableize.singularize}", content)
        rescue

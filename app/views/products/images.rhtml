@@ -1,6 +1,15 @@
-<h2><%= _('Managing images for %s') % @product.description %> <h2>
+<%= title _('Managing images for %s') % @product.name %>
 
-<h3><%= _('Add Image')%></h3>
+<%= error_messages_for 'product' %>
+
+
+<%= subtitle _('Current images')  %>
+
+<% for image in @product.images %>
+  <%= show_image_edit image %>
+<% end %>
+
+<%= subtitle _('Add Image')%>
 
 <% form_tag({:action => 'add_image', :id => @product}, :multipart => true) do %>
   <p>
@@ -11,23 +20,10 @@
     <label for='image_picture'><%= _('Image file') %></label>
   <%= file_column_field 'image', 'picture' %>
   </p>
+
   <div class='button_bar'>
     <%= button 'add',_('Add'), :save %>
     <%= button 'back',_('Back'), :back, :action => 'list' %>
   </div>
-<% end %>
 
-<h3><%= _('Current images')  %></h3>
-
-<table>
-<tr>
-  <% for image in @product.images %>  
-    <td align='center'><%= show_image image %></td>
-  <% end %>
-</tr>
-<tr>
-<% for image in @product.images %>  
-  <td><%= button 'destroy', _('Remove image'), :remove, { :action => 'remove_image', :image_id => image.id, :product_id => @product }, { :confirm => _('Are you sure?') } %></td>
 <% end %>
-</tr>
-</table>

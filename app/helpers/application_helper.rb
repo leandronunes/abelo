@@ -26,10 +26,19 @@ module ApplicationHelper
 
   def show_image(image, size = "50x50")
     link_to(
-      content_tag('span', image_tag(url_for_image_column(image, 'picture', :name => 'thumb'), :size => size)) +
-      content_tag('span', image.description),
+      content_tag('span', image_tag(url_for_image_column(image, 'picture', :name => 'thumb'), :size => size)),
       url_for_image_column(image, 'picture', :name => 'medium'),
       { :class => 'product_image', :popup => [ 'abelo_image', 'height=240,width=320' ] }
+    )
+  end
+
+  def show_image_edit(image, html_options = {})
+    content_tag('div',
+      [
+      show_image(image) +
+      button('del_small', _('Destroy'), :destroy, {:action => 'remove_image', :image_id => image.id, :product_id => @product }, { :confirm => _('Are you sure?') })
+      ],
+      html_options
     )
   end
 
@@ -334,11 +343,8 @@ module ApplicationHelper
     nil
   end
 
-  def display_field_type_image(image, size = "50x50") 
-    link_to(
-      image_tag(url_for_image_column(image, 'picture', :name => 'thumb'), :size => size, :class => 'product_image', :popup => [ 'abelo_image', 'height=240,width=320' ] ),
-      url_for_image_column(image, 'picture', :name => 'medium')
-      )
+  def display_field_type_image(image) 
+    show_image image
   end
 
   def display_field_type_string(content)

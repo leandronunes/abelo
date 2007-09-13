@@ -1,0 +1,3 @@
+<% for supplier in @stock_entry_suppliers %>
+  <%= select( 'entry', 'supplier_id', suppliers.map{ |s| [s.name, s.id] } ) %>
+<% end %>

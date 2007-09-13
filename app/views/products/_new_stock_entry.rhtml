@@ -1,0 +1,45 @@
+<%= error_messages_for :entry %>
+
+<!--[form:stock_entry]-->
+
+<% display_edit_info @entry, :class => 'view_data' do |item | %>
+ 
+  <%= display_field_edit( item, 'supplier',
+        :title => _('Supplier'),
+        :content => select( 'entry', 'supplier_id', @suppliers.map { |s| [ s.name, s.id] } ) 
+    )
+  %>
+
+  <%= display_field_edit( item, 'amount',
+        :title => _('Amount'),
+        :content => text_field( 'entry', 'amount' )
+    )
+  %>
+
+  <%= display_field_edit( item, 'price',
+        :title => _('Buy Price'),
+        :content => text_field( 'entry', 'price' )
+    )
+  %>
+
+  <%= display_field_edit( item, 'date',
+        :title => _('Date'),
+        :content => date_select( 'entry', 'date' )
+    )
+  %>
+
+  <%= display_field_edit( item, 'validity',
+        :title => _('Validity'),
+        :content => date_select( 'entry', 'validity', :include_blank => true )
+    )
+  %>
+
+  <%= display_field_edit( item, 'payment_status',
+        :title => _('Payment status ok?'),
+        :content => check_box( 'entry', 'payment_status' )
+    )
+  %>
+
+  <% end %>
+
+<!--[eoform:stock_entry]-->

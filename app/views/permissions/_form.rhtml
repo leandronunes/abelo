@@ -2,36 +2,36 @@
 
 <!--[form:user_profile]-->
 
-<% display_edit_info @user, :class => 'view_data' do |item| %>
+<% display_edit_info @new_user, :class => 'view_data' do |item| %>
 
   <%= display_field_edit(item, 'login',
         :title => _('Login'),
-        :content => text_field('user', 'login')
+        :content => text_field('new_user', 'login')
       )
   %>
 
   <%= display_field_edit(item, 'email',
         :title => _('E-mail'),
-        :content => text_field('user', 'email')
+        :content => text_field('new_user', 'email')
       )
   %>
 
   <%= display_field_edit(item, 'password',
         :title => _('Password'),
-        :content => password_field('user', 'password')
+        :content => password_field('new_user', 'password')
       )
   %>
 
   <%= display_field_edit(item, 'password_confirmation',
         :title => _('Confirm Password'),
-        :content => password_field('user', 'password_confirmation')
+        :content => password_field('new_user', 'password_confirmation')
       )
   %>
 
 
   <%= display_field_edit(item, 'profiles',
         :title => _('Profiles'),
-        :content => multiple_select('user', 'profile_ids', @profiles) 
+        :content => multiple_select('new_user', 'profile_ids', @profiles) 
       )
   %>
 

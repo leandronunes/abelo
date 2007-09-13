@@ -9,7 +9,6 @@ class PermissionsController < ApplicationController
   def index
     list
     render :action => 'list'
-#    @profiles = @organization.profiles
   end
 
   verify :method => :post, :only => [ :destroy, :create_with_template, :update_template ], 
@@ -17,11 +16,8 @@ class PermissionsController < ApplicationController
 
 
   def list
-
     @query = params[:query]
     @query ||= params[:users][:name] if params[:users]
-#   render :text => params.inspect
-#   return
 
     if @query.nil?
       @users = @organization.users
@@ -47,35 +43,50 @@ class PermissionsController < ApplicationController
   end
 
   def new
-    permissions = Array.new
-    @user = User.new
-    @user_profile = Profile.new
+    @new_user = User.new
     @profiles = @organization.profiles
-    @user_profile.permissions = permissions
   end
 
   #TODO: save a user in the system
   def create
 
-    @user = User.new(params[:user])
-    @user_profile = Profile.new(params[:user_profile])
-    @user_profile.organization = @organization
-    if @user.save
-      flash[:notice] = _('Profile successfully created.')
+    @new_user = User.new(params[:new_user])
+    @profiles = []
+    @profiles = params[:new_user][:profile_ids]
+    @profiles.each do |item|
+      p = Profile.find(item.to_i)
+      @profile = p.clone
+      @profile.user = @new_user 
+      @profile.organization = @organization
+      @profile.save 
+    end
+
+    @user 
+    if @new_user.save
+      flash[:notice] = _('User successfully created.')
       redirect_to :action => 'list'
     else
+   render :text => params.inspect
+   return
 
-#   render :text => params.inspect
-#   return
-
-      @profiles = Profile.find(:all)
+      @profiles = @organization.profiles 
       render :action => 'new'
     end
   end
 
+  def edit
+    begin
+      @new_user = @organization.users.find(params[:id])
+    rescue 
+      @message = _('The user was not found')
+      render :template => 'shared/not_found'
+    end
+    @profiles = @organization.profiles 
+
+  end
 
   def show
-    @user = @organization.users.find(params[:id])
+    @new_user = @organization.users.find(params[:id])
   end
 
 

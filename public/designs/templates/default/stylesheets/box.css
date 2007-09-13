@@ -1,6 +1,6 @@
 #center_box {
   position:relative;
-  background: url('../images/bgcenterbox.png') bottom center no-repeat;
+  background: url('../images/bgcenterbox.png') no-repeat bottom center;
   width:290px;
   padding-top: 10px;
   padding-bottom: 20px;
@@ -13,14 +13,16 @@
 
 #notice {
   position:absolute;
-  background: url('../images/bgcenterbox.png') bottom center no-repeat;
-  width:290px;
-  padding: 20px;
-  margin-left: -145px;
+  background: url('../images/bgcenterbox.png') no-repeat bottom center;
+  margin: -1px 0px 0px -145px;
   left: 50%;
   text-align: center;
   overflow: none;
   z-index: 50;
+}
+#notice div {
+  width:290px;
+  padding: 50px 20px 30px 20px;
 }
 
 #errorExplanation {

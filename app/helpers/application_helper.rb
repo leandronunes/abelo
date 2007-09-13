@@ -67,17 +67,19 @@ module ApplicationHelper
 
 
 
-  def notice_box(msg)
+  def notice_box( msg )
     return if msg.nil?
     content_tag(
-      'div',
-       [
-         content_tag(
-           :div, 
-           msg + javascript_tag(visual_effect(:toggle_slide, 'notice', :duration => 3)),
-             :id => 'notice' 
-         )
-      ].join("\n")
+      :div,
+      [
+        content_tag(
+          :div, 
+          content_tag( :div, msg ),
+          :id => 'notice'
+        ),
+        javascript_tag( visual_effect( :toggle_slide, 'notice', :duration => 8 ) )
+      ],
+      :id => 'wrapper_notice'
     )
   end
 

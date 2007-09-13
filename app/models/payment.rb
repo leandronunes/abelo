@@ -1,7 +1,20 @@
-#TODO see it's needed
-#class Payment < ActiveRecord::Base 
-#  belongs_to :sale
-#  validates_presence_of :sale_id, :value, :date, :received
-#  validates_numericality_of :value
-#  validates_inclusion_of :value, :in => InfiniteSet::POSITIVES, :if => lambda { |p| !(p.cash.nil?) }
-#end
+class Payment < ActiveRecord::Base 
+
+  PAYMENT_METHODS = %w[
+    check
+    credit_card
+    debit_card
+    money
+  ]
+
+   def self.describe(item)
+     {
+      'check' => _('Check'),
+      'credit_card' => _('Credit Card'),
+      'debit_card' => _('Debit Card'),
+      'money' => _('Money')
+     }[item] || item
+   end
+  
+
+end

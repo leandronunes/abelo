@@ -39,7 +39,8 @@ class ApplicationController < ActionController::Base
     ],
     'financial' => [
       'ledger_categories',
-      'ledgers'
+      'ledgers',
+      'bank_accounts'
     ],
     'register' => [
       'products',

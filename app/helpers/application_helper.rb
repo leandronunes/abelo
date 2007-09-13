@@ -182,7 +182,7 @@ module ApplicationHelper
   end
 
   def title(title)
-    content_tag('h1', title)
+    content_tag('h1', title, :class => 'main_title')
   end
 
   def subtitle(subtitle)

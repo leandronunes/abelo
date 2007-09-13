@@ -23,17 +23,20 @@ a {
 }
 
 #user_bar {
+  position: absolute;
+  top: 0px;
+  left: 0px;
   padding: 5px 10px 16px 10px;
 }
 
 #org_bar {
-  position: absolute;
   top: 0px;
   left: 0px;
   padding: 3px 10px 20px 10px;
   min-width: 300px;
   background: #FFFAF0;
-  z-index: 1;
+  position: absolute;
+  
 }
 
 #login_bar {
@@ -63,7 +66,7 @@ a {
   color: #A75;
 }
 
-#header h1.status {
+h1.main_title {
   text-align: center;
   height: 60px;
   max-height:46px;
@@ -72,23 +75,23 @@ a {
   color: #FFF;
   background: url("/designs/templates/default/images/fundo-status.png") 13px 0px;
   margin: 0px;
-  position: relative;
   z-index: 10;
 }
 
 #content {
   position: absolute;
-  top: 0px;
+  top: 25px;
   width: 100%;
   height: 100%;
-  float: left;
 }
 
 #cumpom_bar {
   position: absolute;
+  margin: 0px;
   right: 10px;
-  margin-top: 75px;
   padding-right: 2px;
+  display: inline;
+  list-style: none;
 }
 
 #cumpom_bar span {
@@ -102,7 +105,7 @@ a {
 }
 
 #payment {
-  float: right;
+  float: left;
   display: block;
   background: url('/designs/templates/default/images/icon_sangria.png') top left no-repeat;
   height: 47px;
@@ -113,7 +116,7 @@ a {
 }
 
 #cancel_sale {
-  float: right;
+  float: left;
   display: block;
   background: url('/designs/templates/default/images/icon_sangria.png') top left no-repeat;
   height: 47px;
@@ -123,15 +126,37 @@ a {
   background: url('/designs/templates/default/images/icon_sangria.png') bottom left no-repeat;
 }
 
+#add_cash {
+  float: left;
+  display: block;
+  background: url('/designs/templates/default/images/icon_reforco.png') top no-repeat !important;
+  height: 47px;
+  margin-left: 10px;
+}
+#add_cash:hover {
+  background: url('/designs/templates/default/images/icon_reforco.png') bottom no-repeat !important;
+}
+
+#remove_cash {
+  float: left;
+  display: block;
+  background: url('/designs/templates/default/images/icon_sangria.png') top no-repeat !important;
+  height: 47px;
+  margin-left: 10px;
+}
+#remove_cash:hover {
+  background: url('/designs/templates/default/images/icon_sangria.png') bottom no-repeat !important;
+}
+
 #cumpom_sales {
   height: 100%;
   margin-left: 18px;
   width: 285px;
+  float: left;
   overflow: auto;
 }
 
 #items_table table {
-  margin-top: 100px;
   width: 256px;
 }
 
@@ -179,7 +204,7 @@ td.cell_price {
 }
 
 #sale_details {
-  margin: 40px 10px 0px 315px;
+  margin: 50px 10px 0px 315px;
 }
 
 #product_identification {
@@ -329,27 +354,6 @@ input#amount {
 }
 
 
-#button_reforco {
-  display: block;
-  background: url('/designs/templates/default/images/icon_reforco.png') top no-repeat !important;
-  width: 47px;
-  height: 47px;
-  margin-left: 10px;
-}
-#button_reforco:hover {
-  background: url('/designs/templates/default/images/icon_reforco.png') bottom no-repeat !important;
-}
-
-#button_sangria {
-  display: block;
-  background: url('/designs/templates/default/images/icon_sangria.png') top no-repeat !important;
-  width: 47px;
-  height: 47px;
-  margin-left: 10px;
-}
-#button_sangria:hover {
-  background: url('/designs/templates/default/images/icon_sangria.png') bottom no-repeat !important;
-}
 
 #money_in_change {
   margin-top: 10px;

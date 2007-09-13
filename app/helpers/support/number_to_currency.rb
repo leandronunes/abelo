@@ -1,11 +1,10 @@
 
 def num_to_currency( num )
 
-  # FIXME: get from configuration
   currency_separator = ','
   currency_delimiter = '.' 
 
-  return '0'+ @currency_separator +'00'  if num == nil
+  return '0'+ currency_separator +'00'  if num.nil?
 
   num = ( num * 100 ).round / 100.0
   body = num.to_i
@@ -25,53 +24,3 @@ def num_to_currency( num )
 
 end
 	
-# Teste Ok!
-# puts num_to_currency(nil)
-# puts num_to_currency(0)
-# puts num_to_currency(1)
-# puts num_to_currency(1.01)
-# puts num_to_currency(1.012)
-# puts num_to_currency(1.018)
-# puts num_to_currency(1.112)
-# puts num_to_currency(1.118)
-# puts num_to_currency(1.11)
-# puts num_to_currency(1.99)
-# puts num_to_currency(1.992)
-# puts num_to_currency(1.998)
-# puts num_to_currency(1.9999)
-# puts num_to_currency(12)
-# puts num_to_currency(12.01)
-# puts num_to_currency(12.012)
-# puts num_to_currency(12.018)
-# puts num_to_currency(12.112)
-# puts num_to_currency(12.118)
-# puts num_to_currency(12.11)
-# puts num_to_currency(123)
-# puts num_to_currency(1234)
-# puts num_to_currency(12345)
-# puts num_to_currency(123456)
-# puts num_to_currency(1234567)
-# puts num_to_currency(-1)
-# puts num_to_currency(-1.01)
-# puts num_to_currency(-1.012)
-# puts num_to_currency(-1.018)
-# puts num_to_currency(-1.112)
-# puts num_to_currency(-1.118)
-# puts num_to_currency(-1.11)
-# puts num_to_currency(-1.99)
-# puts num_to_currency(-1.992)
-# puts num_to_currency(-1.998)
-# puts num_to_currency(-1.9999)
-# puts num_to_currency(-12)
-# puts num_to_currency(-12.01)
-# puts num_to_currency(-12.012)
-# puts num_to_currency(-12.018)
-# puts num_to_currency(-12.112)
-# puts num_to_currency(-12.118)
-# puts num_to_currency(-12.11)
-# puts num_to_currency(-123)
-# puts num_to_currency(-1234)
-# puts num_to_currency(-12345)
-# puts num_to_currency(-123456)
-# puts num_to_currency(-1234567)
-

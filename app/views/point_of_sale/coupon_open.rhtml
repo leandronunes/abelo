@@ -1,3 +1,25 @@
+
+<%= notice_box flash[:notice] %>
+
+<%= title _('Coupon Open') %>
+
+  <ul id="cumpom_bar">
+    <li>
+      <%= link_to content_tag('span', _('Cancel sale')), {:controller => 'point_of_sale', :action => 'coupon_cancel', :id => @sale}, :id => 'cancel_sale', :accesskey => 'c' ,  :confirm => _('Are you sure you want to cancel this sale?') %>
+    </li>
+    <li>
+    <%= link_to content_tag('span', _('Payment')), {:controller => 'point_of_sale', :action => 'payment', :id => @sale}, :accesskey => 'p',  :id => 'payment' %>
+    </li>
+  </ul>
+
+
+  <div id="cumpom_sales">
+    <div id="items_table">
+      <%= render :partial => 'point_of_sale/table' %>
+    </div>
+  </div>
+
+
 <div id="sale_details">
 
 <%=error_messages_for 'sale' %>
@@ -36,18 +58,6 @@
     </div>
 
     <% end %>
-
-    <div id="money_in_change">
-      <div id="money_in">
-        <h1>Valor Recebido</h1>
-        <label for="money_in">R$</label><input id="money_in" accesskey="q" name="money_in" type="text" />
-      </div>
-      <div id="change_money">
-        <h1>Troco</h1>
-        <div id="value_change">
-        </div>
-      </div>
-    </div><!--money_in_change -->
 
   </div><!-- add_item_panel -->
 

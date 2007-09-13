@@ -2,22 +2,13 @@
    "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-  <title>Abelo &rarr; <%= @organization.name %> &rarr; <%= @controller.controller_name  %> </title>
+  <title> <%= _('Abelo') %> </title>
   <%= javascript_include_tag :defaults %>
   <%= javascript_include_tag 'showAccessKeys' %>
+  <%= javascript_include_tag 'scroolItemsTable' %>
   <%= stylesheet_link_tag 'point_of_sale' %>
   <%= design_icon_theme_stylesheet_link_tags %>
-  <script type="text/javascript">
-
-    function scroolItemsTable() {
-      var div = $("cumpom_sales");
-      if ( ( div.scrollTop + div.clientHeight ) < div.scrollHeight ) {
-        div.scrollTop++;
-        setTimeout("scroolItemsTable()",50);
-      }
-    }
-
-  </script>
+  <link rel="shortcut icon" href="<%=image_path('logo.ico')%>" />
 </head>
 
 <body onload="setInterval('scroolItemsTable()',1000)">
@@ -38,45 +29,23 @@
 
   </div><!-- user_bar -->
 
-  <h1 class="status"> CAIXA ABERTO </h1>
-
 </div><!-- header -->
 
 
 <div id="content">
 
-  <div id="cumpom_bar">
-    <%= link_to content_tag('span', _('Cancel sale')), {:controller => 'point_of_sale', :action => 'cancel', :id => @sale}, :id => 'cancel_sale', :confirm => _('Are you sure you want to cancel this sale?') %>
-    <%= link_to content_tag('span', _('Payment')), {:controller => 'point_of_sale', :action => 'payment', :id => @sale}, :id => 'payment' %>
-  </div>
-
-  <div id="cumpom_sales">
-    <div id="items_table">
-      <%= render :partial => 'point_of_sale/table' %>
-    </div>
-  </div>    
+  <%= yield %>
 
 </div><!-- content -->
 
-<!--
-<p style="color: green"><%= flash[:notice] if flash[:notice] %></p>
--->
-
-  <%= yield %>
 
 <div id="footer">
 
-<div id="pointsales_bar">
-  <ul>
-    <li><a href="#" class="button_main" id="button_reforco" accesskey="r"><span>Reforço</span></a></li>
-    <li><a href="#" class="button_main" id="button_sangria" accesskey="s"><span>Sangria</span></a></li>
-  </ul>
-</div><!-- pointsales_bar -->
-<div id="banner_bottom"><span>Abelo</span></div>
+<div id="banner_bottom"><span> <%= _('Abelo') %> </span></div>
 
 </div><!-- footer -->
 
-<a href="javascript:showAccessKeys({intro:'<%= _('This are the access keys on this page:') %>'})" id="show_access_keys" class="button help" accesskey="h" title="<%= _('Access Keys Help') %>"><span><%= _('Access Keys Help') %></span></a>
+<%= link_to_function content_tag(:span,_('Access Keys Help')), "showAccessKeys({intro: '#{_('This are the access keys on this page:')}'})", :id => 'show_access_keys', :class => 'button help', :accesskey => 'h' %> 
 
 </body>
 

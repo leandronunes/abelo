@@ -13,12 +13,34 @@ class LedgerCategory < ActiveRecord::Base
 
   validates_presence_of :name
   validates_presence_of :type_of
+  validates_presence_of :payment_method
+  validates_inclusion_of :payment_method, :in => Payment::PAYMENT_METHODS
   validates_presence_of :organization_id
   validates_uniqueness_of :name
   validates_inclusion_of :type_of, :in => TYPE_OF.keys
 
-  def self.configuration_class
-    LedgerCategoryDisplay
+  serialize :settings
+
+  def settings
+    self[:settings] ||= {}
+  end
+
+  def is_store
+    self.settings['is_store']
+  end
+
+  def is_store= value
+    value = value == 'true' ? true : false
+    self.settings['is_store'] = value
+  end
+
+  def is_operational
+    self.settings['is_operational']
+  end
+
+  def is_operational= value
+    value = value == 'true' ? true : false
+    self.settings['is_operational'] = value
   end
 
 

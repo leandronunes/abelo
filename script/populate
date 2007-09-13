@@ -305,8 +305,8 @@ saving_account.save!
 
 ########### Ledger Category ###################
 LedgerCategory.delete_all
-ledger_category_expense = LedgerCategory.create!(:name => 'Limpeza', :organization => organization, :type_of => LedgerCategory::TYPE_OF_EXPENSE)
-ledger_category_income = LedgerCategory.create!(:name => 'Venda Produto', :organization => organization, :type_of => LedgerCategory::TYPE_OF_INCOME)
+ledger_category_expense = LedgerCategory.create!(:name => 'Limpeza', :organization => organization, :type_of => LedgerCategory::TYPE_OF_EXPENSE, :payment_method => 'money')
+ledger_category_income = LedgerCategory.create!(:name => 'Venda Produto', :organization => organization, :type_of => LedgerCategory::TYPE_OF_INCOME, :payment_method => 'money')
 
 #############################
 # Period

@@ -12,7 +12,6 @@
   <%= display_field_edit(item, 'type_of',
         :title => type_of_ledger_category('I'),
         :content => radio_button('category', 'type_of', 'I'),
-        :content => radio_button('category', 'type_of', 'O'),
         :html_options => {:style => 'clear: left;'}
       )
   %>
@@ -23,6 +22,13 @@
       )
   %>
   
+  <%= display_field_edit(item, 'payment_method',
+        :title => _('Payment Method'),
+        :content =>  select('category', 'payment_method', Payment::PAYMENT_METHODS.map{|p| [Payment.describe(p), p]}, :include_blank => true),
+        :html_options => {:style => 'clear: left;'}
+      )
+  %>
+
   
   <%= display_field_edit(item, 'name',
         :title => _('Name'),
@@ -51,14 +57,14 @@
 
   <%= display_field_edit(item, 'is_operational',
         :title => _('Is operational?'),
-        :content => check_box('category', 'is_operational'),
+        :content => check_box('category', 'is_operational', {}, 'true', 'false'),
         :html_options => {:style => 'clear: left;'}
       )
   %>
 
   <%= display_field_edit(item, 'is_store',
         :title => _('Is operation of store'),
-        :content => check_box('category', 'is_store')
+        :content => check_box('category', 'is_store', {}, 'true', 'false')
       )
   %>
 

@@ -1,14 +1,11 @@
 class CreatePayments < ActiveRecord::Migration
   def self.up
     create_table :payments do |t|
-      t.column :sale_id,                    :integer, :null => false
-      t.column :type,                       :string,  :null => false
-      t.column :value,                      :float,   :null => false
-      t.column :date,                       :date,    :null => false
-      t.column :received,                   :boolean, :null => false
-
-      # payment with cash
-      t.column :cash,                       :float
+      t.column :date,                       :string, :null => false
+      t.column :value,                      :float, :null => false
+      t.column :type,                       :string, :null => false
+      t.column :owner_type,                 :string, :null => false
+      t.column :owner_id,                   :integer, :null => false
 
       # payment with credit card
       t.column :credit_card_number,         :string
@@ -32,13 +29,6 @@ class CreatePayments < ActiveRecord::Migration
       t.column :automatic_debit_owner_name, :string
       t.column :automatic_debit_account_agency, :string
       t.column :automatic_debit_account_number, :string
-
-      #for credit card and check
-      t.column :parcels_number,             :int  
-
-      #foreseen days for payment 
-      t.column :days,                       :int     
-
     end
   end
 

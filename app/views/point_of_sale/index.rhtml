@@ -1,14 +1,22 @@
-<%= title _("Point of sale") %>
+<%= title _("Till Open") %>
 
-<% unless @pending_sales.empty? %>
-  <p><%= _('Pending sales:') %>
-  <ul>
-  <% @pending_sales.each do |sale| %>
-    <li><%= link_to sale.id, :action => 'main', :id => sale.id %></li>
-  <% end %>
+  <ul id="cumpom_bar">
+    <li>
+      <%= link_to(content_tag('span', _('Add Cash')), {:controller => 'point_of_sale', :action => 'add_cash', :id => @sale}, :id => "add_cash", :accesskey => "r", :class => 'button_main') %>
+   </li>
+    <li>
+      <%= link_to content_tag('span', _('Remove Cash')), {:controller => 'point_of_sale', :action => 'remove_cash', :id => @sale}, :id => 'remove_cash', :accesskey => 's', :class => 'button_main' %>
+    </li>
   </ul>
+
+<% unless @pending_sale.nil? %>
+  <p><%= _('Pending sales:') %>
+    <%= link_to @pending_sale.id, :action => 'coupon_open', :id => @pending_sale.id %>
+  </p>
 <% end %>
 
 <div class='button_bar'>
-  <%= button _('New sale'), :add, { :action => 'new' }, { :method => 'post' } %>
+vem
+  <%= link_to _('New sale'), { :action => 'coupon_open' }, { :method => 'post' } %>
+vem
 </div>

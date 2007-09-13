@@ -2,6 +2,7 @@ class CreateProducts < ActiveRecord::Migration
   def self.up
     create_table :products do |t|
       t.column :name,            :string, :null => false
+      t.column :code,            :string
       t.column :size,            :string
       t.column :color,           :string
       t.column :description,     :text

@@ -23,6 +23,25 @@ class LedgerCategoryTest < Test::Unit::TestCase
     assert !l.errors.invalid?(:name)
   end
 
+  def test_presence_of_payment_method
+    l = LedgerCategory.new
+    l.valid?
+    assert l.errors.invalid?(:payment_method)
+    l.payment_method = 'money'
+    l.valid?
+    assert !l.errors.invalid?(:payment_method)
+  end
+
+  def test_inclusion_of_payment_method_on_defined_payment_methods
+    l = LedgerCategory.new
+    l.valid?
+    assert l.errors.invalid?(:payment_method)
+    l.payment_method = 'wrong'
+    l.valid?
+    assert l.errors.invalid?(:payment_method)
+  end
+
+
   def test_presence_uniqueness_of_name
     l = LedgerCategory.new
     l.name = @ledger_category.name

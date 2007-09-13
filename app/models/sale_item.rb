@@ -3,7 +3,7 @@ class SaleItem < ActiveRecord::Base
   belongs_to :sale
   belongs_to :product
 
-  validates_presence_of :sale_id, :product_id, :amount
+  validates_presence_of :sale_id, :product_id, :amount, :unitary_price
 
   alias :active_record_set_product :product=
 

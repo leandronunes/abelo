@@ -1,21 +1,31 @@
 class Sale < ActiveRecord::Base
+
+  STATUS_OPEN = 0
+  STATUS_CANCELLED = 2
+  STATUS_CLOSED = 1  # total or parcial credit
+
+  ALL_STATUS = [ STATUS_OPEN,STATUS_CANCELLED, STATUS_CLOSED ]
+
   belongs_to :organization
   belongs_to :customer
-  belongs_to :user
+  belongs_to :salesman, :class_name => 'User', :foreign_key => :user_id
   has_many :payments
   has_many :items, :class_name => 'SaleItem'
 
   validates_presence_of :date, :organization_id, :user_id
+  validates_inclusion_of :status, :in => ALL_STATUS
 
-  STATUS_OPEN = 0
-  STATUS_CLOSED = 1  # total or parcial credit
-  STATUS_CANCELLED = 2
-  STATUS_PAID = 3
 
-  # gives all pending (open) sales for a given organization and user.
+  def validate
+    if !Sale.pending(self.organization, self.salesman).nil? and Sale.pending(self.organization, self.salesman) != self
+      errors.add(:status, _('You cannot have two pendings sale'))
+    end
+  end
 
+  # gives the pending (open) sales for a given organization and user.
   def self.pending(org, user)
-    self.find(:all, :conditions => [ 'organization_id = ? AND user_id = ? AND status = ?', org.id, user.id, STATUS_OPEN ])
+    return nil if org.nil? or user.nil?
+    self.find(:first, :conditions => [ 'organization_id = ? AND user_id = ? AND status = ?', org.id, user.id, STATUS_OPEN ])
   end
 
   # is this sale open?
@@ -31,15 +41,11 @@ class Sale < ActiveRecord::Base
   # cancels a sale
   #
   # TODO: any further stuff that needs to be done when a sale is cancelled
+  #       See if it's needs to remove all items associated to a coupon in de cancel! action
   def cancel!
     raise ArgumentError.new('Only open sales can be cancelled') if self.status != STATUS_OPEN
-    if self.items.empty?
-      self.destroy
-      return false
-    else
-      self.status = STATUS_CANCELLED
-      self.save
-    end
+    self.status = STATUS_CANCELLED
+    self.save
   end
 
   # closes a sale. No item can be added to it anymore

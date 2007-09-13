@@ -7,11 +7,11 @@
 #Uncomment this when the version 0.3.1 be implemented
 #
 #
-#      'stock'                               => _('Stock'),
+      'stock'                               => _('Stock'),
 #      'store'                               => _('Store'),
-#      'permissions'                         => _('User administration'),
+      'permissions'                         => _('User administration'),
       'system_actors'                       => _('Registers'),
-#      'point_of_sale'                       => _('Point of sale'),
+      'point_of_sale'                       => _('Point of sale'),
 #      'mass_mails'                          => _('Mass mail'),
       'ledgers'                             => _('Financial'),
 #      'documents'                           => _('Documents'),

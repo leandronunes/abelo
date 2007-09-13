@@ -9,14 +9,17 @@
     </li>
   </ul>
 
-<% unless @pending_sale.nil? %>
-  <p><%= _('Pending sales:') %>
-    <%= link_to @pending_sale.id, :action => 'coupon_open', :id => @pending_sale.id %>
-  </p>
+<% if !@pending_sale.nil? %>
+
+  <div id="pending_sale">
+    <%= link_to '<span>'+_('You have a pending sale!')+'</span>', :action => 'coupon_open', :id => @pending_sale.id %>
+  </div>
+
+<% else %>
+
+  <div id="new_sale">
+    <%= link_to '<span>'+_('New sale')+'</span>', { :action => 'coupon_open' }, { :method => 'post' } %>
+  </div>
+
 <% end %>
 
-<div class='button_bar'>
-vem
-  <%= link_to _('New sale'), { :action => 'coupon_open' }, { :method => 'post' } %>
-vem
-</div>

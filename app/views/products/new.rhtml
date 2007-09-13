@@ -2,5 +2,22 @@
 
 <% form_tag :action => 'create' do %>
   <%= render :partial => 'form' %>
+  <label><%= _('Add to stock?') %><%= check_box_tag 'new_entry' %></label>
+
+  <div id='stock_entry'>
+    <% if @entry %>
+      <%= subtitle _('New stock entry for %s') % @product.name %>
+      <%= render :partial => 'new_stock_entry' %>
+    <% end %>
+  </div>
+
   <%= display_new_info_options @product %> 
+
+  <%= observe_field('new_entry',
+    :update => 'stock_entry',
+    :url => {:action => 'new_stock_entry', :id => @product.id},
+    :with => "'checked=' + escape(value) "
+  ) %>
+
 <% end %>
+

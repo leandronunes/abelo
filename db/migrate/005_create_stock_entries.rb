@@ -21,7 +21,7 @@ class CreateStockEntries < ActiveRecord::Migration
       # entering/leaving the stock for being sold), or 'production' (meaning
       # that the item are getting into the stock to be used in a production
       # process.
-      t.column :purpose, :string, :null => false
+      t.column :purpose, :string
       # the date when the entry is created
       t.column :date, :date, :null => false
 

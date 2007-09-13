@@ -42,21 +42,40 @@ class ProductsController < ApplicationController
   def new
     @product = Product.new
     @product.organization = @organization
-    @suppliers = @organization.suppliers
     @sizes = Size.find(:all)
     @colors = Color.find(:all)
     @units = Unit.find(:all)
+    @suppliers = @organization.suppliers
+  end
+
+  def new_stock_entry
+    @entry = StockIn.new
+    @suppliers = @organization.suppliers
+    if params[:checked] == "1"
+      render :partial => 'new_stock_entry'
+    else
+      render :nothing => true
+    end
   end
 
   def create
     @product = Product.new(params[:product])
     @product.organization = @organization
+    @entry = StockIn.new(params[:entry])
     if @product.save
+      if @entry  
+        @entry.product = @product
+        if @entry.save
+          flash[:notice] = _('The product was successfully created and added to stock.')
+          redirect_to :action => 'list'
+          return
+        end
+      end
+
       flash[:notice] = _('The product was successfully created.')
       redirect_to :action => 'list'
+
     else
-      render :text => @product.errors
-      return
       @suppliers = @organization.suppliers
       @sizes = Size.find(:all)
       @colors = Color.find(:all)
@@ -99,22 +118,6 @@ class ProductsController < ApplicationController
     redirect_to :action => 'list'
   end
 
-#TODO It's not used yet
-#
-#  def reset
-#    begin 
-#      @product = Product.find(params[:id])
-#    rescue
-#      @product = Product.new
-#    end
-#    @product.organization = @organization
-#    @suppliers = @organization.suppliers
-#    @sizes = Size.options
-#    @colors = Color.options
-#    @units = Unit.options
-#    render :partial => 'form'
-#  end
-
   def images
     @product = @organization.products.find(params[:id])
     @image = Image.new
@@ -138,35 +141,5 @@ class ProductsController < ApplicationController
     redirect_to :action => 'images', :id => params[:product_id]
   end
 
-  def new_stock_entry
-    @product = Product.new(params[:product])
-    @product.organization = @organization
-    if @product.save
-      flash[:notice] = _('The product was successfully created.')
-      @product = @organization.products.find(params[:id])
-      @entry = StockIn.new
-      @entry.product = @product
-      render :template => 'stock/new'
-    else
-      @suppliers = @organization.suppliers
-      @sizes = Size.find(:all)
-      @colors = Color.find(:all)
-      @units = Unit.find(:all)
-      render :action => 'new'
-    end
-  end
-
-  def add_to_stock
-    @product = @organization.products.find(params[:id])
-    @entry = StockIn.new(params[:entry])
-    @entry.product = @product
-    if @entry.save
-      flash[:notice] = 'Stock entry was successfully created and was added to cash flow too.'
-      redirect_to :action => 'history', :id => @product
-    else
-      render :action => 'new'
-    end
-  
-  end
 
 end

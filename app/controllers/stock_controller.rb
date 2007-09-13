@@ -48,7 +48,7 @@ class StockController < ApplicationController
     @entry = StockIn.new(params[:entry])
     @entry.product = @product
     if @entry.save
-      flash[:notice] = 'Stock entry was successfully created and was added to cash flow too.'
+      flash[:notice] = 'Stock entry was successfully created.'
       redirect_to :action => 'history', :id => @product
     else
       render :action => 'new'

@@ -17,10 +17,11 @@
   %>
 
   <%= display_field_edit(item, 'suppliers',
-        :title => _('Suppliers'),
-        :content => multiple_select('product', 'supplier_ids', @suppliers )
-      )
+      :title => _('Suppliers'),
+      :content => multiple_select('product', 'supplier_ids', @suppliers )
+    )
   %>
+
 
   <%= display_field_edit(item, 'size',
         :title => _('Size'),

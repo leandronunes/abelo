@@ -10,7 +10,12 @@ class Ledger < ActiveRecord::Base
   belongs_to :category, :class_name => 'LedgerCategory',  :foreign_key => 'category_id'
   belongs_to :schedule_ledger
   belongs_to :bank_account
+  belongs_to :owner, :polymorphic => true
+  belongs_to :payment
+#TODO we have to validate the presence of owner in all cases
 
+  validates_presence_of :owner_id
+  validates_presence_of :owner_type
   validates_presence_of :category_id
   validates_presence_of :foreseen_value
   validates_presence_of :effective_value, :if => lambda{ |ledger| not ledger.is_foreseen? }
@@ -136,6 +141,8 @@ class Ledger < ActiveRecord::Base
 
   protected
   def validate
+    self.errors.add(:payment_id, _('You cannot save a sale ledger without a payment.') ) if ((self.owner === Sale) and (self.payment.nil?))
+
     self.errors.add(:value, _("The value should be at least 0.01" )) if value.nil? || value <= 0.00
 
     self.errors.add(:date, _("Date cannot be set" )) unless self[:date].nil?

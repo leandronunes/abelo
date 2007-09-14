@@ -5,6 +5,7 @@ class Product < ActiveRecord::Base
   has_many :images
   has_and_belongs_to_many :suppliers
   has_many :stock_entries
+  validates_uniqueness_of :code, :scope => :organization_id
 
   validates_presence_of :name, :sell_price, :unit
 

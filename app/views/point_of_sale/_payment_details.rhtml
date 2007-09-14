@@ -1,0 +1,28 @@
+
+<div id="payment_details">
+    <p><label name="sale_customer"> <%= _('Customer') %> </label>
+      <%= select_item 'sale', 'customer_id', @customers %>
+    </p>
+
+    <%= observe_field('sale_customer_id',
+          :update => 'payment_details',
+          :url => {:action => 'save_customer'},
+          :with => "'customer_id=' + escape(value) + '&sale_id=' + escape(#{@sale.id})"
+    )%>
+
+
+    <p><label name="sale_payment_method"> <%= _('Payment Method') %> </label>
+      <%= select('sale', 'payment_method', Payment::PAYMENT_METHODS.map{|p| [Payment.describe(p), p.to_s]}, :include_blank => true) %> 
+    </p>
+    <%= observe_field('sale_payment_method',
+          :update => 'payment',
+          :url => {:action => 'payment_method'},
+          :with => "'payment_method=' + escape(value) + '&sale_id=' + escape(#{@sale.id})"
+    )%>
+
+    <div id="payment">   
+      <%= render :partial => 'payment_method'%>
+    </div>
+
+</div><!-- payment_details -->
+

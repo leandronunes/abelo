@@ -1,18 +1,3 @@
-# == Schema Information
-# Schema version: 35
-#
-# Table name: products
-#
-#  id              :integer       not null, primary key
-#  description     :string(255)   not null
-#  size            :string(255)   
-#  color           :string(255)   
-#  sell_price      :float         not null
-#  unit            :string(255)   not null
-#  organization_id :integer       not null
-#  category_id     :integer       not null
-#
-
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 first:
   id: 1
@@ -22,6 +7,7 @@ first:
   unit: 'kg'
   organization_id: 1
   category_id: 5
+  code: 1
 second:
   id: 2
   name: 'Diapers'
@@ -30,6 +16,7 @@ second:
   unit: 'un'
   organization_id: 2
   category_id: 6
+  code: 2
 third:
   id: 3
   name: 'Water'
@@ -38,6 +25,7 @@ third:
   unit: 'un'
   organization_id: 1
   category_id: 5
+  code: 3
 fourth:
   id: 4
   name: 'Juice'
@@ -46,6 +34,7 @@ fourth:
   unit: 'un'
   organization_id: 1
   category_id: 5
+  code: 4
 fifth:
   id: 5
   name: 'Bean'
@@ -54,6 +43,7 @@ fifth:
   unit: 'kg'
   organization_id: 1
   category_id: 3
+  code: 5
 sixth:
   id: 6
   name: 'TV'
@@ -62,6 +52,7 @@ sixth:
   unit: 'un'
   organization_id: 1
   category_id: 2
+  code: 6
 seventh:
   id: 7
   name: 'Car'
@@ -70,6 +61,7 @@ seventh:
   unit: 'un'
   organization_id: 2
   category_id: 6
+  code: 7
 eighth:
   id: 8
   name: 'Bike'
@@ -78,3 +70,4 @@ eighth:
   unit: 'un'
   organization_id: 4 
   category_id: 9
+  code: 8

@@ -3,11 +3,38 @@ require File.dirname(__FILE__) + '/../test_helper'
 class ProductTest < Test::Unit::TestCase
   
   def setup
+    @org2 = Organization.find(:first)
     @org = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :identifier => 'org')
     @cat_prod = ProductCategory.create(:name => 'Category for testing', :organization_id => @org.id)
     @cat_supp = SupplierCategory.create(:name => 'Category for testing', :organization_id => @org.id)
     @supplier = Supplier.create!(:name => 'Hering', :cnpj => '58178734000145', :organization_id => @org.id, :email => 'contato@hering.com', :category_id => @cat_supp.id)
   end
+
+  def test_setup
+    assert @org2.valid?
+    assert @org.valid?
+    assert @cat_prod.valid?
+    assert @cat_supp.valid?
+    assert @supplier.valid?
+  end
+
+  def test_uniqueness_of_code
+    Product.delete_all
+    Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization => @org, :category_id => @cat_prod.id, :code => 2)
+    product = Product.new(:code => 2, :organization => @org)
+    product.valid?
+    assert product.errors.invalid?(:code)
+        
+  end
+
+  def test_scope_of_code
+    Product.delete_all
+    Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization => @org, :category_id => @cat_prod.id, :code => 2)
+    product = Product.new(:code => 2, :organization => @org2)
+    product.valid?
+    assert !product.errors.invalid?(:code)
+  end
+
 
   def test_relation_with_organization
     product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
@@ -83,8 +110,8 @@ class ProductTest < Test::Unit::TestCase
 
   def test_full_text_search
     Product.delete_all
-    product1 = Product.create!(:name => 'test product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
-    product2 = Product.create!(:name => 'te_product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
+    product1 = Product.create!(:name => 'test product', :sell_price => 2.0, :unit => 'kg', :organization => @org, :category => @cat_prod, :code => 1)
+    product2 = Product.create!(:name => 'te_product', :sell_price => 2.0, :unit => 'kg', :organization => @org, :category => @cat_prod, :code => 2)
     products = Product.full_text_search('test*')
     assert_equal 1, products.length
     assert products.include?(product1)

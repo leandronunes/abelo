@@ -1,19 +1,31 @@
-<table>
-  <tr>
-    <th class="cell_desc"><div><%= _('Product') %><div>&nbsp;</div></div></th>
-    <th class="cell_un_price"><div><%= _('Unitary price') %><div>&nbsp;</div></div></th>
-    <th class="cell_amount"><div><%= _('Amount') %><div>&nbsp;</div></div></th>
-    <th class="cell_price"><div><%= _('Price') %><div>&nbsp;</div></div></th>
-  </tr>
-  <% @sale.items.each do |item| %>
-  <tr>
-    <td class="cell_desc"><%= item.product.description %></td>
-    <td class="cell_un_price"><%= num_to_currency item.unitary_price %></td>
-    <td class="cell_amount">&times; <%= item.amount.round %></td>
-    <td class="cell_price"><%= num_to_currency item.price %></td>
-  </tr>
-  <% end %>
-  <tr> <td colspan="4" class="cell_tot"> <%= _("Total: %s" ) % num_to_currency(@total) %> </td></tr>
-</table>
 
+<div id="cumpom_sales">
+  <div id="items_table">
+
+    <table>
+      <tr>
+        <th class="cell_code"><div><%= _('Code') %><div>&nbsp;</div></div></th>
+        <th class="cell_desc"><div><%= _('Product') %><div>&nbsp;</div></div></th>
+        <th class="cell_un_price"><div><%= _('Unitary price') %><div>&nbsp;</div></div></th>
+        <th class="cell_amount"><div><%= _('Amount') %><div>&nbsp;</div></div></th>
+        <th class="cell_price"><div><%= _('Price') %><div>&nbsp;</div></div></th>
+      </tr>
+      <% @sale.items.each do |item| %>
+      <tr>
+        <td class="cell_desc"> <%= item.product_code %> </td>
+        <td class="cell_desc"> <%= item.product.name %> </td>
+        <td class="cell_un_price"><%= num_to_currency item.unitary_price %></td>
+        <td class="cell_amount">&times; <%= item.amount.round %></td>
+        <td class="cell_price"><%= num_to_currency item.price %></td>
+      </tr>
+      <% end %>
+      <tr> <td colspan="4" class="cell_tot"> <%= _("Total: %s" ) % num_to_currency(@total) %> </td></tr>
+      <tr> <td colspan="4" class="cell_tot"> <%= _("Payments" ) %> </td></tr>
+      <% @payments.each do |p| %>
+        <tr> <td colspan="2" class="cell_payment_type"> <%= p.describe %> </td></tr>
+        <tr> <td colspan="2" class="cell_payment_value"> <%= p.value %> </td></tr>
+      <% end %>
+    </table>
+  </div>
+</div>
 

@@ -340,7 +340,7 @@ td.cell_price {
   margin: 5px 60px 5px 0px;
 }
 
-input#product_id {
+input#product_code {
   font-weight: bold;
   font-size: 30px;
   width: 99%;

@@ -1,0 +1,35 @@
+
+<div id="product_identification">
+  <%= @product.name unless @product.nil? %>
+</div>
+
+<div id="search_product">
+  <%= link_to content_tag('span', 'Search product'), {}, :class => "button button_search", :accesskey => "p" %>
+</div>
+    
+<% form_remote_tag :url => { :action => 'coupon_add_item', :id => @sale }, :update => 'sale' do %>
+        
+  <%= submit_tag '', :title => _('Add item'), :id => 'button_add_product', :accesskey => 'x' %>
+        
+  <div id="code_product">
+    <h1><%= _('Product code') %></h1>
+    <%= text_field('sale_item', 'product_code',:accesskey => "c", :id => 'product_code') %>
+    <%= observe_field('product_code',
+            :update => 'add_item_panel',
+            :url => {:action => 'refresh_product'},
+            :with => "'product_code=' + escape(value) + '&id=' + escape(#{@sale.id})"
+         )
+    %>
+  </div>
+  <div id="insert_amount">
+    <div id="result_amount">
+      <h1><%= _('Unitary Value') %></h1>
+      <div id="value_product">&nbsp;
+        <%= @product.sell_price unless @product.nil? %>
+      </div>
+    </div>
+    <h1><%= _('Amount') %></h1>
+    <%= text_field('sale_item', 'amount', :id => 'amount', :value => '1') %>
+  </div>
+<% end %>
+</div><!-- add_item_panel -->

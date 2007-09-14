@@ -3,14 +3,15 @@ class PointOfSaleController < ApplicationController
   needs_organization
   layout 'point_of_sale'
 
-  verify :method => :post, :only => [ :new, :add_item, :set_customer, :cancel ], :redirect_to => { :action => :index }
+  verify :method => :post, :only => [ :new, :add_item, :refresh_product, :set_customer, :cancel ], :redirect_to => { :action => :index }
 
   def index
     @pending_sale = Sale.pending(@organization, current_user)
   end
 
+
   def coupon_open
-    pending_sale = Sale.pending(@organization, current_user)
+    pending_sale = Sale.pending(@organization, current_user)    
     if pending_sale.nil?
       @sale = Sale.new
       @sale.date = Date.today
@@ -21,30 +22,37 @@ class PointOfSaleController < ApplicationController
       @sale = pending_sale
       flash[:notice] = _('You have a pending sale. Close or Cancel it before open a new one')
     end
+    @sale_item = SaleItem.new
+    @payments = @sale.payments
     @total = @sale.total_value
   end
 
-#  def add_item
-#    begin
-#      @sale = @organization.sales.find(params[:id])
-#      item = SaleItem.new
-#      item.product = @organization.products.find(params[:product_id])
-#      item.amount = params[:amount]
-#      @sale.items << item
-#      @total = @sale.total_value
-#      render :partial => 'table', :locals => { :item => item }
-#    rescue StandardError
-#      render :text => $!.to_s, :status => 500, :layout => false
-#    end
-#  end
-#
-#  def set_customer
-#    sale = @organization.sales.find(params[:id])
-#    sale.customer = @organization.customers.find(params[:customer_id])
-#    sale.save
-#    render :nothing => true
-#  end
-#
+
+  def refresh_product
+    @sale = @organization.sales.find(params[:id])
+    @product = @organization.products.find_by_code(params[:product_code])
+    @sale_item = SaleItem.new
+    @sale_item.product = @product
+    flash[:notice] = _('This is not a product code valid') if @product.nil?
+    render :partial => 'product_info'
+  end
+
+  def coupon_add_item
+    @sale = @organization.sales.find(params[:id])
+    @total = @sale.total_value
+    @payments = @sale.payments
+    begin
+      item = SaleItem.new(params[:sale_item])
+      item.product = @organization.products.find_by_code(params[:sale_item][:product_code])
+      item.valid?
+      (item.errors.length != 1) ? raise (ActiveRecord::RecordInvalid) :  @sale.items << item 
+    rescue 
+#TODO display a notice when something wrong happen
+      flash[:notice] = _('There is no product with this code')
+    end
+    render :partial => 'sale'
+  end
+
 
   def coupon_cancel
     begin
@@ -60,6 +68,60 @@ class PointOfSaleController < ApplicationController
     end
   end
 
+  def payment
+    @sale = @organization.sales.find(params[:id])
+    @sale.payment_method = 'money'
+    @payments = @sale.payments
+    @customers = @organization.customers
+    @total = @sale.total_value 
+    @payment_methods = Payment::PAYMENT_METHODS
+  end
+
+  def save_customer
+    @sale = @organization.sales.find(params[:sale_id])
+    @customers = @organization.customers
+    @total = @sale.total_value 
+    @payment_methods = Payment::PAYMENT_METHODS
+    if params[:customer_id].blank?
+      @sale.customer = nil
+    else
+      @sale.customer = @organization.customers.find(params[:customer_id]) 
+    end
+    @sale.payment_method = 'money'
+    @sale.save
+    render :partial => 'payment_details'
+  end
+
+  def payment_method
+    @sale = @organization.sales.find(params[:sale_id])
+    @total = @sale.total_value
+    @payment = Payment.new 
+    @payment.date = Date.today
+    @payment.value = @sale.total_value
+    @sale.payment_method = params['payment_method']
+    @banks = Bank.find_all
+    render :partial => 'payment_method'
+  end
+
+  def coupon_add_payment
+    @sale = @organization.sales.find(params[:id])
+    @payments = @sale.payments
+    @customers = @organization.customers
+    @payment_methods = Payment::PAYMENT_METHODS
+    @payment = Money.new(params[:payment])
+    @sale.add_payments(@payment)
+    @payments = @sale.payments       
+    @total = @sale.total_value 
+    render :partial => 'payment'
+  end
+
+#  def set_customer
+#    sale = @organization.sales.find(params[:id])
+#    sale.customer = @organization.customers.find(params[:customer_id])
+#    sale.save
+#    render :nothing => true
+#  end
+#
 #  def close
 #    @sale = @organization.sales.find(params[:id])
 #    if @sale.close!
@@ -75,10 +137,6 @@ class PointOfSaleController < ApplicationController
 #    end
 #  end
 #
-#  def payment
-#    @sale = @organization.sales.find(params[:id])
-#    @total = @sale.total_value 
-#  end
 #
 #  def search_customer
 #    @customers = @organization.customers

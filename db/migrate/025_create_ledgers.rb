@@ -1,6 +1,8 @@
 class CreateLedgers < ActiveRecord::Migration
   def self.up
     create_table :ledgers do |t|
+      t.column :owner_type,                 :string, :null => false
+      t.column :owner_id,                   :integer, :null => false
       t.column :type,                   :string, :null => false
       t.column :category_id,            :integer, :null => false
       t.column :foreseen_value,         :float
@@ -15,9 +17,12 @@ class CreateLedgers < ActiveRecord::Migration
       t.column :number_of_parcels,      :integer, :default => 1
       t.column :parcel_number,          :integer, :default => 1
       t.column :operational,            :boolean, :default => false, :null => false
-      t.column :bank_account_id,        :integer,      :null => false
+      t.column :bank_account_id,        :integer,  :null => false
       t.column :is_foreseen,            :boolean,  :null => false, :default => false
+      t.column :is_operational,         :boolean,  :default => false
       t.column :schedule_ledger_id,     :integer
+      t.column :payment_id,             :integer
+    
     end
     
     add_index :ledgers, :category_id

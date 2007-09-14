@@ -3,8 +3,8 @@ class CreateSaleItems < ActiveRecord::Migration
     create_table :sale_items do |t|
       t.column :sale_id,       :integer,   :null => false
       t.column :product_id,    :integer,   :null => false
-      t.column :amount,       :float,     :null => false
-      t.column :unitary_price, :float,     :null => false
+      t.column :amount,       :float,     :null => false, :default => 0
+      t.column :unitary_price, :float,     :null => false, :default => 0
     end
   end
 

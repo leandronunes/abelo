@@ -101,23 +101,23 @@ manager_category.save
 
 ############Products#############################
 Product.destroy_all
-camisa = Product.new(:name => 'camisa básica', :size => 'p', :color => 'azul', :sell_price => 25.00, :unit => 'letra')
+camisa = Product.new(:name => 'camisa básica', :size => 'p', :color => 'azul', :sell_price => 25.00, :unit => 'letra', :code => 1)
 camisa.organization = organization
 camisa.category = vestuario
 camisa.save!
-calca = Product.new(:name => 'calça xadrez', :size => 'p', :color => 'verde', :sell_price => 45.00, :unit => 'letra')
+calca = Product.new(:name => 'calça xadrez', :size => 'p', :color => 'verde', :sell_price => 45.00, :unit => 'letra', :code => 2)
 calca.organization = organization
 calca.category = vestuario
 calca.save!
-colar = Product.new(:name => 'colar golfinho', :size => '20', :color => 'preto', :sell_price => 20.00, :unit => 'cm')
+colar = Product.new(:name => 'colar golfinho', :size => '20', :color => 'preto', :sell_price => 20.00, :unit => 'cm', :code => 3)
 colar.organization = organization
 colar.category = acessorio
 colar.save!
-brinco = Product.new(:name => 'brinco madreperola', :size => '4', :color => 'branco', :sell_price => 15.00, :unit => 'cm')
+brinco = Product.new(:name => 'brinco madreperola', :size => '4', :color => 'branco', :sell_price => 15.00, :unit => 'cm', :code => 4)
 brinco.organization = organization
 brinco.category = acessorio
 brinco.save!
-monitor = Product.new(:name => 'monitor lcd', :size => '15', :color => 'preto', :sell_price => 0.00, :unit => 'polegadas')
+monitor = Product.new(:name => 'monitor lcd', :size => '15', :color => 'preto', :sell_price => 0.00, :unit => 'polegadas', :code => 5)
 monitor.organization = organization
 monitor.category = acessorio
 monitor.save!
@@ -321,6 +321,6 @@ Periodicity.create!(:name => 'Quinzenal', :number_of_days => 15, :organization =
 # ###########################
 
 Ledger.delete_all
-DebitLedger.create!(:category => ledger_category_expense, :value => 2.3, :bank_account => account, :date => Date.today)
-CreditLedger.create!(:category => ledger_category_income, :value => 222.50, :bank_account => account, :date => Date.today)
+DebitLedger.create!(:category => ledger_category_expense, :value => 2.3, :bank_account => account, :date => Date.today, :owner => organization)
+CreditLedger.create!(:category => ledger_category_income, :value => 222.50, :bank_account => account, :date => Date.today, :owner => organization)
 

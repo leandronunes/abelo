@@ -42,6 +42,18 @@ class LedgerTest < Test::Unit::TestCase
     assert !l.errors.invalid?(:bank_account_id)
   end
 
+  def test_validates_presence_of_owner
+    l = Ledger.new
+    l.valid?
+    assert l.errors.invalid?(:owner_id)
+    assert l.errors.invalid?(:owner_type)
+    l.owner = @organization
+    l.valid?
+    assert !l.errors.invalid?(:owner_id)
+    assert !l.errors.invalid?(:owner_type)
+  end
+
+
   def test_creation_of_ledgers_when_a_schedule_ledgers_is_needed
     Ledger.delete_all
 

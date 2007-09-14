@@ -118,7 +118,7 @@ class Organization < ActiveRecord::Base
   end
 
   def default_bank_account
-    [self.bank_accounts.find(:first, :conditions => ['is_default = ?', true])]
+    self.bank_accounts.find(:first, :conditions => ['is_default = ?', true])
   end
 
   def ledgers_by_bank_account(bank_accounts = [])

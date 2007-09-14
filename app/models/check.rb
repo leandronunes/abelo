@@ -1,2 +1,7 @@
-class Check < ActiveRecord::Base
+class Check < Payment
+
+  def describe
+    self.class.describe('check')
+  end
+
 end

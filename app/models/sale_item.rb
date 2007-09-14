@@ -1,5 +1,7 @@
 class SaleItem < ActiveRecord::Base
 
+  attr_accessor :product_code
+
   belongs_to :sale
   belongs_to :product
 
@@ -7,12 +9,16 @@ class SaleItem < ActiveRecord::Base
 
   alias :active_record_set_product :product=
 
+  def product_code
+    self.product.code unless self.product.nil?
+  end
+
   # Besides assigning the product to this sale item, this method also fills the
   # <tt>unitary_price</tt> attribute (so we save in the sale item the sell
   # price that was current at the time of the sale).
   def product=(product)
     active_record_set_product(product)
-    self.unitary_price = self.product.sell_price
+    self.unitary_price = self.product.sell_price unless self.product.nil?
   end
 
   # Same as @product=, but for when setting the <tt>product_id</tt> attribute
@@ -22,12 +28,16 @@ class SaleItem < ActiveRecord::Base
     self.unitary_price = self.product.sell_price
   end
 
+  def amount= amount
+    self[:amount] = amount unless amount.nil?
+  end
+
   def name
-    self.product.name
+    self.product.name unless self.product.nil?
   end
 
   def price
     self.unitary_price * self.amount
   end
-  
+
 end

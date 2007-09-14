@@ -1,0 +1,44 @@
+<p>
+  <label> <%= _('Value') %> </label>
+  <%= text_field 'payment', 'value' %>
+</p>
+
+<p>
+  <label> <%= _('Date') %> </label>
+  <%= date_select_abelo 'payment', 'date' %>
+</p>
+
+<p>
+  <label> <%= _('Bank') %> </label>
+  <%= select_item 'payment', 'check_bank_id', @banks %>
+</p>
+
+<p>
+  <label> <%= _('Name') %> </label>
+  <%= text_field 'payment', 'check_owner_name' %>
+</p>
+
+<p>
+  <label> <%= _('Agency') %> </label>
+  <%= text_field 'payment', 'check_account_agency' %>
+</p>
+
+<p>
+  <label> <%= _('Account') %> </label>
+  <%= text_field 'payment', 'check_account_number' %>
+</p>
+
+<p>
+  <label> <%= _('Contact Phone') %> </label>
+  <%= text_field 'payment', 'check_contact_telephone' %>
+</p>
+
+<p>
+  <label> <%= _('Rg') %> </label>
+  <%= text_field 'payment', 'check_rg' %>
+</p>
+
+<p>
+  <label> <%= _('CPF') %> </label>
+  <%= text_field 'payment', 'check_cpf' %>
+</p>

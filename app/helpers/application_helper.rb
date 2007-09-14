@@ -45,18 +45,18 @@ module ApplicationHelper
   def display_list_options(object, method, params = {})
     [
       form_tag({:action => 'list'}.merge(params), :class => 'search_itens'),
-        text_field(object, method, :class => 'filter_field'),
+        display_autocomplete(object, method, params),
         button('search', _('Search'), :search),
         button('add', _("Add New"), :new, {:action => 'new'}.merge(params) ),
         button('reset', _('Reset search'), :list, {:action => 'list'}.merge(params)),
-      '</form>',
-      display_list_autocomplete_options(object, method, params)
+      '</form>'
     ].join("\n")
     
   end
 
-  def display_list_autocomplete_options(object, method, params = {})
+  def display_autocomplete(object, method, params = {})
     [
+      text_field(object, method, :class => 'filter_field'),
       content_tag(:div,
         auto_complete_field("#{object}_#{method}", :url => {:action => "autocomplete_#{method}"}.merge(params), :indicator => 'auto_list'),
         :class => 'auto_complete', :id => "#{object}_#{method}_auto_complete"

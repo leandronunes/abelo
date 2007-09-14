@@ -1,0 +1,19 @@
+
+<% form_remote_tag :url => { :action => 'coupon_add_payment', :id => @sale }, :update => 'sale' do %>
+  <% if @sale.payment_method == 'money' %>
+    <%=  render :partial => 'payment_money' %>
+  <% elsif @sale.payment_method == 'check' %>
+    <%=  render :partial => 'payment_check' %>
+  <% elsif @sale.payment_method == 'credit_card' %>
+    <%=  render :partial => 'payment_credit_card' %>
+  <% elsif @sale.payment_method == 'debit_card' %>
+    <%=  render :partial => 'payment_debit_card' %>
+  <% end %>
+  <%= submit_tag '', :title => _('Add item'), :id => 'button_add_product', :accesskey => 'x' %>    
+<% end %>
+
+<p><label name="sale_total"> <%= _('Total %s') % @total %> </label>
+</p>
+
+</div><!-- payment_details -->
+

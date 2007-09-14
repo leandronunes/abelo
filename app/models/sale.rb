@@ -1,5 +1,7 @@
 class Sale < ActiveRecord::Base
 
+  attr_accessor :payment_method
+
   STATUS_OPEN = 0
   STATUS_CANCELLED = 2
   STATUS_CLOSED = 1  # total or parcial credit
@@ -9,12 +11,22 @@ class Sale < ActiveRecord::Base
   belongs_to :organization
   belongs_to :customer
   belongs_to :salesman, :class_name => 'User', :foreign_key => :user_id
-  has_many :payments
   has_many :items, :class_name => 'SaleItem'
+  has_many :ledgers, :as => :owner
 
   validates_presence_of :date, :organization_id, :user_id
   validates_inclusion_of :status, :in => ALL_STATUS
 
+  def payments
+    self.ledgers.map{ |l| l.payment}
+#.map{ |l| l.payment}
+  end
+
+  def add_payments(payment)
+#TODO upgrade this method
+    payment.owner = self
+    payment.save!
+  end
 
   def validate
     if !Sale.pending(self.organization, self.salesman).nil? and Sale.pending(self.organization, self.salesman) != self
@@ -66,6 +78,9 @@ class Sale < ActiveRecord::Base
     value = 0.0
     self.items.each{ |i|
       value = value + i.price
+    }
+    self.ledgers.each{ |l|
+      value = value - l.value
     }
     return value
   end

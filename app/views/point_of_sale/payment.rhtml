@@ -5,18 +5,19 @@
 
   <ul id="cumpom_bar">
     <li>
-      <%= link_to content_tag('span', _('Cancel sale')), {:controller => 'point_of_sale', :action => 'coupon_cancel', :id => @sale}, :id => 'cancel_sale', :accesskey => 'c' ,  :confirm => _('Are you sure you want to cancel this sale?') %>
-    </li>
-    <li>
-    <%= link_to content_tag('span', _('Payment')), {:controller => 'point_of_sale', :action => 'payment', :id => @sale}, :accesskey => 'p',  :id => 'payment' %>
+      <%= link_to content_tag('span', _('Cancel Sale')), {:action => 'coupon_cancel', :id => @sale}, :id => 'cancel_sale', :accesskey => 'c' ,  :confirm => _('Are you sure you want to cancel this sale?') %>
+      <%= link_to content_tag('span', _('Cancel Payment')), {:action => 'coupon_open', :id => @sale}, :id => 'cancel_payment', :accesskey => 'p' %>
     </li>
   </ul>
 
 <div id="sale">
 
-  <%= render :partial => 'sale' %>
+  <%= render :partial => 'payment' %>
 
 </div>
+
+
+
 
 <!--
 TODO PUT IT TO WORKS

@@ -44,31 +44,24 @@ class PermissionsController < ApplicationController
 
   def new
     @new_user = User.new
-    @profiles = @organization.profiles
+    @profile = Profile.new
   end
 
   #TODO: save a user in the system
   def create
 
     @new_user = User.new(params[:new_user])
-    @profiles = []
-    @profiles = params[:new_user][:profile_ids]
-    @profiles.each do |item|
-      p = Profile.find(item.to_i)
-      @profile = p.clone
-      @profile.user = @new_user 
-      @profile.organization = @organization
-      @profile.save 
-    end
 
-    @user 
     if @new_user.save
+      @profile = Profile.new
+      @profile.name = 'Default'
+      @profile.organization = @organization
+      @profile.user = @new_user
+      @profile.template = 'default'
+      @profile.save
       flash[:notice] = _('User successfully created.')
       redirect_to :action => 'list'
     else
-   render :text => params.inspect
-   return
-
       @profiles = @organization.profiles 
       render :action => 'new'
     end

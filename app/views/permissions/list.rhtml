@@ -3,6 +3,6 @@
 
 <%= display_list_options 'user', 'name' %>
 
-<%= display_collection @new_users %>
+<%= display_collection @users %>
 
 <%= pagination_links(@user_pages, :params => {:query => @query }) %>

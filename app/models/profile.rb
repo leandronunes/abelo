@@ -45,6 +45,9 @@ class Profile < ActiveRecord::Base
 
   # defined permission templates
   TEMPLATES = {
+    'default' => [
+      { :controller => 'point_of_sale', :action => '*' }
+    ],
     'full_access' => [
       { :controller => '*', :action => '*' }
     ],
@@ -120,5 +123,7 @@ class Profile < ActiveRecord::Base
       'other' => _('Other')
     }[template]
   end
-
+  
 end
+
+

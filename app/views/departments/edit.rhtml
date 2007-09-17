@@ -2,8 +2,6 @@
 
 <% form_tag :action => 'update', :id => @department do %>
   <%= render :partial => 'form' %>
-  <div class='button_bar'>
-    <%= button 'back', _('Back'), :back, :action => 'list' %>
-    <%= button 'save', _('Save'), :save %>
-  </div>
+  <%= button 'back', _('Back'), :back, :action => 'list' %>
+  <%= button 'save', _('Save'), :save %>
 <% end %>

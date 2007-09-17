@@ -43,52 +43,64 @@ class PermissionsController < ApplicationController
   end
 
   def new
-    @new_user = User.new
-    @profile = Profile.new
+    @user = User.new
+    permissions = Array.new
+    @user_profile = Profile.new
+    @user_profile.permissions = permissions   
   end
 
-  #TODO: save a user in the system
   def create
-
-    @new_user = User.new(params[:new_user])
-
-    if @new_user.save
-      @profile = Profile.new
-      @profile.name = 'Default'
-      @profile.organization = @organization
-      @profile.user = @new_user
-      @profile.template = 'default'
-      @profile.save
+    @user = User.new(params[:new_user])
+    if @user.save
+      @user_profile = Profile.new
+      @user_profile.name = Profile.describe(params[:user_profile][:template])
+      @user_profile.template = params[:user_profile][:template]
+      @user_profile.organization = @organization
+      @user_profile.user = @user
+      @user_profile.save
       flash[:notice] = _('User successfully created.')
       redirect_to :action => 'list'
     else
-      @profiles = @organization.profiles 
       render :action => 'new'
     end
   end
 
   def edit
     begin
-      @new_user = @organization.users.find(params[:id])
+      @user = @organization.users.find(params[:id])
     rescue 
       @message = _('The user was not found')
       render :template => 'shared/not_found'
     end
-    @profiles = @organization.profiles 
+  end
 
+  #TODO: make update all profile, becouse only update the first
+  def update
+    @user = @organization.users.find(params[:id])
+
+    if @user.update_attributes(params[:user])
+      @user_profile = @user.profiles.first
+      @user_profile.name = Profile.describe(params[:user_profile][:template])
+      @user_profile.template = params[:user_profile][:template]
+      @user_profile.update 
+      flash[:notice] = _('User was successfully upated.')
+      redirect_to :action => 'list'
+    else
+      render :action => 'edit'
+    end
+    
   end
 
   def show
     @new_user = @organization.users.find(params[:id])
   end
 
-
   def destroy
-    @organization.profiles.find(params[:id]).destroy
-    redirect_to :action => 'index'
+    @organization.users.find(params[:id]).destroy    
+    redirect_to :action => 'list'
   end
 
-  def create_tabs
+  def create_tabs 
     add_tab do
       named 'Users and permissions'
       links_to :controller => 'permissions', :action => 'list'

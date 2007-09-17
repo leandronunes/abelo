@@ -5,6 +5,12 @@ class User < Person
   has_many :profiles, :class_name => 'Profile'
   has_many :organizations, :through => :profiles
   has_many :ledgers
+  
+  before_destroy :destroy_profiles
+  
+  def destroy_profiles
+    self.profiles.destroy_all 
+  end
 
   def self.configuration_class
     UserDisplay 

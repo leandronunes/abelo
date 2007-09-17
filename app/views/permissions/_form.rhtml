@@ -1,30 +1,36 @@
 <%= error_messages_for 'user_profile' %>
 
-<!--[form:user_profile]-->
+<!--[form:user]-->
 
-<% display_edit_info @new_user, :class => 'view_data' do |item| %>
+<% display_edit_info @user, :class => 'view_data' do |item| %>
 
   <%= display_field_edit(item, 'login',
         :title => _('Login'),
-        :content => text_field('new_user', 'login')
+        :content => text_field('user', 'login')
       )
   %>
 
   <%= display_field_edit(item, 'email',
         :title => _('E-mail'),
-        :content => text_field('new_user', 'email')
+        :content => text_field('user', 'email')
       )
   %>
 
   <%= display_field_edit(item, 'password',
         :title => _('Password'),
-        :content => password_field('new_user', 'password')
+        :content => password_field('user', 'password')
       )
   %>
 
   <%= display_field_edit(item, 'password_confirmation',
         :title => _('Confirm Password'),
-        :content => password_field('new_user', 'password_confirmation')
+        :content => password_field('user', 'password_confirmation')
+      )
+  %>
+
+  <%= display_field_edit(item, 'profiles',
+        :title => _('Template'),
+        :content => select_template('user_profile', 'template') 
       )
   %>
 

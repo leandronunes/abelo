@@ -61,7 +61,7 @@ configuration.stock_out_display_fields= StockOutDisplay.available_fields
 configuration.stock_out_display_fields_in_list= ['date', 'amount', 'price', 'type_of']
 UserDisplay.delete_all
 configuration.user_display_fields= UserDisplay.available_fields
-configuration.user_display_fields_in_list= ['login', 'email', 'profiles'] 
+configuration.user_display_fields_in_list= ['login', 'profiles'] 
 configuration.save!
 
 ###########Categories###################################

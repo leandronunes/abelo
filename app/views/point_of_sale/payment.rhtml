@@ -4,7 +4,7 @@
 
   <ul id="cumpom_bar">
     <li>
-      <%= link_to content_tag('span', _('Cancel Sale')), {:action => 'coupon_cancel', :id => @sale}, :id => 'cancel_sale', :accesskey => 'c' ,  :confirm => _('Are you sure you want to cancel this sale?') %>
+      <%= link_to content_tag('span', _('Cancel Sale')), {:action => 'cancel', :id => @sale}, :id => 'cancel_sale', :accesskey => 'c'  %>
       <%= link_to content_tag('span', _('Cancel Payment')), {:action => 'coupon_open', :id => @sale}, :id => 'cancel_payment', :accesskey => 'p' %>
     </li>
   </ul>
@@ -12,32 +12,10 @@
 <div id="sale">
 
   <%= notice_box flash[:notice] %>
-  <%= render :partial => 'payment' %>
+
+  <%= render :partial => 'table' %>
+
+  <%= render :partial => 'payment_details' %>
+
 
 </div>
-
-
-
-
-<!--
-TODO PUT IT TO WORKS
-<script type="text/javascript">
-
-  document.onkeyup = function(ev) {
-    if ( ev.keyCode == 13  &&  !ev.target.form ) {
-      document.forms[0].onsubmit()
-    }
-    ev.stopPropagation();
-  }
-  
-  $("amount").onkeypress = function(ev) {
-    if ( ev.keyCode == 9 ) {
-      setTimeout('$("product_code").focus()', 10)
-    }
-  }
-
-  $("product_code").focus();
-  $("amount").value = 1;
-
-</script>
--->

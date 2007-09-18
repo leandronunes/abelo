@@ -54,7 +54,21 @@ class Profile < ActiveRecord::Base
       { :controller => '*', :action => 'show'}
     ],
     'sales_person' => [
-      { :controller => 'point_of_sale', :action => '*' }
+#      { :controller => 'point_of_sale', :action => '*' },
+      { :controller => 'point_of_sale', :action => 'index' },
+      { :controller => 'point_of_sale', :action => 'coupon_open' },
+      { :controller => 'point_of_sale', :action => 'refresh_product' },
+      { :controller => 'point_of_sale', :action => 'coupon_add_item' },
+      { :controller => 'point_of_sale', :action => 'payment' },
+      { :controller => 'point_of_sale', :action => 'save_customer' },
+      { :controller => 'point_of_sale', :action => 'payment_method' },
+      { :controller => 'point_of_sale', :action => 'coupon_add_payment' },
+      { :controller => 'point_of_sale', :action => 'coupon_close' },
+      { :controller => 'point_of_sale', :action => 'sale_variables' },
+      { :controller => 'point_of_sale', :action => 'cancel' },
+    ],
+    'sales_supervisor' => [
+      { :controller => 'point_of_sale', :action => '*' },
     ],
     'financial' => [
       { :controller => 'ledgers', :action => '*' },

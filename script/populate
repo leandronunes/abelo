@@ -216,6 +216,8 @@ gerente = User.create!("administrator"=>false, "login"=>"quentin", "email"=>"que
 another_gerente = User.create!("password"=>"juca", "password_confirmation" => 'juca', "administrator"=>false, "login"=>"juca", "email"=>"juca@example.com")
 test_user = User.create!("administrator"=>false, "login"=>"test", "email"=>"test@example.com", :password => 'test', :password_confirmation => 'test')
 admin = User.create!("administrator"=>true, "login"=>"admin", "email"=>"admin@example.com", :password => 'admin', :password_confirmation => 'admin' )
+sales_person = User.create!("administrator"=>false, "login"=>"vendedor", "email"=>"vendedor@example.com", :password => 'test', :password_confirmation => 'test')
+sales_supervisor = User.create!("administrator"=>false, "login"=>"supervisor", "email"=>"supervisor@example.com", :password => 'test', :password_confirmation => 'test')
 
 ############User Profile##########################
 Profile.destroy_all
@@ -237,6 +239,20 @@ perfil_admin = Profile.new
 perfil_admin.user = admin
 perfil_admin.template = 'administration'
 perfil_admin.save!
+
+perfil_financial = Profile.new
+perfil_financial.name = 'Vendedor'
+perfil_financial.organization = organization
+perfil_financial.user = sales_person
+perfil_financial.template = 'sales_person'
+perfil_financial.save!
+
+perfil_financial = Profile.new
+perfil_financial.name = 'Supervisor'
+perfil_financial.organization = organization
+perfil_financial.user = sales_supervisor
+perfil_financial.template = 'sales_supervisor'
+perfil_financial.save!
 
 ############Customers#############################
 Customer.destroy_all

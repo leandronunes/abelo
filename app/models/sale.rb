@@ -3,8 +3,8 @@ class Sale < ActiveRecord::Base
   attr_accessor :payment_method
 
   STATUS_OPEN = 0
+  STATUS_CLOSED = 1 
   STATUS_CANCELLED = 2
-  STATUS_CLOSED = 1  # total or parcial credit
 
   ALL_STATUS = [ STATUS_OPEN,STATUS_CANCELLED, STATUS_CLOSED ]
 
@@ -17,17 +17,6 @@ class Sale < ActiveRecord::Base
 
   validates_presence_of :date, :organization_id, :user_id
   validates_inclusion_of :status, :in => ALL_STATUS
-
-#  def payments
-#    self.ledgers.map{ |l| l.payment}
-#.map{ |l| l.payment}
-#  end
-
-#  def add_payments(payment)
-##TODO upgrade this method remove this
-#    payment.owner = self
-#    payment.save
-#  end
 
   def validate
     if !Sale.pending(self.organization, self.salesman).nil? and Sale.pending(self.organization, self.salesman) != self
@@ -65,9 +54,10 @@ class Sale < ActiveRecord::Base
   # closes a sale. No item can be added to it anymore
   #
   # TODO: actually check and stop adding items to a closed sale
+  # TODO: see if sale with no item need a payment
   def close!
     raise ArgumentError.new('Only open sales can be closed') if self.status != STATUS_OPEN
-    self.status = STATUS_CLOSED
+    self.status = STATUS_CLOSED if self.balance == 0
     self.save
   end
   

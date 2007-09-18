@@ -1,15 +1,16 @@
 module AccessControl
 
-  def can(where)
-    if self.current_user.nil?
+  def can(where, user = nil)
+    user ||= self.current_user
+    if user.nil?
       false
     else
       if where.kind_of? Hash
-        self.current_user.allowed_to?(where)
+        user.allowed_to?(where)
       else
         location = { :controller => self.controller_name, :action => where.to_s }
         location[:organization_nickname] = @organization.identifier if @organization
-        self.current_user.allowed_to?(location)
+        user.allowed_to?(location)
       end
     end
   end

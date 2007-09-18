@@ -2,7 +2,7 @@
 <%= error_messages_for 'payment' %>
 <%= error_messages_for 'sale' %>
 
-<% form_remote_tag :url => { :action => 'coupon_add_payment', :id => @sale }, :update => 'sale' do %>
+<% form_remote_tag :url => { :action => 'coupon_add_payment', :id => @sale }, :update => 'content' do %>
   <%=  hidden_field_tag 'choose_payment', @sale.payment_method  %>
   <% if @sale.payment_method == 'money' %>
     <%=  render :partial => 'payment_money' %>

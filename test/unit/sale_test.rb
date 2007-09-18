@@ -157,6 +157,33 @@ class SaleTest < Test::Unit::TestCase
     end
   end
 
+  def test_close!
+    sale = Sale.create(:date => '2007-08-04', :organization_id => @org.id, :user_id => @user.id, :status => Sale::STATUS_OPEN)
+    assert sale.save
+    sale.close!
+    assert sale.closed?
+  end
+
+  def test_close!_with_status_already_close
+    sale = Sale.create(:date => '2007-08-04', :organization_id => @org.id, :user_id => @user.id, :status => Sale::STATUS_CLOSE)
+    assert sale.save
+    assert_raise sale.close!
+  end
+
+  def test_close!_with_status_canceled
+    sale = Sale.create(:date => '2007-08-04', :organization_id => @org.id, :user_id => @user.id, :status => Sale::STATUS_CANCELED)
+    assert sale.save
+    assert_raise sale.close!
+  end
+
+  def test_close!_with_balance_different_of_zero
+    sale = Sale.create(:date => '2007-08-04', :organization_id => @org.id, :user_id => @user.id, :status => Sale::STATUS_OPEN)
+    assert sale.save
+    item = SaleItem.create(:product => @product1, :sale => sale, :amount => 10 )
+    sale.close!
+    sale.closed?
+  end
+
   def test_cancel_destroy
     sale = Sale.create(:date => '2007-08-04', :organization_id => @org.id, :user_id => @user.id, :status => Sale::STATUS_OPEN)
     sale.destroy

@@ -3,7 +3,20 @@ class PointOfSaleController < ApplicationController
   needs_organization
   layout 'point_of_sale'
 
-  verify :method => :post, :only => [ :new, :add_item, :refresh_product, :set_customer, :cancel ], :redirect_to => { :action => :index }
+  verify :method => :post, :only => [ :new, :add_item, :refresh_product, :set_customer ], :redirect_to => { :action => :index }
+
+  skip_before_filter :check_access_control, :only => ['coupon_cancel']
+
+  before_filter :check_coupon_cancel, :only => ['coupon_cancel']
+
+  def check_coupon_cancel
+    supervisor = User.authenticate(params[:login], params[:password])
+    if supervisor.nil? 
+      render_access_denied_screen
+    elsif !supervisor.allowed_to?(:controller => 'point_of_sale', :action => 'coupon_cancel')
+      render_access_denied_screen
+    end
+  end
 
   def index
     @pending_sale = Sale.pending(@organization, current_user)
@@ -51,18 +64,35 @@ class PointOfSaleController < ApplicationController
     render :partial => 'sale'
   end
 
+  def cancel
+    @sale = @organization.sales.find(params[:id])
+
+    if request.post?
+      user = User.new(params[:user])
+      supervisor =  User.authenticate(user.login, user.password)
+      if supervisor.nil?
+        flash[:notice] = _('You typed a wrong Login or Password.')
+      elsif(can({:controller => 'point_of_sale', :action => 'coupon_cancel'}, supervisor))
+        redirect_to :action => 'coupon_cancel', :id => @sale, :login => user.login, :password => user.password
+      else
+        flash[:notice] = _("You don't have permission to cancel a coupon.")
+      end
+    else
+      unless can(:controller => 'point_of_sale', :action => 'coupon_cancel')
+        @user = current_user
+        flash[:notice] = _('Only sales supervisor can cancel a coupon') 
+      end
+    end
+    sale_variables
+  end
+
 
   def coupon_cancel
-    begin
-      @sale = @organization.sales.find(params[:id])
-      if @sale.cancel!
-        redirect_to :action => 'index'
-      else
-        @total = @sale.total_value
-        render :action => 'coupon_open'
-      end
-    rescue
+    @sale = @organization.sales.find(params[:id])
+    if @sale.cancel!
       redirect_to :action => 'index'
+    else
+      redirect_to :action => 'cancel', :id => @sale.id
     end
   end
 
@@ -139,7 +169,7 @@ class PointOfSaleController < ApplicationController
       sale_variables
       @customers = @organization.customers
       @payment_methods = Payment::PAYMENT_METHODS
-      render :partial => 'payment'
+      render :action => 'payment'
     end
 
   end
@@ -151,52 +181,13 @@ class PointOfSaleController < ApplicationController
     redirect_to :action => 'index'
   end
 
-#  def set_customer
-#    sale = @organization.sales.find(params[:id])
-#    sale.customer = @organization.customers.find(params[:customer_id])
-#    sale.save
-#    render :nothing => true
-#  end
-#
-#  def close
-#    @sale = @organization.sales.find(params[:id])
-#    if @sale.close!
-#      
-#      #Create a new exit in cash flow
-##      cf = CashFlow.new
-##      cf.add_sale(@sale.id)
-#      #end of creation
-#
-#      redirect_to :action => 'index'
-#    else
-#      render :action => 'main'
-#    end
-#  end
-#
-#
-#  def search_customer
-#    @customers = @organization.customers
-#    @sale_id = params[:sale_id]
-#    render :template => 'point_of_sale/search_customer'
-#  end
-#
-#  def show_customers
-#    existing_customers_id = params[:existing_customers].any? ? params[:existing_customers].keys : []
-#    options = params[:options]
-#    @customers = Customer.search(params[:search], existing_customers_id, options)
-#    @type_select = params[:type_select]
-#    render :action => 'show_customers', :layout => false
-#  end
-#
-#  def associating_customer
-#    customer = params[:selected_customer]
-#    s = Sale.find(params[:sale_id])
-#    if not customer.nil?
-#      s.customer = Customer.find(customer)
-#      s.save
-#    end
-#    render :text => s.customer.name
-#  end
+  def add_cash
+
+  end
+
+  def coupon_add_cash
+
+  end
 
   #TODO remove this when the printer test is finished
   #The file sent to the desktop must be opened by the software

@@ -1,0 +1,32 @@
+
+<%= title _('Coupon Cancel') %>
+
+  <ul id="cumpom_bar">
+    <li>
+      <%= link_to content_tag('span', _('Voltar')), {:action => 'coupon_open', :id => @sale}, :accesskey => 'v' %>
+    </li>
+  </ul>
+
+<%= notice_box flash[:notice] %>
+
+<%= render :partial => 'table' %>
+
+
+<div id="sale_details">
+
+<% form_tag :action => 'cancel', :id => @sale do %>
+
+  <p><label for="login"> <%= _("Supervisor") %> </label><br />
+    <span><%= text_field 'user', 'login' %></span>
+  </p>
+
+  <p><label for="password"><%= _("Password") %> </label><br />
+    <span><%= password_field 'user', 'password' %></span>
+  </p>
+
+  <%= button 'password', _('Cancel Sale'), :save, {}, {:class => 'button button_login with_text'} %>
+
+<% end %>
+
+</div>
+

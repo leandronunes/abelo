@@ -2,48 +2,7 @@ class OrganizationsController < ApplicationController
 
   needs_administrator
 
-  skip_before_filter :check_admin_rights, :only => :none_organization
-
-  before_filter :create_organization_tabs
-
-  def create_organization_tabs
-    t = add_tab do
-      in_set 'first'
-      highlights_on :action => 'show'
-      highlights_on :action => 'edit'
-    end
-    t.show_if "!['list', 'new_configuration', 'create_configuration', 'list_configuration'].include?(params[:action])"
-    t.links_to :action => 'show', :id => params[:id]
-    t.named _('Show')
-
-    t = add_tab do
-      in_set 'first'
-      highlights_on :action => 'show_configuration'
-      highlights_on :action => 'edit_configuration'
-    end
-    t.show_if "!['list', 'new_configuration', 'create_configuration', 'list_configuration'].include?(params[:action])"
-    t.links_to :action => 'show_configuration', :id => params[:id]
-    t.named _('Configurations')
-
-    t = add_tab do
-      in_set 'first'
-      links_to :action => 'list'
-      highlights_on :action => 'list'
-    end
-    t.show_if "['list', 'new_configuration', 'create_configuration', 'list_configuration'].include?(params[:action])"
-    t.named _('Organizations')
-
-    t = add_tab do
-      in_set 'first'
-      highlights_on :action => 'new_configuration'
-      highlights_on :action => 'create_configuration'
-      highlights_on :action => 'list_configuration'
-      links_to :action => 'list_configuration'
-    end
-    t.show_if "['list', 'new_configuration', 'create_configuration', 'list_configuration'].include?(params[:action])"
-    t.named _('Organizations Profiles')
-
-  end
+  before_filter :create_admin_organization_tabs
 
   def index
     redirect_to :action => 'list'
@@ -95,7 +54,7 @@ class OrganizationsController < ApplicationController
   end
 
   def list_configuration
-    @configurations = Configuration.find_all_model
+    @configurations = Configuration.models
   end
 
   def new_configuration

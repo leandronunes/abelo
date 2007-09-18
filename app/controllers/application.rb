@@ -200,6 +200,49 @@ class ApplicationController < ActionController::Base
 
   end
 
+  def self.uses_admin_organization_tabs
+    before_filter :create_admin_organization_tabs
+  end
+
+  def create_admin_organization_tabs
+
+    t = add_tab do
+      in_set 'first'
+      highlights_on :action => 'show'
+      highlights_on :action => 'edit'
+      highlights_on :action => 'new'
+    end
+    t.show_if "!['list', 'new_configuration', 'create_configuration', 'list_configuration'].include?(params[:action])"
+    t.links_to :action => 'show', :id => params[:id]
+    t.named _('Show')
+
+    t = add_tab do
+      in_set 'first'
+      highlights_on :action => 'show_configuration'
+      highlights_on :action => 'edit_configuration'
+    end
+    t.show_if "!['list', 'new_configuration', 'create_configuration', 'list_configuration'].include?(params[:action])"
+    t.links_to :action => 'show_configuration', :id => params[:id]
+    t.named _('Configurations')
+
+    t = add_tab do
+      in_set 'first'
+      links_to :action => 'list'
+      highlights_on :action => 'list'
+    end
+    t.show_if "['list', 'new_configuration', 'create_configuration', 'list_configuration'].include?(params[:action])"
+    t.named _('Organizations')
+
+    t = add_tab do
+      in_set 'first'
+      highlights_on :action => 'new_configuration'
+      highlights_on :action => 'create_configuration'
+      highlights_on :action => 'list_configuration'
+      links_to :action => 'list_configuration'
+    end
+    t.show_if "['list', 'new_configuration', 'create_configuration', 'list_configuration'].include?(params[:action])"
+    t.named _('Organizations Profiles')
+  end
   # END TABS DEFINITION
 
   before_filter :define_path  

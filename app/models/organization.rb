@@ -1,5 +1,6 @@
 class Organization < ActiveRecord::Base
 
+#TODO put a transaction here
   after_create do |organization|
     configuration = Configuration.new
     configuration.organization = organization
@@ -39,7 +40,7 @@ class Organization < ActiveRecord::Base
 
 #TODO See a way to guarantee that a organization cannot be created whithout a configuration
 
-  has_one  :configuration, :dependent => :delete
+  has_one  :configuration, :dependent => :destroy
   has_one  :virtual_community, :as => :owner
   has_many :departments
   has_many :products

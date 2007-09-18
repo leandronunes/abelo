@@ -4,7 +4,7 @@ class DepartmentsController < ApplicationController
 
   needs_organization
 
-  before_filter :create_tabs
+  before_filter :department_tabs
 
   def autocomplete_name
     escaped_string = Regexp.escape(params[:department][:name])
@@ -77,7 +77,7 @@ class DepartmentsController < ApplicationController
     render :partial => 'form'
   end
 
-  def create_tabs
+  def department_tabs
     add_tab do
       named 'Departments'
       links_to :controller => 'departments', :action => 'list'

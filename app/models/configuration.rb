@@ -1,4 +1,5 @@
 class Configuration < ActiveRecord::Base
+
   belongs_to :organization
 
   has_many :product_displays
@@ -21,17 +22,54 @@ class Configuration < ActiveRecord::Base
   has_many :profile_displays
   has_many :user_displays
 
-#TODO See a way to guarantee that a configuration cannot be created whithout an organization
-#  validates_presence_of :organization_id, :if => lambda { |conf| !conf.is_model?}
-  
+  serialize :settings 
+
+  validates_presence_of :organization_id, :if => lambda { |conf| !conf.is_model?}
+ 
   def validate
     self.errors.add('organization_id', _('You cannot associate a template to an organization') )   if self.is_model? and !self.organization.nil?
   end
 
-  def self.find_all_model
+  # Get all configuration models
+  def self.models
     Configuration.find(:all, :conditions => ['is_model = ?', true])
   end
 
+  def settings
+    self.settings || {}
+  end
+
+  def organization_name
+    self[:organization_name]
+  end
+
+  def product_name
+    self[:product_name]
+  end
+
+  def department_name
+    self[:department_name]
+  end
+
+  def customer_name
+    self[:customer_name]
+  end
+
+
+  #########################################
+  # Display Items Configurations
+  #########################################
+
+  # Items used to generate the methods used on display actions.
+  # Display actions are action that show something to user (Ex: show, edit, list)
+  # For each item on th list the system will generate the methods:
+  #
+  #     {item}_display_fields=
+  #     {item}_display_fields_in_list
+  #     {item}_display
+  #     {item}_display_in_list
+  #
+  # These actions are describe on its definition
   CONFIGURATION_ITEMS = %w[
     product
     worker

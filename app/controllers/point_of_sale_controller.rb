@@ -92,7 +92,8 @@ class PointOfSaleController < ApplicationController
     if @sale.cancel!
       redirect_to :action => 'index'
     else
-      redirect_to :action => 'cancel', :id => @sale.id
+      sale_variables
+      render :action => 'cancel'
     end
   end
 

@@ -46,7 +46,10 @@ class Sale < ActiveRecord::Base
   # TODO: any further stuff that needs to be done when a sale is cancelled
   #       See if it's needs to remove all items associated to a coupon in de cancel! action
   def cancel!
-    raise ArgumentError.new('Only open sales can be cancelled') if self.status != STATUS_OPEN
+    if self.status != STATUS_OPEN
+      self.errors.add('status', _('Only open sales can be cancelled')) 
+      return false
+    end
     self.status = STATUS_CANCELLED
     self.save
   end

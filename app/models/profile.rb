@@ -54,7 +54,6 @@ class Profile < ActiveRecord::Base
       { :controller => '*', :action => 'show'}
     ],
     'sales_person' => [
-#      { :controller => 'point_of_sale', :action => '*' },
       { :controller => 'point_of_sale', :action => 'index' },
       { :controller => 'point_of_sale', :action => 'coupon_open' },
       { :controller => 'point_of_sale', :action => 'refresh_product' },

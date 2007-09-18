@@ -1,4 +1,4 @@
-module Describe
+module DescribeMenu
 
   # maps a template code (a key in TEMPLATES) to an human-readable string
   def describe(item)

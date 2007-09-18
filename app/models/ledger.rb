@@ -52,16 +52,14 @@ class Ledger < ActiveRecord::Base
     end
   end
 
-#  def save!
-#    define_ledger_type
-#    super
+#FIXME Tongo solution
+#  def self.new(*args)
+#    (self == Ledger) ? (raise "cannot create an instance of Ledger") : super
 #  end
-
-#  def save
-#(attributes = nil)
-#    define_ledger_type
-#    super
-#(attributes)
+#
+#  def self.create_ledger(*args)
+#    klass = (self.category.nil? || self.category.expense? ) ? DebitLedger : CreditLedger
+#    klass.new(args)
 #  end
 
   after_create do |l|

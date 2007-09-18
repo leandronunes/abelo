@@ -27,9 +27,13 @@ class Configuration < ActiveRecord::Base
   validates_presence_of :organization_id, :if => lambda { |conf| !conf.is_model?}
  
   def validate
-    self.errors.add('organization_id', _('You cannot associate a template to an organization') )   if self.is_model? and !self.organization.nil?
+    if self.is_model? and !self.organization.nil?
+      self.errors.add('organization_id', _('You cannot associate a template to an organization') )   
+    end
 
-    self.errors.add( 'organization_name', _('Organization name cannot be blank') )  if self.organization_name.nil?
+    if self.organization_name.nil?
+      self.errors.add( 'organization_name', _('Organization name cannot be blank') )  
+    end
 
     self.errors.add( 'product_name', _('Product name cannot be blank') )  if self.product_name.nil?
 
@@ -46,47 +50,47 @@ class Configuration < ActiveRecord::Base
   end
 
   def settings
-    self.settings || {}
+    self[:settings] ||= {}
   end
 
   def organization_name
-    self[:organization_name]
+    self.settings["organization_name"]
   end
 
   def product_name
-    self[:product_name]
+    self.settings["product_name"]
   end
 
   def department_name
-    self[:department_name]
+    self.settings["department_name"]
   end
 
   def customer_name
-    self[:customer_name]
+    self.settings["customer_name"]
   end
 
   def document_name
-    self[:document_name]
+    self.settings["document_name"]
   end
 
   def organization_name=(name)
-    self[:organization_name] = name
+    self.settings["organization_name"] = name
   end
 
   def product_name=(name)
-    self[:product_name] = name
+    self.settings["product_name"] = name
   end
 
   def department_name=(name)
-    self[:department_name] = name
+    self.settings["department_name"] = name
   end
 
   def customer_name=(name)
-    self[:customer_name] = name
+    self.settings["customer_name"] = name
   end
 
   def document_name=(name)
-    self[:document_name] = name
+    self.settings["document_name"] = name
   end
 
 

@@ -63,6 +63,7 @@ class Organization < ActiveRecord::Base
       configuration.department_name = _('Department')
       configuration.customer_name = _('Customer')
       configuration.document_name = _('Commercial Proposal')
+      configuration.is_model = false
       configuration.save!
 
       homepage = Article.new

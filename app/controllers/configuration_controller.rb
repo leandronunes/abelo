@@ -61,7 +61,7 @@ class ConfigurationController < ApplicationController
   def edit
     @organization = Organization.find(params[:id])
     @configuration = @organization.configuration
-    
+    form_variables
   end
 
   def update
@@ -81,8 +81,6 @@ class ConfigurationController < ApplicationController
 
   def form_variables
     @ledger_informations = LedgerDisplay.available_fields
-    @ledger_display = @configuration.ledger_display_fields
-    @ledger_display_in_list = @configuration.ledger_display_fields_in_list
 
     @product_informations = ProductDisplay.available_fields
     @product_display = @configuration.product_display_fields

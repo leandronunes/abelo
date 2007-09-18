@@ -18,21 +18,5 @@
 </p>
 
 
-<%= multiple_select 'configuration', 'ledger_display_fields', @ledger_informations, _('Ledger All Available Informations'), :to_s, :to_s  %>
+<%= multiple_select_configuration 'configuration', 'ledger_display_fields', @ledger_informations, _('Ledger All Available Informations') %>
 
-<%= multiple_select 'configuration', 'ledger_display_fields_in_list', @ledger_informations, _('Ledger List Informations'), :to_s, :to_s  %>
-
-
-
-<%= multiple_select 'configuration', 'product_display_fields', @product_informations, _('Product All Available Informations'), :to_s, :to_s  %>
-
-<%= multiple_select 'configuration', 'product_display_fields_in_list', @product_informations, _('Product List Informations'), :to_s, :to_s  %>
-
-<%= multiple_select 'configuration', 'worker_display_fields', @worker_informations, _('worker All Available Informations'), :to_s, :to_s  %>
-
-<%= multiple_select 'configuration', 'worker_display_fields_in_list', @worker_informations, _('worker All Available Informations'), :to_s, :to_s  %>
-
-<%= multiple_select 'configuration', 'supplier_display_fields', @supplier_informations, _('supplier All Available Informations'), :to_s, :to_s  %>
-
-<%= multiple_select 'configuration', 'supplier_display_fields_in_list', @supplier_informations, _('supplier All Available Informations'), :to_s, :to_s  %>
-<!--[eoform:organization]-->

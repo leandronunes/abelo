@@ -105,7 +105,10 @@ module ApplicationHelper
   end
 
   def link_to_organization(org, html_options = {})
-    link_to org.name, { :organization_nickname => org.identifier, :controller => 'main', :action => 'index' }, html_options
+    link_to(org.name, 
+       { :organization_nickname => org.identifier, :controller => 'main', :action => 'index' }, 
+       html_options
+    )
   end
 
   def multiple_select(object, method, collection=[], title="", text_method=:name, value_method=:id)
@@ -119,7 +122,7 @@ module ApplicationHelper
           [
             collection.map do |c|
               content_tag(:li,
-                if selected_options.include?(c === String ? c : c.id)
+                if selected_options.include?((c.class == String) ? c : c.id)
                   content_tag('input', 
                            c.send(text_method) , 
                            :name => "#{object}[#{method}][]", 
@@ -140,6 +143,38 @@ module ApplicationHelper
       ].join("\n")
     )
   end
+
+  def multiple_select_configuration(object, method, collection=[], title="")
+    selected_options = controller.instance_variable_get("@#{object}").send(method)
+    content_tag('p', 
+      [
+        content_tag('label', title),
+        content_tag(:ul, 
+          [
+            collection.map do |c|
+              content_tag(:li,
+                if selected_options.include?((c.class == String) ? c : c.id)
+                  content_tag('input', 
+                           c, 
+                           :name => "#{object}[#{method}][]", 
+                           :type => 'checkbox', :value => c , 
+                           :checked => 'checked' 
+                  )
+                else
+                  content_tag('input', 
+                           c, 
+                           :name => "#{object}[#{method}][]", 
+                           :type => 'checkbox', :value => c
+                  )
+                end
+              )  
+            end
+          ].join("\n")
+        )
+      ].join("\n")
+    )
+  end
+
 
   def rich_text_editor(object, method, options = {})
     fckeditor_textarea(object, method, options.merge({:toolbarSet => 'Simple', :height => '300px'}))

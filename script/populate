@@ -2,6 +2,7 @@
 require File.dirname(__FILE__) + '/../config/environment'
 
 ############Organizations########################
+Article.delete_all
 Organization.destroy_all
 organization = Organization.new
 organization.name = 'Toca'

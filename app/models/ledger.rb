@@ -1,4 +1,5 @@
 class Ledger < ActiveRecord::Base
+  #FIXME how to instanciate the correct object according the category?
 
   acts_as_taggable
 
@@ -7,29 +8,64 @@ class Ledger < ActiveRecord::Base
   attr_accessor :schedule_repeat, :schedule_interval
   @schedule_periodicity
 
+
   belongs_to :category, :class_name => 'LedgerCategory',  :foreign_key => 'category_id'
   belongs_to :schedule_ledger
   belongs_to :bank_account
   belongs_to :owner, :polymorphic => true
   belongs_to :payment
-#TODO we have to validate the presence of owner in all cases
-
-  validates_presence_of :owner_id
-  validates_presence_of :owner_type
+##TODO we have to validate the presence of owner in all cases
+#
+  validates_presence_of :owner
   validates_presence_of :category_id
   validates_presence_of :foreseen_value
   validates_presence_of :effective_value, :if => lambda{ |ledger| not ledger.is_foreseen? }
-
   validates_presence_of :bank_account_id
   validates_presence_of :foreseen_date
   validates_presence_of :effective_date, :if => lambda{ |ledger| not ledger.is_foreseen? }
   validates_presence_of :schedule_repeat, :if => lambda{ |l| !l.schedule_periodicity.blank? or  !l.schedule_interval.blank? }
   validates_presence_of :schedule_periodicity, :if => lambda{ |l| l.schedule_repeat? or !l.schedule_interval.blank? }
   validates_presence_of :schedule_interval, :if => lambda{ |l| l.schedule_repeat? or  !l.schedule_periodicity.blank? }
+  validates_presence_of :payment_id, :if => lambda{ |l|  (l.owner === Sale) and (l.payment.nil?)}, :message => _('You cannot save a sale ledger without a payment.')
 
+  def reload
+    Ledger.find(self.id)
+  end
+
+##  @@credit_new = CreditLedger.method(:new)
+##  def self.new(attributes = nil)
+##    @@credit_new.call(attributes)
+##  end
+#
+## after_save do |l|
+##     l = Ledger.find(l.id#
+##  end
+#
+
+  before_validation :define_ledger_type
+
+  def define_ledger_type
+    if !self.category.nil? and self.category.expense?
+      self.type ||= 'DebitLedger'
+    else
+      self.type ||= 'CreditLedger'
+    end
+  end
+
+#  def save!
+#    define_ledger_type
+#    super
+#  end
+
+#  def save
+#(attributes = nil)
+#    define_ledger_type
+#    super
+#(attributes)
+#  end
 
   after_create do |l|
-    return unless l.valid?
+#    if l.valid?
     transaction do 
       if l.schedule_repeat?
         sl = ScheduleLedger.create(:periodicity => l.schedule_periodicity, :start_date => l.foreseen_date, :interval => l.schedule_interval)
@@ -54,6 +90,7 @@ class Ledger < ActiveRecord::Base
         l.save
       end  
     end
+ #   end
   end
 
   def self.full_text_search(q, options = {})
@@ -75,26 +112,14 @@ class Ledger < ActiveRecord::Base
     Periodicity.find(@schedule_periodicity) unless @schedule_periodicity.blank?
   end
 
-  def self.configuration_class
-    LedgerDisplay
-  end
-
-  def save
-    if self.category.nil?
-      self[:type] = nil
-    else    
-      self[:type] = self.category.income? ? 'CreditLedger' : 'DebitLedger'
-    end
-    super
-  end
-
   def value= value
     self[:foreseen_value] = value
     self[:effective_value] = value unless self.is_foreseen? 
   end
 
   def value
-    self.is_foreseen == true ? self[:foreseen_value] :  self[:effective_value]
+    value = self.is_foreseen == true ? self[:foreseen_value] :  self[:effective_value]
+    value ||= 0
   end
 
   def date
@@ -141,17 +166,24 @@ class Ledger < ActiveRecord::Base
 
   protected
   def validate
-    self.errors.add(:payment_id, _('You cannot save a sale ledger without a payment.') ) if ((self.owner === Sale) and (self.payment.nil?))
+    if self[:type] != 'CreditLedger' and self[:type] != 'DebitLedger'
+      self.errors.add(:type, _('You must specify the ledger as a credit or a debit one.'))
+    end
 
     self.errors.add(:value, _("The value should be at least 0.01" )) if value.nil? || value <= 0.00
 
     self.errors.add(:date, _("Date cannot be set" )) unless self[:date].nil?
 
     self.errors.add(:type, _("It's not a valid type" )) unless self[:type].nil? or self[:type] !='CreditLedger' or self[:type] != 'DebitLedger'
+##
+###    if (self.owner === Sale) and (self.owner.balance - self.value < 0)
+###      self.errors.add(:owner, _('Cannot add a payment to this sale. The payment is complete'))  
+###    end
   end
-
-  def type= value
-    errors.add(:type, _("You cannot set a type type manually") )
-  end
+#
+##  def type= value
+##    errors.add(:type, _("You cannot set a type type manually") )
+##  end
+#
 
 end

@@ -1,23 +1,40 @@
 class Payment < ActiveRecord::Base 
 
-  after_create do |payment|
-    return true unless  payment.ledger.nil?
-    transaction do 
-      ledger = CreditLedger.new
-      payment.owner.ledgers << ledger
-      ledger.date = payment.date
-      ledger.bank_account = payment.owner.organization.default_bank_account
-      ledger.value = payment.value
-      ledger.category_id = 1
-      payment.ledger =ledger
-      ledger.save!
-    end
+  belongs_to :owner, :polymorphic => true
+  has_one :ledger, :dependent => :destroy
+  
+  validates_presence_of :date
+  validates_presence_of :owner
+
+#FIXME thi method has a problem. With this implementation i can have ledger without a payment
+#  before_validation do |payment|
+#    unless payment.owner.nil?
+#      transaction do 
+#        ledger = CreditLedger.new
+#        payment.owner.ledgers << ledger
+#        ledger.date = payment.date
+#        ledger.bank_account = payment.owner.organization.default_bank_account
+#        ledger.value = payment.value
+#        ledger.category_id = 1
+#        payment.ledger = ledger
+#        payment.ledger = nil unless ledger.save
+#      end
+#    end
+#  end
+
+  def value
+    self[:value] || 0
   end
 
-  attr_accessor :owner
+  def validate
+    self.errors.add(:value, _("The value should be at least 0.01" )) if self.value <= 0.00
 
-  has_one :ledger
-  validates_presence_of :date
+    self.errors.add(:ledger, _('You cannot have a payment without a ledger')) if self.ledger.nil?    
+
+    if (!self.owner.nil?) and ((self.owner.balance - self.value) < 0)
+      self.errors.add(:value, _('The value cannot be greater than %s.') % self.owner.balance)
+    end
+  end
 
   PAYMENT_METHODS = %w[
     check

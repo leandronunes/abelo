@@ -1,5 +1,7 @@
 class SaleItem < ActiveRecord::Base
 
+  #TODO validate when we made a paymente cannot add more items
+
   attr_accessor :product_code
 
   belongs_to :sale

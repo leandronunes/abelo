@@ -11,27 +11,29 @@ class Sale < ActiveRecord::Base
   belongs_to :organization
   belongs_to :customer
   belongs_to :salesman, :class_name => 'User', :foreign_key => :user_id
-  has_many :items, :class_name => 'SaleItem'
-  has_many :ledgers, :as => :owner
+  has_many :items, :class_name => 'SaleItem', :dependent => :delete_all
+  has_many :ledgers, :as => :owner, :dependent => :delete_all
+  has_many :payments, :through => :ledgers, :as => :owner, :dependent => :delete_all
 
   validates_presence_of :date, :organization_id, :user_id
   validates_inclusion_of :status, :in => ALL_STATUS
 
-  def payments
-    self.ledgers.map{ |l| l.payment}
+#  def payments
+#    self.ledgers.map{ |l| l.payment}
 #.map{ |l| l.payment}
-  end
+#  end
 
-  def add_payments(payment)
-#TODO upgrade this method
-    payment.owner = self
-    payment.save!
-  end
+#  def add_payments(payment)
+##TODO upgrade this method remove this
+#    payment.owner = self
+#    payment.save
+#  end
 
   def validate
     if !Sale.pending(self.organization, self.salesman).nil? and Sale.pending(self.organization, self.salesman) != self
       errors.add(:status, _('You cannot have two pendings sale'))
     end
+
   end
 
   # gives the pending (open) sales for a given organization and user.
@@ -74,15 +76,34 @@ class Sale < ActiveRecord::Base
     self.status == STATUS_CLOSED
   end
 
+  # Return the total price of the sale. The total price is
+  # the sum of each item of the sale
   def total_value
     value = 0.0
     self.items.each{ |i|
       value = value + i.price
     }
+
+    value
+  end
+
+  # Return the balance between the total value of items and 
+  # the total of payments realized
+  def balance
+    total_value - total_payment
+  end
+
+  # Return the sum of payments of the sale
+  def total_payment
+    value = 0
     self.ledgers.each{ |l|
-      value = value - l.value
-    }
-    return value
+      value = value + l.value
+    }  
+    value #Making the return value more clear
+  end
+
+  def reload
+    Sale.find(self.id)
   end
 
   def customers_products(list_products, org)

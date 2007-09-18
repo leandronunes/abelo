@@ -2,10 +2,11 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class SaleTest < Test::Unit::TestCase
 
-  fixtures :products
+  fixtures :products, :banks, :ledger_categories
 
   def setup
     @org = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :identifier => 'org')
+    BankAccount.create!(:owner => @org, :account => 234, :bank_id => 1, :agency => 3434, :is_default => true )
     @user = User.create!("salt"=>"7e3041ebc2fc05a40c60028e2c4901a81035d3cd", "updated_at"=>nil, "crypted_password"=>"00742970dc9e6319f8019fd54864d3ea740f04b1", "type"=>"User", "remember_token_expires_at"=>nil, "id"=>"1", "administrator"=>false, "remember_token"=>nil, "login"=>"new_user", "email"=>"new_user@example.com", "created_at"=>"2007-07-14 18:03:29")
     @product1 = Product.find(1)
     @product2 = Product.find(2)
@@ -17,6 +18,45 @@ class SaleTest < Test::Unit::TestCase
     assert @product1.valid?
     assert @product2.valid?
   end
+
+  def test_dependence_of_sale_item
+    Sale.delete_all
+    SaleItem.delete_all
+    sale = Sale.create(:date => '2007-08-04', :organization => @org, :salesman => @user)
+    SaleItem.create(:product => @product1, :sale => sale, :amount => 10 )
+    SaleItem.create(:product => @product2, :sale => sale, :amount => 1)
+    assert sale.destroy
+    assert_equal 0, SaleItem.count
+  end
+
+  def test_dependence_of_payment
+    Sale.delete_all
+    SaleItem.delete_all
+    Payment.delete_all
+    sale = Sale.create(:date => '2007-08-04', :organization => @org, :salesman => @user)
+    amount = 10
+    value = 2.0
+    SaleItem.create(:product => @product1, :sale => sale, :amount => amount, :unitary_price => value )
+    Money.create(:owner => sale, :value => amount * value, :date => Date.today )
+    assert sale.destroy
+    assert_equal 0, Payment.count
+  end
+
+  def test_dependence_of_ledger
+    Sale.delete_all
+    SaleItem.delete_all
+    Payment.delete_all
+    Ledger.delete_all
+    sale = Sale.create(:date => '2007-08-04', :organization => @org, :salesman => @user)
+    amount = 10
+    value = 2.0
+    SaleItem.create(:product => @product1, :sale => sale, :amount => amount, :unitary_price => value )
+    Money.create(:owner => sale, :value => amount * value, :date => Date.today )
+    assert sale.destroy
+    assert_equal 0, Ledger.count
+  end
+
+
 
   def test_uniq_pending_sale
     Sale.delete_all

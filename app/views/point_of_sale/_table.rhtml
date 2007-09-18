@@ -22,9 +22,19 @@
       <tr> <td colspan="4" class="cell_tot"> <%= _("Total: %s" ) % num_to_currency(@total) %> </td></tr>
       <tr> <td colspan="4" class="cell_tot"> <%= _("Payments" ) %> </td></tr>
       <% @payments.each do |p| %>
-        <tr> <td colspan="2" class="cell_payment_type"> <%= p.describe %> </td></tr>
-        <tr> <td colspan="2" class="cell_payment_value"> <%= p.value %> </td></tr>
+        <tr> 
+          <td colspan="2" class="cell_payment_type"> <%= p.describe %> </td>
+          <td colspan="2" class="cell_payment_value"> <%= p.value %> </td>
+        </tr>
       <% end %>
+      <tr> 
+        <td colspan="1" class="cell_payment_tot"> <%= _("Total" ) %> </td>
+        <td colspan="3" class="cell_payment_tot"> <%= num_to_currency(@total_payment) %> </td>
+      </tr>
+      <tr> 
+        <td colspan="1" class="cell_payment_tot"> <%= _("Balance" ) %> </td>
+        <td colspan="3" class="cell_balance"> <%= num_to_currency(@total - @total_payment) %> </td>
+      </tr>
     </table>
   </div>
 </div>

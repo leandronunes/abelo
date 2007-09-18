@@ -1,6 +1,8 @@
 class CreatePayments < ActiveRecord::Migration
   def self.up
     create_table :payments do |t|
+      t.column :owner_type,                  :string, :null => false
+      t.column :owner_id,                   :integer, :null => false
       t.column :date,                       :date, :null => false
       t.column :value,                      :float, :null => false
       t.column :type,                       :string, :null => false

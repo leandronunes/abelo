@@ -208,9 +208,7 @@ class ApplicationController < ActionController::Base
 
     t = add_tab do
       in_set 'first'
-      highlights_on :action => 'show'
-      highlights_on :action => 'edit'
-      highlights_on :action => 'new'
+      highlights_on :controller => 'organizations'
     end
     t.show_if "!['list', 'new_configuration', 'create_configuration', 'list_configuration'].include?(params[:action])"
     t.links_to :action => 'show', :id => params[:id]
@@ -218,32 +216,60 @@ class ApplicationController < ActionController::Base
 
     t = add_tab do
       in_set 'first'
-      highlights_on :action => 'show_configuration'
-      highlights_on :action => 'edit_configuration'
+      highlights_on :controller => 'configuration'
     end
     t.show_if "!['list', 'new_configuration', 'create_configuration', 'list_configuration'].include?(params[:action])"
-    t.links_to :action => 'show_configuration', :id => params[:id]
+    t.links_to :controller => 'configuration', :action => 'edit', :id => params[:id]
     t.named _('Configurations')
 
     t = add_tab do
       in_set 'first'
-      links_to :action => 'list'
-      highlights_on :action => 'list'
+      links_to :controller => 'organizations', :action => 'list'
+      highlights_on :controller => 'organizations', :action => 'list'
     end
-    t.show_if "['list', 'new_configuration', 'create_configuration', 'list_configuration'].include?(params[:action])"
     t.named _('Organizations')
+    locations = [ {:action => 'list'}]
+    if match_location(locations)
+      t.show_if "true"
+    else
+      t.show_if "false"
+    end
 
     t = add_tab do
       in_set 'first'
-      highlights_on :action => 'new_configuration'
-      highlights_on :action => 'create_configuration'
-      highlights_on :action => 'list_configuration'
-      links_to :action => 'list_configuration'
+      highlights_on :controller => 'configuration', :action => 'list'
+      links_to :controller => 'configuration', :action => 'list'
     end
-    t.show_if "['list', 'new_configuration', 'create_configuration', 'list_configuration'].include?(params[:action])"
+    locations = [{:action => 'list'}]
+    if match_location(locations)
+      t.show_if "true"
+    else
+      t.show_if "false"
+    end
     t.named _('Organizations Profiles')
   end
   # END TABS DEFINITION
+
+  def match_location(location = [])
+
+    return false if !location.kind_of? Array
+
+    test = params.reject { |key,value| key.to_s == 'organization_nickname' }
+
+    location.each{ |hash|
+      match = true
+      hash.each{ |k,v|         
+        unless test[k.to_s] == v
+          match = false           
+          break
+        end
+      }
+      return true if match == true and !hash.blank?
+    }
+
+    false
+  end
+
 
   before_filter :define_path  
 

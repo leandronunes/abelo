@@ -34,9 +34,15 @@ class ConfigurationTest < Test::Unit::TestCase
 
   def test_find_configuration_models
     Configuration.delete_all
-    Configuration.create(:is_model => true)
-    Configuration.create(:is_model => true)
-    Configuration.create(:is_model => false)
+    Configuration.create(:is_model => true, :organization_name => 'Some Name', 
+                         :product_name => 'Some name', :department_name => 'Some Name', 
+                          :customer_name => 'Some name', :document_name => 'Some Name')
+    Configuration.create(:is_model => true, :organization_name => 'Some Name', 
+                         :product_name => 'Some name', :department_name => 'Some Name', 
+                          :customer_name => 'Some name', :document_name => 'Some Name')
+    Configuration.create(:is_model => false, :organization_name => 'Some Name', 
+                         :product_name => 'Some name', :department_name => 'Some Name', 
+                          :customer_name => 'Some name', :document_name => 'Some Name')
     assert_equal 2, Configuration.models.length
   end
 
@@ -111,6 +117,51 @@ class ConfigurationTest < Test::Unit::TestCase
     c.organization = nil
     c.valid?
     assert !c.errors.invalid?(:organization_id)
+  end
+
+  def test_presence_of_organization_name
+    c = Configuration.new  
+    c.valid?
+    assert c.errors.invalid?(:organization_name)
+    c.organization_name = 'Some name'
+    c.valid?
+    assert !c.errors.invalid?(:organization_name)
+  end
+
+  def test_presence_of_product_name
+    c = Configuration.new  
+    c.valid?
+    assert c.errors.invalid?(:product_name)
+    c.product_name = 'Some name'
+    c.valid?
+    assert !c.errors.invalid?(:product_name)
+  end
+
+  def test_presence_of_department_name
+    c = Configuration.new  
+    c.valid?
+    assert c.errors.invalid?(:department_name)
+    c.department_name = 'Some name'
+    c.valid?
+    assert !c.errors.invalid?(:department_name)
+  end
+
+  def test_presence_of_customer_name
+    c = Configuration.new  
+    c.valid?
+    assert c.errors.invalid?(:customer_name)
+    c.customer_name = 'Some name'
+    c.valid?
+    assert !c.errors.invalid?(:customer_name)
+  end
+
+  def test_presence_of_document_name
+    c = Configuration.new  
+    c.valid?
+    assert c.errors.invalid?(:document_name)
+    c.document_name = 'Some name'
+    c.valid?
+    assert !c.errors.invalid?(:document_name)
   end
 
 end

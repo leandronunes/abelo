@@ -2,7 +2,7 @@ class OrganizationsController < ApplicationController
 
   needs_administrator
 
-  before_filter :create_admin_organization_tabs
+  uses_admin_organization_tabs
 
   def index
     redirect_to :action => 'list'

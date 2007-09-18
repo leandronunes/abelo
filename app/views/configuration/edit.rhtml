@@ -1,7 +1,7 @@
 <%= title _('Editing Configuration of Organization %s') % @organization.name %>
 
-<% form_tag :action => 'update_configuration', :id => @configuration  do %>
-  <%= render :partial => 'form_configuration' %>
+<% form_tag :action => 'update', :id => @configuration  do %>
+  <%= render :partial => 'form' %>
   <%= button 'back', _('Back'), :back, :action => 'list' %>
   <%= button 'save', _('Save'), :save %>
 <% end %>

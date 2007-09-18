@@ -1,27 +1,5 @@
 class Organization < ActiveRecord::Base
 
-#TODO put a transaction here
-  after_create do |organization|
-    configuration = Configuration.new
-    configuration.organization = organization
-    configuration.save!
-
-    homepage = Article.new
-    homepage.title = organization.name
-    homepage.parent = Comatose::Page.root
-    homepage.slug = organization.identifier
-    homepage.save!
-
-    virtual_community = VirtualCommunity.new
-    virtual_community.owner = organization
-    virtual_community.name = organization.identifier
-    virtual_community.save!
-  end
-
-  after_destroy do |organization|
-    Article.find_by_path(organization.identifier).destroy
-  end
-
   # Valid identifiers must match this format.
   IDENTIFIER_FORMAT = /^[a-z][a-z0-9_]*[a-z0-9]$/
 
@@ -37,8 +15,7 @@ class Organization < ActiveRecord::Base
   test
   ]
 
-
-#TODO See a way to guarantee that a organization cannot be created whithout a configuration
+  acts_as_design
 
   has_one  :configuration, :dependent => :destroy
   has_one  :virtual_community, :as => :owner
@@ -63,13 +40,48 @@ class Organization < ActiveRecord::Base
   has_many :bank_accounts, :as => :owner
 #  has_many :ledgers, :through => :bank_accounts, :as => :owner TODO see a way to do this
   has_many :periodicities
+  # One VirtualCommunity can be reached by many domains
+  has_many :domains, :as => :owner
+
 
   validates_presence_of :name, :cnpj
   validates_uniqueness_of :name, :cnpj
   validates_as_cnpj :cnpj
+  validates_presence_of :identifier, :name
+  validates_uniqueness_of :identifier
+  validates_format_of :identifier, :with => IDENTIFIER_FORMAT
+  validates_exclusion_of :identifier, :in => RESERVED_IDENTIFIERS
 
-  # One VirtualCommunity can be reached by many domains
-  has_many :domains, :as => :owner
+  #FIXME see a way to guarantee that configuration cannot be created whithout a organization
+  after_create do |organization|
+    transaction do 
+      configuration = Configuration.new
+      configuration.organization = organization
+      organization.configuration = configuration
+      configuration.organization_name = _('Organization')
+      configuration.product_name = _('Product')
+      configuration.department_name = _('Department')
+      configuration.customer_name = _('Customer')
+      configuration.document_name = _('Commercial Proposal')
+      configuration.save!
+
+      homepage = Article.new
+      homepage.title = organization.name
+      homepage.parent = Comatose::Page.root
+      homepage.slug = organization.identifier
+      homepage.save!
+
+      virtual_community = VirtualCommunity.new
+      virtual_community.owner = organization
+      virtual_community.name = organization.identifier
+      virtual_community.save!
+    end
+  end
+
+  after_destroy do |organization|
+    Article.find_by_path(organization.identifier).destroy
+  end
+
 
   # Sets the identifier for this profile. Raises an exception when called on a
   # existing profile (since profiles cannot be renamed)
@@ -80,18 +92,10 @@ class Organization < ActiveRecord::Base
     self[:identifier] = value
   end
 
-
-  validates_presence_of :identifier, :name
-  validates_uniqueness_of :identifier
-  validates_format_of :identifier, :with => IDENTIFIER_FORMAT
-  validates_exclusion_of :identifier, :in => RESERVED_IDENTIFIERS
-
   def homepage(reload = false)
     @homepage = nil if reload
     @homepage ||= Article.find_by_path(self.identifier)
   end
-
-  acts_as_design
 
   def find_ledger(id)
    ledgers = self.bank_accounts.map{|b| b.ledgers}
@@ -205,6 +209,7 @@ class Organization < ActiveRecord::Base
   end
 
 
+  #TODO see if it's useful
   def customers_by_products(list_products)
     customers = []
     self.sales.each { |s|
@@ -213,6 +218,7 @@ class Organization < ActiveRecord::Base
     return customers
   end
 
+  #TODO see if it's useful
   def customers_by_categories(list_categories)
     customers = []
     list_categories.each { |k|

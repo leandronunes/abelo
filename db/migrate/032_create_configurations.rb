@@ -3,10 +3,10 @@ class CreateConfigurations < ActiveRecord::Migration
     create_table :configurations do |t|
       t.column :organization_id,    :integer
       t.column :is_model,           :boolean
+      t.column :name,               :string
       t.column :description,        :text
       t.column :settings,           :text
 #TODO remove this
-#      t.column :name,               :string
 #      t.column :department_name,    :string
 #      t.column :product_name,       :string
 #      t.column :customer_name,      :string

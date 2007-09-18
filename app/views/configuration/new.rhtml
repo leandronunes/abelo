@@ -1,6 +1,6 @@
 <%= title _('Adding Organization Profile') %>
 
-<% form_tag :action => 'create_configuration' do %>
+<% form_tag :action => 'create' do %>
 
   <div id="form">
 
@@ -12,7 +12,7 @@
        <%= text_field 'configuration', 'description'  %>
     </p>
   
-    <%= render :partial => 'form_configuration' %>
+    <%= render :partial => 'form' %>
 
   </div>
 

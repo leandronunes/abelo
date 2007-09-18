@@ -28,6 +28,16 @@ class Configuration < ActiveRecord::Base
  
   def validate
     self.errors.add('organization_id', _('You cannot associate a template to an organization') )   if self.is_model? and !self.organization.nil?
+
+    self.errors.add( 'organization_name', _('Organization name cannot be blank') )  if self.organization_name.nil?
+
+    self.errors.add( 'product_name', _('Product name cannot be blank') )  if self.product_name.nil?
+
+    self.errors.add( 'department_name', _('Department name cannot be blank') )  if self.department_name.nil?
+
+    self.errors.add( 'customer_name', _('Customer name cannot be blank') )  if self.customer_name.nil?
+
+    self.errors.add( 'document_name', _('Document name cannot be blank') )  if self.document_name.nil?
   end
 
   # Get all configuration models
@@ -54,6 +64,31 @@ class Configuration < ActiveRecord::Base
   def customer_name
     self[:customer_name]
   end
+
+  def document_name
+    self[:document_name]
+  end
+
+  def organization_name=(name)
+    self[:organization_name] = name
+  end
+
+  def product_name=(name)
+    self[:product_name] = name
+  end
+
+  def department_name=(name)
+    self[:department_name] = name
+  end
+
+  def customer_name=(name)
+    self[:customer_name] = name
+  end
+
+  def document_name=(name)
+    self[:document_name] = name
+  end
+
 
 
   #########################################

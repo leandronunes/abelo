@@ -11,6 +11,7 @@ class CreateProducts < ActiveRecord::Migration
       t.column :organization_id, :integer, :null => false
       t.column :category_id,     :integer, :null => false
       t.column :minimum_amount,  :integer
+      t.column :info,            :text
     end
   end
 

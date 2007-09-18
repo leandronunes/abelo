@@ -7,6 +7,7 @@ class CreateContacts < ActiveRecord::Migration
       t.column :description,      :text
       t.column :system_actor_id,  :integer, :null => false
       t.column :category_id,      :integer, :null => false
+      t.column :info,             :text
     end
   end
 

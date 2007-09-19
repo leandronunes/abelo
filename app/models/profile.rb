@@ -45,14 +45,6 @@ class Profile < ActiveRecord::Base
 
   # defined permission templates
   TEMPLATES = {
-    'full_access' => [
-      { :controller => '*', :action => '*' }
-    ],
-    'read_only' => [
-      { :controller => '*', :action => 'index'},
-      { :controller => '*', :action => 'list'},
-      { :controller => '*', :action => 'show'}
-    ],
     'sales_person' => [
       { :controller => 'point_of_sale', :action => 'index' },
       { :controller => 'point_of_sale', :action => 'coupon_open' },
@@ -73,11 +65,6 @@ class Profile < ActiveRecord::Base
       { :controller => 'ledgers', :action => '*' },
       { :controller => 'ledger_categories', :action => '*' },
       { :controller => 'bank_accounts', :action => '*' },
-    ],
-    'administration' => [
-      { :controller => 'organizations', :action => '*' },
-      { :controller => 'admin_configurations', :action => '*' },
-      { :controller => 'banks', :action => '*' },
     ],
     'organization_management' => [
       { :controller => 'categories', :action => '*' },
@@ -126,7 +113,8 @@ class Profile < ActiveRecord::Base
     return {
       'full_access' => _('Full access'),
       'read_only' => _('Read-only'), 
-      'sales_person' => _('Sales person'), 
+      'sales_person' => _('Sales person'),
+      'sales_supervisor' => _('Sales Supervisor'), 
       'financial' => _('Financial'), 
       'organization_management' => _('Organization Management'), 
       'administration' => _('Administration'), 

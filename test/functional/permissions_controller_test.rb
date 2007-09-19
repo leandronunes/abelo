@@ -7,7 +7,11 @@ class PermissionsController; def rescue_action(e) raise e end; end
 class PermissionsControllerTest < Test::Unit::TestCase
 
   include TestingUnderOrganization
-  fixtures :organizations
+  fixtures :organizations, :profiles, :configurations
+
+
+
+  under_organization :one
 
 #TODO make these tests works
   def test_true
@@ -15,20 +19,20 @@ class PermissionsControllerTest < Test::Unit::TestCase
   end
 
 
-#  def setup
-#    @controller = PermissionsController.new
-#    @request    = ActionController::TestRequest.new
-#    @response   = ActionController::TestResponse.new
-#    @organization_nickname = 'one'
-#    login_as('quentin')
-#  end
-#
-#  def test_index
-#    get :index
-#    assert_not_nil assigns(:profiles)
-#    assert_kind_of Array, assigns(:profiles)
-#    assert_template 'index'
-#  end
+  def setup
+    @controller = PermissionsController.new
+    @request    = ActionController::TestRequest.new
+    @response   = ActionController::TestResponse.new
+    @organization = Organization.find_by_identifier 'one'
+    @organization_nickname = 'one'
+    login_as('quentin')
+  end
+
+  def test_index
+    get :index
+    assert_response :success
+    assert_template 'list'
+  end
 #
 #  def test_select_template
 #    get :select_template, :id => 3

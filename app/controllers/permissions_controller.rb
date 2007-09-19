@@ -50,16 +50,18 @@ class PermissionsController < ApplicationController
   end
 
   def create
-    @user = User.new(params[:new_user])
+    @user = User.new(params[:user])
     if @user.save
       @user_profile = Profile.new
       @user_profile.name = Profile.describe(params[:user_profile][:template])
       @user_profile.template = params[:user_profile][:template]
       @user_profile.organization = @organization
       @user_profile.user = @user
-      @user_profile.save
-      flash[:notice] = _('User successfully created.')
-      redirect_to :action => 'list'
+      if @user_profile.save 
+        flash[:notice] = _('User successfully created.')
+        redirect_to :action => 'list'
+        return
+      end
     else
       render :action => 'new'
     end
@@ -74,7 +76,6 @@ class PermissionsController < ApplicationController
     end
   end
 
-  #TODO: make update all profile, becouse only update the first
   def update
     @user = @organization.users.find(params[:id])
 

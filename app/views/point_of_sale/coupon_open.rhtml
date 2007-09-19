@@ -5,14 +5,10 @@
 
 <%= title _('Coupon Open') %>
 
-  <ul id="cumpom_bar">
-    <li>
-      <%= link_to content_tag('span', _('Cancel sale')), {:controller => 'point_of_sale', :action => 'cancel', :id => @sale}, :id => 'cancel_sale', :accesskey => 'c' %>
-    </li>
-    <li>
-    <%= link_to content_tag('span', _('Payment')), {:controller => 'point_of_sale', :action => 'payment', :id => @sale}, :accesskey => 'p',  :id => 'payment' %>
-    </li>
-  </ul>
+  <div id="cumpom_bar">
+    <%= link_to content_tag('span', _('Cancel sale')), {:controller => 'point_of_sale', :action => 'cancel', :id => @sale}, :id => 'cancel_sale', :accesskey => 'c' %>
+    <%= link_to content_tag('span', _('Payment')), {:controller => 'point_of_sale', :action => 'payment', :id => @sale}, :accesskey => 'p',  :id => 'bt_payment' %>
+  </div>
 
 <div id="sale">
 

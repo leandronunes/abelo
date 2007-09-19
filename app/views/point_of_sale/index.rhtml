@@ -1,13 +1,9 @@
 <%= title _("Till Open") %>
 
-<ul id="cumpom_bar">
-  <li>
-    <%= link_to(content_tag('span', _('Add Cash')), {:controller => 'point_of_sale', :action => 'add_cash', :id => @sale}, :id => "add_cash", :accesskey => "r", :class => 'button_main') %>
-  </li>
-  <li>
-    <%= link_to content_tag('span', _('Remove Cash')), {:controller => 'point_of_sale', :action => 'remove_cash', :id => @sale}, :id => 'remove_cash', :accesskey => 's', :class => 'button_main' %>
-  </li>
-</ul>
+<div id="cumpom_bar">
+    <%= link_to(content_tag('span', _('Add Cash')), {:controller => 'point_of_sale', :action => 'add_cash', :id => @sale}, :id => "add_cash", :accesskey => "r") %>
+    <%= link_to content_tag('span', _('Remove Cash')), {:controller => 'point_of_sale', :action => 'remove_cash', :id => @sale}, :id => 'remove_cash', :accesskey => 's' %>
+</div>
 
 <% if !@pending_sale.nil? %>
 

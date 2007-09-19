@@ -2,7 +2,7 @@
 <div id="cumpom_sales">
   <div id="items_table">
 
-    <table>
+    <table id="items_tb_list">
       <tr>
         <th class="cell_code"><div><%= _('Code') %><div>&nbsp;</div></div></th>
         <th class="cell_desc"><div><%= _('Product') %><div>&nbsp;</div></div></th>
@@ -14,26 +14,29 @@
       <tr>
         <td class="cell_desc"> <%= item.product_code %> </td>
         <td class="cell_desc"> <%= item.product.name %> </td>
-        <td class="cell_un_price"><%= num_to_currency item.unitary_price %></td>
-        <td class="cell_amount">&times; <%= item.amount.round %></td>
-        <td class="cell_price"><%= num_to_currency item.price %></td>
+        <td class="cell_un_price cell_number"><%= num_to_currency item.unitary_price %></td>
+        <td class="cell_amount cell_number">&times; <%= item.amount.round %></td>
+        <td class="cell_price cell_number"><%= num_to_currency item.price %></td>
       </tr>
       <% end %>
-      <tr> <td colspan="4" class="cell_tot"> <%= _("Total: %s" ) % num_to_currency(@total) %> </td></tr>
-      <tr> <td colspan="4" class="cell_tot"> <%= _("Payments" ) %> </td></tr>
+      <tr> <td colspan="5" class="cell_tot"> <%= _("Total: %s" ) % num_to_currency(@total) %> </td></tr>
+    </table>
+
+    <table id="payments_tb_list">
+      <tr> <th colspan="2"> <%= _("Payments" ) %> </th></tr>
       <% @payments.each do |p| %>
         <tr> 
-          <td colspan="2" class="cell_payment_type"> <%= p.describe %> </td>
-          <td colspan="2" class="cell_payment_value"> <%= p.value %> </td>
+          <td class="cell_payment_type"> <%= p.describe %> </td>
+          <td class="cell_payment_value cell_number"> <%= p.value %> </td>
         </tr>
       <% end %>
-      <tr> 
-        <td colspan="1" class="cell_payment_tot"> <%= _("Total" ) %> </td>
-        <td colspan="3" class="cell_payment_tot"> <%= num_to_currency(@total_payment) %> </td>
+      <tr>
+        <td class="cell_payment_tot_tit"> <%= _("Total") %>: </td>
+        <td class="cell_payment_tot_val cell_number"> <%= num_to_currency(@total_payment) %> </td>
       </tr>
-      <tr> 
-        <td colspan="1" class="cell_payment_tot"> <%= _("Balance" ) %> </td>
-        <td colspan="3" class="cell_balance"> <%= num_to_currency(@total - @total_payment) %> </td>
+      <tr>
+        <td class="cell_balance_tit"> <%= _("Balance") %>: </td>
+        <td class="cell_balance_val cell_number"> <%= num_to_currency(@total - @total_payment) %> </td>
       </tr>
     </table>
   </div>

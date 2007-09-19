@@ -289,7 +289,7 @@ class ApplicationController < ActionController::Base
 #    end
   end
 
-  include Describe
+  include DescribeMenu
 
   HTTP_FORCE_ERROR = 409
   include AuthenticatedSystem

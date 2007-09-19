@@ -1,4 +1,5 @@
   def main_menu
+    return '' if params[:organization_nickname].nil?
     menu_items = {
       'categories'                          => _('Configurations'),
 #TODO the commented menu items are the items that would be implemented on the next

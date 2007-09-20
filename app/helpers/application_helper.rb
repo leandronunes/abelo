@@ -305,8 +305,7 @@ module ApplicationHelper
     list_content = content_tag(:ul,
       content.map{|c|
         [
-#TODO see if this style here it's usefull
-          content_tag(:li, c.to_s + tag(:br, :style => 'clear:both;'), :class => item_class.join(' ')),
+          content_tag(:li, c.to_s, :class => item_class.join(' ')),
           tag(:br, :style => 'clear:both;')
         ].join("\n")
       },

@@ -8,16 +8,14 @@ class LedgerTest < Test::Unit::TestCase
     @ledger = Ledger.find(:first)
     @organization = Organization.find(:first)
     @periodicity = Periodicity.create!(:organization => @organization, :name => 'Some', :number_of_days => 10)
+    @ledger_category = LedgerCategory.find(:first)
   end
 
   def test_setup
     assert @ledger.valid?
     assert @organization.valid?
     assert @periodicity.valid?
-  end
-
-  def test_configuration_class
-    assert_equal LedgerDisplay, Ledger.configuration_class
+    assert @ledger_category.valid?
   end
 
   def test_ledger_type_is_associated_to_ledger_category
@@ -45,8 +43,7 @@ class LedgerTest < Test::Unit::TestCase
   def test_validates_presence_of_owner
     l = Ledger.new
     l.valid?
-    assert l.errors.invalid?(:owner_id)
-    assert l.errors.invalid?(:owner_type)
+    assert l.errors.invalid?(:owner)
     l.owner = @organization
     l.valid?
     assert !l.errors.invalid?(:owner_id)
@@ -58,7 +55,7 @@ class LedgerTest < Test::Unit::TestCase
     Ledger.delete_all
 
     l = Ledger.new
-    l.category = LedgerCategory.find(:first)
+    l.category = @ledger_category
     l.value = 300
     l.description = 'some description'
     l.tag_list = 'tag_test'

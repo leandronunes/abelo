@@ -12,7 +12,7 @@ class SupplierDisplayTest < Test::Unit::TestCase
       cpf
       rg
       birthday
-      person_type
+      actor_type
   ]
   def test_availavle_fields
     assert_equal AVAILABLE_FIELDS_TEST, WorkerDisplay.available_fields
@@ -22,6 +22,10 @@ class SupplierDisplayTest < Test::Unit::TestCase
     AVAILABLE_FIELDS_TEST.each do |field|
       assert_not_equal field, WorkerDisplay.describe(field)
     end
+  end
+
+  def test_title
+    assert_not_nil SupplierDisplay.title
   end
 
 

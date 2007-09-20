@@ -1,25 +1,28 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 one:
   id: 1
+  owner_type: Sale
+  owner_id: 1
   date: Date.today 
   value: 10.20
   type: 'Money'
-  ledger_id: 1
 two:
   id: 2
+  owner_type: Sale
+  owner_id: 1
   date: Date.today 
   value: 23.40
   type: 'DebitCard'
-  ledger_id: 2
   automatic_debit_owner_name: 'João'
   automatic_debit_account_agency: 234324
   automatic_debit_account_number: 232
 three:
   id: 3
+  owner_type: Sale
+  owner_id: 1
   date: Date.today - 2 
   value: 40.10
   type: 'CreditCard'
-  ledger_id: 3
   credit_card_number: 1213
   credit_card_validity: Date.today
   credit_card_secutiry_code: 198
@@ -27,10 +30,11 @@ three:
   credit_card_cpf: '82951456573'
 four:
   id: 4
+  owner_type: Sale
+  owner_id: 1
   date: Date.today  - 4
   value: 50
   type: 'Check'
-  ledger_id: 4
   check_bank_id: 1
   check_owner_name: 'João'
   check_account_agency: 2345

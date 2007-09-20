@@ -14,4 +14,10 @@ class BankAccountDisplay < DisplayConfiguration
     }[field] || field
   end
 
+  def self.title
+    _('Bank Account Display Configuration')
+  end
+
+
+
 end

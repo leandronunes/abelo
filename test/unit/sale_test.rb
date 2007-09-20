@@ -150,11 +150,10 @@ class SaleTest < Test::Unit::TestCase
     assert sale.cancelled?
   end
 
-  def test_cancel_raises
+  def test_cancel!_when_cannot_be_canceled
     sale = Sale.create(:date => '2007-08-04', :organization_id => @org.id, :user_id => @user.id, :status => Sale::STATUS_CLOSED)
-    assert_raise ArgumentError do
-      sale.cancel!
-    end
+    assert !sale.cancel!
+    assert sale.errors.invalid?(:satus)
   end
 
   def test_close!
@@ -192,11 +191,8 @@ class SaleTest < Test::Unit::TestCase
     end
   end
 
-  def test_cancel
+  def test_successfully_cancel!
     sale = Sale.create(:date => '2007-08-04', :organization_id => @org.id, :user_id => @user.id, :status => Sale::STATUS_OPEN)
-    cat_prod = ProductCategory.create(:name => 'Category for testing', :organization_id => @org.id)
-    product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => cat_prod.id)
-    item = SaleItem.create(:sale_id => sale.id, :product_id => product.id, :amount => 2)
     sale.cancel!
     assert_equal Sale::STATUS_CANCELLED, sale.status
   end

@@ -1,5 +1,9 @@
 class LedgerDisplay < DisplayConfiguration
 
+  def self.title
+    _('Ledger Display Configuration')
+  end
+
   def self.available_fields
     %w[
       type
@@ -25,7 +29,7 @@ class LedgerDisplay < DisplayConfiguration
     {
       'type' => _('Type'),
       'category_id' => _('Category'),
-      'value' => _('valeu'),
+      'value' => _('Value'),
       'description' => _('Description'),
       'tag_list' => _('Tag List'),
       'date' => _('Date'),

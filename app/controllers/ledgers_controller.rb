@@ -44,7 +44,7 @@ class LedgersController < ApplicationController
       @chosen_accounts.delete(params[:chosen_account])
       @chosen_accounts = @organization.bank_accounts.find(@chosen_accounts)
     rescue
-      @chosen_accounts = @organization.default_bank_account
+      @chosen_accounts = [@organization.default_bank_account]
     end
     
     begin

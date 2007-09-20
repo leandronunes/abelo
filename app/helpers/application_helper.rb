@@ -1,5 +1,9 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+
+  #TODO Make the test to these helpers. See in noosfero how it's implemented like unitary test
+   
+  #TODO see if it's useful
   ACTIONS = %w[
     'new' => _('New')
     'edit' => _('Edit') 
@@ -143,36 +147,58 @@ module ApplicationHelper
       ].join("\n")
     )
   end
-
-  def multiple_select_configuration(object, method, collection=[], title="")
-    selected_options = controller.instance_variable_get("@#{object}").send(method)
-    content_tag('p', 
+  
+  def select_display_configuration(object, display_class, collection=[])
+    selected_options = controller.instance_variable_get("@#{object}").send(display_class.tableize)
+    content_tag('div', 
       [
-        content_tag('label', title),
+        content_tag('label', _("#{display_class.constantize.title}")),
         content_tag(:ul, 
           [
             collection.map do |c|
+              selected_display_obj = selected_options.detect{|d| d.field == c}
               content_tag(:li,
-                if selected_options.include?((c.class == String) ? c : c.id)
-                  content_tag('input', 
-                           c, 
-                           :name => "#{object}[#{method}][]", 
-                           :type => 'checkbox', :value => c , 
-                           :checked => 'checked' 
-                  )
-                else
-                  content_tag('input', 
-                           c, 
-                           :name => "#{object}[#{method}][]", 
-                           :type => 'checkbox', :value => c
-                  )
-                end
+                set_of_display_configuration(object, display_class, c,selected_display_obj)
               )  
             end
           ].join("\n")
         )
       ].join("\n")
     )
+  end
+
+
+  def set_of_display_configuration(object, display_class, item, display_obj)
+      checkbox_fields = []
+      value = display_obj.nil? ? {} : {:checked => 'checked'}
+
+      checkbox_fields << content_tag('input', 
+        display_class.constantize.describe(item), 
+        {
+          :name => "#{object}[#{"Set#{display_class}".tableize}][#{item}][field]", 
+          :type => 'checkbox', :value => item
+        }.merge(value)
+      )
+
+      value = (!display_obj.nil? and display_obj.break_line?) ? {:checked => 'checked'} : {}
+      checkbox_fields << content_tag('input', 
+        _('Break Line'), 
+        {
+          :name => "#{object}[#{"Set#{display_class}".tableize}][#{item}][break_line]", 
+          :type => 'checkbox', :value => true
+        }.merge(value)
+       )
+
+      value = (!display_obj.nil?  and display_obj.display_in_list?) ? {:checked => 'checked'} : {}
+      checkbox_fields << content_tag('input', 
+        _('Display in List?'), 
+        {
+          :name => "#{object}[#{"Set#{display_class}".tableize}][#{item}][display_in_list]", 
+          :type => 'checkbox', :value => true
+        }.merge(value)
+       )
+
+      checkbox_fields
   end
 
 
@@ -252,45 +278,6 @@ module ApplicationHelper
   # Display Methods 
   ###############################
 
-  def display_collection(collection = Array.new, params = {}, html_options = {})
-    content = Array.new
-    collection.each do |c|
-      content.push(
-        [
-          display_collection_options(c, params),
-          display_info(c,html_options, 'in_list' )
-        ]
-      )
-    end
-    item_class = []
-    item_class.push(html_options[:item_class]) unless item_class.include?(html_options[:item_class])
-    collection_class = ['info_list']
-    collection_class.push(html_options[:collection_class]) unless collection_class.include?(html_options[:collection_class])
-      content_tag(:ul,
-        content.map{|c|
-          content_tag(:li, c.to_s + tag(:br, :style => 'clear:both;'), :class => item_class.join(' '))
-        },
-        :class => collection_class.join(' ')
-      )
-  end
-
-  def display_info(object, html_options = {}, type = '')
-    type = '_' + type unless type.blank?
-    fields = @organization.configuration.send("#{object.class.to_s.tableize.singularize}_display#{type}")
-
-    fields.map do |f|
-      content_tag(:div,
-        display_field_info(object, f),
-        html_options
-      )
-    end.join("\n")
-  end
-
-
-  ##################################
-  # Specific Block Methods Related
-  ##################################
-
   # Generate a list by a given collection passed as argument.
   # The block passed indicates how each element of the list must be drawed.
   # You can use this method like this:
@@ -310,56 +297,153 @@ module ApplicationHelper
         capture(c, &block)
       )
     end
+
+    display_list_info(content, html_options, &block)
+
+  end
+
+  def display_collection(collection = Array.new, params = {}, html_options = {})
+    content = Array.new
+    collection.each do |c|
+      content.push(
+        [
+          display_collection_options(c, params),
+          display_info(c, html_options, true )
+        ]
+      )
+    end
+
+    display_list_info(content, html_options)
+
+  end
+
+  def display_list_info(content, html_options, &block)
+
     item_class = []
     item_class.push(html_options[:item_class]) unless item_class.include?(html_options[:item_class])
     collection_class = ['info_list']
     collection_class.push(html_options[:collection_class]) unless collection_class.include?(html_options[:collection_class])
-    concat(
-      content_tag(:ul,
-        content.map{|c|
-          content_tag(:li, c, :class => item_class.join(' ')) +
-          tag(:br, :style => 'clear:both;')
-        }.join("\n"),
-        :class => collection_class.join(' ')
-      ), block.binding
+
+    list_content = content_tag(:ul,
+      content.map{|c|
+        content_tag(:li, c.to_s + tag(:br, :style => 'clear:both;'), :class => item_class.join(' '))
+      },
+      :class => collection_class.join(' ')
     )
+
+    block.nil? ? list_content : concat(list_content, block.binding)
   end
 
-#TODO remove this
-  def display_field_full(item, field, info = {})
-    unless @organization.nil?
-      return '' unless @organization.configuration.send("full_#{item.class.to_s.tableize.singularize}").include?(field)
-    end
-    display_field_info(info)
-  end
+  def display_info(object, html_options = {}, type = false)
+    
+    inlist = (type == true) ? 'inlist_' : ''
+#    fields = @organization.configuration.send(inlist + "#{object.class.to_s}Display".tableize)
+    fields = []
 
-  def display_field_lite(item, field, info = {})
-    unless @organization.nil?
-      return '' unless @organization.configuration.send("lite_#{item.class.to_s.tableize.singularize}").include?(field)
-    end
-    display_field_info(info)
+    fields.map do |f|
+      content_tag(:div,
+        display_field_info(object, f),
+        html_options
+      )
+    end.join("\n")
   end
-
-  # End Specific Block Methods Related
 
   def display_field_info(object, display_field, html_options = {})
-    content = object.send("#{display_field.field}")
-    configuration_class = eval(object.class.to_s + 'Display')
+    content = object.send(display_field.field)
     content_tag(:div,
       [
-       unless configuration_class.describe(display_field.field).empty?
-       content_tag(:strong, configuration_class.describe(display_field.field) + ": ")
-       end,
-       begin
-         self.send("display_field_type_#{content.class.to_s.tableize.singularize}", content)
-       rescue
-         configuration_class.describe(content.name)
-       end
+       content_tag(:strong, display_field.describe_field + ": "),
+         begin
+           self.send("display_field_type_#{content.class.to_s.tableize.singularize}", content)
+         rescue
+           content_tag(:span, content.name)
+         end
       ].join("\n"),
      html_options
     )
   end
+ 
+  def display_show_info(object, html_options = {})
+    content_tag(:div, display_info(object, html_options))
+  end
 
+  def display_show_info_options(object, params = {},  html_options = {})
+    content_tag(:div,
+      [
+        button('back', _('Back'), :back, {:action => 'list'}.merge(params)),
+        button('edit', _('Edit'), :edit, {:action => 'edit', :id => object.id}.merge(params))
+      ].join("\n"),
+      html_options
+    )
+  end
+
+
+  #DEPRECATED. Use the method 'display_form_info'
+  def display_edit_info(object, html_options = {}, &block)
+    content = capture(object, &block)
+    concat(
+      content_tag(:div,
+        [
+          content,
+         tag(:br, :style => 'clear: left;')
+        ].join("\n"),
+        :id => 'info_form'
+      ),
+      block.binding
+    )
+  end
+
+  alias :display_form_info :display_edit_info
+
+  def display_edit_info_options(object, params = {}, html_options = {})
+    content_tag(:div,
+      [
+        button('back', _('Back'), :back, {:action => 'list'}.merge(params)),
+        button('save', _('Save'), :save),
+        button('reset', _('Reset'), :reset, {}, {:type => 'reset'} ),
+      ].join("\n"),
+      html_options
+    )
+  end
+
+  alias :display_new_info_options :display_edit_info_options 
+
+  def display_field_edit(object, field, info = {})
+    unless @organization.nil?
+      return '' if @organization.send("#{object.class.to_s}Display".tableize).detect{|d| d.field == field}.nil?
+    end
+
+    info[:html_options] ||= Hash.new
+
+    if info[:html_options].blank?
+      info[:html_options][:class] = 'info_field'
+      info[:html_options][:style] = 'float: left;'
+    else
+      info[:html_options][:class] = 'info_field ' +  info[:html_options][:class].to_s
+      info[:html_options][:style] = 'float: left; ' +  info[:html_options][:style].to_s
+    end
+   
+    content_tag(:div,
+      [
+       content_tag(:label, info[:title]),
+       content_tag(:span, info[:content])
+      ].join("\n"),
+      info[:html_options]
+    )
+  end
+
+ 
+  #######################################
+  # Display Field Methods
+  #######################################
+  
+  # Display a field of tag list type.
+  # EX:
+  #   When a tag list +['tag1', 'tag2']+ is passed. It returns
+  #   <ul>
+  #     <li> 'tag1' </li>
+  #     <li> 'tag2' </li>
+  #   </ul>
   def display_field_type_tag_list(content)
     content_tag(:ul,
       content.names.map do |tag|
@@ -368,6 +452,11 @@ module ApplicationHelper
     )
   end
 
+  # Display a field of false type.
+  # EX:
+  #
+  #   When +false+ is passed. It returns +_('False')+
+  #
   def display_field_type_false_class(content=nil)
     _('False')
   end
@@ -395,6 +484,7 @@ module ApplicationHelper
   def display_field_type_float(content)
     content_tag(:span, content)
   end
+
   def display_field_type_fixnum(content)
     content_tag(:span, content)
   end
@@ -404,72 +494,6 @@ module ApplicationHelper
       content.map{ |c|
         content_tag(:li, c.name)
       }.join("\n")
-    )
-  end
-
-  def display_show_info(object, html_options = {})
-    content_tag(:div, display_info(object, html_options))
-  end
-
-  def display_show_info_options(object, params = {},  html_options = {})
-    content_tag(:div,
-      [
-        button('back', _('Back'), :back, {:action => 'list'}.merge(params)),
-        button('edit', _('Edit'), :edit, {:action => 'edit', :id => object.id}.merge(params))
-      ].join("\n"),
-      html_options
-    )
-  end
-
-
-  def display_edit_info(object, html_options = {}, &block)
-    content = capture(object, &block)
-    concat(
-      content_tag(:div,
-        [
-          content,
-         tag(:br, :style => 'clear: left;')
-        ].join("\n"),
-        :id => 'info_form'
-      ),
-      block.binding
-    )
-  end
-
-  def display_edit_info_options(object, params = {}, html_options = {})
-    content_tag(:div,
-      [
-        button('back', _('Back'), :back, {:action => 'list'}.merge(params)),
-        button('save', _('Save'), :save),
-        button('reset', _('Reset'), :reset, {}, {:type => 'reset'} ),
-      ].join("\n"),
-      html_options
-    )
-  end
-
-  alias :display_new_info_options :display_edit_info_options 
-
-  def display_field_edit(object, field, info = {})
-    unless @organization.nil?
-      return '' unless @organization.configuration.send("#{object.class.to_s.tableize.singularize}_display_fields").include?(field)
-    end
-
-    info[:html_options] ||= Hash.new
-
-    if info[:html_options].blank?
-      info[:html_options][:class] = 'info_field'
-      info[:html_options][:style] = 'float: left;'
-    else
-      info[:html_options][:class] = 'info_field ' +  info[:html_options][:class].to_s
-      info[:html_options][:style] = 'float: left; ' +  info[:html_options][:style].to_s
-    end
-   
-    content_tag(:div,
-      [
-       content_tag(:label, info[:title]),
-       content_tag(:span, info[:content])
-      ].join("\n"),
-      info[:html_options]
     )
   end
 

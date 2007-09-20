@@ -34,11 +34,6 @@ class ProfileTest < Test::Unit::TestCase
     assert_kind_of Array, profile.permissions
   end
 
-  def test_read_only
-    profile = Profile.find(2)
-    assert_equal Profile::TEMPLATES['read_only'], profile.permissions
-  end
-
   def test_allowed_actions_in_organization
     profile1 = Profile.find(1)
     assert(profile1.allows?(:organization_nickname => 'one', :controller => 'main', :action => 'edit'))
@@ -59,10 +54,6 @@ class ProfileTest < Test::Unit::TestCase
     profile = Profile.new
     profile.user = people(:aaron)
     profile.organization = organizations(:organization_with_department)
-    profile.template = 'full_access'
-    assert(profile.save)
-    profile.template = 'read_only'
-    assert(profile.save)
     profile.template = 'sales_person'
     assert(profile.save)
     assert_raise(ArgumentError) do

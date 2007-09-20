@@ -44,13 +44,14 @@ class Configuration < ActiveRecord::Base
     self.errors.add( 'document_name', _('Document name cannot be blank') )  if self.document_name.nil?
   end
 
-  # Get all configuration models
-  def self.models
-    Configuration.find(:all, :conditions => ['is_model = ?', true])
-  end
 
   def settings
     self[:settings] ||= {}
+  end
+
+  # Get all configuration models
+  def self.models
+    Configuration.find(:all, :conditions => ['is_model = ?', true])
   end
 
   def organization_name
@@ -94,6 +95,7 @@ class Configuration < ActiveRecord::Base
   end
 
 
+#TODO see if all of this fields are needed
 
   #########################################
   # Display Items Configurations
@@ -109,130 +111,70 @@ class Configuration < ActiveRecord::Base
   #     {item}_display_in_list
   #
   # These actions are describe on its definition
-  CONFIGURATION_ITEMS = %w[
-    product
-    worker
-    customer
-    supplier
-    bank_account
-    product_category
-    worker_category
-    customer_category
-    supplier_category
-    ledger_category
-    department
-    mass_mail
-    ledger
-    credit_ledger
-    debit_ledger
-    stock_in
-    stock_out
-    profile
-    user
+  DISPLAY_CONFIGURATION_CLASSES = %w[
+    WorkerDisplay
+    ProductDisplay
+    CustomerDisplay
+    SupplierDisplay
+    BankAccountDisplay
+    ProductCategoryDisplay
+    WorkerCategoryDisplay
+    CustomerCategoryDisplay
+    SupplierCategoryDisplay
+    LedgerCategoryDisplay
+    DepartmentDisplay
+    MassMailDisplay
+    LedgerDisplay
+    CreditLedgerDisplay
+    DebitLedgerDisplay
+    StockInDisplay
+    StockOutDisplay
+    ProfileDisplay
+    UserDisplay
   ]
 
   #######################################
   # Configuration Object Methods
   #######################################
  
-  # Receives an array of permited fields in the object defined by CONFIGURATION_ITEMS
-  # and create a ObjetcDisplay object to each field associated to 
-  # the current configuration object.
+  # Receives a hash on format:
   #
-  # The ObjectDisplay object in this case is used to define wich field of the
-  # ObjetcDisplay object will be display on the edit and show actions
-  CONFIGURATION_ITEMS.each do |item|
-    define_method("#{item}_display_fields=") do |fields|
-      set_fields(item, fields)
-    end
-  end
-
-  # Receives an array of permited fields in the object defined by CONFIGURATION_ITEMS
-  # and create a ObjectDisplay object to each field associated to the current configuration 
-  # object.
+  #  {field => { display configuration parameters of field}}
   #
-  # The ObjectDisplay in this case is used to define wich field of the object 
-  # will be display on the list action
+  # EX:
+  #   The hash bellow is passed to a DisplayConfiguration object which has
+  #   +name+ and +title+ as attributes.
   #
-  # The diferrence of this method and the +item_display_fields=+ is
-  # that in this case the ObjectDisplay object has a +true+ value on the 
-  # +display_in_list+ attribute 
-  CONFIGURATION_ITEMS.each do |item|
-    define_method("#{item}_display_fields_in_list=") do |fields|
-      set_fields_in_list(item, fields)
-    end
-  end
-
-  # Return a list composed by the +field+ attribute of all objects (ObjetcDisplay) defined by
-  # CONFIGURATION_ITEMS associated to the current object.
-  CONFIGURATION_ITEMS.each do |item|
-    define_method("#{item}_display_fields") do
-      display_fields(item)
-    end
-  end
-
-  # Return a list composed by the +field+ attribute of all ObjectDisplay 
-  # object associated to the current Configuration, whose +display_in_list+ 
-  # attribute has a true value.
-  CONFIGURATION_ITEMS.each do |item|
-    define_method("#{item}_display_fields_in_list") do
-      display_fields_in_list(item)
-    end
-  end
-
-  # Return a list of all ObjectDisplay object associated to the current Configuration.
-  CONFIGURATION_ITEMS.each do |item|
-    define_method("#{item}_display") do
-      display(item)
-    end
-  end
-
-  # Return a list of all ObjectDisplay object associated to the current object, 
-  # whose +display_in_list+ attribute has a true value.
-  CONFIGURATION_ITEMS.each do |item|
-    define_method("#{item}_display_in_list") do
-      display_in_list(item)
-    end
-  end
-
-  private 
-
-  def display(object)
-    self.send("#{object}_displays")
-  end
-
-  def display_in_list(object)
-    self.send("#{object}_displays").select{|p| p.display_in_list? }
-  end
-
-  def display_fields(object)
-    display(object).collect{|o| o.field}
-  end
-
-  def display_fields_in_list(object)
-    display_in_list(object).collect{|d| d.field}
-  end
-
-  def set_fields(class_name, fields)
-    fields.each do |field|
-      if self.send("#{class_name.to_s.tableize.singularize}_displays").detect{|o| o.field == field}.blank?
-        display = eval(class_name.camelize + 'Display').new(:field => field)
-        self.send("#{class_name.to_s.tableize.singularize}_displays").concat(display)
+  #   {
+  #     'name' => {:field => 'name', :display_in_list => false, :break_line=> true}
+  #     'title' => {:field => 'title', :display_in_list => false, :break_line=> true}
+  #   }
+  #
+  # This method uses the hash passed as parameter to create or upgrade
+  # DisplayConfiguration objects.
+  #
+  # Is genereted a method to each DISPLAY_CONFIGURATION_CLASSES defined above.
+  # The name of the method will be 'set_ITEM_OF_DISPLAY_CONFIGURATION_CLASSES'
+  DISPLAY_CONFIGURATION_CLASSES.each do |item|
+    define_method("set_#{item.tableize}=") do |params|
+      return if params.class != HashWithIndifferentAccess and params.class != Hash
+      params.each do |k,v|
+        display = self.send(item.tableize).find_by_field(k)
+        display = item.constantize.new(:configuration => self) if display.nil?
+        display.update_attributes(v)
       end
     end
   end
 
-  def set_fields_in_list(class_name, fields)
-    fields.each do |field|
-      display_field = self.send("#{class_name.to_s.tableize.singularize}_displays").detect{|p| p.field == field}
-      
-      unless display_field.nil?
-        display_field.display_in_list = true 
-        display_field.save
-        self.send("#{class_name.to_s.tableize.singularize}_displays", true) #force reload of objects
-      end
+  # Return a list of DisplayConfiguration object which has 
+  # +display_in_list+ attribute true.
+  #
+  # Is genereted a method to each DISPLAY_CONFIGURATION_CLASSES defined above.
+  # The name of the method will be 'inlist_ITEM_OF_DISPLAY_CONFIGURATION_CLASSES'
+  DISPLAY_CONFIGURATION_CLASSES.each do |item|
+    define_method("inlist_#{item.tableize}") do
+      self.send(item.tableize).select{|i| i.display_in_list? }
     end
   end
-
 
 end

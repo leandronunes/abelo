@@ -18,6 +18,17 @@ class Organization < ActiveRecord::Base
   acts_as_design
 
   has_one  :configuration, :dependent => :destroy
+
+  # Displays has_many methods
+  has_many :worker_displays, :through => :configuration
+  has_many :customer_displays, :through => :configuration
+  has_many :supplier_displays, :through => :configuration
+  has_many :product_displays, :through => :configuration
+  has_many :department_displays, :through => :configuration
+  has_many :ledger_category_displays, :through => :configuration
+  has_many :ledger_displays, :through => :configuration
+  has_many :bank_account_displays, :through => :configuration
+  # End displays has_many methods
   has_one  :virtual_community, :as => :owner
   has_many :departments
   has_many :products

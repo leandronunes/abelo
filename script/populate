@@ -2,7 +2,6 @@
 require File.dirname(__FILE__) + '/../config/environment'
 
 ############Organizations########################
-Article.delete_all
 Organization.destroy_all
 organization = Organization.new
 organization.name = 'Toca'
@@ -12,57 +11,143 @@ organization.save!
 
 ############Configuration#########################
 configuration = organization.configuration
+
 ProductDisplay.delete_all
-configuration.product_display_fields= ProductDisplay.available_fields 
-configuration.product_display_fields_in_list= ['name', 'size', 'category', 'image']
+params = {}
+ProductDisplay.available_fields.collect { |d|
+  in_list = ['name', 'size', 'category', 'image' ].include?(d) ? true : false
+  params[d] = {:field => d, :display_in_list => in_list}  
+}
+configuration.set_product_displays=(params)
+
 WorkerDisplay.delete_all
-configuration.worker_display_fields= WorkerDisplay.available_fields 
-configuration.worker_display_fields_in_list= ['name', 'description', 'email' ]
+params = {}
+WorkerDisplay.available_fields.collect { |d|
+  in_list = ['name', 'description', 'email' ].include?(d) ? true : false
+  params[d] = {:field => d, :display_in_list => in_list}  
+}
+configuration.set_worker_displays=(params)
+
 CustomerDisplay.delete_all
-configuration.customer_display_fields= CustomerDisplay.available_fields 
-configuration.customer_display_fields_in_list= ['name', 'description', 'email' ]
+params = {}
+CustomerDisplay.available_fields.collect { |d|
+  in_list = ['name', 'description', 'email' ].include?(d) ? true : false
+  params[d] = {:field => d, :display_in_list => in_list}  
+}
+configuration.set_customer_displays=(params)
+
 SupplierDisplay.delete_all
-configuration.supplier_display_fields= SupplierDisplay.available_fields 
-configuration.supplier_display_fields_in_list= ['name', 'description', 'email' ]
+params = {}
+SupplierDisplay.available_fields.collect { |d|
+  in_list = ['name', 'description', 'email' ].include?(d) ? true : false
+  params[d] = {:field => d, :display_in_list => in_list}  
+}
+configuration.set_supplier_displays=(params)
+
 ProductCategoryDisplay.delete_all
-configuration.product_category_display_fields= ProductCategoryDisplay.available_fields
-configuration.product_category_display_fields_in_list= ProductCategoryDisplay.available_fields
+params = {}
+ProductCategoryDisplay.available_fields.collect { |d|
+  in_list = true
+  params[d] = {:field => d, :display_in_list => in_list}  
+}
+configuration.set_product_category_displays=(params)
+
 CustomerCategoryDisplay.delete_all
-configuration.customer_category_display_fields= CustomerCategoryDisplay.available_fields
-configuration.customer_category_display_fields_in_list= CustomerCategoryDisplay.available_fields
+params = {}
+CustomerCategoryDisplay.available_fields.collect { |d|
+  in_list = true
+  params[d] = {:field => d, :display_in_list => in_list}  
+}
+configuration.set_customer_category_displays=(params)
+
 WorkerCategoryDisplay.delete_all
-configuration.worker_category_display_fields= WorkerCategoryDisplay.available_fields
-configuration.worker_category_display_fields_in_list= WorkerCategoryDisplay.available_fields
+params = {}
+WorkerCategoryDisplay.available_fields.collect { |d|
+  in_list = true
+  params[d] = {:field => d, :display_in_list => in_list}  
+}
+configuration.set_worker_category_displays=(params)
+
 SupplierCategoryDisplay.delete_all
-configuration.supplier_category_display_fields= SupplierCategoryDisplay.available_fields
-configuration.supplier_category_display_fields_in_list= SupplierCategoryDisplay.available_fields
+params = {}
+SupplierCategoryDisplay.available_fields.collect { |d|
+  in_list = true
+  params[d] = {:field => d, :display_in_list => in_list}  
+}
+configuration.set_supplier_category_displays=(params)
+
 LedgerCategoryDisplay.delete_all
-configuration.ledger_category_display_fields= LedgerCategoryDisplay.available_fields
-configuration.ledger_category_display_fields_in_list= LedgerCategoryDisplay.available_fields
+params = {}
+LedgerCategoryDisplay.available_fields.collect { |d|
+  in_list = true
+  params[d] = {:field => d, :display_in_list => in_list}  
+}
+configuration.set_ledger_category_displays=(params)
+
 LedgerDisplay.delete_all
-configuration.ledger_display_fields= LedgerDisplay.available_fields 
-configuration.ledger_display_fields_in_list= LedgerDisplay.available_fields
+params = {}
+LedgerDisplay.available_fields.collect { |d|
+  in_list = true
+  params[d] = {:field => d, :display_in_list => in_list}  
+}
+configuration.set_ledger_displays=(params)
+
 CreditLedgerDisplay.delete_all
-configuration.credit_ledger_display_fields= CreditLedgerDisplay.available_fields 
-configuration.credit_ledger_display_fields_in_list= CreditLedgerDisplay.available_fields
+params = {}
+CreditLedgerDisplay.available_fields.collect { |d|
+  in_list = true
+  params[d] = {:field => d, :display_in_list => in_list}  
+}
+configuration.set_credit_ledger_displays=(params)
+
 DebitLedgerDisplay.delete_all
-configuration.debit_ledger_display_fields= DebitLedgerDisplay.available_fields 
-configuration.debit_ledger_display_fields_in_list= DebitLedgerDisplay.available_fields
-BankAccount.delete_all
-configuration.bank_account_display_fields= BankAccountDisplay.available_fields
-configuration.bank_account_display_fields_in_list= ['bank','agency','variation','account','owner']
+params = {}
+DebitLedgerDisplay.available_fields.collect { |d|
+  in_list = true
+  params[d] = {:field => d, :display_in_list => in_list}  
+}
+configuration.set_debit_ledger_displays=(params)
+
+BankAccountDisplay.delete_all
+params = {}
+BankAccountDisplay.available_fields.collect { |d|
+  in_list = ['bank', 'agency', 'variation', 'account', 'owner' ].include?(d) ? true : false
+  params[d] = {:field => d, :display_in_list => in_list}  
+}
+configuration.set_bank_account_displays=(params)
+
 DepartmentDisplay.delete_all
-configuration.department_display_fields= DepartmentDisplay.available_fields
-configuration.department_display_fields_in_list= ['name']
+params = {}
+DepartmentDisplay.available_fields.collect { |d|
+  in_list = true
+  params[d] = {:field => d, :display_in_list => in_list}  
+}
+configuration.set_department_displays=(params)
+
 StockInDisplay.delete_all
-configuration.stock_in_display_fields= StockInDisplay.available_fields
-configuration.stock_in_display_fields_in_list=  ['date', 'amount', 'price', 'supplier', 'type_of']
+params = {}
+StockInDisplay.available_fields.collect { |d|
+  in_list = ['date', 'amount', 'price', 'supplier', 'type_of' ].include?(d) ? true : false
+  params[d] = {:field => d, :display_in_list => in_list}  
+}
+configuration.set_stock_in_displays=(params)
+
 StockOutDisplay.delete_all
-configuration.stock_out_display_fields= StockOutDisplay.available_fields
-configuration.stock_out_display_fields_in_list= ['date', 'amount', 'price', 'type_of']
+params = {}
+StockOutDisplay.available_fields.collect { |d|
+  in_list = ['date', 'amount', 'price', 'supplier', 'type_of' ].include?(d) ? true : false
+  params[d] = {:field => d, :display_in_list => in_list}  
+}
+configuration.set_stock_out_displays=(params)
+
 UserDisplay.delete_all
-configuration.user_display_fields= UserDisplay.available_fields
-configuration.user_display_fields_in_list= ['login', 'profiles'] 
+params = {}
+UserDisplay.available_fields.collect { |d|
+  in_list = ['login', 'profiles'].include?(d) ? true : false
+  params[d] = {:field => d, :display_in_list => in_list}  
+}
+configuration.set_user_displays=(params)
+
 configuration.save!
 
 ###########Categories###################################

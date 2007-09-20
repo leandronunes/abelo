@@ -66,6 +66,11 @@ class Profile < ActiveRecord::Base
       { :controller => 'ledger_categories', :action => '*' },
       { :controller => 'bank_accounts', :action => '*' },
     ],
+    'administration' => [
+      { :controller => 'organizations', :action => '*' },
+      { :controller => 'admin_configurations', :action => '*' },
+      { :controller => 'banks', :action => '*' },
+    ],
     'organization_management' => [
       { :controller => 'categories', :action => '*' },
       { :controller => 'stock', :action => '*' },

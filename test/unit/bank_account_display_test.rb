@@ -1,8 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class BankAccountDisplayTest < Test::Unit::TestCase
-    ['bank','agency','variation','account']
-
 
   AVAILABLE_FIELDS_TEST = %w[
       bank
@@ -18,6 +16,10 @@ class BankAccountDisplayTest < Test::Unit::TestCase
     AVAILABLE_FIELDS_TEST.each do |field|
       assert_not_equal field, BankAccountDisplay.describe(field)
     end
+  end
+
+  def test_title
+    assert_not_nil BankAccountDisplay.title
   end
 
 

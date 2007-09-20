@@ -12,7 +12,7 @@ class CustomerDisplayTest < Test::Unit::TestCase
       cpf
       rg
       birthday
-      person_type
+      actor_type
   ]
   def test_availavle_fields
     assert_equal AVAILABLE_FIELDS_TEST, CustomerDisplay.available_fields
@@ -23,5 +23,11 @@ class CustomerDisplayTest < Test::Unit::TestCase
       assert_not_equal field, CustomerDisplay.describe(field)
     end
   end
+
+  def test_title
+    assert_not_nil CustomerDisplay.title
+  end
+
+
 
 end

@@ -1,32 +1,8 @@
 <%= title _('Managing organizations') %>
 
-<% form_tag( { :action => 'list' }, { :class => 'search_itens' } ) do %>
-  <%= text_field 'organization', 'name', :class => 'filter_field' %>
-  <%= button( 'lupa', _('Search'), :search) %>
-  <%= button('add', _("New Organization"), :new, :action => 'new' ) %>
-<% end %>
+<%= display_list_options 'organization', 'name' %>
 
-<div class="auto_complete" id="organization_name_auto_complete"></div>
-<%= auto_complete_field :organization_name, :url => {:action => 'autocomplete_name' }, :indicator => 'auto_list'%>
-<div id="auto_list" style="display:none;">
-</div>
+<%= display_collection @organizations %> 
 
-
-<%= 
-#TODO see a way to implements this functionality
-#display_collection @organizations 
-%>
-
-<% display_collection_by_block @organizations do |item|%>
-
-  <div class="line_item">
-    <strong> <%= _('Name:') %> </strong>
-    <span> <%= item.name %>  </span>
-  </div>
-
-  <div>
-    <strong> <%= _('CNPJ:') %>   </strong>
-    <span> <%= item.cnpj %>  </span>
-  </div>
-<% end %>
+<%= pagination_links(@organization_pages, :params => {:query => @query}) %>
 

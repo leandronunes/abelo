@@ -2,9 +2,8 @@
 one:
   id: 1  
   organization_id: 1
-  customer_name: "Consumidor"
-  organization_name: "Organização"
-  department_name: "Departamento"
-  product_name: "Product"
+  settings: {organization_name: organization, product_name: product, department_name: department, customer_name: customer, document_name: document}
 two:
   id: 2
+  organization_id: 2
+  settings: {organization_name: organization, product_name: product, department_name: department, customer_name: customer, document_name: document}

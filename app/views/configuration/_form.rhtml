@@ -17,6 +17,8 @@
    <%= text_field 'configuration', 'product_name'  %>
 </p>
 
-
-<%= multiple_select_configuration 'configuration', 'ledger_display_fields', @ledger_informations, _('Ledger All Available Informations') %>
+<%= select_display_configuration 'configuration', 'LedgerDisplay', @ledger_fields %>
+<%= select_display_configuration 'configuration', 'WorkerDisplay', @worker_fields %>
+<%= select_display_configuration 'configuration', 'ProductDisplay', @product_fields %>
+<%= select_display_configuration 'configuration', 'SupplierDisplay', @supplier_fields %>
 

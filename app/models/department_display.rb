@@ -10,6 +10,12 @@ class DepartmentDisplay < DisplayConfiguration
     }[field] || field
   end
 
+  def self.title
+    _('Department Display Configuration')
+  end
+
+
+
 end
 
 

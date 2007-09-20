@@ -14,4 +14,9 @@ class DepartmentDisplayTest < Test::Unit::TestCase
     end
   end
 
+
+  def test_title
+    assert_not_nil DepartmentDisplay.title
+  end
+
 end

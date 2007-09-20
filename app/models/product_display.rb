@@ -13,11 +13,16 @@ class ProductDisplay < DisplayConfiguration
       'sell_price' => _('Sell Price'),
       'unit' => _('Unit'),
       'category' => _('Category'),
-      'supplier_ids' => _('Suppliers'),
+      'suppliers' => _('Suppliers'),
       'amount_in_stock' => _('Amount in Stock') ,
       'minimum_amount' => _('Minimum Amount') ,
       'image' => '',
     }[field] || field
   end
+
+  def self.title
+    _('Product Display Configuration')
+  end
+
 
 end

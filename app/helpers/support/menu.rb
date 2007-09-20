@@ -1,5 +1,6 @@
   def main_menu
-    return '' if params[:organization_nickname].nil?
+    params[:organization_nickname] ||= 'admin' if current_user.administrator?
+    return '' if params[:organization_nickname].nil? 
     menu_items = {
       'categories'                          => _('Configurations'),
 #TODO the commented menu items are the items that would be implemented on the next
@@ -32,7 +33,10 @@
             can(:controller => controller)
           end.map do |controller|
             x = x+1
-            content_tag('li',  design_display_button(controller, menu_items[controller], { :controller => controller }, :id => controller, :class => "button_main pos_#{x}"))
+            content_tag('li',  
+              design_display_button(controller, menu_items[controller], 
+                  { :organization_nickname => params[:organization_nickname], :controller => controller }, 
+                  :id => controller, :class => "button_main pos_#{x}"))
           end.join("\n")) ]
        ), :id => 'menu', :style => "display : none;" )
   end

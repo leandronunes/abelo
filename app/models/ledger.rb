@@ -14,8 +14,6 @@ class Ledger < ActiveRecord::Base
   belongs_to :bank_account
   belongs_to :owner, :polymorphic => true
   belongs_to :payment
-##TODO we have to validate the presence of owner in all cases
-#
   validates_presence_of :owner
   validates_presence_of :category_id
   validates_presence_of :foreseen_value

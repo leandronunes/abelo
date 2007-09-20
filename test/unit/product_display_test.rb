@@ -10,9 +10,10 @@ class ProductDisplayTest < Test::Unit::TestCase
       sell_price 
       unit
       category
-      supplier_ids
+      suppliers
       amount_in_stock
       minimum_amount
+      image
   ]
   def test_available_fields
     assert_equal AVAILABLE_FIELDS_TEST, ProductDisplay.available_fields
@@ -22,6 +23,10 @@ class ProductDisplayTest < Test::Unit::TestCase
     AVAILABLE_FIELDS_TEST.each do |field|
       assert_not_equal field, ProductDisplay.describe(field)
     end
+  end
+
+  def test_title
+    assert_not_nil ProductDisplay.title
   end
 
 end

@@ -172,6 +172,8 @@ module ApplicationHelper
       checkbox_fields = []
       value = display_obj.nil? ? {} : {:checked => 'checked'}
 
+      checkbox_fields << hidden_field_tag("#{object}[#{"Set#{display_class}".tableize}][#{item}][none]")
+
       checkbox_fields << content_tag('input', 
         display_class.constantize.describe(item), 
         {
@@ -278,30 +280,6 @@ module ApplicationHelper
   # Display Methods 
   ###############################
 
-  # Generate a list by a given collection passed as argument.
-  # The block passed indicates how each element of the list must be drawed.
-  # You can use this method like this:
-  #
-  #       <% display_collection_by_block @products do |item| %>
-  #
-  #         <%= display_field_info(item, 'name',{:class => 'line_item'}) %>
-  #
-  #         <%= display_field_info(item, 'size') %>
-  #
-  #      <% end %>
-  def display_collection_by_block(collection = Array.new, html_options = {}, &block)
-    content = Array.new
-    collection.each do |c|
-      content.push(
-        display_collection_options(c) +
-        capture(c, &block)
-      )
-    end
-
-    display_list_info(content, html_options, &block)
-
-  end
-
   def display_collection(collection = Array.new, params = {}, html_options = {})
     content = Array.new
     collection.each do |c|
@@ -326,7 +304,11 @@ module ApplicationHelper
 
     list_content = content_tag(:ul,
       content.map{|c|
-        content_tag(:li, c.to_s + tag(:br, :style => 'clear:both;'), :class => item_class.join(' '))
+        [
+#TODO see if this style here it's usefull
+          content_tag(:li, c.to_s + tag(:br, :style => 'clear:both;'), :class => item_class.join(' ')),
+          tag(:br, :style => 'clear:both;')
+        ].join("\n")
       },
       :class => collection_class.join(' ')
     )
@@ -337,8 +319,8 @@ module ApplicationHelper
   def display_info(object, html_options = {}, type = false)
     
     inlist = (type == true) ? 'inlist_' : ''
-#    fields = @organization.configuration.send(inlist + "#{object.class.to_s}Display".tableize)
-    fields = []
+    fields = "#{object.class.to_s}Display".constantize.send(inlist + "available_fields") if @organization.nil? and current_user.administrator
+    fields ||= @organization.configuration.send(inlist + "#{object.class.to_s}Display".tableize)
 
     fields.map do |f|
       content_tag(:div,
@@ -349,15 +331,29 @@ module ApplicationHelper
   end
 
   def display_field_info(object, display_field, html_options = {})
-    content = object.send(display_field.field)
+    content = display_field.class == String ? object.send(display_field) : object.send(display_field.field) 
+
+    break_line = false
+    begin
+      break_line = true if "#{object.class.to_s}Display".constantize.break_line_fields.include?(display_field)
+    rescue
+      break_line = true if display_field.break_line?
+    end
+
+    html_options[:class] = 'break_line' if break_line == true
+
     content_tag(:div,
       [
-       content_tag(:strong, display_field.describe_field + ": "),
-         begin
-           self.send("display_field_type_#{content.class.to_s.tableize.singularize}", content)
-         rescue
-           content_tag(:span, content.name)
-         end
+       content_tag(:strong, 
+         display_field.class == String ? 
+         "#{object.class.to_s}Display".constantize.describe(display_field) : 
+         display_field.describe_field + ": "
+       ),
+       begin
+         self.send("display_field_type_#{content.class.to_s.tableize.singularize}", content)
+       rescue
+         content_tag(:span, content.name)
+       end
       ].join("\n"),
      html_options
     )

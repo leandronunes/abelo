@@ -17,12 +17,12 @@
 }
 
 .info_list li {
-  clear: left;
   margin: 5px 0px;
   padding: 4px 4px 4px 6px;
   list-style: none;
   background: #FFFCF8;
   border: 2px solid #864;
+  float: left;
 }
 
 .info_list li ul li {
@@ -57,4 +57,9 @@
 
 .info_list .line_item {
   display: block;
+}
+
+.info_list .break_line {
+#  display: block;
+  clear: left;
 }

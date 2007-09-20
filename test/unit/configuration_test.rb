@@ -192,8 +192,10 @@ class ConfigurationTest < Test::Unit::TestCase
     assert_equal @configuration.settings['document_name'], @configuration.document_name
   end
 
+  # Test set_display_configuration= functions to each DISPLAY_CONFIGURATION_CLASSES_TEST
   DISPLAY_CONFIGURATION_CLASSES_TEST.each do |item|
     define_method("test_set_#{item.tableize}=") do   
+      item.constantize.delete_all
       params = {}
       item.constantize.available_fields.collect { |d|
         params[d] = {:field => d}
@@ -203,20 +205,44 @@ class ConfigurationTest < Test::Unit::TestCase
     end
   end
 
+
+
+  # When we use the function set_display_configuration= with a empty param
+  # the DisplayConfiguration objects must be erased
+  DISPLAY_CONFIGURATION_CLASSES_TEST.each do |item|
+    define_method("test_erase_set_#{item.tableize}=") do   
+      item.constantize.delete_all
+      params = {}
+      item.constantize.available_fields.collect { |d|
+        params[d] = {:field => d}
+      }
+      @configuration.send("set_#{item.tableize}=", params)
+      assert_equal params.length, @configuration.send("#{item.tableize}").length
+
+      params = {}
+      @configuration.send("set_#{item.tableize}=", params)
+      assert_equal 0, @configuration.send("#{item.tableize}").length
+    end
+  end
+
+
   DISPLAY_CONFIGURATION_CLASSES_TEST.each do |item|
     define_method("test_inlist_#{item.tableize}") do   
+      item.constantize.delete_all
       params = {}
-      count = 0
+      inlist = true
       item.constantize.available_fields.collect { |d|
-        count = count + 1
-        inlist = count == 1 ? true : false
-        params[d] = {:field => d, :display_in_list => inlist}
+        if inlist == true 
+          params[d] = {:field => d, :display_in_list => inlist}
+        else
+          params[d] = {:field => d}
+        end
+        inlist = false
       }
       @configuration.send("set_#{item.tableize}=", params)
       assert_equal 1, @configuration.send("inlist_#{item.tableize}").length
     end
   end
-
 
 
 end

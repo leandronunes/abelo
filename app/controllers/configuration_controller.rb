@@ -61,6 +61,7 @@ class ConfigurationController < ApplicationController
   end
 
   def update
+    parse_params_configuration(params)
     @configuration = Configuration.find(params[:id])
 
     if @configuration.update_attributes(params[:configuration])
@@ -77,6 +78,17 @@ class ConfigurationController < ApplicationController
     @worker_fields = WorkerDisplay.available_fields
     @product_fields = ProductDisplay.available_fields
     @supplier_fields = SupplierDisplay.available_fields
+  end
+
+
+  def parse_params_configuration(params)
+    Configuration::DISPLAY_CONFIGURATION_CLASSES.each do |item|
+      next if params[:configuration]["Set#{item}".tableize].nil?
+      params[:configuration]["Set#{item}".tableize].reject! do |key, value|
+        value.reject!{|k,v| k == 'none'}.blank?
+        
+      end
+    end
   end
 
 end

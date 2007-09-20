@@ -114,8 +114,9 @@ class Configuration < ActiveRecord::Base
   DISPLAY_CONFIGURATION_CLASSES = %w[
     WorkerDisplay
     ProductDisplay
-    CustomerDisplay
+    LedgerDisplay
     SupplierDisplay
+    CustomerDisplay
     BankAccountDisplay
     ProductCategoryDisplay
     WorkerCategoryDisplay
@@ -124,7 +125,6 @@ class Configuration < ActiveRecord::Base
     LedgerCategoryDisplay
     DepartmentDisplay
     MassMailDisplay
-    LedgerDisplay
     CreditLedgerDisplay
     DebitLedgerDisplay
     StockInDisplay
@@ -157,14 +157,32 @@ class Configuration < ActiveRecord::Base
   # The name of the method will be 'set_ITEM_OF_DISPLAY_CONFIGURATION_CLASSES'
   DISPLAY_CONFIGURATION_CLASSES.each do |item|
     define_method("set_#{item.tableize}=") do |params|
-      return if params.class != HashWithIndifferentAccess and params.class != Hash
+
+      return self.send(item.tableize).destroy_all if params.blank?
+
+      remove_keys = self.send(item.tableize).map{|i| i.field} - params.keys
+      
+      remove_keys.each{|k| self.send(item.tableize).find_by_field(k).destroy}
+   
       params.each do |k,v|
+        d_params = {}
+        d_params["field"] = k
+        d_params["break_line"] = v[:break_line].nil? ? false : true
+        d_params["display_in_list"] = v[:display_in_list].nil? ? false : true
         display = self.send(item.tableize).find_by_field(k)
-        display = item.constantize.new(:configuration => self) if display.nil?
-        display.update_attributes(v)
+        if display.nil?
+          display = item.constantize.new(d_params) 
+          self.send("#{item.tableize}") <<  display
+        else
+          display.update_attributes(d_params)
+        end
       end
+
+      self.send(item.tableize)
+
     end
   end
+
 
   # Return a list of DisplayConfiguration object which has 
   # +display_in_list+ attribute true.

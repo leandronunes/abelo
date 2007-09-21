@@ -2,7 +2,6 @@
 
 <% form_tag :action => 'update', :id => @organization  do %>
   <%= render :partial => 'form' %>
-  <%= button 'back', _('Back'), :back, :action => 'list' %>
-  <%= button 'save', _('Save'), :save %>
+  <%= display_edit_info_options(@organization) %>
 <% end %>
 

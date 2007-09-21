@@ -153,6 +153,26 @@ class ConfigurationTest < Test::Unit::TestCase
     assert_equal 2, Configuration.models.length
   end
 
+  def test_is_model_with_valid_id
+    c = Configuration.create(:is_model => true, :organization_name => 'Some Name', 
+                         :product_name => 'Some name', :department_name => 'Some Name', 
+                          :customer_name => 'Some name', :document_name => 'Some Name', 
+                          :name => 'name 1')
+
+    assert Configuration.is_model?(c.id)
+    c.is_model=false
+    c.organization = @organization
+    assert c.save
+    assert !Configuration.is_model?(c.id)
+  end
+
+  def test_is_model_with_invalid_id
+    Configuration.delete_all
+    id = 1 #invalid id
+    assert !Configuration.is_model?(id)
+  end
+
+
   def test_organization_name
     name = 'some name'
     @configuration.organization_name = name

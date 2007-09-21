@@ -1,6 +1,8 @@
-
-<%= title @organization.name %>
-
+<% if @organization.nil? %>
+  <%= title @configuration.name %>
+<% else %>
+  <%= title "leo" + @organization.name %>
+<% end %>
 <p> <b><%= _('Organization Name') %>:</b> <%= @configuration.organization_name %></p>
 <p> <b><%= _('Dertparment Name') %>:</b> <%= @configuration.department_name %></p>
 <p> <b><%= _('Customer Name') %>:</b> <%= @configuration.customer_name %></p>

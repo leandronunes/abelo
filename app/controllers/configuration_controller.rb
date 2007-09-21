@@ -23,7 +23,16 @@ class ConfigurationController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @configurations = Configuration.models
+    @query = params[:query]
+    @query ||= params[:product][:name] if params[:product]
+
+    if @query.nil?
+      @configurations = Configuration.models
+      @configuration_pages, @configurations = paginate_by_collection @configurations
+    else
+      @configurations = Configuration.models.full_text_search(@query)
+      @configuration_pages, @configurations = paginate_by_collection @configurations
+    end
   end
 
   def new
@@ -36,7 +45,7 @@ class ConfigurationController < ApplicationController
     @configuration.is_model = true
     if @configuration.save
       flash[:notice] = _('The configurations was successfully updated.')
-      redirect_to :action => 'list_configuration'
+      redirect_to :action => 'list'
     else
       form_variables
       render :action => 'new'
@@ -44,8 +53,7 @@ class ConfigurationController < ApplicationController
   end
 
   def show
-    @organization = Organization.find(params[:id])
-    @configuration = @organization.configuration
+    @configuration = Configuration.find(params[:id])
     @ledger_display = @configuration.ledger_displays
     @worker_display = @configuration.worker_displays
     @product_display = @configuration.product_displays
@@ -72,10 +80,14 @@ class ConfigurationController < ApplicationController
 
 
   def form_variables
-    @ledger_fields = LedgerDisplay.available_fields
     @worker_fields = WorkerDisplay.available_fields
-    @product_fields = ProductDisplay.available_fields
+    @customer_fields = CustomerDisplay.available_fields
     @supplier_fields = SupplierDisplay.available_fields
+    @product_fields = ProductDisplay.available_fields
+    @department_fields = DepartmentDisplay.available_fields
+    @ledger_category_fields = LedgerCategoryDisplay.available_fields
+    @ledger_fields = LedgerDisplay.available_fields
+    @bank_account_fields = BankAccountDisplay.available_fields
   end
 
 

@@ -2,27 +2,7 @@
 
 <%= display_list_options 'configuration', 'name' %>
 
+<%= display_collection @configurations %>
 
-<ul class="info_list" >
-
-  <% @configurations.each do |item|%>
-    <li>  
-      <div class='list_item_button' >
-        <%= button('view_small', _('Show'), :show, :action => 'show_configuration', :id => item.id) %>
-        <%= button('edit_small', _('Edit'), :edit, :action => 'edit_configuration', :id => item.id) %> 
-        <%= button('del_small', _('Destroy'), :destroy, {:action => 'destroy_configuration', :id => item.id}) %>
-      </div>
-      <div class='line_item'>
-        <strong> <%= _('Name') %> </strong>
-        <span> <%= item.name %> </span>
-      </div>
-      <div>
-        <strong> <%= _('Description') %> </strong>
-        <span> <%= item.description %> </span>
-      </div>
-
-    </li>
-  <% end %>
-
-</ul>
+<%= pagination_links(@configuration_pages, :params => {:query => @query}) %>
 

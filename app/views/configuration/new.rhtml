@@ -3,6 +3,7 @@
 <% form_tag :action => 'create' do %>
 
   <div id="form">
+<%= error_messages_for 'configuration' %>
 
     <p><label for="configuration_name"> <%= _('Name') %> </label>
        <%= text_field 'configuration', 'name'  %>

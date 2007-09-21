@@ -210,51 +210,63 @@ class ApplicationController < ActionController::Base
 
   def create_admin_organization_tabs
 
+    is_not_organization = false
+    if params[:controller] == 'configuration'
+      is_not_organization = true if Configuration.is_model?(params[:id])
+    end
+
     t = add_tab do
       in_set 'first'
       highlights_on :controller => 'organizations'
     end
-    t.show_if "!['list', 'new_configuration', 'create_configuration', 'list_configuration'].include?(params[:action])"
-    if params[:id]
-      t.links_to :action => 'show', :id => params[:id]
-    else
-      t.links_to :action => 'new'
-    end
+    t.links_to :action => 'show', :id => params[:id]
     t.named _('Show')
+    locations = [ {:action => 'edit'}, {:action => 'update'}, {:action => 'show'} ]
+    if is_not_organization == true
+      t.show_if  "false"
+    else
+      t.show_if  match_location(locations) ? "true" : "false"
+    end
 
     t = add_tab do
       in_set 'first'
       highlights_on :controller => 'configuration'
     end
-    t.show_if "!['list', 'new_configuration', 'create_configuration', 'list_configuration'].include?(params[:action])"
-    t.links_to :controller => 'configuration', :action => 'edit', :id => params[:id]
+    t.links_to :controller => 'configuration', :action => 'show', :id => params[:id]
     t.named _('Configurations')
+    locations = [ {:action => 'edit'}, {:action => 'update'}, { :action => 'show'} ]
+    if is_not_organization == true
+      t.show_if  "false"
+    else
+      t.show_if  match_location(locations) ? "true" : "false"
+    end
+
 
     t = add_tab do
       in_set 'first'
       links_to :controller => 'organizations', :action => 'list'
       highlights_on :controller => 'organizations', :action => 'list'
+      highlights_on :controller => 'organizations', :action => 'new'
+      highlights_on :controller => 'organizations', :action => 'create'
     end
-    t.named _('Organizations')
-    locations = [ {:action => 'list'}]
-    if match_location(locations)
-      t.show_if "true"
-    else
-      t.show_if "false"
+    t.named _("Organizations") 
+    t.show_if  is_not_organization.to_s
+    locations = [ {:action => 'list'},{ :action => 'new'}, {:action => 'create'}]
+    if is_not_organization != true
+      t.show_if  match_location(locations) ? "true" : "false"
     end
 
     t = add_tab do
       in_set 'first'
-      highlights_on :controller => 'configuration', :action => 'list'
+      highlights_on :controller => 'configuration'
       links_to :controller => 'configuration', :action => 'list'
     end
-    locations = [{:action => 'list'}]
-    if match_location(locations)
-      t.show_if "true"
-    else
-      t.show_if "false"
-    end
     t.named _('Organizations Profiles')
+    t.show_if  is_not_organization.to_s
+    locations = [{:action => 'list'}, {:action => 'new'}, {:action => 'create'}]
+    if is_not_organization != true
+      t.show_if  match_location(locations) ? "true" : "false"
+    end
   end
   # END TABS DEFINITION
 

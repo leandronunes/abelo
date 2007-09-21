@@ -1,4 +1,3 @@
-<%= error_messages_for 'configuration' %>
 
 <!--[form:organization]-->
 <p><label for="configuration_organization_name"> <%= _('Organization Name') %> </label>
@@ -12,6 +11,12 @@
 <p><label for="configuration_customer_name"> <%= _('Customer Name') %> </label>
    <%= text_field 'configuration', 'customer_name'  %>
 </p>
+
+
+<p><label for="configuration_document_name"> <%= _('Document Name') %> </label>
+   <%= text_field 'configuration', 'document_name'  %>
+</p>
+
 
 <p><label for="configuration_product_name"> <%= _('Product Name') %> </label>
    <%= text_field 'configuration', 'product_name'  %>

@@ -65,9 +65,11 @@ class ConfigurationControllerTest < Test::Unit::TestCase
     assert_response :success
     assert_template 'list'
 
-    assert_not_nil assigns(:organizations)
-    assert_kind_of Array, assigns(:organizations)
-    assert_not_nil assigns(:organization_pages)
+    assert_not_nil assigns(:configurations)
+    assert_kind_of Array, assigns(:configurations)
+    assert_not_nil assigns(:cofiguration_pages)
+
+
   end
 
   def test_show
@@ -85,6 +87,16 @@ class ConfigurationControllerTest < Test::Unit::TestCase
 
   def test_new
     get :new
+
+    @worker_fields = WorkerDisplay.available_fields
+    @customer_fields = CustomerDisplay.available_fields
+    @supplier_fields = SupplierDisplay.available_fields
+    @product_fields = ProductDisplay.available_fields
+    @department_fields = DepartmentDisplay.available_fields
+    @ledger_category_fields = LedgerCategoryDisplay.available_fields
+    @ledger_fields = LedgerDisplay.available_fields
+    @bank_account_fields = BankAccountDisplay.available_fields
+
 
     assert_not_nil assigns(:organization)
 

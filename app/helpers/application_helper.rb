@@ -88,6 +88,7 @@ module ApplicationHelper
   end
 
   def display_navigation_bar
+    return '' if @location.nil?
     content_tag(
       'div',
       [

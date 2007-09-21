@@ -282,7 +282,6 @@ class ApplicationController < ActionController::Base
   before_filter :define_location_path  
 
   def define_location_path
-    @location = 'products'
     MENU_ITEMS.keys.map do |k|
       if MENU_ITEMS[k].include? self.controller_name 
         @location = k

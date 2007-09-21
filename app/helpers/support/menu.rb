@@ -20,7 +20,7 @@
       'departments'                         => _('Departments'),
 #      'admin_configurations'                => _('Configurations'),
       'organizations'                       => _('Organizations'),
-      'banks'                               => _('Banks'),
+#      'banks'                               => _('Banks'),
     }
     x = 0
    content_tag(

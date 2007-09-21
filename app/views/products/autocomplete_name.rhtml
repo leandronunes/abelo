@@ -1,5 +1,1 @@
-<ul class="autocomplete_list">
-  <% @products.each do |p| %>
-  <li class="autocomplete_item"><%= p.name %></li>
-  <% end %>
-</ul>
+<%= autocomplete_list @products %>

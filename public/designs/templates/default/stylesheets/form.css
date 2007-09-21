@@ -16,8 +16,8 @@
   padding: 0px 4px;
 }
 
-#info_form .line_item {
-  display: block;
+#info_form .break_line {
+  clear: left;
 }
 
 #info_form .info_field {

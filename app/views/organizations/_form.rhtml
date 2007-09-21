@@ -1,14 +1,25 @@
 <%= error_messages_for 'organization' %>
 
-<div id="form">
-<!--[form:organization]-->
-<p><label for="organization_name"> <%= _('Name') %> </label>
-<%= text_field 'organization', 'name'  %></p>
+<% display_form_info @organization do |item| %>
 
-<p><label for="organization_cnpj"> <%= _('Cnpj') %> </label>
-<%= text_field 'organization', 'cnpj'  %></p>
+  <%= display_field_form(item, 'name',
+        :title => _('Name'),
+        :content => text_field('organization', 'name')
+      )
+  %>
 
-<p><label for="organization_nickname"> <%= _('Nickname') %> </label>
-<%= text_field 'organization', 'identifier'  %></p>
-<!--[eoform:organization]-->
-</div>
+  <%= display_field_form(item, 'identifier',
+        :title => _('Nickname'),
+        :content => text_field('organization', 'identifier'),
+        :html_options => {:class => 'break_line'}
+      )
+  %>
+
+  <%= display_field_form(item, 'cnpj',
+        :title => _('CNPJ'),
+        :content => text_field('organization', 'cnpj')
+      )
+  %>
+
+<% end %>
+

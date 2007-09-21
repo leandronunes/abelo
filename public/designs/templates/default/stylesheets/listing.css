@@ -59,7 +59,10 @@
   display: block;
 }
 
+.info_list .field_item {
+  float: left;
+}
+
 .info_list .break_line {
-#  display: block;
   clear: left;
 }

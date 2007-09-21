@@ -115,6 +115,7 @@ module ApplicationHelper
     )
   end
 
+  #TODO see if it's usefull
   def multiple_select(object, method, collection=[], title="", text_method=:name, value_method=:id)
     value_method = value_method.to_s
     text_method = text_method.to_s
@@ -148,6 +149,7 @@ module ApplicationHelper
     )
   end
   
+  # Display a set of display configurations to be choosed by user
   def select_display_configuration(object, display_class, collection=[])
     selected_options = controller.instance_variable_get("@#{object}").send(display_class.tableize)
     content_tag('div', 
@@ -167,7 +169,9 @@ module ApplicationHelper
     )
   end
 
-
+  # Used by select_display_configuration to generate the checkbox options
+  # to be choosed by user.
+  # 
   def set_of_display_configuration(object, display_class, item, display_obj)
       checkbox_fields = []
       value = display_obj.nil? ? {} : {:checked => 'checked'}
@@ -199,6 +203,17 @@ module ApplicationHelper
           :type => 'checkbox', :value => true
         }.merge(value)
        )
+
+
+      value = (!display_obj.nil?  and display_obj.display_title?) ? {:checked => 'checked'} : {}
+      checkbox_fields << content_tag('input', 
+        _('Display Title?'), 
+        {
+          :name => "#{object}[#{"Set#{display_class}".tableize}][#{item}][display_title]", 
+          :type => 'checkbox', :value => true
+        }.merge(value)
+       )
+
 
       checkbox_fields
   end
@@ -321,33 +336,50 @@ module ApplicationHelper
     fields = "#{object.class.to_s}Display".constantize.send(inlist + "available_fields") if @organization.nil? and current_user.administrator
     fields ||= @organization.configuration.send(inlist + "#{object.class.to_s}Display".tableize)
 
+    html_options[:class] =  html_options[:class].nil? ? 'field_item' : 'field_item ' + html_options[:class]
+    local_html_options = html_options.clone
+
     fields.map do |f|
+      break_line = false
+      begin
+        break_line = true if f.break_line?
+      rescue
+        break_line = true if "#{object.class.to_s}Display".constantize.break_lines.include?(f)
+      end
+
+      local_html_options[:class] = (break_line == true) ? html_options[:class] + ' break_line' : html_options[:class]
+
       content_tag(:div,
-        display_field_info(object, f),
-        html_options
+        display_field_info(object, f, {}, !type),
+        local_html_options
       )
+
     end.join("\n")
   end
 
-  def display_field_info(object, display_field, html_options = {})
-    content = display_field.class == String ? object.send(display_field) : object.send(display_field.field) 
+  def display_field_info(object, field, html_options = {}, type = true)
+    content = field.class == String ? object.send(field) : object.send(field.field) 
 
-    break_line = false
-    begin
-      break_line = true if "#{object.class.to_s}Display".constantize.break_line_fields.include?(display_field)
-    rescue
-      break_line = true if display_field.break_line?
+    title = ''
+    if type == false
+      begin 
+        type = field.display_title?
+      rescue
+        type = "#{object.class.to_s}Display".constantize.titles.include?(field)
+      end
     end
 
-    html_options[:class] = 'break_line' if break_line == true
+    if type == true
+      title = content_tag(:strong, 
+        field.class == String ? 
+        "#{object.class.to_s}Display".constantize.describe(field) : 
+         field.describe_field + ": "
+      )
+    end
 
     content_tag(:div,
       [
-       content_tag(:strong, 
-         display_field.class == String ? 
-         "#{object.class.to_s}Display".constantize.describe(display_field) : 
-         display_field.describe_field + ": "
-       ),
+       title,
        begin
          self.send("display_field_type_#{content.class.to_s.tableize.singularize}", content)
        rescue
@@ -403,10 +435,10 @@ module ApplicationHelper
 
   alias :display_new_info_options :display_edit_info_options 
 
+  # Deprecated use display_field_form function
   def display_field_edit(object, field, info = {})
-    unless @organization.nil?
-      return '' if @organization.send("#{object.class.to_s}Display".tableize).detect{|d| d.field == field}.nil?
-    end
+    return '' if @organization.nil? and !current_user.administrator?
+    return '' if !current_user.administrator? and @organization.send("#{object.class.to_s}Display".tableize).detect{|d| d.field == field}.nil?
 
     info[:html_options] ||= Hash.new
 
@@ -427,6 +459,7 @@ module ApplicationHelper
     )
   end
 
+  alias :display_field_form :display_field_edit
  
   #######################################
   # Display Field Methods

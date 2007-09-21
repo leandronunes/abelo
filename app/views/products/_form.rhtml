@@ -2,58 +2,58 @@
 
 <!--[form:product]-->
 
-<% display_edit_info @product, :class => 'view_data' do |item| %>
+<% display_form_info @product, :class => 'view_data' do |item| %>
 
-  <%= display_field_edit(item, 'name',
+  <%= display_field_form(item, 'name',
         :title => _('Name'),
         :content => text_field('product', 'name')
       )
   %>
   
-  <%= display_field_edit(item, 'category',
+  <%= display_field_form(item, 'category',
         :title => _('Category'),
         :content => select_category('product', 'product')
       )
   %>
 
-  <%= display_field_edit(item, 'suppliers',
+  <%= display_field_form(item, 'suppliers',
       :title => _('Suppliers'),
       :content => multiple_select('product', 'supplier_ids', @suppliers )
     )
   %>
 
 
-  <%= display_field_edit(item, 'size',
+  <%= display_field_form(item, 'size',
         :title => _('Size'),
         :content => select_item('product', 'size', @sizes)
       )
   %>
 
-  <%= display_field_edit(item, 'unit',
+  <%= display_field_form(item, 'unit',
         :title => _('Unit'),
         :content => select_item('product', 'unit', @units)
       )
   %>
 
-  <%= display_field_edit(item, 'color',
+  <%= display_field_form(item, 'color',
         :title => _('Color'),
         :content => select_item('product', 'color', @colors)
       )
   %>
 
-  <%= display_field_edit(item, 'sell_price',
+  <%= display_field_form(item, 'sell_price',
         :title => _('Sell Price'),
         :content => text_field('product', 'sell_price')
       )
   %>
 
-  <%= display_field_edit(item, 'description',
+  <%= display_field_form(item, 'description',
         :title => _('Description'),
         :content => text_field('product', 'description')  
       )
   %>
   
-  <%= display_field_edit(item, 'minimum_amount',
+  <%= display_field_form(item, 'minimum_amount',
         :title => _('Minimum Amount'),
         :content => text_field('product', 'minimum_amount')  
       )

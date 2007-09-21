@@ -169,6 +169,7 @@ class Configuration < ActiveRecord::Base
         d_params["field"] = k
         d_params["break_line"] = v[:break_line].nil? ? false : true
         d_params["display_in_list"] = v[:display_in_list].nil? ? false : true
+        d_params["display_title"] = v[:display_title].nil? ? false : true
         display = self.send(item.tableize).find_by_field(k)
         if display.nil?
           display = item.constantize.new(d_params) 

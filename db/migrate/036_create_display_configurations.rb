@@ -6,9 +6,8 @@ class CreateDisplayConfigurations < ActiveRecord::Migration
       t.column :type,               :string
       t.column :configuration_id,   :integer, :null => false
       t.column :field,              :string
-      t.column :display_in_list,    :boolean, :default => false
-      t.column :break_line,         :boolean, :default => false
       t.column :position,           :integer
+      t.column :settings,           :text
     end
   end
 

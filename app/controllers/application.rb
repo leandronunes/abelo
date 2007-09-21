@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
   MENU_ITEMS = {
     'main' => [
       'main'
-  ],
+    ],
     'configurations' => [
       'categories'
     ],
@@ -75,6 +75,10 @@ class ApplicationController < ActionController::Base
     ],
     'departments' => [
       'departments'
+    ],
+    'organizations' => [
+      'organizations',
+      'configuration'
     ]
   }
 
@@ -211,7 +215,11 @@ class ApplicationController < ActionController::Base
       highlights_on :controller => 'organizations'
     end
     t.show_if "!['list', 'new_configuration', 'create_configuration', 'list_configuration'].include?(params[:action])"
-    t.links_to :action => 'show', :id => params[:id]
+    if params[:id]
+      t.links_to :action => 'show', :id => params[:id]
+    else
+      t.links_to :action => 'new'
+    end
     t.named _('Show')
 
     t = add_tab do
@@ -271,22 +279,16 @@ class ApplicationController < ActionController::Base
   end
 
 
-  before_filter :define_path  
+  before_filter :define_location_path  
 
-  def define_path
-    @item = 'products'
+  def define_location_path
+    @location = 'products'
     MENU_ITEMS.keys.map do |k|
       if MENU_ITEMS[k].include? self.controller_name 
-        @item = k
+        @location = k
         break 
       end
     end
-
-#TODO fix it
-#    if @item.nil?
-#      render_error _('You have a controller not defined in path')
-#      return
-#    end
   end
 
   include DescribeMenu

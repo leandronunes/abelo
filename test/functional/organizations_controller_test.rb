@@ -16,11 +16,7 @@ class OrganizationsControllerTest < Test::Unit::TestCase
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     login_as('admin')
-    @organization = Organization.create!(
-      :name => 'Organization for testing',
-      :identifier => 'organization_test',
-      :cnpj => '99249952000100'
-    )
+    @organization = Organization.create!( :name => 'Organization for testing', :identifier => 'organization_test', :cnpj => '99249952000100' )
 
   end
 
@@ -40,11 +36,14 @@ class OrganizationsControllerTest < Test::Unit::TestCase
     assert_response 403
   end
 
-  def test_check_access_non_admin_user_on_none_organization_action
-    login_as('aaron')
-    get :none_organization
-    assert_response :success
-    assert_template 'none_organization' 
+  def test_autocomplete_name
+    Organization.delete_all
+    product = Organization.create!(:name => 'test product', :identifier => 'some', :cnpj => '84.021.301/0001-91')
+    product = Organization.create!(:name => ' product', :identifier => 'anothersome', :cnpj => '73.417.283/0001-45')
+    get :autocomplete_name, :organization => { :name => 'test'}
+    assert_not_nil assigns(:organizations)
+    assert_kind_of Array, assigns(:organizations)
+    assert_equal 1, assigns(:organizations).length
   end
 
   def test_index
@@ -64,15 +63,6 @@ class OrganizationsControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:organization_pages)
   end
 
-  def test_new
-    get :new
-
-    assert_not_nil assigns(:organization)
-
-    assert_response :success
-    assert_template 'new'
-  end
-
   def test_show
     Organization.delete_all
     o = Organization.create!(:name => 'Some Organization', :identifier => 'testing_org', :cnpj => '78048802000169')
@@ -86,13 +76,22 @@ class OrganizationsControllerTest < Test::Unit::TestCase
     assert_equal o.id, assigns(:organization).id
   end
 
+  def test_new
+    get :new
+
+    assert_not_nil assigns(:organization)
+
+    assert_response :success
+    assert_template 'new'
+  end
+
   def test_successfully_create
     num_organizations = Organization.count
 
     post :create, :organization => {:name => 'Some Organization', :identifier => 'testing_org', :cnpj => '78048802000169'}
 
     assert_response :redirect
-    assert_redirected_to :action => 'edit_configuration'
+    assert_redirected_to :controller => 'configuration', :action => 'edit'
 
     assert_equal num_organizations + 1, Organization.count
   end
@@ -202,18 +201,16 @@ class OrganizationsControllerTest < Test::Unit::TestCase
     assert_equal num_organizations, Organization.count
   end
 
-#FIXME see a way to make this test works
-#  def test_destroy
-#    id = Organization.find(:first).id
-#    assert_not_nil Organization.find(id)
-#
-#    post :destroy, :id => id
-#    assert_response :redirect
-#    assert_redirected_to :action => 'list'
-#
-#    assert_raise(ActiveRecord::RecordNotFound) {
-#      Organization.find(id)
-#    }
-#  end
+  def test_destroy
+    id = @organization.id
+
+    post :destroy, :id => id
+    assert_response :redirect
+    assert_redirected_to :action => 'list'
+
+    assert_raise(ActiveRecord::RecordNotFound) {
+      Organization.find(id)
+    }
+  end
 
 end

@@ -99,13 +99,13 @@ module ApplicationHelper
           content_tag('a',[] ,:class => 'show', :accesskey => 'x',:onClick => "$('warp').style.marginTop='0px';"),
         ],
         :class => 'control_header'),
-        link_to(@organization.name, :controller => 'main'),
+        current_user.administrator? ? link_to(_('Abelo'), :controller => 'organizations') : link_to(@organization.name, :controller => 'main') ,
         if controller.controller_name != 'main'
-        "&rarr " + link_to(controller.describe(@item), :controller => params[:controller])
+        "&rarr " + link_to(controller.describe(@location), :controller => @location)
         end
       ],
       :class => 'navigation_bar'
-    ) if @organization
+    ) 
   end
 
   def link_to_organization(org, html_options = {})

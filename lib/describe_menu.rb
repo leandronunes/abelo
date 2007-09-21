@@ -16,7 +16,8 @@ module DescribeMenu
       'store' => _('Store'),
       'administration' => _('Administration of users'),
       'point_of_sale' => _('Point of sale'),
-      'departments' => _('Departments')
+      'departments' => _('Departments'),
+      'organizations' => _('Organizations'),
     }[item] || item
   end
 

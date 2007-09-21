@@ -1,9 +1,5 @@
 class LedgerDisplay < DisplayConfiguration
 
-  def self.title
-    _('Ledger Display Configuration')
-  end
-
   def self.available_fields
     %w[
       type

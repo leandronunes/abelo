@@ -2,24 +2,26 @@
 
 <% form_tag :action => 'create' do %>
 
-  <div id="form">
-<%= error_messages_for 'configuration' %>
+   <%= error_messages_for 'configuration' %>
 
-    <p><label for="configuration_name"> <%= _('Name') %> </label>
-       <%= text_field 'configuration', 'name'  %>
-    </p>
-  
-    <p><label for="configuration_description"> <%= _('Description') %> </label>
-       <%= text_field 'configuration', 'description'  %>
-    </p>
-  
+  <% display_form_info @configuration do |item| %>
+
+    <%= display_field_form(item, 'name',
+        :title => _('Name'),
+        :content => text_field('configuration', 'name')
+      )
+    %>
+    <%= display_field_form(item, 'description',
+        :title => _('Description'),
+        :content => text_field('configuration', 'description')
+      )
+    %>
+
     <%= render :partial => 'form' %>
 
-  </div>
+  <% end %>
 
-  <div class='button_bar'>
-    <%= button 'back', _('Back'), :back, :action => 'list' %>
-    <%= button 'save',  _("Create"), :save %>
-  </div>
+  <%= display_new_info_options(@configuration) %>
+
 <% end %>
 

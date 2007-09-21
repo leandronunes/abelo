@@ -2,25 +2,25 @@ class Configuration < ActiveRecord::Base
 
   belongs_to :organization
 
-  has_many :product_displays
-  has_many :worker_displays
-  has_many :customer_displays
-  has_many :supplier_displays
-  has_many :bank_account_displays
-  has_many :ledger_displays
-  has_many :debit_ledger_displays
-  has_many :credit_ledger_displays
-  has_many :product_category_displays
-  has_many :worker_category_displays
-  has_many :supplier_category_displays
-  has_many :customer_category_displays
-  has_many :ledger_category_displays
-  has_many :department_displays
-  has_many :mass_mail_displays
-  has_many :stock_in_displays
-  has_many :stock_out_displays
-  has_many :profile_displays
-  has_many :user_displays
+  has_many :product_displays, :dependent => :destroy
+  has_many :worker_displays, :dependent => :destroy
+  has_many :customer_displays, :dependent => :destroy
+  has_many :supplier_displays, :dependent => :destroy
+  has_many :bank_account_displays, :dependent => :destroy
+  has_many :ledger_displays, :dependent => :destroy
+  has_many :debit_ledger_displays, :dependent => :destroy
+  has_many :credit_ledger_displays, :dependent => :destroy
+  has_many :product_category_displays, :dependent => :destroy
+  has_many :worker_category_displays, :dependent => :destroy
+  has_many :supplier_category_displays, :dependent => :destroy
+  has_many :customer_category_displays, :dependent => :destroy
+  has_many :ledger_category_displays, :dependent => :destroy
+  has_many :department_displays, :dependent => :destroy
+  has_many :mass_mail_displays, :dependent => :destroy
+  has_many :stock_in_displays, :dependent => :destroy
+  has_many :stock_out_displays, :dependent => :destroy
+  has_many :profile_displays, :dependent => :destroy
+  has_many :user_displays, :dependent => :destroy
 
   serialize :settings 
 
@@ -45,7 +45,6 @@ class Configuration < ActiveRecord::Base
 
     self.errors.add( 'document_name', _('Document name cannot be blank') )  if self.document_name.blank?
   end
-
 
   def settings
     self[:settings] ||= {}
@@ -167,13 +166,12 @@ class Configuration < ActiveRecord::Base
   # The name of the method will be 'set_ITEM_OF_DISPLAY_CONFIGURATION_CLASSES'
   DISPLAY_CONFIGURATION_CLASSES.each do |item|
     define_method("set_#{item.tableize}=") do |params|
-      return unless self.valid?
       return self.send(item.tableize).destroy_all if params.blank?
 
       remove_keys = self.send(item.tableize).map{|i| i.field} - params.keys
       
       remove_keys.each{|k| self.send(item.tableize).find_by_field(k).destroy}
-   
+      conf_a=[]
       params.each do |k,v|
         d_params = {}
         d_params["field"] = k
@@ -183,13 +181,12 @@ class Configuration < ActiveRecord::Base
         display = self.send(item.tableize).find_by_field(k)
         if display.nil?
           display = item.constantize.new(d_params) 
-          self.send("#{item.tableize}") <<  display
+          conf_a.push display
+          self.send("#{item.tableize}=", conf_a)
         else
           display.update_attributes(d_params)
         end
       end
-
-      self.send(item.tableize)
 
     end
   end

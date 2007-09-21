@@ -24,10 +24,4 @@ class CustomerDisplayTest < Test::Unit::TestCase
     end
   end
 
-  def test_title
-    assert_not_nil CustomerDisplay.title
-  end
-
-
-
 end

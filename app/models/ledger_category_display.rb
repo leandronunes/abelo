@@ -17,9 +17,4 @@ class LedgerCategoryDisplay < DisplayConfiguration
     }[field] || field
   end
 
-  def self.title
-    _('Ledger Category Display Configuration')
-  end
-
-
 end

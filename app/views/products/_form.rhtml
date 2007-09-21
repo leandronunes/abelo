@@ -2,7 +2,7 @@
 
 <!--[form:product]-->
 
-<% display_form_info @product, :class => 'view_data' do |item| %>
+<% display_form_info @product do |item| %>
 
   <%= display_field_form(item, 'name',
         :title => _('Name'),

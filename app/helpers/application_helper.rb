@@ -154,19 +154,16 @@ module ApplicationHelper
   def select_display_configuration(object, display_class, collection=[])
     selected_options = controller.instance_variable_get("@#{object}").send(display_class.tableize)
     content_tag('div', 
-      [
-        content_tag('label', _("#{display_class.constantize.title}")),
-        content_tag(:ul, 
-          [
-            collection.map do |c|
-              selected_display_obj = selected_options.detect{|d| d.field == c}
-              content_tag(:li,
-                set_of_display_configuration(object, display_class, c,selected_display_obj)
-              )  
-            end
-          ].join("\n")
-        )
-      ].join("\n")
+      content_tag(:ul, 
+        [
+          collection.map do |c|
+            selected_display_obj = selected_options.detect{|d| d.field == c}
+            content_tag(:li,
+              set_of_display_configuration(object, display_class, c,selected_display_obj)
+            )  
+          end
+        ].join("\n")
+      )
     )
   end
 
@@ -334,7 +331,7 @@ module ApplicationHelper
   def display_info(object, html_options = {}, type = false)
     
     inlist = (type == true) ? 'inlist_' : ''
-    fields = "#{object.class.to_s}Display".constantize.send(inlist + "available_fields") if @organization.nil? and current_user.administrator
+    fields = "#{object.class.to_s}Display".constantize.send(inlist + "available_fields") if current_user.administrator
     fields ||= @organization.configuration.send(inlist + "#{object.class.to_s}Display".tableize)
 
     html_options[:class] =  html_options[:class].nil? ? 'field_item' : 'field_item ' + html_options[:class]
@@ -519,11 +516,8 @@ module ApplicationHelper
   end
 
   def display_field_type_array(content)
-    content_tag(:ul,
-      content.map{ |c|
-        content_tag(:li, c.name)
-      }.join("\n")
-    )
+    @displays = content
+    render :partial => 'display_array'
   end
 
   private 

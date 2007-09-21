@@ -20,9 +20,4 @@ class ProductDisplay < DisplayConfiguration
     }[field] || field
   end
 
-  def self.title
-    _('Product Display Configuration')
-  end
-
-
 end

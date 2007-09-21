@@ -21,10 +21,4 @@ class LedgerCategoryDisplayTest < Test::Unit::TestCase
     end
   end
 
-
-  def test_title
-    assert_not_nil LedgerCategoryDisplay.title
-  end
-
-
 end

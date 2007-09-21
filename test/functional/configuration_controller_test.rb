@@ -13,10 +13,20 @@ class ConfigurationControllerTest < Test::Unit::TestCase
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     login_as('admin')
-    @configuration = Configuration.create(:is_model => true, :organization_name => 'Some Name',
+    @organization = Organization.find(:first)
+    @configuration = Configuration.create!(:is_model => true, :organization_name => 'Some Name',
       :product_name => 'Some name', :department_name => 'Some Name',
-      :customer_name => 'Some name', :document_name => 'Some Name')
+      :customer_name => 'Some name', :document_name => 'Some Name', :name => 'A name')
+    @configuration_organization = Configuration.create!( :organization_name => 'Some Name',
+      :product_name => 'Some name', :department_name => 'Some Name',
+      :customer_name => 'Some name', :document_name => 'Some Name',:organization => @organization)
 
+  end
+
+  def test_setup
+    assert @organization.valid?
+    assert @configuration.valid?
+    assert @configuration_organization.valid?
   end
 
   def test_only_admin_has_access
@@ -40,17 +50,15 @@ class ConfigurationControllerTest < Test::Unit::TestCase
 
     Configuration.create(:is_model => true, :organization_name => 'Some Name',
       :product_name => 'Some name', :department_name => 'Some Name',
-      :customer_name => 'Some name', :document_name => 'Some Name')
+      :customer_name => 'Some name', :document_name => 'Some Name', :name => 'name')
     Configuration.create(:is_model => true, :organization_name => 'Some Name',
       :product_name => 'Some name', :department_name => 'Some Name',
-      :customer_name => 'Some name', :document_name => 'Some Name')
+      :customer_name => 'Some name', :document_name => 'Some Name', :name => 'name test')
 
-    product = Configuration.create!(:name => 'test product', :identifier => 'some', :cnpj => '84.021.301/0001-91')
-    product = Organization.create!(:name => ' product', :identifier => 'anothersome', :cnpj => '73.417.283/0001-45')
-    get :autocomplete_name, :organization => { :name => 'test'}
-    assert_not_nil assigns(:organizations)
-    assert_kind_of Array, assigns(:organizations)
-    assert_equal 1, assigns(:organizations).length
+    get :autocomplete_name, :configuration => { :name => 'test'}
+    assert_not_nil assigns(:configurations)
+    assert_kind_of Array, assigns(:configurations)
+    assert_equal 1, assigns(:configurations).length
   end
 
   def test_index
@@ -67,169 +75,302 @@ class ConfigurationControllerTest < Test::Unit::TestCase
 
     assert_not_nil assigns(:configurations)
     assert_kind_of Array, assigns(:configurations)
-    assert_not_nil assigns(:cofiguration_pages)
-
-
+    assert_not_nil assigns(:configuration_pages)
+    assert_kind_of ActionController::Pagination::Paginator, assigns(:configuration_pages)
   end
 
+
   def test_show
-    Organization.delete_all
-    o = Organization.create!(:name => 'Some Organization', :identifier => 'testing_org', :cnpj => '78048802000169')
-    get :show, :id => o.id
+    get :show, :id => @configuration.id
+
+    assert_not_nil assigns(:configuration)
+    assert_not_nil assigns(:worker_display)
+    assert_not_nil assigns(:customer_display)
+    assert_not_nil assigns(:supplier_display)
+    assert_not_nil assigns(:product_display)
+    assert_not_nil assigns(:department_display)
+    assert_not_nil assigns(:ledger_display)
+    assert_not_nil assigns(:ledger_category_display)
+    assert_not_nil assigns(:bank_account_display)
 
     assert_response :success
     assert_template 'show'
-
-    assert_not_nil assigns(:organization)
-    assert assigns(:organization).valid?
-    assert_equal o.id, assigns(:organization).id
   end
 
   def test_new
     get :new
-
-    @worker_fields = WorkerDisplay.available_fields
-    @customer_fields = CustomerDisplay.available_fields
-    @supplier_fields = SupplierDisplay.available_fields
-    @product_fields = ProductDisplay.available_fields
-    @department_fields = DepartmentDisplay.available_fields
-    @ledger_category_fields = LedgerCategoryDisplay.available_fields
-    @ledger_fields = LedgerDisplay.available_fields
-    @bank_account_fields = BankAccountDisplay.available_fields
-
-
-    assert_not_nil assigns(:organization)
+    assert_not_nil assigns(:configuration)
+    assert_not_nil assigns(:worker_fields)
+    assert_not_nil assigns(:customer_fields)
+    assert_not_nil assigns(:supplier_fields)
+    assert_not_nil assigns(:product_fields)
+    assert_not_nil assigns(:department_fields)
+    assert_not_nil assigns(:ledger_category_fields)
+    assert_not_nil assigns(:ledger_fields)
+    assert_not_nil assigns(:bank_account_fields)
 
     assert_response :success
     assert_template 'new'
   end
 
   def test_successfully_create
-    num_organizations = Organization.count
+    num = Configuration.count
 
-    post :create, :organization => {:name => 'Some Organization', :identifier => 'testing_org', :cnpj => '78048802000169'}
+    post :create, :configuration => {:name => 'Some Name', :organization_name => 'Some Name',
+      :product_name => 'Some name', :department_name => 'Some Name',
+      :customer_name => 'Some name', :document_name => 'Some Name'}
 
     assert_response :redirect
-    assert_redirected_to :controller => 'configuration', :action => 'edit'
+    assert_redirected_to :action => 'list'
 
-    assert_equal num_organizations + 1, Organization.count
+    assert_equal num + 1, Configuration.count
   end
 
   def test_save_name_on_create
-    Organization.delete_all
-    post :create, :organization => {:name => 'Some Organization', :identifier => 'testing_org', :cnpj => '78048802000169'}
+    Configuration.delete_all
+    name = "Some name"
+    post :create, :configuration => {:name => name, :organization_name => 'Another Name',
+      :product_name => 'Some name', :department_name => 'Another Name',
+      :customer_name => 'Some name', :document_name => 'Another Name'}
     
-    o = Organization.find(:first)
-    assert_not_nil o
-    assert o.valid?
-    assert_equal 'Some Organization', o.name
+    c = Configuration.find(:first)
+    assert_not_nil c
+    assert_equal name, c.name
   end
 
-  def test_save_identifier_on_create
-    Organization.delete_all
-    post :create, :organization => {:name => 'Some Organization', :identifier => 'testing_org', :cnpj => '78048802000169'}
+  def test_save_organization_name_on_create
+    Configuration.delete_all
+    name = "Some name"
+    post :create, :configuration => {:name => 'Another Name', :organization_name => name,
+      :product_name => 'Some name', :department_name => 'Another Name',
+      :customer_name => 'Some name', :document_name => 'Another Name'}
     
-    o = Organization.find(:first)
-    assert_not_nil o
-    assert o.valid?
-    assert_equal 'testing_org', o.identifier
+    c = Configuration.find(:first)
+    assert_not_nil c
+    assert_equal name, c.organization_name
   end
 
-  def test_save_cnpj_on_create
-    Organization.delete_all
-    post :create, :organization => {:name => 'Some Organization', :identifier => 'testing_org', :cnpj => '78048802000169'}
+  def test_save_product_name_on_create
+    Configuration.delete_all
+    name = "Some name"
+    post :create, :configuration => {:name => 'Another Name', :organization_name => 'Another Name',
+      :product_name => name, :department_name => 'Another Name',
+      :customer_name => 'Some name', :document_name => 'Another Name'}
     
-    o = Organization.find(:first)
-    assert_not_nil o
-    assert o.valid?
-    assert_equal '78048802000169', o.cnpj
+    c = Configuration.find(:first)
+    assert_not_nil c
+    assert_equal name, c.product_name
   end
+
+  def test_save_department_name_on_create
+    Configuration.delete_all
+    name = "Some name"
+    post :create, :configuration => {:name => 'Another Name', :organization_name => 'Another Name',
+      :product_name => 'Some name', :department_name => name,
+      :customer_name => 'Some name', :document_name => 'Another Name'}
+    
+    c = Configuration.find(:first)
+    assert_not_nil c
+    assert_equal name, c.department_name
+  end
+
+  def test_save_customer_name_on_create
+    Configuration.delete_all
+    name = "Some name"
+    post :create, :configuration => {:name => 'Another Name', :organization_name => 'Another Name',
+      :product_name => 'Some name', :department_name => 'Another Name',
+      :customer_name => name, :document_name => 'Another Name'}
+    
+    c = Configuration.find(:first)
+    assert_not_nil c
+    assert_equal name, c.customer_name
+  end
+
+  def test_save_document_name_on_create
+    Configuration.delete_all
+    name = "Some name"
+    post :create, :configuration => {:name => 'Another Name', :organization_name => 'Another Name',
+      :product_name => 'Some name', :department_name => 'Another Name',
+      :customer_name => 'Some name', :document_name => name}
+    
+    c = Configuration.find(:first)
+    assert_not_nil c
+    assert_equal name, c.document_name
+  end
+
+  def test_save_worker_displays_on_create
+    Configuration.delete_all
+    WorkerDisplay.delete_all
+    post :create, :configuration => {:name => 'Another Name', :organization_name => 'Another Name',
+      :product_name => 'Some name', :department_name => 'Another Name',
+      :customer_name => 'Some name', :document_name => 'Another Name', 
+      'set_worker_displays' =>{"name"=>{"none" => "", "field" => "name"} }}
+    
+    c = Configuration.find(:first)
+    assert_not_nil c
+    assert_equal 1, WorkerDisplay.count
+    assert_equal 1, c.worker_displays.length
+  end
+
 
 
   def test_unsuccessfully_create
-    num_organizations = Organization.count
+    num = Configuration.count
 
-    post :create, :organization => {:name => 'Some Organization', :identifier => 'testing_org'}
+    # The configuration passed as parameter don't have all params needed
+    post :create, :configuration => {:name => 'Some Organization'}
 
     assert_response :success
     assert_template 'new'
-    assert assigns(:organization)
+    assert assigns(:configuration)
+    assert_not_nil assigns(:worker_fields)
+    assert_not_nil assigns(:customer_fields)
+    assert_not_nil assigns(:supplier_fields)
+    assert_not_nil assigns(:product_fields)
+    assert_not_nil assigns(:department_fields)
+    assert_not_nil assigns(:ledger_category_fields)
+    assert_not_nil assigns(:ledger_fields)
+    assert_not_nil assigns(:bank_account_fields)
 
-    assert_equal num_organizations, Organization.count
+    assert_equal num, Configuration.count
   end
 
   def test_edit
-    Organization.delete_all
-    o = Organization.create!(:name => 'Some Organization', :identifier => 'testing_org', :cnpj => '78048802000169')
-    get :edit, :id => o.id
+    get :edit, :id => @configuration.id
 
     assert_response :success
     assert_template 'edit'
+    assert assigns(:configuration)
+    assert_not_nil assigns(:worker_fields)
+    assert_not_nil assigns(:customer_fields)
+    assert_not_nil assigns(:supplier_fields)
+    assert_not_nil assigns(:product_fields)
+    assert_not_nil assigns(:department_fields)
+    assert_not_nil assigns(:ledger_category_fields)
+    assert_not_nil assigns(:ledger_fields)
+    assert_not_nil assigns(:bank_account_fields)
 
-    assert_not_nil assigns(:organization)
-    assert assigns(:organization).valid?
   end
 
 
   def test_successfully_update
-    Organization.delete_all
-    o = Organization.create!(:name => 'Some Organization', :identifier => 'testing_org', :cnpj => '78048802000169')
-    num_organizations = Organization.count
-    post :update, :id => o.id, :organization => {:name => 'Another Organization'}
+    post :update, :id => @configuration.id, :configuration => {:name => 'Another Configuration'}
 
     assert_response :redirect
     assert_redirected_to :action => 'show'
-
-    assert_equal num_organizations, Organization.count
   end
 
-  def test_save_name_on_update
-    Organization.delete_all
-    o = Organization.create!(:name => 'Some Organization', :identifier => 'testing_org', :cnpj => '78048802000169')
-    post :update, :id => o.id, :organization => {:name => 'Another Organization'}
-
-    o = Organization.find(:first)
-    assert_not_nil o
-    assert o.valid?
-    assert_equal 'Another Organization', o.name
+  def test_update_name
+    name = "Another name"
+    id = @configuration.id
+    post :update, :id => id, :configuration => {:name => name}
+    
+    c = Configuration.find(id)
+    assert_equal name, c.name
   end
 
+  def test_update_organization_name
+    organization_name = "Another organization_name"
+    id = @configuration.id
+    post :update, :id => id, :configuration => {:organization_name => organization_name}
+    
+    c = Configuration.find(id)
+    assert_equal organization_name, c.organization_name
+  end
 
-  def test_save_cnpj_on_update
-    Organization.delete_all
-    o = Organization.create!(:name => 'Some Organization', :identifier => 'testing_org', :cnpj => '78048802000169')
-    post :update, :id => o.id, :organization => {:cnpj => '62.370.998/0001-73'}
+  def test_update_product_name
+    product_name = "Another product_name"
+    id = @configuration.id
+    post :update, :id => id, :configuration => {:product_name => product_name}
+    
+    c = Configuration.find(id)
+    assert_equal product_name, c.product_name
+  end
 
-    o = Organization.find(:first)
-    assert_not_nil o
-    assert o.valid?
-    assert_equal '62.370.998/0001-73', o.cnpj
+  def test_update_department_name
+    department_name = "Another department_name"
+    id = @configuration.id
+    post :update, :id => id, :configuration => {:department_name => department_name}
+    
+    c = Configuration.find(id)
+    assert_equal department_name, c.department_name
+  end
+
+  def test_update_customer_name
+    customer_name = "Another customer_name"
+    id = @configuration.id
+    post :update, :id => id, :configuration => {:customer_name => customer_name}
+    
+    c = Configuration.find(id)
+    assert_equal customer_name, c.customer_name
+  end
+
+  def test_update_document_name
+    document_name = "Another document_name"
+    id = @configuration.id
+    post :update, :id => id, :configuration => {:document_name => document_name}
+    
+    c = Configuration.find(id)
+    assert_equal document_name, c.document_name
   end
 
   def test_unsuccessfully_update
-    Organization.delete_all
-    Organization.create!(:name => 'Another Some Organization', :identifier => 'another_testing_org', :cnpj => '62.370.998/0001-73')
-    o = Organization.create!(:name => 'Some Organization', :identifier => 'testing_org', :cnpj => '78048802000169')
-    num_organizations = Organization.count
-    post :update, :id => o.id, :organization => {:cnpj => '62.370.998/0001-73'}
+    customer_name = nil
+    id = @configuration.id
+    post :update, :id => id, :configuration => {:customer_name => customer_name}
 
     assert_response :success
     assert_template 'edit'
-    assert assigns(:organization)
+    assert assigns(:configuration)
+    assert_not_nil assigns(:worker_fields)
+    assert_not_nil assigns(:customer_fields)
+    assert_not_nil assigns(:supplier_fields)
+    assert_not_nil assigns(:product_fields)
+    assert_not_nil assigns(:department_fields)
+    assert_not_nil assigns(:ledger_category_fields)
+    assert_not_nil assigns(:ledger_fields)
+    assert_not_nil assigns(:bank_account_fields)
 
-    assert_equal num_organizations, Organization.count
   end
 
-  def test_destroy
-    id = @organization.id
+  def test_successfully_destroy
+
+    id = @configuration.id
+    assert_not_nil Configuration.find(id)
 
     post :destroy, :id => id
     assert_response :redirect
     assert_redirected_to :action => 'list'
-
+    assert_not_nil flash[:notice]
+  
     assert_raise(ActiveRecord::RecordNotFound) {
-      Organization.find(id)
+      Configuration.find(id)
     }
   end
+
+  def test_unsuccessfully_destroy
+
+    id = @configuration_organization.id
+    assert_not_nil Configuration.find(id)
+
+    post :destroy, :id => id
+    assert_response :redirect
+    assert_redirected_to :action => 'list'
+    assert_not_nil flash[:notice]
+  
+    assert_not_nil Configuration.find(id)
+  end
+
+  def test_parse_params_configuration
+    parameters =  {:configuration =>{ 
+      'set_worker_displays' => {'name' => {'field' => 'name', 'none' => '', 'display_in_list' => 'true'}, 'email' => {'field' => 'email', 'none' => ''}  },
+      'set_product_displays' => {'name' => {'field' => 'name', 'none' => '', 'display_in_list' => 'false'}  }}}
+
+    expected =  {:configuration =>{ 
+      'set_worker_displays' => {'name' => {'field' => 'name', 'display_in_list' => 'true'}, 'email' => {'field' => 'email'}  },
+      'set_product_displays' => {'name' => {'field' => 'name', 'display_in_list' => 'false'}  }}}
+    assert_equal expected,  @controller.parse_params_configuration(parameters)
+  end
+
 
 end

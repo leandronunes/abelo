@@ -1,7 +1,18 @@
-<%= title _('Editing Configuration of Organization %s') % @organization.name %>
+<% if @organization.nil? %>
+  <%= title _('Editing Configuration %s') % @configuration.name %>
+<% else %>
+  <%= title _('Editing Configuration of Organization %s') % @organization.name %>
+<% end %>
+
 
 <% form_tag :action => 'update', :id => @configuration  do %>
-  <%= render :partial => 'form' %>
+
+  <%= error_messages_for 'configuration' %>
+
+  <% display_form_info @configuration do |item| %>
+    <%= render :partial => 'form' %>
+  <% end %>
+
   <%= display_edit_info_options(@configuration) %>
 <% end %>
 

@@ -1,29 +1,80 @@
 
 <!--[form:organization]-->
-<p><label for="configuration_organization_name"> <%= _('Organization Name') %> </label>
-   <%= text_field 'configuration', 'organization_name'  %>
-</p>
-   
-<p><label for="configuration_department_name"> <%= _('Department Name') %> </label>
-   <%= text_field 'configuration', 'department_name'  %>
-</p>
 
-<p><label for="configuration_customer_name"> <%= _('Customer Name') %> </label>
-   <%= text_field 'configuration', 'customer_name'  %>
-</p>
+  <%= display_field_form(@configuration, 'organization_name',
+        :title => _('Organization Name'),
+        :content => text_field('configuration', 'organization_name')
+      )
+  %>
 
+  <%= display_field_form(@configuration, 'department_name',
+        :title => _('Department Name'),
+        :content => text_field('configuration', 'department_name')
+      )
+  %>
 
-<p><label for="configuration_document_name"> <%= _('Document Name') %> </label>
-   <%= text_field 'configuration', 'document_name'  %>
-</p>
+  <%= display_field_form(@configuration, 'customer_name',
+        :title => _('Customer Name'),
+        :content => text_field('configuration', 'customer_name')
+      )
+  %>
 
+  <%= display_field_form(@configuration, 'document_name',
+        :title => _('Document Name'),
+        :content => text_field('configuration', 'document_name')
+      )
+  %>
 
-<p><label for="configuration_product_name"> <%= _('Product Name') %> </label>
-   <%= text_field 'configuration', 'product_name'  %>
-</p>
+  <%= display_field_form(@configuration, 'product_name',
+        :title => _('Product Name'),
+        :content => text_field('configuration', 'product_name')
+      )
+  %>
 
-<%= select_display_configuration 'configuration', 'LedgerDisplay', @ledger_fields %>
-<%= select_display_configuration 'configuration', 'WorkerDisplay', @worker_fields %>
-<%= select_display_configuration 'configuration', 'ProductDisplay', @product_fields %>
-<%= select_display_configuration 'configuration', 'SupplierDisplay', @supplier_fields %>
+  <%= display_field_form(@configuration, 'worker_displays',
+        :title => _('Worker Display Configuration'),
+        :content => select_display_configuration('configuration', 'WorkerDisplay', @worker_fields)
+      )
+  %>
+
+  <%= display_field_form(@configuration, 'customer_displays',
+        :title => _('Customer Display Configuration'),
+        :content => select_display_configuration('configuration', 'CustomerDisplay', @customer_fields)
+      )
+  %>
+
+  <%= display_field_form(@configuration, 'supplier_displays',
+        :title => _('Supplier Display Configuration'),
+        :content => select_display_configuration('configuration', 'SupplierDisplay', @supplier_fields)
+      )
+  %>
+
+  <%= display_field_form(@configuration, 'product_displays',
+        :title => _('Product Display Configuration'),
+        :content => select_display_configuration('configuration', 'ProductDisplay', @product_fields)
+      )
+  %>
+
+  <%= display_field_form(@configuration, 'department_displays',
+        :title => _('Department Display Configuration'),
+        :content => select_display_configuration('configuration', 'DepartmentDisplay', @department_fields)
+      )
+  %>
+
+  <%= display_field_form(@configuration, 'ledger_category_displays',
+        :title => _('LedgerCategory Display Configuration'),
+        :content => select_display_configuration('configuration', 'LedgerCategoryDisplay', @ledger_category_fields)
+      )
+  %>
+
+  <%= display_field_form(@configuration, 'ledger_display',
+        :title => _('Ledger Display Configuration'),
+        :content => select_display_configuration('configuration', 'LedgerDisplay', @ledger_fields)
+      )
+  %>
+  <%= display_field_form(@configuration, 'bank_account_displays',
+        :title => _('BankAccount Display Configuration'),
+        :content => select_display_configuration('configuration', 'BankAccountDisplay', @bank_account_fields)
+      )
+  %>
 

@@ -24,9 +24,4 @@ class SupplierDisplayTest < Test::Unit::TestCase
     end
   end
 
-  def test_title
-    assert_not_nil SupplierDisplay.title
-  end
-
-
 end

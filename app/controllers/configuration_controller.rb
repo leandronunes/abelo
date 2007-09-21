@@ -23,16 +23,21 @@ class ConfigurationController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @query = params[:query]
-    @query ||= params[:product][:name] if params[:product]
+    @configurations = Configuration.models
+    @configuration_pages, @configurations = paginate_by_collection @configurations
+  end
 
-    if @query.nil?
-      @configurations = Configuration.models
-      @configuration_pages, @configurations = paginate_by_collection @configurations
-    else
-      @configurations = Configuration.models.full_text_search(@query)
-      @configuration_pages, @configurations = paginate_by_collection @configurations
-    end
+  def show
+    @configuration = Configuration.find(params[:id])
+    @organization = @configuration.organization
+    @worker_display = @configuration.worker_displays
+    @customer_display = @configuration.customer_displays
+    @supplier_display = @configuration.supplier_displays
+    @product_display = @configuration.product_displays
+    @department_display = @configuration.department_displays
+    @ledger_display = @configuration.ledger_displays
+    @ledger_category_display = @configuration.ledger_category_displays
+    @bank_account_display = @configuration.bank_account_displays
   end
 
   def new
@@ -41,6 +46,7 @@ class ConfigurationController < ApplicationController
   end
 
   def create
+    parse_params_configuration(params)
     @configuration = Configuration.new(params[:configuration])
     @configuration.is_model = true
     if @configuration.save
@@ -52,32 +58,37 @@ class ConfigurationController < ApplicationController
     end
   end
 
-  def show
-    @configuration = Configuration.find(params[:id])
-    @ledger_display = @configuration.ledger_displays
-    @worker_display = @configuration.worker_displays
-    @product_display = @configuration.product_displays
-    @supplier_display = @configuration.supplier_displays
-  end
-
   def edit
-    @organization = Organization.find(params[:id])
-    @configuration = @organization.configuration
+    @configuration = Configuration.find(params[:id])
+    @organization = @configuration.organization
     form_variables
   end
 
   def update
     parse_params_configuration(params)
+
     @configuration = Configuration.find(params[:id])
 
     if @configuration.update_attributes(params[:configuration])
       flash[:notice] = _('The configurations was successfully updated.')
       redirect_to :action => 'show', :id => @configuration
     else
+      @organization = @configuration.organization
+      form_variables
       render :action => 'edit'
     end
   end
 
+  def destroy
+    c = Configuration.find(params[:id])
+    if Configuration.models.include?(c)
+      c.destroy 
+      flash[:notice] =  _('The configuration model was successfully removed')
+    else
+      flash[:notice] = _('This configuration cannot be removed')
+    end
+    redirect_to :action => 'list'
+  end
 
   def form_variables
     @worker_fields = WorkerDisplay.available_fields
@@ -96,9 +107,9 @@ class ConfigurationController < ApplicationController
       next if params[:configuration]["Set#{item}".tableize].nil?
       params[:configuration]["Set#{item}".tableize].reject! do |key, value|
         value.reject!{|k,v| k == 'none'}.blank?
-        
       end
     end
+    params
   end
 
 end

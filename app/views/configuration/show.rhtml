@@ -1,36 +1,9 @@
 <% if @organization.nil? %>
   <%= title @configuration.name %>
 <% else %>
-  <%= title "leo" + @organization.name %>
+  <%= title @organization.name %>
 <% end %>
-<p> <b><%= _('Organization Name') %>:</b> <%= @configuration.organization_name %></p>
-<p> <b><%= _('Dertparment Name') %>:</b> <%= @configuration.department_name %></p>
-<p> <b><%= _('Customer Name') %>:</b> <%= @configuration.customer_name %></p>
-<p> <b><%= _('Product Name') %>:</b> <%= @configuration.product_name %></p>
 
-<p> <b><%= _('Ledger Fields') %>:</b> </p>
-<ul>
-  <% @ledger_display.each do |display| %>
-    <li> 
-      <%= display.describe_field %>
-      <%= _('Display in list? %s') % display.display_in_list %>
-      <%= _('Break Line? %s') % display.break_line %>
-      <%= _('Display Title? %s') % display.display_title %>
-    </li>
-  <% end %>
-</ul>
+<%= display_show_info @configuration %>
 
-
-<p> <b><%= _('Worker Fields') %>:</b> </p>
-<ul>
-  <% @worker_display.each do |display| %>
-    <li> 
-      <%= display.describe_field %>
-      <%= _('Display in list? %s') % display.display_in_list %>
-      <%= _('Break Line? %s') % display.break_line %>
-      <%= _('Display Title? %s') % display.display_title %>
-    </li>
-  <% end %>
-</ul>
-
-<%= button('edit', _('Edit'), :list, :action => 'edit', :id => @organization) %> 
+<%= button('edit', _('Edit'), :list, :action => 'edit', :id => @configuration) %> 

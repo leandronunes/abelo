@@ -34,13 +34,11 @@ class ConfigurationController < ApplicationController
   def create
     @configuration = Configuration.new(params[:configuration])
     @configuration.is_model = true
-    @configuration.full_product = params[:product_full_informations].nil? ? Array.new : params[:product_full_informations].keys
-    @configuration.lite_product = params[:product_lite_informations].nil? ? Array.new : params[:product_lite_informations].keys
-
     if @configuration.save
       flash[:notice] = _('The configurations was successfully updated.')
       redirect_to :action => 'list_configuration'
     else
+      form_variables
       render :action => 'new'
     end
   end

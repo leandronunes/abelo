@@ -6,7 +6,7 @@ class ConfigurationTest < Test::Unit::TestCase
     @organization = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :identifier => 'org')
     @configuration = Configuration.create(:is_model => true, :organization_name => 'Some Name', 
                        :product_name => 'Some name', :department_name => 'Some Name', 
-                        :customer_name => 'Some name', :document_name => 'Some Name')
+                        :customer_name => 'Some name', :document_name => 'Some Name', :name => 'A name')
   end
 
   def test_setup
@@ -41,6 +41,34 @@ class ConfigurationTest < Test::Unit::TestCase
     Configuration::DISPLAY_CONFIGURATION_CLASSES.each do |item|
       assert DISPLAY_CONFIGURATION_CLASSES_TEST.include?(item)
     end
+  end
+
+  def test_presence_of_name_when_is_model
+    c = Configuration.new(:is_model => true)  
+    c.valid?
+    assert c.errors.invalid?(:name)
+    c.name = 'some name'
+    c.valid?
+    assert !c.errors.invalid?(:name)
+  end
+
+  def test_uniqueness_of_name_when_is_model
+    Configuration.delete_all
+    Configuration.create(:is_model => true, :organization_name => 'Some Name', 
+      :product_name => 'Some name', :department_name => 'Some Name',  :customer_name => 'Some name', 
+      :document_name => 'Some Name', :name => 'some name')
+    c = Configuration.new(:is_model => true, :name => 'some name')  
+    c.valid?
+    assert c.errors.invalid?(:name)
+  end
+
+  def test_permit_equal_names_when_is_not_model
+    Configuration.create( :organization_name => 'Some Name', 
+      :product_name => 'Some name', :department_name => 'Some Name',  :customer_name => 'Some name', 
+      :document_name => 'Some Name', :name => 'some name')
+    c = Configuration.new(:name => 'some name')  
+    c.valid?
+    assert !c.errors.invalid?(:name)
   end
 
 
@@ -112,13 +140,16 @@ class ConfigurationTest < Test::Unit::TestCase
     Configuration.delete_all
     Configuration.create(:is_model => true, :organization_name => 'Some Name', 
                          :product_name => 'Some name', :department_name => 'Some Name', 
-                          :customer_name => 'Some name', :document_name => 'Some Name')
+                          :customer_name => 'Some name', :document_name => 'Some Name', 
+                          :name => 'name 1')
     Configuration.create(:is_model => true, :organization_name => 'Some Name', 
                          :product_name => 'Some name', :department_name => 'Some Name', 
-                          :customer_name => 'Some name', :document_name => 'Some Name')
+                          :customer_name => 'Some name', :document_name => 'Some Name',
+                          :name => 'name 2')
     Configuration.create(:is_model => false, :organization_name => 'Some Name', 
                          :product_name => 'Some name', :department_name => 'Some Name', 
-                          :customer_name => 'Some name', :document_name => 'Some Name')
+                          :customer_name => 'Some name', :document_name => 'Some Name',
+                          :name => 'name 3')
     assert_equal 2, Configuration.models.length
   end
 

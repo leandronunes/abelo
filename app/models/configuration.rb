@@ -25,6 +25,8 @@ class Configuration < ActiveRecord::Base
   serialize :settings 
 
   validates_presence_of :organization_id, :if => lambda { |conf| !conf.is_model?}
+  validates_presence_of :name, :if => lambda {|conf| conf.is_model? }
+  validates_uniqueness_of :name, :if => lambda {|conf| conf.is_model? }
  
   def validate
     if self.is_model? and !self.organization.nil?
@@ -157,7 +159,7 @@ class Configuration < ActiveRecord::Base
   # The name of the method will be 'set_ITEM_OF_DISPLAY_CONFIGURATION_CLASSES'
   DISPLAY_CONFIGURATION_CLASSES.each do |item|
     define_method("set_#{item.tableize}=") do |params|
-
+      return unless self.valid?
       return self.send(item.tableize).destroy_all if params.blank?
 
       remove_keys = self.send(item.tableize).map{|i| i.field} - params.keys

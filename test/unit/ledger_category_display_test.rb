@@ -9,7 +9,7 @@ class LedgerCategoryDisplayTest < Test::Unit::TestCase
       is_operational
       is_store
       type_of
-      payment_method
+      payment_methods
   ]
   def test_available_fields
     assert_equal AVAILABLE_FIELDS_TEST, LedgerCategoryDisplay.available_fields

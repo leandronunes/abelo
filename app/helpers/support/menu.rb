@@ -13,7 +13,7 @@
 #      'store'                               => _('Store'),
       'permissions'                         => _('User administration'),
       'system_actors'                       => _('Registers'),
-      'point_of_sale'                       => _('Point of sale'),
+#      'point_of_sale'                       => _('Point of sale'),
 #      'mass_mails'                          => _('Mass mail'),
       'ledgers'                             => _('Financial'),
 #      'documents'                           => _('Documents'),

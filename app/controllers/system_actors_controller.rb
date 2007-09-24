@@ -1,16 +1,16 @@
 class SystemActorsController < ApplicationController
 
+  auto_complete_for :system_actor, :name
+
+  needs_organization
+
+  uses_register_tabs
+
   SYSTEM_ACTORS = {
     'customer' => _('Customer'),
     'worker' => _('Workers'),
     'supplier' => _('Supplier'),
   }
-
-  auto_complete_for :system_actor, :name
-
-  needs_organization
-
-  before_filter :create_register_tabs
 
   def autocomplete_name
     actor = params[:actor].camelize

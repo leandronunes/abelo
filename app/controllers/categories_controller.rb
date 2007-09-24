@@ -2,6 +2,10 @@ class CategoriesController < ApplicationController
 
   needs_organization
 
+
+  uses_configurations_tabs
+
+
   CATEGORY_TYPES = %w[
     customer
     worker
@@ -10,16 +14,13 @@ class CategoriesController < ApplicationController
     contact
   ]
 
-  before_filter :create_configurations_tabs
-
   # Show all available categories of the system
   def index
     redirect_to :action => 'list', :category_type => 'customer'
   end
 
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
-  verify :method => :post, :only => [ :destroy, :create, :update ],
-         :redirect_to => { :action => :list }
+  post_only [ :destroy, :create, :update ]
 
   def autocomplete_name
     escaped_string = Regexp.escape(params[:category][:name])

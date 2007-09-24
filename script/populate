@@ -16,7 +16,7 @@ ProductDisplay.delete_all
 params = {}
 ProductDisplay.available_fields.collect { |d|
   in_list = ['name', 'size', 'category', 'image' ].include?(d) ? true : false
-  params[d] = {:field => d, :display_in_list => in_list}  
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
 }
 configuration.set_product_displays=(params)
 
@@ -24,7 +24,7 @@ WorkerDisplay.delete_all
 params = {}
 WorkerDisplay.available_fields.collect { |d|
   in_list = ['name', 'description', 'email' ].include?(d) ? true : false
-  params[d] = {:field => d, :display_in_list => in_list}  
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
 }
 configuration.set_worker_displays=(params)
 
@@ -32,7 +32,7 @@ CustomerDisplay.delete_all
 params = {}
 CustomerDisplay.available_fields.collect { |d|
   in_list = ['name', 'description', 'email' ].include?(d) ? true : false
-  params[d] = {:field => d, :display_in_list => in_list}  
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
 }
 configuration.set_customer_displays=(params)
 
@@ -40,7 +40,7 @@ SupplierDisplay.delete_all
 params = {}
 SupplierDisplay.available_fields.collect { |d|
   in_list = ['name', 'description', 'email' ].include?(d) ? true : false
-  params[d] = {:field => d, :display_in_list => in_list}  
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
 }
 configuration.set_supplier_displays=(params)
 
@@ -48,7 +48,7 @@ ProductCategoryDisplay.delete_all
 params = {}
 ProductCategoryDisplay.available_fields.collect { |d|
   in_list = true
-  params[d] = {:field => d, :display_in_list => in_list}  
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
 }
 configuration.set_product_category_displays=(params)
 
@@ -56,7 +56,7 @@ CustomerCategoryDisplay.delete_all
 params = {}
 CustomerCategoryDisplay.available_fields.collect { |d|
   in_list = true
-  params[d] = {:field => d, :display_in_list => in_list}  
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
 }
 configuration.set_customer_category_displays=(params)
 
@@ -64,7 +64,7 @@ WorkerCategoryDisplay.delete_all
 params = {}
 WorkerCategoryDisplay.available_fields.collect { |d|
   in_list = true
-  params[d] = {:field => d, :display_in_list => in_list}  
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
 }
 configuration.set_worker_category_displays=(params)
 
@@ -72,7 +72,7 @@ SupplierCategoryDisplay.delete_all
 params = {}
 SupplierCategoryDisplay.available_fields.collect { |d|
   in_list = true
-  params[d] = {:field => d, :display_in_list => in_list}  
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
 }
 configuration.set_supplier_category_displays=(params)
 
@@ -80,7 +80,7 @@ LedgerCategoryDisplay.delete_all
 params = {}
 LedgerCategoryDisplay.available_fields.collect { |d|
   in_list = true
-  params[d] = {:field => d, :display_in_list => in_list}  
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
 }
 configuration.set_ledger_category_displays=(params)
 
@@ -88,7 +88,7 @@ LedgerDisplay.delete_all
 params = {}
 LedgerDisplay.available_fields.collect { |d|
   in_list = true
-  params[d] = {:field => d, :display_in_list => in_list}  
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
 }
 configuration.set_ledger_displays=(params)
 
@@ -96,7 +96,7 @@ CreditLedgerDisplay.delete_all
 params = {}
 CreditLedgerDisplay.available_fields.collect { |d|
   in_list = true
-  params[d] = {:field => d, :display_in_list => in_list}  
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
 }
 configuration.set_credit_ledger_displays=(params)
 
@@ -104,7 +104,7 @@ DebitLedgerDisplay.delete_all
 params = {}
 DebitLedgerDisplay.available_fields.collect { |d|
   in_list = true
-  params[d] = {:field => d, :display_in_list => in_list}  
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
 }
 configuration.set_debit_ledger_displays=(params)
 
@@ -112,7 +112,7 @@ BankAccountDisplay.delete_all
 params = {}
 BankAccountDisplay.available_fields.collect { |d|
   in_list = ['bank', 'agency', 'variation', 'account', 'owner' ].include?(d) ? true : false
-  params[d] = {:field => d, :display_in_list => in_list}  
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
 }
 configuration.set_bank_account_displays=(params)
 
@@ -120,7 +120,7 @@ DepartmentDisplay.delete_all
 params = {}
 DepartmentDisplay.available_fields.collect { |d|
   in_list = true
-  params[d] = {:field => d, :display_in_list => in_list}  
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
 }
 configuration.set_department_displays=(params)
 
@@ -128,7 +128,7 @@ StockInDisplay.delete_all
 params = {}
 StockInDisplay.available_fields.collect { |d|
   in_list = ['date', 'amount', 'price', 'supplier', 'type_of' ].include?(d) ? true : false
-  params[d] = {:field => d, :display_in_list => in_list}  
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
 }
 configuration.set_stock_in_displays=(params)
 
@@ -136,7 +136,7 @@ StockOutDisplay.delete_all
 params = {}
 StockOutDisplay.available_fields.collect { |d|
   in_list = ['date', 'amount', 'price', 'supplier', 'type_of' ].include?(d) ? true : false
-  params[d] = {:field => d, :display_in_list => in_list}  
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
 }
 configuration.set_stock_out_displays=(params)
 
@@ -144,7 +144,7 @@ UserDisplay.delete_all
 params = {}
 UserDisplay.available_fields.collect { |d|
   in_list = ['login', 'profiles'].include?(d) ? true : false
-  params[d] = {:field => d, :display_in_list => in_list}  
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
 }
 configuration.set_user_displays=(params)
 
@@ -407,8 +407,8 @@ saving_account.save!
 
 ########### Ledger Category ###################
 LedgerCategory.delete_all
-ledger_category_expense = LedgerCategory.create!(:name => 'Limpeza', :organization => organization, :type_of => LedgerCategory::TYPE_OF_EXPENSE, :payment_method => 'money')
-ledger_category_income = LedgerCategory.create!(:name => 'Venda Produto', :organization => organization, :type_of => LedgerCategory::TYPE_OF_INCOME, :payment_method => 'money')
+ledger_category_expense = LedgerCategory.create!(:name => 'Limpeza', :organization => organization, :type_of => LedgerCategory::TYPE_OF_EXPENSE, :payment_methods => ['money'])
+ledger_category_income = LedgerCategory.create!(:name => 'Venda Produto', :organization => organization, :type_of => LedgerCategory::TYPE_OF_INCOME, :payment_methods => ['money'])
 
 #############################
 # Period

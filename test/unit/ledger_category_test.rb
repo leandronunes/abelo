@@ -12,6 +12,7 @@ class LedgerCategoryTest < Test::Unit::TestCase
   def test_setup
     assert @organization.valid?
     assert @ledger_category.valid?
+    assert @bank_account.valid?
   end
 
   def test_presence_of_name
@@ -26,19 +27,19 @@ class LedgerCategoryTest < Test::Unit::TestCase
   def test_presence_of_payment_method
     l = LedgerCategory.new
     l.valid?
-    assert l.errors.invalid?(:payment_method)
-    l.payment_method = 'money'
+    assert l.errors.invalid?(:payment_methods)
+    l.payment_methods = ['money']
     l.valid?
-    assert !l.errors.invalid?(:payment_method)
+    assert !l.errors.invalid?(:payment_methods)
   end
 
   def test_inclusion_of_payment_method_on_defined_payment_methods
     l = LedgerCategory.new
     l.valid?
-    assert l.errors.invalid?(:payment_method)
-    l.payment_method = 'wrong'
+    assert l.errors.invalid?(:payment_methods)
+    l.payment_methods = ['wrong']
     l.valid?
-    assert l.errors.invalid?(:payment_method)
+    assert l.errors.invalid?(:payment_methods)
   end
 
 
@@ -97,14 +98,17 @@ class LedgerCategoryTest < Test::Unit::TestCase
 
   def test_foreseen_value_by_date
     Ledger.delete_all
-    l = Ledger.new(:date => Date.today, :value => 10, :category => @ledger_category, :bank_account => @bank_account, :operational => false)
-    assert l.save
+    l = CreditLedger.new(:date => Date.today, :value => 10, :category => @ledger_category, 
+       :bank_account => @bank_account, :operational => false, :owner => @organization)
+    l.save!
     
-    l = Ledger.new(:date => Date.today, :value => 240.43, :category => @ledger_category, :bank_account => @bank_account, :operational => false)
-    assert l.save
+    l = CreditLedger.new(:date => Date.today, :value => 240.43, :category => @ledger_category, 
+        :bank_account => @bank_account, :operational => false, :owner => @organization)
+    l.save!
 
-    l = Ledger.new(:date => Date.today, :value => 20, :category => @ledger_category, :bank_account => @bank_account, :operational => false, :is_foreseen => true )
-    assert l.save
+    l = CreditLedger.new(:date => Date.today, :value => 20, :category => @ledger_category, 
+        :bank_account => @bank_account, :operational => false, :is_foreseen => true, :owner => @organization )
+    l.save!
 
     assert_equal 270.43, @ledger_category.foreseen_value_by_date
 
@@ -113,14 +117,17 @@ class LedgerCategoryTest < Test::Unit::TestCase
 
   def test_effective_value_by_date
     Ledger.delete_all
-    l = Ledger.new(:date => Date.today, :value => 10, :category => @ledger_category, :bank_account => @bank_account, :operational => false)
-    assert l.save
+    l = CreditLedger.new(:date => Date.today, :value => 10, :category => @ledger_category, 
+        :bank_account => @bank_account, :operational => false, :owner => @organization)
+    l.save!
     
-    l = Ledger.new(:date => Date.today, :value => 240.43, :category => @ledger_category, :bank_account => @bank_account, :operational => false)
-    assert l.save
+    l = CreditLedger.new(:date => Date.today, :value => 240.43, :category => @ledger_category, 
+        :bank_account => @bank_account, :operational => false, :owner => @organization)
+    l.save!
 
-    l = Ledger.new(:date => Date.today, :value => 20, :category => @ledger_category, :bank_account => @bank_account, :operational => false, :is_foreseen => true )
-    assert l.save
+    l = CreditLedger.new(:date => Date.today, :value => 20, :category => @ledger_category, 
+        :bank_account => @bank_account, :operational => false, :is_foreseen => true , :owner => @organization)
+    l.save!
 
     assert_equal 250.43, @ledger_category.effective_value_by_date
 
@@ -138,11 +145,13 @@ class LedgerCategoryTest < Test::Unit::TestCase
 
   def test_count_ledgers
     Ledger.delete_all
-    l = Ledger.new(:date => Date.today, :value => 10, :category => @ledger_category, :bank_account => @bank_account, :operational => false)
-    assert l.save
+    l = CreditLedger.new(:date => Date.today, :value => 10, :category => @ledger_category, 
+        :bank_account => @bank_account, :operational => false, :owner => @organization)
+    l.save!
     
-    l = Ledger.new(:date => Date.today, :value => 240.43, :category => @ledger_category, :bank_account => @bank_account, :operational => false)
-    assert l.save
+    l = DebitLedger.new(:date => Date.today, :value => 240.43, :category => @ledger_category, 
+        :bank_account => @bank_account, :operational => false, :owner => @organization)
+    l.save!
 
     assert_equal 2, @ledger_category.count_ledgers
 

@@ -18,7 +18,8 @@
 
   <%= display_field_form(item, 'suppliers',
       :title => _('Suppliers'),
-      :content => multiple_select('product', 'supplier_ids', @suppliers )
+      :content => multiple_select('product', 'supplier_ids', @suppliers ),
+      :html_options => {:class => 'break_line' }
     )
   %>
 
@@ -37,7 +38,8 @@
 
   <%= display_field_form(item, 'color',
         :title => _('Color'),
-        :content => select_item('product', 'color', @colors)
+        :content => select_item('product', 'color', @colors),
+        :html_options => {:class => 'break_line' }
       )
   %>
 

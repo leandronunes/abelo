@@ -4,13 +4,9 @@ one:
   configuration_id: 1
   type: 'ProductDisplay'
   field: 'name'
-  display_in_list: false
-  break_line: false
 two:
   id: 2
   configuration_id: 1
   type: 'ProductDisplay'
   field: 'size'
-  display_in_list: false
-  break_line: false
 

@@ -13,13 +13,21 @@ class LedgerCategory < ActiveRecord::Base
 
   validates_presence_of :name
   validates_presence_of :type_of
-  validates_presence_of :payment_method
-  validates_inclusion_of :payment_method, :in => Payment::PAYMENT_METHODS
   validates_presence_of :organization_id
   validates_uniqueness_of :name
   validates_inclusion_of :type_of, :in => TYPE_OF.keys
 
   serialize :settings
+
+  def validate
+    if self.payment_methods.length < 1
+      self.errors.add('payment_methods', _('You have to choose at least one payment method'))
+    end
+            
+    if (self.payment_methods - Payment::PAYMENT_METHODS).length != 0 
+      self.errors.add('payment_methods', _('You have to choose a valid payment method'))
+    end
+  end
 
   def settings
     self[:settings] ||= {}
@@ -43,6 +51,13 @@ class LedgerCategory < ActiveRecord::Base
     self.settings['is_operational'] = value
   end
 
+  def payment_methods= value
+    self.settings['payment_methods'] = value
+  end
+
+  def payment_methods
+    self.settings['payment_methods'] || []
+  end
 
   # Check if the current ledger is a income
   def income?

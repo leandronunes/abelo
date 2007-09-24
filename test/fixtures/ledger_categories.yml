@@ -8,7 +8,7 @@ one:
   is_operational: true
   organization_id: 1
   type_of: 'I'
-  payment_method: 'money'
+  settings: {payment_methods:  ['money'] }
 two:
   id: 2
   name: 'Sell 2x '
@@ -18,7 +18,7 @@ two:
   is_operational: true
   organization_id: 1
   type_of: 'I'
-  payment_method: 'money'
+  settings: {payment_methods:  ['money'] }
 three:
   id: 3
   name: 'Expenditure Clean 1'
@@ -28,7 +28,7 @@ three:
   is_operational: false
   organization_id: 1
   type_of: 'O'
-  payment_method: 'money'
+  settings: {payment_methods:  ['money'] }
 four:
   id: 4
   name: 'Expenditure Clean 2'
@@ -38,4 +38,4 @@ four:
   is_operational: false
   organization_id: 1
   type_of: 'O'
-  payment_method: 'money'
+  settings: {payment_methods:  ['money'] }

@@ -1,7 +1,7 @@
 class LedgerCategoryDisplay < DisplayConfiguration
 
   def self.available_fields
-    ['name', 'interests', 'interests_days', 'number_of_parcels', 'is_operational', 'is_store','type_of', 'payment_method']
+    ['name', 'interests', 'interests_days', 'number_of_parcels', 'is_operational', 'is_store','type_of', 'payment_methods']
   end
 
   def self.describe(field)
@@ -13,7 +13,7 @@ class LedgerCategoryDisplay < DisplayConfiguration
       'is_operational' =>  _('Is Operational?'),
       'is_store' =>  _('Is to Store?'),
       'type_of' =>  _('Type of'),
-      'payment_method' =>  _('Payment Method'),
+      'payment_methods' =>  _('Payment Methods'),
     }[field] || field
   end
 

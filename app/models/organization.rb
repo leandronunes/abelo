@@ -28,6 +28,8 @@ class Organization < ActiveRecord::Base
   has_many :ledger_category_displays, :through => :configuration
   has_many :ledger_displays, :through => :configuration
   has_many :bank_account_displays, :through => :configuration
+  has_many :stock_in_displays, :through => :configuration
+  has_many :stock_out_displays, :through => :configuration
   # End displays has_many methods
   has_one  :virtual_community, :as => :owner
   has_many :departments

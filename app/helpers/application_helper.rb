@@ -116,6 +116,35 @@ module ApplicationHelper
     )
   end
 
+  def select_payments(object, method, title=nil)
+
+    collection =  Payment::PAYMENT_METHODS
+    selected_options = controller.instance_variable_get("@#{object}").send(method)
+    content_tag(:ul, 
+      [
+        collection.map do |c|
+          content_tag(:li,
+            if selected_options.include?(c)
+              content_tag('input', 
+                       Payment.describe(c) , 
+                       :name => "#{object}[#{method}][]", 
+                       :type => 'checkbox', :value => c, 
+                       :checked => 'checked' 
+              )
+            else
+              content_tag('input', 
+                       Payment.describe(c) , 
+                       :name => "#{object}[#{method}][]", 
+                       :type => 'checkbox', :value => c
+              )
+            end
+          )  
+        end
+      ].join("\n")
+    )
+  end
+  
+
   #TODO see if it's usefull
   def multiple_select(object, method, collection=[], title="", text_method=:name, value_method=:id)
     value_method = value_method.to_s

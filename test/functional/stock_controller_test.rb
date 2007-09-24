@@ -6,15 +6,14 @@ class StockController; def rescue_action(e) raise e end; end
 
 class StockControllerTest < Test::Unit::TestCase
 
-  include TestingUnderOrganization
+  fixtures :stock_entries, :system_actors, :products, :configurations
 
-  fixtures :organizations, :stock_entries, :system_actors, :products
+  under_organization :one
 
   def setup
     @controller = StockController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-    @organization_nickname = 'one'
     login_as("quentin")
   end
 

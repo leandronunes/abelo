@@ -24,46 +24,23 @@ class Ledger < ActiveRecord::Base
   validates_presence_of :schedule_repeat, :if => lambda{ |l| !l.schedule_periodicity.blank? or  !l.schedule_interval.blank? }
   validates_presence_of :schedule_periodicity, :if => lambda{ |l| l.schedule_repeat? or !l.schedule_interval.blank? }
   validates_presence_of :schedule_interval, :if => lambda{ |l| l.schedule_repeat? or  !l.schedule_periodicity.blank? }
-  validates_presence_of :payment_id, :if => lambda{ |l|  (l.owner === Sale) and (l.payment.nil?)}, :message => _('You cannot save a sale ledger without a payment.')
+  validates_presence_of :payment_id
+#, :if => lambda{ |l|  (l.owner === Sale) and (l.payment.nil?)}, :message => _('You cannot save a sale ledger without a payment.')
 
   def reload
     Ledger.find(self.id)
   end
 
-##  @@credit_new = CreditLedger.method(:new)
-##  def self.new(attributes = nil)
-##    @@credit_new.call(attributes)
-##  end
-#
-## after_save do |l|
-##     l = Ledger.find(l.id#
-##  end
-#
-
-  before_validation :define_ledger_type
-
-  def define_ledger_type
-    if !self.category.nil? and self.category.expense?
-      self.type ||= 'DebitLedger'
-    else
-      self.type ||= 'CreditLedger'
-    end
+  @@original_new = self.method(:new)
+  def self.new(*args)
+    (self == Ledger) ? (raise "cannot create an instance of Ledger") : super(*args)
   end
 
-#  @@original_new = self.method(:new)
-#  def self.new(*args)
-#    (self == Ledger) ? (raise "cannot create an instance of Ledger") : super(*args)
-#  end
-#
-#  def self.instanciate_ledger(*args)
-#    @@original_new.call(*args)
-#  end
-#
-#  def self.create_ledger(*args)
-#    l = Ledger.instanciate_ledger(*args)
-#    klass = (l.category.nil? || l.category.expense? ) ? DebitLedger : CreditLedger
-#    klass.new(*args)
-#  end
+  def self.create_ledger(*args)
+    l = Ledger.instanciate_ledger(*args)
+    klass = (l.category.nil? || l.category.expense? ) ? DebitLedger : CreditLedger
+    klass.new(*args)
+  end
 
   after_create do |l|
 #    if l.valid?
@@ -71,19 +48,9 @@ class Ledger < ActiveRecord::Base
       if l.schedule_repeat?
         sl = ScheduleLedger.create(:periodicity => l.schedule_periodicity, :start_date => l.foreseen_date, :interval => l.schedule_interval)
         (1..l.schedule_interval.to_i).each do |n|
-          ledger_schedule = Ledger.new()
+          ledger_schedule = l.clone
           ledger_schedule.is_foreseen = true
-          ledger_schedule.category = l.category
-          ledger_schedule.value = l.value
-          ledger_schedule.description = l.description
-          ledger_schedule.tag_list = l.tag_list.names
           ledger_schedule.date = l.date + l.schedule_periodicity.number_of_days * n
-          ledger_schedule.interests = l.interests
-          ledger_schedule.interests_days = l.interests_days
-          ledger_schedule.number_of_parcels = l.number_of_parcels
-          ledger_schedule.parcel_number = l.parcel_number
-          ledger_schedule.operational = l.operational
-          ledger_schedule.bank_account = l.bank_account
           ledger_schedule.schedule_ledger = sl
           ledger_schedule.save
         end
@@ -92,6 +59,10 @@ class Ledger < ActiveRecord::Base
       end  
     end
  #   end
+  end
+
+  def set_payment= payment
+    
   end
 
   def self.full_text_search(q, options = {})
@@ -186,5 +157,11 @@ class Ledger < ActiveRecord::Base
 ##    errors.add(:type, _("You cannot set a type type manually") )
 ##  end
 #
+
+  private
+
+  def self.instanciate_ledger(*args)
+    @@original_new.call(*args)
+  end
 
 end

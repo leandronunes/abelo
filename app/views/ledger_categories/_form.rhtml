@@ -22,9 +22,9 @@
       )
   %>
   
-  <%= display_field_edit(item, 'payment_method',
-        :title => _('Payment Method'),
-        :content =>  select('category', 'payment_method', Payment::PAYMENT_METHODS.map{|p| [Payment.describe(p), p]}, :include_blank => true),
+  <%= display_field_edit(item, 'payment_methods',
+        :title => _('Payment Methods'),
+        :content =>  select_payments('category', 'payment_methods'),
         :html_options => {:style => 'clear: left;'}
       )
   %>

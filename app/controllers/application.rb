@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
 
   require 'extended_array'
   require 'extended_date'
-
+  
 #TODO uncomment this when needed
 #  def rescue_action(e)
 #    render_error('', e)
@@ -96,200 +96,27 @@ class ApplicationController < ActionController::Base
   #Tabs definitions
   ####################################
 
-  def self.uses_configurations_tabs
-    before_filter :create_configurations_tabs
-  end
-
-  def create_configurations_tabs
-    t = add_tab do
-      links_to :controller => 'categories', :action => 'list', :category_type => 'customer'
-      in_set 'first'
-      highlights_on :controller => 'categories', :category_type => 'customer'
-    end
-    t.named _('Customer categories')
-
-    t = add_tab do
-      links_to :controller => 'categories', :action => 'list', :category_type => 'worker'
-      in_set 'first'
-      highlights_on :controller => 'categories', :category_type => 'worker'
-    end
-    t.named _('Worker categories')
-
-    t = add_tab do
-      links_to :controller => 'categories', :action => 'list', :category_type => 'supplier'
-      in_set 'first'
-      highlights_on :controller => 'categories', :category_type => 'supplier'
-    end
-    t.named _('Supplier categories')
-
-    t = add_tab do
-      links_to :controller => 'categories', :action => 'list', :category_type => 'product'
-      in_set 'first'
-      highlights_on :controller => 'categories', :category_type => 'product'
-    end
-    t.named _('Product categories')
-
-
-#    t = add_tab do
-#      links_to :controller => 'interface'
-#      in_set 'first'
-#      highlights_on :controller => 'interface'
-#    end
-#    t.named _('Interface')
-
-#    t = add_tab do
-#      links_to :controller => 'organization_configuration'
-#      in_set 'first'
-#      highlights_on :controller => 'organization_configuration'
-#    end
-#    t.named _('Field Configuration')
-  end
+  require 'tabs/configuration'
+  require 'tabs/register'
+  require 'tabs/financial'
+  require 'tabs/admin_organization'
 
   def self.uses_register_tabs
     before_filter :create_register_tabs
   end
 
-  def create_register_tabs
-    t = add_tab do
-      links_to :controller => 'system_actors', :action => 'list', :actor => 'worker'
-      in_set 'first'
-      highlights_on :controller => 'system_actors', :actor => 'worker'
-    end
-    t.named _('Workers')
-
-    t = add_tab do
-      links_to :controller => 'system_actors', :action => 'list', :actor => 'customer'
-      in_set 'first'
-      highlights_on :controller => 'system_actors', :actor => 'customer'
-    end
-    t.named _('Customers')
-
-    t = add_tab do
-      links_to :controller => 'system_actors', :action => 'list', :actor => 'supplier'
-      in_set 'first'
-      highlights_on :controller => 'system_actors', :actor => 'supplier'
-    end
-    t.named _('Suppliers')
-
-    t = add_tab do
-      links_to :controller => 'products', :action => 'list'
-      in_set 'first'
-      highlights_on :controller => 'products'
-    end
-    t.named _('Products')
+  def self.uses_configurations_tabs
+    before_filter :create_configurations_tabs
   end
  
   def self.uses_financial_tabs
     before_filter :create_financial_tabs
   end 
  
-  def create_financial_tabs
-    t = add_tab do
-      links_to :controller => 'ledgers'
-      in_set 'first'
-    end
-    t.named _('Ledgers')
-
-    t = add_tab do
-      links_to :controller => 'bank_accounts'
-      in_set 'first'
-    end
-    t.named _('Bank Accounts')
-
-    t = add_tab do
-      links_to :controller => 'ledger_categories'
-      in_set 'first'
-    end
-    t.named _('Ledger Category')
-
-  end
-
   def self.uses_admin_organization_tabs
     before_filter :create_admin_organization_tabs
   end
-
-  def create_admin_organization_tabs
-
-    is_not_organization = false
-    if params[:controller] == 'configuration'
-      is_not_organization = true if Configuration.is_model?(params[:id])
-    end
-
-    t = add_tab do
-      in_set 'first'
-      highlights_on :controller => 'organizations'
-    end
-    t.links_to :action => 'show', :id => params[:id]
-    t.named _('Show')
-    locations = [ {:action => 'edit'}, {:action => 'update'}, {:action => 'show'} ]
-    if is_not_organization == true
-      t.show_if  "false"
-    else
-      t.show_if  match_location(locations) ? "true" : "false"
-    end
-
-    t = add_tab do
-      in_set 'first'
-      highlights_on :controller => 'configuration'
-    end
-    t.links_to :controller => 'configuration', :action => 'show', :id => params[:id]
-    t.named _('Configurations')
-    locations = [ {:action => 'edit'}, {:action => 'update'}, { :action => 'show'} ]
-    if is_not_organization == true
-      t.show_if  "false"
-    else
-      t.show_if  match_location(locations) ? "true" : "false"
-    end
-
-
-    t = add_tab do
-      in_set 'first'
-      links_to :controller => 'organizations', :action => 'list'
-      highlights_on :controller => 'organizations', :action => 'list'
-      highlights_on :controller => 'organizations', :action => 'new'
-      highlights_on :controller => 'organizations', :action => 'create'
-    end
-    t.named _("Organizations") 
-    t.show_if  is_not_organization.to_s
-    locations = [ {:action => 'list'},{ :action => 'new'}, {:action => 'create'}]
-    if is_not_organization != true
-      t.show_if  match_location(locations) ? "true" : "false"
-    end
-
-    t = add_tab do
-      in_set 'first'
-      highlights_on :controller => 'configuration'
-      links_to :controller => 'configuration', :action => 'list'
-    end
-    t.named _('Organizations Profiles')
-    t.show_if  is_not_organization.to_s
-    locations = [{:action => 'list'}, {:action => 'new'}, {:action => 'create'}]
-    if is_not_organization != true
-      t.show_if  match_location(locations) ? "true" : "false"
-    end
-  end
   # END TABS DEFINITION
-
-  def match_location(location = [])
-
-    return false if !location.kind_of? Array
-
-    test = params.reject { |key,value| key.to_s == 'organization_nickname' }
-
-    location.each{ |hash|
-      match = true
-      hash.each{ |k,v|         
-        unless test[k.to_s] == v
-          match = false           
-          break
-        end
-      }
-      return true if match == true and !hash.blank?
-    }
-
-    false
-  end
-
 
   before_filter :define_location_path  
 
@@ -381,7 +208,7 @@ class ApplicationController < ActionController::Base
   end
 
   def render_access_denied_screen
-    render :template => 'users/access_denied', :status => 403, :layout => false
+    render :template => 'users/access_denied'
   end
 
   def render_error(message = nil, error = nil)

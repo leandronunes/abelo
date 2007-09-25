@@ -173,9 +173,24 @@ class Configuration < ActiveRecord::Base
       params.each do |k,v|
         d_params = {}
         d_params["field"] = k
-        d_params["break_line"] = v[:break_line].nil? ? false : true
-        d_params["display_in_list"] = v[:display_in_list].nil? ? false : true
-        d_params["display_title"] = v[:display_title].nil? ? false : true
+        if v[:break_line].nil? or v[:break_line].to_s == 'false'
+          d_params["break_line"] = false 
+        else
+          d_params["break_line"] = true
+        end
+
+        if v[:display_in_list].nil? or v[:display_in_list].to_s == 'false'
+          d_params["display_in_list"] = false 
+        else
+          d_params["display_in_list"] = true
+        end
+
+        if v[:display_title].nil? or v[:display_title].to_s == 'false'
+          d_params["display_title"] = false 
+        else
+          d_params["display_title"] = true
+        end
+
         display = self.send(item.tableize).find_by_field(k)
         if display.nil?
           display = item.constantize.new(d_params) 

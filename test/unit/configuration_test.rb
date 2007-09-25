@@ -28,6 +28,7 @@ class ConfigurationTest < Test::Unit::TestCase
     DepartmentDisplay
     MassMailDisplay
     LedgerDisplay
+    StockVirtualDisplay
     StockInDisplay
     StockOutDisplay
     ProfileDisplay
@@ -274,22 +275,26 @@ class ConfigurationTest < Test::Unit::TestCase
     end
   end
 
-
+  #Test presence of field on inlist methods
   DISPLAY_CONFIGURATION_CLASSES_TEST.each do |item|
     define_method("test_inlist_#{item.tableize}") do   
       item.constantize.delete_all
       params = {}
       inlist = true
+      count = 0
       item.constantize.available_fields.collect { |d|
         if inlist == true 
-          params[d] = {:field => d, :display_in_list => inlist}
+          params[d] = {:field => d, :display_in_list => true}
+          count = count + 1
+          inlist = false
         else
-          params[d] = {:field => d}
+          params[d] = {:field => d, :display_in_list => false}
+          inlist = true
         end
-        inlist = false
       }
       @configuration.send("set_#{item.tableize}=", params)
-      assert_equal 1, @configuration.send("inlist_#{item.tableize}").length
+
+      assert_equal count, @configuration.send("inlist_#{item.tableize}").length
     end
   end
 

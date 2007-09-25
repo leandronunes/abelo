@@ -20,11 +20,11 @@ class DisplayConfiguration < ActiveRecord::Base
   end
 
   def display_in_list?
-    settings['display_in_list'] == true ? true : false
+    settings['display_in_list'].to_s == 'true' ? true : false
   end
 
   def display_in_list
-    settings['display_in_list'] == true ? _('Yes') : _('No')
+    settings['display_in_list'].to_s == 'true' ? _('Yes') : _('No')
   end
 
   def display_in_list= value
@@ -32,11 +32,11 @@ class DisplayConfiguration < ActiveRecord::Base
   end
 
   def break_line?
-    settings['break_line'] == true ? true : false
+    settings['break_line'].to_s == 'true' ? true : false
   end
 
   def break_line
-    settings['break_line'] == true ? _('Yes') : _('No')
+    settings['break_line'].to_s == 'true' ? _('Yes') : _('No')
   end
 
   def break_line= value
@@ -44,11 +44,11 @@ class DisplayConfiguration < ActiveRecord::Base
   end
 
   def display_title?
-    settings['display_title'] == true ? true : false
+    settings['display_title'].to_s == 'true' ? true : false
   end
 
   def display_title
-    settings['display_title'] == true ? _('Yes') : _('No')
+    settings['display_title'].to_s == 'true' ? _('Yes') : _('No')
   end
 
   def display_title= value

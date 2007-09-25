@@ -8,6 +8,8 @@ class UserDisplay < DisplayConfiguration
     {
       'login' => _('Login'),
       'email' => _('E-mail'),
+      'password' => _('Password'),
+      'password_confirmation' => _('Password Confirmation'),
       'profile_ids' => _('Profiles')
     }[field] || field
   end

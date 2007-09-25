@@ -33,7 +33,7 @@ class CreateStocks < ActiveRecord::Migration
       # the validity of the product
       t.column :validity, :date
       #field to know if payment was accomplished or not
-      t.column :ledger_id, :interger
+      t.column :ledger_id, :integer
 
       ################################
       ### fields used only by StockOut

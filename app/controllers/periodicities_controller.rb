@@ -1,4 +1,16 @@
 class PeriodicitiesController < ApplicationController
+
+  auto_complete_for :periodicity, :name
+
+  needs_organization
+
+  def autocomplete_name
+    escaped_string = Regexp.escape(params[:periodicity][:name])
+    re = Regexp.new(escaped_string, "i")
+    @periodicities = Periodicity.find(:all).select { |dp| dp.name.match re}
+    render :layout=>false
+  end
+
   def index
     list
     render :action => 'list'
@@ -9,7 +21,18 @@ class PeriodicitiesController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @periodicity_pages, @periodicities = paginate :periodicities, :per_page => 10
+
+    @query = params[:query]
+    @query ||= params[:periodicity][:name] if params[:periodicity]
+
+    if @query.nil?
+      @periodicities  = @organization.periodicities
+      @periodicity_pages, @periodicities = paginate_by_collection @periodicities 
+    else
+      @periodicities = @organization.periodicities.full_text_search(@query)
+      @periodicity_pages, @periodicities = paginate_by_collection @periodicities 
+    end
+
   end
 
   def show

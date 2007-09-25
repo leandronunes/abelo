@@ -88,6 +88,7 @@ class Profile < ActiveRecord::Base
       { :controller => 'bank_accounts', :action => '*' },
       { :controller => 'interface', :action => '*' },
       { :controller => 'content_viewer', :action => '*' },
+      { :controller => 'periodicities', :action => '*' },
     ]
   }
 

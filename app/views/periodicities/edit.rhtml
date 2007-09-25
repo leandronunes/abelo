@@ -1,9 +1,7 @@
-<h1>Editing periodicity</h1>
+<%= title _('Editing periodicity') %>
 
 <% form_tag :action => 'update', :id => @periodicity do %>
   <%= render :partial => 'form' %>
-  <%= submit_tag 'Edit' %>
+  <%= display_edit_info_options(@periodicity) %>
 <% end %>
 
-<%= link_to 'Show', :action => 'show', :id => @periodicity %> |
-<%= link_to 'Back', :action => 'list' %>

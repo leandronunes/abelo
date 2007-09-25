@@ -1,27 +1,8 @@
-<h1>Listing periodicities</h1>
+<%= title _('Listing periodicities') %>
 
-<table>
-  <tr>
-  <% for column in Periodicity.content_columns %>
-    <th><%= column.human_name %></th>
-  <% end %>
-  </tr>
-  
-<% for periodicity in @periodicities %>
-  <tr>
-  <% for column in Periodicity.content_columns %>
-    <td><%=h periodicity.send(column.name) %></td>
-  <% end %>
-    <td><%= link_to 'Show', :action => 'show', :id => periodicity %></td>
-    <td><%= link_to 'Edit', :action => 'edit', :id => periodicity %></td>
-    <td><%= link_to 'Destroy', { :action => 'destroy', :id => periodicity }, :confirm => 'Are you sure?', :method => :post %></td>
-  </tr>
-<% end %>
-</table>
+<%= display_list_options 'periodicity', 'name' %>
 
-<%= link_to 'Previous page', { :page => @periodicity_pages.current.previous } if @periodicity_pages.current.previous %>
-<%= link_to 'Next page', { :page => @periodicity_pages.current.next } if @periodicity_pages.current.next %> 
+<%= display_collection @periodicities %>
 
-<br />
+<%= pagination_links(@periodicity_pages, :params => {:query => @query}) %>
 
-<%= link_to 'New periodicity', :action => 'new' %>

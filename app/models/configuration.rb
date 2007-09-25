@@ -20,6 +20,7 @@ class Configuration < ActiveRecord::Base
   has_many :stock_out_displays, :dependent => :destroy
   has_many :profile_displays, :dependent => :destroy
   has_many :user_displays, :dependent => :destroy
+  has_many :periodicity_displays, :dependent => :destroy
 
   serialize :settings 
 
@@ -138,6 +139,7 @@ class Configuration < ActiveRecord::Base
     StockOutDisplay
     ProfileDisplay
     UserDisplay
+    PeriodicityDisplay
   ]
 
   #######################################

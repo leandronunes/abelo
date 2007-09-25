@@ -21,12 +21,13 @@ class LedgerCategoriesControllerTest < Test::Unit::TestCase
 
   def test_setup
     assert @ledger_category.valid?
+    assert @organization.valid?
   end
 
   def test_autocomplete
     LedgerCategory.delete_all
-    LedgerCategory.create!(:type_of => 'I', :name => 'some  category', :organization => @organization)
-    LedgerCategory.create!(:type_of => 'I', :name => 'another category', :organization => @organization)
+    LedgerCategory.create!(:type_of => 'I', :name => 'some  category', :organization => @organization, :payment_methods => ['money'])
+    LedgerCategory.create!(:type_of => 'I', :name => 'another category', :organization => @organization, :payment_methods => ['money'])
     post :autocomplete_name, :category => {:name => 'category' }
     assert_not_nil assigns(:categories)
     assert_equal 2, assigns(:categories).length
@@ -62,7 +63,7 @@ class LedgerCategoriesControllerTest < Test::Unit::TestCase
   end
 
   def test_create_with_correct_params 
-    post :create, :category => {:type_of => 'I', :name => 'another category'}
+    post :create, :category => {:type_of => 'I', :name => 'another category', :payment_methods => ['money']}
 
     assert_not_nil assigns(:category)
     assert_response :redirect
@@ -158,11 +159,23 @@ class LedgerCategoriesControllerTest < Test::Unit::TestCase
     assert_template 'edit'
   end
 
-  def test_destroy
+  def test_destroy_successfully
     get :destroy, :id => @ledger_category.id
     
     assert_response :redirect
     assert_redirected_to :action => 'list'
   end
+
+  def test_destroy_unsuccessfully
+    Ledger.delete_all
+    Ledger.create_ledger!(:owner => @organization, :value => 10, :date => Date.today, :category => @ledger_category, :bank_account_id => BankAccount.find(:first), :payment_method => 'money')
+
+    get :destroy, :id => @ledger_category.id
+
+    assert_response :redirect
+    assert_redirected_to :action => 'list'
+    assert_not_nil flash[:notice]
+  end
+
 
 end

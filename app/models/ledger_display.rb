@@ -4,6 +4,7 @@ class LedgerDisplay < DisplayConfiguration
     %w[
       type
       category_id
+      payment_method
       value
       description
       tag_list
@@ -25,6 +26,7 @@ class LedgerDisplay < DisplayConfiguration
     {
       'type' => _('Type'),
       'category_id' => _('Category'),
+      'payment_method' => _('Payment Method'),
       'value' => _('Value'),
       'description' => _('Description'),
       'tag_list' => _('Tag List'),

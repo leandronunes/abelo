@@ -26,7 +26,8 @@ class Organization < ActiveRecord::Base
   has_many :product_displays, :through => :configuration
   has_many :department_displays, :through => :configuration
   has_many :ledger_category_displays, :through => :configuration
-  has_many :ledger_displays, :through => :configuration
+  has_many :money_displays, :through => :configuration, :source => :ledger_displays
+  has_many :check_displays, :through => :configuration, :source => :ledger_displays
   has_many :bank_account_displays, :through => :configuration
   has_many :stock_in_displays, :through => :configuration
   has_many :stock_out_displays, :through => :configuration
@@ -217,11 +218,24 @@ class Organization < ActiveRecord::Base
   # Return all ledger categories ordened by type and name.
   # Income ledger categories appear first ordened by name and
   # Out ledger categories appear after ordened by name too.
-  #TODO see if it's useful
-  def ledger_categories_sorted
+  def ledger_categories_sorted_by_name
     LedgerCategory.find(:all, :conditions => ['organization_id = ?', self], :order => 'type_of, name ASC' )
   end
 
+  # Return all ledger categories of a specific payment method
+  # ordened by type and name.
+  # Income ledger categories appear first ordened by name and
+  # Expense ledger categories appear after ordened by name too.
+  def ledger_categories_by_payment_method(payment_method)
+    category = LedgerCategory.find(:all, :conditions => ['organization_id = ?', self], :order => 'type_of, name ASC' )
+    category.select{|c| c.payment_methods.include?(payment_method)} 
+  end
+ 
+  def stocks_in_list
+    self.products.map do |p|
+      Stock.new(:product_in_list => p, :amount_in_list => p.amount_in_stock )   
+    end
+  end 
 
   #TODO see if it's useful
   def customers_by_products(list_products)

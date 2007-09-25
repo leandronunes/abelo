@@ -92,22 +92,6 @@ LedgerDisplay.available_fields.collect { |d|
 }
 configuration.set_ledger_displays=(params)
 
-CreditLedgerDisplay.delete_all
-params = {}
-CreditLedgerDisplay.available_fields.collect { |d|
-  in_list = true
-  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
-}
-configuration.set_credit_ledger_displays=(params)
-
-DebitLedgerDisplay.delete_all
-params = {}
-DebitLedgerDisplay.available_fields.collect { |d|
-  in_list = true
-  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
-}
-configuration.set_debit_ledger_displays=(params)
-
 BankAccountDisplay.delete_all
 params = {}
 BankAccountDisplay.available_fields.collect { |d|
@@ -123,6 +107,13 @@ DepartmentDisplay.available_fields.collect { |d|
   params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
 }
 configuration.set_department_displays=(params)
+
+StockDisplay.delete_all
+params = {}
+StockDisplay.available_fields.collect { |d|
+  params[d] = {:field => d, :display_in_list => true, :display_title => true }  
+}
+configuration.set_stock_displays=(params)
 
 StockInDisplay.delete_all
 params = {}
@@ -289,12 +280,6 @@ calca.add_suppliers(hering)
 colar.add_suppliers(mundo_prata)
 brinco.add_suppliers(mundo_prata)
 
-############Stock Entries#########################
-StockEntry.destroy_all
-camisa_entrada = StockIn.create!(:supplier => hering, :amount => 50, :price => '15.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product => camisa)
-camisa_entrada = StockIn.create!(:supplier => hering, :amount => 40, :price => '13.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product => camisa)
-calca_entrada = StockIn.create!(:supplier => hering, :amount => 50, :price => '30.00', :purpose => 'sell', :date => '2007-07-01', :payment_status => true, :product => calca)
-camisa_saida = StockIn.create!(:supplier => hering, :amount => 10, :price => '30.00', :purpose => 'sell', :date => '2007-07-05', :payment_status => true, :product => camisa)
 
 ############People################################
 Person.destroy_all
@@ -356,10 +341,6 @@ Worker.destroy_all
 vendedor = Worker.create!(:name => 'José Fernandes', :cpf => '63358421813', :address => 'Rua do Timbó, nº 45, Itaigara', :birthday => '1975-06-14', :category => salesman_category, :organization => organization, :email => 'jose@toca.com')
 gerente = Worker.create!(:name => 'Carla Alves', :cpf => '53170430424', :address => 'Alameda das Pintagueiras, nº 37, Caminho das Árvores', :birthday => '1979-07-18', :category => manager_category, :organization => organization, :email => 'carla@toca.com')
 
-############Payments################################
-#TODO see it's usefull
-#Payment.destroy_all
-
 ############Sales###################################
 Sale.destroy_all
 
@@ -407,9 +388,10 @@ saving_account.save!
 
 ########### Ledger Category ###################
 LedgerCategory.delete_all
-ledger_category_expense = LedgerCategory.create!(:name => 'Limpeza', :organization => organization, :type_of => LedgerCategory::TYPE_OF_EXPENSE, :payment_methods => ['money'])
-ledger_category_income = LedgerCategory.create!(:name => 'Venda Produto', :organization => organization, :type_of => LedgerCategory::TYPE_OF_INCOME, :payment_methods => ['money'])
+money_expense = LedgerCategory.create!(:name => 'Limpeza', :organization => organization, :type_of => TypeOfLedger::TYPE_OF_EXPENSE, :payment_methods => ['money'])
+money_income = LedgerCategory.create!(:name => 'Venda Produto', :organization => organization, :type_of => TypeOfLedger::TYPE_OF_INCOME, :payment_methods => ['money', 'check'])
 
+check_income = LedgerCategory.create!(:name => 'Cheque 3 X', :organization => organization, :type_of => TypeOfLedger::TYPE_OF_INCOME, :payment_methods => ['check'], :is_store => true)
 #############################
 # Period
 # ###########################
@@ -418,11 +400,23 @@ Periodicity.delete_all
 Periodicity.create!(:name => 'Mensal', :number_of_days => 30, :organization => organization)
 Periodicity.create!(:name => 'Quinzenal', :number_of_days => 15, :organization => organization)
 
+
 #############################
 # Ledger
 # ###########################
 
 Ledger.delete_all
-DebitLedger.create!(:category => ledger_category_expense, :value => 2.3, :bank_account => account, :date => Date.today, :owner => organization)
-CreditLedger.create!(:category => ledger_category_income, :value => 222.50, :bank_account => account, :date => Date.today, :owner => organization)
+Money.create_ledger!(:category => money_expense, :value => 2.3, :bank_account => account, :date => Date.today, :owner => organization, :payment_method => 'money')
+Money.create_ledger!(:category => money_income, :value => 222.50, :bank_account => account, :date => Date.today, :owner => organization, :payment_method => 'money')
 
+
+############Stock Entries#########################
+Stock.destroy_all
+money_stock_in = Money.create_ledger!(:category => money_expense, :value => 12.3, :bank_account => account, :date => Date.today, :owner => organization, :payment_method => 'money')
+camisa_entrada = StockIn.create!(:supplier => hering, :amount => 50, :purpose => 'sell', :date => '2007-07-01', :product => camisa, :ledger => money_stock_in, :validity => Date.today)
+money_stock_in = Money.create_ledger!(:category => money_expense, :value => 12.3, :bank_account => account, :date => Date.today, :owner => organization, :payment_method => 'money')
+camisa_entrada = StockIn.create!(:supplier => hering, :amount => 40, :purpose => 'sell', :date => '2007-07-01', :product => camisa, :ledger => money_stock_in,:validity => Date.today )
+money_stock_in = Money.create_ledger!(:category => money_expense, :value => 12.3, :bank_account => account, :date => Date.today, :owner => organization, :payment_method => 'money')
+calca_entrada = StockIn.create!(:supplier => hering, :amount => 50, :purpose => 'sell', :date => '2007-07-01', :product => calca, :ledger => money_stock_in, :validity => Date.today)
+money_stock_in = Money.create_ledger!(:category => money_expense, :value => 12.3, :bank_account => account, :date => Date.today, :owner => organization, :payment_method => 'money')
+camisa_saida = StockIn.create!(:supplier => hering, :amount => 10, :purpose => 'sell', :date => '2007-07-05', :product => camisa, :ledger => money_stock_in, :validity => Date.today)

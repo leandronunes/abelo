@@ -8,8 +8,6 @@ class Configuration < ActiveRecord::Base
   has_many :supplier_displays, :dependent => :destroy
   has_many :bank_account_displays, :dependent => :destroy
   has_many :ledger_displays, :dependent => :destroy
-  has_many :debit_ledger_displays, :dependent => :destroy
-  has_many :credit_ledger_displays, :dependent => :destroy
   has_many :product_category_displays, :dependent => :destroy
   has_many :worker_category_displays, :dependent => :destroy
   has_many :supplier_category_displays, :dependent => :destroy
@@ -17,6 +15,7 @@ class Configuration < ActiveRecord::Base
   has_many :ledger_category_displays, :dependent => :destroy
   has_many :department_displays, :dependent => :destroy
   has_many :mass_mail_displays, :dependent => :destroy
+  has_many :stock_displays, :dependent => :destroy
   has_many :stock_in_displays, :dependent => :destroy
   has_many :stock_out_displays, :dependent => :destroy
   has_many :profile_displays, :dependent => :destroy
@@ -134,8 +133,7 @@ class Configuration < ActiveRecord::Base
     LedgerCategoryDisplay
     DepartmentDisplay
     MassMailDisplay
-    CreditLedgerDisplay
-    DebitLedgerDisplay
+    StockDisplay
     StockInDisplay
     StockOutDisplay
     ProfileDisplay

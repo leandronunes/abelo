@@ -1,11 +1,12 @@
 class Ledger < ActiveRecord::Base
-  #FIXME how to instanciate the correct object according the category?
+
+  include TypeOfLedger
 
   acts_as_taggable
 
   acts_as_ferret
   
-  attr_accessor :schedule_repeat, :schedule_interval
+  attr_accessor :schedule_repeat, :schedule_interval, :payment_method_choosen
   @schedule_periodicity
 
 
@@ -13,7 +14,6 @@ class Ledger < ActiveRecord::Base
   belongs_to :schedule_ledger
   belongs_to :bank_account
   belongs_to :owner, :polymorphic => true
-  belongs_to :payment
   validates_presence_of :owner
   validates_presence_of :category_id
   validates_presence_of :foreseen_value
@@ -24,8 +24,40 @@ class Ledger < ActiveRecord::Base
   validates_presence_of :schedule_repeat, :if => lambda{ |l| !l.schedule_periodicity.blank? or  !l.schedule_interval.blank? }
   validates_presence_of :schedule_periodicity, :if => lambda{ |l| l.schedule_repeat? or !l.schedule_interval.blank? }
   validates_presence_of :schedule_interval, :if => lambda{ |l| l.schedule_repeat? or  !l.schedule_periodicity.blank? }
-  validates_presence_of :payment_id
-#, :if => lambda{ |l|  (l.owner === Sale) and (l.payment.nil?)}, :message => _('You cannot save a sale ledger without a payment.')
+  validates_inclusion_of :payment_method, :in => PAYMENT_METHODS
+  validates_presence_of :type_of
+  validates_inclusion_of :type_of, :in => TYPE_OF
+
+  before_validation do |l|
+    l.type_of = l.category.type_of unless l.category.nil?
+  end
+
+  after_create do |l|
+
+    transaction do 
+      if l.schedule_repeat?
+        sl = ScheduleLedger.create(:periodicity => l.schedule_periodicity, :start_date => l.foreseen_date, :interval => l.schedule_interval)
+        (1..l.schedule_interval.to_i).each do |n|
+          ledger_schedule = l.clone
+          ledger_schedule.is_foreseen = true
+          ledger_schedule.date = l.date + l.schedule_periodicity.number_of_days * n
+          ledger_schedule.schedule_ledger = sl
+          ledger_schedule.payment_method = l.payment_method
+          ledger_schedule.save
+        end
+        l.schedule_ledger = sl
+        l.save
+      end  
+    end
+  end
+
+  def payment_method= value
+    self.payment_method_choosen= value
+  end
+
+  def payment_method
+    (self.payment_method_choosen.nil? and self.class != Ledger ) ? self.class.to_s.tableize.singularize : self.payment_method_choosen
+  end
 
   def reload
     Ledger.find(self.id)
@@ -36,34 +68,21 @@ class Ledger < ActiveRecord::Base
     (self == Ledger) ? (raise "cannot create an instance of Ledger") : super(*args)
   end
 
-  def self.create_ledger(*args)
+  def self.create_ledger!(*args)
+    object = self.new_ledger(*args)
+    object.save!
+    object
+  end
+
+  def self.new_ledger(*args)
     l = Ledger.instanciate_ledger(*args)
-    klass = (l.category.nil? || l.category.expense? ) ? DebitLedger : CreditLedger
-    klass.new(*args)
+    klass = l.payment_method.nil? ? 'money' : l.payment_method
+    klass = klass.camelize.constantize
+    object = klass.new(*args)
+    object.type_of =  l.category.type_of unless l.category.nil?
+    object
   end
 
-  after_create do |l|
-#    if l.valid?
-    transaction do 
-      if l.schedule_repeat?
-        sl = ScheduleLedger.create(:periodicity => l.schedule_periodicity, :start_date => l.foreseen_date, :interval => l.schedule_interval)
-        (1..l.schedule_interval.to_i).each do |n|
-          ledger_schedule = l.clone
-          ledger_schedule.is_foreseen = true
-          ledger_schedule.date = l.date + l.schedule_periodicity.number_of_days * n
-          ledger_schedule.schedule_ledger = sl
-          ledger_schedule.save
-        end
-        l.schedule_ledger = sl
-        l.save
-      end  
-    end
- #   end
-  end
-
-  def set_payment= payment
-    
-  end
 
   def self.full_text_search(q, options = {})
     default_options = {:limit => :all, :offset => 0}
@@ -136,9 +155,30 @@ class Ledger < ActiveRecord::Base
     self.schedule_repeat.to_s == 'true' ? true : false
   end
 
+#FIXME 
+# Until the protected methods we have to remove this methods of here to the module
+# TypeOfLedger in lib
+  def self.describe_payment(item)
+    {
+      'check' => _('Check'),
+      'credit_card' => _('Credit Card'),
+      'debit_card' => _('Debit Card'),
+      'money' => _('Money')
+    }[item] || item
+  end
+
+
+  def self.describe(item)
+    {
+      'I' => _('Income'),
+      'E' => _('Expense')
+    }[item] || item
+  end
+
   protected
   def validate
-    if self[:type] != 'CreditLedger' and self[:type] != 'DebitLedger'
+    if !(self.class == Money) and !(self.class == Check)
+#FIXME put the other payment method to validate
       self.errors.add(:type, _('You must specify the ledger as a credit or a debit one.'))
     end
 
@@ -146,17 +186,12 @@ class Ledger < ActiveRecord::Base
 
     self.errors.add(:date, _("Date cannot be set" )) unless self[:date].nil?
 
-    self.errors.add(:type, _("It's not a valid type" )) unless self[:type].nil? or self[:type] !='CreditLedger' or self[:type] != 'DebitLedger'
-##
-###    if (self.owner === Sale) and (self.owner.balance - self.value < 0)
-###      self.errors.add(:owner, _('Cannot add a payment to this sale. The payment is complete'))  
-###    end
+    self.errors.add(:payment_method, _("You don't have a payment method associated to this ledger.")) if self.payment_method.blank?
+
+    if !self.category.nil? and !self.category.payment_methods.include?(self.payment_method)
+      self.errors.add(:payment_method, _("You canno't have a payment method not include in payment category list.")) 
+    end
   end
-#
-##  def type= value
-##    errors.add(:type, _("You cannot set a type type manually") )
-##  end
-#
 
   private
 

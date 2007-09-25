@@ -1,64 +1,58 @@
 module StockHelper
 
-  def show_amount(n)
-    klass = (n > 0) ? ('positive') : ('negative')
-    (content_tag 'span', '%2.2f' % n, :class => klass)
-  end
-
-  def show_supplier(stock_entry)
-     (StockIn === stock_entry) ? stock_entry.supplier.name : ''
-  end
-
-  def show_purpose(purpose)
-    StockEntry.valid_purposes[purpose]
-  end
-
-  def select_purpose(object, method)
-    select(object, method, StockEntry.valid_purposes.map { |k,v| [v, k] })
-  end
-
   def display_stock_collection(collection = Array.new, params = {}, html_options = {})
+
     content = Array.new
     collection.each do |c|
       content.push(
         [
           display_stock_collection_options(c, params),
-          display_info(c,html_options, 'in_list' )
+          display_info(c, html_options, true )
         ]
       )
     end
-    item_class = []
-    item_class.push(html_options[:item_class]) unless item_class.include?(html_options[:item_class])
-    collection_class = ['info_list']
-    collection_class.push(html_options[:collection_class]) unless collection_class.include?(html_options[:collection_class])
-      content_tag(:ul,
-        content.map{|c|
-          content_tag(:li, c.to_s + tag(:br, :style => 'clear:both;'), :class => item_class.join(' '))
-        },
-        :class => collection_class.join(' ')
-      )
+
+    display_list_info(content, html_options)
+
   end
 
   def display_stock_collection_options(item, params ={})
     content_tag(:div,
       [
-        button('new_entry', _('New entry'), :new_entry, {:action => 'new', :id => item.id}.merge(params)),
-        button('history', _('History'), :history, {:action => 'history', :id => item.id}.merge(params))
+        button('new_entry', _('New entry'), :new_entry, {:action => 'new', :product_id => item.product_in_list.id}.merge(params)),
+        button('history', _('History'), :history, {:action => 'history', :product_id => item.product_in_list.id}.merge(params))
       ].join("\n"),
       :class => 'list_item_button'
     )
   end
 
-  def display_stock_info(object, html_options = {}, type = '')
-    type = '_' + type unless type.blank?
-    fields = @organization.configuration.send("stock_entry_display#{type}")
+#TODO see why this same implementation of rails method didn't works
+  def error_messages_for(*params)
+     options = params.last.is_a?(Hash) ? params.pop.symbolize_keys : {}
+     objects = params.collect {|object_name| instance_variable_get("@#{object_name}") }.compact
+     count   = objects.inject(0) {|sum, object| sum + object.errors.count }
+     unless count.zero?
+       html = {}
+       [:id, :class].each do |key|
+         if options.include?(key)
+           value = options[key]
+           html[key] = value unless value.blank?
+         else
+           html[key] = 'errorExplanation'
+         end
+       end
+       header_message = "#{pluralize(count, 'error')} prohibited this #{(options[:object_name] || params.first).to_s.gsub('_', ' ')} from being saved"
+       error_messages = objects.map {|object| object.errors.full_messages.map {|msg| content_tag(:li, msg) } }
+       content_tag(:div,
+         content_tag(options[:header_tag] || :h2, header_message) <<
+           content_tag(:p, 'There were problems with the following fields:') <<
+           content_tag(:ul, error_messages),
+         html
+       )
+     else
+       ''
+     end
+   end
 
-    fields.map do |f|
-      content_tag(:div,
-        display_field_info(object, f),
-        html_options
-      )
-    end.join("\n")
-  end
 
 end

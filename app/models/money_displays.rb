@@ -1,0 +1,3 @@
+class MoneyDisplay < LedgerDisplay
+
+end

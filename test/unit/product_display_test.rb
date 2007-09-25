@@ -3,6 +3,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 class ProductDisplayTest < Test::Unit::TestCase
 
   AVAILABLE_FIELDS_TEST = %w[
+      image
       name
       size
       color
@@ -13,7 +14,6 @@ class ProductDisplayTest < Test::Unit::TestCase
       suppliers
       amount_in_stock
       minimum_amount
-      image
   ]
   def test_available_fields
     assert_equal AVAILABLE_FIELDS_TEST, ProductDisplay.available_fields

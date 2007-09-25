@@ -1,0 +1,43 @@
+
+<%= display_field_form(@ledger, 'payment_method',
+      :title => _('Bank'),
+      :content => select_item('ledger', 'check_bank_id', @banks),
+      :html_options => {:class => 'break_line'}
+    )
+%>
+
+<%= display_field_form(@ledger, 'payment_method',
+      :title => _('Name'),
+      :content => text_field('ledger', 'check_owner_name')
+    )
+%>
+
+<%= display_field_form(@ledger, 'payment_method',
+      :title => _('Agency'),
+      :content => text_field('ledger', 'check_account_agency')
+    )
+%>
+
+<%= display_field_form(@ledger, 'payment_method',
+      :title => _('Account'),
+      :content => text_field('ledger', 'check_account_number')
+    )
+%>
+
+<%= display_field_form(@ledger, 'payment_method',
+      :title => _('Contact Phone'),
+      :content => text_field('ledger', 'check_contact_telephone')
+    )
+%>
+
+<%= display_field_form(@ledger, 'payment_method',
+      :title => _('Rg'),
+      :content => text_field('ledger', 'check_rg')
+    )
+%>
+
+<%= display_field_form(@ledger, 'payment_method',
+      :title => _('CPF'),
+      :content => text_field('ledger', 'check_cpf')
+    )
+%>

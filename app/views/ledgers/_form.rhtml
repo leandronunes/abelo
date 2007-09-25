@@ -1,34 +1,48 @@
 <%= error_messages_for 'ledger' %>
 
-<% display_edit_info @ledger do |item| %>
+<% display_form_info @ledger do |item| %>
 
-  <%= display_field_edit(item, 'bank_account_id',
+  <%= display_field_form(item, 'bank_account_id',
         :title => _('Bank Account'),
         :content => select_item('ledger', 'bank_account_id', @bank_accounts ),
         :html_options => {:class => 'line_item'}
       )
   %>
 
-  <%= display_field_edit(item, 'date',
+  <%= display_field_form(item, 'date',
         :title => _('Date:'),
         :content => date_select('ledger', 'date', :order => [:day, :month, :year]),
         :html_options => {:class => 'line_item'}
       )
   %>
 
-  <%= display_field_edit(item, 'category_id',
-        :title => _('Category:'),
-        :content => select_item('ledger', 'category_id',@ledger_categories, 'name_with_sign' )
+  <%= display_field_form(item, 'payment_method',
+        :title => _('Payment Method'),
+        :content =>  select('ledger', 'payment_method',  TypeOfLedger::PAYMENT_METHODS.map{|p|[ Ledger.describe_payment(p), p]}, :include_blank => true)
       )
   %>
 
-  <%= display_field_edit(item, 'is_foreseen',
+  <div id='category'>
+    <% if !@ledger.payment_method.nil? %>
+      <%= render :partial => 'shared_payments/select_category' %>
+    <% end %>
+  </div>
+
+  <%= observe_field('ledger_payment_method',
+      :update => 'category',
+      :url => {:action => 'select_category' },
+      :with => "'payment_method=' +  escape(value)"
+    )
+  %>
+
+  <%= display_field_form(item, 'is_foreseen',
         :title => _('Is it a foreseen?'),
-        :content => check_box('ledger', 'is_foreseen', {}, true, false )
+        :content => check_box('ledger', 'is_foreseen', {}, true, false ),
+        :html_options => {:style => 'clear: left;'}
       )
   %>
 
-  <%= display_field_edit(item, 'schedule_repeat',
+  <%= display_field_form(item, 'schedule_repeat',
         :title => _('Repeat this foreseen ledger?'),
         :content => check_box('ledger', 'schedule_repeat', {}, 'true', 'false' ),
         :html_options => {:style => 'clear: left;'}
@@ -48,21 +62,21 @@
     )
   %>
   
-  <%= display_field_edit(item, 'description',
+  <%= display_field_form(item, 'description',
         :title => _('Description:'),
         :content => text_area('ledger', 'description', :rows => 4),
         :html_options => {:style => 'clear: left;'}
       )
   %>
 
-  <%= display_field_edit(item, 'tag_list',
+  <%= display_field_form(item, 'tag_list',
         :title => _('Tags (separated by comma):'),
         :content => text_field('ledger', 'tag_list'),
         :html_options => {:class => 'line_item'}
       )
   %>
 
-  <%= display_field_edit(item, 'value',
+  <%= display_field_form(item, 'value',
         :title => _('Value:'),
         :content => text_field('ledger', 'value')
       )

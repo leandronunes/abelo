@@ -29,23 +29,9 @@ class SaleTest < Test::Unit::TestCase
     assert_equal 0, SaleItem.count
   end
 
-  def test_dependence_of_payment
-    Sale.delete_all
-    SaleItem.delete_all
-    Payment.delete_all
-    sale = Sale.create(:date => '2007-08-04', :organization => @org, :salesman => @user)
-    amount = 10
-    value = 2.0
-    SaleItem.create(:product => @product1, :sale => sale, :amount => amount, :unitary_price => value )
-    Money.create(:owner => sale, :value => amount * value, :date => Date.today )
-    assert sale.destroy
-    assert_equal 0, Payment.count
-  end
-
   def test_dependence_of_ledger
     Sale.delete_all
     SaleItem.delete_all
-    Payment.delete_all
     Ledger.delete_all
     sale = Sale.create(:date => '2007-08-04', :organization => @org, :salesman => @user)
     amount = 10

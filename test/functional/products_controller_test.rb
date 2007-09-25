@@ -51,9 +51,9 @@ class ProductsControllerTest < Test::Unit::TestCase
 
   def test_list_when_query_param_not_nil
     Product.delete_all
-    Product.create!(:name => 'Some Product', :sell_price => '20', :unit => 'U', :organization_id => 1, :category_id => 1)
-    Product.create!(:name => 'Another Product', :sell_price => '25', :unit => 'U', :organization_id => 1, :category_id => 1)
-    Product.create!(:name => 'Product Three', :sell_price => '30', :unit => 'U', :organization_id => 1, :category_id => 1)
+    Product.create!(:name => 'Some Product', :sell_price => '20', :unit => 'U', :organization_id => 1, :category_id => 1, :code => 1)
+    Product.create!(:name => 'Another Product', :sell_price => '25', :unit => 'U', :organization_id => 1, :category_id => 1, :code => 2)
+    Product.create!(:name => 'Product Three', :sell_price => '30', :unit => 'U', :organization_id => 1, :category_id => 1, :code => 3)
     get :list, :query => 'Another*' 
 
     assert_not_nil assigns(:query)

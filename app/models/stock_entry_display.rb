@@ -1,3 +1,0 @@
-class StockEntryDisplay < DisplayConfiguration
-
-end

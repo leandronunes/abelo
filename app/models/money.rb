@@ -1,7 +1,3 @@
-class Money < Payment
-
-  def describe
-    self.class.describe('money')
-  end
+class Money < Ledger
 
 end

@@ -6,7 +6,7 @@ class StockController; def rescue_action(e) raise e end; end
 
 class StockControllerTest < Test::Unit::TestCase
 
-  fixtures :stock_entries, :system_actors, :products, :configurations
+  fixtures :stocks, :system_actors, :products, :configurations
 
   under_organization :one
 
@@ -45,8 +45,8 @@ class StockControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:product)
     assert_equal 1, assigns(:product).id
 
-    assert_not_nil assigns(:entry)
-    assert_kind_of StockEntry, assigns(:entry)
+    assert_not_nil assigns(:stock)
+    assert_kind_of Stock, assigns(:stock)
   
     assert_response :success
     assert_template 'new'
@@ -55,7 +55,7 @@ class StockControllerTest < Test::Unit::TestCase
   def test_create
     count = StockIn.count
 
-    post :create, :id => 1, :entry => { :supplier_id => 3, :amount => 1, :price => 1.99, :purpose => 'sell', :date => '2007-01-01' }
+    post :create, :id => 1, :stock => { :supplier_id => 3, :amount => 1, :price => 1.99, :purpose => 'sell', :date => '2007-01-01' }
 
     assert_redirected_to :action => 'history', :id => 1
     assert_equal count + 1, StockIn.count
@@ -64,7 +64,7 @@ class StockControllerTest < Test::Unit::TestCase
   def test_create_fail
     count = StockIn.count
 
-    post :create, :id => 1, :entry => {  }
+    post :create, :id => 1, :stock => {  }
 
     assert_equal count , StockIn.count
     assert_template 'new'
@@ -78,23 +78,23 @@ class StockControllerTest < Test::Unit::TestCase
   end
 
   def test_update
-    post :update, :product_id => 1, :id => 1, :entry => { :supplier_id => 3, :amount => 1, :price => 1.99, :purpose => 'sell', :date => '2007-01-01' }
+    post :update, :product_id => 1, :id => 1, :stock => { :supplier_id => 3, :amount => 1, :price => 1.99, :purpose => 'sell', :date => '2007-01-01' }
 
     assert_response :redirect
     assert_redirected_to :action => 'history', :id => 1
   end
 
   def test_update_fails
-    entry = StockIn.new
-    entry.supplier = Supplier.find(3)
-    entry.amount = 1
-    entry.price = 2
-    entry.purpose = 'sell'
-    entry.product = Product.find(1)
-    entry.date = '2006-04-01'
-    assert entry.save
-    post :update, :id => entry.id, :product_id => 1, :entry => {:price => 'bli'}
-    assert_not_nil assigns(:entry)
+    stock = StockIn.new
+    stock.supplier = Supplier.find(3)
+    stock.amount = 1
+    stock.price = 2
+    stock.purpose = 'sell'
+    stock.product = Product.find(1)
+    stock.date = '2006-04-01'
+    assert stock.save
+    post :update, :id => stock.id, :product_id => 1, :stock => {:price => 'bli'}
+    assert_not_nil assigns(:stock)
     assert_not_nil assigns(:product)
     assert_template 'edit', :id => 1, :product_id => 1
   end

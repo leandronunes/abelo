@@ -1,7 +1,6 @@
-<%= title _('New stock entry for %s') % @product.name %>
+<%= title _('New stock entry for %s') % @stock.product.name %>
 
-<%= error_messages_for :entry %>
-<% form_tag :action => 'create', :id => @product do %>
+<% form_tag :action => 'create', :product_id => @stock.product do %>
   <%= render :partial => 'form'%>
   <%= display_new_info_options @product %> 
 <% end %>

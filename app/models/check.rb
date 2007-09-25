@@ -1,7 +1,5 @@
-class Check < Payment
+class Check < Ledger
 
-  def describe
-    self.class.describe('check')
-  end
+  validates_presence_of :check_owner_name
 
 end

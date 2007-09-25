@@ -14,7 +14,8 @@ class LedgersControllerTest < Test::Unit::TestCase
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     login_as("quentin")
-    @ledger_category = LedgerCategory.create!(:name => 'Some Category', :type_of => 'I', :organization_id => 1 )
+    @organization = Organization.find_by_identifier('one')
+    @ledger_category = LedgerCategory.create!(:name => 'Some Category', :type_of => 'I', :organization_id => 1 , :payment_methods => ['money'])
     @another_bank_account = BankAccount.find(2)
     @default_bank_account = BankAccount.find(1)
   end
@@ -23,6 +24,8 @@ class LedgersControllerTest < Test::Unit::TestCase
     assert @another_bank_account.valid?
     assert @default_bank_account.valid?
     assert @default_bank_account.is_default
+    assert @organization.valid?
+    assert_equal 'one', @organization.identifier
   end
 
   def test_index
@@ -55,7 +58,7 @@ class LedgersControllerTest < Test::Unit::TestCase
     assert_template 'list'
 
     assert_not_equal [@another_bank_account], assigns(:chosen_accounts)
-    assert_equal assigns(:organization).default_bank_account, assigns(:chosen_accounts)
+    assert_equal [assigns(:organization).default_bank_account], assigns(:chosen_accounts)
   end
 
   def test_list_without_default_bank_account
@@ -79,9 +82,8 @@ class LedgersControllerTest < Test::Unit::TestCase
 
   def test_list_when_query_param_not_nil
     Ledger.delete_all
-    l = CreditLedger.new(:date => Date.today, :value => 34, :description => 'Some Description', :bank_account => @another_bank_account, :category => @ledger_category, :operational => false, :is_foreseen => false)
-    l.save!
-    l = DebitLedger.new(:date => Date.today, :value => 50, :description => 'Another Some Description', :bank_account => @another_bank_account, :category => @ledger_category, :operational => false, :is_foreseen => false)
+    l = Ledger.create_ledger!(:date => Date.today, :value => 34, :description => 'Some Description', :bank_account => @another_bank_account, :category => @ledger_category, :operational => false, :is_foreseen => false, :owner => @organization)
+    l = Money.new(:date => Date.today, :value => 50, :description => 'Another Some Description', :bank_account => @another_bank_account, :category => @ledger_category, :operational => false, :is_foreseen => false, :owner => @organization)
     l.save!
     
     get :list, :accounts => @another_bank_account.id, :ledger => {:description => 'Another'}
@@ -114,7 +116,7 @@ class LedgersControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:tags)
     assert_not_nil assigns(:ledger_pages)
     assert_not_nil assigns(:ledgers)
-    assert_equal assigns(:organization).default_bank_account, assigns(:chosen_accounts)    
+    assert_equal [assigns(:organization).default_bank_account], assigns(:chosen_accounts)
   end
 
   def test_display_table_without_default_bank_account

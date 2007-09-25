@@ -3,7 +3,8 @@ expense:
   id: 1
   owner_type: 'Organization'
   owner_id: 1
-  type: 'DebitLedger'
+  type: 'Money'
+  type_of: 'E'
   foreseen_date: <%=  Date.today - 2 %>
   effective_date: <%=  Date.today - 2 %>
   foreseen_value: 1000.00
@@ -17,7 +18,8 @@ income:
   id: 2
   owner_type: 'Organization'
   owner_id: 1
-  type: 'CreditLedger'
+  type: 'Money'
+  type_of: 'I'
   foreseen_date: <%=  Date.today - 3 %>
   effective_date: <%=  Date.today - 3 %>
   foreseen_value: 700.00

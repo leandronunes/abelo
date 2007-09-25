@@ -18,7 +18,7 @@ class LedgerCategoriesController < ApplicationController
   end
 
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
-  post_only [ :destroy, :create, :update, :autocomplete_name ]
+  post_only [ :create, :update, :autocomplete_name ]
 
   def list
     categories = @organization.ledger_categories
@@ -62,8 +62,12 @@ class LedgerCategoriesController < ApplicationController
   end
 
   def destroy
-    @organization.ledger_categories.find(params[:id]).destroy
-    redirect_to :action => 'list'
+    if @organization.ledger_categories.find(params[:id]).destroy
+      redirect_to :action => 'list'
+    else
+      flash[:notice] = _('The ledger category cannot be destroy with ledgers associated to its')
+      redirect_to :action => 'list'
+    end
   end
 
 end

@@ -1,4 +1,4 @@
-class StockOut < StockEntry
+class StockOut < Stock
 
   validates_inclusion_of :amount, :in => InfiniteSet::NEGATIVES, :if => lambda { |entry| !entry.amount.nil? }
 

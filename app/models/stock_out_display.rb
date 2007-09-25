@@ -1,4 +1,4 @@
-class StockOutDisplay < StockEntryDisplay
+class StockOutDisplay < StockDisplay
 
   def self.available_fields
     ['date', 'amount', 'price']

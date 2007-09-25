@@ -4,7 +4,8 @@ class Product < ActiveRecord::Base
   belongs_to :category, :class_name => 'ProductCategory', :foreign_key => 'category_id'
   has_many :images
   has_and_belongs_to_many :suppliers
-  has_many :stock_entries
+  has_many :stocks
+  has_many :stock_ins
   validates_uniqueness_of :code, :scope => :organization_id
 
   validates_presence_of :name, :sell_price, :unit
@@ -22,11 +23,12 @@ class Product < ActiveRecord::Base
   end
 
   def amount_in_stock
-    self.connection.select_value('select sum(amount) from stock_entries where product_id = %d' % self.id).to_f
+    self.connection.select_value('select sum(amount) from stocks where product_id = %d' % self.id).to_f
   end
 
   def total_cost
-    self.connection.select_value('select sum(amount * price) from stock_entries where product_id = %d' % self.id).to_f
+    total = 0
+    self.stock_ins.each{ |s| total = total + s.ledger.value * s.amount}
   end
 
   def image

@@ -1,4 +1,0 @@
-class CreditLedgerDisplay < LedgerDisplay
-
-
-end

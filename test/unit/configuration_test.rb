@@ -28,8 +28,6 @@ class ConfigurationTest < Test::Unit::TestCase
     DepartmentDisplay
     MassMailDisplay
     LedgerDisplay
-    CreditLedgerDisplay
-    DebitLedgerDisplay
     StockInDisplay
     StockOutDisplay
     ProfileDisplay

@@ -13,7 +13,6 @@ class Sale < ActiveRecord::Base
   belongs_to :salesman, :class_name => 'User', :foreign_key => :user_id
   has_many :items, :class_name => 'SaleItem', :dependent => :delete_all
   has_many :ledgers, :as => :owner, :dependent => :delete_all
-  has_many :payments, :through => :ledgers, :as => :owner, :dependent => :delete_all
 
   validates_presence_of :date, :organization_id, :user_id
   validates_inclusion_of :status, :in => ALL_STATUS

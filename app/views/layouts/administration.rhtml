@@ -16,7 +16,11 @@
 
         <div id="header">
           <div id="info_org">
-            <span><%= _('Abelo Administration') %></span>
+            <% if current_user.administrator? %>
+              <span><%= _('Abelo Administration') %></span>
+            <% else %>
+              <span><%= _('Abelo') %></span>
+            <% end %>
           </div>
 
           <div id="banner_top"><span>Abelo</span></div>

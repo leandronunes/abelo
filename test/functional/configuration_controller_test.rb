@@ -32,17 +32,23 @@ class ConfigurationControllerTest < Test::Unit::TestCase
   def test_only_admin_has_access
     login_as('aaron')
     get :index
-    assert_response 403
+    assert_response :success
+    assert_template 'users/access_denied'
     get :list
-    assert_response 403
+    assert_response :success
+    assert_template 'users/access_denied'
     get :new
-    assert_response 403
+    assert_response :success
+    assert_template 'users/access_denied'
     get :edit
-    assert_response 403
+    assert_response :success
+    assert_template 'users/access_denied'
     get :create
-    assert_response 403
+    assert_response :success
+    assert_template 'users/access_denied'
     get :update
-    assert_response 403
+    assert_response :success
+    assert_template 'users/access_denied'
   end
 
   def test_autocomplete_name

@@ -132,18 +132,30 @@ class LedgersController < ApplicationController
   def show
     @ledger = @organization.find_ledger(params[:id])
     @bank_accounts = @organization.bank_accounts
-    @ledger_categories =  @organization.ledger_categories_sorted
+    @ledger_categories =  @organization.ledger_categories_sorted_by_name
   end
 
   def new
-    @ledger = Ledger.new
+    @ledger = Ledger.new_ledger
     @bank_accounts = @organization.bank_accounts
-    @ledger_categories =  @organization.ledger_categories_sorted
+    @ledger_categories =  @organization.ledger_categories_by_payment_method(@ledger.payment_method)
+  end
+
+  def select_category
+    payment_method = params[:payment_method]
+    if !payment_method.blank?
+      @ledger = Ledger.new_ledger(:payment_method => payment_method)
+      @banks = Bank.find(:all)
+      @ledger_categories =  @organization.ledger_categories_by_payment_method(@ledger.payment_method)
+      render :partial => 'shared_payments/select_category'
+    else
+      render :nothing => true
+    end
   end
 
   def get_periodicity_informations
     if params[:value] == "true"
-      @ledger = Ledger.new
+      @ledger = Ledger.new_ledger
       @periodicities = @organization.periodicities
       render :partial => 'get_periodicity_informations'
     else
@@ -155,20 +167,22 @@ class LedgersController < ApplicationController
     if params[:value].blank?
       render :nothing => true
     else
-      @ledger = Ledger.new
+      @ledger = Ledger.new_ledger
       render :partial => 'get_interval_informations'
     end
   end
 
   def create
-    @ledger = Ledger.new(params[:ledger])
-    
+    @ledger = Ledger.new_ledger(params[:ledger])    
+    @ledger.owner = @organization
+  
     if @ledger.save
       flash[:notice] = _('The ledger was successfully created')
       redirect_to :action => 'list'
     else
+      @banks = Bank.find(:all)
       @bank_accounts = @organization.bank_accounts
-      @ledger_categories =  @organization.ledger_categories_sorted
+      @ledger_categories =  @organization.ledger_categories_by_payment_method(@ledger.payment_method)
       @periodicities = @organization.periodicities
       render_action :new
     end
@@ -178,7 +192,7 @@ class LedgersController < ApplicationController
     #TODO change this if someone make the relationship organizatin has_many ledgers works
     @ledger = @organization.find_ledger(params[:id])
     @bank_accounts = @organization.bank_accounts
-    @ledger_categories =  @organization.ledger_categories_sorted
+    @ledger_categories =  @organization.ledger_categories_sorted_by_name
   end
 
   def update
@@ -196,9 +210,9 @@ class LedgersController < ApplicationController
       flash[:notice] = _('The ledger was successfully created')
       redirect_to :action => 'list'
     else
-      @ledger_categories =  @organization.ledger_categories_sorted
+      @ledger_categories =  @organization.ledger_categories_sorted_by_name
       @bank_accounts = @organization.bank_accounts
-      @ledger_categories =  @organization.ledger_categories_sorted
+      @ledger_categories =  @organization.ledger_categories_sorted_by_name
       @periodicities = @organization.periodicities
       render :action => 'edit'
     end

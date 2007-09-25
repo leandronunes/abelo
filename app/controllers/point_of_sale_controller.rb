@@ -56,7 +56,7 @@ class PointOfSaleController < ApplicationController
       item = SaleItem.new(params[:sale_item])
       item.product = @organization.products.find_by_code(params[:sale_item][:product_code])
       item.valid?
-      (item.errors.length != 1) ? raise (ActiveRecord::RecordInvalid) :  @sale.items << item 
+      (item.errors.length != 1) ? raise(ActiveRecord::RecordInvalid) :  @sale.items << item 
     rescue 
 #TODO display a notice when something wrong happen
       flash[:notice] = _('There is no product with this code')

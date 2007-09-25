@@ -1,7 +1,9 @@
 <%= title _('Stock control') %>
 
-<%= display_list_options 'product', 'name', :controller => 'products'  %>
+<%= 
+#FIXME put this options to works # display_list_options 'product', 'name', :controller => 'products'  
+%>
 
-<%= display_stock_collection @products %>
+<%= display_stock_collection @stocks  %>
 
-<%= pagination_links(@product_pages, :params => {:query => @query}) %>
+<%= pagination_links(@stock_pages, :params => {:query => @query}) %>

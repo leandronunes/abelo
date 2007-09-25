@@ -1,8 +1,8 @@
-<%= title _("Movement in stock on %s") % [@entry.date] %>
+<%= title _("Movement in stock on %s") % @stock.date %>
 
-<%= display_show_info @entry, :class => 'view_data', :product_id => @product.id %>
+<%= display_show_info @stock, :class => 'view_data', :product_id => @stock.product %>
 
 <div>
-<%= button('back', _('Back'), :back, {:action => 'history', :id => @product.id}.merge(params)) %>
-<%= button('edit', _('Edit'), :edit, {:action => 'edit', :id => @entry.id}.merge(params)) %>
+<%= button('back', _('Back'), :back, {:action => 'history', :product_id => @stock.product}.merge(params)) %>
+<%= button('edit', _('Edit'), :edit, {:action => 'edit', :id => @stock.id}.merge(params)) %>
 </div>

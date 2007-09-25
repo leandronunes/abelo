@@ -1,45 +1,60 @@
-<%= error_messages_for :entry %>
+<%= error_messages_for 'stock', 'ledger' %>
 
-<!--[form:stock_entry]-->
+<!--[form:stock_stock]-->
 
-<% display_edit_info @entry, :class => 'view_data' do |item | %>
+<% display_form_info @stock, :class => 'view_data' do |item | %>
 
-  <%= display_field_edit( item, 'supplier',
+  <%= display_field_form( item, 'supplier',
         :title => _('Supplier'),
-        :content => select( 'entry', 'supplier_id', @product.suppliers.map { |s| [ s.name, s.id] } ) 
+        :content => select( 'stock', 'supplier_id', @suppliers.map { |s| [ s.name, s.id] } ) 
     )
   %>
 
-  <%= display_field_edit( item, 'amount',
+  <%= display_field_form( item, 'amount',
         :title => _('Amount'),
-        :content => text_field( 'entry', 'amount' )
+        :content => text_field( 'stock', 'amount' )
     )
   %>
 
-  <%= display_field_edit( item, 'price',
-        :title => _('Buy Price'),
-        :content => text_field( 'entry', 'price' )
+  <%= display_field_form( item, 'payment_method',
+        :title => _('Payment Method'),
+        :content =>  select('stock', 'payment_method',  TypeOfLedger::PAYMENT_METHODS.map{|p|[ Ledger.describe_payment(p), p]}, :include_blank => true)
     )
   %>
 
-  <%= display_field_edit( item, 'date',
+  <div id='category'>
+    <% if !@stock.payment_method.nil? %>
+      <%= render :partial => 'shared_payments/select_category' %>
+    <% end %>
+  </div>
+
+  <%= observe_field('stock_payment_method',
+      :update => 'category',
+      :url => {:action => 'select_category' },
+      :with => "'payment_method=' +  escape(value)"
+    )
+  %>
+
+
+  <%= display_field_form( item, 'date',
         :title => _('Date'),
-        :content => date_select( 'entry', 'date' )
+        :content => date_select_abelo( 'stock', 'date' )
     )
   %>
 
-  <%= display_field_edit( item, 'validity',
+  <%= display_field_form( item, 'value',
+        :title => _('Value'),
+        :content => text_field( 'stock', 'value')
+    )
+  %>
+
+  <%= display_field_form( item, 'validity',
         :title => _('Validity'),
-        :content => date_select( 'entry', 'validity', :include_blank => true )
+        :content => date_select_abelo( 'stock', 'validity', :include_blank => true )
     )
   %>
 
-  <%= display_field_edit( item, 'payment_status',
-        :title => _('Payment status ok?'),
-        :content => check_box( 'entry', 'payment_status' )
-    )
-  %>
 
   <% end %>
 
-<!--[eoform:stock_entry]-->
+<!--[eoform:stock_stock]-->

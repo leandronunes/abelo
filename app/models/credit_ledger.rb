@@ -1,3 +1,0 @@
-class CreditLedger < Ledger
-
-end

@@ -1,9 +1,6 @@
-<%= title _('Edit stock entry for %s') % @product.name %>
-<%= error_messages_for :entry %>
-<% form_tag :action => 'update', :product_id => @product.id, :id => @entry.id do %>
+<%= title _('Edit stock stock for %s') % @product.name %>
+
+<% form_tag :action => 'update', :product_id => @stock.product, :id => @stock do %>
   <%= render :partial => 'form'%>
-  <div>
-    <%= button('back', _('Back'), :back, {:action => 'history', :id => @product.id}.merge(params)) %>
-    <%= button('edit', _('Edit'), :edit, {:action => 'edit', :id => @entry.id}.merge(params)) %>
-  </div>
+  <%= display_edit_info_options @stock, :action => 'history', :product_id => @stock.product %>
 <% end %>

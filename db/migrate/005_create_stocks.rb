@@ -1,8 +1,8 @@
-# this migratino defines the stock_entries table for holdind all stock movement
+# this migratino defines the stocks table for holdind all stock movement
 # records, which includes both adding to stock and removing from stock.
-class CreateStockEntries < ActiveRecord::Migration
+class CreateStocks < ActiveRecord::Migration
   def self.up
-    create_table :stock_entries do |t|
+    create_table :stocks do |t|
 
       ###########################################
       ### Single-table inheritance infrastructure
@@ -30,12 +30,10 @@ class CreateStockEntries < ActiveRecord::Migration
       ###############################
       # from who we bought the items
       t.column :supplier_id, :integer
-      # the price paid
-      t.column :price, :float
       # the validity of the product
       t.column :validity, :date
       #field to know if payment was accomplished or not
-      t.column :payment_status, :boolean
+      t.column :ledger_id, :interger
 
       ################################
       ### fields used only by StockOut
@@ -46,6 +44,6 @@ class CreateStockEntries < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :stock_entries
+    drop_table :stocks
   end
 end

@@ -16,6 +16,15 @@ module ApplicationHelper
 
   require 'support/number_to_currency'
 
+
+  def type_of_ledger(type)
+    if type.to_s == 'I'
+      Ledger.describe('I')
+    elsif type.to_s == 'E'
+      Ledger.describe('E')
+    end
+  end
+
   def show_date(date)
     _('%{year}/%{month}/%{day}') % {:day => '%02d' % date.day, :month => '%02d' % date.month, :year => '%04d' % date.year}
   end  
@@ -100,7 +109,9 @@ module ApplicationHelper
           content_tag('a',[] ,:class => 'show', :accesskey => 'x',:onClick => "$('warp').style.marginTop='0px';"),
         ],
         :class => 'control_header'),
-        current_user.administrator? ? link_to(_('Abelo'), :controller => 'organizations') : link_to(@organization.name, :controller => 'main') ,
+        (@organization.nil? or current_user.administrator) ? 
+              link_to(_('Abelo'), :controller => 'organizations') : 
+              link_to(@organization.name, :controller => 'main') ,
         if controller.controller_name != 'main'
         "&rarr " + link_to(controller.describe(@location), :controller => @location)
         end
@@ -118,22 +129,22 @@ module ApplicationHelper
 
   def select_payments(object, method, title=nil)
 
-    collection =  Payment::PAYMENT_METHODS
+    collection =  TypeOfLedger::PAYMENT_METHODS
     selected_options = controller.instance_variable_get("@#{object}").send(method)
     content_tag(:ul, 
       [
         collection.map do |c|
           content_tag(:li,
-            if selected_options.include?(c)
+            if !selected_options.nil? and selected_options.include?(c)
               content_tag('input', 
-                       Payment.describe(c) , 
+                       Ledger.describe_payment(c) , 
                        :name => "#{object}[#{method}][]", 
                        :type => 'checkbox', :value => c, 
                        :checked => 'checked' 
               )
             else
               content_tag('input', 
-                       Payment.describe(c) , 
+                       Ledger.describe_payment(c) , 
                        :name => "#{object}[#{method}][]", 
                        :type => 'checkbox', :value => c
               )

@@ -5,71 +5,51 @@ in1:
   product_id: 1
   amount: 5
   supplier_id: 3
-  purpose: 'sell'
-  price: 1.99
   date: '2006-01-01'
-  payment_status: true
 in2:
   id: 2
   type: 'StockIn'
   product_id: 1
   amount: 10
   supplier_id: 3
-  purpose: 'sell'
-  price: 2.05
   date: '2006-02-01'
-  payment_status: false
 in3:
   id: 3
   type: 'StockIn'
   product_id: 1
   amount: 12
   supplier_id: 1
-  purpose: 'sell'
-  price: 1.97
   date: '2006-03-01'
-  payment_status: true
 out1:
   id: 4
   type: 'StockOut'
   product_id: 1
   amount: -10
   date: '2006-04-01'
-  purpose: 'sell'
 in4:
   id: 5
   type: 'StockIn'
   product_id: 2
   amount: 5
   supplier_id: 2
-  purpose: 'production'
-  price: 1.99
   date: '2006-05-01'
-  payment_status: true
 in5:
   id: 6
   type: 'StockIn'
   product_id: 3
   amount: 10
   supplier_id: 2
-  purpose: 'production'
-  price: 2.05
   date: '2006-06-01'
-  payment_status: true
 in6:
   id: 7
   type: 'StockIn'
   product_id: 4
   amount: 12
   supplier_id: 3
-  purpose: 'production'
-  price: 1.97
   date: '2006-07-01'
-  payment_status: true
 out2:
   id: 8
   type: 'StockOut'
   product_id: 4
   amount: -10
   date: '2006-08-01'
-  purpose: 'production'

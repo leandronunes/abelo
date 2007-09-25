@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class StockEntryTest < Test::Unit::TestCase
+class StockTest < Test::Unit::TestCase
 
   def setup
     @org = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :identifier => 'org')
@@ -11,7 +11,7 @@ class StockEntryTest < Test::Unit::TestCase
   end
 
   def test_relation_with_product
-    entry = StockEntry.new
+    entry = Stock.new
     entry.product = @product
     assert_equal @product, entry.product
   end

@@ -108,12 +108,12 @@ DepartmentDisplay.available_fields.collect { |d|
 }
 configuration.set_department_displays=(params)
 
-StockDisplay.delete_all
+StockVirtualDisplay.delete_all
 params = {}
-StockDisplay.available_fields.collect { |d|
+StockVirtualDisplay.available_fields.collect { |d|
   params[d] = {:field => d, :display_in_list => true, :display_title => true }  
 }
-configuration.set_stock_displays=(params)
+configuration.set_stock_virtual_displays=(params)
 
 StockInDisplay.delete_all
 params = {}

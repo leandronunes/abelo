@@ -238,7 +238,7 @@ class Organization < ActiveRecord::Base
   # of Stock object to display this attributes on list action
   def stocks_in_list
     self.products.map do |p|
-      Stock.new(:product_in_list => p, :amount_in_list => p.amount_in_stock )   
+      StockVirtual.new(:product_in_list => p, :amount_in_list => p.amount_in_stock )   
     end
   end 
 

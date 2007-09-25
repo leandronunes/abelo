@@ -15,7 +15,7 @@ class Configuration < ActiveRecord::Base
   has_many :ledger_category_displays, :dependent => :destroy
   has_many :department_displays, :dependent => :destroy
   has_many :mass_mail_displays, :dependent => :destroy
-  has_many :stock_displays, :dependent => :destroy
+  has_many :stock_virtual_displays, :dependent => :destroy
   has_many :stock_in_displays, :dependent => :destroy
   has_many :stock_out_displays, :dependent => :destroy
   has_many :profile_displays, :dependent => :destroy
@@ -133,7 +133,7 @@ class Configuration < ActiveRecord::Base
     LedgerCategoryDisplay
     DepartmentDisplay
     MassMailDisplay
-    StockDisplay
+    StockVirtualDisplay
     StockInDisplay
     StockOutDisplay
     ProfileDisplay

@@ -57,23 +57,15 @@ class StockController < ApplicationController
   def create
     product = @organization.products.find(params[:product_id])
    
-    result = Ledger.transaction do 
-      @stock = StockIn.new(params[:stock])
-      @ledger = Ledger.new_ledger(params[:ledger])
-      @ledger.date = @stock.date
-      @ledger.value = @stock.value
-      @ledger.bank_account = @organization.default_bank_account
-      @ledger.owner = @organization
-      @stock.product = product
-      @ledger.save
-      @stock.ledger = @ledger
-      @stock.save
-    end
+    @stock = StockIn.new(params[:stock])
+    @stock.ledger = Ledger.new_ledger(params[:ledger])
+    @stock.product = product
 
-    if result
+    if @stock.save
       flash[:notice] = 'Stock stock was successfully created.'
       redirect_to :action => 'history', :product_id => product
     else
+      @ledger = @stock.ledger
       @suppliers = product.suppliers
       @banks = Bank.find(:all)
       @ledger_categories =  @organization.ledger_categories_by_payment_method(@stock.payment_method)

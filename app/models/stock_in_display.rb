@@ -1,7 +1,7 @@
 class StockInDisplay < StockDisplay
 
   def self.available_fields
-    ['date', 'amount', 'supplier', 'product', 'validity', 'payment_method', 'value']
+    ['date', 'amount', 'supplier', 'product', 'validity', 'payment_method', 'price']
   end
   
   def self.describe(field)
@@ -12,7 +12,7 @@ class StockInDisplay < StockDisplay
    'product' => _('Product'),
    'validity' => _('Validity'),
    'payment_method' => _('Payment Method'),
-   'value' => _('Value')
+   'price' => _('Buy Price')
   }[field] || field
   end
 

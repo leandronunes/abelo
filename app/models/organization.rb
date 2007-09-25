@@ -155,6 +155,7 @@ class Organization < ActiveRecord::Base
     bank_accounts.collect{ |b| b.ledgers.tag_counts }.flatten
   end
 
+  #FIXME split this method in small one
   def ledgers_by_all(bank_accounts, tags, categories, start_date, end_date, query = nil)
     Array.new if bank_accounts.blank?
     ledger_banks = bank_accounts.collect{ |b| b.ledgers }.flatten
@@ -233,6 +234,8 @@ class Organization < ActiveRecord::Base
     category.select{|c| c.payment_methods.include?(payment_method)} 
   end
  
+  # Create new stock objects fill virtual attributes 'product_in_list' and 'amount_in_list'
+  # of Stock object to display this attributes on list action
   def stocks_in_list
     self.products.map do |p|
       Stock.new(:product_in_list => p, :amount_in_list => p.amount_in_stock )   

@@ -42,11 +42,12 @@
     )
   %>
 
-  <%= display_field_form( item, 'value',
-        :title => _('Value'),
-        :content => text_field( 'stock', 'value')
+  <%= display_field_form( item, 'price',
+        :title => _('Buy Price'),
+        :content => text_field( 'stock', 'price')
     )
   %>
+
 
   <%= display_field_form( item, 'validity',
         :title => _('Validity'),

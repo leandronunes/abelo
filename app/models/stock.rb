@@ -15,7 +15,7 @@ class Stock < ActiveRecord::Base
     end
   end
 
-  attr_accessor :product_in_list, :amount_in_list, :buy_payment_method, :buy_value
+  attr_accessor :product_in_list, :amount_in_list, :buy_payment_method, :buy_price
 
   def payment_method= value
     self.buy_payment_method= value
@@ -25,12 +25,12 @@ class Stock < ActiveRecord::Base
     self.ledger.nil? ? self.buy_payment_method : self.ledger.class.to_s.tableize.singularize
   end
 
-  def value= value
-    self.buy_value = value
+  def price= price
+    self.buy_price = price
   end
 
-  def value
-    self.ledger.nil? ? self.buy_value : self.ledger.value
+  def price
+    self.buy_price.nil? ? (self.ledger.nil? ? 0 : self.ledger.value)  : self.buy_price 
   end
 
 end

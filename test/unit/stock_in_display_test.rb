@@ -5,11 +5,11 @@ class StockInDisplayTest < Test::Unit::TestCase
   AVAILABLE_FIELDS_TEST = %w[
     date
     amount
-    price
     supplier
     product
     validity
-    payment_status
+    payment_method
+    value
   ]
 
   def test_available_fields

@@ -8,7 +8,7 @@ class StockOutDisplay < StockDisplay
   {
     'date' => _('Date'),
     'amount' => _('Amount'),
-    'price' => _('Price')
+    'price' => _('Sell Price')
   }[field] || field
   end
 

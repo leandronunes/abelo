@@ -41,6 +41,17 @@ class LedgerCategory < ActiveRecord::Base
     self.settings['is_store'] = value
   end
 
+  def is_stock
+    self.settings['is_stock']
+  end
+
+  alias :is_stock? :is_stock
+
+  def is_stock= value
+    value = value.to_s == 'true' ? true : false
+    self.settings['is_stock'] = value
+  end
+
   def is_operational
     self.settings['is_operational']
   end

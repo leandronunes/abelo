@@ -29,6 +29,7 @@ class Product < ActiveRecord::Base
   def total_cost
     total = 0
     self.stock_ins.each{ |s| total = total + s.ledger.value * s.amount}
+    total
   end
 
   def image

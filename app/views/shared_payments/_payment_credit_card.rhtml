@@ -1,11 +1,35 @@
-<p>
-  <label> <%= _('Value') %> </label>
-  <%= text_field 'payment', 'value' %>
-</p>
 
-<p>
-  <label> <%= _('Date') %> </label>
-  <%= date_select_abelo 'payment', 'date' %>
-</p>
+<%= display_field_form(@ledger, 'payment_method',
+      :title => _('Credit Card Number'),
+      :content => text_field('ledger', 'credit_card_number'),
+      :html_options => {:class => 'break_line'}
+    )
+%>
 
+<%= display_field_form(@ledger, 'payment_method',
+      :title => _('Security Code'),
+      :content => text_field('ledger', 'credit_card_secutiry_code')
+    )
+%>
 
+<%= display_field_form(@ledger, 'payment_method',
+      :title => _('Credit Card Validity'),
+      :content => date_select_abelo('ledger', 'credit_card_validity')
+    )
+%>
+
+<%= display_field_form(@ledger, 'payment_method',
+      :title => _('Name'),
+      :content => text_field('ledger', 'credit_card_owner_name')
+    )
+%>
+
+<%= display_field_form(@ledger, 'payment_method',
+      :title => _('CPF'),
+      :content => text_field('ledger', 'credit_card_cpf')
+    )
+%>
+
+<%=
+#FIXME we need add CNPJ option here
+%>

@@ -44,9 +44,10 @@ class CreateLedgers < ActiveRecord::Migration
       t.column :check_cnpj,                 :string
 
       # payment with automatic debit
-      t.column :automatic_debit_owner_name, :string
-      t.column :automatic_debit_account_agency, :string
-      t.column :automatic_debit_account_number, :string
+      t.column :automatic_debit_owner_name,      :string
+      t.column :automatic_debit_bank_id,         :integer
+      t.column :automatic_debit_account_agency,  :string
+      t.column :automatic_debit_account_number,  :string
 
     end
     

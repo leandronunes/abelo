@@ -28,6 +28,8 @@ class Organization < ActiveRecord::Base
   has_many :ledger_category_displays, :through => :configuration
   has_many :money_displays, :through => :configuration, :source => :ledger_displays
   has_many :check_displays, :through => :configuration, :source => :ledger_displays
+  has_many :credit_card_displays, :through => :configuration, :source => :ledger_displays
+  has_many :debit_card_displays, :through => :configuration, :source => :ledger_displays
   has_many :bank_account_displays, :through => :configuration
   has_many :stock_in_displays, :through => :configuration
   has_many :stock_out_displays, :through => :configuration

@@ -1,0 +1,3 @@
+class CreditCardDisplay < LedgerDisplay
+
+end

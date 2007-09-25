@@ -14,6 +14,10 @@ ActionController::Routing::Routes.draw do |map|
   map.connect '', :controller => 'users'
   map.connect 'public', :controller => 'public'
 
+  # documentation browser
+  map.connect 'doc', :controller => 'doc'
+
+
   # content administration 
   map.cms 'cms/:organization_nickname/:action/:id', :controller => 'cms'
 
@@ -27,9 +31,6 @@ ActionController::Routing::Routes.draw do |map|
 
   # non-organization-based controllers
   map.connect 'users/:action/:id', :controller => 'users'
-
-  # documentation browser
-  map.connect 'doc', :controller => 'doc'
 
   # *content viewing*
   # XXX this route must come last so other tasks have priority over it.

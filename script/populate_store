@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+require File.dirname(__FILE__) + '/../config/environment'
+
+############Organizations########################
+organization = Organization.new
+organization.name = 'Gab'
+organization.cnpj = '93.868.132/0001-10'
+organization.identifier = 'gab'
+organization.save!
+

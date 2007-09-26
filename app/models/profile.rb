@@ -33,11 +33,11 @@ class Profile < ActiveRecord::Base
   #   profile.allows(:controller => 'main', :action => 'index')   => true
   #   profile.allows(:controller => 'main', :action => 'edit')    => false
   def allows?(location)
-    return false unless  self.organization.nil? or (location[:organization_nickname] = self.organization.identifier)
-    test = location.reject { |key,value| key == :organization_nickname }
+    return false unless  self.organization.nil? or (location[:organization_nickname] != self.organization.identifier)
+    test = location.reject { |key,value| key.to_s == 'organization_nickname' }
     self.permissions.any? do |permission|
       test.all? do |key,value|
-        (value == permission[key]) || (permission[key] == '*')
+        (value == permission[key.to_s]) || (permission[key.to_s] == '*')
       end
     end
   end
@@ -46,49 +46,49 @@ class Profile < ActiveRecord::Base
   # defined permission templates
   TEMPLATES = {
     'sales_person' => [
-      { :controller => 'point_of_sale', :action => 'index' },
-      { :controller => 'point_of_sale', :action => 'coupon_open' },
-      { :controller => 'point_of_sale', :action => 'refresh_product' },
-      { :controller => 'point_of_sale', :action => 'coupon_add_item' },
-      { :controller => 'point_of_sale', :action => 'payment' },
-      { :controller => 'point_of_sale', :action => 'save_customer' },
-      { :controller => 'point_of_sale', :action => 'payment_method' },
-      { :controller => 'point_of_sale', :action => 'coupon_add_payment' },
-      { :controller => 'point_of_sale', :action => 'coupon_close' },
-      { :controller => 'point_of_sale', :action => 'sale_variables' },
-      { :controller => 'point_of_sale', :action => 'cancel' },
+      { 'controller' => 'point_of_sale', 'action' => 'index' },
+      { 'controller' => 'point_of_sale', 'action' => 'coupon_open' },
+      { 'controller' => 'point_of_sale', 'action' => 'refresh_product' },
+      { 'controller' => 'point_of_sale', 'action' => 'coupon_add_item' },
+      { 'controller' => 'point_of_sale', 'action' => 'payment' },
+      { 'controller' => 'point_of_sale', 'action' => 'save_customer' },
+      { 'controller' => 'point_of_sale', 'action' => 'payment_method' },
+      { 'controller' => 'point_of_sale', 'action' => 'coupon_add_payment' },
+      { 'controller' => 'point_of_sale', 'action' => 'coupon_close' },
+      { 'controller' => 'point_of_sale', 'action' => 'sale_variables' },
+      { 'controller' => 'point_of_sale', 'action' => 'cancel' },
     ],
     'sales_supervisor' => [
-      { :controller => 'point_of_sale', :action => '*' },
+      { 'controller' => 'point_of_sale', 'action' => '*' },
     ],
     'financial' => [
-      { :controller => 'ledgers', :action => '*' },
-      { :controller => 'ledger_categories', :action => '*' },
-      { :controller => 'bank_accounts', :action => '*' },
+      { 'controller' => 'ledgers', 'action' => '*' },
+      { 'controller' => 'ledger_categories', 'action' => '*' },
+      { 'controller' => 'bank_accounts', 'action' => '*' },
     ],
     'administration' => [
-      { :controller => 'organizations', :action => '*' },
-      { :controller => 'admin_configurations', :action => '*' },
-      { :controller => 'banks', :action => '*' },
+      { 'controller' => 'organizations', 'action' => '*' },
+      { 'controller' => 'admin_configurations', 'action' => '*' },
+      { 'controller' => 'banks', 'action' => '*' },
     ],
     'organization_management' => [
-      { :controller => 'categories', :action => '*' },
-      { :controller => 'stock', :action => '*' },
-      { :controller => 'store', :action => '*' },
-      { :controller => 'permissions', :action => '*' },
-      { :controller => 'system_actors', :action => '*' },
-      { :controller => 'point_of_sale', :action => '*' },
-      { :controller => 'mass_mails', :action => '*' },
-      { :controller => 'ledgers', :action => '*' },
-      { :controller => 'ledger_categories', :action => '*' },
-      { :controller => 'documents', :action => '*' },
-      { :controller => 'departments', :action => '*' },
-      { :controller => 'main', :action => '*' },
-      { :controller => 'products', :action => '*' },
-      { :controller => 'bank_accounts', :action => '*' },
-      { :controller => 'interface', :action => '*' },
-      { :controller => 'content_viewer', :action => '*' },
-      { :controller => 'periodicities', :action => '*' },
+      { 'controller' => 'categories', 'action' => '*' },
+      { 'controller' => 'stock', 'action' => '*' },
+      { 'controller' => 'store', 'action' => '*' },
+      { 'controller' => 'permissions', 'action' => '*' },
+      { 'controller' => 'system_actors', 'action' => '*' },
+      { 'controller' => 'point_of_sale', 'action' => '*' },
+      { 'controller' => 'mass_mails', 'action' => '*' },
+      { 'controller' => 'ledgers', 'action' => '*' },
+      { 'controller' => 'ledger_categories', 'action' => '*' },
+      { 'controller' => 'documents', 'action' => '*' },
+      { 'controller' => 'departments', 'action' => '*' },
+      { 'controller' => 'main', 'action' => '*' },
+      { 'controller' => 'products', 'action' => '*' },
+      { 'controller' => 'bank_accounts', 'action' => '*' },
+      { 'controller' => 'interface', 'action' => '*' },
+      { 'controller' => 'content_viewer', 'action' => '*' },
+      { 'controller' => 'periodicities', 'action' => '*' },
     ]
   }
 
@@ -105,7 +105,8 @@ class Profile < ActiveRecord::Base
   # * <tt>template</tt>: a string. Must be a key in the TEMPLATES hash.
   def template=(template)
     raise ArgumentError.new("%s is not a valid template" % template) unless TEMPLATES[template]
-    self.permissions = TEMPLATES[template]
+    permissions = TEMPLATES[template].each{|t| t }
+    self.permissions = permissions
   end
 
   # Describes the permissions granted comparing them with the templates in this

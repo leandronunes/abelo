@@ -9,7 +9,7 @@ module AccessControl
         user.allowed_to?(where)
       else
         location = { :controller => self.controller_name, :action => where.to_s }
-        location[:organization_nickname] = @organization.identifier if @organization
+        location[:organization_nickname] = @organization.identifier unless @organization.nil?
         user.allowed_to?(location)
       end
     end

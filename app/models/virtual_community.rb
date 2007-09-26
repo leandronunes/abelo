@@ -62,4 +62,9 @@ class VirtualCommunity < ActiveRecord::Base
   # <tt>name</tt> is mandatory
   validates_presence_of :name
 
+  # the default Environment.
+  def self.default
+    self.find(:first, :conditions => [ 'is_default = ?', true ] )
+  end
+
 end

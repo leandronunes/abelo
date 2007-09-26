@@ -137,11 +137,13 @@ class ApplicationController < ActionController::Base
   helper AccessControl
   before_filter :login_required
   before_filter :check_access_control
+
   def check_access_control
     unless can(params[:action])
       render_access_denied_screen
     end
   end
+
   def check_admin_rights
     unless current_user.administrator
       render_access_denied_screen
@@ -156,21 +158,13 @@ class ApplicationController < ActionController::Base
   def self.needs_administrator
     skip_before_filter :check_access_control
     before_filter :check_admin_rights
-    non_organization_layout
+    before_filter :load_virtual_community
+    layout 'default'
   end
 
   def self.public_layout
-    non_organization_layout
-  end
-
-  def self.non_organization_layout
-    layout 'administration'
-
-    design :fixed => {
-       :template => 'default',
-       :theme => 'default',
-       :icon_theme => 'default'
-     }
+    before_filter :load_virtual_community
+    layout 'default'
   end
 
 #  before_filter :detect_stuff_by_domain
@@ -187,34 +181,40 @@ class ApplicationController < ActionController::Base
 #  end  
 
   def self.needs_organization
-    before_filter :load_organization
     before_filter :load_virtual_community
+    before_filter :check_load_organization
     layout 'organization'
   end
 
+  def check_load_organization
+    if @organization.nil?
+      render_error(_("There is no organization with nickname %s or you don't have access to it") % params[:organization_nickname])
+    end
+   end
+
   def load_organization
-    @organization = Organization.find_by_identifier(params[:organization_nickname])
-    render :text => _('There is no organization with identifier %s') % params[:organization_nickname] unless @organization
-    @organization
+    @organization = current_user.organizations.find_by_identifier(params[:organization_nickname])
   end
 
   def load_virtual_community
+    load_organization
     if @organization.nil?
-#TODO search by domain
-#     @virtual_community = @organization.virtual_community 
+       @virtual_community = VirtualCommunity.default 
     else
       @virtual_community = @organization.virtual_community 
     end
   end
 
   def render_access_denied_screen
-    render :template => 'users/access_denied'
+    @virtual_community = VirtualCommunity.default
+    render :template => 'users/access_denied', :layout => 'default'
   end
 
   def render_error(message = nil, error = nil)
-    @message = _("This system didn't works correctly. Please contact the administrator and inform the message below.")
+    @message = message ||  _("This system didn't works correctly. Please contact the administrator and inform the message below.")    
     @error = error
-    render :template => 'shared/error'
+    @virtual_community = VirtualCommunity.default
+    render :template => 'shared/error', :layout => 'default'
   end
 
 end

@@ -11,7 +11,6 @@ class UsersController < ApplicationController
     :icon_theme => 'default',
   }
 
-
   def extra_access_control
     unless current_user.administrator || current_user.id == params[:id].to_i
       render :action => 'access_denied', :status => 403, :layout => false

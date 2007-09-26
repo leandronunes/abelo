@@ -8,5 +8,10 @@ anhetegua_net:
   id: 2
   owner_type: 'Organization'
   owner_id: 2
-  owner_type: 'Organization'
   name: 'colivre.coop'
+default:
+  id: 3
+  owner_type:
+  owner_id: 
+  name: 'Default Envoriment'
+  is_default: true

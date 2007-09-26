@@ -6,24 +6,35 @@ class MainController; def rescue_action(e) raise e end; end
 
 class MainControllerTest < Test::Unit::TestCase
 
-  fixtures :organizations
+  fixtures :organizations, :virtual_communities, :profiles
 
-  include TestingUnderOrganization
+  under_organization :one
 
   def setup
     @controller = MainController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-    @organization_nickname = 'one'
     login_as("quentin")
   end
 
   # Replace this with your real tests.
-  def test_got_organization
+  def test_index
     get :index
     assert_response :success
     assert_template 'index'
     assert_not_nil assigns(:organization)
     assert_kind_of Organization, assigns(:organization)
   end
+
+  def test_access_between_organizations
+    get :index
+    assert_response :success
+    assert_template 'index'
+    
+    login_as("aaron")
+    get :index
+    assert_response :success
+    assert_template 'users/access_denied'
+  end
+
 end

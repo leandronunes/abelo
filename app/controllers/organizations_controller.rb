@@ -5,6 +5,7 @@ class OrganizationsController < ApplicationController
   needs_administrator
 
   uses_admin_organization_tabs
+  design :holder => 'virtual_community'
 
 
   def autocomplete_name

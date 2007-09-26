@@ -1,6 +1,11 @@
 #!/usr/bin/env ruby
 require File.dirname(__FILE__) + '/../config/environment'
 
+############Virtual Community########################
+VirtualCommunity.delete_all
+VirtualCommunity.create!(:name => 'Default Environment', :is_default => true)
+
+
 ############Organizations########################
 Organization.destroy_all
 organization = Organization.new

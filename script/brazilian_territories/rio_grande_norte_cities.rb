@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-require File.dirname(__FILE__) + '/../config/environment'
+require File.dirname(__FILE__) + '/../../config/environment'
 
 country = Country.find_by_name('Brazil')
 country ||= Country.create(:name => 'Brazil') 

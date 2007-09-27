@@ -32,6 +32,8 @@ organization_admin:
     action: '*'
   - controller: 'bank_accounts'
     action: '*'
+  - controller: 'periodicities'
+    action: '*'
 another:
   id: 2
   user_id: 2

@@ -5,14 +5,17 @@ require 'periodicities_controller'
 class PeriodicitiesController; def rescue_action(e) raise e end; end
 
 class PeriodicitiesControllerTest < Test::Unit::TestCase
-  fixtures :periodicities
+  fixtures :periodicities, :configurations, :organizations
+
+  under_organization :one
 
   def setup
     @controller = PeriodicitiesController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-
-    @first_id = periodicities(:first).id
+    @organization = Organization.find_by_identifier 'one'
+    @first_id = periodicities(:one).id
+    login_as("quentin")
   end
 
   def test_index
@@ -52,16 +55,16 @@ class PeriodicitiesControllerTest < Test::Unit::TestCase
   def test_create
     num_periodicities = Periodicity.count
 
-    post :create, :periodicity => {}
+    post :create, :periodicity => {:name => 'CreateP', :number_of_days => '30'}
 
-    assert_response :redirect
     assert_redirected_to :action => 'list'
-
     assert_equal num_periodicities + 1, Periodicity.count
   end
 
   def test_edit
-    get :edit, :id => @first_id
+    Periodicity.delete_all
+    Periodicity.create!(:name => 'Month', :number_of_days => '30', :organization_id => @organization  )
+    get :edit, :id => 1
 
     assert_response :success
     assert_template 'edit'
@@ -71,7 +74,7 @@ class PeriodicitiesControllerTest < Test::Unit::TestCase
   end
 
   def test_update
-    post :update, :id => @first_id
+    post :update, :id => 1, :periodicity => {:name => 'Month', :number_of_days => '30', :organization_id => @organization }
     assert_response :redirect
     assert_redirected_to :action => 'show', :id => @first_id
   end

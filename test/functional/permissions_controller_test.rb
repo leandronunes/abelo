@@ -9,8 +9,6 @@ class PermissionsControllerTest < Test::Unit::TestCase
   include TestingUnderOrganization
   fixtures :organizations, :profiles, :configurations
 
-
-
   under_organization :one
 
 #TODO make these tests works
@@ -33,7 +31,7 @@ class PermissionsControllerTest < Test::Unit::TestCase
     assert_response :success
     assert_template 'list'
   end
-#
+
 #  def test_select_template
 #    get :select_template, :id => 3
 #    assert_not_nil assigns(:user_profile)

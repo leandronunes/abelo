@@ -1,4 +1,4 @@
-<%= title _('Edit stock stock for %s') % @product.name %>
+<%= title _('Edit stock for %s') % @product.name %>
 
 <% form_tag :action => 'update', :product_id => @stock.product, :id => @stock do %>
   <%= render :partial => 'form'%>

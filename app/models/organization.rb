@@ -34,6 +34,7 @@ class Organization < ActiveRecord::Base
   has_many :stock_in_displays, :through => :configuration
   has_many :stock_out_displays, :through => :configuration
   has_many :user_displays, :through => :configuration
+  has_many :periodicity_displays, :through => :configuration
   # End displays has_many methods
   has_one  :virtual_community, :as => :owner
   has_many :departments

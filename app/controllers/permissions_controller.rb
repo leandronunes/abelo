@@ -1,7 +1,17 @@
 class PermissionsController < ApplicationController
 
+  auto_complete_for :user, :login
+
   needs_organization
   # before_filter :check_admin_rights
+
+
+  def autocomplete_name
+    escaped_string = Regexp.escape(params[:user][:login])
+    re = Regexp.new(escaped_string, "i")
+    @users = Periodicity.find(:all).select { |dp| dp.login.match re}
+    render :layout=>false
+  end
 
 
   before_filter :create_tabs

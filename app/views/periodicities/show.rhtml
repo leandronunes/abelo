@@ -1,8 +1,5 @@
-<% for column in Periodicity.content_columns %>
-<p>
-  <b><%= column.human_name %>:</b> <%=h @periodicity.send(column.name) %>
-</p>
-<% end %>
+<%= title _("Periodicity %s") % @periodicity.name %>
 
-<%= link_to 'Edit', :action => 'edit', :id => @periodicity %> |
-<%= link_to 'Back', :action => 'list' %>
+<%= display_show_info @periodicity, :class => 'view_data' %>
+
+<%= display_show_info_options(@periodicity) %>

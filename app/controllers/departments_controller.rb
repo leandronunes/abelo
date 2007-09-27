@@ -9,7 +9,7 @@ class DepartmentsController < ApplicationController
   def autocomplete_name
     escaped_string = Regexp.escape(params[:department][:name])
     re = Regexp.new(escaped_string, "i")
-    @departments = Department.find(:all).select { |dp| dp.name.match re}
+    @departments = @organization.departments.select { |dp| dp.name.match re}
     render :layout=>false
   end
 

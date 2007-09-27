@@ -6,10 +6,13 @@ class Periodicity < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name, :scope => :organization_id
 
+  acts_as_ferret
+
   def self.full_text_search(q, options = {})
     default_options = {:limit => :all, :offset => 0}
     options = default_options.merge options
-    self.find_by_contents(q, options)
+    results = self.find_by_contents(q, options)
+    return results
   end
 
 end

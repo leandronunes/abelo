@@ -7,7 +7,7 @@ class PeriodicitiesController < ApplicationController
   def autocomplete_name
     escaped_string = Regexp.escape(params[:periodicity][:name])
     re = Regexp.new(escaped_string, "i")
-    @periodicities = Periodicity.find(:all).select { |dp| dp.name.match re}
+    @periodicities = @organization.periodicities.select { |dp| dp.name.match re}
     render :layout=>false
   end
 
@@ -45,6 +45,7 @@ class PeriodicitiesController < ApplicationController
 
   def create
     @periodicity = Periodicity.new(params[:periodicity])
+    @periodicity.organization = @organization
     if @periodicity.save
       flash[:notice] = 'Periodicity was successfully created.'
       redirect_to :action => 'list'

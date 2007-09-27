@@ -6,7 +6,7 @@ class PeriodicityDisplay < DisplayConfiguration
   def self.describe(field)
     {
       'name' => _('Name'),
-      'namber_of_days' => _('Name of Days'),
+      'namber_of_days' => _('Namber of Days'),
     }[field] || field
   end
 end

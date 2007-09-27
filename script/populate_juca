@@ -144,6 +144,14 @@ UserDisplay.available_fields.collect { |d|
 }
 configuration.set_user_displays=(params)
 
+PeriodicityDisplay.delete_all
+params = {}
+PeriodicityDisplay.available_fields.collect { |d|
+  in_list = ['name', 'number_of_days'].include?(d) ? true : false
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
+}
+configuration.set_periodicity_displays=(params)
+
 configuration.save!
 
 ###########Categories###################################

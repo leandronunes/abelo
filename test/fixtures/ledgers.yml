@@ -29,3 +29,24 @@ income:
   operational: false
   is_foreseen: false
   bank_account_id: 1
+income:
+  id: 2
+  owner_type: 'Organization'
+  owner_id: 1
+  type: 'Check'
+  type_of: 'I'
+  foreseen_date: <%=  Date.today - 3 %>
+  effective_date: <%=  Date.today - 3 %>
+  foreseen_value: 700.00
+  effective_value: 700.00
+  description: teste
+  category_id: 2
+  operational: false
+  is_foreseen: false
+  bank_account_id: 1
+  check_owner_name: 'Some name'
+  check_bank_id: 1
+  check_account_agency: 33423
+  check_account_number: 324234
+  check_number: 343
+  check_cpf: '845.402.165-54'

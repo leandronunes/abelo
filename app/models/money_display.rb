@@ -1,3 +1,3 @@
-class DebitCardDisplay < LedgerDisplay
+class MoneyDisplay < LedgerDisplay
 
 end

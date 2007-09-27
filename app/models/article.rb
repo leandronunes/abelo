@@ -1,4 +1,5 @@
 class Article < Comatose::Page
+  #TODO See the comatose better
   acts_as_taggable  
   
   def keywords

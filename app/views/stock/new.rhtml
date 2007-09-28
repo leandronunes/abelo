@@ -5,7 +5,9 @@
 
 <% form_tag({:action => 'create', :product_id => @stock.product}, :id => 'stock_form')  do %>
   <%= render :partial => 'form'%>
-  <%= render :partial => 'payment_on_new' %>
+
+  <%= subtitle _("Payments [%s]") % submit_to_remote( 'payment_button' , _('Add'), :update => 'add_payment', :url => {:action => 'create', :product_id => @stock.product, :id => @stock}) %>
+
   <%= display_new_info_options @product %> 
 <% end %>
 

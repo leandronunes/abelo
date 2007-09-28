@@ -1,5 +1,17 @@
 <%= title _('Stock history for %s') % @product.name %>
 
-<%= display_list_options 'supplier', 'name',  :product_id => @product.id %>
+<%  form_tag({:action => 'list', :product_id => @product }, :class => 'search_itens') do %>
+  <%= text_field( 'supplier', 'name', :class => 'filter_field') %>
+  <div class='auto_complete' id='supplier_name_auto_complete' >
+   <%=  auto_complete_field("supplier_name", :url => {:action => "autocomplete_supplier", :product_id => @product}, :indicator => 'auto_list') %>
+  </div>
+  <div id="auto_list" style='display: none;' >
+  </div>
+
+  <%=  button('search', _('Search'), :search) %>
+  <%=  button('add', _("Add New"), :new, {:action => 'new', :product_id => @product} ) %>
+  <%=  button('reset', _('Reset search'), :list, {:action => 'history', :product_id => @product}) %>
+<% end %>
+
 
 <%= display_collection @stocks, :product_id => @product %>

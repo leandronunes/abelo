@@ -35,7 +35,6 @@ class ConfigurationController < ApplicationController
     @supplier_display = @configuration.supplier_displays
     @product_display = @configuration.product_displays
     @department_display = @configuration.department_displays
-    @ledger_display = @configuration.ledger_displays
     @ledger_category_display = @configuration.ledger_category_displays
     @bank_account_display = @configuration.bank_account_displays
   end

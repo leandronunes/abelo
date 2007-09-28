@@ -158,8 +158,8 @@
         <td><%= ledger.date.strftime('%d/%m/%Y') %></td>
         <td> <%= ledger.category.name %></td>
         <td> <%= ledger.description %></td>
-    	  <td><%= ledger.value if ledger.category.income? %></td>
-        <td><%= ledger.value if ledger.category.expense? %></td>
+    	  <td><%= ledger.value if Payment.income?(ledger.category.type_of) %></td>
+        <td><%= ledger.value if Payment.expense?(ledger.category.type_of) %></td>
         <td>
           <%= button 'view_small', _('Show'), :show, :action => 'show', :id => ledger %>
           <%= button 'edit_small', _('Edit'), :edit, :action => 'edit', :id => ledger %>

@@ -4,13 +4,20 @@ class StockController < ApplicationController
 
   before_filter :create_tabs
 
-  auto_complete_for :supplier, :name
-
-  def autocomplete_name
+  def autocomplete_supplier
     escaped_string = Regexp.escape(params[:supplier][:name])
     re = Regexp.new(escaped_string, "i")
     stocks = @organization.products.find(params[:product_id]).stocks
-    @suppliers = stocks.map{|s| s.supplier if(s.supplier.name.match re)}
+    suppliers = stocks.map{|s| s.supplier}
+    @suppliers = suppliers.select{|s| s.name.match re}
+    @suppliers.uniq!
+    render :layout=>false
+  end
+
+  def autocomplete_name
+    escaped_string = Regexp.escape(params[:product][:name])
+    re = Regexp.new(escaped_string, "i")
+    @products = @organization.products.select{|p| p.name.match re}
     render :layout=>false
   end
 
@@ -67,7 +74,7 @@ class StockController < ApplicationController
     display_layout =  !request.xml_http_request?
 
     if @stock.save
-      flash[:notice] = 'Stock stock was successfully created.'
+      flash[:notice] = _('It was successfully created.')
       if display_layout
         redirect_to :action => 'history', :product_id => product
       else
@@ -138,15 +145,12 @@ class StockController < ApplicationController
 
   def update
     @stock = Stock.find(params[:id])
-    if @stock.save
-      flash[:notice] = 'Entry was successfully updated.'
+    if @stock.update_attributes(params[:stock])
+      flash[:notice] = _('It was successfully updated.')
       redirect_to :action => 'history', :product_id => @stock.product
     else
-      @product = @organization.products.find(params[:product_id])
-      @suppliers = @product.suppliers
-      @ledger = @stock.update_ledger
-      @banks = Bank.find(:all)
-      @ledger_categories =  @organization.ledger_categories_by_payment_method(@stock.payment_method)
+      @suppliers = @stock.product.suppliers
+      @ledgers = @stock.ledgers
       render :action => 'edit'
     end
   end

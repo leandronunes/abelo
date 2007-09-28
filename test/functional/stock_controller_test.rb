@@ -18,12 +18,14 @@ class StockControllerTest < Test::Unit::TestCase
     @product = Product.find(:first)
     @supplier = Supplier.find(:first)
     @ledger_category = LedgerCategory.find(:first)
+    @stock_in = StockIn.find(:first)
   end
 
   def test_setup
     assert @product.valid?
     assert @supplier.valid?
     assert @ledger_category.valid?
+    assert @stock_in.valid?
   end
 
   def test_index
@@ -122,58 +124,64 @@ class StockControllerTest < Test::Unit::TestCase
     post :create, :product_id => @product.id
 
     assert_response :success
-    assert_template 'new'
+    assert_template '_form'
     assert_equal count, StockIn.count
-    assert assigns(:ledger)
-    assert assigns(:ledger_categories)
-    assert assigns(:banks)
+    assert assigns(:ledgers)
     assert assigns(:suppliers)
   end
 
-
-
-  def test_create_fail
-    count = StockIn.count
-
-    post :create, :id => 1, :stock => {  }
-
-    assert_equal count , StockIn.count
-    assert_template 'new'
+  def test_add_payment
+    get :add_payment, :id => @stock_in.id
+    
     assert_response :success
+    assert_template '_payment'
+
+    assert assigns(:stock)
+    assert assigns(:product)
+    assert assigns(:ledger)
+    assert assigns(:banks)
+    assert assigns(:ledger_categories)
   end
 
   def test_edit
-    get :edit, :id => 1, :product_id => 1
+    get :edit, :id => @stock_in.id
+
     assert_response :success
-    assert_template 'edit' 
+    assert_template 'edit'
+
+    assert assigns(:stock)
+    assert assigns(:product)
+    assert assigns(:suppliers)
+    assert assigns(:ledgers)
+
   end
 
   def test_update
-    post :update, :product_id => 1, :id => 1, :stock => { :supplier_id => 3, :amount => 1, :price => 1.99, :purpose => 'sell', :date => '2007-01-01' }
+    stock_id = @stock_in.id
+    @stock_in.amount = 3
+    assert @stock_in.save
+    new_amount = 2
+    post :update, :id => @stock_in, :stock => { :amount =>new_amount }
 
     assert_response :redirect
-    assert_redirected_to :action => 'history', :id => 1
+    assert_redirected_to :action => 'history'
+
+    assert_equal new_amount, StockIn.find(stock_id).amount
+  end
+
+  def test_attributes_updated
+#TODO test all atttributes os sotck were successfully updated
+    assert flunk  
   end
 
   def test_update_fails
-    stock = StockIn.new
-    stock.supplier = Supplier.find(3)
-    stock.amount = 1
-    stock.price = 2
-    stock.purpose = 'sell'
-    stock.product = Product.find(1)
-    stock.date = '2006-04-01'
-    assert stock.save
-    post :update, :id => stock.id, :product_id => 1, :stock => {:price => 'bli'}
-    assert_not_nil assigns(:stock)
-    assert_not_nil assigns(:product)
-    assert_template 'edit', :id => 1, :product_id => 1
-  end
+    post :update, :id => @stock_in.id, :stock => { :amount => nil }
 
-  def test_destroy
-    post :destroy, :id => 1, :product_id => 1
-    assert_response :redirect
-    assert_redirected_to :action => 'history', :id => 1
+    assert_response :success
+    assert_template 'edit'
+
+    assert assigns(:suppliers)
+    assert assigns(:ledgers)
   end
 
 end

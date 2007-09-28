@@ -7,6 +7,7 @@ in1:
   supplier_id: 3
   price: 2
   date: '2006-01-01'
+  validity: <%= Date.today %> 
 in2:
   id: 2
   type: 'StockIn'
@@ -15,6 +16,7 @@ in2:
   supplier_id: 3
   price: 2
   date: '2006-02-01'
+  validity: <%= Date.today %> 
 in3:
   id: 3
   type: 'StockIn'
@@ -23,6 +25,7 @@ in3:
   supplier_id: 1
   price: 2
   date: '2006-03-01'
+  validity: <%= Date.today %> 
 out1:
   id: 4
   type: 'StockOut'
@@ -30,6 +33,7 @@ out1:
   amount: -10
   price: 2
   date: '2006-04-01'
+  validity: <%= Date.today %> 
 in4:
   id: 5
   type: 'StockIn'
@@ -38,6 +42,7 @@ in4:
   supplier_id: 2
   price: 2
   date: '2006-05-01'
+  validity: <%= Date.today %> 
 in5:
   id: 6
   type: 'StockIn'
@@ -46,6 +51,7 @@ in5:
   supplier_id: 2
   price: 2
   date: '2006-06-01'
+  validity: <%= Date.today %> 
 in6:
   id: 7
   type: 'StockIn'
@@ -54,6 +60,7 @@ in6:
   supplier_id: 3
   price: 2
   date: '2006-07-01'
+  validity: <%= Date.today %> 
 out2:
   id: 8
   type: 'StockOut'
@@ -61,3 +68,4 @@ out2:
   amount: -10
   price: 2
   date: '2006-08-01'
+  validity: <%= Date.today %> 

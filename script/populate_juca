@@ -433,10 +433,10 @@ saving_account.save!
 
 ########### Ledger Category ###################
 LedgerCategory.delete_all
-money_expense = LedgerCategory.create!(:name => 'Limpeza', :organization => organization, :type_of => TypeOfLedger::TYPE_OF_EXPENSE, :payment_methods => ['money'])
-money_income = LedgerCategory.create!(:name => 'Venda Produto', :organization => organization, :type_of => TypeOfLedger::TYPE_OF_INCOME, :payment_methods => ['money', 'check'])
+money_expense = LedgerCategory.create!(:name => 'Limpeza', :organization => organization, :type_of => Payment::TYPE_OF_EXPENSE, :payment_methods => ['money'])
+money_income = LedgerCategory.create!(:name => 'Venda Produto', :organization => organization, :type_of => Payment::TYPE_OF_INCOME, :payment_methods => ['money', 'check'])
 
-check_income = LedgerCategory.create!(:name => 'Cheque 3 X', :organization => organization, :type_of => TypeOfLedger::TYPE_OF_INCOME, :payment_methods => ['check'], :is_store => true)
+check_income = LedgerCategory.create!(:name => 'Cheque 3 X', :organization => organization, :type_of => Payment::TYPE_OF_INCOME, :payment_methods => ['check'], :is_store => true)
 #############################
 # Period
 # ###########################

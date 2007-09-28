@@ -187,7 +187,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_load_organization
-    if @organization.nil?
+    if @organization.nil? and can(params[:action])
       render_error(_("There is no organization with nickname %s or you don't have access to it") % params[:organization_nickname])
     end
    end

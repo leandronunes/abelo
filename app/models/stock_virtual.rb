@@ -9,7 +9,7 @@ class StockVirtual < Stock
 
 
   def self.create_virtuals(products)
-    return Array.new if (products.nil?) or (products.class != Array)
+    return Array.new if (products.nil?) 
     products.map do |p|
       StockVirtual.new(:product_in_list => p, :amount_in_list => p.amount_in_stock )
     end

@@ -31,7 +31,7 @@ class MainControllerTest < Test::Unit::TestCase
     assert_response :success
     assert_template 'index'
     
-    login_as("aaron")
+    login_as("dani")
     get :index
     assert_response :success
     assert_template 'users/access_denied'

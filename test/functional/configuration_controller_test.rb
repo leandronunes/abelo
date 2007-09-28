@@ -95,7 +95,6 @@ class ConfigurationControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:supplier_display)
     assert_not_nil assigns(:product_display)
     assert_not_nil assigns(:department_display)
-    assert_not_nil assigns(:ledger_display)
     assert_not_nil assigns(:ledger_category_display)
     assert_not_nil assigns(:bank_account_display)
 

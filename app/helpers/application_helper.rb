@@ -19,9 +19,9 @@ module ApplicationHelper
 
   def type_of_ledger(type)
     if type.to_s == 'I'
-      Ledger.describe('I')
+      Payment.describe('I')
     elsif type.to_s == 'E'
-      Ledger.describe('E')
+      Payment.describe('E')
     end
   end
 
@@ -129,7 +129,7 @@ module ApplicationHelper
 
   def select_payments(object, method, title=nil)
 
-    collection =  TypeOfLedger::PAYMENT_METHODS
+    collection =  Payment::PAYMENT_METHODS
     selected_options = controller.instance_variable_get("@#{object}").send(method)
     content_tag(:ul, 
       [
@@ -137,14 +137,14 @@ module ApplicationHelper
           content_tag(:li,
             if !selected_options.nil? and selected_options.include?(c)
               content_tag('input', 
-                       Ledger.describe_payment(c) , 
+                       Payment.describe_payment(c) , 
                        :name => "#{object}[#{method}][]", 
                        :type => 'checkbox', :value => c, 
                        :checked => 'checked' 
               )
             else
               content_tag('input', 
-                       Ledger.describe_payment(c) , 
+                       Payment.describe_payment(c) , 
                        :name => "#{object}[#{method}][]", 
                        :type => 'checkbox', :value => c
               )
@@ -318,6 +318,7 @@ module ApplicationHelper
   end
 
   def autocomplete_list(collection, method = 'name' )
+    return '' if (collection.blank?)
     content_tag(:ul,
       collection.map do |c|
         content_tag(:li, 

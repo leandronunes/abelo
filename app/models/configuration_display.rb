@@ -14,7 +14,6 @@ class ConfigurationDisplay < ActiveRecord::Base
       product_displays
       department_displays
       ledger_category_displays
-      ledger_displays
       bank_account_displays
     ]
   end
@@ -33,7 +32,6 @@ class ConfigurationDisplay < ActiveRecord::Base
       'product_displays' => _('Product Fields'),
       'department_displays' => _('Department Fields'),
       'ledger_category_displays' => _('Ledger Category Fields'),
-      'ledger_displays' => _('Ledger Fields'),
       'bank_account_displays' => _('Bank Account Fields'),
     }[field] || field
   end

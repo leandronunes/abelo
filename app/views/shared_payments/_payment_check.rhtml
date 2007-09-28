@@ -25,6 +25,12 @@
 %>
 
 <%= display_field_form(@ledger, 'payment_method',
+      :title => _('Check Number'),
+      :content => text_field('ledger', 'check_number')
+    )
+%>
+
+<%= display_field_form(@ledger, 'payment_method',
       :title => _('Contact Phone'),
       :content => text_field('ledger', 'check_contact_telephone')
     )

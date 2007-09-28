@@ -56,6 +56,7 @@ class Organization < ActiveRecord::Base
   has_many :users, :through => :profiles  
   has_many :contacts, :through => :customers
   has_many :bank_accounts, :as => :owner
+  has_many :stocks, :through => :products
 #  has_many :ledgers, :through => :bank_accounts, :as => :owner TODO see a way to do this
   has_one  :virtual_community, :as => :owner
   has_many :periodicities

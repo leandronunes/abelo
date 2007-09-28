@@ -97,6 +97,30 @@ MoneyDisplay.available_fields.collect { |d|
 }
 configuration.set_money_displays=(params)
 
+CheckDisplay.delete_all
+params = {}
+CheckDisplay.available_fields.collect { |d|
+  in_list = true
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
+}
+configuration.set_check_displays=(params)
+
+CreditCardDisplay.delete_all
+params = {}
+CreditCardDisplay.available_fields.collect { |d|
+  in_list = true
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
+}
+configuration.set_credit_card_displays=(params)
+
+DebitCardDisplay.delete_all
+params = {}
+DebitCardDisplay.available_fields.collect { |d|
+  in_list = true
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
+}
+configuration.set_debit_card_displays=(params)
+
 BankAccountDisplay.delete_all
 params = {}
 BankAccountDisplay.available_fields.collect { |d|
@@ -151,6 +175,14 @@ PeriodicityDisplay.available_fields.collect { |d|
   params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
 }
 configuration.set_periodicity_displays=(params)
+
+StockVirtualDisplay.delete_all
+params = {}
+StockVirtualDisplay.available_fields.collect { |d|
+  in_list = true
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
+}
+configuration.set_stock_virtual_displays=(params)
 
 configuration.save!
 
@@ -425,11 +457,10 @@ Money.create_ledger!(:category => money_income, :value => 222.50, :bank_account 
 
 ############Stock Entries#########################
 Stock.destroy_all
+camisa_entrada = StockIn.create!(:supplier => hering, :amount => 50, :price => 10, :date => '2007-07-01', :product => camisa, :validity => Date.today)
 money_stock_in = Money.create_ledger!(:category => money_expense, :value => 12.3, :bank_account => account, :date => Date.today, :owner => organization, :payment_method => 'money')
-camisa_entrada = StockIn.create!(:supplier => hering, :amount => 50, :purpose => 'sell', :date => '2007-07-01', :product => camisa, :ledger => money_stock_in, :validity => Date.today)
+camisa_entrada = StockIn.create!(:supplier => hering, :amount => 40, :price => 10, :date => '2007-07-01', :product => camisa, :validity => Date.today )
 money_stock_in = Money.create_ledger!(:category => money_expense, :value => 12.3, :bank_account => account, :date => Date.today, :owner => organization, :payment_method => 'money')
-camisa_entrada = StockIn.create!(:supplier => hering, :amount => 40, :purpose => 'sell', :date => '2007-07-01', :product => camisa, :ledger => money_stock_in,:validity => Date.today )
+calca_entrada = StockIn.create!(:supplier => hering, :amount => 50, :price => 10, :date => '2007-07-01', :product => calca,  :validity => Date.today)
 money_stock_in = Money.create_ledger!(:category => money_expense, :value => 12.3, :bank_account => account, :date => Date.today, :owner => organization, :payment_method => 'money')
-calca_entrada = StockIn.create!(:supplier => hering, :amount => 50, :purpose => 'sell', :date => '2007-07-01', :product => calca, :ledger => money_stock_in, :validity => Date.today)
-money_stock_in = Money.create_ledger!(:category => money_expense, :value => 12.3, :bank_account => account, :date => Date.today, :owner => organization, :payment_method => 'money')
-camisa_saida = StockIn.create!(:supplier => hering, :amount => 10, :purpose => 'sell', :date => '2007-07-05', :product => camisa, :ledger => money_stock_in, :validity => Date.today)
+camisa_saida = StockIn.create!(:supplier => hering, :amount => 10, :price => 10, :date => '2007-07-05', :product => camisa,  :validity => Date.today)

@@ -304,7 +304,7 @@ module ApplicationHelper
   end
 
   def subtitle(subtitle)
-    content_tag('h2', subtitle)
+    content_tag('h2', subtitle, :class => 'subtitle')
   end
 
   def footer

@@ -104,7 +104,7 @@ class Ledger < ActiveRecord::Base
   end
 
   def value= value
-    self[:foreseen_value] = value
+    self[:foreseen_value] = self.is_foreseen? ? (value) : (self[:foreseen_value] || value)
     self[:effective_value] = value unless self.is_foreseen? 
   end
 
@@ -122,34 +122,34 @@ class Ledger < ActiveRecord::Base
     self[:effective_date] = date unless self.is_foreseen?
   end
 
-  #This method cannot be access directly. 
-  #You have to access the date method and this method
-  #set the correct value of effective_date attribute
-  def effective_date= date
-    raise _('This function cannot be accessed directly')
-  end
-
-  #This method cannot be access directly. 
-  #You have to access the date method and this method
-  #set the correct value of foreseen_date attribute
-  def foreseen_date= date
-    raise _('This function cannot be accessed directly')
-  end
-
-
-  #This method cannot be access directly. 
-  #You have to access the value method and this method
-  #set the correct value of effective_value attribute
-  def effective_value= value
-    raise _('This function cannot be accessed directly')
-  end
-
-  #This method cannot be access directly. 
-  #You have to access the value method and this method
-  #set the correct value of foreseen_value attribute
-  def foreseen_value= value
-    raise _('This function cannot be accessed directly')
-  end
+#  #This method cannot be access directly. 
+#  #You have to access the date method and this method
+#  #set the correct value of effective_date attribute
+#  def effective_date= date
+#    raise _('This function cannot be accessed directly')
+#  end
+#
+#  #This method cannot be access directly. 
+#  #You have to access the date method and this method
+#  #set the correct value of foreseen_date attribute
+#  def foreseen_date= date
+#    raise _('This function cannot be accessed directly')
+#  end
+#
+#
+#  #This method cannot be access directly. 
+#  #You have to access the value method and this method
+#  #set the correct value of effective_value attribute
+#  def effective_value= value
+#    raise _('This function cannot be accessed directly')
+#  end
+#
+#  #This method cannot be access directly. 
+#  #You have to access the value method and this method
+#  #set the correct value of foreseen_value attribute
+#  def foreseen_value= value
+#    raise _('This function cannot be accessed directly')
+#  end
 
   def schedule_repeat?
     self.schedule_repeat.to_s == 'true' ? true : false

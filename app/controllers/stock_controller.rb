@@ -36,13 +36,12 @@ class StockController < ApplicationController
   end
   
   def history
-    @product = @organization.products.find(params[:product_id])
-    @stocks = @product.stock_ins
-
-    @total_amount = @product.amount_in_stock
-    @total_cost = @product.total_cost
-
-    @stock_pages, @stocks = paginate_by_collection @stocks
+    begin
+      @product = @organization.products.find(params[:product_id])
+      @stocks = @product.stocks
+    rescue
+      redirect_to :action => 'index'
+    end
   end
 
   def new
@@ -60,36 +59,66 @@ class StockController < ApplicationController
     product = @organization.products.find(params[:product_id])
     @stock = StockIn.new(params[:stock])
     @stock.product = product
-    @stock.ledger = Ledger.new_ledger(params[:ledger])
 
     if @stock.save
       flash[:notice] = 'Stock stock was successfully created.'
       redirect_to :action => 'history', :product_id => product
     else
-      @ledger = @stock.ledger
+      @ledgers = @stock.ledgers
       @suppliers = product.suppliers
-      @banks = Bank.find(:all)
-      @ledger_categories =  @organization.ledger_categories_by_payment_method(@stock.payment_method)
       render :action => 'new'
     end
   end
-  
+
+  def add_payment
+    begin 
+      @stock = @organization.stocks.find(params[:id])
+    rescue
+      product = @organization.products.find(params[:product_id])
+      @stock = StockIn.new()
+      @stock.product = product
+    end
+
+    if @stock.update_attributes(params[:stock])
+    @product = @stock.product
+    @suppliers = @product.suppliers
+    @ledger = Money.new
+    @banks = Bank.find(:all)
+    @ledger_categories =  @organization.ledger_categories_by_payment_method('money')
+      render :action => 'edit', :layout => false
+    else
+      @ledgers = @stock.ledgers
+      @suppliers = product.suppliers
+      render :action => 'new', :layout => false
+    end
+  end  
 
   def edit
     @stock = Stock.find(params[:id])
     @product = @stock.product
     @suppliers = @product.suppliers
     @ledger = @stock.ledger
+    @banks = Bank.find(:all)
     @ledger_categories =  @organization.ledger_categories_by_payment_method(@stock.payment_method)
   end
 
   def update
+#render :text => params.inspect
+#return
     @stock = Stock.find(params[:id])
-    if @stock.update_attributes(params[:entry])
+    @stock.update_ledger = Ledger.new_ledger(@stock.ledger.attributes.merge(params[:ledger]))
+#   m  = @stock.ledger
+#render :text => params.inspect
+#return
+    if @stock.save
       flash[:notice] = 'Entry was successfully updated.'
       redirect_to :action => 'history', :product_id => @stock.product
     else
       @product = @organization.products.find(params[:product_id])
+    @suppliers = @product.suppliers
+    @ledger = @stock.update_ledger
+    @banks = Bank.find(:all)
+    @ledger_categories =  @organization.ledger_categories_by_payment_method(@stock.payment_method)
       render :action => 'edit'
     end
   end
@@ -98,7 +127,11 @@ class StockController < ApplicationController
     stock = Stock.find(params[:id])
     product = stock.product
     stock.destroy
-    redirect_to :action => 'history', :product_id => product
+    if product.stocks.any?
+      redirect_to :action => 'history', :product_id => product
+    else
+      redirect_to :action => 'list'
+    end
   end
 
   def create_tabs

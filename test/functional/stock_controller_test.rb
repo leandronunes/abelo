@@ -69,17 +69,23 @@ class StockControllerTest < Test::Unit::TestCase
   end
   
   def test_history
-    get :history, :id => 1
+    get :history, :product_id => @product.id
 
     assert_not_nil assigns(:product)
-    assert_equal 1, assigns(:product).id
-
-    assert_not_nil assigns(:entries)
-    assert_kind_of Array, assigns(:entries)
+    assert_not_nil assigns(:stocks)
+    assert_kind_of Array, assigns(:stocks)
 
     assert_response :success
     assert_template 'history'
   end
+
+  def test_history_with_wrong_product_id
+    get :history, :product_id => nil
+
+    assert_response :redirect
+    assert_redirected_to :action => 'index'
+  end
+
 
   def test_new_with_product_id_parameter
     get :new, :product_id => @product.id

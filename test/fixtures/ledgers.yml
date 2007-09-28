@@ -50,7 +50,7 @@ check:
   check_account_number: 324234
   check_number: 343
   check_cpf: '845.402.165-54'
-debit_card:
+credit_card:
   id: 4
   owner_type: 'Organization'
   owner_id: 1
@@ -72,7 +72,7 @@ debit_card:
   credit_card_owner_name: 'Some name'
   credit_card_cpf: '705.163.825-43'
 debit_card:
-  id: 4
+  id: 5
   owner_type: 'Organization'
   owner_id: 1
   type: 'DebitCard'

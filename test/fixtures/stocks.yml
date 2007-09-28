@@ -5,6 +5,7 @@ in1:
   product_id: 1
   amount: 5
   supplier_id: 3
+  price: 2
   date: '2006-01-01'
 in2:
   id: 2
@@ -12,6 +13,7 @@ in2:
   product_id: 1
   amount: 10
   supplier_id: 3
+  price: 2
   date: '2006-02-01'
 in3:
   id: 3
@@ -19,12 +21,14 @@ in3:
   product_id: 1
   amount: 12
   supplier_id: 1
+  price: 2
   date: '2006-03-01'
 out1:
   id: 4
   type: 'StockOut'
   product_id: 1
   amount: -10
+  price: 2
   date: '2006-04-01'
 in4:
   id: 5
@@ -32,6 +36,7 @@ in4:
   product_id: 2
   amount: 5
   supplier_id: 2
+  price: 2
   date: '2006-05-01'
 in5:
   id: 6
@@ -39,6 +44,7 @@ in5:
   product_id: 3
   amount: 10
   supplier_id: 2
+  price: 2
   date: '2006-06-01'
 in6:
   id: 7
@@ -46,10 +52,12 @@ in6:
   product_id: 4
   amount: 12
   supplier_id: 3
+  price: 2
   date: '2006-07-01'
 out2:
   id: 8
   type: 'StockOut'
   product_id: 4
   amount: -10
+  price: 2
   date: '2006-08-01'

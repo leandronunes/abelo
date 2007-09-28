@@ -87,13 +87,13 @@ class LedgerCategoryTest < Test::Unit::TestCase
   def test_income?
     l = LedgerCategory.new
     l.type_of= 'I'
-    assert l.income?
+    assert Payment.income?(l.type_of)
   end
 
   def test_expense?
     l = LedgerCategory.new
     l.type_of= 'E'
-    assert l.expense?
+    assert Payment.expense?(l.type_of)
   end
 
   def test_foreseen_value_by_date

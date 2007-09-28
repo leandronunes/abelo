@@ -4,10 +4,13 @@ class StockController < ApplicationController
 
   before_filter :create_tabs
 
+  auto_complete_for :supplier, :name
+
   def autocomplete_name
-    escaped_string = Regexp.escape(params[:product][:name])
+    escaped_string = Regexp.escape(params[:supplier][:name])
     re = Regexp.new(escaped_string, "i")
-    @products = @organization.products.select { |pr| pr.name.match re}
+    stocks = @organization.products.find(params[:product_id]).stocks
+    @suppliers = stocks.map{|s| s.supplier if(s.supplier.name.match re)}
     render :layout=>false
   end
 
@@ -33,6 +36,7 @@ class StockController < ApplicationController
 
   def show
     @stock = Stock.find(params[:id])
+    @ledgers = @stock.ledgers
   end
   
   def history
@@ -70,8 +74,8 @@ class StockController < ApplicationController
         @product = @stock.product
         @suppliers = @product.suppliers 
         @banks = Bank.find(:all)
-        @ledger_categories =  @organization.ledger_categories_by_payment_method('money')
         @ledger = Ledger.new_ledger
+        @ledger_categories =  @organization.ledger_categories_by_payment_method(@ledger.payment_method)
         render :update do |page|
           page.replace_html 'add_payment', :partial => 'edit'
         end
@@ -113,7 +117,7 @@ class StockController < ApplicationController
         page.replace_html 'partial_edit', :partial => 'edit'
       end
     else
-@ledger = ledger
+      @ledger = ledger
       @product = @stock.product
       @suppliers = @product.suppliers
       @banks = Bank.find(:all)
@@ -129,22 +133,20 @@ class StockController < ApplicationController
     @stock = Stock.find(params[:id])
     @product = @stock.product
     @suppliers = @product.suppliers
-    @ledger = @stock.ledgers
+    @ledgers = @stock.ledgers
   end
 
   def update
-#render :text => params.inspect
-#return
     @stock = Stock.find(params[:id])
     if @stock.save
       flash[:notice] = 'Entry was successfully updated.'
       redirect_to :action => 'history', :product_id => @stock.product
     else
       @product = @organization.products.find(params[:product_id])
-    @suppliers = @product.suppliers
-    @ledger = @stock.update_ledger
-    @banks = Bank.find(:all)
-    @ledger_categories =  @organization.ledger_categories_by_payment_method(@stock.payment_method)
+      @suppliers = @product.suppliers
+      @ledger = @stock.update_ledger
+      @banks = Bank.find(:all)
+      @ledger_categories =  @organization.ledger_categories_by_payment_method(@stock.payment_method)
       render :action => 'edit'
     end
   end

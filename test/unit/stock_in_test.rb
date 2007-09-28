@@ -26,7 +26,7 @@ class StockInTest < Test::Unit::TestCase
     assert @product.valid?
     assert @supplier.valid?
     assert @ledger_category.valid?
-    assert @ledger_category.income?
+    assert Payment.income?(@ledger_category.type_of)
     assert @ledger_category.is_stock?
     assert @ledger.valid?
   end
@@ -38,28 +38,57 @@ class StockInTest < Test::Unit::TestCase
   end
 
   def test_mandatory_field_supplier_id
-    entry = StockIn.create(:amount => 5, :date => '2007-07-01', :product_id => @product.id, :ledger => @ledger)
-    assert entry.errors.invalid?(:supplier_id)
+    s = StockIn.new()
+    s.valid?
+    assert s.errors.invalid?(:supplier_id)
+    s.supplier = @supplier
+    s.valid?
+    assert !s.errors.invalid?(:supplier_id)
   end
 
+
   def test_mandatory_field_price
-    entry = StockIn.create(:amount => 5,  :date => '2007-07-01',  :product_id => @product.id, :ledger => @ledger)
-    assert entry.errors.invalid?(:price) 
+    s = StockIn.new()
+    s.valid?
+    assert s.errors.invalid?(:price)
+    s.price = 10
+    s.valid?
+    assert !s.errors.invalid?(:price)
   end
 
   def test_price_not_numerical
-    entry = StockIn.create(:amount => 5,  :date => '2007-07-01',  :product_id => @product.id, :ledger => @ledger)
-    assert entry.errors.invalid?(:price) 
+    s = StockIn.new()
+    s.price = 'some'
+    s.valid?
+    assert s.errors.invalid?(:price)
   end
 
   def test_amount_not_positive
-    entry = StockIn.create(:amount => -5,  :date => '2007-07-01',  :product_id => @product.id, :ledger => @ledger )
-    assert entry.errors.invalid?(:amount) 
+    s = StockIn.new()
+    s.amount = -1
+    s.valid?
+    assert s.errors.invalid?(:amount)
+  end
+
+  def test_amount_is_positive
+    s = StockIn.new()
+    s.amount = 10
+    s.valid?
+    assert !s.errors.invalid?(:amount)
   end
 
   def test_total_cost
-    entry = StockIn.create(:amount => 5,  :date => '2007-07-01',  :product_id => @product.id, :ledger => @ledger )
+    entry = StockIn.create(:amount => 5,  :date => '2007-07-01',  :product_id => @product.id, :supplier => @supplier, :price => 10, :validity => Date.today )
     assert_in_delta 50, entry.total_cost, 0.01
+  end
+
+
+  def test_validate_cannot_be_less_than_date
+    s = StockIn.new
+    s.validity = Date.today - 1
+    s.date = Date.today
+    s.valid?
+    assert s.errors.invalid?(:validity)
   end
 
 end

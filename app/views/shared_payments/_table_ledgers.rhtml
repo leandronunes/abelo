@@ -1,0 +1,21 @@
+
+
+
+<table>
+  <tr>
+    <th> <%= _('Date') %> </th>
+    <th> <%= _('Type') %> </th>
+    <th> <%= _('Category') %> </th>
+    <th> <%= _('Description') %> </th>
+    <th> <%= _('Value') %> </th>
+  </tr>
+  <% @ledgers.each do |l|%>
+  <tr>
+    <td><%= show_date(l.date) %> </td>
+    <td><%= Payment.describe_payment(l.payment_type) %> </td>
+    <td><%= l.category.name %> </td>
+    <td><%= l.description %> </td>
+    <td><%= l.value %> </td>
+  </tr>
+  <% end %>
+</table>

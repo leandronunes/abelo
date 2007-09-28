@@ -24,7 +24,7 @@ class ProductTest < Test::Unit::TestCase
     assert @cat_supp.valid?
     assert @supplier.valid?
     assert @ledger_category.valid?
-    assert @ledger_category.income?
+    assert Payment.income?(@ledger_category.type_of)
     assert @ledger_category.is_stock?
     assert @bank_account.valid?
   end
@@ -83,16 +83,14 @@ class ProductTest < Test::Unit::TestCase
 
   def test_relation_with_stock_in
     product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
-    l = Ledger.create_ledger!(:category => @ledger_category, :value => 1.00, :date => Date.today, :bank_account => @bank_account, :owner => @organization)
-    entry = StockIn.create!(:supplier_id => @supplier.id, :amount => 50, :date => '2007-07-01', :product_id => product.id, :validity => Date.today, :ledger => l)
+    entry = StockIn.create!(:supplier_id => @supplier.id, :amount => 50, :date => '2007-07-01', :product_id => product.id, :validity => Date.today, :price => 10)
     assert product.stocks.include?(entry)
   end
 
   def test_relation_with_stock_out
     product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
-    l = Ledger.create_ledger!(:category => @ledger_category, :value => 1.00, :date => Date.today, :bank_account => @bank_account, :owner => @organization)
-    entry = StockIn.create!(:supplier_id => @supplier.id, :amount => 100, :date => '2007-07-01', :product_id => product.id, :ledger => l, :validity => Date.today)
-    entry = StockOut.create!(:supplier_id => @supplier.id, :amount => -50, :date => '2007-07-02', :product_id => product.id)
+    entry = StockIn.create!(:supplier_id => @supplier.id, :amount => 100, :date => '2007-07-01', :product_id => product.id, :price => 10, :validity => Date.today)
+    entry = StockOut.create!(:supplier_id => @supplier.id, :amount => -50, :date => '2007-07-02', :product_id => product.id, :price => 10)
     assert product.stocks.include?(entry)
   end
 
@@ -138,10 +136,9 @@ class ProductTest < Test::Unit::TestCase
     total_cost = 0.0
 
     (1..10).each { |n|
-      l = Ledger.create_ledger!(:category => @ledger_category, :value => 1.00, :date => Date.today, :bank_account => @bank_account, :owner => @organization)
-      entry = StockIn.create!(:supplier_id => @supplier.id, :amount => 5, :date => Date.today, :product_id => product.id, :validity => Date.today, :ledger => l)
+      entry = StockIn.create!(:supplier_id => @supplier.id, :amount => 5, :date => Date.today, :product_id => product.id, :validity => Date.today, :price => 10)
       total_amount += entry.amount
-      total_cost += entry.value * entry.amount
+      total_cost += entry.price * entry.amount
     }
 
     assert_equal total_amount, product.amount_in_stock

@@ -8,8 +8,7 @@ class StockInDisplayTest < Test::Unit::TestCase
     supplier
     product
     validity
-    payment_method
-    value
+    price
   ]
 
   def test_available_fields

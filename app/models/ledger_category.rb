@@ -1,9 +1,7 @@
 class LedgerCategory < ActiveRecord::Base
 
-  include TypeOfLedger
-
   validates_presence_of :type_of
-  validates_inclusion_of :type_of, :in => TYPE_OF
+  validates_inclusion_of :type_of, :in => Payment::TYPE_OF
 
   has_many :ledgers, :foreign_key => 'category_id', :dependent => :delete_all
   belongs_to :organization
@@ -23,7 +21,7 @@ class LedgerCategory < ActiveRecord::Base
       self.errors.add('payment_methods', _('You have to choose at least one payment method'))
     end
             
-    if (self.payment_methods - PAYMENT_METHODS).length != 0 
+    if (self.payment_methods - Payment::PAYMENT_METHODS).length != 0 
       self.errors.add('payment_methods', _('You have to choose a valid payment method'))
     end
   end
@@ -84,7 +82,7 @@ class LedgerCategory < ActiveRecord::Base
   end
 
   def name_with_sign
-    self.income? ? _("(+) %s") % self.name :  _("(-) %s") % self.name
+    Payment.income?(self.type_of) ? _("(+) %s") % self.name :  _("(-) %s") % self.name
   end
 
   def count_ledgers

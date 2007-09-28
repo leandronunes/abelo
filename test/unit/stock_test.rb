@@ -42,19 +42,4 @@ class StockTest < Test::Unit::TestCase
     assert entry.errors.invalid?(:amount)
   end
 
-  # One cannot add a invalid item to the stock. The validity date must always
-  # be after the date in which the entry gets into the stock.
-  def test_validate_less_than_actual_date
-    entry = StockIn.create({
-      :product_id => 1,
-      :supplier_id => 1,
-      :amount => 1,
-      :date =>  '2007-01-01',
-      :validity => '2006-12-01'
-    })
-    
-    assert entry.errors.invalid?(:validity)
-  end
-  
-
 end

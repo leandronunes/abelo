@@ -17,23 +17,9 @@ class DisplayConfigurationTest < Test::Unit::TestCase
     assert @organization.valid?
   end
 
-  def test_uniqueness_of_field
-    DisplayConfiguration.create(:configuration => @configuration, :field => 'name')
-    d = DisplayConfiguration.new(:configuration => @configuration, :field => 'name')
-    d.valid?
-    assert d.errors.invalid?(:field)
-  end
-
-  def test_scope_of_field_by_different_organization_configurations
-    DisplayConfiguration.create(:configuration => @configuration, :field => 'name')
-    d = DisplayConfiguration.new(:configuration => @other_configuration, :field => 'name')
-    d.valid?
-    assert !d.errors.invalid?(:field)
-  end
-
   def test_scope_of_field_by_differents_display_objects_of_the_same_organization_configuration
-    ProductDisplay.create(:configuration => @configuration, :field => 'name')
-    d = LedgerDisplay.new(:configuration => @configuration, :field => 'name')
+    WorkerDisplay.create(:configuration => @configuration, :field => 'name')
+    d = SupplierDisplay.new(:configuration => @configuration, :field => 'name')
     d.valid?
     assert !d.errors.invalid?(:field)
   end

@@ -34,19 +34,11 @@ class ProfileTest < Test::Unit::TestCase
     assert_kind_of Array, profile.permissions
   end
 
-  def test_allowed_actions_in_organization
-    profile1 = Profile.find(1)
-    assert(profile1.allows?(:organization_nickname => 'one', :controller => 'main', :action => 'edit'))
-
-    profile2 = Profile.find(2)
-    assert(!profile2.allows?(:organization_nickname => 'one', :controller => 'main', :action =>  'edit'))
-  end
-
   def test_allowed_actions_per_user
     user1 = people(:quentin)
     assert(user1.allowed_to?(:organization_nickname => 'one', :controller => 'main', :action => 'edit'))
 
-    user2 = people(:aaron)
+    user2 = people(:dani)
     assert(!user2.allowed_to?(:organization_nickname => 'one', :controller => 'main', :action => 'edit'))
   end
 

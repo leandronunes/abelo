@@ -8,6 +8,7 @@ class LedgerCategoryDisplayTest < Test::Unit::TestCase
       number_of_parcels
       is_operational
       is_store
+      is_stock
       type_of
       payment_methods
   ]

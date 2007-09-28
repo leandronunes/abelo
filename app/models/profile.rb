@@ -33,7 +33,7 @@ class Profile < ActiveRecord::Base
   #   profile.allows(:controller => 'main', :action => 'index')   => true
   #   profile.allows(:controller => 'main', :action => 'edit')    => false
   def allows?(location)
-    return false unless  self.organization.nil? or (location[:organization_nickname] != self.organization.identifier)
+    return false unless  self.organization.nil? or (location['organization_nickname'] != self.organization.identifier)
     test = location.reject { |key,value| key.to_s == 'organization_nickname' }
     self.permissions.any? do |permission|
       test.all? do |key,value|

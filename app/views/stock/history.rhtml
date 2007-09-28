@@ -1,3 +1,5 @@
 <%= title _('Stock history for %s') % @product.name %>
 
+<%= display_list_options 'supplier', 'name',  :product_id => @product.id %>
+
 <%= display_collection @stocks, :product_id => @product %>

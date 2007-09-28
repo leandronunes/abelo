@@ -33,7 +33,7 @@ class LedgerTest < Test::Unit::TestCase
 
     assert l.save
     ledger_id = l.id
-    assert category.income? 
+    assert Payment.income?(category.type_of)
     ledger = Ledger.find(ledger_id) 
     assert_equal Money, ledger.class
   end
@@ -368,12 +368,12 @@ class LedgerTest < Test::Unit::TestCase
 
   def test_payment_methods_are_describe
     PAYMENT_METHODS_TEST.each do |p|
-      assert_not_equal p, Ledger.describe_payment(p)
+      assert_not_equal p, Payment.describe_payment(p)
     end
   end
 
   def test_payment_methods
-    assert_equal PAYMENT_METHODS_TEST, Ledger::PAYMENT_METHODS
+    assert_equal PAYMENT_METHODS_TEST, Payment::PAYMENT_METHODS
   end
 
 end

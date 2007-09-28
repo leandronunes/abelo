@@ -1,7 +1,5 @@
 class Ledger < ActiveRecord::Base
 
-  include TypeOfLedger
-
   acts_as_taggable
 
   acts_as_ferret
@@ -24,9 +22,9 @@ class Ledger < ActiveRecord::Base
   validates_presence_of :schedule_repeat, :if => lambda{ |l| !l.schedule_periodicity.blank? or  !l.schedule_interval.blank? }
   validates_presence_of :schedule_periodicity, :if => lambda{ |l| l.schedule_repeat? or !l.schedule_interval.blank? }
   validates_presence_of :schedule_interval, :if => lambda{ |l| l.schedule_repeat? or  !l.schedule_periodicity.blank? }
-  validates_inclusion_of :payment_method, :in => PAYMENT_METHODS
+  validates_inclusion_of :payment_method, :in => Payment::PAYMENT_METHODS
   validates_presence_of :type_of
-  validates_inclusion_of :type_of, :in => TYPE_OF
+  validates_inclusion_of :type_of, :in => Payment::TYPE_OF
 
   before_validation do |l|
     l.type_of = l.category.type_of unless l.category.nil?
@@ -49,6 +47,10 @@ class Ledger < ActiveRecord::Base
         l.save
       end  
     end
+  end
+
+  def payment_type
+    self.class.to_s.tableize.singularize
   end
 
   def payment_method= value
@@ -125,54 +127,34 @@ class Ledger < ActiveRecord::Base
 #  #This method cannot be access directly. 
 #  #You have to access the date method and this method
 #  #set the correct value of effective_date attribute
-#  def effective_date= date
-#    raise _('This function cannot be accessed directly')
-#  end
-#
+  def effective_date= date
+    raise _('This function cannot be accessed directly')
+  end
+
 #  #This method cannot be access directly. 
 #  #You have to access the date method and this method
 #  #set the correct value of foreseen_date attribute
-#  def foreseen_date= date
-#    raise _('This function cannot be accessed directly')
-#  end
-#
-#
+  def foreseen_date= date
+    raise _('This function cannot be accessed directly')
+  end
+
+
 #  #This method cannot be access directly. 
 #  #You have to access the value method and this method
 #  #set the correct value of effective_value attribute
-#  def effective_value= value
-#    raise _('This function cannot be accessed directly')
-#  end
-#
+  def effective_value= value
+    raise _('This function cannot be accessed directly')
+  end
+
 #  #This method cannot be access directly. 
 #  #You have to access the value method and this method
 #  #set the correct value of foreseen_value attribute
-#  def foreseen_value= value
-#    raise _('This function cannot be accessed directly')
-#  end
+  def foreseen_value= value
+    raise _('This function cannot be accessed directly')
+  end
 
   def schedule_repeat?
     self.schedule_repeat.to_s == 'true' ? true : false
-  end
-
-#FIXME 
-# Until the protected methods we have to remove this methods of here to the module
-# TypeOfLedger in lib
-  def self.describe_payment(item)
-    {
-      'check' => _('Check'),
-      'credit_card' => _('Credit Card'),
-      'debit_card' => _('Debit Card'),
-      'money' => _('Money')
-    }[item] || item
-  end
-
-
-  def self.describe(item)
-    {
-      'I' => _('Income'),
-      'E' => _('Expense')
-    }[item] || item
   end
 
   protected

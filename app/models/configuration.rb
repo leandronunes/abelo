@@ -7,7 +7,10 @@ class Configuration < ActiveRecord::Base
   has_many :customer_displays, :dependent => :destroy
   has_many :supplier_displays, :dependent => :destroy
   has_many :bank_account_displays, :dependent => :destroy
-  has_many :ledger_displays, :dependent => :destroy
+  has_many :money_displays, :dependent => :destroy
+  has_many :check_displays, :dependent => :destroy
+  has_many :credit_card_displays, :dependent => :destroy
+  has_many :debit_card_displays, :dependent => :destroy
   has_many :product_category_displays, :dependent => :destroy
   has_many :worker_category_displays, :dependent => :destroy
   has_many :supplier_category_displays, :dependent => :destroy
@@ -123,7 +126,10 @@ class Configuration < ActiveRecord::Base
   DISPLAY_CONFIGURATION_CLASSES = %w[
     WorkerDisplay
     ProductDisplay
-    LedgerDisplay
+    MoneyDisplay
+    CheckDisplay
+    CreditCardDisplay
+    DebitCardDisplay
     SupplierDisplay
     CustomerDisplay
     BankAccountDisplay

@@ -2,8 +2,11 @@ class DisplayConfiguration < ActiveRecord::Base
 
   belongs_to :configuration
 
-#  validates_presence_of :configuration_id
   validates_uniqueness_of :field, :scope => :configuration_id
+
+  def validate
+    self.errors.add(:field, _("The field %s is not a valid field") % self.field ) unless self.class.available_fields.include?(self.field)
+  end
 
   serialize :settings
 

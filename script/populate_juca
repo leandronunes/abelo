@@ -89,13 +89,13 @@ LedgerCategoryDisplay.available_fields.collect { |d|
 }
 configuration.set_ledger_category_displays=(params)
 
-LedgerDisplay.delete_all
+MoneyDisplay.delete_all
 params = {}
-LedgerDisplay.available_fields.collect { |d|
+MoneyDisplay.available_fields.collect { |d|
   in_list = true
   params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
 }
-configuration.set_ledger_displays=(params)
+configuration.set_money_displays=(params)
 
 BankAccountDisplay.delete_all
 params = {}

@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class CheckTest < Test::Unit::TestCase
-  fixtures :banks, :ledgers
+  fixtures :banks, :ledgers, :ledger_categories
 
   def setup
     @check = Check.find(:first)

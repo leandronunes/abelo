@@ -67,11 +67,6 @@
       )
   %>
 
-  <%= display_field_form(@configuration, 'ledger_display',
-        :title => _('Ledger Display Configuration'),
-        :content => select_display_configuration('configuration', 'LedgerDisplay', @ledger_fields)
-      )
-  %>
   <%= display_field_form(@configuration, 'bank_account_displays',
         :title => _('BankAccount Display Configuration'),
         :content => select_display_configuration('configuration', 'BankAccountDisplay', @bank_account_fields)

@@ -26,17 +26,17 @@ class Organization < ActiveRecord::Base
   has_many :product_displays, :through => :configuration
   has_many :department_displays, :through => :configuration
   has_many :ledger_category_displays, :through => :configuration
-  has_many :money_displays, :through => :configuration, :source => :ledger_displays
-  has_many :check_displays, :through => :configuration, :source => :ledger_displays
-  has_many :credit_card_displays, :through => :configuration, :source => :ledger_displays
-  has_many :debit_card_displays, :through => :configuration, :source => :ledger_displays
+  has_many :money_displays, :through => :configuration
+  has_many :check_displays, :through => :configuration
+  has_many :credit_card_displays, :through => :configuration
+  has_many :debit_card_displays, :through => :configuration
   has_many :bank_account_displays, :through => :configuration
   has_many :stock_in_displays, :through => :configuration
   has_many :stock_out_displays, :through => :configuration
   has_many :user_displays, :through => :configuration
   has_many :periodicity_displays, :through => :configuration
   # End displays has_many methods
-  has_one  :virtual_community, :as => :owner
+  
   has_many :departments
   has_many :products
   has_many :sales
@@ -57,6 +57,7 @@ class Organization < ActiveRecord::Base
   has_many :contacts, :through => :customers
   has_many :bank_accounts, :as => :owner
 #  has_many :ledgers, :through => :bank_accounts, :as => :owner TODO see a way to do this
+  has_one  :virtual_community, :as => :owner
   has_many :periodicities
   # One VirtualCommunity can be reached by many domains
   has_many :domains, :as => :owner
@@ -238,10 +239,8 @@ class Organization < ActiveRecord::Base
  
   # Create new stock objects fill virtual attributes 'product_in_list' and 'amount_in_list'
   # of Stock object to display this attributes on list action
-  def stocks_in_list
-    self.products.map do |p|
-      StockVirtual.new(:product_in_list => p, :amount_in_list => p.amount_in_stock )   
-    end
+  def stock_virtuals
+    StockVirtual.create_virtuals(self.products)
   end 
 
   #TODO see if it's useful

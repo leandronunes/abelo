@@ -6,7 +6,7 @@ class CreateSystemActors < ActiveRecord::Migration
       t.column :organization_id, :integer, :null => false
       t.column :address,         :string
       t.column :description,     :text
-      t.column :email,           :string,  :null => false
+      t.column :email,           :string
       t.column :type,            :string
       t.column :category_id,     :integer, :null => false
       t.column :info,            :text

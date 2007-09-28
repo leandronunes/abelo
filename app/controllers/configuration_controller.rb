@@ -42,6 +42,7 @@ class ConfigurationController < ApplicationController
 
   def new
     @configuration = Configuration.new
+    @configuration.is_model = true
     form_variables
   end
 

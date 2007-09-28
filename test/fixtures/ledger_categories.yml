@@ -18,24 +18,24 @@ two:
   is_operational: true
   organization_id: 1
   type_of: 'I'
-  settings: {payment_methods:  ['money'] }
+  settings: {payment_methods:  ['money', 'check'] }
 three:
   id: 3
-  name: 'Expenditure Clean 1'
+  name: 'Income Clean 1'
   interests: 0
   interests_days: 0
   number_of_parcels: 0
   is_operational: false
   organization_id: 1
-  type_of: 'O'
-  settings: {payment_methods:  ['money'] }
+  type_of: 'I'
+  settings: {payment_methods:  ['money', 'credit_card'] }
 four:
   id: 4
-  name: 'Expenditure Clean 2'
+  name: 'Income Clean 2'
   interests: 0
   interests_days: 0
   number_of_parcels: 0
   is_operational: false
   organization_id: 1
-  type_of: 'O'
-  settings: {payment_methods:  ['money'] }
+  type_of: 'I'
+  settings: {payment_methods:  ['money', 'debit_card'] }

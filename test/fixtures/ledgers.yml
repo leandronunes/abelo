@@ -29,8 +29,8 @@ income:
   operational: false
   is_foreseen: false
   bank_account_id: 1
-income:
-  id: 2
+check:
+  id: 3
   owner_type: 'Organization'
   owner_id: 1
   type: 'Check'
@@ -50,3 +50,43 @@ income:
   check_account_number: 324234
   check_number: 343
   check_cpf: '845.402.165-54'
+debit_card:
+  id: 4
+  owner_type: 'Organization'
+  owner_id: 1
+  type: 'CreditCard'
+  type_of: 'I'
+  foreseen_date: <%=  Date.today - 3 %>
+  effective_date: <%=  Date.today - 3 %>
+  foreseen_value: 700.00
+  effective_value: 700.00
+  description: teste
+  category_id: 3
+  operational: false
+  is_foreseen: false
+  bank_account_id: 1
+  check_owner_name: 'Some name'
+  credit_card_number: 334432
+  credit_card_validity: <%= Date.today%>
+  credit_card_secutiry_code: 343
+  credit_card_owner_name: 'Some name'
+  credit_card_cpf: '705.163.825-43'
+debit_card:
+  id: 4
+  owner_type: 'Organization'
+  owner_id: 1
+  type: 'DebitCard'
+  type_of: 'I'
+  foreseen_date: <%=  Date.today - 3 %>
+  effective_date: <%=  Date.today - 3 %>
+  foreseen_value: 700.00
+  effective_value: 700.00
+  description: teste
+  category_id: 4
+  operational: false
+  is_foreseen: false
+  bank_account_id: 1
+  automatic_debit_owner_name: 'Some name'
+  automatic_debit_bank_id: 1
+  automatic_debit_account_agency: 2343
+  automatic_debit_account_number: 3434

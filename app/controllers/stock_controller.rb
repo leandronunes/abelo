@@ -4,31 +4,29 @@ class StockController < ApplicationController
 
   before_filter :create_tabs
 
-  # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
-  verify :method => :post, :only => [ :destroy, :create, :update ],
-         :redirect_to => { :action => :list }
+  def autocomplete_name
+    escaped_string = Regexp.escape(params[:product][:name])
+    re = Regexp.new(escaped_string, "i")
+    @products = @organization.products.select { |pr| pr.name.match re}
+    render :layout=>false
+  end
 
+  # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
+  post_only [ :destroy, :create, :update ]
 
   def index
     redirect_to :action => 'list'
   end
 
   def list
-
-#   search_param = params[:product].nil? ? nil : params[:product][:name]
-#    @products = search_param.nil? ? @organization.products : @organization.products.find_by_contents(search_param)
-#    @product_pages, @products = paginate_by_collection @products
-
-
     @query = params[:query]
-    @query ||= params[:stock][:name] if params[:stock]
+    @query ||= params[:product][:name] if params[:product]
 
     if @query.nil?
-      @stocks = @organization.stocks_in_list
+      @stocks = @organization.stock_virtuals
       @stock_pages, @stocks = paginate_by_collection @stocks
     else
-#FIXME put this part of code to works
-      @stocks = @organization.stocks_in_list.full_text_search(@query)
+      @stocks = StockVirtual.create_virtuals(@organization.products.full_text_search(@query))
       @stock_pages, @stocks = paginate_by_collection @stocks
     end
   end
@@ -48,18 +46,21 @@ class StockController < ApplicationController
   end
 
   def new
-    product = @organization.products.find(params[:product_id])
-    @stock = StockIn.new
-    @stock.product = product
-    @suppliers = product.suppliers
+    begin
+      product = @organization.products.find(params[:product_id])
+      @stock = StockIn.new
+      @stock.product = product
+      @suppliers = product.suppliers
+    rescue
+      redirect_to :controller => 'products', :action => 'new'
+    end
   end
 
   def create
     product = @organization.products.find(params[:product_id])
-   
     @stock = StockIn.new(params[:stock])
-    @stock.ledger = Ledger.new_ledger(params[:ledger])
     @stock.product = product
+    @stock.ledger = Ledger.new_ledger(params[:ledger])
 
     if @stock.save
       flash[:notice] = 'Stock stock was successfully created.'
@@ -73,6 +74,7 @@ class StockController < ApplicationController
     end
   end
   
+
   def edit
     @stock = Stock.find(params[:id])
     @product = @stock.product

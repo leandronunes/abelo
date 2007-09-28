@@ -1,8 +1,6 @@
 <%= title _('Stock control') %>
 
-<%= 
-#FIXME put this options to works # display_list_options 'product', 'name', :controller => 'products'  
-%>
+<%= display_list_options 'product', 'name' %>
 
 <%= display_stock_collection @stocks  %>
 

@@ -24,4 +24,15 @@ class WorkerDisplayTest < Test::Unit::TestCase
     end
   end
 
+  def test_presence_of_field_on_available_fields
+    w = WorkerDisplay.new
+    w.field = 'some field'
+    w.valid?
+    assert w.errors.invalid?(:field)
+
+    w.field = 'name'
+    w.valid?
+    assert !w.errors.invalid?(:field)    
+  end
+
 end

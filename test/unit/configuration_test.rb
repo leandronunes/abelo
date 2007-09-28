@@ -17,8 +17,12 @@ class ConfigurationTest < Test::Unit::TestCase
   DISPLAY_CONFIGURATION_CLASSES_TEST = %w[
     WorkerDisplay
     ProductDisplay
-    CustomerDisplay
+    MoneyDisplay
+    CheckDisplay
+    CreditCardDisplay
+    DebitCardDisplay
     SupplierDisplay
+    CustomerDisplay
     BankAccountDisplay
     ProductCategoryDisplay
     WorkerCategoryDisplay
@@ -27,19 +31,16 @@ class ConfigurationTest < Test::Unit::TestCase
     LedgerCategoryDisplay
     DepartmentDisplay
     MassMailDisplay
-    LedgerDisplay
     StockVirtualDisplay
     StockInDisplay
     StockOutDisplay
     ProfileDisplay
     UserDisplay
+    PeriodicityDisplay
   ]
 
-
   def test_configuration_itens_array
-    Configuration::DISPLAY_CONFIGURATION_CLASSES.each do |item|
-      assert DISPLAY_CONFIGURATION_CLASSES_TEST.include?(item)
-    end
+    assert_equal DISPLAY_CONFIGURATION_CLASSES_TEST, Configuration::DISPLAY_CONFIGURATION_CLASSES
   end
 
   def test_presence_of_name_when_is_model
@@ -295,6 +296,18 @@ class ConfigurationTest < Test::Unit::TestCase
       @configuration.send("set_#{item.tableize}=", params)
 
       assert_equal count, @configuration.send("inlist_#{item.tableize}").length
+    end
+  end
+
+  #Test has_many associations exist
+  DISPLAY_CONFIGURATION_CLASSES_TEST.each do |item|
+    define_method("test_has_many_#{item.tableize}") do
+      item.constantize.delete_all
+      configuration_id = @configuration.id
+      d = item.constantize.create(:field => item.constantize.available_fields[0], :configuration => @configuration )
+      @configuration.send("#{item.tableize}=", [d])
+      c = Configuration.find(configuration_id)
+      assert c.send(item.tableize).include?(d)
     end
   end
 

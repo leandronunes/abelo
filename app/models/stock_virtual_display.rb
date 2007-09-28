@@ -11,6 +11,4 @@ class StockVirtualDisplay < StockDisplay
     }[field] || field
   end
 
-
-
 end

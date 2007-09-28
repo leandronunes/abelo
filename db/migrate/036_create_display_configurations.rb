@@ -4,7 +4,7 @@ class CreateDisplayConfigurations < ActiveRecord::Migration
       t.column :owner_type,         :string
       t.column :owner_id,           :integer
       t.column :type,               :string
-      t.column :configuration_id,   :integer, :null => false
+      t.column :configuration_id,   :integer
       t.column :field,              :string
       t.column :position,           :integer
       t.column :settings,           :text

@@ -22,7 +22,7 @@ class LedgerDisplay < DisplayConfiguration
      ]
   end
 
-  def self.describe(field)
+  DESCRIBE_AVAILABLE_FIELDS = 
     {
       'type' => _('Type'),
       'category_id' => _('Category'),
@@ -43,7 +43,10 @@ class LedgerDisplay < DisplayConfiguration
       'schedule_interval' => _('Interval fo Schedule'),
       'CreditLedger' => _('Credit'),
       'F' => _('No'),
-    }[field] || field
+    }
+
+  def self.describe(field)
+     DESCRIBE_AVAILABLE_FIELDS[field] || field
   end
 
 end

@@ -177,9 +177,8 @@ class Ledger < ActiveRecord::Base
 
   protected
   def validate
-    if !(self.class == Money) and !(self.class == Check)
-#FIXME put the other payment method to validate
-      self.errors.add(:type, _('You must specify the ledger as a credit or a debit one.'))
+    if !(self.class == Money) and !(self.class == Check) and !(self.class == CreditCard) and !(self.class == DebitCard)
+      self.errors.add(:type, _('You must specify the ledger as Money, Check, Credit Card or Debit Card.'))
     end
 
     self.errors.add(:value, _("The value should be at least 0.01" )) if value.nil? || value <= 0.00

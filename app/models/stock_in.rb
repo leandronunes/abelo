@@ -15,13 +15,16 @@ class StockIn < Stock
       ledger = self.ledger
       ledger.date = self.date
       ledger.value = self.price
-      ledger.bank_account = Organization.find(1).default_bank_account
-      ledger.owner = Organization.find(1)
+      ledger.bank_account = self.organization.default_bank_account unless self.organization.nil?
+      ledger.owner = self.organization
       ledger.save
       self.ledger = ledger
       super
     end
   end
 
+  def organization
+    self.product.nil? ? nil : self.product.organization
+  end
 
 end

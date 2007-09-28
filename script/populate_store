@@ -2,9 +2,156 @@
 require File.dirname(__FILE__) + '/../config/environment'
 
 ############Organizations########################
-organization = Organization.new
-organization.name = 'Gab'
-organization.cnpj = '93.868.132/0001-10'
-organization.identifier = 'gab'
-organization.save!
+begin
+  organization = Organization.create!(:name => 'Gab', :cnpj => '93.868.132/0001-10', :identifier => 'gab')
+rescue
+  organization = Organization.find_by_identifier('gab')
+end
+
+begin
+gerente = User.create!("administrator"=>false, "login"=>"store", "email"=>"store@example.com", :password => 'test', :password_confirmation => 'test')
+rescue
+gerente = User.find_by_login('store')
+end
+
+
+############User Profile##########################
+perfil_organization = Profile.new
+perfil_organization.name = 'Gerente da Organização'
+perfil_organization.organization = organization 
+perfil_organization.user = gerente
+perfil_organization.template = 'organization_management'
+perfil_organization.save
+
+perfil_organization = Profile.new
+perfil_organization.name = 'Gerente da Organização'
+perfil_organization.organization = organization 
+perfil_organization.user = User.find_by_login('quentin')
+perfil_organization.template = 'organization_management'
+perfil_organization.save
+
+
+############Configuration#########################
+configuration = organization.configuration
+
+params = {}
+ProductDisplay.available_fields.collect { |d|
+  in_list = ['name', 'size', 'category', 'image' ].include?(d) ? true : false
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }
+}
+configuration.set_product_displays=(params)
+params = {}
+WorkerDisplay.available_fields.collect { |d|
+  in_list = ['name', 'description', 'email' ].include?(d) ? true : false
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }
+}
+configuration.set_worker_displays=(params)
+
+params = {}
+CustomerDisplay.available_fields.collect { |d|
+  in_list = ['name', 'description', 'email' ].include?(d) ? true : false
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }
+}
+configuration.set_customer_displays=(params)
+params = {}
+SupplierDisplay.available_fields.collect { |d|
+  in_list = ['name', 'description', 'email' ].include?(d) ? true : false
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }
+}
+configuration.set_supplier_displays=(params)
+
+params = {}
+ProductCategoryDisplay.available_fields.collect { |d|
+  in_list = true
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }
+}
+configuration.set_product_category_displays=(params)
+
+params = {}
+CustomerCategoryDisplay.available_fields.collect { |d|
+  in_list = true
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }
+}
+configuration.set_customer_category_displays=(params)
+
+params = {}
+WorkerCategoryDisplay.available_fields.collect { |d|
+  in_list = true
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }
+}
+params = {}
+SupplierCategoryDisplay.available_fields.collect { |d|
+  in_list = true
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }
+}
+configuration.set_supplier_category_displays=(params)
+
+params = {}
+LedgerCategoryDisplay.available_fields.collect { |d|
+  in_list = true
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }
+}
+configuration.set_ledger_category_displays=(params)
+params = {}
+MoneyDisplay.available_fields.collect { |d|
+  in_list = true
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }
+}
+configuration.set_money_displays=(params)
+
+params = {}
+BankAccountDisplay.available_fields.collect { |d|
+  in_list = ['bank', 'agency', 'variation', 'account', 'owner' ].include?(d) ? true : false
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }
+}
+configuration.set_bank_account_displays=(params)
+params = {}
+DepartmentDisplay.available_fields.collect { |d|
+  in_list = true
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }
+}
+configuration.set_department_displays=(params)
+
+params = {}
+StockVirtualDisplay.available_fields.collect { |d|
+  params[d] = {:field => d, :display_in_list => true, :display_title => true }
+}
+configuration.set_stock_virtual_displays=(params)
+params = {}
+StockInDisplay.available_fields.collect { |d|
+  in_list = ['date', 'amount', 'price', 'supplier', 'type_of' ].include?(d) ? true : false
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }
+}
+configuration.set_stock_in_displays=(params)
+
+params = {}
+StockOutDisplay.available_fields.collect { |d|
+  in_list = ['date', 'amount', 'price', 'supplier', 'type_of' ].include?(d) ? true : false
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }
+}
+configuration.set_stock_out_displays=(params)
+params = {}
+UserDisplay.available_fields.collect { |d|
+  in_list = ['login', 'profiles'].include?(d) ? true : false
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }
+}
+configuration.set_user_displays=(params)
+
+params = {}
+PeriodicityDisplay.available_fields.collect { |d|
+  in_list = ['name', 'number_of_days'].include?(d) ? true : false
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }
+}
+configuration.set_periodicity_displays=(params)
+
+configuration.save
+
+
+###########Categories###################################
+vestuario = ProductCategory.new(:name => 'vestuário')
+vestuario.organization = organization
+vestuario.save
+acessorio = ProductCategory.new(:name => 'acessório')
+acessorio.organization = organization
+acessorio.save
 

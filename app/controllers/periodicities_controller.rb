@@ -7,7 +7,8 @@ class PeriodicitiesController < ApplicationController
   def autocomplete_name
     escaped_string = Regexp.escape(params[:periodicity][:name])
     re = Regexp.new(escaped_string, "i")
-    @periodicities = @organization.periodicities.select { |dp| dp.name.match re}
+
+    @periodicities = Periodicity.find(:all).select { |p| p.name.match re}
     render :layout=>false
   end
 

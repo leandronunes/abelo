@@ -6,11 +6,11 @@ class PermissionsController < ApplicationController
   # before_filter :check_admin_rights
 
 
-  def autocomplete_name
+  def autocomplete_login
     escaped_string = Regexp.escape(params[:user][:login])
     re = Regexp.new(escaped_string, "i")
-    @users = Periodicity.find(:all).select { |dp| dp.login.match re}
-    render :layout=>false
+    @users = User.find(:all).select { |dp| dp.login.match re}
+    render :layout => false
   end
 
 
@@ -27,7 +27,7 @@ class PermissionsController < ApplicationController
 
   def list
     @query = params[:query]
-    @query ||= params[:users][:name] if params[:users]
+    @query ||= params[:user][:login] if params[:user]
 
     if @query.nil?
       @users = @organization.users
@@ -103,7 +103,7 @@ class PermissionsController < ApplicationController
   end
 
   def show
-    @new_user = @organization.users.find(params[:id])
+    @user = @organization.users.find(params[:id])
   end
 
   def destroy

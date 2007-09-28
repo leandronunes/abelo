@@ -86,6 +86,10 @@ class Configuration < ActiveRecord::Base
     self.settings["document_name"]
   end
 
+  def periodicity_name
+    self.settings["periodicity_name"]
+  end
+
   def organization_name=(name)
     self.settings["organization_name"] = name
   end
@@ -106,6 +110,9 @@ class Configuration < ActiveRecord::Base
     self.settings["document_name"] = name
   end
 
+  def periodicity_name=(name)
+    self.settings["periodicity_name"] = name
+  end
 
 #TODO see if all of this fields are needed
 

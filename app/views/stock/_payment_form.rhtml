@@ -1,0 +1,34 @@
+<% display_form_info @ledger do |item | %>
+
+  <%= display_field_form( item, 'date',
+      :title => _('Date'),
+      :content =>  date_select_abelo('ledger', 'date')
+      )
+  %>
+
+
+  <%= display_field_form( item, 'value',
+      :title => _('Value'),
+      :content =>  text_field('ledger', 'value')
+      )
+  %>
+
+  <%= display_field_form( item, 'payment_method',
+      :title => _('Payment Method'),
+      :content =>  select('ledger', 'payment_method',  TypeOfLedger::PAYMENT_METHODS.map{|p|[ Ledger.describe_payment(p), p]}, :include_blank => true)
+      )
+  %>
+
+  <div id='category'>
+    <% unless @ledger.payment_method.nil? %>
+      <%= render :partial => 'shared_payments/select_category' %>
+    <% end %>
+  </div>
+
+  <%= observe_field('ledger_payment_method',
+      :update => 'category',
+      :url => {:action => 'select_category' },
+      :with => "'payment_method=' +  escape(value)"
+      )   
+  %>
+<% end %>

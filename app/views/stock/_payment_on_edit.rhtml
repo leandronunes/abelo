@@ -1,12 +1,13 @@
 
 
-<%= subtitle _("Payments [%s]") % submit_to_remote( 'payment_button' , _('Add'), :update => 'payment', :url => {:action => 'add_payment', :id => @stock}) %>
+<%= subtitle _("Payments [%s]") % link_to_remote( _('Add'), :update => 'payment', :url => {:action => 'add_payment', :id => @stock}) %>
 
 <div id='payment'>
-  <% if @ledger.nil? %>
-    <%= render :partial => 'show_ledgers'%>
-  <% else %>
-    <%= render :partial => 'shared_payments/select_category' %>
-  <% end %>
+
+<% if @ledger.nil? %>
+  <%= render :partial => 'show_ledgers'%>
+<% else %>
+  <%= render :partial => 'payment' %>
+<% end %>
 </div>
 

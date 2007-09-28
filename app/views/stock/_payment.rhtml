@@ -1,0 +1,8 @@
+<% form_remote_tag(:url => {:action => 'create_payment', :id => @stock})  do %>
+
+  <%= error_messages_for 'ledger' %>
+  <%= render :partial => 'payment_form' %>
+  <%= display_new_info_options @ledger %>
+
+<% end %>
+

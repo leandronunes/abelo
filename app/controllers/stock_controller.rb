@@ -60,56 +60,82 @@ class StockController < ApplicationController
     @stock = StockIn.new(params[:stock])
     @stock.product = product
 
+    display_layout =  !request.xml_http_request?
+
     if @stock.save
       flash[:notice] = 'Stock stock was successfully created.'
-      redirect_to :action => 'history', :product_id => product
+      if display_layout
+        redirect_to :action => 'history', :product_id => product
+      else
+        @product = @stock.product
+        @suppliers = @product.suppliers 
+        @banks = Bank.find(:all)
+        @ledger_categories =  @organization.ledger_categories_by_payment_method('money')
+        @ledger = Ledger.new_ledger
+        render :update do |page|
+          page.replace_html 'add_payment', :partial => 'edit'
+        end
+      end
     else
       @ledgers = @stock.ledgers
       @suppliers = product.suppliers
-      render :action => 'new'
+      render :update do |page|
+        page.replace_html 'stock_form', :partial => 'form'
+      end
     end
   end
 
   def add_payment
-    begin 
-      @stock = @organization.stocks.find(params[:id])
-    rescue
-      product = @organization.products.find(params[:product_id])
-      @stock = StockIn.new()
-      @stock.product = product
-    end
-
-    if @stock.update_attributes(params[:stock])
+    @stock = @organization.stocks.find(params[:id])
     @product = @stock.product
     @suppliers = @product.suppliers
-    @ledger = Money.new
+    @ledger = Ledger.new_ledger()
     @banks = Bank.find(:all)
-    @ledger_categories =  @organization.ledger_categories_by_payment_method('money')
-      render :action => 'edit', :layout => false
-    else
-      @ledgers = @stock.ledgers
-      @suppliers = product.suppliers
-      render :action => 'new', :layout => false
+    @ledger_categories =  @organization.ledger_categories_by_payment_method(@ledger.payment_method)
+    render :update do |page|
+      page.replace_html 'payment', :partial => 'payment'
+      page.replace_html 'stock_options', " "
     end
   end  
+
+  def create_payment
+    @stock = @organization.stocks.find(params[:id])
+    ledger = Ledger.new_ledger(params[:ledger])
+    ledger.owner = @stock
+    ledger.bank_account = @stock.default_bank_account
+
+    if ledger.save
+      @ledgers = @stock.ledgers
+      @product = @stock.product
+      @suppliers = @product.suppliers
+      @ledger_categories =  @organization.ledger_categories_by_payment_method(ledger.payment_method)
+      render :update do |page|
+        page.replace_html 'partial_edit', :partial => 'edit'
+      end
+    else
+@ledger = ledger
+      @product = @stock.product
+      @suppliers = @product.suppliers
+      @banks = Bank.find(:all)
+      @ledger_categories =  @organization.ledger_categories_by_payment_method(@ledger.payment_method)
+      render :update do |page|
+        page.replace_html 'payment', :partial => 'payment'
+      end
+    end
+  end
+
 
   def edit
     @stock = Stock.find(params[:id])
     @product = @stock.product
     @suppliers = @product.suppliers
-    @ledger = @stock.ledger
-    @banks = Bank.find(:all)
-    @ledger_categories =  @organization.ledger_categories_by_payment_method(@stock.payment_method)
+    @ledger = @stock.ledgers
   end
 
   def update
 #render :text => params.inspect
 #return
     @stock = Stock.find(params[:id])
-    @stock.update_ledger = Ledger.new_ledger(@stock.ledger.attributes.merge(params[:ledger]))
-#   m  = @stock.ledger
-#render :text => params.inspect
-#return
     if @stock.save
       flash[:notice] = 'Entry was successfully updated.'
       redirect_to :action => 'history', :product_id => @stock.product

@@ -58,8 +58,4 @@ class StockIn < Stock
 #    end
 #  end
 
-  def organization
-    self.product.nil? ? nil : self.product.organization
-  end
-
 end

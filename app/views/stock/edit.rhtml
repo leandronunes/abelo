@@ -2,5 +2,6 @@
 
 <% form_tag :action => 'update', :product_id => @stock.product, :id => @stock do %>
   <%= render :partial => 'form'%>
+  <%= render :partial => 'payment_on_edit' %>
   <%= display_edit_info_options @stock, :action => 'history', :product_id => @stock.product %>
 <% end %>

@@ -1,8 +1,8 @@
-<%= error_messages_for 'stock', 'ledger' %>
+<%= error_messages_for 'stock' %>
 
 <!--[form:stock_stock]-->
 
-<% display_form_info @stock, :class => 'view_data' do |item | %>
+<% display_form_info @stock do |item | %>
 
   <%= display_field_form( item, 'supplier',
         :title => _('Supplier'),
@@ -15,26 +15,6 @@
         :content => text_field( 'stock', 'amount' )
     )
   %>
-
-  <%= display_field_form( item, 'payment_method',
-        :title => _('Payment Method'),
-        :content =>  select('stock', 'payment_method',  TypeOfLedger::PAYMENT_METHODS.map{|p|[ Ledger.describe_payment(p), p]}, :include_blank => true)
-    )
-  %>
-
-  <div id='category'>
-    <% if !@stock.payment_method.nil? %>
-      <%= render :partial => 'shared_payments/select_category' %>
-    <% end %>
-  </div>
-
-  <%= observe_field('stock_payment_method',
-      :update => 'category',
-      :url => {:action => 'select_category' },
-      :with => "'payment_method=' +  escape(value)"
-    )
-  %>
-
 
   <%= display_field_form( item, 'date',
         :title => _('Date'),
@@ -54,7 +34,6 @@
         :content => date_select_abelo( 'stock', 'validity', :include_blank => true )
     )
   %>
-
 
   <% end %>
 

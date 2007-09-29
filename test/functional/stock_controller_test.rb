@@ -169,9 +169,46 @@ class StockControllerTest < Test::Unit::TestCase
     assert_equal new_amount, StockIn.find(stock_id).amount
   end
 
-  def test_attributes_updated
-#TODO test all atttributes os sotck were successfully updated
-    assert flunk  
+  def test_update_attributes_validity
+    stock_id = @stock_in.id
+    @stock_in.validity = Date.today
+    assert @stock_in.save
+    new_date = Date.today + 2
+    post :update, :id => @stock_in, :stock => { :validity =>new_date }
+
+    assert_equal new_date, StockIn.find(stock_id).validity
+  end
+
+
+  def test_update_attributes_date
+    stock_id = @stock_in.id
+    @stock_in.date = Date.today
+    assert @stock_in.save
+    new_value = Date.today - 1
+    post :update, :id => @stock_in, :stock => { :date =>new_value }
+
+    assert_equal new_value, StockIn.find(stock_id).date
+  end
+
+
+  def test_update_attributes_price
+    stock_id = @stock_in.id
+    @stock_in.price = 20
+    assert @stock_in.save
+    new_value = 50
+    post :update, :id => @stock_in, :stock => { :price =>new_value }
+
+    assert_equal new_value, StockIn.find(stock_id).price
+  end
+
+  def test_update_attributes_amount
+    stock_id = @stock_in.id
+    @stock_in.amount = 3
+    assert @stock_in.save
+    new_amount = 2
+    post :update, :id => @stock_in, :stock => { :amount =>new_amount }
+
+    assert_equal new_amount, StockIn.find(stock_id).amount
   end
 
   def test_update_fails
@@ -183,5 +220,33 @@ class StockControllerTest < Test::Unit::TestCase
     assert assigns(:suppliers)
     assert assigns(:ledgers)
   end
+
+  def test_destroy
+    stock_id = @stock_in.id
+    assert @stock_in.product.stocks.length > 1
+    get :destroy, :id => @stock_in.id
+    assert_raise(ActiveRecord::RecordNotFound) {
+      assert StockIn.find(stock_id)
+    }
+    
+    assert_response :redirect
+    assert_redirected_to :action => 'history'
+  end
+
+  def test_destroy_last_object
+    @stock_in.product.stocks.each do |s|
+      if s != @stock_in
+        s.destroy 
+      end
+    end
+    stock_id = @stock_in.id
+    @stock_in = StockIn.find(stock_id)
+    assert_equal 1,  @stock_in.product.stocks.length
+    get :destroy, :id => @stock_in.id
+    assert_response :redirect
+    assert_redirected_to :action => 'list'
+  end
+
+
 
 end

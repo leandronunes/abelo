@@ -14,7 +14,6 @@ class ConfigurationDisplayTest < Test::Unit::TestCase
       product_displays
       department_displays
       ledger_category_displays
-      ledger_displays
       bank_account_displays
   ]
 

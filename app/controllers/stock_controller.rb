@@ -22,7 +22,7 @@ class StockController < ApplicationController
   end
 
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
-  post_only [ :destroy, :create, :update ]
+  post_only [ :create, :update ]
 
   def index
     redirect_to :action => 'list'
@@ -156,7 +156,7 @@ class StockController < ApplicationController
   end
 
   def destroy
-    stock = Stock.find(params[:id])
+    stock = Stock.find(params[:id]).destroy
     product = stock.product
     stock.destroy
     if product.stocks.any?

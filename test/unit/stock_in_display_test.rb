@@ -17,7 +17,7 @@ class StockInDisplayTest < Test::Unit::TestCase
   
   def test_describe
     AVAILABLE_FIELDS_TEST.each do |field|
-      assert_equal field, ProductDisplay.describe(field)
+      assert_not_equal field, StockInDisplay.describe(field)
     end
   end
 

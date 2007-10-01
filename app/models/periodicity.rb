@@ -5,6 +5,7 @@ class Periodicity < ActiveRecord::Base
   validates_presence_of :number_of_days
   validates_presence_of :name
   validates_uniqueness_of :name, :scope => :organization_id
+  validates_numericality_of :number_of_days, :only_integer => true
 
   acts_as_ferret
 

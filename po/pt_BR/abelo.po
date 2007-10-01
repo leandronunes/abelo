@@ -67,7 +67,7 @@ msgstr "Categorias de Fornecedores"
 
 #: app/controllers/tabs/configuration.rb:32
 msgid "Product categories"
-msgstr "Produto|categorias"
+msgstr "Categorias de Produto"
 
 #: app/controllers/tabs/register.rb:14
 #: app/views/mass_mails/filter_customers.rhtml:2

@@ -4,11 +4,13 @@ class PeriodicitiesController < ApplicationController
 
   needs_organization
 
+  uses_configurations_tabs
+
   def autocomplete_name
     escaped_string = Regexp.escape(params[:periodicity][:name])
     re = Regexp.new(escaped_string, "i")
 
-    @periodicities = Periodicity.find(:all).select { |p| p.name.match re}
+    @periodicities = @organization.periodicities.select { |p| p.name.match re}
     render :layout=>false
   end
 
@@ -37,7 +39,7 @@ class PeriodicitiesController < ApplicationController
   end
 
   def show
-    @periodicity = Periodicity.find(params[:id])
+    @periodicity = @organization.periodicities.find(params[:id])
   end
 
   def new
@@ -48,7 +50,7 @@ class PeriodicitiesController < ApplicationController
     @periodicity = Periodicity.new(params[:periodicity])
     @periodicity.organization = @organization
     if @periodicity.save
-      flash[:notice] = 'Periodicity was successfully created.'
+      flash[:notice] = _('Periodicity was successfully created.')
       redirect_to :action => 'list'
     else
       render :action => 'new'
@@ -56,13 +58,13 @@ class PeriodicitiesController < ApplicationController
   end
 
   def edit
-    @periodicity = Periodicity.find(params[:id])
+    @periodicity = @organization.periodicities.find(params[:id])
   end
 
   def update
-    @periodicity = Periodicity.find(params[:id])
+    @periodicity = @organization.periodicities.find(params[:id])
     if @periodicity.update_attributes(params[:periodicity])
-      flash[:notice] = 'Periodicity was successfully updated.'
+      flash[:notice] = _('Periodicity was successfully updated.')
       redirect_to :action => 'show', :id => @periodicity
     else
       render :action => 'edit'
@@ -70,7 +72,7 @@ class PeriodicitiesController < ApplicationController
   end
 
   def destroy
-    Periodicity.find(params[:id]).destroy
+    @organization.periodicities.find(params[:id]).destroy
     redirect_to :action => 'list'
   end
 end

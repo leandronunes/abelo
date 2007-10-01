@@ -31,6 +31,13 @@ def create_configurations_tabs
   end
   t.named _('Product categories')
 
+  t = add_tab do
+    links_to :controller => 'periodicities'
+    in_set 'first'
+    highlights_on :controller => 'periodicities'
+  end
+  t.named _('Periodicties')
+
 
 #    t = add_tab do
 #      links_to :controller => 'interface'

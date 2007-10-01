@@ -60,5 +60,24 @@ class PeriodicityTest < Test::Unit::TestCase
     assert p2.save
   end
 
+  def test_numericality_of_number_of_days
+    p = Periodicity.new()
+    p.number_of_days = 20
+    p.valid?
+    assert !p.errors.invalid?(:number_of_days)
+    p.number_of_days = 'a'
+    p.valid?
+    assert p.errors.invalid?(:number_of_days)
+  end
+
+  def test_number_of_days_is_integer
+    p = Periodicity.new()
+    p.number_of_days = 20
+    p.valid?
+    assert !p.errors.invalid?(:number_of_days)
+    p.number_of_days = 2.3
+    p.valid?
+    assert p.errors.invalid?(:number_of_days)
+  end
 
 end

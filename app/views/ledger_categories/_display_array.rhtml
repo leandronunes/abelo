@@ -1,5 +1,5 @@
 <ul>
   <% @displays.each do |d|%> 
-    <li> <%= Ledger.describe(d)%> </li>
+    <li> <%= Payment.describe_payment(d)%> </li>
   <% end %>
 </ul>

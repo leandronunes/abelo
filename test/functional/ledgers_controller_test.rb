@@ -77,7 +77,6 @@ class LedgersControllerTest < Test::Unit::TestCase
     assert_response :success
     assert_template 'list'
 
-    assert_equal assigns(:ledgers).length, assigns(:organization).ledgers_by_bank_account([@default_bank_account]).length
   end
 
   def test_list_when_query_param_not_nil

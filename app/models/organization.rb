@@ -149,37 +149,60 @@ class Organization < ActiveRecord::Base
 
   def ledgers_by_bank_account(bank_accounts = [])
     if bank_accounts.class == Array
-      bank_accounts.collect{ |b| b.ledgers}.flatten
+      ledgers = bank_accounts.collect{ |b| b.ledgers}.flatten
     else
-      self.bank_accounts.find(bank_accounts).ledgers
+      ledgers = self.bank_accounts.find(bank_accounts).ledgers
     end
+    ledgers #Redundant make the return value more clear
   end
 
   def tags_by_bank_account(bank_accounts = [])
     bank_accounts.collect{ |b| b.ledgers.tag_counts }.flatten
   end
 
-  #FIXME split this method in small one
+  def ledgers_by_tag(tags, bank_accounts = [])
+    bank_accounts.collect{ |b| b.ledgers.find_tagged_with(tags) }.flatten
+  end
+
+  def ledgers_by_dates(start_date, end_date, bank_accounts = [])
+    return [] if start_date.nil? or end_date.nil?
+    bank_accounts.collect{|b| 
+      b.ledgers.find(:all, :conditions => [ 
+        '((effective_date >= ?) and (effective_date <= ?)) or (foreseen_date >= ? and foreseen_date <= ?)', 
+         start_date, end_date, start_date, end_date
+      ])
+    }.flatten
+  end
+
+  def ledgers_by_categories(categories, bank_accounts = [])
+    return [] if categories.blank?
+
+    merge_cond = ''
+    categories.each do |c|
+      merge_cond = merge_cond.blank? ? merge_cond + "category_id = #{c.id}" : merge_cond + " or category_id = #{c.id}"
+    end
+
+    bank_accounts.collect{ |b| b.ledgers.find(:all, :conditions => [ merge_cond]) }.flatten
+  end
+
+  def ledgers_by_search(search_query, bank_accounts = [])
+    return [] if search_query.blank?
+    bank_accounts.collect{ |b| b.ledgers.full_text_search(search_query) }.flatten
+  end
+
   def ledgers_by_all(bank_accounts, tags, categories, start_date, end_date, query = nil)
     Array.new if bank_accounts.blank?
-    ledger_banks = bank_accounts.collect{ |b| b.ledgers }.flatten
-    tags = tags_by_bank_account(bank_accounts).collect{|t| t.name}.join(',') if tags.blank?
-    ledger_tags = bank_accounts.collect{ |b| b.ledgers.find_tagged_with(tags) }.flatten
-    ledger_dates = bank_accounts.collect{|b| 
-                     b.ledgers.find(:all, :conditions => [ 
-                                '((effective_date > ?) and (effective_date < ?)) or (foreseen_date > ? and foreseen_date < ?)', 
-                                 start_date, end_date, start_date, end_date
-                     ])}.flatten
-    condition_ids = Array.new
-    condition_string = ''
+    ledger_banks = ledgers_by_bank_account(bank_accounts)
 
-    unless categories.blank? 
-      categories.each do |c|
-        condition_string = condition_string.blank? ? condition_string + "category_id = #{c.id}" : condition_string + " or category_id = #{c.id}"
-      end
-      ledger_categories = bank_accounts.collect{ |b| b.ledgers.find(:all, :conditions => [ condition_string]) }.flatten
-    end
-    ledger_search = bank_accounts.collect{ |b| b.ledgers.full_text_search(query) }.flatten unless query.nil?
+    tags = tags_by_bank_account(bank_accounts).collect{|t| t.name}.join(',') if tags.blank?
+
+    ledger_tags = ledgers_by_tag(tags, bank_accounts)
+
+    ledger_dates = ledgers_by_dates(start_date, end_date, bank_accounts)
+
+    ledger_categories = ledgers_by_categories(categories, bank_accounts)
+
+    ledger_search = ledgers_by_search(query, bank_accounts)
 
     all_leders = ledger_banks 
     all_leders = all_leders & ledger_tags unless ledger_tags.blank?

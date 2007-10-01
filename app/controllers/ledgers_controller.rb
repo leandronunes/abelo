@@ -67,9 +67,9 @@ class LedgersController < ApplicationController
     @ledger_categories = @organization.ledger_categories
     @tags = @organization.tags_by_bank_account(@chosen_accounts)
 
-    @leo_ledgers = @organization.ledgers_by_all(@chosen_accounts, @chosen_tags, @chosen_categories, start_date, end_date, @query)
+    ledgers = @organization.ledgers_by_all(@chosen_accounts, @chosen_tags, @chosen_categories, start_date, end_date, @query)
 
-    @ledger_pages, @ledgers = paginate_by_collection @leo_ledgers
+    @ledger_pages, @ledgers = paginate_by_collection ledgers
 
   end
 

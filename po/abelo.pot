@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: abelo 0.3.0\n"
-"POT-Creation-Date: 2007-09-25 09:32-0300\n"
+"POT-Creation-Date: 2007-10-01 18:17-0300\n"
 "PO-Revision-Date: 2007-01-06 10:39-0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 #: app/controllers/system_actors_controller.rb:10
-#: app/models/system_actor.rb:48 app/models/organization.rb:80
+#: app/models/system_actor.rb:48 app/models/organization.rb:84
 #: app/views/point_of_sale/_payment_details.rhtml:4
 #: app/views/categories/index.rhtml:5
 msgid "Customer"
@@ -94,7 +94,7 @@ msgid "Ledger Category"
 msgstr "Categorias de Livro Caixa"
 
 #: app/controllers/tabs/admin_organization.rb:18
-#: app/helpers/support/actions.rb:210 app/helpers/application_helper.rb:569
+#: app/helpers/support/actions.rb:210 app/helpers/application_helper.rb:570
 #: app/views/ledgers/_display_table.rhtml:164
 #: app/views/documents/list.rhtml:20 app/views/documents/edit.rhtml:8
 msgid "Show"
@@ -158,20 +158,20 @@ msgstr "Produto atualizado com sucesso."
 msgid "Image was successfully added."
 msgstr "Imagem adicionada com sucesso."
 
-#: app/controllers/permissions_controller.rb:38
+#: app/controllers/permissions_controller.rb:48
 msgid "Profile updated successfully"
 msgstr "Perfil atualizado com sucesso."
 
-#: app/controllers/permissions_controller.rb:61
+#: app/controllers/permissions_controller.rb:71
 #, fuzzy
 msgid "User successfully created."
 msgstr "Usuáro criado com sucesso"
 
-#: app/controllers/permissions_controller.rb:74
+#: app/controllers/permissions_controller.rb:84
 msgid "The user was not found"
 msgstr ""
 
-#: app/controllers/permissions_controller.rb:87
+#: app/controllers/permissions_controller.rb:97
 #, fuzzy
 msgid "User was successfully upated."
 msgstr "Usuário atualizado com sucesso"
@@ -298,47 +298,62 @@ msgstr ""
 msgid "Cannot upload this bank account. It wasn't found"
 msgstr ""
 
-#: app/controllers/stock_controller.rb:116 app/views/stock/list.rhtml:1
+#: app/controllers/stock_controller.rb:77
+#, fuzzy
+msgid "It was successfully created."
+msgstr "Item criado com sucesso."
+
+#: app/controllers/stock_controller.rb:149
+#, fuzzy
+msgid "It was successfully updated."
+msgstr "Item atualizado com sucesso."
+
+#: app/controllers/stock_controller.rb:175 app/views/stock/list.rhtml:1
 #: app/views/stock/index.rhtml:1
 msgid "Stock control"
 msgstr "Controle de Estoque"
 
-#: app/controllers/organizations_controller.rb:41
+#: app/controllers/organizations_controller.rb:42
 #, fuzzy
 msgid "Organization was successfully created."
 msgstr "Contato criado com sucesso."
 
-#: app/controllers/organizations_controller.rb:55
+#: app/controllers/organizations_controller.rb:56
 #, fuzzy
 msgid "The organization was successfully updated."
 msgstr "Usuário atualizado com sucesso"
 
-#: app/controllers/users_controller.rb:46
+#: app/controllers/users_controller.rb:45
 msgid "Logged in successfully"
 msgstr "Conectado com sucesso."
 
-#: app/controllers/users_controller.rb:69
+#: app/controllers/users_controller.rb:68
 msgid "Thanks for signing up!"
 msgstr "Obrigado por cadastrar-se!"
 
-#: app/controllers/users_controller.rb:79
+#: app/controllers/users_controller.rb:78
 msgid "You have been logged out."
 msgstr "Você foi desconectado."
 
-#: app/controllers/users_controller.rb:86
+#: app/controllers/users_controller.rb:85
 msgid "User was successfully created."
 msgstr "Usuáro criado com sucesso"
 
-#: app/controllers/users_controller.rb:109
+#: app/controllers/users_controller.rb:108
 msgid "User was successfully updated."
 msgstr "Usuário atualizado com sucesso"
 
-#: app/controllers/application.rb:197
+#: app/controllers/main_controller.rb:6
+msgid "Welcome to Abelo System"
+msgstr ""
+
+#: app/controllers/application.rb:191
 #, fuzzy
-msgid "There is no organization with identifier %s"
+msgid ""
+"There is no organization with nickname %s or you don't have access to it"
 msgstr "Não existe organização com apelido %s"
 
-#: app/controllers/application.rb:215
+#: app/controllers/application.rb:214
 msgid ""
 "This system didn't works correctly. Please contact the administrator and "
 "inform the message below."
@@ -409,11 +424,13 @@ msgstr ""
 msgid "organization display"
 msgstr "organização"
 
-#: app/models/organization_display.rb:9 app/models/configuration_display.rb:24
+#: app/models/organization_display.rb:9 app/models/configuration_display.rb:23
 #: app/models/costumer_category_display.rb:8 app/models/profile_display.rb:8
-#: app/models/category_display.rb:9 app/models/ledger_category_display.rb:9
-#: app/models/product_display.rb:10 app/models/system_actor_display.rb:9
-#: app/models/department_display.rb:9 app/helpers/point_of_sale_helper.rb:9
+#: app/models/credit_card_display.rb:20 app/models/category_display.rb:9
+#: app/models/ledger_category_display.rb:9 app/models/product_display.rb:10
+#: app/models/system_actor_display.rb:9 app/models/check_display.rb:19
+#: app/models/periodicity_display.rb:8 app/models/department_display.rb:9
+#: app/models/debit_card_display.rb:16 app/helpers/point_of_sale_helper.rb:9
 #: app/views/shared_payments/_payment_credit_card.rhtml:22
 #: app/views/shared_payments/_payment_check.rhtml:10
 #: app/views/shared_payments/_payment_debit_card.rhtml:10
@@ -423,14 +440,15 @@ msgstr "organização"
 #: app/views/organizations/_form.rhtml:6 app/views/organizations/show.rhtml:4
 #: app/views/documents/new.rhtml:8 app/views/documents/_form.rhtml:6
 #: app/views/documents/show.rhtml:4 app/views/configuration/new.rhtml:10
-#: app/views/departments/_form.rhtml:8
+#: app/views/departments/_form.rhtml:8 app/views/periodicities/_form.rhtml:8
 #: app/views/product_categories/list.rhtml:5 app/views/products/_form.rhtml:8
 #: app/views/document_sections/edit.rhtml:9
 #: app/views/system_actors/_form.rhtml:10 app/views/categories/_form.rhtml:4
 msgid "Name"
 msgstr ""
 
-#: app/models/organization_display.rb:10 app/models/system_actor_display.rb:13
+#: app/models/organization_display.rb:10 app/models/credit_card_display.rb:21
+#: app/models/system_actor_display.rb:13 app/models/check_display.rb:25
 #: app/views/layouts/organization.rhtml:24
 #: app/views/layouts/comatose_admin.rhtml:24
 #: app/views/organizations/_form.rhtml:19 app/views/organizations/show.rhtml:5
@@ -442,6 +460,20 @@ msgstr ""
 #, fuzzy
 msgid "Presentation Name"
 msgstr "Nome"
+
+#: app/models/stock_virtual_display.rb:9 app/models/stock_in_display.rb:12
+#: app/models/organization.rb:82 app/views/point_of_sale/_table.rhtml:8
+#: app/views/categories/index.rhtml:4
+msgid "Product"
+msgstr ""
+
+#: app/models/stock_virtual_display.rb:10 app/models/stock_out_display.rb:10
+#: app/models/stock_in_display.rb:10 app/views/stock/_form.rhtml:14
+#: app/views/point_of_sale/_table.rhtml:10
+#: app/views/point_of_sale/_product_info.rhtml:31
+#: app/views/products/_new_stock_entry.rhtml:14
+msgid "Amount"
+msgstr ""
 
 #: app/models/schedule_ledger.rb:-
 msgid "schedule ledger"
@@ -468,72 +500,67 @@ msgstr ""
 msgid "configuration display"
 msgstr "Configurações"
 
-#: app/models/configuration_display.rb:25
+#: app/models/configuration_display.rb:24
 #: app/views/configuration/_form.rhtml:5
 #, fuzzy
 msgid "Organization Name"
 msgstr "Nome"
 
-#: app/models/configuration_display.rb:26
+#: app/models/configuration_display.rb:25
 #: app/views/configuration/_form.rhtml:29
 #, fuzzy
 msgid "Product Name"
 msgstr "Tamanho"
 
-#: app/models/configuration_display.rb:27
+#: app/models/configuration_display.rb:26
 #: app/views/configuration/_form.rhtml:11
 #, fuzzy
 msgid "Department Name"
 msgstr "Nome"
 
-#: app/models/configuration_display.rb:28
+#: app/models/configuration_display.rb:27
 #: app/views/configuration/_form.rhtml:17
 #, fuzzy
 msgid "Customer Name"
 msgstr "Cliente"
 
-#: app/models/configuration_display.rb:29
+#: app/models/configuration_display.rb:28
 #: app/views/configuration/_form.rhtml:23
 #, fuzzy
 msgid "Document Name"
 msgstr "Nome"
 
-#: app/models/configuration_display.rb:30
+#: app/models/configuration_display.rb:29
 #, fuzzy
 msgid "Worker Fields"
 msgstr "Trabalhadores"
 
-#: app/models/configuration_display.rb:31
+#: app/models/configuration_display.rb:30
 #, fuzzy
 msgid "Customer Fields"
 msgstr "Consumidores"
 
-#: app/models/configuration_display.rb:32
+#: app/models/configuration_display.rb:31
 #, fuzzy
 msgid "Supplier Fields"
 msgstr "Fornecedores"
 
-#: app/models/configuration_display.rb:33
+#: app/models/configuration_display.rb:32
 #, fuzzy
 msgid "Product Fields"
 msgstr "Produtos"
 
-#: app/models/configuration_display.rb:34
+#: app/models/configuration_display.rb:33
 #, fuzzy
 msgid "Department Fields"
 msgstr "departamento"
 
-#: app/models/configuration_display.rb:35
+#: app/models/configuration_display.rb:34
 #, fuzzy
 msgid "Ledger Category Fields"
 msgstr "Categorias de Livro Caixa"
 
-#: app/models/configuration_display.rb:36
-#, fuzzy
-msgid "Ledger Fields"
-msgstr "Livro Caixa"
-
-#: app/models/configuration_display.rb:37
+#: app/models/configuration_display.rb:35
 #, fuzzy
 msgid "Bank Account Fields"
 msgstr "departamento"
@@ -548,33 +575,38 @@ msgstr "Categorias de Livro Caixa"
 msgid "The name %{fn} for customer category was already taken."
 msgstr ""
 
-#: app/models/ledger_display.rb:27 app/views/ledger_categories/_form.rhtml:8
+#: app/models/ledger_display.rb:27
+#: app/views/shared_payments/_table_ledgers.rhtml:7
+#: app/views/ledger_categories/_form.rhtml:8
 msgid "Type"
 msgstr ""
 
 #: app/models/ledger_display.rb:28 app/models/product_display.rb:16
 #: app/models/system_actor_display.rb:12
+#: app/views/shared_payments/_table_ledgers.rhtml:8
 #: app/views/ledgers/_display_table.rhtml:149
 #: app/views/products/_form.rhtml:14 app/views/system_actors/_form.rhtml:63
 #, fuzzy
 msgid "Category"
 msgstr "Categoria"
 
-#: app/models/ledger_display.rb:29 app/models/stock_in_display.rb:14
-#: app/views/stock/_form.rhtml:20 app/views/ledgers/_form.rhtml:20
+#: app/models/ledger_display.rb:29 app/views/stock/_payment_form.rhtml:17
+#: app/views/ledgers/_form.rhtml:20
 #: app/views/point_of_sale/_payment_details.rhtml:15
 #, fuzzy
 msgid "Payment Method"
 msgstr "Venda"
 
-#: app/models/ledger_display.rb:30 app/models/stock_in_display.rb:15
-#: app/views/stock/_form.rhtml:46
+#: app/models/ledger_display.rb:30
+#: app/views/shared_payments/_table_ledgers.rhtml:10
+#: app/views/stock/_payment_form.rhtml:11
 #, fuzzy
 msgid "Value"
 msgstr "venda"
 
 #: app/models/ledger_display.rb:31 app/models/product_display.rb:13
 #: app/models/system_actor_display.rb:17
+#: app/views/shared_payments/_table_ledgers.rhtml:9
 #: app/views/ledgers/_display_table.rhtml:150
 #: app/views/configuration/new.rhtml:15 app/views/products/_form.rhtml:53
 #: app/views/products/images.rhtml:16 app/views/system_actors/_form.rhtml:69
@@ -586,7 +618,9 @@ msgid "Tag List"
 msgstr ""
 
 #: app/models/ledger_display.rb:33 app/models/stock_out_display.rb:9
-#: app/models/stock_in_display.rb:9 app/views/stock/_form.rhtml:40
+#: app/models/stock_in_display.rb:9
+#: app/views/shared_payments/_table_ledgers.rhtml:6
+#: app/views/stock/_payment_form.rhtml:4 app/views/stock/_form.rhtml:20
 #: app/views/ledgers/_display_table.rhtml:148
 #: app/views/products/_new_stock_entry.rhtml:26
 msgid "Date"
@@ -636,9 +670,9 @@ msgstr ""
 msgid "Credit"
 msgstr ""
 
-#: app/models/ledger_display.rb:45 app/models/display_configuration.rb:27
-#: app/models/display_configuration.rb:39
-#: app/models/display_configuration.rb:51
+#: app/models/ledger_display.rb:45 app/models/display_configuration.rb:30
+#: app/models/display_configuration.rb:42
+#: app/models/display_configuration.rb:54
 msgid "No"
 msgstr ""
 
@@ -674,37 +708,37 @@ msgstr "nome"
 msgid "Profile|Permissions"
 msgstr ""
 
-#: app/models/profile.rb:119
+#: app/models/profile.rb:121
 msgid "Full access"
 msgstr ""
 
-#: app/models/profile.rb:120
+#: app/models/profile.rb:122
 msgid "Read-only"
 msgstr ""
 
-#: app/models/profile.rb:121
+#: app/models/profile.rb:123
 msgid "Sales person"
 msgstr ""
 
-#: app/models/profile.rb:122
+#: app/models/profile.rb:124
 msgid "Sales Supervisor"
 msgstr ""
 
-#: app/models/profile.rb:123 app/helpers/support/menu.rb:18
+#: app/models/profile.rb:125 app/helpers/support/menu.rb:18
 #: lib/describe_menu.rb:8
 msgid "Financial"
 msgstr "Financeiro"
 
-#: app/models/profile.rb:124
+#: app/models/profile.rb:126
 #, fuzzy
 msgid "Organization Management"
 msgstr "Nome"
 
-#: app/models/profile.rb:125 app/views/layouts/administration.rhtml:5
+#: app/models/profile.rb:127 app/views/layouts/default.rhtml:7
 msgid "Administration"
 msgstr ""
 
-#: app/models/profile.rb:126
+#: app/models/profile.rb:128
 msgid "Other"
 msgstr ""
 
@@ -738,29 +772,29 @@ msgstr "Descrição"
 msgid "Configuration|Settings"
 msgstr "Configurações"
 
-#: app/models/configuration.rb:32
+#: app/models/configuration.rb:36
 msgid "You cannot associate a template to an organization"
 msgstr ""
 
-#: app/models/configuration.rb:36
+#: app/models/configuration.rb:40
 #, fuzzy
 msgid "Organization name cannot be blank"
 msgstr "Nome"
 
-#: app/models/configuration.rb:39
+#: app/models/configuration.rb:43
 msgid "Product name cannot be blank"
 msgstr ""
 
-#: app/models/configuration.rb:41
+#: app/models/configuration.rb:45
 #, fuzzy
 msgid "Department name cannot be blank"
 msgstr "Nome"
 
-#: app/models/configuration.rb:43
+#: app/models/configuration.rb:47
 msgid "Customer name cannot be blank"
 msgstr ""
 
-#: app/models/configuration.rb:45
+#: app/models/configuration.rb:49
 msgid "Document name cannot be blank"
 msgstr ""
 
@@ -817,6 +851,30 @@ msgstr "Produtos"
 #: app/models/profile_display.rb:10
 #: app/views/permissions/new_with_template.rhtml:8
 msgid "User"
+msgstr ""
+
+#: app/models/credit_card_display.rb:17
+#: app/views/shared_payments/_payment_credit_card.rhtml:3
+#, fuzzy
+msgid "Credit Card Number"
+msgstr "Número do cartão de crédito"
+
+#: app/models/credit_card_display.rb:18 app/models/stock_in_display.rb:13
+#: app/views/stock/_form.rhtml:32 app/views/products/_new_stock_entry.rhtml:32
+msgid "Validity"
+msgstr ""
+
+#: app/models/credit_card_display.rb:19
+#: app/views/shared_payments/_payment_credit_card.rhtml:10
+msgid "Security Code"
+msgstr ""
+
+#: app/models/credit_card_display.rb:22 app/models/system_actor_display.rb:14
+#: app/models/check_display.rb:24 app/helpers/point_of_sale_helper.rb:7
+#: app/views/shared_payments/_payment_credit_card.rhtml:28
+#: app/views/shared_payments/_payment_check.rhtml:46
+#: app/views/system_actors/_natural_person.rhtml:2
+msgid "CPF"
 msgstr ""
 
 #: app/models/size.rb:-
@@ -921,19 +979,10 @@ msgstr ""
 msgid "VirtualCommunity|Design data"
 msgstr "Apelido"
 
-#: app/models/stock_display.rb:9 app/models/stock_in_display.rb:12
-#: app/models/organization.rb:78 app/views/point_of_sale/_table.rhtml:8
-#: app/views/categories/index.rhtml:4
-msgid "Product"
-msgstr ""
-
-#: app/models/stock_display.rb:10 app/models/stock_out_display.rb:10
-#: app/models/stock_in_display.rb:10 app/views/stock/_form.rhtml:14
-#: app/views/point_of_sale/_table.rhtml:10
-#: app/views/point_of_sale/_product_info.rhtml:31
-#: app/views/products/_new_stock_entry.rhtml:14
-msgid "Amount"
-msgstr ""
+#: app/models/virtual_community.rb:-
+#, fuzzy
+msgid "VirtualCommunity|Is default"
+msgstr "Apelido"
 
 #: app/models/department.rb:-
 msgid "department"
@@ -946,6 +995,34 @@ msgstr "Nome"
 #: app/models/department.rb:-
 msgid "Department|Organization"
 msgstr "Organização"
+
+#: app/models/payment.rb:-
+msgid "payment"
+msgstr "pagamento"
+
+#: app/models/payment.rb:30
+msgid "Income"
+msgstr ""
+
+#: app/models/payment.rb:31
+msgid "Expense"
+msgstr ""
+
+#: app/models/payment.rb:38
+msgid "Check"
+msgstr ""
+
+#: app/models/payment.rb:39
+msgid "Credit Card"
+msgstr ""
+
+#: app/models/payment.rb:40
+msgid "Debit Card"
+msgstr ""
+
+#: app/models/payment.rb:41
+msgid "Money"
+msgstr ""
 
 #: app/models/mass_mail.rb:-
 msgid "mass mail"
@@ -1573,10 +1650,14 @@ msgid "Is to Store?"
 msgstr ""
 
 #: app/models/ledger_category_display.rb:15
-msgid "Type of"
+msgid "Is to Stock?"
 msgstr ""
 
 #: app/models/ledger_category_display.rb:16
+msgid "Type of"
+msgstr ""
+
+#: app/models/ledger_category_display.rb:17
 #: app/views/ledger_categories/_form.rhtml:26
 #, fuzzy
 msgid "Payment Methods"
@@ -1719,7 +1800,8 @@ msgstr ""
 msgid "Color"
 msgstr ""
 
-#: app/models/product_display.rb:14 app/views/products/_form.rhtml:47
+#: app/models/product_display.rb:14 app/models/stock_out_display.rb:11
+#: app/views/products/_form.rhtml:47
 #, fuzzy
 msgid "Sell Price"
 msgstr "Preço de venda"
@@ -1782,6 +1864,14 @@ msgstr ""
 msgid "Periodicity|Organization"
 msgstr "Organização"
 
+#: app/models/stock_in.rb:9
+msgid "The amount must be a positive number"
+msgstr ""
+
+#: app/models/stock_in.rb:16
+msgid "The price should be at least 0.01"
+msgstr ""
+
 #: app/models/image.rb:-
 msgid "image"
 msgstr ""
@@ -1824,7 +1914,18 @@ msgstr ""
 msgid "E-mail"
 msgstr ""
 
-#: app/models/user_display.rb:11
+#: app/models/user_display.rb:11 app/views/users/login.rhtml:9
+#: app/views/users/_form.rhtml:10 app/views/point_of_sale/cancel.rhtml:25
+#: app/views/permissions/_form.rhtml:20
+msgid "Password"
+msgstr ""
+
+#: app/models/user_display.rb:12
+#, fuzzy
+msgid "Password Confirmation"
+msgstr "Configurações"
+
+#: app/models/user_display.rb:13
 #, fuzzy
 msgid "Profiles"
 msgstr "Usuário"
@@ -1837,13 +1938,6 @@ msgstr ""
 #: app/models/system_actor_display.rb:11 app/views/users/_form.rhtml:6
 #: app/views/system_actors/_form.rhtml:57
 msgid "Email"
-msgstr ""
-
-#: app/models/system_actor_display.rb:14 app/helpers/point_of_sale_helper.rb:7
-#: app/views/shared_payments/_payment_credit_card.rhtml:28
-#: app/views/shared_payments/_payment_check.rhtml:40
-#: app/views/system_actors/_natural_person.rhtml:2
-msgid "CPF"
 msgstr ""
 
 #: app/models/system_actor_display.rb:15
@@ -1859,13 +1953,15 @@ msgstr ""
 msgid "Natural Person or Juristic Person"
 msgstr ""
 
-#: app/models/bank_account_display.rb:10
+#: app/models/bank_account_display.rb:10 app/models/check_display.rb:20
+#: app/models/debit_card_display.rb:17
 #: app/views/shared_payments/_payment_check.rhtml:3
 #: app/views/shared_payments/_payment_debit_card.rhtml:3
 msgid "Bank"
 msgstr ""
 
-#: app/models/bank_account_display.rb:11
+#: app/models/bank_account_display.rb:11 app/models/check_display.rb:21
+#: app/models/debit_card_display.rb:18
 #: app/views/shared_payments/_payment_check.rhtml:16
 #: app/views/shared_payments/_payment_debit_card.rhtml:16
 #: app/views/bank_accounts/_form.rhtml:8
@@ -1879,7 +1975,8 @@ msgstr ""
 msgid "Variation"
 msgstr "organização"
 
-#: app/models/bank_account_display.rb:13
+#: app/models/bank_account_display.rb:13 app/models/check_display.rb:22
+#: app/models/debit_card_display.rb:19
 #: app/views/shared_payments/_payment_check.rhtml:22
 #: app/views/shared_payments/_payment_debit_card.rhtml:21
 #: app/views/bank_accounts/_form.rhtml:21
@@ -1910,10 +2007,6 @@ msgstr ""
 #: app/models/mass_mail_display.rb:12 app/views/documents/_form.rhtml:9
 #: app/views/documents/show.rhtml:8 app/views/mass_mails/_form.rhtml:17
 msgid "Body"
-msgstr ""
-
-#: app/models/stock_out_display.rb:11 app/views/point_of_sale/_table.rhtml:11
-msgid "Price"
 msgstr ""
 
 #: app/models/document.rb:-
@@ -1954,6 +2047,12 @@ msgstr ""
 msgid "The name %{fn} for a product category was already taken."
 msgstr ""
 
+#: app/models/check_display.rb:23
+#: app/views/shared_payments/_payment_check.rhtml:28
+#, fuzzy
+msgid "Check Number"
+msgstr "Número do cheque"
+
 #: app/models/stock.rb:-
 #, fuzzy
 msgid "stock"
@@ -1963,6 +2062,11 @@ msgstr "Estoque"
 #, fuzzy
 msgid "Stock|Type"
 msgstr "Estoque"
+
+#: app/models/stock.rb:-
+#, fuzzy
+msgid "Stock|Price"
+msgstr "Produto"
 
 #: app/models/stock.rb:-
 #, fuzzy
@@ -1991,11 +2095,6 @@ msgstr "Fornecedor"
 #: app/models/stock.rb:-
 msgid "Stock|Validity"
 msgstr ""
-
-#: app/models/stock.rb:-
-#, fuzzy
-msgid "Stock|Ledger"
-msgstr "Livro Caixa"
 
 #: app/models/stock.rb:-
 #, fuzzy
@@ -2042,9 +2141,13 @@ msgstr "Descrição"
 msgid "DisplayConfiguration|Settings"
 msgstr "Configurações"
 
-#: app/models/display_configuration.rb:27
-#: app/models/display_configuration.rb:39
-#: app/models/display_configuration.rb:51
+#: app/models/display_configuration.rb:8
+msgid "The field %s is not a valid field"
+msgstr ""
+
+#: app/models/display_configuration.rb:30
+#: app/models/display_configuration.rb:42
+#: app/models/display_configuration.rb:54
 msgid "Yes"
 msgstr ""
 
@@ -2352,58 +2455,38 @@ msgstr "Agência da conta do cheque"
 msgid "Ledger|Automatic debit account number"
 msgstr "Número da conta do cheque"
 
-#: app/models/ledger.rb:129 app/models/ledger.rb:136 app/models/ledger.rb:144
-#: app/models/ledger.rb:151
+#: app/models/ledger.rb:131 app/models/ledger.rb:138 app/models/ledger.rb:146
+#: app/models/ledger.rb:153
 msgid "This function cannot be accessed directly"
 msgstr ""
 
 #: app/models/ledger.rb:163
-msgid "Check"
-msgstr ""
-
-#: app/models/ledger.rb:164
-msgid "Credit Card"
-msgstr ""
-
-#: app/models/ledger.rb:165
-msgid "Debit Card"
+msgid "You must specify the ledger as Money, Check, Credit Card or Debit Card."
 msgstr ""
 
 #: app/models/ledger.rb:166
-msgid "Money"
-msgstr ""
-
-#: app/models/ledger.rb:173
-msgid "Income"
-msgstr ""
-
-#: app/models/ledger.rb:174
-msgid "Expense"
-msgstr ""
-
-#: app/models/ledger.rb:182
-msgid "You must specify the ledger as a credit or a debit one."
-msgstr ""
-
-#: app/models/ledger.rb:185
 msgid "The value should be at least 0.01"
 msgstr ""
 
-#: app/models/ledger.rb:187
+#: app/models/ledger.rb:168
 msgid "Date cannot be set"
 msgstr ""
 
-#: app/models/ledger.rb:189
+#: app/models/ledger.rb:170
 msgid "You don't have a payment method associated to this ledger."
 msgstr ""
 
-#: app/models/ledger.rb:192
+#: app/models/ledger.rb:173
 msgid "You canno't have a payment method not include in payment category list."
 msgstr ""
 
-#: app/models/stock_in_display.rb:13 app/views/stock/_form.rhtml:52
-#: app/views/products/_new_stock_entry.rhtml:32
-msgid "Validity"
+#: app/models/periodicity_display.rb:9
+msgid "Namber of Days"
+msgstr ""
+
+#: app/models/stock_in_display.rb:14 app/views/stock/_form.rhtml:26
+#: app/views/products/_new_stock_entry.rhtml:20
+msgid "Buy Price"
 msgstr ""
 
 #: app/models/organization.rb:-
@@ -2433,23 +2516,28 @@ msgstr "Apelido"
 msgid "Organization|Identifier"
 msgstr "Apelido"
 
-#: app/models/organization.rb:77
+#: app/models/organization.rb:81
 #, fuzzy
 msgid "Organization"
 msgstr "organização"
 
-#: app/models/organization.rb:79 app/views/documents/show.rhtml:6
+#: app/models/organization.rb:83 app/views/documents/show.rhtml:6
 #, fuzzy
 msgid "Department"
 msgstr "departamento"
 
-#: app/models/organization.rb:81
+#: app/models/organization.rb:85
 msgid "Commercial Proposal"
 msgstr ""
 
-#: app/models/organization.rb:107
+#: app/models/organization.rb:111
 msgid "An existing organization cannot be renamed."
 msgstr ""
+
+#: app/models/user_profile.rb:-
+#, fuzzy
+msgid "user profile"
+msgstr "Usuário"
 
 #: app/models/ledger_category.rb:-
 msgid "ledger category"
@@ -2488,45 +2576,46 @@ msgstr ""
 msgid "LedgerCategory|Settings"
 msgstr "Categorias de Livro Caixa"
 
-#: app/models/ledger_category.rb:23
+#: app/models/ledger_category.rb:21
 msgid "You have to choose at least one payment method"
 msgstr ""
 
-#: app/models/ledger_category.rb:27
+#: app/models/ledger_category.rb:25
 msgid "You have to choose a valid payment method"
 msgstr ""
 
-#: app/models/ledger_category.rb:76
+#: app/models/ledger_category.rb:85
 msgid "(+) %s"
 msgstr ""
 
-#: app/models/ledger_category.rb:76
+#: app/models/ledger_category.rb:85
 msgid "(-) %s"
 msgstr ""
 
 #: app/helpers/point_of_sale_helper.rb:8
-#: app/views/shared_payments/_payment_check.rhtml:34
+#: app/views/shared_payments/_payment_check.rhtml:40
 msgid "Rg"
 msgstr ""
 
 #: app/helpers/point_of_sale_helper.rb:11 app/helpers/application_helper.rb:62
-#: app/views/documents/list.rhtml:6 app/views/departments/list.rhtml:6
+#: app/views/stock/history.rhtml:11 app/views/documents/list.rhtml:6
+#: app/views/departments/list.rhtml:6
 msgid "Search"
 msgstr ""
 
 #: app/helpers/stock_helper.rb:22 app/helpers/support/actions.rb:224
-#: app/helpers/application_helper.rb:583
+#: app/helpers/application_helper.rb:584
 msgid "New entry"
 msgstr "Nova entrada"
 
 #: app/helpers/stock_helper.rb:23 app/helpers/support/actions.rb:225
-#: app/helpers/application_helper.rb:584
+#: app/helpers/application_helper.rb:585
 msgid "History"
 msgstr "Histórico"
 
 #: app/helpers/support/actions.rb:147 app/helpers/support/actions.rb:172
-#: app/helpers/application_helper.rb:438 app/helpers/application_helper.rb:466
-#: app/views/stock/show.rhtml:6 app/views/organizations/new.rhtml:7
+#: app/helpers/application_helper.rb:439 app/helpers/application_helper.rb:467
+#: app/views/stock/show.rhtml:8 app/views/organizations/new.rhtml:7
 #: app/views/organizations/show.rhtml:8 app/views/documents/new.rhtml:12
 #: app/views/documents/show.rhtml:10 app/views/documents/edit.rhtml:9
 #: app/views/departments/edit.rhtml:5 app/views/products/images.rhtml:26
@@ -2537,10 +2626,9 @@ msgid "Back"
 msgstr ""
 
 #: app/helpers/support/actions.rb:148 app/helpers/support/actions.rb:211
-#: app/helpers/application_helper.rb:439 app/helpers/application_helper.rb:570
-#: app/views/stock/show.rhtml:7 app/views/users/list.rhtml:11
-#: app/views/layouts/organization.rhtml:30
-#: app/views/layouts/administration.rhtml:33
+#: app/helpers/application_helper.rb:440 app/helpers/application_helper.rb:571
+#: app/views/stock/show.rhtml:9 app/views/users/list.rhtml:11
+#: app/views/layouts/organization.rhtml:30 app/views/layouts/default.rhtml:39
 #: app/views/layouts/comatose_admin.rhtml:30
 #: app/views/ledgers/_display_table.rhtml:165
 #: app/views/document_items/_list.rhtml:5
@@ -2554,7 +2642,7 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: app/helpers/support/actions.rb:173 app/helpers/application_helper.rb:467
+#: app/helpers/support/actions.rb:173 app/helpers/application_helper.rb:468
 #: app/views/users/new.rhtml:5 app/views/users/edit.rhtml:5
 #: app/views/permissions/new_with_template.rhtml:14
 #: app/views/permissions/select_template.rhtml:8
@@ -2568,7 +2656,7 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: app/helpers/support/actions.rb:174 app/helpers/application_helper.rb:468
+#: app/helpers/support/actions.rb:174 app/helpers/application_helper.rb:469
 #: app/views/stock/_new.rhtml:9 app/views/departments/new.rhtml:8
 #: app/views/departments/_new.rhtml:9 app/views/products/_new.rhtml:9
 #: app/views/system_actors/_new.rhtml:10
@@ -2576,7 +2664,7 @@ msgid "Reset"
 msgstr ""
 
 #: app/helpers/support/actions.rb:212 app/helpers/application_helper.rb:52
-#: app/helpers/application_helper.rb:571
+#: app/helpers/application_helper.rb:572
 #: app/views/customer_categories/_list.rhtml:5
 #: app/views/documents/list.rhtml:22 app/views/contact_positions/list.rhtml:16
 #: app/views/product_categories/_list.rhtml:5
@@ -2585,7 +2673,7 @@ msgid "Destroy"
 msgstr ""
 
 #: app/helpers/support/actions.rb:213 app/helpers/application_helper.rb:52
-#: app/helpers/application_helper.rb:572
+#: app/helpers/application_helper.rb:573
 #: app/views/customer_categories/_list.rhtml:5
 #: app/views/documents/list.rhtml:24 app/views/contact_positions/list.rhtml:16
 #: app/views/product_categories/_list.rhtml:5
@@ -2614,18 +2702,17 @@ msgstr ""
 msgid "%{year}/%{month}/%{day}"
 msgstr ""
 
-#: app/helpers/application_helper.rb:63
+#: app/helpers/application_helper.rb:63 app/views/stock/history.rhtml:12
 msgid "Add New"
 msgstr ""
 
-#: app/helpers/application_helper.rb:64
+#: app/helpers/application_helper.rb:64 app/views/stock/history.rhtml:13
 #, fuzzy
 msgid "Reset search"
 msgstr "Cadastro"
 
 #: app/helpers/application_helper.rb:113 app/views/layouts/login.rhtml:5
-#: app/views/layouts/organization.rhtml:5
-#: app/views/layouts/administration.rhtml:22
+#: app/views/layouts/organization.rhtml:5 app/views/layouts/default.rhtml:28
 #: app/views/layouts/point_of_sale.rhtml:5
 #: app/views/layouts/point_of_sale.rhtml:43
 #: app/views/layouts/comatose_admin.rhtml:5
@@ -2656,12 +2743,12 @@ msgstr ""
 msgid "GPL"
 msgstr ""
 
-#: app/helpers/application_helper.rb:527
+#: app/helpers/application_helper.rb:528
 #, fuzzy
 msgid "False"
 msgstr "venda"
 
-#: app/helpers/application_helper.rb:531
+#: app/helpers/application_helper.rb:532
 msgid "True"
 msgstr ""
 
@@ -2917,21 +3004,12 @@ msgstr "Nome"
 msgid "Category:"
 msgstr "Categoria"
 
-#: app/views/shared_payments/_payment_credit_card.rhtml:3
-#, fuzzy
-msgid "Credit Card Number"
-msgstr "Número do cartão de crédito"
-
-#: app/views/shared_payments/_payment_credit_card.rhtml:10
-msgid "Security Code"
-msgstr ""
-
 #: app/views/shared_payments/_payment_credit_card.rhtml:16
 #, fuzzy
 msgid "Credit Card Validity"
 msgstr "Validade do cartão de crédito"
 
-#: app/views/shared_payments/_payment_check.rhtml:28
+#: app/views/shared_payments/_payment_check.rhtml:34
 #, fuzzy
 msgid "Contact Phone"
 msgstr "Telefone"
@@ -2957,10 +3035,21 @@ msgstr "Loja"
 msgid "There is no such page: %s"
 msgstr ""
 
-#: app/views/stock/new.rhtml:1 app/views/stock/new_entry.rhtml:1
-#: app/views/products/new.rhtml:9
+#: app/views/stock/new.rhtml:2 app/views/products/new.rhtml:12
 msgid "New stock entry for %s"
 msgstr "Nova entrada de estoque para %s"
+
+#: app/views/stock/new.rhtml:10 app/views/stock/_edit.rhtml:5
+#: app/views/stock/show.rhtml:5
+#, fuzzy
+msgid "Payments [%s]"
+msgstr "pagamento"
+
+#: app/views/stock/new.rhtml:10 app/views/stock/_edit.rhtml:5
+#: app/views/stock/show.rhtml:5 app/views/products/images.rhtml:25
+#: app/views/mass_mails/attach.rhtml:9
+msgid "Add"
+msgstr ""
 
 #: app/views/stock/_new.rhtml:2
 msgid "New stock entry"
@@ -2984,14 +3073,8 @@ msgstr ""
 
 #: app/views/stock/edit.rhtml:1
 #, fuzzy
-msgid "Edit stock stock for %s"
+msgid "Edit stock for %s"
 msgstr "Edição de entrada de estoque para %s"
-
-#: app/views/users/login.rhtml:9 app/views/users/_form.rhtml:10
-#: app/views/point_of_sale/cancel.rhtml:25
-#: app/views/permissions/_form.rhtml:20
-msgid "Password"
-msgstr ""
 
 #: app/views/users/login.rhtml:15
 msgid "Log in"
@@ -3035,27 +3118,24 @@ msgstr ""
 msgid "Organization Logo"
 msgstr "organização"
 
-#: app/views/layouts/organization.rhtml:29
-#: app/views/layouts/administration.rhtml:31
+#: app/views/layouts/organization.rhtml:29 app/views/layouts/default.rhtml:37
 #: app/views/layouts/comatose_admin.rhtml:29
 msgid "Go to"
 msgstr ""
 
-#: app/views/layouts/organization.rhtml:31
-#: app/views/layouts/administration.rhtml:34
+#: app/views/layouts/organization.rhtml:31 app/views/layouts/default.rhtml:40
 #: app/views/layouts/point_of_sale.rhtml:21
 #: app/views/layouts/comatose_admin.rhtml:31
 msgid "Logout"
 msgstr ""
 
-#: app/views/layouts/organization.rhtml:31
-#: app/views/layouts/administration.rhtml:34
+#: app/views/layouts/organization.rhtml:31 app/views/layouts/default.rhtml:40
 #: app/views/layouts/point_of_sale.rhtml:21
 #: app/views/layouts/comatose_admin.rhtml:31
 msgid "Exit from system?"
 msgstr ""
 
-#: app/views/layouts/administration.rhtml:20
+#: app/views/layouts/default.rhtml:26
 msgid "Abelo Administration"
 msgstr ""
 
@@ -3228,6 +3308,10 @@ msgstr "Modelos"
 msgid "Unitary price"
 msgstr ""
 
+#: app/views/point_of_sale/_table.rhtml:11
+msgid "Price"
+msgstr ""
+
 #: app/views/point_of_sale/_table.rhtml:22
 msgid "Total: %s"
 msgstr ""
@@ -3326,6 +3410,16 @@ msgstr ""
 #: app/views/permissions/list.rhtml:2
 #, fuzzy
 msgid "Listing permissions"
+msgstr "departamento"
+
+#: app/views/permissions/show.rhtml:2
+#, fuzzy
+msgid "User %s"
+msgstr "Usuários"
+
+#: app/views/permissions/edit.rhtml:2
+#, fuzzy
+msgid "Editing user"
 msgstr "departamento"
 
 #: app/views/document_items/_new.rhtml:3
@@ -3453,11 +3547,6 @@ msgstr "Configurações"
 
 #: app/views/configuration/_form.rhtml:71
 #, fuzzy
-msgid "Ledger Display Configuration"
-msgstr "Configurações"
-
-#: app/views/configuration/_form.rhtml:76
-#, fuzzy
 msgid "BankAccount Display Configuration"
 msgstr "Configurações"
 
@@ -3523,6 +3612,30 @@ msgstr ""
 msgid "New contact_position"
 msgstr ""
 
+#: app/views/periodicities/new.rhtml:1
+#, fuzzy
+msgid "New periodicity"
+msgstr "produto"
+
+#: app/views/periodicities/_form.rhtml:14
+msgid "Number of Days"
+msgstr ""
+
+#: app/views/periodicities/list.rhtml:1
+#, fuzzy
+msgid "Listing periodicities"
+msgstr "departamento"
+
+#: app/views/periodicities/show.rhtml:1
+#, fuzzy
+msgid "Periodicity %s"
+msgstr "Produtos"
+
+#: app/views/periodicities/edit.rhtml:1
+#, fuzzy
+msgid "Editing periodicity"
+msgstr "produto"
+
 #: app/views/bank_accounts/new.rhtml:1
 msgid "Adding New Bank Account"
 msgstr ""
@@ -3557,7 +3670,7 @@ msgstr ""
 msgid "New product"
 msgstr "Novo produto"
 
-#: app/views/products/new.rhtml:5
+#: app/views/products/new.rhtml:8
 msgid "Add to stock?"
 msgstr ""
 
@@ -3575,14 +3688,6 @@ msgstr ""
 
 #: app/views/products/images.rhtml:20 app/views/mass_mails/attach.rhtml:5
 msgid "Image file"
-msgstr ""
-
-#: app/views/products/images.rhtml:25 app/views/mass_mails/attach.rhtml:9
-msgid "Add"
-msgstr ""
-
-#: app/views/products/_new_stock_entry.rhtml:20
-msgid "Buy Price"
 msgstr ""
 
 #: app/views/products/_new_stock_entry.rhtml:38
@@ -3788,8 +3893,17 @@ msgstr ""
 msgid "Point of sale"
 msgstr ""
 
-#~ msgid "payment"
-#~ msgstr "pagamento"
+#, fuzzy
+#~ msgid "Ledger Fields"
+#~ msgstr "Livro Caixa"
+
+#, fuzzy
+#~ msgid "Stock|Ledger"
+#~ msgstr "Livro Caixa"
+
+#, fuzzy
+#~ msgid "Ledger Display Configuration"
+#~ msgstr "Configurações"
 
 #, fuzzy
 #~ msgid "Payment|Owner type"
@@ -3879,18 +3993,8 @@ msgstr ""
 #~ msgid "Listing objects of configuration"
 #~ msgstr "Lista de objetos de configuração"
 
-#~ msgid "Item was successfully updated."
-#~ msgstr "Item atualizado com sucesso."
-
-#~ msgid "Item was successfully created."
-#~ msgstr "Item criado com sucesso."
-
 #~ msgid "Interface"
 #~ msgstr "Interface"
-
-#, fuzzy
-#~ msgid "Field Configuration"
-#~ msgstr "Configurações"
 
 #, fuzzy
 #~ msgid "Configuration|Full product"

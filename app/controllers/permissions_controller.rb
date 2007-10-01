@@ -61,16 +61,16 @@ class PermissionsController < ApplicationController
 
   def create
     @user = User.new(params[:user])
-      @user_profile = Profile.new
-      @user_profile.name = Profile.describe(params[:user_profile][:template])
-      @user_profile.template = params[:user_profile][:template]
+#      @user_profile = Profile.new
+#      @user_profile.name = Profile.describe(params[:user_profile][:template])
+#      @user_profile.template = params[:user_profile][:template]
 #TODO continue after FIXME
-if can(@user_profile.locations_by_template(params[:user_profile][:template]))
-  render :text => @user_profile.locations_by_template(params[:user_profile][:template]).inspect
-else
-  render :text => 'bli'
-end
-return
+#if can(@user_profile.locations_by_template(params[:user_profile][:template]))
+#  render :text => @user_profile.locations_by_template(params[:user_profile][:template]).inspect
+#else
+#  render :text => 'bli'
+#end
+#return
     if @user.save
       @user_profile = Profile.new
       @user_profile.name = Profile.describe(params[:user_profile][:template])

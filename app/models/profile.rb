@@ -108,6 +108,10 @@ class Profile < ActiveRecord::Base
     permissions = TEMPLATES[template].each{|t| t }
     self.permissions = permissions
   end
+ 
+  def locations_by_template(template)
+    TEMPLATES[template].each{|t| t }
+  end
 
   # Describes the permissions granted comparing them with the templates in this
   # class.
@@ -118,8 +122,6 @@ class Profile < ActiveRecord::Base
   # maps a template code (a key in TEMPLATES) to an human-readable string
   def self.describe(template)
     return {
-      'full_access' => _('Full access'),
-      'read_only' => _('Read-only'), 
       'sales_person' => _('Sales person'),
       'sales_supervisor' => _('Sales Supervisor'), 
       'financial' => _('Financial'), 

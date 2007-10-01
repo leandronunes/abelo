@@ -111,7 +111,10 @@ module ApplicationHelper
         :class => 'control_header'),
         (@organization.nil? or current_user.administrator) ? 
               link_to(_('Abelo'), :controller => 'organizations') : 
-              link_to(@organization.name, :controller => 'main') ,
+              (can(:controller => 'main') ? 
+                 link_to(@organization.name, :controller => 'main') : 
+                 link_to(@organization.name, :controller => 'public') 
+              ),
         if controller.controller_name != 'main'
         "&rarr " + link_to(controller.describe(@location), :controller => @location)
         end
@@ -121,10 +124,13 @@ module ApplicationHelper
   end
 
   def link_to_organization(org, html_options = {})
-    link_to(org.name, 
-       { :organization_nickname => org.identifier, :controller => 'main', :action => 'index' }, 
-       html_options
-    )
+    location = [
+      {:organization_nickname => org.identifier, :controller => 'main'},
+      {:organization_nickname => org.identifier, :controller => 'ledgers'},
+      {:organization_nickname => org.identifier, :controller => 'point_of_sale'}
+    ]
+    link_location = location.detect{|l| can(l)}
+    link_to(org.name, link_location,  html_options )
   end
 
   def select_payments(object, method, title=nil)

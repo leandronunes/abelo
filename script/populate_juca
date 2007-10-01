@@ -329,7 +329,7 @@ brinco.add_suppliers(mundo_prata)
 ############People################################
 Person.destroy_all
 gerente = User.create!("administrator"=>false, "login"=>"quentin", "email"=>"quentin@example.com", :password => 'test', :password_confirmation => 'test')
-another_gerente = User.create!("password"=>"juca", "password_confirmation" => 'juca', "administrator"=>false, "login"=>"juca", "email"=>"juca@example.com")
+financial = User.create!("password"=>"test", "password_confirmation" => 'test', "administrator"=>false, "login"=>"financeiro", "email"=>"financeiro@example.com")
 test_user = User.create!("administrator"=>false, "login"=>"test", "email"=>"test@example.com", :password => 'test', :password_confirmation => 'test')
 admin = User.create!("administrator"=>true, "login"=>"admin", "email"=>"admin@example.com", :password => 'admin', :password_confirmation => 'admin' )
 sales_person = User.create!("administrator"=>false, "login"=>"vendedor", "email"=>"vendedor@example.com", :password => 'test', :password_confirmation => 'test')
@@ -347,7 +347,7 @@ perfil_organization.save!
 perfil_financial = Profile.new
 perfil_financial.name = 'Financeiro'
 perfil_financial.organization = organization
-perfil_financial.user = another_gerente
+perfil_financial.user = financial
 perfil_financial.template = 'financial'
 perfil_financial.save!
 
@@ -356,19 +356,19 @@ perfil_admin.user = admin
 perfil_admin.template = 'administration'
 perfil_admin.save!
 
-perfil_financial = Profile.new
-perfil_financial.name = 'Vendedor'
-perfil_financial.organization = organization
-perfil_financial.user = sales_person
-perfil_financial.template = 'sales_person'
-perfil_financial.save!
+perfil_vendedor = Profile.new
+perfil_vendedor.name = 'Vendedor'
+perfil_vendedor.organization = organization
+perfil_vendedor.user = sales_person
+perfil_vendedor.template = 'sales_person'
+perfil_vendedor.save!
 
-perfil_financial = Profile.new
-perfil_financial.name = 'Supervisor'
-perfil_financial.organization = organization
-perfil_financial.user = sales_supervisor
-perfil_financial.template = 'sales_supervisor'
-perfil_financial.save!
+perfil_sales_supervisor = Profile.new
+perfil_sales_supervisor.name = 'Supervisor'
+perfil_sales_supervisor.organization = organization
+perfil_sales_supervisor.user = sales_supervisor
+perfil_sales_supervisor.template = 'sales_supervisor'
+perfil_sales_supervisor.save!
 
 ############Customers#############################
 Customer.destroy_all

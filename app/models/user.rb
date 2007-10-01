@@ -21,11 +21,6 @@ class User < Person
     self.profiles.destroy_all 
   end
 
-  def self.configuration_class
-    UserDisplay 
-  end
-
-
   # Tells if this user has access to the <tt>location</tt> passed as parameter
   # (as a URL hash, just like everywhere in Rails).
   #
@@ -54,6 +49,10 @@ class User < Person
   def self.authenticate(login, password)
     u = find_by_login(login) # need to get the salt
     u && u.authenticated?(password) ? u : nil
+  end
+
+  def organization
+    self.organizations.find(:first)
   end
 
   # Encrypts some data with the salt.

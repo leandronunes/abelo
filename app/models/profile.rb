@@ -5,6 +5,7 @@ class Profile < ActiveRecord::Base
   belongs_to :virtual_community
 
   validates_presence_of :user_id
+  validates_presence_of :organization_id, :if  => lambda {|p| !p.user.nil? and !p.user.administrator }
 
   serialize :permissions, Array
 
@@ -18,9 +19,6 @@ class Profile < ActiveRecord::Base
       self.errors.add('permissions', '%{fn} must be a list of permissions')
     end
     if !self.user.nil? and self.user.administrator and !self.organization.nil?
-      self.errors.add('organization_id', 'An administrator user cannot be associated to an organization')
-    end
-    if !self.user.nil? and !self.user.administrator and self.organization.nil?
       self.errors.add('organization_id', 'An administrator user cannot be associated to an organization')
     end
   end
@@ -42,7 +40,12 @@ class Profile < ActiveRecord::Base
     end
   end
 
-
+  def allows_all?(locations)
+    return false unless locations.kind_of? Array
+    locations.all? do |item|
+      allows?(item)
+    end
+  end
   # defined permission templates
   TEMPLATES = {
     'sales_person' => [
@@ -89,7 +92,8 @@ class Profile < ActiveRecord::Base
       { 'controller' => 'interface', 'action' => '*' },
       { 'controller' => 'content_viewer', 'action' => '*' },
       { 'controller' => 'periodicities', 'action' => '*' },
-    ]
+    ],
+    'other' => []
   }
 
   # detects the template used for this Profile, if any. Returns 'other'
@@ -108,9 +112,10 @@ class Profile < ActiveRecord::Base
     permissions = TEMPLATES[template].each{|t| t }
     self.permissions = permissions
   end
- 
-  def locations_by_template(template)
-    TEMPLATES[template].each{|t| t }
+
+  # Return an array with all locations defined by template
+  def self.locations_by_template(template)
+    TEMPLATES[template]
   end
 
   # Describes the permissions granted comparing them with the templates in this

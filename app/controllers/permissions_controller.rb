@@ -3,8 +3,6 @@ class PermissionsController < ApplicationController
   auto_complete_for :user, :login
 
   needs_organization
-  # before_filter :check_admin_rights
-
 
   def autocomplete_login
     escaped_string = Regexp.escape(params[:user][:login])
@@ -12,7 +10,6 @@ class PermissionsController < ApplicationController
     @users = User.find(:all).select { |dp| dp.login.match re}
     render :layout => false
   end
-
 
   before_filter :create_tabs
 
@@ -61,39 +58,28 @@ class PermissionsController < ApplicationController
 
   def create
     @user = User.new(params[:user])
-#      @user_profile = Profile.new
-#      @user_profile.name = Profile.describe(params[:user_profile][:template])
-#      @user_profile.template = params[:user_profile][:template]
-#TODO continue after FIXME
-#if can(@user_profile.locations_by_template(params[:user_profile][:template]))
-#  render :text => @user_profile.locations_by_template(params[:user_profile][:template]).inspect
-#else
-#  render :text => 'bli'
-#end
-#return
-    if @user.save
-      @user_profile = Profile.new
-      @user_profile.name = Profile.describe(params[:user_profile][:template])
-      @user_profile.template = params[:user_profile][:template]
-      @user_profile.organization = @organization
-      @user_profile.user = @user
-      if @user_profile.save 
+
+    template = params[:user][:template] unless params[:user].nil?
+    if can(Profile.locations_by_template(template))
+      @user.template_valid = true
+    end
+    
+    @user.organization_profile = @organization
+    begin
+      if @user.save
         flash[:notice] = _('User successfully created.')
         redirect_to :action => 'list'
-        return
+      else
+        render :action => 'new'
       end
-    else
+    rescue
       render :action => 'new'
     end
   end
 
   def edit
-    begin
-      @user = @organization.users.find(params[:id])
-    rescue 
-      @message = _('The user was not found')
-      render :template => 'shared/not_found'
-    end
+    @user = @organization.users.find(params[:id])
+    @user.organization_profile= @organization
   end
 
   def update

@@ -28,9 +28,11 @@
       )
   %>
 
+teste <%= @user.template %> bli
+
   <%= display_field_edit(item, 'profiles',
         :title => _('Template'),
-        :content => select_template('user_profile', 'template') 
+        :content => select_template('user', 'template') 
       )
   %>
 

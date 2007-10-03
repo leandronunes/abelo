@@ -3,9 +3,10 @@ require "digest/sha1"
 class User < Person
   # Virtual attribute for the unencrypted password
   attr_accessor :password
-  attr_accessor :organization_profile
-  attr_accessor :template
+  attr_accessor :profile_organization
+  attr_accessor :profile_template
   attr_accessor :template_valid
+  attr_accessor :validates_profile
 
   validates_presence_of     :login, :email
   validates_presence_of     :password,                   :if => :password_required?
@@ -27,11 +28,12 @@ class User < Person
   acts_as_ferret
 
   after_create do |user|
+    return unless user.validates_profile?
     transaction do
       profile = Profile.new
       profile.name = user.template
       profile.template = user.template
-      profile.organization = user.organization_profile
+      profile.organization = user.profile_organization
       profile.user_id = user.id
       profile.save! 
     end  
@@ -39,21 +41,30 @@ class User < Person
 
   def validate
     unless template_valid?
-      self.errors.add(:template, _("You don't have permissions to create a user with this template %s ") % self.template)
+      self.errors.add(_("You don't have permissions to create a user with template %s. This template ") % self.template)
     end
   end
 
+  def template= value
+    self.profile_template = value
+  end
+
   def template
-    return nil if self.organization_profile.nil?
-    if !self.profiles.nil? and !self.organization_profile.blank?
-      p = self.profiles.find_by_organization_id(self.organization_profile.id)
+    return self.profile_template if self.profile_organization.blank? or !self.profile_template.blank?
+    if !self.profiles.nil? and !self.profile_organization.blank?
+      p = self.profiles.find_by_organization_id(self.profile_organization.id)
     end
     p.template unless p.nil?
   end
 
   def template_valid?
-    self.template_valid == true ? true : false
+    self.template_valid.to_s == 'true' ? true : false
   end
+
+  def validates_profile?
+    self.validates_profile.to_s == 'true' ? true : false
+  end
+
 
   # Destroy all profiles before destroy the user 
   def destroy_profiles

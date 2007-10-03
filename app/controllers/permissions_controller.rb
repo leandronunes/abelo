@@ -58,13 +58,14 @@ class PermissionsController < ApplicationController
 
   def create
     @user = User.new(params[:user])
+    @user.validates_profile = true
 
     template = params[:user][:template] unless params[:user].nil?
     if can(Profile.locations_by_template(template))
       @user.template_valid = true
     end
     
-    @user.organization_profile = @organization
+    @user.profile_organization = @organization
     begin
       if @user.save
         flash[:notice] = _('User successfully created.')
@@ -79,7 +80,7 @@ class PermissionsController < ApplicationController
 
   def edit
     @user = @organization.users.find(params[:id])
-    @user.organization_profile= @organization
+    @user.profile_organization= @organization
   end
 
   def update

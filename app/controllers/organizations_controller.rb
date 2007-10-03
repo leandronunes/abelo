@@ -7,14 +7,12 @@ class OrganizationsController < ApplicationController
   uses_admin_organization_tabs
   design :holder => 'virtual_community'
 
-
   def autocomplete_name
     escaped_string = Regexp.escape(params[:organization][:name])
     re = Regexp.new(escaped_string, "i")
     @organizations = Organization.find(:all).select { |o| o.name.match re}
     render :layout=>false
   end
-
 
   def index
     redirect_to :action => 'list'

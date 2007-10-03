@@ -28,19 +28,20 @@ class User < Person
   acts_as_ferret
 
   after_create do |user|
-    return unless user.validates_profile?
-    transaction do
-      profile = Profile.new
-      profile.name = user.template
-      profile.template = user.template
-      profile.organization = user.profile_organization
-      profile.user_id = user.id
-      profile.save! 
-    end  
+    if user.validates_profile?
+      transaction do
+        profile = Profile.new
+        profile.name = user.template
+        profile.template = user.template
+        profile.organization = user.profile_organization
+        profile.user_id = user.id
+        profile.save! 
+      end  
+    end
   end
 
   def validate
-    unless template_valid?
+    if !self.template_valid? and self.validates_profile?
       self.errors.add(_("You don't have permissions to create a user with template %s. This template ") % self.template)
     end
   end

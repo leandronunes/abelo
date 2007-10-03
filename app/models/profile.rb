@@ -110,7 +110,8 @@ class Profile < ActiveRecord::Base
   def template=(template)
     raise ArgumentError.new("%s is not a valid template" % template) unless TEMPLATES[template]
     permissions = TEMPLATES[template].each{|t| t }
-    permissions = permissions.reject { |key,value| key.to_s == 'organization_nickname' }
+    permissions = permissions.each{|a| a.reject { |key,value| key.to_s == 'organization_nickname' }}
+#TODO the preblem is here
     self.permissions = permissions
   end
 

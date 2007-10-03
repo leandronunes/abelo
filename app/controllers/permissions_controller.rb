@@ -66,16 +66,16 @@ class PermissionsController < ApplicationController
     end
     
     @user.profile_organization = @organization
-    begin
+#    begin
       if @user.save
         flash[:notice] = _('User successfully created.')
         redirect_to :action => 'list'
       else
         render :action => 'new'
       end
-    rescue
+#    rescue
       render :action => 'new'
-    end
+#    end
   end
 
   def edit

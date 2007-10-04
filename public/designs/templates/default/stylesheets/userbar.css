@@ -20,7 +20,7 @@ height: 30px;
   margin-bottom: 0px;
 }
 #userbar .navigation_bar {
-padding-left: 40px;
+  padding-left: 40px;
 }
 
 #userbar .navigation_bar .control_header{
@@ -71,11 +71,13 @@ padding-left: 40px;
 }
 
 div.login_bar {
-float: right;
+  float: right;
 }
 
 div.login_bar a {
-background-position: top left;
-background-repeat: no-repeat;
-padding-left: 18px;
+  background-position: top left;
+  background-repeat: no-repeat;
+  padding-left: 18px;
+  height: 26px;
+  padding-bottom: 2px;
 }

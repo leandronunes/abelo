@@ -1,4 +1,4 @@
-<%= title _('Stock history for %s') % @product.name %>
+<%= title _('Stock history for %s') % content_tag(:b, @product.name) %>
 
 <%  form_tag({:action => 'list', :product_id => @product }, :class => 'search_itens') do %>
   <%= text_field( 'supplier', 'name', :class => 'filter_field') %>

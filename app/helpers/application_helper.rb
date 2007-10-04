@@ -314,7 +314,7 @@ module ApplicationHelper
   end
 
   def footer
-    _("Copyrigth © 2007 %s. This software is under %s") % [link_to(_('Colivre'), 'http://www.colivre.coop.br', :alt => 'Cooperativa de Tecnologias Livres'), link_to(_('GPL'), 'http://www.gnu.org/licenses/licenses.html#GPL')]
+    _("Copyrigth © 2007 %s. This software is under %s") % [link_to(_('Colivre'), 'http://www.colivre.coop.br', :alt => 'Cooperativa de Tecnologias Livres'), link_to(_('GPLv3'), 'http://www.gnu.org/licenses/gpl-3.0.html')]
   end
 
   def select_item(object, method, collection=[], text_method=:name, value_method=:id )

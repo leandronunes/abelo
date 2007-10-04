@@ -33,7 +33,7 @@
                   :url => {:action => 'display_table', :chosen_account => b.id, :query => @query, :accounts => @chosen_accounts.ids, :tags => @chosen_tags.join(','), :categories => @chosen_categories.ids, :start_date_day => @start_date_day, :start_date_month => @start_date_month, :start_date_year => @start_date_year, :end_date_day => @end_date_day, :end_date_month => @end_date_month, :end_date_year => @end_date_year }
                 },
                 :class => 'detach'
-              ) %> 
+              ) %> </br> 
           <% else %>
           <%= link_to_remote(b.name, 
                   {
@@ -41,7 +41,7 @@
                   :url => {:action => 'display_table', :accounts => "#{b.id},#{@chosen_accounts.ids}", :query => @query, :tags => @chosen_tags.join(','), :categories => @chosen_categories.ids, :start_date_day => @start_date_day, :start_date_month => @start_date_month, :start_date_year => @start_date_year, :end_date_day => @end_date_day, :end_date_month => @end_date_month, :end_date_year => @end_date_year }
                   }
               ) %> 
-          <% end %>
+          <% end %> </br>
         <% end %>
       </td>
 

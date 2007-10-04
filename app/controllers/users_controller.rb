@@ -68,7 +68,8 @@ class UsersController < ApplicationController
     self.current_user = @user
     redirect_back_or_default(:controller => 'public')
     flash[:notice] = _("Thanks for signing up!")
-    Notifier::deliver_signup_thanks(@user)
+#TODO see a better way to sent email
+#    Notifier::deliver_signup_thanks(@user)
     rescue ActiveRecord::RecordInvalid
     render :action => 'signup'
   end

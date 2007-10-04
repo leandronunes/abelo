@@ -100,6 +100,7 @@ class Profile < ActiveRecord::Base
   # if no template matches
   def template
     templates = TEMPLATES.select do |key, value|
+      value = value.map{|v| v.reject { |key,value| key.to_s == 'organization_nickname' }}
       value == self.permissions
     end
     templates.first ? templates.first.first : 'other'
@@ -110,8 +111,7 @@ class Profile < ActiveRecord::Base
   def template=(template)
     raise ArgumentError.new("%s is not a valid template" % template) unless TEMPLATES[template]
     permissions = TEMPLATES[template].each{|t| t }
-    permissions = permissions.each{|a| a.reject { |key,value| key.to_s == 'organization_nickname' }}
-#TODO the preblem is here
+    permissions = permissions.map{|a| a.reject { |key,value| key.to_s == 'organization_nickname' }}
     self.permissions = permissions
   end
 

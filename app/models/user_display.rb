@@ -1,7 +1,7 @@
 class UserDisplay < DisplayConfiguration
 
   def self.available_fields
-    ['login', 'email','password', 'password_confirmation', 'profiles' ]
+    ['login', 'email','password', 'password_confirmation', 'template_description' ]
   end
 
   def self.describe(field)
@@ -10,7 +10,7 @@ class UserDisplay < DisplayConfiguration
       'email' => _('E-mail'),
       'password' => _('Password'),
       'password_confirmation' => _('Password Confirmation'),
-      'profile_ids' => _('Profiles')
+      'template_description' => _('Template')
     }[field] || field
   end
  

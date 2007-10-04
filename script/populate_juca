@@ -163,7 +163,7 @@ configuration.set_stock_out_displays=(params)
 UserDisplay.delete_all
 params = {}
 UserDisplay.available_fields.collect { |d|
-  in_list = ['login', 'profiles'].include?(d) ? true : false
+  in_list = ['login', 'template_description'].include?(d) ? true : false
   params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
 }
 configuration.set_user_displays=(params)

@@ -6,23 +6,22 @@ class PermissionsController; def rescue_action(e) raise e end; end
 
 class PermissionsControllerTest < Test::Unit::TestCase
 
-  include TestingUnderOrganization
   fixtures :organizations, :profiles, :configurations, :people
 
   under_organization :one
-
-#TODO make these tests works
-  def test_true
-    assert true
-  end
 
   def setup
     @controller = PermissionsController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-    @organization = Organization.find_by_identifier 'one'
-    @organization_nickname = 'one'
+    @organization = Organization.find_by_identifier('one')
+    @user = User.find(:first)
     login_as('quentin')
+  end
+
+  def test_setup
+    assert @user.valid?
+    assert @organization.users.include?(@user)
   end
 
   def test_index
@@ -44,6 +43,7 @@ class PermissionsControllerTest < Test::Unit::TestCase
     get :list
 
     assert_nil assigns(:query)
+    assert_not_nil assigns(:organization)
     assert_not_nil assigns(:users)
     assert_kind_of Array, assigns(:users)
     assert_not_nil assigns(:user_pages)
@@ -67,11 +67,12 @@ class PermissionsControllerTest < Test::Unit::TestCase
   end
 
   def test_show
-    get :show, :id => 1
+    get :show, :id => @user.id
 
     assert_response :success
     assert_template 'show'
 
+    assert_not_nil assigns(:organization)
     assert_not_nil assigns(:user)
     assert assigns(:user).valid?
   end
@@ -88,13 +89,21 @@ class PermissionsControllerTest < Test::Unit::TestCase
   def test_create_correct_params
     num_users = User.count
 
-    post :create, :user => {:login => "josias", :email => "t@example.com", :password => 'test', :password_confirmation => 'test' }, :user_profile => {:template => 'financial'}
+    post :create, :user => {:login => "josias", :email => "t@example.com", :password => 'test', :password_confirmation => 'test', :template => 'financial'}
 
     assert_response :redirect
     assert_redirected_to :action => 'list'
 
     assert_equal num_users + 1, User.count
   end
+
+  def test_validates_profile_on_create
+    post :create
+
+    assert_not_nil assigns(:user)
+    assert assigns(:user).validates_profile
+  end
+
 
   def test_create_wrong_params
     num_user = User.count
@@ -108,49 +117,72 @@ class PermissionsControllerTest < Test::Unit::TestCase
   end
 
   def test_edit
-    get :edit, :id => 1, :user_profile => {:template => 'financial'}
+    get :edit, :id => @user.id
 
     assert_response :success
     assert_template 'edit'
 
+    assert_not_nil assigns(:organization)
     assert_not_nil assigns(:user)
     assert assigns(:user).valid?
   end
 
   def test_update
-    post :update, :id => 1, :user => {:login => 'test'}, :user_profile => {:template => 'financial'}
+    post :update, :id => @user.id, :user => {:login => 'test'}
 
     assert_response :redirect
     assert_redirected_to :action => 'list'
   end
 
-#  def test_update_with_wrong_params
-#    user = User.new
-#    user.login = "joazinho"
-#    user.email = "joao@example.com"
-#    user.password = 'test'
-#    user.password_confirmation = 'test'
-#    assert user.save
-#
-#    post :update, :id => user.id , :user => {:login => 'a'}, :user_profile => {:template => nil} 
-#
-#    assert_response :success
-#    assert_not_nil assigns(:user)
-#    assert_template 'edit'
-#  end
+  def test_update_with_wrong_params
+    post :update, :id => @user.id, :user => {:login => nil}
+
+    assert_response :success
+    assert_template 'edit'
+  end
+
+  def test_update_login
+    new_login = 'test login'
+    assert_not_equal new_login, @user.login
+    user_id = @user.id
+    post :update, :id => @user.id, :user => {:login => new_login}
+    
+    assert_equal new_login, User.find(user_id).login
+  end
+
+  def test_update_email
+    new_email = 'test@test.com'
+    assert_not_equal new_email, @user.email
+    user_id = @user.id
+    post :update, :id => @user.id, :user => {:email => new_email}
+    
+    assert_equal new_email, User.find(user_id).email
+  end
+
+  def test_update_template
+    new_template = 'financial'
+#puts 'teste'
+#puts @user.profiles.inspect
+    profile = @user.profile_by_organization(@organization)
+    assert_not_equal new_template, profile.template
+    profile_id = profile.id
+    post :update, :id => @user.id, :user => {:template => new_template}
+   
+    assert_equal new_template, Profile.find(profile_id).template
+  end
 
 
-
-
-
-#  def test_destroy
-#    count = Profile.count
-#    assert count > 0
-#    post :destroy, :id => 3
-#    assert_raise(ActiveRecord::RecordNotFound) do
-#      Profile.find(3)
-#    end
-#    assert_equal count - 1, Profile.count
-#  end
+  def test_destroy
+    count_profile = Profile.count
+    count_user = User.count
+    num_user_profiles = @user.profiles.length
+    user_id = @user.id
+    post :destroy, :id => @user.id
+    assert_raise(ActiveRecord::RecordNotFound) do
+      User.find(user_id)
+    end
+    assert_equal count_profile - num_user_profiles, Profile.count
+    assert_equal count_user - 1, User.count
+  end
 
 end

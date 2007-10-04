@@ -28,32 +28,17 @@ class PermissionsController < ApplicationController
 
     if @query.nil?
       @users = @organization.users
+      @users.map{|u| u.profile_organization = @organization }
       @user_pages, @users = paginate_by_collection @users
     else
       @users = @organization.users.full_text_search(@query)
+      @users.map{|u| u.profile_organization = @organization }
       @user_pages, @users = paginate_by_collection @users
-    end
-  end
-
-  def select_template
-    @user_profile = @organization.profiles.find(params[:id])
-  end
-
-  def update_template
-    @user_profile = @organization.profiles.find(params[:id])
-    if @user_profile.update_attributes(params[:user_profile])
-      flash[:notice] = _('Profile updated successfully')
-      redirect_to :action => 'index'
-    else
-      render :action => 'select_template'
     end
   end
 
   def new
     @user = User.new
-    permissions = Array.new
-    @user_profile = Profile.new
-    @user_profile.permissions = permissions   
   end
 
   def create
@@ -66,16 +51,16 @@ class PermissionsController < ApplicationController
     end
     
     @user.profile_organization = @organization
-#    begin
+    begin
       if @user.save
         flash[:notice] = _('User successfully created.')
         redirect_to :action => 'list'
       else
         render :action => 'new'
       end
-#    rescue
+    rescue
       render :action => 'new'
-#    end
+    end
   end
 
   def edit
@@ -85,12 +70,15 @@ class PermissionsController < ApplicationController
 
   def update
     @user = @organization.users.find(params[:id])
+    @user.validates_profile = true
 
+    template = params[:user][:template] unless params[:user].nil?
+    if can(Profile.locations_by_template(template))
+      @user.template_valid = true
+    end
+    
+    @user.profile_organization = @organization
     if @user.update_attributes(params[:user])
-      @user_profile = @user.profiles.first
-      @user_profile.name = Profile.describe(params[:user_profile][:template])
-      @user_profile.template = params[:user_profile][:template]
-      @user_profile.update 
       flash[:notice] = _('User was successfully upated.')
       redirect_to :action => 'list'
     else
@@ -101,6 +89,7 @@ class PermissionsController < ApplicationController
 
   def show
     @user = @organization.users.find(params[:id])
+    @user.profile_organization = @organization
   end
 
   def destroy

@@ -40,6 +40,17 @@ class User < Person
     end
   end
 
+  after_update do |user|
+    if user.validates_profile?
+      transaction do
+        profile = user.profile_by_organization(user.profile_organization)
+        profile.update_attributes(:name => user.template, :template => user.template)
+      end  
+    end
+  end
+
+
+
   def validate
     if !self.template_valid? and self.validates_profile?
       self.errors.add(_("You don't have permissions to create a user with template %s. This template ") % self.template)
@@ -53,9 +64,13 @@ class User < Person
   def template
     return self.profile_template if self.profile_organization.blank? or !self.profile_template.blank?
     if !self.profiles.nil? and !self.profile_organization.blank?
-      p = self.profiles.find_by_organization_id(self.profile_organization.id)
+      p = self.profile_by_organization(self.profile_organization)
     end
     p.template unless p.nil?
+  end
+
+  def template_description
+    Profile.describe(template)
   end
 
   def template_valid?
@@ -101,6 +116,12 @@ class User < Person
   def self.authenticate(login, password)
     u = find_by_login(login) # need to get the salt
     u && u.authenticated?(password) ? u : nil
+  end
+
+  # Return a profile associated to the current organization
+  def profile_by_organization(organization)
+    return nil if organization.nil?
+    self.profiles.find_by_organization_id(organization.id)
   end
 
   def organization

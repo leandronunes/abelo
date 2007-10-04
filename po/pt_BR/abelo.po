@@ -9,11 +9,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: abelo 0.3.0\n"
 "POT-Creation-Date: 2007-10-01 18:17-0300\n"
-"PO-Revision-Date: 2007-09-27 15:54-0300\n"
-"Last-Translator: Krishnamurti Lelis Lima Vieira Nunes <krishna@colivre.coop."
-"br>\n"
-"Language-Team: Krishnamurti Lelis Lima Vieira Nunes <krishna@colivre.coop."
-"br>\n"
+"PO-Revision-Date: 2007-10-04 11:49-0300\n"
+"Last-Translator: Leandro Nunes dos Santos <leandronunes@colivre.coop.br>\n"
+"Language-Team: Krishnamurti Lelis Lima Vieira Nunes "
+"<krishna@colivre.coop.br>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -297,14 +296,12 @@ msgid "Cannot upload this bank account. It wasn't found"
 msgstr "Impossível atualizar conta bancária: não encontrada."
 
 #: app/controllers/stock_controller.rb:77
-#, fuzzy
 msgid "It was successfully created."
-msgstr "Item criado com sucesso."
+msgstr "Foi criado com sucesso."
 
 #: app/controllers/stock_controller.rb:149
-#, fuzzy
 msgid "It was successfully updated."
-msgstr "Item atualizado com sucesso."
+msgstr "Foi atualizado com sucesso."
 
 #: app/controllers/stock_controller.rb:175 app/views/stock/list.rhtml:1
 #: app/views/stock/index.rhtml:1
@@ -341,13 +338,14 @@ msgstr "Usuário atualizado com sucesso."
 
 #: app/controllers/main_controller.rb:6
 msgid "Welcome to Abelo System"
-msgstr ""
+msgstr "Bem-Vindo ao Sistema Abelo"
 
 #: app/controllers/application.rb:191
-#, fuzzy
 msgid ""
 "There is no organization with nickname %s or you don't have access to it"
-msgstr "Não há nenhuma organização com identificador %s"
+msgstr ""
+"Não há nenhuma organização com identificador %s ou você não tem acesso a "
+"ele."
 
 #: app/controllers/application.rb:214
 msgid ""
@@ -931,9 +929,8 @@ msgid "VirtualCommunity|Design data"
 msgstr "Formato dos dados"
 
 #: app/models/virtual_community.rb:-
-#, fuzzy
 msgid "VirtualCommunity|Is default"
-msgstr "Formato dos dados"
+msgstr "É padrão"
 
 #: app/models/department.rb:-
 msgid "department"
@@ -1281,7 +1278,7 @@ msgstr "Ciano Claro"
 
 #: app/models/color.rb:75
 msgid "Light Golden Rod Yellow"
-msgstr ""
+msgstr "Light Golden Rod Yellow"
 
 #: app/models/color.rb:76
 msgid "Light Gray"
@@ -1313,11 +1310,11 @@ msgstr "Azul Celeste Claro"
 
 #: app/models/color.rb:83
 msgid "Light Slate Gray"
-msgstr ""
+msgstr "Light Slate Gray"
 
 #: app/models/color.rb:84
 msgid "Light Slate Grey"
-msgstr ""
+msgstr "Light Slate Grey"
 
 #: app/models/color.rb:85
 msgid "Light Steel Blue"
@@ -1337,7 +1334,7 @@ msgstr "Verde Lima"
 
 #: app/models/color.rb:89
 msgid "Linen"
-msgstr ""
+msgstr "Linen"
 
 #: app/models/color.rb:90
 msgid "Magenta"
@@ -1345,7 +1342,7 @@ msgstr "Escarlate"
 
 #: app/models/color.rb:91
 msgid "Maroon"
-msgstr ""
+msgstr "Maroon"
 
 #: app/models/color.rb:92
 msgid "Medium Aqua Marine"
@@ -1369,7 +1366,7 @@ msgstr "Verde Marinho Médio "
 
 #: app/models/color.rb:97
 msgid "Medium Slate Blue"
-msgstr ""
+msgstr "Medium Slate Blue"
 
 #: app/models/color.rb:98
 msgid "Medium Spring Green"
@@ -1401,7 +1398,7 @@ msgstr "Mocassim"
 
 #: app/models/color.rb:105
 msgid "Navajo White"
-msgstr ""
+msgstr "Navajo White"
 
 #: app/models/color.rb:106
 msgid "Navy"
@@ -1409,7 +1406,7 @@ msgstr "Marinha"
 
 #: app/models/color.rb:107
 msgid "Old Lace"
-msgstr ""
+msgstr "Old Lace"
 
 #: app/models/color.rb:108
 msgid "Olive"
@@ -1417,7 +1414,7 @@ msgstr "Oliva"
 
 #: app/models/color.rb:109
 msgid "Olive Drab"
-msgstr ""
+msgstr "Olive Drab"
 
 #: app/models/color.rb:110
 msgid "Orange"
@@ -1481,7 +1478,7 @@ msgstr "Vermelho"
 
 #: app/models/color.rb:125
 msgid "Rosy Brown"
-msgstr ""
+msgstr "Rosy Brown"
 
 #: app/models/color.rb:126
 msgid "Royal Blue"
@@ -1509,7 +1506,7 @@ msgstr "Concha Marinha"
 
 #: app/models/color.rb:132
 msgid "Sienna"
-msgstr ""
+msgstr "Sienna"
 
 #: app/models/color.rb:133
 msgid "Silver"
@@ -1521,15 +1518,15 @@ msgstr "Azul Celeste"
 
 #: app/models/color.rb:135
 msgid "Slate Blue"
-msgstr ""
+msgstr "Slate Blue"
 
 #: app/models/color.rb:136
 msgid "Slate Gray"
-msgstr ""
+msgstr "Slate Gray"
 
 #: app/models/color.rb:137
 msgid "Slate Grey"
-msgstr ""
+msgstr "Slate Grey"
 
 #: app/models/color.rb:138
 msgid "Snow"
@@ -1545,15 +1542,15 @@ msgstr "Azul Metálico"
 
 #: app/models/color.rb:141
 msgid "Tan"
-msgstr ""
+msgstr "Tan"
 
 #: app/models/color.rb:142
 msgid "Teal"
-msgstr ""
+msgstr "Teal"
 
 #: app/models/color.rb:143
 msgid "Thistle"
-msgstr ""
+msgstr "Thistle"
 
 #: app/models/color.rb:144
 msgid "Tomato"
@@ -1569,7 +1566,7 @@ msgstr "Violeta "
 
 #: app/models/color.rb:147
 msgid "Wheat"
-msgstr ""
+msgstr "Wheat"
 
 #: app/models/color.rb:148
 msgid "White"
@@ -1600,9 +1597,8 @@ msgid "Is to Store?"
 msgstr "É para loja?"
 
 #: app/models/ledger_category_display.rb:15
-#, fuzzy
 msgid "Is to Stock?"
-msgstr "É para loja?"
+msgstr "É para o estoque?"
 
 #: app/models/ledger_category_display.rb:16
 msgid "Type of"
@@ -1643,7 +1639,7 @@ msgstr "Senha encriptada"
 
 #: app/models/person.rb:-
 msgid "Person|Salt"
-msgstr ""
+msgstr "Salt"
 
 #: app/models/person.rb:-
 msgid "Person|Created at"
@@ -1805,12 +1801,11 @@ msgstr "Organização"
 
 #: app/models/stock_in.rb:9
 msgid "The amount must be a positive number"
-msgstr ""
+msgstr "A quantidade deve ser um número positivo"
 
 #: app/models/stock_in.rb:16
-#, fuzzy
 msgid "The price should be at least 0.01"
-msgstr "O valor deveria ser pelo menos 0.01"
+msgstr "O preço deveria ser pelo menos 0.01"
 
 #: app/models/image.rb:-
 msgid "image"
@@ -1861,9 +1856,8 @@ msgid "Password"
 msgstr "Senha"
 
 #: app/models/user_display.rb:12
-#, fuzzy
 msgid "Password Confirmation"
-msgstr "Configurações do campo"
+msgstr "Confirmação de Senha"
 
 #: app/models/user_display.rb:13
 msgid "Profiles"
@@ -1985,9 +1979,8 @@ msgstr "O nome %{fn} para categoria de produto já foi usado."
 
 #: app/models/check_display.rb:23
 #: app/views/shared_payments/_payment_check.rhtml:28
-#, fuzzy
 msgid "Check Number"
-msgstr "Número do cheque"
+msgstr "Número do Cheque"
 
 #: app/models/stock.rb:-
 msgid "stock"
@@ -1998,9 +1991,8 @@ msgid "Stock|Type"
 msgstr "Tipo"
 
 #: app/models/stock.rb:-
-#, fuzzy
 msgid "Stock|Price"
-msgstr "EntradaNoEstoque|Preço"
+msgstr "Preço"
 
 #: app/models/stock.rb:-
 msgid "Stock|Product"
@@ -2064,7 +2056,7 @@ msgstr "Configurações"
 
 #: app/models/display_configuration.rb:8
 msgid "The field %s is not a valid field"
-msgstr ""
+msgstr "O campo %s não é um campo válido"
 
 #: app/models/display_configuration.rb:30
 #: app/models/display_configuration.rb:42
@@ -2350,9 +2342,10 @@ msgid "This function cannot be accessed directly"
 msgstr "Essa função não pode ser acessada diretamente"
 
 #: app/models/ledger.rb:163
-#, fuzzy
 msgid "You must specify the ledger as Money, Check, Credit Card or Debit Card."
-msgstr "Você precisa especificar o lançamento como de crédito ou de débito."
+msgstr ""
+"Você precisa especificar o lançamento como de Dinheiro, Cheque, Cartão de "
+"Crédito ou Cartão de Débito."
 
 #: app/models/ledger.rb:166
 msgid "The value should be at least 0.01"
@@ -2373,9 +2366,8 @@ msgstr ""
 "pagamentos."
 
 #: app/models/periodicity_display.rb:9
-#, fuzzy
 msgid "Namber of Days"
-msgstr "Número de parcelas"
+msgstr "Namero de parcelas"
 
 #: app/models/stock_in_display.rb:14 app/views/stock/_form.rhtml:26
 #: app/views/products/_new_stock_entry.rhtml:20
@@ -2423,9 +2415,8 @@ msgid "An existing organization cannot be renamed."
 msgstr "Uma organização existente não pode ser renomeada."
 
 #: app/models/user_profile.rb:-
-#, fuzzy
 msgid "user profile"
-msgstr "Novo perfil de usuário"
+msgstr "perfil de usuário"
 
 #: app/models/ledger_category.rb:-
 msgid "ledger category"
@@ -2703,7 +2694,7 @@ msgstr "Menos..."
 
 #: app/views/cms/_form.rhtml:11
 msgid "Slug"
-msgstr ""
+msgstr "Slug"
 
 #: app/views/cms/_form.rhtml:17
 msgid "Keywords"
@@ -2850,7 +2841,7 @@ msgstr "Título:"
 
 #: app/views/cms/versions.rhtml:15 app/views/cms/versions.rhtml:36
 msgid "Slug:"
-msgstr ""
+msgstr "Slug:"
 
 #: app/views/cms/versions.rhtml:17 app/views/cms/versions.rhtml:38
 msgid "Keywords:"
@@ -2914,9 +2905,8 @@ msgstr "Nova entrada de estoque para %s"
 
 #: app/views/stock/new.rhtml:10 app/views/stock/_edit.rhtml:5
 #: app/views/stock/show.rhtml:5
-#, fuzzy
 msgid "Payments [%s]"
-msgstr "Pagamentos"
+msgstr "Pagamentos [%s]"
 
 #: app/views/stock/new.rhtml:10 app/views/stock/_edit.rhtml:5
 #: app/views/stock/show.rhtml:5 app/views/products/images.rhtml:25
@@ -2945,9 +2935,8 @@ msgid "Stock history for %s"
 msgstr "Histórico de estoque para %s"
 
 #: app/views/stock/edit.rhtml:1
-#, fuzzy
 msgid "Edit stock for %s"
-msgstr "Editar estoque de %s"
+msgstr "Editar estoque para %s"
 
 #: app/views/users/login.rhtml:15
 msgid "Log in"
@@ -3233,7 +3222,7 @@ msgstr "Supervisor"
 # que quer dizer isso? -- krishna
 #: app/views/point_of_sale/index.rhtml:1
 msgid "Till Open"
-msgstr ""
+msgstr "Venda Aberta"
 
 #: app/views/point_of_sale/index.rhtml:4
 msgid "Add Cash"
@@ -3272,14 +3261,12 @@ msgid "Listing permissions"
 msgstr "Listando permissões"
 
 #: app/views/permissions/show.rhtml:2
-#, fuzzy
 msgid "User %s"
-msgstr "Usuários"
+msgstr "Usuários %s"
 
 #: app/views/permissions/edit.rhtml:2
-#, fuzzy
 msgid "Editing user"
-msgstr "Editando %s"
+msgstr "Editando usuários"
 
 #: app/views/document_items/_new.rhtml:3
 msgid "New item"
@@ -3451,29 +3438,24 @@ msgid "New contact_position"
 msgstr "Nova posição_contato"
 
 #: app/views/periodicities/new.rhtml:1
-#, fuzzy
 msgid "New periodicity"
-msgstr "periodicidade"
+msgstr "Nova periodicidade"
 
 #: app/views/periodicities/_form.rhtml:14
-#, fuzzy
 msgid "Number of Days"
-msgstr "Número de parcelas"
+msgstr "Número de Dias"
 
 #: app/views/periodicities/list.rhtml:1
-#, fuzzy
 msgid "Listing periodicities"
-msgstr "Listando produtos"
+msgstr "Listando periodicidades"
 
 #: app/views/periodicities/show.rhtml:1
-#, fuzzy
 msgid "Periodicity %s"
-msgstr "Periodicidade?"
+msgstr "Periodicidade %s"
 
 #: app/views/periodicities/edit.rhtml:1
-#, fuzzy
 msgid "Editing periodicity"
-msgstr "Editando produto"
+msgstr "Editando periodicidade"
 
 #: app/views/bank_accounts/new.rhtml:1
 msgid "Adding New Bank Account"

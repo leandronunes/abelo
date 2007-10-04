@@ -90,13 +90,6 @@ class ConfigurationControllerTest < Test::Unit::TestCase
     get :show, :id => @configuration.id
 
     assert_not_nil assigns(:configuration)
-    assert_not_nil assigns(:worker_display)
-    assert_not_nil assigns(:customer_display)
-    assert_not_nil assigns(:supplier_display)
-    assert_not_nil assigns(:product_display)
-    assert_not_nil assigns(:department_display)
-    assert_not_nil assigns(:ledger_category_display)
-    assert_not_nil assigns(:bank_account_display)
 
     assert_response :success
     assert_template 'show'

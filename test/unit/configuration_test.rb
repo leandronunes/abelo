@@ -208,6 +208,13 @@ class ConfigurationTest < Test::Unit::TestCase
     assert_equal name, @configuration.document_name
   end
 
+  def test_periodicity_name
+    name = 'some name'
+    @configuration.periodicity_name = name
+    assert @configuration.save
+    assert_equal name, @configuration.periodicity_name
+  end
+
   def test_organization_name=
     name = 'some name'
     @configuration.organization_name = name
@@ -241,6 +248,13 @@ class ConfigurationTest < Test::Unit::TestCase
     @configuration.document_name = name
     assert @configuration.save
     assert_equal @configuration.settings['document_name'], @configuration.document_name
+  end
+
+  def test_periodicity_name=
+    name = 'some name'
+    @configuration.periodicity_name = name
+    assert @configuration.save
+    assert_equal @configuration.settings['periodicity_name'], @configuration.periodicity_name
   end
 
   # Test set_display_configuration= functions to each DISPLAY_CONFIGURATION_CLASSES_TEST

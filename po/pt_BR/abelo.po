@@ -9,10 +9,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: abelo 0.3.0\n"
 "POT-Creation-Date: 2007-10-04 11:42-0300\n"
-"PO-Revision-Date: 2007-10-04 11:49-0300\n"
+"PO-Revision-Date: 2007-10-04 11:53-0300\n"
 "Last-Translator: Leandro Nunes dos Santos <leandronunes@colivre.coop.br>\n"
-"Language-Team: Krishnamurti Lelis Lima Vieira Nunes <krishna@colivre.coop."
-"br>\n"
+"Language-Team: Krishnamurti Lelis Lima Vieira Nunes "
+"<krishna@colivre.coop.br>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -69,9 +69,8 @@ msgid "Product categories"
 msgstr "Categorias de Produto"
 
 #: app/controllers/tabs/configuration.rb:39
-#, fuzzy
 msgid "Periodicties"
-msgstr "Periodicidade %s"
+msgstr "Periodicidades"
 
 #: app/controllers/tabs/register.rb:14
 #: app/views/mass_mails/filter_customers.rhtml:2
@@ -314,14 +313,12 @@ msgid "The organization was successfully updated."
 msgstr "Organização atualizada com sucesso."
 
 #: app/controllers/periodicities_controller.rb:53
-#, fuzzy
 msgid "Periodicity was successfully created."
-msgstr "O produto foi criado com sucesso."
+msgstr "Periodicidade criada com sucesso."
 
 #: app/controllers/periodicities_controller.rb:67
-#, fuzzy
 msgid "Periodicity was successfully updated."
-msgstr "Produto atualizado com sucesso."
+msgstr "Periodicidade atualizada com sucesso."
 
 #: app/controllers/users_controller.rb:45
 msgid "Logged in successfully"
@@ -1913,10 +1910,11 @@ msgid "Account"
 msgstr "Conta"
 
 #: app/models/user.rb:56
-#, fuzzy
 msgid ""
 "You don't have permissions to create a user with template %s. This template "
-msgstr "Você não tem permissão para cancelar um cupom."
+msgstr ""
+"Você não tem permissão para criar um usuário com o template %s. Este "
+"template"
 
 #: app/models/bank.rb:-
 msgid "bank"
@@ -2618,9 +2616,8 @@ msgid "Colivre"
 msgstr "Colivre"
 
 #: app/helpers/application_helper.rb:317
-#, fuzzy
 msgid "GPLv3"
-msgstr "GPL"
+msgstr "GPLv3"
 
 #: app/helpers/application_helper.rb:534
 msgid "False"

@@ -8,11 +8,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: abelo 0.3.0\n"
-"POT-Creation-Date: 2007-10-01 18:17-0300\n"
+"POT-Creation-Date: 2007-10-04 11:42-0300\n"
 "PO-Revision-Date: 2007-10-04 11:49-0300\n"
 "Last-Translator: Leandro Nunes dos Santos <leandronunes@colivre.coop.br>\n"
-"Language-Team: Krishnamurti Lelis Lima Vieira Nunes "
-"<krishna@colivre.coop.br>\n"
+"Language-Team: Krishnamurti Lelis Lima Vieira Nunes <krishna@colivre.coop."
+"br>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -68,6 +68,11 @@ msgstr "Categorias de Fornecedores"
 msgid "Product categories"
 msgstr "Categorias de Produto"
 
+#: app/controllers/tabs/configuration.rb:39
+#, fuzzy
+msgid "Periodicties"
+msgstr "Periodicidade %s"
+
 #: app/controllers/tabs/register.rb:14
 #: app/views/mass_mails/filter_customers.rhtml:2
 msgid "Customers"
@@ -96,7 +101,7 @@ msgid "Ledger Category"
 msgstr "Categoria contábil"
 
 #: app/controllers/tabs/admin_organization.rb:18
-#: app/helpers/support/actions.rb:210 app/helpers/application_helper.rb:570
+#: app/helpers/support/actions.rb:210 app/helpers/application_helper.rb:576
 #: app/views/ledgers/_display_table.rhtml:164
 #: app/views/documents/list.rhtml:20 app/views/documents/edit.rhtml:8
 msgid "Show"
@@ -157,19 +162,11 @@ msgstr "Produto atualizado com sucesso."
 msgid "Image was successfully added."
 msgstr "Imagem adicionada com sucesso."
 
-#: app/controllers/permissions_controller.rb:48
-msgid "Profile updated successfully"
-msgstr "Perfil atualizado com sucesso."
-
-#: app/controllers/permissions_controller.rb:71
+#: app/controllers/permissions_controller.rb:56
 msgid "User successfully created."
 msgstr "Usuário criado com sucesso."
 
-#: app/controllers/permissions_controller.rb:84
-msgid "The user was not found"
-msgstr "Usuário não encontrado"
-
-#: app/controllers/permissions_controller.rb:97
+#: app/controllers/permissions_controller.rb:82
 msgid "User was successfully upated."
 msgstr "Usuário atualizado com sucesso."
 
@@ -308,31 +305,41 @@ msgstr "Foi atualizado com sucesso."
 msgid "Stock control"
 msgstr "Controle de estoque"
 
-#: app/controllers/organizations_controller.rb:42
+#: app/controllers/organizations_controller.rb:40
 msgid "Organization was successfully created."
 msgstr "Organização criada com sucesso."
 
-#: app/controllers/organizations_controller.rb:56
+#: app/controllers/organizations_controller.rb:54
 msgid "The organization was successfully updated."
 msgstr "Organização atualizada com sucesso."
+
+#: app/controllers/periodicities_controller.rb:53
+#, fuzzy
+msgid "Periodicity was successfully created."
+msgstr "O produto foi criado com sucesso."
+
+#: app/controllers/periodicities_controller.rb:67
+#, fuzzy
+msgid "Periodicity was successfully updated."
+msgstr "Produto atualizado com sucesso."
 
 #: app/controllers/users_controller.rb:45
 msgid "Logged in successfully"
 msgstr "Autenticação realizada com sucesso."
 
-#: app/controllers/users_controller.rb:68
+#: app/controllers/users_controller.rb:70
 msgid "Thanks for signing up!"
 msgstr "Obrigado por se registrar!"
 
-#: app/controllers/users_controller.rb:78
+#: app/controllers/users_controller.rb:81
 msgid "You have been logged out."
 msgstr "Você foi desconectado."
 
-#: app/controllers/users_controller.rb:85
+#: app/controllers/users_controller.rb:88
 msgid "User was successfully created."
 msgstr "Usuário criado com sucesso."
 
-#: app/controllers/users_controller.rb:108
+#: app/controllers/users_controller.rb:111
 msgid "User was successfully updated."
 msgstr "Usuário atualizado com sucesso."
 
@@ -344,8 +351,7 @@ msgstr "Bem-Vindo ao Sistema Abelo"
 msgid ""
 "There is no organization with nickname %s or you don't have access to it"
 msgstr ""
-"Não há nenhuma organização com identificador %s ou você não tem acesso a "
-"ele."
+"Não há nenhuma organização com identificador %s ou você não tem acesso a ele."
 
 #: app/controllers/application.rb:214
 msgid ""
@@ -420,7 +426,7 @@ msgstr "mostrar organização"
 #: app/models/credit_card_display.rb:20 app/models/category_display.rb:9
 #: app/models/ledger_category_display.rb:9 app/models/product_display.rb:10
 #: app/models/system_actor_display.rb:9 app/models/check_display.rb:19
-#: app/models/periodicity_display.rb:8 app/models/department_display.rb:9
+#: app/models/periodicity_display.rb:9 app/models/department_display.rb:9
 #: app/models/debit_card_display.rb:16 app/helpers/point_of_sale_helper.rb:9
 #: app/views/shared_payments/_payment_credit_card.rhtml:22
 #: app/views/shared_payments/_payment_check.rhtml:10
@@ -675,36 +681,28 @@ msgstr "É modelo"
 msgid "Profile|Permissions"
 msgstr "Permissões"
 
-#: app/models/profile.rb:121
-msgid "Full access"
-msgstr "Acesso completo"
-
-#: app/models/profile.rb:122
-msgid "Read-only"
-msgstr "Somente-Leitura"
-
-#: app/models/profile.rb:123
+#: app/models/profile.rb:132
 msgid "Sales person"
 msgstr "Vendedor"
 
-#: app/models/profile.rb:124
+#: app/models/profile.rb:133
 msgid "Sales Supervisor"
 msgstr "Supervisor de vendas"
 
-#: app/models/profile.rb:125 app/helpers/support/menu.rb:18
+#: app/models/profile.rb:134 app/helpers/support/menu.rb:18
 #: lib/describe_menu.rb:8
 msgid "Financial"
 msgstr "Financeiro"
 
-#: app/models/profile.rb:126
+#: app/models/profile.rb:135
 msgid "Organization Management"
 msgstr "Gerenciamento da Organização"
 
-#: app/models/profile.rb:127 app/views/layouts/default.rhtml:7
+#: app/models/profile.rb:136 app/views/layouts/default.rhtml:7
 msgid "Administration"
 msgstr "Administração"
 
-#: app/models/profile.rb:128
+#: app/models/profile.rb:137
 msgid "Other"
 msgstr "Outro"
 
@@ -805,7 +803,6 @@ msgid "Permission"
 msgstr "Permissões"
 
 #: app/models/profile_display.rb:10
-#: app/views/permissions/new_with_template.rhtml:8
 msgid "User"
 msgstr "Usuário"
 
@@ -1859,9 +1856,9 @@ msgstr "Senha"
 msgid "Password Confirmation"
 msgstr "Confirmação de Senha"
 
-#: app/models/user_display.rb:13
-msgid "Profiles"
-msgstr "Perfis"
+#: app/models/user_display.rb:13 app/views/permissions/_form.rhtml:32
+msgid "Template"
+msgstr "Modelo"
 
 #: app/models/system_actor_display.rb:10
 #: app/views/system_actors/_form.rhtml:50
@@ -1914,6 +1911,12 @@ msgstr "Variação"
 #: app/views/bank_accounts/_form.rhtml:21
 msgid "Account"
 msgstr "Conta"
+
+#: app/models/user.rb:56
+#, fuzzy
+msgid ""
+"You don't have permissions to create a user with template %s. This template "
+msgstr "Você não tem permissão para cancelar um cupom."
 
 #: app/models/bank.rb:-
 msgid "bank"
@@ -2365,9 +2368,9 @@ msgstr ""
 "Não pode haver uma forma de pagamento não inclusa na lista de categorias de "
 "pagamentos."
 
-#: app/models/periodicity_display.rb:9
-msgid "Namber of Days"
-msgstr "Namero de parcelas"
+#: app/models/periodicity_display.rb:10 app/views/periodicities/_form.rhtml:14
+msgid "Number of Days"
+msgstr "Número de Dias"
 
 #: app/models/stock_in_display.rb:14 app/views/stock/_form.rhtml:26
 #: app/views/products/_new_stock_entry.rhtml:20
@@ -2482,17 +2485,17 @@ msgid "Search"
 msgstr "Busca"
 
 #: app/helpers/stock_helper.rb:22 app/helpers/support/actions.rb:224
-#: app/helpers/application_helper.rb:584
+#: app/helpers/application_helper.rb:590
 msgid "New entry"
 msgstr "Nova entrada"
 
 #: app/helpers/stock_helper.rb:23 app/helpers/support/actions.rb:225
-#: app/helpers/application_helper.rb:585
+#: app/helpers/application_helper.rb:591
 msgid "History"
 msgstr "Histórico"
 
 #: app/helpers/support/actions.rb:147 app/helpers/support/actions.rb:172
-#: app/helpers/application_helper.rb:439 app/helpers/application_helper.rb:467
+#: app/helpers/application_helper.rb:445 app/helpers/application_helper.rb:473
 #: app/views/stock/show.rhtml:8 app/views/organizations/new.rhtml:7
 #: app/views/organizations/show.rhtml:8 app/views/documents/new.rhtml:12
 #: app/views/documents/show.rhtml:10 app/views/documents/edit.rhtml:9
@@ -2504,7 +2507,7 @@ msgid "Back"
 msgstr "Voltar"
 
 #: app/helpers/support/actions.rb:148 app/helpers/support/actions.rb:211
-#: app/helpers/application_helper.rb:440 app/helpers/application_helper.rb:571
+#: app/helpers/application_helper.rb:446 app/helpers/application_helper.rb:577
 #: app/views/stock/show.rhtml:9 app/views/users/list.rhtml:11
 #: app/views/layouts/organization.rhtml:30 app/views/layouts/default.rhtml:39
 #: app/views/layouts/comatose_admin.rhtml:30
@@ -2520,10 +2523,8 @@ msgstr "Voltar"
 msgid "Edit"
 msgstr "Editar"
 
-#: app/helpers/support/actions.rb:173 app/helpers/application_helper.rb:468
+#: app/helpers/support/actions.rb:173 app/helpers/application_helper.rb:474
 #: app/views/users/new.rhtml:5 app/views/users/edit.rhtml:5
-#: app/views/permissions/new_with_template.rhtml:14
-#: app/views/permissions/select_template.rhtml:8
 #: app/views/document_items/_edit.rhtml:9
 #: app/views/customer_categories/edit.rhtml:6
 #: app/views/departments/_edit.rhtml:8 app/views/departments/edit.rhtml:6
@@ -2534,7 +2535,7 @@ msgstr "Editar"
 msgid "Save"
 msgstr "Salvar"
 
-#: app/helpers/support/actions.rb:174 app/helpers/application_helper.rb:469
+#: app/helpers/support/actions.rb:174 app/helpers/application_helper.rb:475
 #: app/views/stock/_new.rhtml:9 app/views/departments/new.rhtml:8
 #: app/views/departments/_new.rhtml:9 app/views/products/_new.rhtml:9
 #: app/views/system_actors/_new.rhtml:10
@@ -2542,7 +2543,7 @@ msgid "Reset"
 msgstr "Reiniciar"
 
 #: app/helpers/support/actions.rb:212 app/helpers/application_helper.rb:52
-#: app/helpers/application_helper.rb:572
+#: app/helpers/application_helper.rb:578
 #: app/views/customer_categories/_list.rhtml:5
 #: app/views/documents/list.rhtml:22 app/views/contact_positions/list.rhtml:16
 #: app/views/product_categories/_list.rhtml:5
@@ -2551,7 +2552,7 @@ msgid "Destroy"
 msgstr "Destruir"
 
 #: app/helpers/support/actions.rb:213 app/helpers/application_helper.rb:52
-#: app/helpers/application_helper.rb:573
+#: app/helpers/application_helper.rb:579
 #: app/views/customer_categories/_list.rhtml:5
 #: app/views/documents/list.rhtml:24 app/views/contact_positions/list.rhtml:16
 #: app/views/product_categories/_list.rhtml:5
@@ -2596,35 +2597,36 @@ msgstr "Zerar pesquisa"
 msgid "Abelo"
 msgstr "Abelo"
 
-#: app/helpers/application_helper.rb:229
+#: app/helpers/application_helper.rb:235
 msgid "Break Line"
 msgstr "Quebrar linha"
 
-#: app/helpers/application_helper.rb:238
+#: app/helpers/application_helper.rb:244
 msgid "Display in List?"
 msgstr "Mostrar na lista?"
 
-#: app/helpers/application_helper.rb:248
+#: app/helpers/application_helper.rb:254
 msgid "Display Title?"
 msgstr "Mostrar título?"
 
-#: app/helpers/application_helper.rb:311
+#: app/helpers/application_helper.rb:317
 msgid "Copyrigth © 2007 %s. This software is under %s"
 msgstr "Copyright © 2007 %s. Este software está licenciado sob %s"
 
-#: app/helpers/application_helper.rb:311
+#: app/helpers/application_helper.rb:317
 msgid "Colivre"
 msgstr "Colivre"
 
-#: app/helpers/application_helper.rb:311
-msgid "GPL"
+#: app/helpers/application_helper.rb:317
+#, fuzzy
+msgid "GPLv3"
 msgstr "GPL"
 
-#: app/helpers/application_helper.rb:528
+#: app/helpers/application_helper.rb:534
 msgid "False"
 msgstr "Falso"
 
-#: app/helpers/application_helper.rb:532
+#: app/helpers/application_helper.rb:538
 msgid "True"
 msgstr "Verdadeiro"
 
@@ -2756,10 +2758,7 @@ msgstr ""
 #: app/views/cms/_form.rhtml:69 app/views/cms/delete.rhtml:16
 #: app/views/cms/versions.rhtml:25 app/views/users/new.rhtml:6
 #: app/views/users/signup.rhtml:7 app/views/users/edit.rhtml:7
-#: app/views/users/edit.rhtml:9
-#: app/views/permissions/new_with_template.rhtml:15
-#: app/views/permissions/select_template.rhtml:9
-#: app/views/document_items/_edit.rhtml:8
+#: app/views/users/edit.rhtml:9 app/views/document_items/_edit.rhtml:8
 #: app/views/customer_categories/new.rhtml:7
 #: app/views/customer_categories/edit.rhtml:7
 #: app/views/departments/new.rhtml:7 app/views/departments/_edit.rhtml:9
@@ -3240,21 +3239,9 @@ msgstr "Você tem uma venda pendente!"
 msgid "New sale"
 msgstr "Nova venda"
 
-#: app/views/permissions/new_with_template.rhtml:1
-msgid "New user profile"
-msgstr "Novo perfil de usuário"
-
 #: app/views/permissions/new.rhtml:1
 msgid "New User"
 msgstr "Novo usuário"
-
-#: app/views/permissions/select_template.rhtml:1
-msgid "Editing profile for %s"
-msgstr "Editando perfil de usuário para %s"
-
-#: app/views/permissions/_form.rhtml:32
-msgid "Template"
-msgstr "Modelo"
 
 #: app/views/permissions/list.rhtml:2
 msgid "Listing permissions"
@@ -3440,10 +3427,6 @@ msgstr "Nova posição_contato"
 #: app/views/periodicities/new.rhtml:1
 msgid "New periodicity"
 msgstr "Nova periodicidade"
-
-#: app/views/periodicities/_form.rhtml:14
-msgid "Number of Days"
-msgstr "Número de Dias"
 
 #: app/views/periodicities/list.rhtml:1
 msgid "Listing periodicities"
@@ -3702,6 +3685,30 @@ msgstr "Administração de usuários"
 #: lib/describe_menu.rb:18
 msgid "Point of sale"
 msgstr "Ponto de venda"
+
+#~ msgid "Profile updated successfully"
+#~ msgstr "Perfil atualizado com sucesso."
+
+#~ msgid "The user was not found"
+#~ msgstr "Usuário não encontrado"
+
+#~ msgid "Full access"
+#~ msgstr "Acesso completo"
+
+#~ msgid "Read-only"
+#~ msgstr "Somente-Leitura"
+
+#~ msgid "Profiles"
+#~ msgstr "Perfis"
+
+#~ msgid "Namber of Days"
+#~ msgstr "Namero de parcelas"
+
+#~ msgid "New user profile"
+#~ msgstr "Novo perfil de usuário"
+
+#~ msgid "Editing profile for %s"
+#~ msgstr "Editando perfil de usuário para %s"
 
 #~ msgid "Ledger Fields"
 #~ msgstr "Campos de Lançamentos"

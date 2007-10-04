@@ -1,8 +1,10 @@
 class PermissionsController < ApplicationController
 
-  auto_complete_for :user, :login
 
   needs_organization
+
+
+  auto_complete_for :user, :login
 
   def autocomplete_login
     escaped_string = Regexp.escape(params[:user][:login])
@@ -98,12 +100,12 @@ class PermissionsController < ApplicationController
   end
 
   def create_tabs 
-    add_tab do
-      named 'Users and permissions'
+    t = add_tab do
       links_to :controller => 'permissions', :action => 'list'
       in_set 'first'
       highlights_on :controller => 'permissions'
     end
+    t.named _('Users and permissions')
   end
 
 end

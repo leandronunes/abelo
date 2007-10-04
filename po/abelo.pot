@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: abelo 0.3.0\n"
-"POT-Creation-Date: 2007-10-04 11:46-0300\n"
+"POT-Creation-Date: 2007-10-04 17:04-0300\n"
 "PO-Revision-Date: 2007-01-06 10:39-0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -163,15 +163,20 @@ msgstr "Produto atualizado com sucesso."
 msgid "Image was successfully added."
 msgstr "Imagem adicionada com sucesso."
 
-#: app/controllers/permissions_controller.rb:56
+#: app/controllers/permissions_controller.rb:58
 #, fuzzy
 msgid "User successfully created."
 msgstr "Usuáro criado com sucesso"
 
-#: app/controllers/permissions_controller.rb:82
+#: app/controllers/permissions_controller.rb:84
 #, fuzzy
 msgid "User was successfully upated."
 msgstr "Usuário atualizado com sucesso"
+
+#: app/controllers/permissions_controller.rb:108
+#, fuzzy
+msgid "Users and permissions"
+msgstr "departamento"
 
 #: app/controllers/ledger_categories_controller.rb:41
 msgid "Ledger category was successfully created."
@@ -267,18 +272,18 @@ msgstr "Seção do documento atualizado com sucesso."
 msgid "Attachment was successfully added."
 msgstr "Imagem adicionada com sucesso."
 
-#: app/controllers/configuration_controller.rb:53
-#: app/controllers/configuration_controller.rb:73
+#: app/controllers/configuration_controller.rb:46
+#: app/controllers/configuration_controller.rb:66
 #, fuzzy
 msgid "The configurations was successfully updated."
 msgstr "Usuário atualizado com sucesso"
 
-#: app/controllers/configuration_controller.rb:86
+#: app/controllers/configuration_controller.rb:79
 #, fuzzy
 msgid "The configuration model was successfully removed"
 msgstr "Usuário atualizado com sucesso"
 
-#: app/controllers/configuration_controller.rb:88
+#: app/controllers/configuration_controller.rb:81
 msgid "This configuration cannot be removed"
 msgstr ""
 
@@ -431,7 +436,7 @@ msgstr ""
 msgid "organization display"
 msgstr "organização"
 
-#: app/models/organization_display.rb:9 app/models/configuration_display.rb:23
+#: app/models/organization_display.rb:9 app/models/configuration_display.rb:36
 #: app/models/costumer_category_display.rb:8 app/models/profile_display.rb:8
 #: app/models/credit_card_display.rb:20 app/models/category_display.rb:9
 #: app/models/ledger_category_display.rb:9 app/models/product_display.rb:10
@@ -507,70 +512,135 @@ msgstr ""
 msgid "configuration display"
 msgstr "Configurações"
 
-#: app/models/configuration_display.rb:24
+#: app/models/configuration_display.rb:37
 #: app/views/configuration/_form.rhtml:5
 #, fuzzy
 msgid "Organization Name"
 msgstr "Nome"
 
-#: app/models/configuration_display.rb:25
+#: app/models/configuration_display.rb:38
 #: app/views/configuration/_form.rhtml:29
 #, fuzzy
 msgid "Product Name"
 msgstr "Tamanho"
 
-#: app/models/configuration_display.rb:26
+#: app/models/configuration_display.rb:39
 #: app/views/configuration/_form.rhtml:11
 #, fuzzy
 msgid "Department Name"
 msgstr "Nome"
 
-#: app/models/configuration_display.rb:27
+#: app/models/configuration_display.rb:40
 #: app/views/configuration/_form.rhtml:17
 #, fuzzy
 msgid "Customer Name"
 msgstr "Cliente"
 
-#: app/models/configuration_display.rb:28
+#: app/models/configuration_display.rb:41
 #: app/views/configuration/_form.rhtml:23
 #, fuzzy
 msgid "Document Name"
 msgstr "Nome"
 
-#: app/models/configuration_display.rb:29
+#: app/models/configuration_display.rb:42
 #, fuzzy
 msgid "Worker Fields"
 msgstr "Trabalhadores"
 
-#: app/models/configuration_display.rb:30
+#: app/models/configuration_display.rb:43
+#, fuzzy
+msgid "Worker Category Fields"
+msgstr "Categorias de Trabalhadores"
+
+#: app/models/configuration_display.rb:44
 #, fuzzy
 msgid "Customer Fields"
 msgstr "Consumidores"
 
-#: app/models/configuration_display.rb:31
+#: app/models/configuration_display.rb:45
+#, fuzzy
+msgid "Customer Category Fields"
+msgstr "Categorias de Consumidores"
+
+#: app/models/configuration_display.rb:46
 #, fuzzy
 msgid "Supplier Fields"
 msgstr "Fornecedores"
 
-#: app/models/configuration_display.rb:32
+#: app/models/configuration_display.rb:47
+#, fuzzy
+msgid "Supplier Category Fields"
+msgstr "Categorias de Fornecedores"
+
+#: app/models/configuration_display.rb:48
 #, fuzzy
 msgid "Product Fields"
 msgstr "Produtos"
 
-#: app/models/configuration_display.rb:33
+#: app/models/configuration_display.rb:49
+#, fuzzy
+msgid "Product Category Fields"
+msgstr "Categorias de Produtos"
+
+#: app/models/configuration_display.rb:50
 #, fuzzy
 msgid "Department Fields"
 msgstr "departamento"
 
-#: app/models/configuration_display.rb:34
+#: app/models/configuration_display.rb:51
 #, fuzzy
 msgid "Ledger Category Fields"
 msgstr "Categorias de Livro Caixa"
 
-#: app/models/configuration_display.rb:35
+#: app/models/configuration_display.rb:52
 #, fuzzy
 msgid "Bank Account Fields"
 msgstr "departamento"
+
+#: app/models/configuration_display.rb:53
+#, fuzzy
+msgid "Money Fields"
+msgstr "Trabalhadores"
+
+#: app/models/configuration_display.rb:54
+#, fuzzy
+msgid "Check Fields"
+msgstr "Consumidores"
+
+#: app/models/configuration_display.rb:55
+#, fuzzy
+msgid "Credit Card Fields"
+msgstr "Validade do cartão de crédito"
+
+#: app/models/configuration_display.rb:56
+#, fuzzy
+msgid "Debit Card Fields"
+msgstr "departamento"
+
+#: app/models/configuration_display.rb:57
+#, fuzzy
+msgid "Stock Virtual Fields"
+msgstr "Trabalhadores"
+
+#: app/models/configuration_display.rb:58
+#, fuzzy
+msgid "Stock In Fields"
+msgstr "Trabalhadores"
+
+#: app/models/configuration_display.rb:59
+#, fuzzy
+msgid "Stock Out Fields"
+msgstr "Produtos"
+
+#: app/models/configuration_display.rb:60
+#, fuzzy
+msgid "User Fields"
+msgstr "Consumidores"
+
+#: app/models/configuration_display.rb:61
+#, fuzzy
+msgid "Periodicity Fields"
+msgstr "Produtos"
 
 #: app/models/costumer_category_display.rb:12
 #: app/models/category_display.rb:10
@@ -2630,8 +2700,7 @@ msgstr ""
 #: app/helpers/support/actions.rb:148 app/helpers/support/actions.rb:211
 #: app/helpers/application_helper.rb:446 app/helpers/application_helper.rb:577
 #: app/views/stock/show.rhtml:9 app/views/users/list.rhtml:11
-#: app/views/layouts/organization.rhtml:30 app/views/layouts/default.rhtml:39
-#: app/views/layouts/comatose_admin.rhtml:30
+#: app/views/layouts/default.rhtml:39
 #: app/views/ledgers/_display_table.rhtml:165
 #: app/views/document_items/_list.rhtml:5
 #: app/views/customer_categories/_list.rhtml:4
@@ -3120,6 +3189,12 @@ msgstr "organização"
 msgid "Go to"
 msgstr ""
 
+#: app/views/layouts/organization.rhtml:30
+#: app/views/layouts/comatose_admin.rhtml:30
+#, fuzzy
+msgid "My account"
+msgstr "Quantidade: "
+
 #: app/views/layouts/organization.rhtml:31 app/views/layouts/default.rhtml:40
 #: app/views/layouts/point_of_sale.rhtml:21
 #: app/views/layouts/comatose_admin.rhtml:31
@@ -3507,32 +3582,97 @@ msgstr "Configurações"
 
 #: app/views/configuration/_form.rhtml:41
 #, fuzzy
-msgid "Customer Display Configuration"
+msgid "Worker Category Display Configuration"
 msgstr "Configurações"
 
 #: app/views/configuration/_form.rhtml:47
 #, fuzzy
-msgid "Supplier Display Configuration"
+msgid "Customer Display Configuration"
 msgstr "Configurações"
 
 #: app/views/configuration/_form.rhtml:53
 #, fuzzy
-msgid "Product Display Configuration"
+msgid "Customer Categorory Display Configuration"
 msgstr "Configurações"
 
 #: app/views/configuration/_form.rhtml:59
 #, fuzzy
-msgid "Department Display Configuration"
+msgid "Supplier Display Configuration"
 msgstr "Configurações"
 
 #: app/views/configuration/_form.rhtml:65
 #, fuzzy
-msgid "LedgerCategory Display Configuration"
+msgid "Supplier Category Display Configuration"
 msgstr "Configurações"
 
 #: app/views/configuration/_form.rhtml:71
 #, fuzzy
+msgid "Product Display Configuration"
+msgstr "Configurações"
+
+#: app/views/configuration/_form.rhtml:77
+#, fuzzy
+msgid "Product Category Display Configuration"
+msgstr "Configurações"
+
+#: app/views/configuration/_form.rhtml:83
+#, fuzzy
+msgid "Department Display Configuration"
+msgstr "Configurações"
+
+#: app/views/configuration/_form.rhtml:89
+#, fuzzy
+msgid "LedgerCategory Display Configuration"
+msgstr "Configurações"
+
+#: app/views/configuration/_form.rhtml:95
+#, fuzzy
 msgid "BankAccount Display Configuration"
+msgstr "Configurações"
+
+#: app/views/configuration/_form.rhtml:101
+#, fuzzy
+msgid "Money Display Configuration"
+msgstr "Configurações"
+
+#: app/views/configuration/_form.rhtml:107
+#, fuzzy
+msgid "Check Display Configuration"
+msgstr "Configurações"
+
+#: app/views/configuration/_form.rhtml:113
+#, fuzzy
+msgid "Credit Card Display Configuration"
+msgstr "Configurações"
+
+#: app/views/configuration/_form.rhtml:119
+#, fuzzy
+msgid "Debit Card Display Configuration"
+msgstr "Configurações"
+
+#: app/views/configuration/_form.rhtml:125
+#, fuzzy
+msgid "Stock Virtual Display Configuration"
+msgstr "Configurações"
+
+#: app/views/configuration/_form.rhtml:131
+#, fuzzy
+msgid "Stock In Display Configuration"
+msgstr "Configurações"
+
+#: app/views/configuration/_form.rhtml:137
+#, fuzzy
+msgid "Stock Out Display Configuration"
+msgstr "Configurações"
+
+#: app/views/configuration/_form.rhtml:143
+#, fuzzy
+msgid "User Display Configuration"
+msgstr "Configurações"
+
+#: app/views/configuration/_form.rhtml:149
+#, fuzzy
+msgid "Periodicity Display Configuration"
 msgstr "Configurações"
 
 #: app/views/configuration/edit.rhtml:2

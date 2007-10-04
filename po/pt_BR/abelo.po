@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: abelo 0.3.0\n"
-"POT-Creation-Date: 2007-10-04 11:46-0300\n"
+"POT-Creation-Date: 2007-10-04 17:04-0300\n"
 "PO-Revision-Date: 2007-10-04 11:53-0300\n"
 "Last-Translator: Leandro Nunes dos Santos <leandronunes@colivre.coop.br>\n"
 "Language-Team: Krishnamurti Lelis Lima Vieira Nunes <krishna@colivre.coop."
@@ -161,13 +161,17 @@ msgstr "Produto atualizado com sucesso."
 msgid "Image was successfully added."
 msgstr "Imagem adicionada com sucesso."
 
-#: app/controllers/permissions_controller.rb:56
+#: app/controllers/permissions_controller.rb:58
 msgid "User successfully created."
 msgstr "Usuário criado com sucesso."
 
-#: app/controllers/permissions_controller.rb:82
+#: app/controllers/permissions_controller.rb:84
 msgid "User was successfully upated."
 msgstr "Usuário atualizado com sucesso."
+
+#: app/controllers/permissions_controller.rb:108
+msgid "Users and permissions"
+msgstr "Usuários e permissions"
 
 #: app/controllers/ledger_categories_controller.rb:41
 msgid "Ledger category was successfully created."
@@ -265,16 +269,16 @@ msgstr "Seção do documento atualizada com sucesso."
 msgid "Attachment was successfully added."
 msgstr "Arquivo anexado com sucesso."
 
-#: app/controllers/configuration_controller.rb:53
-#: app/controllers/configuration_controller.rb:73
+#: app/controllers/configuration_controller.rb:46
+#: app/controllers/configuration_controller.rb:66
 msgid "The configurations was successfully updated."
 msgstr "Configurações atualizadas com sucesso."
 
-#: app/controllers/configuration_controller.rb:86
+#: app/controllers/configuration_controller.rb:79
 msgid "The configuration model was successfully removed"
 msgstr "Configurações do modelo removidas com sucesso."
 
-#: app/controllers/configuration_controller.rb:88
+#: app/controllers/configuration_controller.rb:81
 msgid "This configuration cannot be removed"
 msgstr "Esta configuração não pode ser removida."
 
@@ -418,7 +422,7 @@ msgstr "Cada produto deve pertencer a uma categoria"
 msgid "organization display"
 msgstr "mostrar organização"
 
-#: app/models/organization_display.rb:9 app/models/configuration_display.rb:23
+#: app/models/organization_display.rb:9 app/models/configuration_display.rb:36
 #: app/models/costumer_category_display.rb:8 app/models/profile_display.rb:8
 #: app/models/credit_card_display.rb:20 app/models/category_display.rb:9
 #: app/models/ledger_category_display.rb:9 app/models/product_display.rb:10
@@ -492,58 +496,110 @@ msgstr "Você não pode agendar um lançamento começando em uma data no passado
 msgid "configuration display"
 msgstr "exibir configuração"
 
-#: app/models/configuration_display.rb:24
+#: app/models/configuration_display.rb:37
 #: app/views/configuration/_form.rhtml:5
 msgid "Organization Name"
 msgstr "Nome da Organização"
 
-#: app/models/configuration_display.rb:25
+#: app/models/configuration_display.rb:38
 #: app/views/configuration/_form.rhtml:29
 msgid "Product Name"
 msgstr "Nome do produto"
 
-#: app/models/configuration_display.rb:26
+#: app/models/configuration_display.rb:39
 #: app/views/configuration/_form.rhtml:11
 msgid "Department Name"
 msgstr "Nome do Departamento"
 
-#: app/models/configuration_display.rb:27
+#: app/models/configuration_display.rb:40
 #: app/views/configuration/_form.rhtml:17
 msgid "Customer Name"
 msgstr "Nome do Consumidor"
 
-#: app/models/configuration_display.rb:28
+#: app/models/configuration_display.rb:41
 #: app/views/configuration/_form.rhtml:23
 msgid "Document Name"
-msgstr "Documento|Nome"
+msgstr "Nome do Documento"
 
-#: app/models/configuration_display.rb:29
+#: app/models/configuration_display.rb:42
 msgid "Worker Fields"
 msgstr "Campos de Trabalhadores"
 
-#: app/models/configuration_display.rb:30
+#: app/models/configuration_display.rb:43
+msgid "Worker Category Fields"
+msgstr "Campos de Categorias de Trabalhadores"
+
+#: app/models/configuration_display.rb:44
 msgid "Customer Fields"
 msgstr "Campos de  Consumidores"
 
-#: app/models/configuration_display.rb:31
+#: app/models/configuration_display.rb:45
+msgid "Customer Category Fields"
+msgstr "Campos de Categorias de Clientes"
+
+#: app/models/configuration_display.rb:46
 msgid "Supplier Fields"
 msgstr "Campos de Fornecedores"
 
-#: app/models/configuration_display.rb:32
+#: app/models/configuration_display.rb:47
+msgid "Supplier Category Fields"
+msgstr "Campos de Categorias de Fornecedores"
+
+#: app/models/configuration_display.rb:48
 msgid "Product Fields"
 msgstr "Campos de Produto"
 
-#: app/models/configuration_display.rb:33
+#: app/models/configuration_display.rb:49
+msgid "Product Category Fields"
+msgstr "Campos de Categorias de Produto"
+
+#: app/models/configuration_display.rb:50
 msgid "Department Fields"
 msgstr "Campos de Departamento"
 
-#: app/models/configuration_display.rb:34
+#: app/models/configuration_display.rb:51
 msgid "Ledger Category Fields"
 msgstr "Campos de Categorias dos Lançamentos"
 
-#: app/models/configuration_display.rb:35
+#: app/models/configuration_display.rb:52
 msgid "Bank Account Fields"
-msgstr "Campos de Contas bancárias"
+msgstr "Campos de Contas Bancárias"
+
+#: app/models/configuration_display.rb:53
+msgid "Money Fields"
+msgstr "Campos de Dinheiro"
+
+#: app/models/configuration_display.rb:54
+msgid "Check Fields"
+msgstr "Campos de Cheque"
+
+#: app/models/configuration_display.rb:55
+msgid "Credit Card Fields"
+msgstr "Campos de Cartão de Crédito"
+
+#: app/models/configuration_display.rb:56
+msgid "Debit Card Fields"
+msgstr "Campos de Cartão de Débito"
+
+#: app/models/configuration_display.rb:57
+msgid "Stock Virtual Fields"
+msgstr "Campos de Estoque Virtual"
+
+#: app/models/configuration_display.rb:58
+msgid "Stock In Fields"
+msgstr "Campos de Entrada de Estoque"
+
+#: app/models/configuration_display.rb:59
+msgid "Stock Out Fields"
+msgstr "Campos de Saída de Estoque"
+
+#: app/models/configuration_display.rb:60
+msgid "User Fields"
+msgstr "Campos de Usuários"
+
+#: app/models/configuration_display.rb:61
+msgid "Periodicity Fields"
+msgstr "Campos de Periodicidade"
 
 #: app/models/costumer_category_display.rb:12
 #: app/models/category_display.rb:10
@@ -590,7 +646,7 @@ msgid "Description"
 msgstr "Descrição"
 
 #: app/models/ledger_display.rb:32
-msgid "Tag List"
+//msgid "Tag List"
 msgstr "Lista de Tags"
 
 #: app/models/ledger_display.rb:33 app/models/stock_out_display.rb:9
@@ -2506,8 +2562,7 @@ msgstr "Voltar"
 #: app/helpers/support/actions.rb:148 app/helpers/support/actions.rb:211
 #: app/helpers/application_helper.rb:446 app/helpers/application_helper.rb:577
 #: app/views/stock/show.rhtml:9 app/views/users/list.rhtml:11
-#: app/views/layouts/organization.rhtml:30 app/views/layouts/default.rhtml:39
-#: app/views/layouts/comatose_admin.rhtml:30
+#: app/views/layouts/default.rhtml:39
 #: app/views/ledgers/_display_table.rhtml:165
 #: app/views/document_items/_list.rhtml:5
 #: app/views/customer_categories/_list.rhtml:4
@@ -2979,6 +3034,11 @@ msgstr "Loga da Organização"
 msgid "Go to"
 msgstr "Ir para"
 
+#: app/views/layouts/organization.rhtml:30
+#: app/views/layouts/comatose_admin.rhtml:30
+msgid "My account"
+msgstr "Minha conta"
+
 #: app/views/layouts/organization.rhtml:31 app/views/layouts/default.rhtml:40
 #: app/views/layouts/point_of_sale.rhtml:21
 #: app/views/layouts/comatose_admin.rhtml:31
@@ -3344,28 +3404,80 @@ msgid "Worker Display Configuration"
 msgstr "Configuração da exibição do trabalhador"
 
 #: app/views/configuration/_form.rhtml:41
+msgid "Worker Category Display Configuration"
+msgstr "Configuração da exibição das categorias de trabalhadores"
+
+#: app/views/configuration/_form.rhtml:47
 msgid "Customer Display Configuration"
 msgstr "Configuração da exibição do consumidor"
 
-#: app/views/configuration/_form.rhtml:47
+#: app/views/configuration/_form.rhtml:53
+msgid "Customer Categorory Display Configuration"
+msgstr "Configuração da exibição das categorias de consumidores"
+
+#: app/views/configuration/_form.rhtml:59
 msgid "Supplier Display Configuration"
 msgstr "Configuração da exibição do fornecedor"
 
-#: app/views/configuration/_form.rhtml:53
+#: app/views/configuration/_form.rhtml:65
+msgid "Supplier Category Display Configuration"
+msgstr "Configuração da exibição das categorias de fornecedores"
+
+#: app/views/configuration/_form.rhtml:71
 msgid "Product Display Configuration"
 msgstr "Configuração da exibição do produto"
 
-#: app/views/configuration/_form.rhtml:59
+#: app/views/configuration/_form.rhtml:77
+msgid "Product Category Display Configuration"
+msgstr "Configuração da exibição das categorias de produtos"
+
+#: app/views/configuration/_form.rhtml:83
 msgid "Department Display Configuration"
 msgstr "Configuração da exibição do departamento"
 
-#: app/views/configuration/_form.rhtml:65
+#: app/views/configuration/_form.rhtml:89
 msgid "LedgerCategory Display Configuration"
-msgstr "Configuração da exibição da categoria de lançamentos"
+msgstr "Configuração da exibição das categorias de lançamentos"
 
-#: app/views/configuration/_form.rhtml:71
+#: app/views/configuration/_form.rhtml:95
 msgid "BankAccount Display Configuration"
 msgstr "Configuração da exibição de conta bancária"
+
+#: app/views/configuration/_form.rhtml:101
+msgid "Money Display Configuration"
+msgstr "Configuração da exibição de dinheiro"
+
+#: app/views/configuration/_form.rhtml:107
+msgid "Check Display Configuration"
+msgstr "Configuração da exibição de cheque"
+
+#: app/views/configuration/_form.rhtml:113
+msgid "Credit Card Display Configuration"
+msgstr "Configuração da exibição de cartão de crédito"
+
+#: app/views/configuration/_form.rhtml:119
+msgid "Debit Card Display Configuration"
+msgstr "Configuração da exibição de cartão de débito"
+
+#: app/views/configuration/_form.rhtml:125
+msgid "Stock Virtual Display Configuration"
+msgstr "Configuração da exibição de estoque virtual"
+
+#: app/views/configuration/_form.rhtml:131
+msgid "Stock In Display Configuration"
+msgstr "Configuração da exibição de entrada de estoque"
+
+#: app/views/configuration/_form.rhtml:137
+msgid "Stock Out Display Configuration"
+msgstr "Configuração da exibição de saída de estoque"
+
+#: app/views/configuration/_form.rhtml:143
+msgid "User Display Configuration"
+msgstr "Configuração da exibição de usuário"
+
+#: app/views/configuration/_form.rhtml:149
+msgid "Periodicity Display Configuration"
+msgstr "Configuração da exibição de periodicidade"
 
 #: app/views/configuration/edit.rhtml:2
 msgid "Editing Configuration %s"

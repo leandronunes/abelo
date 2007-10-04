@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: abelo 0.3.0\n"
-"POT-Creation-Date: 2007-10-04 11:45-0300\n"
+"POT-Creation-Date: 2007-10-04 11:46-0300\n"
 "PO-Revision-Date: 2007-10-04 11:53-0300\n"
 "Last-Translator: Leandro Nunes dos Santos <leandronunes@colivre.coop.br>\n"
 "Language-Team: Krishnamurti Lelis Lima Vieira Nunes <krishna@colivre.coop."

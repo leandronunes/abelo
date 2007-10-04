@@ -9,12 +9,25 @@ class ConfigurationDisplay < ActiveRecord::Base
       customer_name
       document_name
       worker_displays
+      worker_category_displays
       customer_displays
+      customer_category_displays
       supplier_displays
+      supplier_category_displays
       product_displays
+      product_category_displays
       department_displays
       ledger_category_displays
       bank_account_displays
+      money_displays
+      check_displays
+      credit_card_displays
+      debit_card_displays
+      stock_virtual_displays
+      stock_in_displays
+      stock_out_displays
+      user_displays
+      periodicity_displays
     ]
   end
 

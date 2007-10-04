@@ -4,7 +4,7 @@ class StockOutDisplay < StockDisplay
     ['date', 'amount', 'price']
   end
 
-  def self.describre(field)
+  def self.describe(field)
   {
     'date' => _('Date'),
     'amount' => _('Amount'),

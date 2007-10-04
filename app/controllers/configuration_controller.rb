@@ -30,13 +30,6 @@ class ConfigurationController < ApplicationController
   def show
     @configuration = Configuration.find(params[:id])
     @organization = @configuration.organization
-    @worker_display = @configuration.worker_displays
-    @customer_display = @configuration.customer_displays
-    @supplier_display = @configuration.supplier_displays
-    @product_display = @configuration.product_displays
-    @department_display = @configuration.department_displays
-    @ledger_category_display = @configuration.ledger_category_displays
-    @bank_account_display = @configuration.bank_account_displays
   end
 
   def new
@@ -92,13 +85,26 @@ class ConfigurationController < ApplicationController
 
   def form_variables
     @worker_fields = WorkerDisplay.available_fields
+    @worker_category_fields = WorkerCategoryDisplay.available_fields
     @customer_fields = CustomerDisplay.available_fields
+    @customer_category_fields = CustomerCategoryDisplay.available_fields
     @supplier_fields = SupplierDisplay.available_fields
+    @supplier_category_fields = SupplierCategoryDisplay.available_fields
     @product_fields = ProductDisplay.available_fields
+    @product_category_fields = ProductCategoryDisplay.available_fields
     @department_fields = DepartmentDisplay.available_fields
     @ledger_category_fields = LedgerCategoryDisplay.available_fields
     @ledger_fields = LedgerDisplay.available_fields
     @bank_account_fields = BankAccountDisplay.available_fields
+    @money_fields = MoneyDisplay.available_fields
+    @check_fields = CheckDisplay.available_fields
+    @credit_card_fields = CreditCardDisplay.available_fields
+    @debit_card_fields = DebitCardDisplay.available_fields
+    @stock_virtual_fields = StockVirtualDisplay.available_fields
+    @stock_in_fields =  StockInDisplay.available_fields
+    @stock_out_fields = StockOutDisplay.available_fields
+    @user_fields = UserDisplay.available_fields
+    @periodicity_fields = PeriodicityDisplay.available_fields
   end
 
 

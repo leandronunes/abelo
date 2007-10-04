@@ -37,9 +37,21 @@
       )
   %>
 
+  <%= display_field_form(@configuration, 'worker_category_displays',
+        :title => _('Worker Category Display Configuration'),
+        :content => select_display_configuration('configuration', 'WorkerCategoryDisplay', @worker_category_fields)
+      )
+  %>
+
   <%= display_field_form(@configuration, 'customer_displays',
         :title => _('Customer Display Configuration'),
         :content => select_display_configuration('configuration', 'CustomerDisplay', @customer_fields)
+      )
+  %>
+
+  <%= display_field_form(@configuration, 'customer_category_displays',
+        :title => _('Customer Categorory Display Configuration'),
+        :content => select_display_configuration('configuration', 'CustomerCategoryDisplay', @customer_category_fields)
       )
   %>
 
@@ -49,9 +61,21 @@
       )
   %>
 
+  <%= display_field_form(@configuration, 'supplier_category_displays',
+        :title => _('Supplier Category Display Configuration'),
+        :content => select_display_configuration('configuration', 'SupplierCategoryDisplay', @supplier_category_fields)
+      )
+  %>
+
   <%= display_field_form(@configuration, 'product_displays',
         :title => _('Product Display Configuration'),
         :content => select_display_configuration('configuration', 'ProductDisplay', @product_fields)
+      )
+  %>
+
+  <%= display_field_form(@configuration, 'product_category_displays',
+        :title => _('Product Category Display Configuration'),
+        :content => select_display_configuration('configuration', 'ProductCategoryDisplay', @product_category_fields)
       )
   %>
 
@@ -73,3 +97,56 @@
       )
   %>
 
+  <%= display_field_form(@configuration, 'money_displays',
+        :title => _('Money Display Configuration'),
+        :content => select_display_configuration('configuration', 'MoneyDisplay', @money_fields)
+      )
+  %>
+
+  <%= display_field_form(@configuration, 'check_displays',
+        :title => _('Check Display Configuration'),
+        :content => select_display_configuration('configuration', 'CheckDisplay', @check_fields)
+      )
+  %>
+  
+  <%= display_field_form(@configuration, 'credit_card_displays',
+        :title => _('Credit Card Display Configuration'),
+        :content => select_display_configuration('configuration', 'CreditCardDisplay', @credit_card_fields)
+      )
+  %>
+
+  <%= display_field_form(@configuration, 'debit_card_displays',
+        :title => _('Debit Card Display Configuration'),
+        :content => select_display_configuration('configuration', 'DebitCardDisplay', @debit_card_fields)
+      )
+  %>
+  
+  <%= display_field_form(@configuration, 'stock_virtual_displays',
+        :title => _('Stock Virtual Display Configuration'),
+        :content => select_display_configuration('configuration', 'StockVirtualDisplay', @stock_virtual_fields)
+      )
+  %>
+  
+  <%= display_field_form(@configuration, 'stock_in_displays',
+        :title => _('Stock In Display Configuration'),
+        :content => select_display_configuration('configuration', 'StockInDisplay', @stock_in_fields)
+      )
+  %>
+
+  <%= display_field_form(@configuration, 'stock_out_displays',
+        :title => _('Stock Out Display Configuration'),
+        :content => select_display_configuration('configuration', 'StockOutDisplay', @stock_out_fields)
+      )
+  %>
+
+  <%= display_field_form(@configuration, 'user_displays',
+        :title => _('User Display Configuration'),
+        :content => select_display_configuration('configuration', 'UserDisplay', @user_fields)
+      )
+  %>
+  
+  <%= display_field_form(@configuration, 'periodicity_displays',
+        :title => _('Periodicity Display Configuration'),
+        :content => select_display_configuration('configuration', 'PeriodicityDisplay', @periodicity_fields)
+      )
+  %>

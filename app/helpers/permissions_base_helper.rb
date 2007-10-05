@@ -1,0 +1,2 @@
+module PermissionsBaseHelper
+end

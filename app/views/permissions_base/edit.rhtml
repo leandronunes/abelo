@@ -1,6 +1,6 @@
 
 <%= title(_('Editing user')) %>
 <% form_tag :action => 'update', :id => @user do %>
-  <%= render :partial => 'form' %>   
+  <%= render :partial => 'permissions_base/form' %>   
   <%= display_edit_info_options(@user) %>
 <% end %>

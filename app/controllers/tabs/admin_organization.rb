@@ -36,6 +36,18 @@ def create_admin_organization_tabs
     t.show_if  match_location(locations) ? "true" : "false"
   end
 
+  t = add_tab do
+    in_set 'first'
+    highlights_on :controller => 'permissions_admin'
+  end
+  t.links_to :controller => 'permissions_admin', :action => 'list', :organization_id => params[:id]
+  t.named _('Users and Permissions')
+  locations = [ {:action => 'edit'}, {:action => 'update'}, { :action => 'show'} ]
+  if is_not_organization == true
+    t.show_if  "false"
+  else
+    t.show_if  match_location(locations) ? "true" : "false"
+  end
 
   t = add_tab do
     in_set 'first'

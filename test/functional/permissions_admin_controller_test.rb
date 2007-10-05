@@ -1,22 +1,22 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'permissions_controller'
+require 'permissions_admin_controller'
 
 # Re-raise errors caught by the controller.
-class PermissionsController; def rescue_action(e) raise e end; end
+class PermissionsAdminController; def rescue_action(e) raise e end; end
 
-class PermissionsControllerTest < Test::Unit::TestCase
+class PermissionsAdminControllerTest < Test::Unit::TestCase
 
   fixtures :organizations, :profiles, :configurations, :people
 
-  under_organization :one
+  under_organization :admin
 
   def setup
-    @controller = PermissionsController.new
+    @controller = PermissionsAdminController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     @organization = Organization.find_by_identifier('one')
     @user = User.find(:first)
-    login_as('quentin')
+    login_as('admin')
   end
 
   def test_setup
@@ -41,7 +41,7 @@ class PermissionsControllerTest < Test::Unit::TestCase
 
   def test_list_when_query_param_is_nil
     get :list
-
+    
     assert_nil assigns(:query)
     assert_not_nil assigns(:organization)
     assert_not_nil assigns(:users)
@@ -89,7 +89,8 @@ class PermissionsControllerTest < Test::Unit::TestCase
   def test_create_correct_params
     num_users = User.count
 
-    post :create, :user => {:login => "josias", :email => "t@example.com", :password => 'test', :password_confirmation => 'test', :template => 'financial'}
+    post :create, :user => {:login => "josias", :email => "t@example.com", :password => 'test', :password_confirmation => 'test', :template => 'financial'}, :organization_id => @organization_id
+
 
     assert_response :redirect
     assert_redirected_to :action => 'list'
@@ -154,8 +155,7 @@ class PermissionsControllerTest < Test::Unit::TestCase
     new_email = 'test@test.com'
     assert_not_equal new_email, @user.email
     user_id = @user.id
-    post :update, :id => @user.id, :user => {:email => new_email}
-    
+    post :update, :id => @user.id, :user => {:email => new_email}    
     assert_equal new_email, User.find(user_id).email
   end
 

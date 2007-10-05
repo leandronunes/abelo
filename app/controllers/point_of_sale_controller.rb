@@ -1,6 +1,7 @@
 class PointOfSaleController < ApplicationController
 
   needs_organization
+
   layout 'point_of_sale'
 
   verify :method => :post, :only => [ :new, :add_item, :refresh_product, :set_customer ], :redirect_to => { :action => :index }
@@ -8,6 +9,16 @@ class PointOfSaleController < ApplicationController
   skip_before_filter :check_access_control, :only => ['coupon_cancel']
 
   before_filter :check_coupon_cancel, :only => ['coupon_cancel']
+  
+  before_filter :load_point_of_sale
+
+  design :holder => :load_point_of_sale
+
+  def load_point_of_sale
+    @point_of_sale = DesignPointOfSale.new
+#TODO see the better way
+#    @point_of_sale.design_data = @organization.design_data
+  end
 
   def check_coupon_cancel
     supervisor = User.authenticate(params[:login], params[:password])
@@ -20,7 +31,6 @@ class PointOfSaleController < ApplicationController
 
   def index
     @pending_sale = Sale.pending(@organization, current_user)
-
   end
 
   def coupon_open

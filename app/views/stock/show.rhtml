@@ -5,5 +5,5 @@
 <%= subtitle _("Payments [%s]") % link_to_remote( _('Add'), :url => {:action => 'add_payment', :id => @stock}) %>
 <%= render :partial => 'shared_payments/table_ledgers'%>
 
-<%= button('back', _('Back'), :back, {:action => 'history', :product_id => @stock.product}.merge(params)) %>
-<%= button('edit', _('Edit'), :edit, {:action => 'edit', :id => @stock.id}.merge(params)) %>
+<%= button('back', _('Back'), :back, {:action => 'history', :product_id => @stock.product}) %>
+<%= button('edit', _('Edit'), :edit, {:action => 'edit', :id => @stock.id}) %>

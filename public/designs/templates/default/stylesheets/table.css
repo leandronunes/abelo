@@ -9,6 +9,10 @@ width: 100%;
 
 }
 
+table ul{
+  list-style: none;
+}
+
 tr th {
 background: #f4edcf;
 text-align: center;

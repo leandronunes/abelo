@@ -25,7 +25,9 @@
     </tr>
     <tr>
       <td colspan='2'>
+        <ul>
         <% @bank_accounts.each do |b| %>
+          <li>
           <% if @chosen_accounts.include?(b) %>
           <%= link_to_remote(b.name,
                 {
@@ -33,7 +35,7 @@
                   :url => {:action => 'display_table', :chosen_account => b.id, :query => @query, :accounts => @chosen_accounts.ids, :tags => @chosen_tags.join(','), :categories => @chosen_categories.ids, :start_date_day => @start_date_day, :start_date_month => @start_date_month, :start_date_year => @start_date_year, :end_date_day => @end_date_day, :end_date_month => @end_date_month, :end_date_year => @end_date_year }
                 },
                 :class => 'detach'
-              ) %> </br> 
+              ) %>
           <% else %>
           <%= link_to_remote(b.name, 
                   {
@@ -41,8 +43,10 @@
                   :url => {:action => 'display_table', :accounts => "#{b.id},#{@chosen_accounts.ids}", :query => @query, :tags => @chosen_tags.join(','), :categories => @chosen_categories.ids, :start_date_day => @start_date_day, :start_date_month => @start_date_month, :start_date_year => @start_date_year, :end_date_day => @end_date_day, :end_date_month => @end_date_month, :end_date_year => @end_date_year }
                   }
               ) %> 
-          <% end %> </br>
+          <% end %>
+          </li>
         <% end %>
+        </ul>
       </td>
 
       <td colspan='2'>
@@ -61,7 +65,7 @@
           )
         %>
 
-        <%= select_year @start_date_year, :field_name => 'start_date_year' %> <%= _('to') %>
+        <%= select_year @start_date_year, :field_name => 'start_date_year' %> <br/> <%= _('to') %> <br/>
         <%= observe_field('date_start_date_year',
           :update => 'financial_table',
           :url => {:action => 'display_table' },

@@ -17,13 +17,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 namespace :test do
   desc "Run all tests with Rcov to measure coverage"
   task :rcov do |t|
-    puts "Generating full test coverage report..."
-    test_tasks = Rake::Task.tasks.select{ |t| t.comment && [ 'test:units', 'test:functionals', 'test:integration' ].include?(t.name) }
-    for test_task in test_tasks
-      Rake::Task[test_task.name + ':rcov'].invoke
-    end
+    require 'rbconfig'
+
+    tests = Dir.glob(File.join(RAILS_ROOT, 'test', '*', '*_test.rb'))
+    outdir = File.join(RAILS_ROOT, 'coverage')
+    test_loader = File.join(Config::CONFIG['rubylibdir'], 'rake', 'rake_test_loader.rb')
+
+    system("rcov", '-o', outdir, '-T', '-x', 'rubygems/*,rcov*', '--rails', '-Ilib:test', test_loader, *tests)
   end
 end

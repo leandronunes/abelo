@@ -10,14 +10,13 @@ class PointOfSaleController < ApplicationController
 
   before_filter :check_coupon_cancel, :only => ['coupon_cancel']
   
-  before_filter :load_point_of_sale
-
   design :holder => :load_point_of_sale
+
+  Design.design_root= 'designs/point_of_sale'
 
   def load_point_of_sale
     @point_of_sale = DesignPointOfSale.new
-#TODO see the better way
-#    @point_of_sale.design_data = @organization.design_data
+    @point_of_sale.design_data = @organization.point_of_sale_design_data
   end
 
   def check_coupon_cancel

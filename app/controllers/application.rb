@@ -12,8 +12,9 @@ class ApplicationController < ActionController::Base
 
   uses_tabbed_navigation
 
-  design :holder => 'virtual_community'
-
+  design :holder => 'organization'
+  
+  Design.design_root= 'designs/organization'
 
   # declares that the given <tt>actions</tt> cannot be accessed by other HTTP
   # method besides POST.

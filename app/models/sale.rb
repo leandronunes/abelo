@@ -1,7 +1,5 @@
 class Sale < ActiveRecord::Base
 
-  attr_accessor :payment_method
-
   STATUS_OPEN = 0
   STATUS_CLOSED = 1 
   STATUS_CANCELLED = 2
@@ -50,7 +48,7 @@ class Sale < ActiveRecord::Base
       return false
     end
     self.status = STATUS_CANCELLED
-    self.save
+    self.save!
   end
 
   # closes a sale. No item can be added to it anymore
@@ -59,7 +57,7 @@ class Sale < ActiveRecord::Base
   # TODO: see if sale with no item need a payment
   def close!
     raise ArgumentError.new('Only open sales can be closed') if self.status != STATUS_OPEN
-    self.status = STATUS_CLOSED if self.balance == 0
+    self.status = STATUS_CLOSED  if self.balance == 0
     self.save
   end
   
@@ -94,9 +92,14 @@ class Sale < ActiveRecord::Base
     value #Making the return value more clear
   end
 
-  def reload
-    Sale.find(self.id)
+  def customer_identifier
+    self.customer.cpf unless self.customer.nil?
   end
+
+#TODO remove this if it's don't needed
+#  def reload
+#    Sale.find(self.id)
+#  end
 
   def customers_products(list_products, org)
     customers = []

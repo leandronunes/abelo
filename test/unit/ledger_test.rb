@@ -2,21 +2,14 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class LedgerTest < Test::Unit::TestCase
 
-  PAYMENT_METHODS_TEST = %w[
-    check
-    credit_card
-    debit_card
-    money
-  ]
-
-
-  fixtures :bank_accounts, :categories, :ledgers, :periodicities, :ledger_categories
+  fixtures :bank_accounts, :categories, :ledgers, :periodicities, :ledger_categories, :sales, :sale_items
 
   def setup
     @organization = Organization.find(:first)
     @periodicity = Periodicity.create!(:organization => @organization, :name => 'Some', :number_of_days => 10)
     @ledger_category = LedgerCategory.find(:first)
     @ledger = Ledger.find(:first)
+    @sale = Sale.find(:first)
   end
 
   def test_setup
@@ -24,6 +17,7 @@ class LedgerTest < Test::Unit::TestCase
     assert @organization.valid?
     assert @periodicity.valid?
     assert @ledger_category.valid?
+    assert @sale.valid?
   end
 
   def test_money_class_is_associated_to_a_valid_ledger_category
@@ -61,7 +55,8 @@ class LedgerTest < Test::Unit::TestCase
   def test_validates_presence_of_owner
     l = Ledger.new_ledger
     l.valid?
-    assert l.errors.invalid?(:owner)
+    assert l.errors.invalid?(:owner_id)
+    assert l.errors.invalid?(:owner_type)
     l.owner = @organization
     l.valid?
     assert !l.errors.invalid?(:owner_id)
@@ -366,14 +361,37 @@ class LedgerTest < Test::Unit::TestCase
     assert_not_nil p.value
   end
 
-  def test_payment_methods_are_describe
-    PAYMENT_METHODS_TEST.each do |p|
-      assert_not_equal p, Payment.describe_payment(p)
-    end
+  def test_ledger_value_should_be_minor_than_sale_value
+    sale_value = @sale.balance
+    ledger = Ledger.new_ledger    
+    ledger.valid?
+    assert ledger.errors.invalid?(:value)
+    ledger.owner = @sale
+    ledger.value = sale_value - 1
+    ledger.valid?
+    assert !ledger.errors.invalid?(:value)
   end
 
-  def test_payment_methods
-    assert_equal PAYMENT_METHODS_TEST, Payment::PAYMENT_METHODS
+  def test_ledger_value_should_be_equal_than_sale_value
+    sale_value = @sale.balance
+    ledger = Ledger.new_ledger    
+    ledger.valid?
+    assert ledger.errors.invalid?(:value)
+    ledger.owner = @sale
+    ledger.value = sale_value
+    ledger.valid?
+    assert !ledger.errors.invalid?(:value)
+  end
+
+  def test_ledger_value_must_be_equal_or_minor_than_sale_value
+    sale_value = @sale.balance
+    ledger = Ledger.new_ledger    
+    ledger.valid?
+    assert ledger.errors.invalid?(:value)
+    ledger.owner = @sale
+    ledger.value = sale_value + 1
+    ledger.valid?
+    assert ledger.errors.invalid?(:value)
   end
 
 end

@@ -8,6 +8,7 @@ class CreateVirtualCommunities < ActiveRecord::Migration
       t.column :design_data, :text
       t.column :is_default, :boolean
     end
+     Design.design_root= 'designs/organization'
     VirtualCommunity.create!(:name => 'Default Environment', :is_default => true)
   end
 

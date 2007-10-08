@@ -8,7 +8,7 @@ one:
   is_operational: true
   organization_id: 1
   type_of: 'I'
-  settings: {payment_methods:  ['money'] }
+  settings: {payment_methods:  ['money'] , is_sale: true}
 two:
   id: 2
   name: 'Sell 2x '

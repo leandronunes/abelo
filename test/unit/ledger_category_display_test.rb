@@ -7,7 +7,7 @@ class LedgerCategoryDisplayTest < Test::Unit::TestCase
       interests_days
       number_of_parcels
       is_operational
-      is_store
+      is_sale
       is_stock
       type_of
       payment_methods

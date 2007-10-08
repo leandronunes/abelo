@@ -180,6 +180,7 @@ class StockController < ApplicationController
     if !payment_method.blank?
       @ledger = Ledger.new_ledger(:payment_method => payment_method)
       @banks = Bank.find(:all)
+      @hide_sign = true
       @ledger_categories =  @organization.ledger_categories_by_payment_method(@ledger.payment_method)
       render :partial => 'shared_payments/select_category'
     else

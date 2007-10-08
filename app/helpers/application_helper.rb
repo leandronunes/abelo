@@ -133,7 +133,7 @@ module ApplicationHelper
     link_to(org.name, link_location,  html_options )
   end
 
-  def select_payments(object, method, title=nil)
+  def select_payments(object, method)
 
     collection =  Payment::PAYMENT_METHODS
     selected_options = controller.instance_variable_get("@#{object}").send(method)
@@ -159,6 +159,11 @@ module ApplicationHelper
         end
       ].join("\n")
     )
+  end
+  
+  def select_payment(object, method)
+    collection =  Payment::PAYMENT_METHODS
+    select('ledger', 'payment_method',  collection.map{|p|[ Payment.describe_payment(p), p]}, :include_blank => true)
   end
   
 

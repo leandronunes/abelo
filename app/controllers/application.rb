@@ -208,7 +208,7 @@ class ApplicationController < ActionController::Base
 
   def render_access_denied_screen
     @virtual_community = VirtualCommunity.default
-    render :template => 'users/access_denied', :layout => 'default'
+    render :template => 'users/access_denied'
   end
 
   def render_error(message = nil, error = nil)

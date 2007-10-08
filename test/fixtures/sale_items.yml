@@ -1,15 +1,3 @@
-# == Schema Information
-# Schema version: 35
-#
-# Table name: sale_items
-#
-#  id            :integer       not null, primary key
-#  sale_id       :integer       not null
-#  product_id    :integer       not null
-#  amount       :float         not null
-#  unitary_price :float         not null
-#
-
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 first:
   id: 1

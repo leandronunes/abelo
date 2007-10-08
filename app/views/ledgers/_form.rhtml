@@ -18,7 +18,7 @@
 
   <%= display_field_form(item, 'payment_method',
         :title => _('Payment Method'),
-        :content =>  select('ledger', 'payment_method',  Payment::PAYMENT_METHODS.map{|p|[ Payment.describe_payment(p), p]}, :include_blank => true)
+        :content =>  select_payment('ledger', 'payment_method')
       )
   %>
 

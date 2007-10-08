@@ -256,11 +256,21 @@ class Organization < ActiveRecord::Base
   # ordened by type and name.
   # Income ledger categories appear first ordened by name and
   # Expense ledger categories appear after ordened by name too.
-  def ledger_categories_by_payment_method(payment_method)
+  def ledger_categories_by_payment_method(payment_method = 'money')
     category = LedgerCategory.find(:all, :conditions => ['organization_id = ?', self], :order => 'type_of, name ASC' )
     category.select{|c| c.payment_methods.include?(payment_method)} 
   end
+
+  # Return all ledger categories of a specific payment method
+  # ordened by type and name.
+  # Income ledger categories appear first ordened by name and
+  # Expense ledger categories appear after ordened by name too.
+  def sale_ledger_categories_by_payment_method(payment_method = 'money')
+    category = LedgerCategory.find(:all, :conditions => ['organization_id = ?', self], :order => 'type_of, name ASC' )
+    category.select{|c| c.payment_methods.include?(payment_method) and c.is_sale?} 
+  end
  
+
   # Create new stock objects fill virtual attributes 'product_in_list' and 'amount_in_list'
   # of Stock object to display this attributes on list action
   def stock_virtuals

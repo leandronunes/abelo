@@ -35,6 +35,10 @@ class SystemActor < ActiveRecord::Base
     end
   end
 
+  def identifier
+    self.cpf || self.cnpj
+  end
+
   def self.full_text_search(q, options = {})
     default_options = {:limit => :all, :offset => 0}
     options = default_options.merge options

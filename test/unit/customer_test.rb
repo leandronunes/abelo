@@ -4,7 +4,7 @@ class CustomerTest < Test::Unit::TestCase
   
   def setup
     @organization = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :identifier => 'org')
-    @category = CustomerCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
+    @category = CustomerCategory.create(:name => 'Category for testing', :organization => @organization)
   end
 
   def test_setup

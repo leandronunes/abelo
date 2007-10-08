@@ -4,27 +4,37 @@ class PointOfSaleController < ApplicationController
 
   layout 'point_of_sale'
 
-  verify :method => :post, :only => [ :new, :add_item, :refresh_product, :set_customer ], :redirect_to => { :action => :index }
+  post_only [ :new, :add_item, :refresh_product, :coupon_cancel ]
 
   skip_before_filter :check_access_control, :only => ['coupon_cancel']
 
   before_filter :check_coupon_cancel, :only => ['coupon_cancel']
   
-  design :holder => :load_point_of_sale
-
   Design.design_root= 'designs/point_of_sale'
 
-  def load_point_of_sale
-    @point_of_sale = DesignPointOfSale.new
-    @point_of_sale.design_data = @organization.point_of_sale_design_data
+  design :holder => :design_point_of_sale
+
+  def design_point_of_sale
+    point_of_sale = DesignPointOfSale.new 
+    point_of_sale.design_data = @organization.point_of_sale_design_data unless @organization.nil?
+    point_of_sale
   end
 
+  def autocomplete_customer
+    @sale = @organization.sales.find(params[:id])
+    escaped_string = Regexp.escape(params[:sale][:customer_identifier])
+    re = Regexp.new(escaped_string, "i")
+    @customers = @organization.customers.select { |c| c.identifier.match re}
+    render :layout=>false
+  end
+
+#TODO make this test
   def check_coupon_cancel
-    supervisor = User.authenticate(params[:login], params[:password])
+    supervisor = User.authenticate(params[:user][:login], params[:user][:password])
     if supervisor.nil? 
-      render_access_denied_screen
+      render_access_denied_screen(_("You don't have permissions to cancel a coupon."))
     elsif !supervisor.allowed_to?(:controller => 'point_of_sale', :action => 'coupon_cancel')
-      render_access_denied_screen
+      render_access_denied_screen(_("You don't have permissions to cancel a coupon."))
     end
   end
 
@@ -42,10 +52,12 @@ class PointOfSaleController < ApplicationController
       @sale.save
     else
       @sale = pending_sale
-      flash[:notice] = _('You have a pending sale. Close or Cancel it before open a new one')
+      flash.now[:notice] = _('You have a pending sale. Close or Cancel it before open a new one')
     end
     @sale_item = SaleItem.new 
-    sale_variables
+    @total = @sale.total_value 
+    @total_payment = @sale.total_payment 
+    @payments = @sale.ledgers
   end
 
 
@@ -54,131 +66,105 @@ class PointOfSaleController < ApplicationController
     @product = @organization.products.find_by_code(params[:product_code])
     @sale_item = SaleItem.new
     @sale_item.product = @product
-    flash[:notice] = _('This is not a product code valid') if @product.nil?
+    flash.now[:notice] = _('This is not a product code valid') if @product.nil?
     render :partial => 'product_info'
   end
 
   def coupon_add_item
     @sale = @organization.sales.find(params[:id])
-    sale_variables
     begin
       item = SaleItem.new(params[:sale_item])
       item.product = @organization.products.find_by_code(params[:sale_item][:product_code])
       item.valid?
-      (item.errors.length != 1) ? raise(ActiveRecord::RecordInvalid) :  @sale.items << item 
+      (item.errors.length != 1) ? raise(ActiveRecord::RecordInvalid) :   @sale.items << item 
     rescue 
-#TODO display a notice when something wrong happen
       flash[:notice] = _('There is no product with this code')
     end
+    @total = @sale.total_value 
+    @total_payment = @sale.total_payment 
+    @payments = @sale.ledgers
     render :partial => 'sale'
   end
 
   def cancel
     @sale = @organization.sales.find(params[:id])
 
-    if request.post?
-      user = User.new(params[:user])
-      supervisor =  User.authenticate(user.login, user.password)
-      if supervisor.nil?
-        flash[:notice] = _('You typed a wrong Login or Password.')
-      elsif(can({:controller => 'point_of_sale', :action => 'coupon_cancel'}, supervisor))
-        redirect_to :action => 'coupon_cancel', :id => @sale, :login => user.login, :password => user.password
-      else
-        flash[:notice] = _("You don't have permission to cancel a coupon.")
-      end
-    else
-      unless can(:controller => 'point_of_sale', :action => 'coupon_cancel')
-        @user = current_user
-        flash[:notice] = _('Only sales supervisor can cancel a coupon') 
-      end
+    unless can(:controller => 'point_of_sale', :action => 'coupon_cancel')
+      flash[:notice] = _('Only sales supervisor can cancel a coupon') if flash[:notice].nil?
     end
-    sale_variables
+    @total = @sale.total_value 
+    @total_payment = @sale.total_payment 
+    @payments = @sale.ledgers
   end
-
 
   def coupon_cancel
     @sale = @organization.sales.find(params[:id])
     if @sale.cancel!
       redirect_to :action => 'index'
     else
-      sale_variables
+      @total = @sale.total_value 
+      @total_payment = @sale.total_payment 
+      @payments = @sale.ledgers
       render :action => 'cancel'
     end
   end
 
   def payment
     @sale = @organization.sales.find(params[:id])
-    sale_variables
-    @customers = @organization.customers
-    @payment_methods = Payment::PAYMENT_METHODS
-    @payment = Payment.new(:date => Date.today, :value => @sale.balance)
+    @total = @sale.total_value 
+    @total_payment = @sale.total_payment 
+    @payments = @sale.ledgers
+    @ledger = Ledger.new_ledger
+    @ledger.value = @sale.balance
+    @ledger_categories =  @organization.sale_ledger_categories_by_payment_method(@ledger.payment_method)
   end
 
   def save_customer
-    @sale = @organization.sales.find(params[:sale_id])
-    @customers = @organization.customers
-    @total = @sale.total_value 
-    @payment_methods = Payment::PAYMENT_METHODS
+    sale = @organization.sales.find(params[:id])
     if params[:customer_id].blank?
-      @sale.customer = nil
+      sale.customer = nil
     else
-      @sale.customer = @organization.customers.find(params[:customer_id]) 
+      sale.customer = @organization.customers.find(params[:customer_id]) 
     end
-    @sale.payment_method = 'money'
-    @sale.save
-    render :partial => 'payment_details'
+    sale.save
+    redirect_to :action => 'payment', :id => sale.id
   end
 
-  def payment_method
-    @sale = @organization.sales.find(params[:sale_id])
-    @total = @sale.total_value
-    @payment = Payment.new 
-    @payment.date = Date.today
-    @payment.value = @sale.balance
-    @sale.payment_method = params['payment_method']
-    @banks = Bank.find_all
-    render :partial => 'payment_method'
+  def select_category
+    payment_method = params[:payment_method]
+    if !payment_method.blank?
+      @ledger = Ledger.new_ledger(:payment_method => payment_method)
+      @banks = Bank.find(:all)
+      @ledger_categories =  @organization.sale_ledger_categories_by_payment_method(@ledger.payment_method)
+      @hide_sign = true
+      render :partial => 'shared_payments/select_category'
+    else
+      render :nothing => true
+    end
   end
 
   def coupon_add_payment
     @sale = @organization.sales.find(params[:id])
-   
-    #FIXME Exist another way to do this more clear
-    payment_method = params[:choose_payment]
-    if payment_method == 'credit_card'
-      @payment = CreditCard.new(params[:payment])
-    elsif payment_method == 'debit_card'
-      @payment = DebitCard.new(params[:payment])
-    elsif payment_method == 'check'
-      @payment = Check.new(params[:payment])
-    else payment_method == 'money'
-      @payment = Money.new(params[:payment])
-    end 
-
-    #FIXME see a way to put it on the model
-    Payment.transaction do
-      @payment.owner = @sale
-      ledger = CreditLedger.new
-      ledger.date = @payment.date
-      ledger.bank_account = @organization.default_bank_account
-      ledger.value = @payment.value
-      ledger.category_id = 1
-      ledger.owner = @sale
-      @payment.ledger = ledger
-      ledger.save
-      @payment.save
-    end
+     
+    @ledger = Ledger.new_ledger(params['ledger'])
+    @ledger.date = Date.today
+    @ledger.owner = @sale
+    @ledger.bank_account = @organization.default_bank_account
     
-    @sale = @sale.reload
-
-    if @sale.balance == 0
-       flash[:notice] = _('Payment successfully realized.')
-      redirect_to :action => :coupon_close, :id => @sale.id
+    if @ledger.valid?
+      @sale.ledgers << @ledger
+      if @sale.balance == 0
+        flash[:notice] = _('Payment successfully realized.')
+        redirect_to :action => :coupon_close, :id => @sale.id
+      else
+        redirect_to :action => :payment, :id => @sale.id
+      end
     else
-      @payment.value = @sale.balance
-      sale_variables
-      @customers = @organization.customers
-      @payment_methods = Payment::PAYMENT_METHODS
+      @ledger_categories =  @organization.sale_ledger_categories_by_payment_method(@ledger.payment_method)
+      @total = @sale.total_value 
+      @total_payment = @sale.total_payment 
+      @payments = @sale.ledgers
+      @banks = Bank.find(:all)
       render :action => 'payment'
     end
 
@@ -186,7 +172,6 @@ class PointOfSaleController < ApplicationController
 
   def coupon_close
     @sale = @organization.sales.find(params[:id])
-    sale_variables
     @sale.close!      
     redirect_to :action => 'index'
   end
@@ -199,6 +184,11 @@ class PointOfSaleController < ApplicationController
 
   end
 
+  def render_access_denied_screen(message = nil)
+    flash[:notice] = message || _("You don't have permissions to access this function")
+    redirect_to :back    
+  end
+
   #TODO remove this when the printer test is finished
   #The file sent to the desktop must be opened by the software
   #test_printer
@@ -208,15 +198,6 @@ class PointOfSaleController < ApplicationController
           :type => 'printer/apy',
           :filename => "printer.apy")
 #    redirect_to :action => 'main'
-  end
-
-  private
-
-  def sale_variables
-    @sale.payment_method = 'money'
-    @total = @sale.total_value 
-    @total_payment = @sale.total_payment 
-    @payments = @sale.payments       
   end
 
 end

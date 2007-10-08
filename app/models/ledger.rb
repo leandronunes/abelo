@@ -12,7 +12,8 @@ class Ledger < ActiveRecord::Base
   belongs_to :schedule_ledger
   belongs_to :bank_account
   belongs_to :owner, :polymorphic => true
-  validates_presence_of :owner
+  validates_presence_of :owner_type
+  validates_presence_of :owner_id
   validates_presence_of :category_id
   validates_presence_of :foreseen_value
   validates_presence_of :effective_value, :if => lambda{ |ledger| not ledger.is_foreseen? }
@@ -171,6 +172,11 @@ class Ledger < ActiveRecord::Base
 
     if !self.category.nil? and !self.category.payment_methods.include?(self.payment_method)
       self.errors.add(:payment_method, _("You canno't have a payment method not include in payment category list.")) 
+    end
+   
+    # Ledgers of sales must have values minor or equal the sale value
+    if !self.owner.nil? and self.owner.class.class_name == "Sale" and (self.owner.balance - self.value < 0)
+      self.errors.add(:value, _('The value must be minor or equal to %s') % self.owner.balance)
     end
   end
 

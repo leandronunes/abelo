@@ -58,8 +58,9 @@ class Profile < ActiveRecord::Base
       { 'controller' => 'point_of_sale', 'action' => 'payment_method' },
       { 'controller' => 'point_of_sale', 'action' => 'coupon_add_payment' },
       { 'controller' => 'point_of_sale', 'action' => 'coupon_close' },
-      { 'controller' => 'point_of_sale', 'action' => 'sale_variables' },
       { 'controller' => 'point_of_sale', 'action' => 'cancel' },
+      { 'controller' => 'point_of_sale', 'action' => 'autocomplete_customer' },
+      { 'controller' => 'point_of_sale', 'action' => 'select_category' },
     ],
     'sales_supervisor' => [
       { 'controller' => 'point_of_sale', 'action' => '*' },

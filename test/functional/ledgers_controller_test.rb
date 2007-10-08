@@ -381,6 +381,57 @@ class LedgersControllerTest < Test::Unit::TestCase
     }
   end
 
+  def test_select_category
+    get :select_category, :payment_method => 'money'
+
+    assert_not_nil assigns(:ledger)
+    assert_not_nil assigns(:banks)
+    assert_not_nil assigns(:ledger_categories)
+    assert_response :success
+    assert_template 'shared_payments/_select_category'
+  end
+
+  def test_select_category_without_payment_method
+    get :select_category, :payment_method => nil
+
+    assert_response :success
+    assert_template nil
+  end
+
+
+  def test_select_category_of_money_payment_method
+    get :select_category, :payment_method => 'money'
+
+    assert_kind_of Money, assigns(:ledger)
+    assert_response :success
+    assert_template 'shared_payments/_select_category'
+  end
+
+  def test_select_category_of_check_payment_method
+    get :select_category, :payment_method => 'check'
+
+    assert_kind_of Check, assigns(:ledger)
+    assert_response :success
+    assert_template 'shared_payments/_select_category'
+  end
+
+  def test_select_category_of_debit_card_payment_method
+    get :select_category, :payment_method => 'debit_card'
+
+    assert_kind_of DebitCard, assigns(:ledger)
+    assert_response :success
+    assert_template 'shared_payments/_select_category'
+  end
+
+  def test_select_category_of_credit_card_payment_method
+    get :select_category, :payment_method => 'credit_card'
+
+    assert_kind_of CreditCard, assigns(:ledger)
+    assert_response :success
+    assert_template 'shared_payments/_select_category'
+  end
+
+
   #TODO make this test
   def test_ledgers_by_period
   end

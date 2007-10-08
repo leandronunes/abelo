@@ -16,7 +16,7 @@
 
 <%= error_messages_for 'sale' %>
 
-<% form_tag :action => 'cancel', :id => @sale do %>
+<% form_tag :action => 'coupon_cancel', :id => @sale do %>
 
   <p><label for="login"> <%= _("Supervisor") %> </label><br />
     <span><%= text_field 'user', 'login' %></span>

@@ -78,9 +78,38 @@ yet_another:
   permissions:
   - controller: '*'
     action: '*'
-for_sales_person:
+for_salesperson:
   id: 4
   user_id: 7
+  organization_id: 1
+  permissions:
+  - controller: 'point_of_sale'
+    action: 'index'
+  - controller: 'point_of_sale'
+    action: 'coupon_open'
+  - controller: 'point_of_sale'
+    action: 'refresh_product'
+  - controller: 'point_of_sale'
+    action: 'coupon_add_item'
+  - controller: 'point_of_sale'
+    action: 'payment'
+  - controller: 'point_of_sale'
+    action: 'save_customer'
+  - controller: 'point_of_sale'
+    action: 'payment_method'
+  - controller: 'point_of_sale'
+    action: 'coupon_add_payment'
+  - controller: 'point_of_sale'
+    action: 'coupon_close'
+  - controller: 'point_of_sale'
+    action: 'cancel'
+  - controller: 'point_of_sale'
+    action: 'autocomplete_customer'
+  - controller: 'point_of_sale'
+    action: 'select_category'
+for_sales_supervisor:
+  id: 6
+  user_id: 5
   organization_id: 1
   permissions:
   - controller: 'point_of_sale'

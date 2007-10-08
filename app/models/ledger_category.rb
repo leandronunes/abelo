@@ -30,13 +30,17 @@ class LedgerCategory < ActiveRecord::Base
     self[:settings] ||= {}
   end
 
-  def is_store
-    self.settings['is_store']
+  def is_sale
+    self.settings['is_sale']
   end
 
-  def is_store= value
+  def is_sale= value
     value = value.to_s == 'true' ? true : false
-    self.settings['is_store'] = value
+    self.settings['is_sale'] = value
+  end
+
+  def is_sale?
+    self.is_sale
   end
 
   def is_stock

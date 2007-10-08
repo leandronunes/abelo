@@ -1,29 +1,43 @@
 
-<!-- TODO remove this style hard code --> 
+
+<% form_tag :action => 'coupon_add_payment', :id => @sale do %>
+
+<%= error_messages_for :ledger %>
+
 <div id="payment_details">
-    <p><label name="sale_customer"> <%= _('Customer') %> </label>
-      <%= select_item 'sale', 'customer_id', @customers %>
-    </p>
 
-    <%= observe_field('sale_customer_id',
-          :update => 'payment_details',
-          :url => {:action => 'save_customer'},
-          :with => "'customer_id=' + escape(value) + '&sale_id=' + escape(#{@sale.id})"
-    )%>
-
-
-    <p><label name="sale_payment_method"> <%= _('Payment Method') %> </label>
-      <%= select('sale', 'payment_method', Payment::PAYMENT_METHODS.map{|p| [Payment.describe(p), p.to_s]}, :include_blank => true) %> 
-    </p>
-    <%= observe_field('sale_payment_method',
-          :update => 'payment',
-          :url => {:action => 'payment_method'},
-          :with => "'payment_method=' + escape(value) + '&sale_id=' + escape(#{@sale.id})"
-    )%>
-
-    <div id="payment">   
-      <%= render :partial => 'payment_method'%>
+  <p><label name="sale_customer"> <%= _('Customer') %> </label>
+    <%= text_field 'sale', 'customer_identifier', :class => 'filter_field' %> 
+    <div class='auto_complete' id='sale_customer_identifier_auto_complete' >
+      <%= auto_complete_field("sale_customer_identifier", :url => {:action => "autocomplete_customer", :id => @sale.id}, :indicator => 'auto_list') %>
     </div>
+    <div id='auto_list' style='display: none;' >
+    </div>
+  </p>
+
+  <p><label name="sale_value"> <%= _('Value') %> </label>
+    <%= text_field('ledger', 'value') %> 
+  </p>
+
+  <p><label name="sale_payment_method"> <%= _('Payment Method') %> </label>
+    <%= select_payment('ledger', 'payment_method') %>
+  </p>
+
+  <%= observe_field('ledger_payment_method',
+        :update => 'category',
+        :url => {:action => 'select_category'},
+        :with => "'payment_method=' + escape(value) + '&sale_id=' + escape(#{@sale.id})"
+  )%>
+
+  <div id='category'>
+    <% if !@ledger.payment_method.nil? %>
+      <%= render :partial => 'shared_payments/select_category' %>
+    <% end %>
+  </div>
+
 
 </div><!-- payment_details -->
 
+  <%= button 'save', _('Pay'), :save, {}, {:class => 'button button_login with_text'} %>
+
+<% end %>

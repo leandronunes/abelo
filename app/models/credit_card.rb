@@ -1,5 +1,6 @@
 class CreditCard < Ledger
 
+  validates_presence_of :category_id
   validates_presence_of :credit_card_number
   validates_presence_of :credit_card_validity
   validates_presence_of :credit_card_secutiry_code

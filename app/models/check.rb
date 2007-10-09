@@ -2,6 +2,7 @@ class Check < Ledger
 
   belongs_to :bank, :foreign_key => :check_bank_id
 
+  validates_presence_of :category_id
   validates_presence_of :check_owner_name
   validates_presence_of :check_bank_id
   validates_presence_of :check_account_agency

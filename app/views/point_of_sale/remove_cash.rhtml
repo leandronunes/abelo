@@ -1,0 +1,9 @@
+<%= title _("Remove Cash") %>
+
+<% form_tag :action => 'create_remove_cash' do %>
+
+  <%= render :partial => 'cash_form' %>
+
+  <%= button 'save', _('Save'), :save, {}, {:class => 'button'} %>
+
+<% end %>

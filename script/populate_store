@@ -32,9 +32,6 @@ perfil_organization.user = User.find_by_login('quentin')
 perfil_organization.template = 'organization_management'
 perfil_organization.save
 
-puts "teste"
-puts organization.inspect
-
 ############Configuration#########################
 configuration = organization.configuration
 

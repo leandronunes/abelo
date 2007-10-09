@@ -62,9 +62,17 @@
       )
   %>
 
-  <%= display_field_edit(item, 'is_store',
-        :title => _('Is operation of store'),
-        :content => check_box('category', 'is_store', {}, 'true', 'false')
+  <%= display_field_edit(item, 'is_sale',
+        :title => _('Is operation of sale'),
+        :content => check_box('category', 'is_sale', {}, 'true', 'false'),
+        :html_options => {:style => 'clear: left;'}
+      )
+  %>
+
+  <%= display_field_edit(item, 'is_stock',
+        :title => _('Is operation of stock'),
+        :content => check_box('category', 'is_stock', {}, 'true', 'false'),
+        :html_options => {:style => 'clear: left;'}
       )
   %>
 

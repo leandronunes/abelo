@@ -177,11 +177,41 @@ class PointOfSaleController < ApplicationController
   end
 
   def add_cash
-
+    @cash = AddCash.new
   end
 
-  def coupon_add_cash
+  def create_add_cash
+    @cash = AddCash.new(params[:cash])
+    @cash.payment_method = 'money'
+    @cash.date = Date.today
+    @cash.bank_account = @organization.default_bank_account
+    @cash.type_of = Payment::TYPE_OF_INCOME
+    @cash.owner = @organization
+    if @cash.save
+      flash[:notice] = _('The cash was added with sucess')
+      redirect_to :action => 'index'
+    else
+      render :action => 'add_cash'
+    end
+  end
 
+  def remove_cash
+    @cash = RemoveCash.new
+  end
+
+  def create_remove_cash
+    @cash = RemoveCash.new(params[:cash])
+    @cash.payment_method = 'money'
+    @cash.date = Date.today
+    @cash.bank_account = @organization.default_bank_account
+    @cash.type_of = Payment::TYPE_OF_EXPENSE
+    @cash.owner = @organization
+    if @cash.save
+      flash[:notice] = _('The cash was removed with sucess')
+      redirect_to :action => 'index'
+    else
+      render :action => 'remove_cash'
+    end
   end
 
   def render_access_denied_screen(message = nil)

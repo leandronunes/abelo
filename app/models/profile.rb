@@ -61,6 +61,10 @@ class Profile < ActiveRecord::Base
       { 'controller' => 'point_of_sale', 'action' => 'cancel' },
       { 'controller' => 'point_of_sale', 'action' => 'autocomplete_customer' },
       { 'controller' => 'point_of_sale', 'action' => 'select_category' },
+      { 'controller' => 'point_of_sale', 'action' => 'add_cash' },
+      { 'controller' => 'point_of_sale', 'action' => 'create_add_cash' },
+      { 'controller' => 'point_of_sale', 'action' => 'remove_cash' },
+      { 'controller' => 'point_of_sale', 'action' => 'create_remove_cash' },
     ],
     'sales_supervisor' => [
       { 'controller' => 'point_of_sale', 'action' => '*' },

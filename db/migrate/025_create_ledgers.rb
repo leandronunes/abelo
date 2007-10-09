@@ -5,7 +5,7 @@ class CreateLedgers < ActiveRecord::Migration
       t.column :owner_id,               :integer, :null => false
       t.column :type,                   :string, :null => false
       t.column :type_of,                :string, :limit => 1, :null => false
-      t.column :category_id,            :integer, :null => false
+      t.column :category_id,            :integer
       t.column :foreseen_value,         :float
       t.column :effective_value,        :float
       t.column :description,            :string, :default => ''

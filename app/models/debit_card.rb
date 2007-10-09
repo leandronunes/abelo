@@ -2,6 +2,7 @@ class DebitCard < Ledger
 
   belongs_to :bank, :foreign_key => :check_bank_id
 
+  validates_presence_of :category_id
   validates_presence_of :automatic_debit_owner_name
   validates_presence_of :automatic_debit_bank_id
   validates_presence_of :automatic_debit_account_agency

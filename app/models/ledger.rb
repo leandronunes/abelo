@@ -7,14 +7,12 @@ class Ledger < ActiveRecord::Base
   attr_accessor :schedule_repeat, :schedule_interval, :payment_method_choosen
   @schedule_periodicity
 
-
   belongs_to :category, :class_name => 'LedgerCategory',  :foreign_key => 'category_id'
   belongs_to :schedule_ledger
   belongs_to :bank_account
   belongs_to :owner, :polymorphic => true
   validates_presence_of :owner_type
   validates_presence_of :owner_id
-  validates_presence_of :category_id
   validates_presence_of :foreseen_value
   validates_presence_of :effective_value, :if => lambda{ |ledger| not ledger.is_foreseen? }
   validates_presence_of :bank_account_id
@@ -160,9 +158,6 @@ class Ledger < ActiveRecord::Base
 
   protected
   def validate
-    if !(self.class == Money) and !(self.class == Check) and !(self.class == CreditCard) and !(self.class == DebitCard)
-      self.errors.add(:type, _('You must specify the ledger as Money, Check, Credit Card or Debit Card.'))
-    end
 
     self.errors.add(:value, _("The value should be at least 0.01" )) if value.nil? || value <= 0.00
 

@@ -107,6 +107,14 @@ for_salesperson:
     action: 'autocomplete_customer'
   - controller: 'point_of_sale'
     action: 'select_category'
+  - controller: 'point_of_sale'
+    action: 'add_cash'
+  - controller: 'point_of_sale'
+    action: 'create_add_cash'
+  - controller: 'point_of_sale'
+    action: 'remove_cash'
+  - controller: 'point_of_sale'
+    action: 'create_remove_cash'
 for_sales_supervisor:
   id: 6
   user_id: 5

@@ -6,7 +6,7 @@ class PointOfSaleController; def rescue_action(e) raise e end; end
 
 class PointOfSaleControllerTest < Test::Unit::TestCase
 
-  fixtures :sales, :sale_items, :system_actors, :people, :products, :ledger_categories
+  fixtures :sales, :sale_items, :system_actors, :people, :products, :ledger_categories, :bank_accounts
 
   under_organization :one
 
@@ -301,11 +301,59 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   end
 
   def test_coupon_close
-    Ledger.create_ledger!(:payment_method => 'money', :category_id => @category, :value => @sale.balance, :date => Date.today, :owner => @sale, :bank_account => @organization.default_bank_account)
     get :coupon_close, :id => @sale.id
+
     assert_response :redirect
-    assert Sale.find(@sale.id).closed?
     assert_redirected_to :action => 'index'
   end
+
+  def test_add_cash
+    get :add_cash
+    assert_response :success
+    assert_template 'add_cash'
+    assert assigns(:cash)
+  end
+
+  def test_create_add_cash_successfully
+    get :create_add_cash, :cash => {:value => 12}
+    assert_response :redirect
+    assert_redirected_to :action => 'index'
+    assert assigns(:cash)
+    assert_equal 'money', assigns(:cash).payment_method
+    assert_equal Date.today, assigns(:cash).date
+    assert_equal Payment::TYPE_OF_INCOME, assigns(:cash).type_of
+  end
+
+  def test_create_add_cash_unsuccessfully
+    # The method expect a value different of nil
+    get :create_add_cash, :cash => {:value => nil}
+    assert_response :success
+    assert_template 'add_cash'
+  end
+
+  def test_remove_cash
+    get :remove_cash
+    assert_response :success
+    assert_template 'remove_cash'
+    assert assigns(:cash)
+  end
+
+  def test_create_remove_cash_successfully
+    get :create_remove_cash, :cash => {:value => 12}
+    assert_response :redirect
+    assert_redirected_to :action => 'index'
+    assert assigns(:cash)
+    assert_equal 'money', assigns(:cash).payment_method
+    assert_equal Date.today, assigns(:cash).date
+    assert_equal Payment::TYPE_OF_EXPENSE, assigns(:cash).type_of
+  end
+
+  def test_create_remove_cash_unsuccessfully
+    # The method expect a value different of nil
+    get :create_remove_cash, :cash => {:value => nil}
+    assert_response :success
+    assert_template 'remove_cash'
+  end
+
 
 end

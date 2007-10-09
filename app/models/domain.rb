@@ -40,10 +40,10 @@ class Domain < ActiveRecord::Base
     name.downcase.sub(/^www\./, '')
   end
 
-  # detects the VirtualCommunity to which this domain belongs, either if it's
+  # detects the Environment to which this domain belongs, either if it's
   # directly owned by one, or through a profile who owns the domain but belongs
-  # to a VirtualCommunity.
-  def virtual_community
+  # to a Environment.
+  def environment
     owner
   end
 

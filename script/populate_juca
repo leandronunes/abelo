@@ -4,8 +4,8 @@ require File.dirname(__FILE__) + '/../config/environment'
 ############Virtual Community########################
 Design.design_root= 'designs/organization'
 
-VirtualCommunity.delete_all
-VirtualCommunity.create!(:name => 'Default Environment', :is_default => true)
+Environment.delete_all
+Environment.create!(:name => 'Default Environment', :is_default => true)
 
 
 ############Organizations########################

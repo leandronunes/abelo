@@ -2,6 +2,10 @@ class DesignPointOfSale
 
   attr_accessor :settings
 
+  def self.design_root
+    File.join('designs', 'point_of_sale')
+  end
+
   def design_data
     self.settings ||= {}
   end

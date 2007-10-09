@@ -2,7 +2,7 @@ class PublicController < ApplicationController
 
   skip_before_filter :check_access_control
 
-  public_layout
+  default_environment
 
   def index
     @organizations = current_user.organizations

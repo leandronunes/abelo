@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
 
   uses_tabbed_navigation
 
-  design :holder => 'organization', :root => File.join('designs', 'organization')
+  design :holder => 'organization'
 
   # declares that the given <tt>actions</tt> cannot be accessed by other HTTP
   # method besides POST.
@@ -157,12 +157,12 @@ class ApplicationController < ActionController::Base
   def self.needs_administrator
     skip_before_filter :check_access_control
     before_filter :check_admin_rights
-    before_filter :load_virtual_community
-    layout 'default'
+    default_environment
   end
 
-  def self.public_layout
-    before_filter :load_virtual_community
+  def self.default_environment
+    design :holder => 'environment'
+    before_filter :load_environment
     layout 'default'
   end
 
@@ -171,10 +171,8 @@ class ApplicationController < ActionController::Base
   # TODO: move this logic somewhere else (Domain class?)
   def detect_stuff_by_domain
     @domain = Domain.find_by_name(request.host)
-    if @domain.nil?
-      @virtual_community = VirtualCommunity.default
-    else
-      @virtual_community = @domain.virtual_community
+    unless @domain.nil?
+      @environment = @domain.environment
     end
   end  
 
@@ -190,24 +188,24 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def load_virtual_community
-    return nil unless @virtual_community.nil?
+  def load_environment
+    return nil unless @environment.nil?
     if @organization.nil?
-      @virtual_community = VirtualCommunity.default 
+      @environment = Environment.default 
     else
-      @virtual_community = @organization.virtual_community 
+      @environment = @organization.environment 
     end
   end
 
   def render_access_denied_screen
-    @virtual_community = VirtualCommunity.default
+    @environment = Environment.default
     render :template => 'users/access_denied'
   end
 
   def render_error(message = nil, error = nil)
     @message = message ||  _("This system didn't works correctly. Please contact the administrator and inform the message below.")    
     @error = error
-    @virtual_community = VirtualCommunity.default
+    @environment = Environment.default
     render :template => 'shared/error'
   end
 

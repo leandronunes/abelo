@@ -2,7 +2,7 @@ class Profile < ActiveRecord::Base
 
   belongs_to :organization
   belongs_to :user
-  belongs_to :virtual_community
+  belongs_to :environment
 
   validates_presence_of :user_id
   validates_presence_of :organization_id, :if  => lambda {|p| !p.user.nil? and !p.user.administrator }

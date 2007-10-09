@@ -15,7 +15,7 @@ class Organization < ActiveRecord::Base
   test
   ]
 
-  acts_as_design
+  acts_as_design :root => File.join('designs', 'organization')
 
   has_one  :configuration, :dependent => :destroy
 
@@ -57,9 +57,9 @@ class Organization < ActiveRecord::Base
   has_many :contacts, :through => :customers
   has_many :bank_accounts, :as => :owner
   has_many :stocks, :through => :products
-  has_one  :virtual_community, :as => :owner
+  has_one  :environment, :as => :owner
   has_many :periodicities
-  # One VirtualCommunity can be reached by many domains
+  # One Environment can be reached by many domains
   has_many :domains, :as => :owner
 
 
@@ -91,10 +91,10 @@ class Organization < ActiveRecord::Base
       homepage.slug = organization.identifier
       homepage.save!
 
-      virtual_community = VirtualCommunity.new
-      virtual_community.owner = organization
-      virtual_community.name = organization.identifier
-      virtual_community.save!
+      environment = Environment.new
+      environment.owner = organization
+      environment.name = organization.identifier
+      environment.save!
     end
   end
 

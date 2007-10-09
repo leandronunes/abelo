@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 require File.dirname(__FILE__) + '/../config/environment'
 
+Design.design_root= 'designs/organization'
+
 ############Organizations########################
 begin
   organization = Organization.create!(:name => 'Gab', :cnpj => '93.868.132/0001-10', :identifier => 'gab')
@@ -30,6 +32,8 @@ perfil_organization.user = User.find_by_login('quentin')
 perfil_organization.template = 'organization_management'
 perfil_organization.save
 
+puts "teste"
+puts organization.inspect
 
 ############Configuration#########################
 configuration = organization.configuration

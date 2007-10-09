@@ -57,7 +57,6 @@ class Organization < ActiveRecord::Base
   has_many :contacts, :through => :customers
   has_many :bank_accounts, :as => :owner
   has_many :stocks, :through => :products
-#  has_many :ledgers, :through => :bank_accounts, :as => :owner TODO see a way to do this
   has_one  :virtual_community, :as => :owner
   has_many :periodicities
   # One VirtualCommunity can be reached by many domains
@@ -118,6 +117,7 @@ class Organization < ActiveRecord::Base
     @homepage ||= Article.find_by_path(self.identifier)
   end
 
+  #Find a ledger of organization
   def find_ledger(id)
    ledgers = self.bank_accounts.map{|b| b.ledgers}
    ledgers.flatten.detect{|l| l.id.to_s == id.to_s}
@@ -147,9 +147,10 @@ class Organization < ActiveRecord::Base
     self.bank_accounts.find(:first, :conditions => ['is_default = ?', true])
   end
 
+  # Return the organization ledgers by bank accounts passed as arguments
   def ledgers_by_bank_account(bank_accounts = [])
-    if bank_accounts.class == Array
-      ledgers = bank_accounts.collect{ |b| b.ledgers}.flatten
+    if(bank_accounts.class == Array and self.bank_accounts.include?(bank_accounts))
+      ledgers = bank_accounts.collect{|b| b.ledgers}.flatten
     else
       ledgers = self.bank_accounts.find(bank_accounts).ledgers
     end
@@ -160,12 +161,14 @@ class Organization < ActiveRecord::Base
     bank_accounts.collect{ |b| b.ledgers.tag_counts }.flatten
   end
 
+  # Return the organization ledgers by tags and bank accounts passed as arguments
   def ledgers_by_tag(tags, bank_accounts = [])
     bank_accounts.collect{ |b| b.ledgers.find_tagged_with(tags) }.flatten
   end
 
+  # Return the organization ledgers between the start and end dates passed as arguments
   def ledgers_by_dates(start_date, end_date, bank_accounts = [])
-    return [] if start_date.nil? or end_date.nil?
+    return [] if start_date.nil? or end_date.nil? or !self.bank_accounts.include?(bank_accounts)
     bank_accounts.collect{|b| 
       b.ledgers.find(:all, :conditions => [ 
         '((effective_date >= ?) and (effective_date <= ?)) or (foreseen_date >= ? and foreseen_date <= ?)', 
@@ -174,8 +177,9 @@ class Organization < ActiveRecord::Base
     }.flatten
   end
 
+  # Return the organization ledgers by categories and bank accounts passed as arguments
   def ledgers_by_categories(categories, bank_accounts = [])
-    return [] if categories.blank?
+    return [] if categories.blank? or !self.bank_accounts.include?(bank_accounts)
 
     merge_cond = ''
     categories.each do |c|
@@ -186,22 +190,17 @@ class Organization < ActiveRecord::Base
   end
 
   def ledgers_by_search(search_query, bank_accounts = [])
-    return [] if search_query.blank?
+    return [] if search_query.blank? or !self.bank_accounts.include?(bank_accounts)
     bank_accounts.collect{ |b| b.ledgers.full_text_search(search_query) }.flatten
   end
 
   def ledgers_by_all(bank_accounts, tags, categories, start_date, end_date, query = nil)
-    Array.new if bank_accounts.blank?
+    Array.new if bank_accounts.blank? or !self.bank_accounts.include?(bank_accounts)
     ledger_banks = ledgers_by_bank_account(bank_accounts)
-
     tags = tags_by_bank_account(bank_accounts).collect{|t| t.name}.join(',') if tags.blank?
-
     ledger_tags = ledgers_by_tag(tags, bank_accounts)
-
     ledger_dates = ledgers_by_dates(start_date, end_date, bank_accounts)
-
     ledger_categories = ledgers_by_categories(categories, bank_accounts)
-
     ledger_search = ledgers_by_search(query, bank_accounts)
 
     all_leders = ledger_banks 

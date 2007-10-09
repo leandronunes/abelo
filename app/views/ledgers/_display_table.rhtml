@@ -160,10 +160,16 @@
     <% for ledger in @ledgers %>
       <tr id="list_ledger_<%=ledger.id %>">
         <td><%= ledger.date.strftime('%d/%m/%Y') %></td>
-        <td> <%= ledger.category.name %></td>
+        <% if ledger.class.to_s == 'AddCash' %>
+          <td> <%= _('Point of Sale: Add Cash') %></td>
+        <% elsif ledger.class.to_s == 'RemoveCash' %>
+           <td> <%= _('Point of Sale: Remove Cash') %></td>
+        <% else %>
+          <td> <%= ledger.category.name %></td>
+        <% end %>
         <td> <%= ledger.description %></td>
-    	  <td><%= ledger.value if Payment.income?(ledger.category.type_of) %></td>
-        <td><%= ledger.value if Payment.expense?(ledger.category.type_of) %></td>
+    	  <td><%= ledger.value if Payment.income?(ledger.type_of) %></td>
+        <td><%= ledger.value if Payment.expense?(ledger.type_of) %></td>
         <td>
           <%= button 'view_small', _('Show'), :show, :action => 'show', :id => ledger %>
           <%= button 'edit_small', _('Edit'), :edit, :action => 'edit', :id => ledger %>

@@ -16,11 +16,8 @@ class LedgersController < ApplicationController
 
 
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
-  verify :method => :post, :only => [ :update, :create, :destroy, :find_by_tag, 
-                                      :display_table, :get_periodicity_informations, :get_interval_informations ],
-         :redirect_to => { :action => :index }
+  post_only [ :update, :create, :destroy, :find_by_tag, :display_table, :get_periodicity_informations, :get_interval_informations ]
 
-  # Redirect to action list
   def index
     redirect_to :action => 'list'
   end

@@ -5,7 +5,7 @@ require 'ledgers_controller'
 class LedgersController; def rescue_action(e) raise e end; end
 
 class LedgersControllerTest < Test::Unit::TestCase
-  fixtures :ledgers, :ledger_categories, :configurations, :bank_accounts
+  fixtures :ledgers, :ledger_categories, :configurations, :bank_accounts, :virtual_communities
  
   under_organization :one
 
@@ -431,23 +431,17 @@ class LedgersControllerTest < Test::Unit::TestCase
     assert_template 'shared_payments/_select_category'
   end
 
-
-  #TODO make this test
-  def test_ledgers_by_period
+  def test_action_list_with_ledger_without_category
+    Ledger.delete_all
+    @ledger = AddCash.new
+    @ledger.payment_method = 'money'
+    @ledger.date = Date.today
+    @ledger.bank_account = @organization.default_bank_account
+    @ledger.type_of = Payment::TYPE_OF_INCOME
+    @ledger.owner = @organization
+    @ledger.value = 10
+    @ledger.save!
+    get :list
   end
-
-  #TODO make this test
-  def test_ledgers_by_bank_account
-  end
-
-  #TODO make this test
-  def test_ledgers_by_ledger_category
-  end
-
-  #TODO make this test
-  def test_ledgers_by_tag
-  end
-
-
 
 end

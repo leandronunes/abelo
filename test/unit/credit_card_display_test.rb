@@ -49,5 +49,4 @@ class CreditCardDisplayTest < Test::Unit::TestCase
     assert !m.errors.invalid?(:field)
   end
 
-
 end

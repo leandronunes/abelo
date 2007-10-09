@@ -179,16 +179,6 @@ class LedgerTest < Test::Unit::TestCase
     l.valid?
     assert l.errors.invalid?(:schedule_repeat)
   end
-  def test_precense_of_category
-    c = LedgerCategory.new(:name => 'Some category', :organization_id => 1, :type_of => 'I', :payment_methods => ['money'])
-    c.save!
-    l = Ledger.new_ledger
-    l.valid?
-    assert l.errors.invalid?(:category_id)
-    l.category = c 
-    l.valid?
-    assert !l.errors.invalid?(:category_id)
-  end
 
   def test_precense_of_foreseen_date
     l = Ledger.new_ledger

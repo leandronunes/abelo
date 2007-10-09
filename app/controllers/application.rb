@@ -182,19 +182,15 @@ class ApplicationController < ActionController::Base
 #  end  
 
   def self.needs_organization
-    before_filter :load_virtual_community
-    before_filter :check_load_organization
+    before_filter :load_organization
     layout 'organization'
   end
 
-  def check_load_organization
-    if @organization.nil? and can(params[:action])
-      render_error(_("There is no organization with nickname %s or you don't have access to it") % params[:organization_nickname])
-    end
-   end
-
   def load_organization
     @organization = current_user.organizations.find_by_identifier(params[:organization_nickname])
+    if @organization.nil?
+      render_error(_("There is no organization with nickname %s") % params[:organization_nickname])
+    end
   end
 
   def load_virtual_community
@@ -215,7 +211,7 @@ class ApplicationController < ActionController::Base
     @message = message ||  _("This system didn't works correctly. Please contact the administrator and inform the message below.")    
     @error = error
     @virtual_community = VirtualCommunity.default
-    render :template => 'shared/error', :layout => 'default'
+    render :template => 'shared/error'
   end
 
 end

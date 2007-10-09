@@ -101,4 +101,16 @@ class CreditCardTest < Test::Unit::TestCase
     assert_raise(NoMethodError){c.type_person = 'something'}
   end
 
+  def test_presence_of_category
+    c = LedgerCategory.new(:name => 'Some category', :organization_id => 1, :type_of => 'I', :payment_methods => ['money'])
+    c.save!
+    l = CreditCard.new
+    l.valid?
+    assert l.errors.invalid?(:category_id)
+    l.category = c
+    l.valid?
+    assert !l.errors.invalid?(:category_id)
+  end
+
+
 end

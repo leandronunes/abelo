@@ -2,12 +2,10 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class OrganizationTest < Test::Unit::TestCase
 
+  fixtures :bank_accounts, :organizations, :banks
+
   def setup
-    @organization = Organization.new
-    @organization.name = 'organization for testing'
-    @organization.cnpj = '19900000002462'
-    @organization.identifier = 'test_organization'
-    @organization.save
+    @organization = Organization.find(:first)
     
     @cat_prod = ProductCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
     @cat_cust = CustomerCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
@@ -50,13 +48,6 @@ class OrganizationTest < Test::Unit::TestCase
     assert @organization.mass_mails.include?(mail)
   end
 
-  def test_relation_with_ledgers
-  end
-
-  def test_relation_with_categories
-    assert_equal 4, @organization.categories.count
-  end
-
   def test_relation_with_product_categories
     assert @organization.product_categories.include?(@cat_prod)
   end
@@ -74,10 +65,11 @@ class OrganizationTest < Test::Unit::TestCase
   end
 
   def test_relation_with_system_actors
+    num_actors = @organization.system_actors.length
     supplier = Supplier.create!(:name => 'Hering', :cnpj => '58178734000145', :organization_id => @organization.id, :email => 'contato@hering.com', :category_id => @cat_supp.id)
     customer = Customer.create!(:name => 'João da Silva', :email => 'joao@softwarelivre.org', :cpf => '74676743920', :organization_id => @organization.id, :email => 'joao@softwarelivre.org', :category_id => @cat_cust.id)
     worker = Worker.create!(:name => 'José Fernandes', :cpf => '63358421813', :category_id => @cat_worker.id, :organization_id => @organization.id , :email => 'jose@toca.com')
-    assert_equal 3, @organization.system_actors.count
+    assert_equal num_actors + 3, @organization.system_actors.count
   end
 
   def test_relation_with_suppliers
@@ -192,20 +184,17 @@ class OrganizationTest < Test::Unit::TestCase
     assert @organization.documents_not_model.include?(doc) 
   end
 
-  #TODO make this test
-  def test_ledgers_by_bank_account
-  end
-
-  #TODO make this test
-  def test_ledgers_by_period
-  end
-
-  #TODO make this test
-  def test_ledgers_by_ledger_category
-  end
-
-  #TODO make this test
-  def test_ledgers_by_tags
+  def test_find_ledger
+    ledger = AddCash.new
+    ledger.payment_method = 'money'
+    ledger.date = Date.today
+    ledger.bank_account = @organization.default_bank_account
+    ledger.type_of = Payment::TYPE_OF_INCOME
+    ledger.owner = @organization
+    ledger.value = 10
+    ledger.save!
+     
+    assert_not_nil @organization.find_ledger(ledger.id)
   end
 
 end

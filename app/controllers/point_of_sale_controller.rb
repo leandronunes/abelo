@@ -10,9 +10,9 @@ class PointOfSaleController < ApplicationController
 
   before_filter :check_coupon_cancel, :only => ['coupon_cancel']
   
-  Design.design_root= 'designs/point_of_sale'
+ # Design.design_root= 'designs/point_of_sale'
 
-  design :holder => :design_point_of_sale
+  design :holder => :design_point_of_sale, :root => File.join('designs','point_of_sale')
 
   def design_point_of_sale
     point_of_sale = DesignPointOfSale.new 

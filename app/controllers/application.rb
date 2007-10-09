@@ -12,9 +12,7 @@ class ApplicationController < ActionController::Base
 
   uses_tabbed_navigation
 
-  design :holder => 'organization'
-  
-  Design.design_root= 'designs/organization'
+  design :holder => 'organization', :root => File.join('designs', 'organization')
 
   # declares that the given <tt>actions</tt> cannot be accessed by other HTTP
   # method besides POST.
@@ -168,18 +166,17 @@ class ApplicationController < ActionController::Base
     layout 'default'
   end
 
-#  before_filter :detect_stuff_by_domain
+  before_filter :detect_stuff_by_domain
 
   # TODO: move this logic somewhere else (Domain class?)
-#  def detect_stuff_by_domain
-#    @domain = Domain.find_by_name(request.host)
-#    if @domain.nil?
-#      @virtual_community = VirtualCommunity.default
-#    else
-#      @virtual_community = @domain.virtual_community
-#      @profile = @domain.profile
-#    end
-#  end  
+  def detect_stuff_by_domain
+    @domain = Domain.find_by_name(request.host)
+    if @domain.nil?
+      @virtual_community = VirtualCommunity.default
+    else
+      @virtual_community = @domain.virtual_community
+    end
+  end  
 
   def self.needs_organization
     before_filter :load_organization
@@ -194,9 +191,9 @@ class ApplicationController < ActionController::Base
   end
 
   def load_virtual_community
-    load_organization
+    return nil unless @virtual_community.nil?
     if @organization.nil?
-       @virtual_community = VirtualCommunity.default 
+      @virtual_community = VirtualCommunity.default 
     else
       @virtual_community = @organization.virtual_community 
     end

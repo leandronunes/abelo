@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>Abelo &rarr; Organization number one &rarr; main </title>
+  <title>Abelo &rarr; Login </title>
+  <link href="../../css/style.css" media="screen" rel="Stylesheet" type="text/css" />
+  <link href="../../../../icons/neu/style.css" media="screen" rel="Stylesheet" type="text/css" />
+  <script src="../../js/prototype.js" type="text/javascript"></script>
+<script src="../../js/effects.js" type="text/javascript"></script>
+<script src="../../js/dragdrop.js" type="text/javascript"></script>
+<script src="../../js/controls.js" type="text/javascript"></script>
+<script src="../../js/application.js" type="text/javascript"></script>
+<script src="../../js/slider.js" type="text/javascript"></script>
+<script src="../../js/global.js" type="text/javascript"></script>
+<script src="../../js/scriptaculous.js" type="text/javascript"></script>
+<script src="../../../../javascripts/fckeditor/fckeditor.js" type="text/javascript"></script>
+
+</head>
+<body>
+<div id="warp">
+
+<div id="header">
+<img id="logo_org" src="../../../../images/org0001.png" alt="Logo - COOPTECLIVRE" height="75px" width="75px">
+<div id="info_org">
+<span>COOPTECLIVRE - Cooperativa de Tecnologias Livres</span><br />
+CNPJ: 07.970.746/0001-77
+</div>
+<img id="banner_top" src="../../../../images/bannerabelo_160x75.jpg" "Banner - Abelo" height="75px" width="160px">
+<div id="userbar">
+<div class="login_bar"><a href="#" onclick="Effect.toggle('nav','slide',{duration:2}); return false;" accesskey="z" id="goto">Go to</a>&nbsp;<a href="edit_profile.htm" id="edit_profile">Edit personal information</a>&nbsp;<a href="login.htm" id="logout">Logout</a></div>
+<div class="navigation_bar"><div class="control_header"><a href="#" onClick="$('warp').style.marginTop='-77px';" class="hide" accesskey="z">&nbsp;<span>Hide</span></a><a href="#" onClick="$('warp').style.marginTop='0px';" class="show" accesskey="x">&nbsp;<span>Show</span></a></div>
+<a href="organization.htm">main</a> &rarr; <a href="organization_01.htm">COOPTECLIVRE - Coo...</a> &rarr; <a href="edit_profile.htm">Edit personal i...</a>
+</div>
+</div>
+<div id="nav" style="display : none;"><div><ul>
+<li><a href="configuration.htm" accesskey="1" class="button_main pos_1" id="configuration"><span>Configurations</span></a></li>
+<li><a href="customer_categories.htm" accesskey="2" class="button_main pos_2" id="customer_categories"><span>Customer Categories</span></a></li>
+<li><a href="suppliers.htm" class="button_main pos_3" id="suppliers"><span>Suppliers</span></a></li>
+<li><a href="departments.htm" class="button_main pos_4" id="departments"><span>Departments</span></a></li>
+<li><a href="customers.htm" class="button_main pos_5" id="customers"><span>Customers</span></a></li>
+<li><a href="point_of_sale.htm" class="button_main pos_6" id="point_of_sale"><span>Point of sale</span></a></li>
+<li><a href="contact_positions.htm" class="button_main pos_7" id="contact_positions"><span>Contact Positions</span></a></li>
+<li><a href="stock.htm" class="button_main pos_8" id="stock"><span>Stock</span></a></li>
+<li><a href="products.htm" class="button_main pos_9" id="products"><span>Products</span></a></li>
+<li><a href="commercial_proposals.htm" class="button_main pos_10" id="commercial_proposals"><span>Commercial Proposals</span></a></li>
+<li><a href="store.htm" class="button_main pos_11" id="store"><span>Store</span></a></li>
+<li><a href="product_categories.htm" class="button_main pos_12" id="product_categories"><span>Product Categories</span></a></li>
+<li><a href="cash_flows.htm" class="button_main pos_13" id="cash_flows"><span>Cash Flow</span></a></li>
+<li><a href="permissions.htm" class="button_main pos_14" id="permissions"><span>User administration</span></a></li>
+<li><a href="mass_mails.htm" class="button_main pos_15" id="mass_mails"><span>Mass Mails</span></a></li>
+<li><a href="workers.htm" class="button_main pos_16" id="workers"><span>Workers</span></a></li></ul></div></div>
+</div>
+</div>
+
+<div id="content">
+
+<div id="sidebar"></div>
+<!-- Inicio do conteudo ficticio --><form action="/users/update/1" method="post">
+
+<div id="center_box">
+<div id='loginform'>
+
+<p><label for="login">Login</label>
+<span><input id="user_login" name="user[login]" size="30" type="text" value="quentin" /></span>
+</p>
+
+<p><label for="email">Email</label>
+
+<span><input id="user_email" name="user[email]" size="30" type="text" value="quentin@example.com" /></span>
+</p>
+
+<p><label for="email">Is Administrator?</label>
+<span><input id="user_administrator" name="user[administrator]" type="checkbox" value="1" /><input name="user[administrator]" type="hidden" value="0" /></span>
+</p>
+
+<p><label for="password">Password</label>
+<span><input id="user_password" name="user[password]" size="30" type="password" /></span>
+</p>
+
+<p><label for="password_confirmation">Confirm Password</label>
+<span><input id="user_password_confirmation" name="user[password_confirmation]" size="30" type="password" /></span>
+</p>
+
+
+
+<div class='button_bar'>
+<input class="button button_save" name="commit" type="submit" value="Save" />
+
+  <a href="/" class="button button_cancel">Cancel</a>
+
+</div>
+</form>
+</div>
+</div>
+<!-- Fim do conteudo ficticio -->
+
+</div>
+
+<div id="notice">
+<p style="color: green"></p>
+</div>
+
+</div>
+<div id="footer">
+Copyrigth © 2007 <a href="http://www.colivre.coop.br" alt="Cooperativa de Tecnologias Livres">Colivre</a><br />
+Todo o conteúdo deste software pode ser reutilizado de acordo com os termos da licença <a href="http://www.gnu.org/licenses/licenses.html#GPL">GNU General Public License (GPL)</a>.
+</div>
+</body>
+</html>

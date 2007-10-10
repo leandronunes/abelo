@@ -1,0 +1,26 @@
+#info_form {
+  clear: left;
+  margin: 10px;
+  padding: 5px 0px 0px 0px;
+  list-style: none;
+  width: 60%;
+}
+
+
+#info_form label {
+  color: black;
+  font-weight: bold;
+}
+#info_form div {
+  display: inline;
+  padding: 0px 4px;
+}
+
+#info_form .break_line {
+  clear: left;
+}
+
+#info_form .info_field {
+  margin: 5px;
+  padding: 5px;
+}

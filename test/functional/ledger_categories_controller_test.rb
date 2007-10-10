@@ -135,12 +135,12 @@ class LedgerCategoriesControllerTest < Test::Unit::TestCase
     assert_equal true, assigns(:category).is_operational
   end
   
-  def test_update_is_store
-    @ledger_category.is_store = false
+  def test_update_is_sale
+    @ledger_category.is_sale = false
     assert @ledger_category.save
-    post :update, :id => @ledger_category.id, :category => {:is_store => true }
+    post :update, :id => @ledger_category.id, :category => {:is_sale => true }
 
-    assert_equal true , assigns(:category).is_store
+    assert_equal true , assigns(:category).is_sale
   end
 
   def test_update_type_of

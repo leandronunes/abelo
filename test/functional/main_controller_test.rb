@@ -6,7 +6,7 @@ class MainController; def rescue_action(e) raise e end; end
 
 class MainControllerTest < Test::Unit::TestCase
 
-  fixtures :organizations, :virtual_communities, :profiles
+  fixtures :organizations, :environments, :profiles
 
   under_organization :one
 

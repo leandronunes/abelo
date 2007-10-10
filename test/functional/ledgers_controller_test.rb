@@ -5,7 +5,7 @@ require 'ledgers_controller'
 class LedgersController; def rescue_action(e) raise e end; end
 
 class LedgersControllerTest < Test::Unit::TestCase
-  fixtures :ledgers, :ledger_categories, :configurations, :bank_accounts, :virtual_communities
+  fixtures :ledgers, :ledger_categories, :configurations, :bank_accounts, :environments
  
   under_organization :one
 

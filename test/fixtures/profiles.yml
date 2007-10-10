@@ -132,3 +132,5 @@ admin_profile:
     action: '*'
   - controller: 'banks'
     action: '*'
+  - controller: 'permissions_admin'
+    action: '*'

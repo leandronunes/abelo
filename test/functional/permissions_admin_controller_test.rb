@@ -15,7 +15,7 @@ class PermissionsAdminControllerTest < Test::Unit::TestCase
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     @user = User.find(:first)
-    @organization = @user.organization
+    @organization = Organization.find_by_identifier('one')
     login_as('admin')
   end
 
@@ -25,7 +25,7 @@ class PermissionsAdminControllerTest < Test::Unit::TestCase
   end
 
   def test_index
-    get :index
+    get :index, :organization_id => @organization.id
     assert_response :success
     assert_template 'permissions_base/list'
   end

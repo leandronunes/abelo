@@ -5,65 +5,46 @@
 
 def create_admin_organization_tabs
 
-  is_not_organization = false
-  if params[:controller] == 'configuration'
-    is_not_organization = true if Configuration.is_model?(params[:id])
-  elsif params[:controller] == 'permissions_admin'
-    is_not_organization = true
-  end
-
   t = add_tab do
     in_set 'first'
     highlights_on :controller => 'organizations'
   end
-  t.links_to :action => 'show', :id => params[:id]
+  t.links_to :controller => 'organizations', :action => 'show', :organization_id => params[:organization_id]
   t.named _('Show')
-  locations = [ {:action => 'edit'}, {:action => 'update'}, {:action => 'show'} ]
-  if is_not_organization == true
-    t.show_if  "false"
-  else
-    t.show_if  match_location(locations) ? "true" : "false"
-  end
+  locations = [ 
+    {:controller => 'organizations', :action => 'edit'}, 
+    {:controller => 'organizations', :action => 'update'}, 
+    {:controller => 'organizations', :action => 'show'},
+    {:controller => 'configuration', :action => 'edit'}, 
+    {:controller => 'configuration', :action => 'update'}, 
+    {:controller => 'configuration', :action => 'show'} ,
+    {:controller => 'permissions_admin'},
+  ]
+  t.show_if  match_location(locations) ? "true" : "false"
 
   t = add_tab do
     in_set 'first'
     highlights_on :controller => 'configuration'
   end
-  t.links_to :controller => 'configuration', :action => 'show', :id => params[:id]
+  t.links_to :controller => 'configuration', :action => 'show', :configuration_id => Organization.find(params[:organization_id] || params[:id]).configuration
   t.named _('Configurations')
-  locations = [ {:action => 'edit'}, {:action => 'update'}, { :action => 'show'} ]
-  if is_not_organization == true
-    t.show_if  "false"
-  else
-    t.show_if  match_location(locations) ? "true" : "false"
-  end
+  t.show_if  match_location(locations) ? "true" : "false"
 
   t = add_tab do
     in_set 'first'
     highlights_on :controller => 'permissions_admin'
   end
-  t.links_to :controller => 'permissions_admin', :action => 'list', :organization_id => params[:id]
+  t.links_to :controller => 'permissions_admin', :action => 'list', :organization_id => params[:organization_id]
   t.named _('Users and Permissions')
-  locations = [ {:action => 'edit'}, {:action => 'update'}, { :action => 'show'} ]
-  if is_not_organization == true
-    t.show_if  "false"
-  else
-    t.show_if  match_location(locations) ? "true" : "false"
-  end
+  t.show_if  match_location(locations) ? "true" : "false"
 
   t = add_tab do
     in_set 'first'
     links_to :controller => 'organizations', :action => 'list'
-    highlights_on :controller => 'organizations', :action => 'list'
-    highlights_on :controller => 'organizations', :action => 'new'
-    highlights_on :controller => 'organizations', :action => 'create'
+     highlights_on :controller => 'organizations'
   end
   t.named _("Organizations") 
-  t.show_if  is_not_organization.to_s
-  locations = [ {:action => 'list'},{ :action => 'new'}, {:action => 'create'}]
-  if is_not_organization != true
-    t.show_if  match_location(locations) ? "true" : "false"
-  end
+  t.show_if  match_location(locations) ? "false" : "true"
 
   t = add_tab do
     in_set 'first'
@@ -71,11 +52,7 @@ def create_admin_organization_tabs
     links_to :controller => 'configuration', :action => 'list'
   end
   t.named _('Organizations Profiles')
-  t.show_if  is_not_organization.to_s
-  locations = [{:action => 'list'}, {:action => 'new'}, {:action => 'create'}]
-  if is_not_organization != true
-    t.show_if  match_location(locations) ? "true" : "false"
-  end
+  t.show_if  match_location(locations) ? "false" : "true"
 end
 
 def match_location(location = []) 

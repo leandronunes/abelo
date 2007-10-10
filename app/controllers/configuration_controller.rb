@@ -1,6 +1,6 @@
 class ConfigurationController < ApplicationController
 
-  auto_complete_for :cofiguration, :name
+  auto_complete_for :configuration, :name
 
   needs_administrator
 
@@ -28,7 +28,7 @@ class ConfigurationController < ApplicationController
   end
 
   def show
-    @configuration = Configuration.find(params[:id])
+    @configuration = Configuration.find(params[:configuration_id])
     @organization = @configuration.organization
   end
 

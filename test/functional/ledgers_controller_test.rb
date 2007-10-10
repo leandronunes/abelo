@@ -25,6 +25,8 @@ class LedgersControllerTest < Test::Unit::TestCase
     assert @default_bank_account.valid?
     assert @default_bank_account.is_default
     assert @organization.valid?
+    assert @organization.bank_accounts.include?(@default_bank_account)
+    assert @organization.bank_accounts.include?(@another_bank_account)
     assert_equal 'one', @organization.identifier
   end
 
@@ -81,9 +83,8 @@ class LedgersControllerTest < Test::Unit::TestCase
 
   def test_list_when_query_param_not_nil
     Ledger.delete_all
-    l = Ledger.create_ledger!(:date => Date.today, :value => 34, :description => 'Some Description', :bank_account => @another_bank_account, :category => @ledger_category, :operational => false, :is_foreseen => false, :owner => @organization)
-    l = Money.new(:date => Date.today, :value => 50, :description => 'Another Some Description', :bank_account => @another_bank_account, :category => @ledger_category, :operational => false, :is_foreseen => false, :owner => @organization)
-    l.save!
+    l = Money.create!(:date => Date.today, :value => 34, :description => 'Some Description', :bank_account => @another_bank_account, :category => @ledger_category, :operational => false, :is_foreseen => false, :owner => @organization)
+    l = Money.create!(:date => Date.today, :value => 50, :description => 'Another Some Description', :bank_account => @another_bank_account, :category => @ledger_category, :operational => false, :is_foreseen => false, :owner => @organization)
     
     get :list, :accounts => @another_bank_account.id, :ledger => {:description => 'Another'}
 

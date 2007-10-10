@@ -37,6 +37,7 @@ class PermissionsBaseController < ApplicationController
   end
 
   def new
+    @organization ||= Organization.find(params[:organization_id])
     @user = User.new
     render :template => 'permissions_base/new' 
   end

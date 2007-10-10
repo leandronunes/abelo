@@ -8,6 +8,8 @@ def create_admin_organization_tabs
   is_not_organization = false
   if params[:controller] == 'configuration'
     is_not_organization = true if Configuration.is_model?(params[:id])
+  elsif params[:controller] == 'permissions_admin'
+    is_not_organization = true
   end
 
   t = add_tab do

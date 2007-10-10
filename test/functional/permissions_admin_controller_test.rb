@@ -14,8 +14,8 @@ class PermissionsAdminControllerTest < Test::Unit::TestCase
     @controller = PermissionsAdminController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-    @organization = Organization.find_by_identifier('one')
     @user = User.find(:first)
+    @organization = @user.organization
     login_as('admin')
   end
 
@@ -31,7 +31,7 @@ class PermissionsAdminControllerTest < Test::Unit::TestCase
   end
 
   def test_list
-    get :list
+    get :list, :organization_id => @organization.id
 
     assert_response :success
     assert_template 'permissions_base/list'
@@ -40,7 +40,7 @@ class PermissionsAdminControllerTest < Test::Unit::TestCase
   end
 
   def test_list_when_query_param_is_nil
-    get :list
+    get :list, :organization_id => @organization.id
     
     assert_nil assigns(:query)
     assert_not_nil assigns(:organization)
@@ -55,7 +55,7 @@ class PermissionsAdminControllerTest < Test::Unit::TestCase
     User.create!("administrator"=>false, "login"=>"quentin", "email"=>"quentin@example.com", :password => 'test', :password_confirmation => 'test')
     User.create!("administrator"=>false, "login"=>"jose", "email"=>"j@example.com", :password => 'test', :password_confirmation => 'test')
     User.create!("administrator"=>false, "login"=>"tadeu", "email"=>"t@example.com", :password => 'test', :password_confirmation => 'test')
-    get :list, :query => 'que*'
+    get :list, :query => 'que*', :organization_id => @organization.id
 
     assert_not_nil assigns(:query)
     assert_not_nil assigns(:users)
@@ -67,7 +67,7 @@ class PermissionsAdminControllerTest < Test::Unit::TestCase
   end
 
   def test_show
-    get :show, :id => @user.id
+    get :show, :id => @user.id, :organization_id => @organization.id
 
     assert_response :success
     assert_template 'permissions_base/show'
@@ -78,7 +78,7 @@ class PermissionsAdminControllerTest < Test::Unit::TestCase
   end
 
   def test_new
-    get :new
+    get :new, :organization_id => @organization.id
 
     assert_response :success
     assert_template 'permissions_base/new'
@@ -89,7 +89,7 @@ class PermissionsAdminControllerTest < Test::Unit::TestCase
   def test_create_correct_params
     num_users = User.count
 
-    post :create, :user => {:login => "josias", :email => "t@example.com", :password => 'test', :password_confirmation => 'test', :template => 'financial'}, :organization_id => @organization_id
+    post :create, :user => {:login => "josias", :email => "t@example.com", :password => 'test', :password_confirmation => 'test', :template => 'financial'}, :organization_id => @organization_id, :organization_id => @organization.id
 
 
     assert_response :redirect
@@ -99,7 +99,7 @@ class PermissionsAdminControllerTest < Test::Unit::TestCase
   end
 
   def test_validates_profile_on_create
-    post :create
+    post :create, :organization_id => @organization.id
 
     assert_not_nil assigns(:user)
     assert assigns(:user).validates_profile
@@ -109,7 +109,7 @@ class PermissionsAdminControllerTest < Test::Unit::TestCase
   def test_create_wrong_params
     num_user = User.count
 
-    post :create, :user => {}
+    post :create, :user => {}, :organization_id => @organization.id
 
     assert_response :success
     assert_template 'permissions_base/new'
@@ -118,7 +118,7 @@ class PermissionsAdminControllerTest < Test::Unit::TestCase
   end
 
   def test_edit
-    get :edit, :id => @user.id
+    get :edit, :id => @user.id, :organization_id => @organization.id
 
     assert_response :success
     assert_template 'permissions_base/edit'
@@ -129,14 +129,14 @@ class PermissionsAdminControllerTest < Test::Unit::TestCase
   end
 
   def test_update
-    post :update, :id => @user.id, :user => {:login => 'test'}
+    post :update, :id => @user.id, :user => {:login => 'test'}, :organization_id => @organization.id
 
     assert_response :redirect
     assert_redirected_to :action => 'list'
   end
 
   def test_update_with_wrong_params
-    post :update, :id => @user.id, :user => {:login => nil}
+    post :update, :id => @user.id, :user => {:login => nil}, :organization_id => @organization.id
 
     assert_response :success
     assert_template 'permissions_base/edit'
@@ -146,7 +146,7 @@ class PermissionsAdminControllerTest < Test::Unit::TestCase
     new_login = 'test login'
     assert_not_equal new_login, @user.login
     user_id = @user.id
-    post :update, :id => @user.id, :user => {:login => new_login}
+    post :update, :id => @user.id, :user => {:login => new_login}, :organization_id => @organization.id
     
     assert_equal new_login, User.find(user_id).login
   end
@@ -155,7 +155,7 @@ class PermissionsAdminControllerTest < Test::Unit::TestCase
     new_email = 'test@test.com'
     assert_not_equal new_email, @user.email
     user_id = @user.id
-    post :update, :id => @user.id, :user => {:email => new_email}    
+    post :update, :id => @user.id, :user => {:email => new_email}, :organization_id => @organization.id   
     assert_equal new_email, User.find(user_id).email
   end
 
@@ -166,7 +166,7 @@ class PermissionsAdminControllerTest < Test::Unit::TestCase
     profile = @user.profile_by_organization(@organization)
     assert_not_equal new_template, profile.template
     profile_id = profile.id
-    post :update, :id => @user.id, :user => {:template => new_template}
+    post :update, :id => @user.id, :user => {:template => new_template}, :organization_id => @organization.id
    
     assert_equal new_template, Profile.find(profile_id).template
   end
@@ -177,7 +177,7 @@ class PermissionsAdminControllerTest < Test::Unit::TestCase
     count_user = User.count
     num_user_profiles = @user.profiles.length
     user_id = @user.id
-    post :destroy, :id => @user.id
+    post :destroy, :id => @user.id, :organization_id => @organization.id
     assert_raise(ActiveRecord::RecordNotFound) do
       User.find(user_id)
     end

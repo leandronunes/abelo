@@ -13,5 +13,17 @@ class UserDisplay < DisplayConfiguration
       'template_description' => _('Template')
     }[field] || field
   end
+
+  def self.inlist_available_fields
+    ['login', 'email', 'template_description' ] 
+  end
+
+  def self.break_lines
+    ['template_description']
+  end
+
+  def self.titles
+    self.available_fields
+  end
  
 end

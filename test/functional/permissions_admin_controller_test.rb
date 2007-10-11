@@ -51,13 +51,12 @@ class PermissionsAdminControllerTest < Test::Unit::TestCase
   end
 
   def test_list_when_query_param_not_nil
-    User.delete_all
-    User.create!("administrator"=>false, "login"=>"quentin", "email"=>"quentin@example.com", :password => 'test', :password_confirmation => 'test')
-    User.create!("administrator"=>false, "login"=>"jose", "email"=>"j@example.com", :password => 'test', :password_confirmation => 'test')
-    User.create!("administrator"=>false, "login"=>"tadeu", "email"=>"t@example.com", :password => 'test', :password_confirmation => 'test')
-    get :list, :query => 'que*', :organization_id => @organization.id
+    get :list,  :query => 'que*', :organization_id => @organization.id
 
-    assert_not_nil assigns(:query)
+
+    assert_not_nil @organization.users
+
+    assert_not_nil assigns(:organization)
     assert_not_nil assigns(:users)
     assert_kind_of Array, assigns(:users)
     assert_not_nil assigns(:user_pages)
@@ -91,6 +90,10 @@ class PermissionsAdminControllerTest < Test::Unit::TestCase
 
     post :create, :user => {:login => "josias", :email => "t@example.com", :password => 'test', :password_confirmation => 'test', :template => 'financial'}, :organization_id => @organization.id
 
+    assert_not_nil assigns(:user)
+    assert Profile.locations_by_template('financial')
+    assert_not_nil assigns(:user).profile_organization
+    assert assigns(:user).template_valid
 
     assert_response :redirect
     assert_redirected_to :action => 'list'
@@ -129,7 +132,7 @@ class PermissionsAdminControllerTest < Test::Unit::TestCase
   end
 
   def test_update
-    post :update, :id => @user.id, :user => {:login => 'test'}, :organization_id => @organization.id
+    post :update, :id => @user.id, :user => {:login => 'test', :template => 'financial'}, :organization_id => @organization.id
 
     assert_response :redirect
     assert_redirected_to :action => 'list'
@@ -146,8 +149,8 @@ class PermissionsAdminControllerTest < Test::Unit::TestCase
     new_login = 'test login'
     assert_not_equal new_login, @user.login
     user_id = @user.id
-    post :update, :id => @user.id, :user => {:login => new_login}, :organization_id => @organization.id
-    
+    post :update, :id => @user.id, :user => {:login => new_login, :template => 'financial'}, :organization_id => @organization.id
+   
     assert_equal new_login, User.find(user_id).login
   end
 
@@ -155,7 +158,7 @@ class PermissionsAdminControllerTest < Test::Unit::TestCase
     new_email = 'test@test.com'
     assert_not_equal new_email, @user.email
     user_id = @user.id
-    post :update, :id => @user.id, :user => {:email => new_email}, :organization_id => @organization.id   
+    post :update, :id => @user.id, :user => {:email => new_email, :template => 'financial'}, :organization_id => @organization.id   
     assert_equal new_email, User.find(user_id).email
   end
 

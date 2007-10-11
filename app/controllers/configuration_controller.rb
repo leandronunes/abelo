@@ -67,7 +67,7 @@ class ConfigurationController < ApplicationController
       redirect_to :action => 'show', :organization_id => @organization
     else
       form_variables
-      render :action => 'edit'
+      render :action => 'edit', :id => params[:id]
     end
   end
 

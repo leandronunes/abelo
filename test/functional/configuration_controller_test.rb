@@ -234,7 +234,7 @@ class ConfigurationControllerTest < Test::Unit::TestCase
   end
 
   def test_edit
-    get :edit, :id => @configuration.id
+    get :edit, :id => @configuration_organization.id
 
     assert_response :success
     assert_template 'edit'
@@ -314,7 +314,7 @@ class ConfigurationControllerTest < Test::Unit::TestCase
 
   def test_unsuccessfully_update
     customer_name = nil
-    id = @configuration.id
+    id = @configuration_organization.id
     post :update, :id => id, :configuration => {:customer_name => customer_name}
 
     assert_response :success

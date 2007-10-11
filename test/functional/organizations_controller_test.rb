@@ -148,7 +148,7 @@ class OrganizationsControllerTest < Test::Unit::TestCase
   def test_edit
     Organization.delete_all
     o = Organization.create!(:name => 'Some Organization', :identifier => 'testing_org', :cnpj => '78048802000169')
-    get :edit, :id => o.id
+    get :edit, :organization_id => o.id
 
     assert_response :success
     assert_template 'edit'
@@ -210,7 +210,7 @@ class OrganizationsControllerTest < Test::Unit::TestCase
   def test_destroy
     id = @organization.id
 
-    post :destroy, :id => id
+    post :destroy, :organization_id => id
     assert_response :redirect
     assert_redirected_to :action => 'list'
 

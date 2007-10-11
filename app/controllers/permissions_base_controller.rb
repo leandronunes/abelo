@@ -48,15 +48,16 @@ class PermissionsBaseController < ApplicationController
     @user.validates_profile = true
 
     template = params[:user][:template] unless params[:user].nil?
-    if can(Profile.locations_by_template(template))
+    @user.profile_organization = @organization
+
+    if Profile.locations_by_template(template)
       @user.template_valid = true
     end
     
-    @user.profile_organization = @organization
     begin
       if @user.save
         flash[:notice] = _('User successfully created.')
-        redirect_to :action => 'list'
+        redirect_to :action => 'list', :organization_id => @organization
       else
         render :template => 'permissions_base/new'
       end
@@ -78,14 +79,14 @@ class PermissionsBaseController < ApplicationController
     @user.validates_profile = true
 
     template = params[:user][:template] unless params[:user].nil?
-    if can(Profile.locations_by_template(template))
+    if Profile.locations_by_template(template)
       @user.template_valid = true
     end
     
     @user.profile_organization = @organization
     if @user.update_attributes(params[:user])
       flash[:notice] = _('User was successfully upated.')
-      redirect_to :action => 'list'
+      redirect_to :action => 'list', :organization_id => @organization
     else
       render :template => 'permissions_base/edit'
     end
@@ -102,7 +103,7 @@ class PermissionsBaseController < ApplicationController
   def destroy
     @organization ||= Organization.find(params[:organization_id])
     @organization.users.find(params[:id]).destroy    
-    redirect_to :action => 'list'
+    redirect_to :action => 'list', :organization_id => @organization
   end
 
 end

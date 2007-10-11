@@ -14,4 +14,4 @@ else
   ext="$2"
 fi
 
-grep -r "$1" . | grep "\.$ext:"
+grep -r --ignore-case "$1" . | grep --ignore-case "\.$ext:"

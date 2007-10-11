@@ -41,22 +41,22 @@ body {
 }
 
 #banner_top {
-position: absolute;
-top: 2px;
-right: 5px;
-background: url('../images/bannerabelo_213x66.png') 50% no-repeat;
-width: 213px;
-height: 75px;
+  position: absolute;
+  top: 2px;
+  right: 5px;
+  background: url('../images/bannerabelo_213x66.png') 50% no-repeat;
+  width: 213px;
+  height: 75px;
 }
 #banner_top span {
   display: none;
 }
 
 #footer {
-margin-top: 50px;
-padding-left: 60px;
-bottom: 0;
-height: 50px;
+  margin-top: 50px;
+  padding-left: 60px;
+  bottom: 0;
+  height: 50px;
 }
 
 .clear{

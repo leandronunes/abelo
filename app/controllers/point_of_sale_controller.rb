@@ -10,7 +10,16 @@ class PointOfSaleController < ApplicationController
 
   before_filter :check_coupon_cancel, :only => ['coupon_cancel']
   
-  design :holder => :design_point_of_sale
+#  design :holder => :design_point_of_sale
+
+   design :fixed => {
+     :template => 'default',
+     :theme => 'default',
+     :icon_theme => 'default'
+#     :boxes => [ box1, box2, box3 ]
+   }
+
+
 #, :root => File.join('designs','point_of_sale')
 
   def design_point_of_sale

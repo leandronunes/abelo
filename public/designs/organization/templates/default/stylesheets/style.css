@@ -86,3 +86,31 @@ height: 50px;
 .subtitle{
   clear:both;
 }
+
+#localist_menu,
+#localist_menu li {
+  display: inline;
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+  font-size: 1px;
+}
+#localist_menu {
+  position: absolute;
+  top: 85px;
+  left: 12px;
+}
+#localist_menu a {
+  margin-right: 3px;
+}
+#localist_menu img {
+  border: none;
+}
+
+.localist_unselected a {
+  opacity: 0.4
+}
+.localist_unselected a:hover {
+  opacity: 1
+}
+

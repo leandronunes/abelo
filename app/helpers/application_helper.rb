@@ -97,7 +97,7 @@ module ApplicationHelper
   end
 
   def display_navigation_bar
-    return '' if @location.nil?
+    return localist_menu if @location.nil?
     content_tag(:div,
       [
         localist_menu,

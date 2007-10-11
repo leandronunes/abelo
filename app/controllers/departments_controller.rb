@@ -78,12 +78,12 @@ class DepartmentsController < ApplicationController
   end
 
   def department_tabs
-    add_tab do
-      named 'Departments'
+    t = add_tab do
       links_to :controller => 'departments', :action => 'list'
       in_set 'first'
       highlights_on :controller => 'departments'
     end
+    t.named _('Departments')
   end
 
 end

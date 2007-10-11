@@ -385,7 +385,7 @@ module ApplicationHelper
     fields = "#{object.class.to_s}Display".constantize.send(inlist + "available_fields") if current_user.administrator
     fields ||= @organization.configuration.send(inlist + "#{object.class.to_s}Display".tableize)
 
-    html_options[:class] =  html_options[:class].nil? ? 'field_item' : 'field_item ' + html_options[:class]
+    html_options[:class] ||= 'field_item'
     local_html_options = html_options.clone
 
     fields.map do |f|
@@ -396,7 +396,9 @@ module ApplicationHelper
         break_line = true if "#{object.class.to_s}Display".constantize.break_lines.include?(f)
       end
 
-      local_html_options[:class] = (break_line == true) ? html_options[:class] + ' break_line' : html_options[:class]
+      local_html_options[:class] = (break_line == true) ?
+            html_options[:class] + ' break_line' :
+            html_options[:class] + ' item_' + f.field
 
       content_tag(:div,
         display_field_info(object, f, {}, !type),
@@ -421,7 +423,7 @@ module ApplicationHelper
     if type == true
       title = content_tag(:strong, 
         field.class == String ? 
-        "#{object.class.to_s}Display".constantize.describe(field) : 
+        "#{object.class.to_s}Display".constantize.describe(field) :
          field.describe_field + ": "
       )
     end

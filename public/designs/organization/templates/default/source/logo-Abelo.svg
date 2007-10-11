@@ -16,7 +16,10 @@
    inkscape:version="0.45+devel"
    sodipodi:docname="logo-Abelo.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
-   version="1.0">
+   version="1.0"
+   inkscape:export-filename="/home/aurium/abelo/public/designs/organization/templates/default/source/logo-Abelo.png"
+   inkscape:export-xdpi="52.729233"
+   inkscape:export-ydpi="52.729233">
   <defs
      id="defs3377">
     <linearGradient
@@ -93,9 +96,9 @@
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      inkscape:window-width="692"
-     inkscape:window-height="668"
-     inkscape:window-x="221"
-     inkscape:window-y="0"
+     inkscape:window-height="670"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
      width="300px"
      height="150px" />
   <metadata

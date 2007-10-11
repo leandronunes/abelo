@@ -5,7 +5,7 @@
 <% end %>
 
 
-<% form_tag :action => 'update', :id => @configuration  do %>
+<% form_tag :action => 'update', :organization_id => @organization, :id => @configuration  do %>
 
   <%= error_messages_for 'configuration' %>
 
@@ -13,6 +13,6 @@
     <%= render :partial => 'form' %>
   <% end %>
 
-  <%= display_edit_info_options(@configuration) %>
+  <%= display_edit_info_options(@configuration, :organization_id => @organization.id) %>
 <% end %>
 

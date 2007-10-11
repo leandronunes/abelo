@@ -89,7 +89,7 @@ class PermissionsAdminControllerTest < Test::Unit::TestCase
   def test_create_correct_params
     num_users = User.count
 
-    post :create, :user => {:login => "josias", :email => "t@example.com", :password => 'test', :password_confirmation => 'test', :template => 'financial'}, :organization_id => @organization_id, :organization_id => @organization.id
+    post :create, :user => {:login => "josias", :email => "t@example.com", :password => 'test', :password_confirmation => 'test', :template => 'financial'}, :organization_id => @organization.id
 
 
     assert_response :redirect

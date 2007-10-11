@@ -87,7 +87,7 @@ class ConfigurationControllerTest < Test::Unit::TestCase
 
 
   def test_show
-    get :show, :id => @configuration.id
+    get :show, :organization_id => @organization.id
 
     assert_not_nil assigns(:configuration)
 

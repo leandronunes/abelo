@@ -78,6 +78,7 @@ class Profile < ActiveRecord::Base
       { 'controller' => 'organizations', 'action' => '*' },
       { 'controller' => 'admin_configurations', 'action' => '*' },
       { 'controller' => 'banks', 'action' => '*' },
+      { 'controller' => 'permissions_admin', 'action' => '*' },
     ],
     'organization_management' => [
       { 'controller' => 'categories', 'action' => '*' },

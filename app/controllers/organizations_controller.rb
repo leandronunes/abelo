@@ -26,7 +26,7 @@ class OrganizationsController < ApplicationController
   end
 
   def show
-    @organization = Organization.find(params[:organization_id] || params[:id])
+    @organization = Organization.find(params[:organization_id])
   end
 
   def new
@@ -44,7 +44,7 @@ class OrganizationsController < ApplicationController
   end
 
   def edit
-    @organization = Organization.find(params[:id])
+    @organization = Organization.find(params[:organization_id])
   end
 
   def update
@@ -58,7 +58,7 @@ class OrganizationsController < ApplicationController
   end
 
   def destroy
-    Organization.find(params[:id]).destroy
+    Organization.find(params[:organization_id]).destroy
     redirect_to :action => 'list'
   end
 

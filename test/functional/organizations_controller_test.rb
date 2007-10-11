@@ -72,7 +72,7 @@ class OrganizationsControllerTest < Test::Unit::TestCase
   def test_show
     Organization.delete_all
     o = Organization.create!(:name => 'Some Organization', :identifier => 'testing_org', :cnpj => '78048802000169')
-    get :show, :id => o.id
+    get :show, :organization_id => o.id
 
     assert_response :success
     assert_template 'show'

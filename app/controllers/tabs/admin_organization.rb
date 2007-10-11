@@ -26,7 +26,7 @@ def create_admin_organization_tabs
     in_set 'first'
     highlights_on :controller => 'configuration'
   end
-  t.links_to :controller => 'configuration', :action => 'show', :configuration_id => Organization.find(params[:organization_id] || params[:id]).configuration
+  t.links_to :controller => 'configuration', :action => 'show', :organization_id => params[:organization_id]
   t.named _('Configurations')
   t.show_if  match_location(locations) ? "true" : "false"
 

@@ -28,8 +28,8 @@ class ConfigurationController < ApplicationController
   end
 
   def show
-    @configuration = Configuration.find(params[:configuration_id])
-    @organization = @configuration.organization
+    @organization = Organization.find(params[:organization_id])
+    @configuration = @organization.configuration
   end
 
   def new
@@ -61,12 +61,11 @@ class ConfigurationController < ApplicationController
     parse_params_configuration(params)
 
     @configuration = Configuration.find(params[:id])
-
+    @organization = @configuration.organization
     if @configuration.update_attributes(params[:configuration])
       flash[:notice] = _('The configurations was successfully updated.')
-      redirect_to :action => 'show', :id => @configuration
+      redirect_to :action => 'show', :organization_id => @organization
     else
-      @organization = @configuration.organization
       form_variables
       render :action => 'edit'
     end

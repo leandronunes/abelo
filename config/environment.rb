@@ -55,6 +55,9 @@ end
 require 'jcode'
 $KCODE = 'u'
 require 'gettext/rails'
+Localist.supported_locales = %w[en-US pt-BR es-ES]
+Localist.default_locale = "pt-BR"
+Localist.callback = lambda { |l| GetText.locale= l }
 
 Comatose.configure do |config|
   config.admin_get_root_page do

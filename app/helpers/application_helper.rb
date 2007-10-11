@@ -98,17 +98,17 @@ module ApplicationHelper
 
   def display_navigation_bar
     return '' if @location.nil?
-    content_tag(
-      'div',
+    content_tag(:div,
       [
-        content_tag(
-        'div',
-        [
-          #alterar para usar as funções do rails
-          content_tag('a',[] ,:class => 'hide', :accesskey => 'z',:onclick => "$('warp').style.marginTop='-77px';"),
-          content_tag('a',[] ,:class => 'show', :accesskey => 'x',:onClick => "$('warp').style.marginTop='0px';"),
-        ],
-        :class => 'control_header'),
+        localist_menu,
+        content_tag(:div,
+          [
+            #alterar para usar as funções do rails
+            content_tag('a',[] ,:class => 'hide', :accesskey => 'z',:onclick => "$('warp').style.marginTop='-77px';"),
+            content_tag('a',[] ,:class => 'show', :accesskey => 'x',:onClick => "$('warp').style.marginTop='0px';"),
+          ],
+          :class => 'control_header'
+        ),
         (@organization.nil? or current_user.administrator) ? 
               link_to(_('Abelo'), :controller => 'organizations') : 
               (can(:controller => 'main') ? 

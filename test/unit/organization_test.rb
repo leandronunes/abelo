@@ -5,7 +5,7 @@ class OrganizationTest < Test::Unit::TestCase
   fixtures :bank_accounts, :organizations, :banks
 
   def setup
-    @organization = Organization.find(:first)
+    @organization = Organization.find_by_identifier('six')
     
     @cat_prod = ProductCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
     @cat_cust = CustomerCategory.create(:name => 'Category for testing', :organization_id => @organization.id)

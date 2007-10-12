@@ -1,10 +1,11 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class ImageTest < Test::Unit::TestCase
-  fixtures :images, :products
+
+  fixtures :images, :products, :organizations
 
   def setup
-    @org = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :identifier => 'org')
+    @org = Organization.find_by_identifier('six') 
   end
 
   def test_mandatory_field_description

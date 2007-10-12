@@ -12,9 +12,9 @@ class DirectMailTest < Test::Unit::TestCase
     ActionMailer::Base.perform_deliveries = true
     ActionMailer::Base.deliveries = []
 
+    @org = Organization.find_by_identifier('six') 
     @expected = TMail::Mail.new
     @expected.set_content_type "text", "plain", { "charset" => CHARSET }
-    @org = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :identifier => 'org')
   end
 
   def test_mail_to

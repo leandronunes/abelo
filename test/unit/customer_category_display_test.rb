@@ -2,8 +2,10 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class CustomerCategoryDisplayTest < Test::Unit::TestCase
 
+  fixtures :organizations
+
   def setup
-    @org = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :identifier => 'org')
+    @org = Organization.find_by_identifier('six') 
   end
 
   def test_available_fields_are_valids

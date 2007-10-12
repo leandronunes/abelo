@@ -2,8 +2,10 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class CustomerTest < Test::Unit::TestCase
   
+  fixtures :organizations
+
   def setup
-    @organization = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :identifier => 'org')
+    @organization = Organization.find_by_identifier('six') 
     @category = CustomerCategory.create(:name => 'Category for testing', :organization => @organization)
   end
 

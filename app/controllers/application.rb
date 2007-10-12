@@ -20,6 +20,7 @@ class ApplicationController < ActionController::Base
     verify :method => :post, :only => actions, :redirect_to => redirect
   end
 
+
   ###########################################
   # Internationalization Settings 
   ###########################################

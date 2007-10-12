@@ -17,6 +17,7 @@ class PermissionsAdminControllerTest < Test::Unit::TestCase
     @user = User.find(:first)
     @organization = Organization.find_by_identifier('one')
     login_as('admin')
+    Localist.supported_locales = %w[en-US pt-BR]
   end
 
   def test_setup

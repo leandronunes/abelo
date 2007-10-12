@@ -2,10 +2,10 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class SaleTest < Test::Unit::TestCase
 
-  fixtures :products, :banks, :ledger_categories
+  fixtures :products, :banks, :ledger_categories, :organizations
 
   def setup
-    @org = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :identifier => 'org')
+    @org = Organization.find_by_identifier('six') 
     BankAccount.create!(:owner => @org, :account => 234, :bank_id => 1, :agency => 3434, :is_default => true )
     @user = User.create!("salt"=>"7e3041ebc2fc05a40c60028e2c4901a81035d3cd", "updated_at"=>nil, "crypted_password"=>"00742970dc9e6319f8019fd54864d3ea740f04b1", "type"=>"User", "remember_token_expires_at"=>nil, "id"=>"1", "administrator"=>false, "remember_token"=>nil, "login"=>"new_user", "email"=>"new_user@example.com", "created_at"=>"2007-07-14 18:03:29")
     @product1 = Product.find(1)

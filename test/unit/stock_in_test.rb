@@ -2,10 +2,10 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class StockInTest < Test::Unit::TestCase
 
-  fixtures :ledger_categories, :bank_accounts
+  fixtures :ledger_categories, :bank_accounts, :organizations
 
   def setup
-    @organization = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :identifier => 'org')
+    @organization = Organization.find_by_identifier('six') 
     @bank_account = BankAccount.find(:first)
     @cat_prod = ProductCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
     @product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @organization.id, :category_id => @cat_prod.id) 

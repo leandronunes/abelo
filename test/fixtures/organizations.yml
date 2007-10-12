@@ -23,3 +23,8 @@ five:
   name: 'Organization number five'
   cnpj: '56846691000101'
   identifier: 'five'
+for_teste_without_fixtures:
+  id: 6
+  name: 'Organization number six'
+  cnpj: '32681138000190'
+  identifier: 'six'

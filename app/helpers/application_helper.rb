@@ -398,7 +398,7 @@ module ApplicationHelper
 
       local_html_options[:class] = (break_line == true) ?
             html_options[:class] + ' break_line' :
-            html_options[:class] + ' item_' + f.field
+            html_options[:class] + ' item_' + f.field if f.methods.include? 'field'
 
       content_tag(:div,
         display_field_info(object, f, {}, !type),

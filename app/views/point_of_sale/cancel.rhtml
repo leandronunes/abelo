@@ -1,11 +1,7 @@
 
 <%= title _('Coupon Cancel') %>
 
-  <ul id="cumpom_bar">
-    <li>
-      <%= link_to content_tag('span', _('Voltar')), {:action => 'coupon_open', :id => @sale}, :accesskey => 'v' %>
-    </li>
-  </ul>
+<%= link_to content_tag('span', _('Voltar')), {:action => 'coupon_open', :id => @sale}, :accesskey => 'v', :class => 'button back' %>
 
 <%= notice_box flash[:notice] %>
 

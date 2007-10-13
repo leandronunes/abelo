@@ -1,43 +1,53 @@
 
 
-<% form_tag :action => 'coupon_add_payment', :id => @sale do %>
+<% form_tag( { :action => 'coupon_add_payment', :id => @sale }, :id => 'payment_form' ) do %>
 
 <%= error_messages_for :ledger %>
 
 <div id="payment_details">
 
-  <p><label name="sale_customer"> <%= _('Customer') %> </label>
-    <%= text_field 'sale', 'customer_identifier', :class => 'filter_field' %> 
-    <div class='auto_complete' id='sale_customer_identifier_auto_complete' >
-      <%= auto_complete_field("sale_customer_identifier", :url => {:action => "autocomplete_customer", :id => @sale.id}, :indicator => 'auto_list') %>
-    </div>
-    <div id='auto_list' style='display: none;' >
-    </div>
-  </p>
+  <div class="info_field">
+    <label name="sale_customer"> <%= _('Customer') %>: </label>
+    <span class="field">
+      <%= text_field 'sale', 'customer_identifier', :class => 'filter_field' %> 
+      <div class='auto_complete' id='sale_customer_identifier_auto_complete' >
+        <%= auto_complete_field("sale_customer_identifier", :url => {:action => "autocomplete_customer", :id => @sale.id}, :indicator => 'auto_list') %>
+      </div>
+      <div id='auto_list' style='display: none;' >
+      </div>
+    </span><!-- fim class="field" -->
+  </div><!-- fim class="info_field" -->
 
-  <p><label name="sale_value"> <%= _('Value') %> </label>
-    <%= text_field('ledger', 'value') %> 
-  </p>
+  <div class="info_field">
+    <label name="sale_value"> <%= _('Value') %>: </label>
+    <span class="field">
+      <%= text_field('ledger', 'value') %> 
+    </span><!-- fim class="field" -->
+  </div><!-- fim class="info_field" -->
 
-  <p><label name="sale_payment_method"> <%= _('Payment Method') %> </label>
-    <%= select_payment('ledger', 'payment_method') %>
-  </p>
-
-  <%= observe_field('ledger_payment_method',
-        :update => 'category',
-        :url => {:action => 'select_category'},
-        :with => "'payment_method=' + escape(value) + '&sale_id=' + escape(#{@sale.id})"
-  )%>
-
-  <div id='category'>
-    <% if !@ledger.payment_method.nil? %>
-      <%= render :partial => 'shared_payments/select_category' %>
-    <% end %>
-  </div>
-
+  <div class="info_field">
+    <label name="sale_payment_method"> <%= _('Payment Method') %>: </label>
+    <span class="field">
+      <%= select_payment('ledger', 'payment_method') %>
+    </span><!-- fim class="field" -->
+  </div><!-- fim class="info_field" -->
 
 </div><!-- payment_details -->
 
-  <%= button 'save', _('Pay'), :save, {}, {:class => 'button button_login with_text'} %>
+<%=
+  observe_field('ledger_payment_method',
+        :update => 'category',
+        :url => {:action => 'select_category'},
+        :with => "'payment_method=' + escape(value) + '&sale_id=' + escape(#{@sale.id})"
+  )
+%>
+<h2>Detalhes da forma de pagamento:</h2>
+<div id="category">
+  <% if !@ledger.payment_method.nil? %>
+    <%= render :partial => 'shared_payments/select_category' %>
+  <% end %>
+</div><!-- category -->
+
+<%= button 'pay', _('Pay'), :save, {}, {:class => 'button bt_big with_text'} %>
 
 <% end %>

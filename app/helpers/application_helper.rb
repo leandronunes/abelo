@@ -492,19 +492,12 @@ module ApplicationHelper
     return '' if !current_user.administrator? and @organization.send("#{object.class.to_s}Display".tableize).detect{|d| d.field == field}.nil?
 
     info[:html_options] ||= Hash.new
-
-    if info[:html_options].blank?
-      info[:html_options][:class] = 'info_field'
-      info[:html_options][:style] = 'float: left;'
-    else
-      info[:html_options][:class] = 'info_field ' +  info[:html_options][:class].to_s
-      info[:html_options][:style] = 'float: left; ' +  info[:html_options][:style].to_s
-    end
+    info[:html_options][:class] = 'info_field ' + info[:html_options][:class].to_s
    
     content_tag(:div,
       [
        content_tag(:label, info[:title]),
-       content_tag(:span, info[:content])
+       content_tag(:span, info[:content], {:class => 'field'})
       ].join("\n"),
       info[:html_options]
     )

@@ -1,6 +1,9 @@
 <%= display_field_form(@ledger, 'category_id',
       :title => _('Category:'),
-      :content => select_item('ledger', 'category_id',@ledger_categories, @hide_sign == true ? 'name' :  'name_with_sign' )
+      :content => select_item('ledger',
+                       'category_id',
+                       @ledger_categories,
+                       @hide_sign == true ? 'name' : 'name_with_sign' )
     )
 %>
 

@@ -100,11 +100,9 @@ body {
   top: 85px;
   left: 12px;
 }
-#localist_menu a {
-  margin-right: 3px;
-}
 #localist_menu img {
   border: none;
+  margin-right: 3px;
 }
 
 .localist_unselected a {

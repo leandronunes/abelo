@@ -128,7 +128,7 @@ class PermissionsControllerTest < Test::Unit::TestCase
   end
 
   def test_update
-    post :update, :id => @user.id, :user => {:login => 'test'}
+    post :update, :id => @user.id, :user => {:login => 'test', :template => 'financial'}
 
     assert_response :redirect
     assert_redirected_to :action => 'list'
@@ -145,7 +145,7 @@ class PermissionsControllerTest < Test::Unit::TestCase
     new_login = 'test login'
     assert_not_equal new_login, @user.login
     user_id = @user.id
-    post :update, :id => @user.id, :user => {:login => new_login}
+    post :update, :id => @user.id, :user => {:login => new_login, :template => 'financial' }
     
     assert_equal new_login, User.find(user_id).login
   end
@@ -154,7 +154,7 @@ class PermissionsControllerTest < Test::Unit::TestCase
     new_email = 'test@test.com'
     assert_not_equal new_email, @user.email
     user_id = @user.id
-    post :update, :id => @user.id, :user => {:email => new_email}
+    post :update, :id => @user.id, :user => {:email => new_email, :template => 'financial'}
     
     assert_equal new_email, User.find(user_id).email
   end

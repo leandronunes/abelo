@@ -100,7 +100,7 @@ class DocumentsController < ApplicationController
       links_to :controller => 'documents'
       in_set 'first'
     end
-    t.highlights_off :organization_nickname => @organization.nickname, :controller => 'documents', :action => /.*/, :document_model => /.*/
+    t.highlights_off :organization_nickname => @organization.identifier, :controller => 'documents', :action => /.*/, :document_model => /.*/
     t.named _("Models")
    
     @organization.documents_model.each do |d| 

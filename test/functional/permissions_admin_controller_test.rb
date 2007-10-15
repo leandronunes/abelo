@@ -17,7 +17,6 @@ class PermissionsAdminControllerTest < Test::Unit::TestCase
     @user = User.find(:first)
     @organization = Organization.find_by_identifier('one')
     login_as('admin')
-    Localist.supported_locales = %w[en-US pt-BR]
   end
 
   def test_setup
@@ -52,18 +51,19 @@ class PermissionsAdminControllerTest < Test::Unit::TestCase
   end
 
   def test_list_when_query_param_not_nil
-    get :list,  :query => 'que*', :organization_id => @organization.id
+    get :list,  :user => {:login => "q*"}, :organization_id => @organization.id
 
 
     assert_not_nil @organization.users
 
+    assert_not_nil assigns(:query)
     assert_not_nil assigns(:organization)
     assert_not_nil assigns(:users)
     assert_kind_of Array, assigns(:users)
     assert_not_nil assigns(:user_pages)
     assert_kind_of ActionController::Pagination::Paginator, assigns(:user_pages)
 
-    assert_equal 1, assigns(:users).size
+    assert !assigns(:users).empty?
   end
 
   def test_show

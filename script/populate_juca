@@ -179,6 +179,14 @@ StockVirtualDisplay.available_fields.collect { |d|
 }
 configuration.set_stock_virtual_displays=(params)
 
+DocumentDisplay.delete_all
+params = {}
+DocumentDisplay.available_fields.collect { |d|
+  in_list = true
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
+}
+configuration.set_document_displays=(params)
+
 configuration.save!
 
 ###########Categories###################################

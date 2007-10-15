@@ -24,6 +24,7 @@ class Configuration < ActiveRecord::Base
   has_many :profile_displays, :dependent => :destroy
   has_many :user_displays, :dependent => :destroy
   has_many :periodicity_displays, :dependent => :destroy
+  has_many :document_displays, :dependent => :destroy
 
   serialize :settings 
 
@@ -153,6 +154,7 @@ class Configuration < ActiveRecord::Base
     ProfileDisplay
     UserDisplay
     PeriodicityDisplay
+    DocumentDisplay
   ]
 
   #######################################

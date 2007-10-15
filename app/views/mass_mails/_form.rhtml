@@ -1,6 +1,17 @@
 <%= error_messages_for 'mass_mail' %>
 
 <!--[form:mass_mail]-->
+
+<% display_edit_info @mass_mail, :class => 'view_data' do |item| %> 
+
+  <%= display_field_edit (item, 'subject', 
+        :title => _('Subject'),
+        :content => text_field('mass_mail','subject'),
+        :html_options => {:class => 'line_item' }
+      )
+  %>
+<% end %>
+
 <label for="mass_mail_subject"><b><%= _('Subject:') %></b></label>
 <%= text_field 'mass_mail', 'subject', 'size' => 65  %>
 <br>
@@ -11,9 +22,9 @@
  #  page.insert_html :bottom, :attachments, :partial => "attach", :object => @attachment
    page.insert_html :bottom, :attachments, file_column_field('attachment', 'file') + '<br>'
     #    page.replace_html :attachments2, submit_tag("teste") + '<br>'
-    end %><b></label>  -->
+    end %><b></label>  
     
 <br>
-<label for="mass_mail_body"><b><% _('Body') %></b></label><br/>
-<%= rich_text_editor 'mass_mail', 'body', :width => '54%', :height => '300px' %>
+<label for="mass_mail_body"><b><% _('Body') %></b></label><br/> 
+<%= rich_text_editor 'mass_mail', 'body', :width => '54%', :height => '300px' %> -->
 <!--[eoform:mass_mail]-->

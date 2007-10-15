@@ -1,6 +1,16 @@
 class MassMailsController < ApplicationController
 
+  auto_complete_for :mass_mail, :subject
+
   needs_organization
+
+  def autocomplete_subject
+    escaped_string = Regexp.escape(params[:mass_mail][:subject])
+    re = Regexp.new(escaped_string, "i")
+    @mass_mails = @organization.mass_mails.select { |mm| mm.subject.match re}
+    render :layout=>false
+  end
+
 
   before_filter :create_tabs
 
@@ -14,7 +24,17 @@ class MassMailsController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @mass_mails = @organization.mass_mails
+    @query = params[:query]
+    @query ||= params[:mass_mail][:subject] if params[:mass_mail]
+
+    if @query.nil?
+      @mass_mails = @organization.mass_mails
+      @mass_mail_pages, @mass_mails = paginate_by_collection @mass_mails
+    else
+      @mass_mails = @organization.mass_mails.full_text_search(@query)
+      @mass_mail_pages, @mass_mails = paginate_by_collection @mass_mails
+    end
+
   end
 
   def show

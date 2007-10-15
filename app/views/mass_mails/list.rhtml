@@ -1,5 +1,10 @@
 <%= title _('Listing mass mail') %>
 
+<%= display_list_options 'mass_mail', 'subject' %>
+
+<%= display_collection @mass_mails %>
+
+<%= pagination_links(@mass_mail_pages, :params => {:query => @query}) %>
 
 <!--
   ul class="info_list mass_mail"> -->
@@ -22,7 +27,4 @@
   < %= display_collection @mass_mails %>
   </ul> -->
   
-<%= display_collection @mass_mails %>
 
-
-<%= button 'add',_('New mass mail'), :new, :action => 'new' %>

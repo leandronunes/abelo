@@ -35,6 +35,7 @@ class Organization < ActiveRecord::Base
   has_many :stock_out_displays, :through => :configuration
   has_many :user_displays, :through => :configuration
   has_many :periodicity_displays, :through => :configuration
+  has_many :mass_mail_displays, :through => :configuration
   # End displays has_many methods
   
   has_many :departments
@@ -59,6 +60,7 @@ class Organization < ActiveRecord::Base
   has_many :stocks, :through => :products
   has_one  :environment, :as => :owner
   has_many :periodicities
+  has_many :mass_mails
   # One Environment can be reached by many domains
   has_many :domains, :as => :owner
 

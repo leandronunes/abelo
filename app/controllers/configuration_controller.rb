@@ -104,6 +104,7 @@ class ConfigurationController < ApplicationController
     @stock_out_fields = StockOutDisplay.available_fields
     @user_fields = UserDisplay.available_fields
     @periodicity_fields = PeriodicityDisplay.available_fields
+    @mass_mail_fields = MassMailDisplay.available_fields
   end
 
 

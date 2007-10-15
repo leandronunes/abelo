@@ -4,12 +4,11 @@ class MassMailDisplay < DisplayConfiguration
     ['subject', 'body']
   end
 
-  def self.title_subject
-    _('Subject')
-  end
-
-  def self.title_body
-    _('Body')
+  def self.describe(field)
+    {
+      'title_subject' => _('Subject'),
+      'title_body' =>    _('Body'),
+    } [field] || field
   end
 
 end

@@ -2,9 +2,6 @@
 
 <% form_tag :action => 'create' do %>
   <%= render :partial => 'form' %>
-  <div class='button_bar'>
-    <%= button 'save',"Create", :save %>
-    <%= button 'cancel', 'Cancel', :cancel, :action => 'list' %>
-  </div>
+  <%= display_new_info_options @mass_mail %>
 <% end %>
 

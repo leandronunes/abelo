@@ -52,6 +52,7 @@ class User < Person
 
 
   def validate
+    self.errors.add(:model, _('You cannot change the user on demo version')) if APP_DEMO == true
     if !self.template_valid? and self.validates_profile?
       self.errors.add(_("You don't have permissions to create a user with template %s. This template ") % self.template)
     end

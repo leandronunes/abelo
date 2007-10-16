@@ -81,6 +81,13 @@ class User < Person
   end
 
 
+  def generate_password(length=6)
+    chars = 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ23456789'
+    password = ''
+    length.downto(1) { |i| password << chars[rand(chars.length - 1)] }
+    password
+  end
+
   # Destroy all profiles before destroy the user 
   def destroy_profiles
     self.profiles.destroy_all 

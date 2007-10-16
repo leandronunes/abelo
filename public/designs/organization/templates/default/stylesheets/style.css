@@ -112,3 +112,9 @@ body {
   opacity: 1
 }
 
+.controller-stock.action-history .main_title b {
+  font-size: 120%;
+  letter-spacing: -2px;
+  color: #E80;
+}
+

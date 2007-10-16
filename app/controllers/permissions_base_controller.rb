@@ -1,12 +1,11 @@
 class PermissionsBaseController < ApplicationController
 
-  auto_complete_for :user, :login
-
   def autocomplete_login
+    @organization ||= Organization.find(params[:organization_id])
     escaped_string = Regexp.escape(params[:user][:login])
     re = Regexp.new(escaped_string, "i")
-    @users = User.find(:all).select { |dp| dp.login.match re}
-    render :layout => false
+    @users = @organization.users.select { |u| u.login.match re}
+    render :template => 'permissions_base/autocomplete_login', :layout => false
   end
 
   def index

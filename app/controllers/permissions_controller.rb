@@ -1,7 +1,7 @@
 class PermissionsController < PermissionsBaseController
 
   needs_organization
-  
+
   before_filter :create_tabs
 
   def create_tabs 

@@ -35,4 +35,6 @@ ActionController::Routing::Routes.draw do |map|
   # *content viewing*
   # XXX this route must come last so other tasks have priority over it.
   map.homepage '/homepage/:organization_nickname/*page', :controller => 'content_viewer', :action => 'view_page'
+
+  map.connect ':controller/:action/:id'
 end

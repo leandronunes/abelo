@@ -7,8 +7,10 @@
     <%= render :partial => 'form'%>
   </div>
 
-  <%= subtitle _("Payments [%s]") % submit_to_remote( 'payment_button' , _('Add'), :url => {:action => 'create', :product_id => @stock.product, :id => @stock}) %>
+  <%= subtitle _("Payments") %> 
+  <%= button_remote( 'add' , _('Add'), :save, :url => {:action => 'create', :product_id => @stock.product, :id => @stock}) %>
 
+  <%= subtitle _("Payments [%s]") % submit_to_remote( 'payment_button' , _('Add'), :url => {:action => 'create', :product_id => @stock.product, :id => @stock}) %>
   <%= display_new_info_options @product %> 
 <% end %>
 

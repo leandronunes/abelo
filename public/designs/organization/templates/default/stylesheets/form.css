@@ -23,4 +23,5 @@
 #info_form .info_field {
   margin: 5px;
   padding: 5px;
+  float: left;
 }

@@ -118,3 +118,12 @@ body {
   color: #E80;
 }
 
+#image_list div {
+  float: left;
+  margin-right: 5px;
+}
+#image_list img {
+  border: 1px solid #642;
+  padding: 3px;
+}
+

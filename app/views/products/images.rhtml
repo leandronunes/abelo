@@ -5,9 +5,11 @@
 
 <%= subtitle _('Current images')  %>
 
+<div id="image_list">
 <% for image in @product.images %>
   <%= show_image_edit image %>
 <% end %>
+</div>
 
 <%= subtitle _('Add Image')%>
 

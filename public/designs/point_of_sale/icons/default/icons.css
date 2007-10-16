@@ -9,3 +9,6 @@
 .sale           { background-image: url('sale.png') }
 .cancel_sale    { background-image: url('cancel-sale.png') }
 
+.edit_small     { background-image: url('edit_small.png') }
+.system-log-out { background-image: url('system-log-out.png') }
+.help           { background-image: url('help.png') }

@@ -519,3 +519,22 @@ input#money_in {
   margin-left: 60px;
 }
 
+.auto_complete {
+  border: 1px solid #DC8;
+  background: #FAF8A0;
+}
+.auto_complete ul,
+.auto_complete li{
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+}
+.auto_complete a{
+  color: #000;
+  display: block;
+  padding: 2px 0px 2px 4px;
+}
+.auto_complete a:hover{
+  background: #FAF080;
+}
+

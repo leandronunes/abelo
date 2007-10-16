@@ -120,7 +120,7 @@ body {
 
 #image_list div {
   float: left;
-  margin-right: 5px;
+  margin: 0px 5px 20px 0px;
 }
 #image_list img {
   border: 1px solid #642;

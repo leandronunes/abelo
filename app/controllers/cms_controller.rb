@@ -1,10 +1,11 @@
 class CmsController < ComatoseAdminController
+
   uses_tabbed_navigation
+
   define_option :page_class, Article
 
   before_filter :load_organization
 
-  include Describe
   include AccessControl
   helper AccessControl
 

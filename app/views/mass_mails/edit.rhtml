@@ -1,14 +1,12 @@
 <%= title _('Editing mass mail') %>
 
-<%= start_form_tag ({:action => 'update', :id => @mass_mail}, :multipart => true) %>
+<% form_tag ({:action => 'update', :id => @mass_mail}, :multipart => true) do %>
 
   <%= render :partial => 'form' %>
 
-  <div class='button_bar'>
-    <%= button 'save',_('Save'), :save %>
-    <%= button 'cancel',_('Cancel'), :cancel, :action => 'list' %>
-  </div>
-<%= end_form_tag %>
+  <%= display_edit_info_options(@mass_mail) %>
+
+<% end %>
 
 <div id="new_file">
 

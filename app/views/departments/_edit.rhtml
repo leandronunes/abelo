@@ -2,13 +2,13 @@
   <%= show_item_bar("edit_department", _("Edit department")) %>
   <div id="edit_department" class="itembar">
     <div>
-      <%= start_form_tag :action => 'update', :id => @department %>
+      <% form_tag :action => 'update', :id => @department do %>
     <%= render :partial => 'form' %>
     <div class='button_bar'>
       <%= submit_to_remote "button_remote", _("Save"), :url => {:action => "update", :id => @department}, :update => {:success => 'warp', :failure => 'sidebar'} %>
       <%= button _('Cancel'), :cancel, :action => 'list' %>
     </div>
-    <%= end_form_tag %>
+    <% end %>
     </div>
   <%= hide_item_bar("edit_department")%>
   </div>

@@ -1,13 +1,18 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class MassMailDisplayTest < Test::Unit::TestCase
- 
+
   fixtures :organizations
 
   def setup
     @org = Organization.find_by_identifier('six') 
   end
 
+  AVAILABLE_FIELDS_TEST = %w[
+      subject
+      body 
+  ]
+ 
   def test_available_fields_are_valids
     mass_mail = MassMail.new(:subject => 'Mass Mail for testing', :organization_id => @org.id, :body => 'testing mass mail')
     assert_kind_of Array, MassMailDisplay.available_fields
@@ -16,19 +21,10 @@ class MassMailDisplayTest < Test::Unit::TestCase
     end
   end
 
-  def test_available_fields_have_title_method
-    mass_mail = MassMail.new(:subject => 'Mass Mail for testing', :organization_id => @org.id, :body => 'testing mass mail')
-    MassMailDisplay.available_fields.each do |field|
-      assert MassMailDisplay.methods.include?("title_#{field}")
-    end 
-  end
-
-  def test_title_subject
-    assert_kind_of String, MassMailDisplay.title_subject
-  end
-
-  def test_title_body
-    assert_kind_of String, MassMailDisplay.title_body
+  def test_describe
+    AVAILABLE_FIELDS_TEST.each do |field|
+      assert_not_equal field,MassMailDisplay.describe(field)
+    end
   end
 
 end

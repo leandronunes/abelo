@@ -1,9 +1,9 @@
 <h2> <%= _('New contact_position') %> </h2>
 
-<%= start_form_tag :action => 'create' %>
+<% form_tag :action => 'create'do %>
   <%= render :partial => 'form' %>
   <div class='button_bar'>
     <%= button _("Create"), :save %>
     <%= button _('Cancel'), :cancel, :action => 'list' %>
   </div>
-<%= end_form_tag %>
+<% end %>

@@ -9,10 +9,10 @@
 <% end %>
 </blockquote>
 
-<%= start_form_tag %>
+<% form_tag do %>
 <div id="button-group">
   <%= submit_tag _("Yes, Delete The Page") %>
   or
   <%= link_to _("Cancel"), :action=>'index' %>
 </div>
-<%= end_form_tag %>
+<% end %>

@@ -1,7 +1,7 @@
 <div id='sidebar'>
   <%= show_item_bar("new_worker", _("Edit %s") % SystemActor.describe(@actor)) %>
   <div id="new_worker" class="itembar">
-    <%= start_form_tag :action => 'update', :id => @system_actor %>
+    <% form_tag :action => 'update', :id => @system_actor do %>
       <div id="form">
         <%= render :partial => 'form' %>
       </div>
@@ -10,7 +10,7 @@
         <%=  submit_to_remote "button_remote", _("Save"), :url => {:action => "update", :id => @system_actor, :actor => @actor}, :update => {:success => 'warp', :failure => 'form'} %>
         <%= button _('Cancel'), :cancel, :action => 'list', :actor => @actor %>
       </div>
-    <%= end_form_tag %>
+    <% end %>
     <%= hide_item_bar("new_worker")%>
   </div>
 </div>

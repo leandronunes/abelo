@@ -2,10 +2,10 @@
 
 <h2><%= _('New item') %></h2>
 
-<%= form_remote_tag(:url => {:controller => 'commercial_proposal_items', :action => 'add', :id => @commercial_section_id, :commercial_proposal_id => @commercial_proposal_id }, :update => {:success => 'proposal_sections', :failure => 'new_component'} ) %>
+<% form_remote_tag(:url => {:controller => 'commercial_proposal_items', :action => 'add', :id => @commercial_section_id, :commercial_proposal_id => @commercial_proposal_id }, :update => {:success => 'proposal_sections', :failure => 'new_component'} ) do %>
 
 <%= render :partial => 'form' %>
 <%= link_to_remote _('Close'), {:url => {:action => 'cancel'}, :update => 'new_component'}, :class => 'button' %>
 <%= submit_tag _('Add item'), :class => 'button' %>
 
-<%= end_form_tag %>
+<%= end %>

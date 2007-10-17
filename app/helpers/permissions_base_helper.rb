@@ -4,7 +4,7 @@ module PermissionsBaseHelper
     select(
       object,
       method,
-      Profile::TEMPLATES.keys.reject{|k| k == 'administration' or k == 'sales_person' or k == 'sales_supervisor' or k == 'other' }.map do |profile|
+      Profile::TEMPLATES.keys.reject{|k| k == 'administration' }.map do |profile|
         [ Profile.describe(profile), profile ]
       end
     )

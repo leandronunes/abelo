@@ -1,4 +1,6 @@
-<%= title _('Editing Category') %>
+<%= render :partial => 'menu' %>
+
+<%= title _('Editing %s ') % Category.describe(@category_type) %>
 
 <% form_tag :action => 'update', :id => @category, :category_type => @category_type  do %>
   <%= render :partial => 'form' %>

@@ -1,4 +1,6 @@
-<%= title _('New Category') %>
+<%= render :partial => 'menu' %>
+
+<%= title _('New %s') % Category.describe(@category_type) %>
 
 <% form_tag :action => 'create', :category_type => @category_type do %>
   <%= render :partial => 'form' %>

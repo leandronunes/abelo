@@ -31,4 +31,18 @@ class Category < ActiveRecord::Base
     self.find(:all, :conditions => ['parent_id is null and organization_id = ?', organization.id ])
   end
 
+  def self.describe(name)
+    {
+      'product' => _('Product'),
+      'products' => _('Products'),
+      'supplier' => _('Supplier'),
+      'suppliers' => _('Suppliers'),
+      'worker' => _('Worker'),
+      'workers' => _('Workers'),
+      'customer' => _('Customer'),
+      'customers' => _('Customers'),
+
+    }[name] || name
+  end
+
 end

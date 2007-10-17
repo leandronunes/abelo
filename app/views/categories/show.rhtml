@@ -1,5 +1,6 @@
+<%= render :partial => 'menu' %>
 
-<%= title _("Category %s") % @category_type %>
+<%= title _("#{Category.describe(@category_type)}") %>
 
 <%= display_show_info @category, :class => 'view_data'%>
 

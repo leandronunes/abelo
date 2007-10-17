@@ -7,13 +7,12 @@ class DocumentsController < ApplicationController
   before_filter :create_tabs
 
 
-#TODO fix this autocomplete field because it searchs on all non model document.
-#And in this case it must search only on a non model document of based on a given model
+#Search on a non model document of based on a given model or a document without a model
   def autocomplete_name
     escaped_string = Regexp.escape(params[:document][:name])
     re = Regexp.new(escaped_string, "i")
-    if params[:show_document_models]
-      @documents = @organization.documents_model.select { |d| d.name.match re}
+    if params[:document_model_id]
+      @documents = @organization.documents_by_model.select { |d| d.name.match re}
     else
       @documents = @organization.documents_without_model.select { |d| d.name.match re} 
     end

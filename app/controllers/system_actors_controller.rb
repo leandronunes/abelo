@@ -29,8 +29,8 @@ class SystemActorsController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @actor = params[:actor] || 'worker'
-    
+    @actor = params[:actor] ||= 'worker'
+      
     @query = params[:query]
     @query ||= params[:system_actor][:name] if params[:system_actor]
 

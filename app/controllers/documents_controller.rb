@@ -25,18 +25,15 @@ class DocumentsController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    begin
-      document_model = @organization.documents.find(params[:document_model])
-    rescue
-      document_model = nil
+    @query || params[:query]
+    @query ||=  params[:document][:name] if params[:document]
+    if params[:show_document_models]
+      @title = _('Listing Document Models')
+      @documents = @query.blank? ? @organization.documents_model : @organization.documents_model.full_text_search(@query)
+    else
+      @title = _('Listing Documents without Models')
+      @documents = @query.blank? ? @organization.documents_without_model : @organization.documents_without_model.full_text_search(@query)
     end
-
-    @title = document_model.nil? ?  _('Listing Document Models') : document_model.name
-    search_param = params[:document].nil? ? nil : params[:document][:name]
-    @documents = search_param.blank? ? 
-                 @organization.documents_by_model(document_model) : 
-                 @organization.documents.find_by_contents(search_param).select{|d| d.document_model == document_model}
-
     @document_pages, @documents = paginate_by_collection @documents
   end
 
@@ -97,20 +94,18 @@ class DocumentsController < ApplicationController
 
   def create_tabs
     t = add_tab do      
-      links_to :controller => 'documents'
+      links_to :controller => 'documents', :action => 'list', :show_document_models => 'true'
       in_set 'first'
+      highlights_on :controller => 'documents', :show_document_models => 'true'
     end
-    t.highlights_off :organization_nickname => @organization.identifier, :controller => 'documents', :action => /.*/, :document_model => /.*/
     t.named _("Models")
    
-    @organization.documents_model.each do |d| 
-      t = add_tab do      
-        links_to :controller => 'documents', :action => 'list', :document_model => d.id
-        in_set 'first'
-        highlights_on :controller => 'documents', :action => /.*/, :document_model => d.id
-      end
-      t.named d.name
+    t = add_tab do      
+      links_to :controller => 'documents'
+      in_set 'first'
+      highlights_off :controller => 'documents', :show_document_models => 'true'
     end
+    t.named _('Other Documents')
   end
 
 end

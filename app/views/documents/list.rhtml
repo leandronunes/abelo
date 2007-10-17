@@ -3,6 +3,6 @@
 
 <%= display_list_options 'document', 'name' %>
 
-<% display_collection @documents %>
+<%= display_collection @documents %>
 
 <%= pagination_links(@document_pages, :params => {:query => @query } ) %>

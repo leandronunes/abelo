@@ -2,7 +2,6 @@ class Document < ActiveRecord::Base
 
   validates_presence_of :organization_id
   validates_presence_of :name
-  validates_presence_of :document_model_id, :if => lambda {|dm|  not dm.is_model? }
   validates_uniqueness_of :name, :scope => :organization_id
 
 

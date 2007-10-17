@@ -249,6 +249,11 @@ class Organization < ActiveRecord::Base
     self.documents.select{ |d| d.document_model == model }
   end
 
+  #Get all documents without a model
+  def documents_without_model
+    self.documents_not_model.select{ |d| d.document_model_id.nil? }
+  end
+
 
   # Return all ledger categories ordened by type and name.
   # Income ledger categories appear first ordened by name and

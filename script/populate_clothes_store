@@ -20,7 +20,7 @@ configuration = organization.configuration
 ProductDisplay.delete_all
 params = {}
 ProductDisplay.available_fields.collect { |d|
-  in_list = ['name', 'size', 'category', 'image' ].include?(d) ? true : false
+  in_list = ['image', 'name','size', 'category' ].include?(d) ? true : false
   params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
 }
 configuration.set_product_displays=(params)

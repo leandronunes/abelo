@@ -4,7 +4,7 @@ require 'system_actors_controller'
 # Re-raise errors caught by the controller.
 class SystemActorsController; def rescue_action(e) raise e end; end
 
-class CustomersControllerTest < Test::Unit::TestCase
+class WorkersControllerTest < Test::Unit::TestCase
 
   under_organization :one
 
@@ -14,26 +14,13 @@ class CustomersControllerTest < Test::Unit::TestCase
     @controller = SystemActorsController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-    @organization = Organization.find_by_identifier('one')
+    @organization = Organization.find_by_identifier 'one'
     login_as("quentin")
-    @customer_category = CustomerCategory.find(:first)
-    @system_actor = Customer.create!(:name => "Another Name to Test", :cpf => '874.923.844-24', 
-                   :category => @customer_category, :email => 'test@test.com', :organization => @organization)
+    @system_actor = Worker.create!(:name => "Another Name to Test", :cpf => '874.923.844-24', :category_id => '20', :email => 'test@test.com', :organization_id => 1)
   end
 
-  def test_setup
-    assert @system_actor.valid?
-    assert @customer_category.valid?
-  end
-
-  def test_system_actors_fixtures 
-    SystemActor.find(:all).each do |item|
-      assert item.valid?
-      assert item.category.valid?
-    end
-  end
   def test_list
-    get :list, :actor => 'customer'
+    get :list, :actor => 'worker'
 
     assert_response :success
     assert_template 'list'
@@ -42,96 +29,97 @@ class CustomersControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:system_actors)
     assert_kind_of Array, assigns(:system_actors)
     assigns(:system_actors).each  do |s|
-      assert_kind_of Customer, s
+      assert_kind_of Worker, s
       assert s.valid?
     end
   end
 
   def test_new
-    get :new, :actor => 'customer'
+    get :new, :actor => 'worker'
 
     assert_response :success
     assert_template 'new'
 
     assert_not_nil assigns(:system_actor)
     assert_not_nil assigns(:actor)
-    assert_kind_of Customer, assigns(:system_actor)
+    assert_kind_of Worker, assigns(:system_actor)
     assert_equal @organization, assigns(:system_actor).organization
   end
 
   def test_create_successfully
-    num_customers = Customer.count
+    num_workers = Worker.count
 
-    post :create, :actor => 'customer', :system_actor =>{:name=>"Some Name", :cpf => "403.786.765-63", :category_id => "20", :email => "test@mail.com"}
+    post :create, :actor => 'worker', :system_actor =>{:name=>"Some Name", :cpf => "403.786.765-63", :category_id => "20", :email => "test@mail.com"}
 
 
     assert_not_nil assigns(:system_actor)
     assert_not_nil assigns(:actor)
-    assert_kind_of Customer, assigns(:system_actor)
+    assert_kind_of Worker, assigns(:system_actor)
     assert_response :redirect
     assert_redirected_to :action => 'list'
 
-    assert_equal num_customers + 1, Customer.count
+    assert_equal num_workers + 1, Worker.count
   end
 
   def test_create_unsuccessfully
-    num_customers = Customer.count
+    num_workers = Worker.count
 
     # At least the name cannot be nil
-    post :create, :actor => 'customer', :system_actor =>{:name => nil}
+    post :create, :actor => 'worker', :system_actor =>{:name => nil}
 
 
     assert_not_nil assigns(:system_actor)
     assert_not_nil assigns(:actor)
-    assert_kind_of Customer, assigns(:system_actor)
+    assert_kind_of Worker, assigns(:system_actor)
     assert_response :success
     assert_template 'new'
 
-    assert_equal num_customers, Customer.count
+    assert_equal num_workers, Worker.count
   end
 
 
   def test_edit
-    get :edit, :id => @system_actor.id, :actor => 'customer'
+    get :edit, :id => @system_actor.id, :actor => 'worker'
 
     assert_response :success
     assert_template 'edit'
 
     assert_not_nil assigns(:system_actor)
     assert assigns(:system_actor).valid?
-    assert_kind_of Customer, assigns(:system_actor)
+    assert_kind_of Worker, assigns(:system_actor)
     assert_not_nil assigns(:actor)
   end
 
-  def test_update
-    post :update, :id => @system_actor.id, :actor => 'customer'
+  def test_update_successfully
+    post :update, :id => @system_actor.id, :actor => 'worker'
     assert_response :redirect
-    assert_redirected_to :action => 'list', :actor => 'customer'
+    assert_redirected_to :action => 'list', :actor => 'worker'
     assert_not_nil assigns(:system_actor)
     assert assigns(:system_actor).valid?
-    assert_kind_of Customer, assigns(:system_actor)
+    assert_kind_of Worker, assigns(:system_actor)
     assert_not_nil assigns(:actor)
   end
 
   def test_update_unsuccessfully
-    #The name must be diffent of nil
-    post :update, :id => @system_actor.id, :actor => 'customer', :system_actor => {:name => nil}
+    #The name must be different of nil
+    post :update, :id => @system_actor.id, :actor => 'worker', :system_actor => {:name => nil}
     assert_response :success
-      assert_template 'edit'
+    assert_template 'edit'
     assert_not_nil assigns(:actor)
     assert_not_nil assigns(:system_actor)
-    assert_kind_of Customer, assigns(:system_actor)
+    assert_kind_of Worker, assigns(:system_actor)
   end
+
 
   def test_destroy
     assert_not_nil @system_actor
 
-    post :destroy, :id => @system_actor.id, :actor => 'customer'
+    post :destroy, :id => @system_actor.id, :actor => 'worker'
     assert_response :redirect
     assert_redirected_to :action => 'list'
 
     assert_raise(ActiveRecord::RecordNotFound) {
-      Customer.find(@system_actor.id)
+      Worker.find(@system_actor.id)
     }
   end
 

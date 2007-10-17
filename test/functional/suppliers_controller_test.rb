@@ -53,7 +53,7 @@ class SuppliersControllerTest < Test::Unit::TestCase
     assert_equal @organization, assigns(:system_actor).organization
   end
 
-  def test_create
+  def test_create_successfully
     num_suppliers = Supplier.count
 
     post :create, :actor => 'supplier', :system_actor =>{:name=>"Some Name", :cpf => "403.786.765-63", :category_id => "20", :email => "test@mail.com"}
@@ -68,6 +68,23 @@ class SuppliersControllerTest < Test::Unit::TestCase
     assert_equal num_suppliers + 1, Supplier.count
   end
 
+  def test_create_unsuccessfully
+    num_suppliers = Supplier.count
+
+    # At least the name cannot be nil
+    post :create, :actor => 'supplier', :system_actor =>{:name => nil}
+
+
+    assert_not_nil assigns(:system_actor)
+    assert_not_nil assigns(:actor)
+    assert_kind_of Supplier, assigns(:system_actor)
+    assert_response :success
+    assert_template 'new'
+
+    assert_equal num_suppliers, Supplier.count
+  end
+
+
   def test_edit
     get :edit, :id => @system_actor.id, :actor => 'supplier'
 
@@ -80,7 +97,7 @@ class SuppliersControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:actor)
   end
 
-  def test_update
+  def test_update_successfully
     post :update, :id => @system_actor.id, :actor => 'supplier'
     assert_response :redirect
     assert_redirected_to :action => 'list', :actor => 'supplier'
@@ -89,6 +106,17 @@ class SuppliersControllerTest < Test::Unit::TestCase
     assert_kind_of Supplier, assigns(:system_actor)
     assert_not_nil assigns(:actor)
   end
+
+  def test_update_unsuccessfully
+    #The name must be different of nil
+    post :update, :id => @system_actor.id, :actor => 'supplier', :system_actor => {:name => nil}
+    assert_response :success
+    assert_template 'edit'
+    assert_not_nil assigns(:actor)
+    assert_not_nil assigns(:system_actor)
+    assert_kind_of Supplier, assigns(:system_actor)
+  end
+
 
   def test_destroy
     assert_not_nil @system_actor

@@ -21,6 +21,7 @@
 }
 
 #info_form .info_field {
+  float: left;
   margin: 5px;
   padding: 5px;
 }

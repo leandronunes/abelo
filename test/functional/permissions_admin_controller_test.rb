@@ -51,7 +51,7 @@ class PermissionsAdminControllerTest < Test::Unit::TestCase
   end
 
   def test_list_when_query_param_not_nil
-    get :list,  :user => {:login => "q*"}, :organization_id => @organization.id
+    get :list,  :user => {:login => "*"}, :organization_id => @organization.id
 
 
     assert_not_nil @organization.users

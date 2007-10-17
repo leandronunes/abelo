@@ -1,11 +1,33 @@
 <%= title _('Adding Organization') %>
 
 <% form_tag :action => 'create' do %>
-  <%= render :partial => 'form' %>
 
-  <div class='button_bar'>
-    <%= button 'back', _('Back'), :back, :action => 'list' %>
-    <%= button 'save',  _("Create"), :save %>
-  </div>
+  <%= error_messages_for 'organization' %>
+
+  <% display_form_info @organization do |item| %>
+
+    <%= display_field_form(item, 'name',
+          :title => _('Name'),
+          :content => text_field('organization', 'name')
+        )
+    %>
+
+    <%= display_field_form(item, 'identifier',
+          :title => _('Nickname'),
+          :content => text_field('organization', 'identifier'),
+          :html_options => {:class => 'break_line'}
+        )
+    %>
+    <%= display_field_form(item, 'cnpj',
+          :title => _('CNPJ'),
+          :content => text_field('organization', 'cnpj')
+        )
+    %>
+
+  <% end %>
+
+
+  <%= display_new_info_options(@organization) %>
+
 <% end %>
 

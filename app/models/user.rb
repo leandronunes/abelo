@@ -25,8 +25,6 @@ class User < Person
   
   before_destroy :destroy_profiles
 
-  acts_as_ferret
-
   after_create do |user|
     if user.validates_profile?
       transaction do

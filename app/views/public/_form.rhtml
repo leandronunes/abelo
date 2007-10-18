@@ -1,0 +1,31 @@
+<%= error_messages_for 'user' %>
+
+<!--[form:user]-->
+
+<% display_edit_info @user do |item| %>
+
+  <%= display_field_edit(item, 'login',
+        :title => _('Login'),
+        :content => text_field('user', 'login')
+      )
+  %>
+
+  <%= display_field_edit(item, 'email',
+        :title => _('E-mail'),
+        :content => text_field('user', 'email')
+      )
+  %>
+
+  <%= display_field_edit(item, 'password',
+        :title => _('Password'),
+        :content => password_field('user', 'password')
+      )
+  %>
+
+  <%= display_field_edit(item, 'password_confirmation',
+        :title => _('Confirm Password'),
+        :content => password_field('user', 'password_confirmation')
+      )
+  %>
+
+<% end %>

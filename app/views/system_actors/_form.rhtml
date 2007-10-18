@@ -71,6 +71,13 @@
       )
   %>
 
+  <%= display_field_edit(item, 'info',
+        :title => _('Additional Information'),
+        :content => rich_text_editor('system_actor', 'info')
+      )
+  %>
+
+
 <% end %>
 
 <!--[eoform:system_actor]-->

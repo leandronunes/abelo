@@ -1,7 +1,7 @@
 class SystemActorDisplay < DisplayConfiguration
 
   def self.available_fields
-    ['name', 'address', 'description', 'email', 'category', 'cnpj', 'cpf', 'rg', 'birthday', 'actor_type']
+    ['name', 'address', 'description', 'email', 'category', 'cnpj', 'cpf', 'rg', 'birthday', 'actor_type','info']
   end
 
   def self.describe(field)
@@ -16,6 +16,7 @@ class SystemActorDisplay < DisplayConfiguration
       'birthday' => _('Birthday'),
       'description' => _('Description'),
       'actor_type' => _('Natural Person or Juristic Person'),
+      'info' => _('Additional Information'),
     }[field] || field
   end
 

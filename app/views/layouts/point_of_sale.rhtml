@@ -16,7 +16,7 @@
   <div id="user_bar">
 
     <div id="login_bar">
-      <%= button( 'edit_small' , _('Edit prederences'), :edit_small, {:controller => 'users', :action => 'edit', :id => self.current_user}, :id => "edit_profile", :accesskey => "e", :addclass => "bt_small") %>
+      <%= button( 'edit_small' , _('Edit prederences'), :edit_small, {:controller => 'public', :action => 'edit_user', :id => self.current_user}, :id => "edit_profile", :accesskey => "e", :addclass => "bt_small") %>
       <%= button( 'system-log-out', _('Logout'), :logout, {:organization_nickname => nil, :controller => 'users', :action => 'logout'}, :id => "logout", :accesskey => "q", :confirm => _('Exit from system?'), :method => 'post', :addclass => "bt_small") %>
     </div> <!-- login_bar -->
     

@@ -6,6 +6,8 @@ class CreateDocuments < ActiveRecord::Migration
       t.column :organization_id,   :integer, :null => false
       t.column :document_model_id, :integer
       t.column :body,              :text
+      t.column :owner_type,        :string
+      t.column :owner_id,          :integer
     end
   end
 

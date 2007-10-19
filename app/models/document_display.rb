@@ -1,14 +1,15 @@
 class DocumentDisplay < DisplayConfiguration
 
   def self.available_fields
-    ['name', 'is_model', 'body'] 
+    ['name', 'body', 'departments', 'owner'] 
   end
 
   def self.describe(field)
     {
       'name' => _('Name'),
-      'is_model' => _('Is model'),
       'body' => _('Body'),
+      'departments' => _('Departments'),
+      'owner' => _('Owner'),
     }[field] || field
   end
 

@@ -1,0 +1,8 @@
+
+<%= title('%s') % @title %>
+
+<%= display_list_options 'document', 'name', :models_list => params[:models_list] %>
+
+<%= display_document_model_collection @documents %>
+
+<%= pagination_links(@document_pages, :params => {:query => @query } ) %>

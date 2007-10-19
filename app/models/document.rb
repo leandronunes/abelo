@@ -9,6 +9,7 @@ class Document < ActiveRecord::Base
 
   has_many :document_sections
   has_and_belongs_to_many :departments
+  belongs_to :owner, :polymorphic => true
   belongs_to :organization
   belongs_to :document_model, :class_name => 'Document', :foreign_key => 'document_model_id'
 

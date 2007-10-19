@@ -64,6 +64,9 @@ class DocumentsController < ApplicationController
       @document = Document.new
     end
     @departments = @organization.departments
+    @customers = @organization.customers
+    @workers = @organization.workers
+    @suppliers = @organization.suppliers
   end
 
   def create

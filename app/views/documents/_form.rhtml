@@ -1,12 +1,28 @@
 <%= error_messages_for 'document' %>
 
 <!--[form:document]-->
-<p><label for="document_name"> <%= _('Name') %> </label>
-<%= text_field 'document', 'name', :size => '60'  %></p>
 
-<%= multiple_select('document', 'departments', @departments, _('Departments')) %>
+<% display_form_info @document do |item| %>
 
-<p><label for="document_body"> <%= _('Body') %></label></p>
-<%= fckeditor_textarea 'document', 'body', :width => '80%', :height => '500px' %>
+  <%= display_field_form(item, 'name', 
+        :title => _('Name'),
+        :content => text_field('document', 'name')
+      )
+  %>
+
+  <%= display_field_form(item, 'departments', 
+        :title => _('Departments'),
+        :content => multiple_select('document', 'departments', @departments),
+        :html_options => {:class => 'break_line'}
+      )
+  %>
+
+  <%= display_field_form(item, 'body', 
+        :title => _('Body'),
+        :content => rich_text_editor('document', 'body')
+      )
+  %>
+
+<%  end %>
 
 <!--[eoform:document]-->

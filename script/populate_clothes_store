@@ -435,7 +435,7 @@ account.bank = bank
 account.owner = organization
 account.is_default = true
 account.save!
-saving_account = BankAccount.new(:agency => '3352-3', :account => '23456-3', :variation => 1)
+saving_account = BankAccount.new(:agency => '4122-3', :account => '4546-3', :variation => 4)
 saving_account.bank = bank
 saving_account.owner = organization
 saving_account.save!

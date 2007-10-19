@@ -1,14 +1,8 @@
-<%= title('New Document Model') %>
+<%= title @title %>
 
 <%= error_messages_for "document" %>
 
-
 <% form_tag :action => 'create' do %>
-  
-  <label><%= _('Name') %></label>
-  <%= text_field 'document', 'name' %>
-    
-  <%= multiple_select('document', 'departments', @departments, _('Departments')) %>
-  <%= button 'back',_('Back'), :back,  :action => 'list', :document_model => params[:document_model] %>
-  <%= button 'save', _('Edit'), :save%>
+  <%= render :partial => 'form' %>
+  <%= display_new_info_options @document, :models_list => params[:models_list], :document_model_id => params[:document_model_id] %>
 <% end %>

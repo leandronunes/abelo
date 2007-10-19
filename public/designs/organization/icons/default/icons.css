@@ -18,6 +18,8 @@
 .new_entry  { background-image: url('new_entry.png') }
 .history    { background-image: url('history.png') }
 .help       { background-image: url('help.png') }
+.show_documents_small { background-image: url('del_small.png') }
+.add_document_small { background-image: url('del_small.png') }
 
 /* * * Menu Icons * * */
 

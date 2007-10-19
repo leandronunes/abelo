@@ -91,6 +91,7 @@ class Profile < ActiveRecord::Base
       { 'controller' => 'ledgers', 'action' => '*' },
       { 'controller' => 'ledger_categories', 'action' => '*' },
       { 'controller' => 'documents', 'action' => '*' },
+      { 'controller' => 'document_models', 'action' => '*' },
       { 'controller' => 'departments', 'action' => '*' },
       { 'controller' => 'main', 'action' => '*' },
       { 'controller' => 'products', 'action' => '*' },

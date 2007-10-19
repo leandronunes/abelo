@@ -1,7 +1,7 @@
 
 <%= title('%s') % @title %>
 
-<%= display_list_options 'document', 'name', :show_document_models => params[:show_document_models] %>
+<%= display_list_options 'document', 'name', :document_model_id => params[:document_model_id], :models_list => params[:models_list] %>
 
 <%= display_collection @documents %>
 

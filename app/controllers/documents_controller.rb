@@ -13,6 +13,8 @@ class DocumentsController < ApplicationController
     re = Regexp.new(escaped_string, "i")
     if params[:document_model_id]
       @documents = @organization.documents_by_model.select { |d| d.name.match re}
+    elsif params[:models_list]
+      @documents = @organization.documents_model.select { |d| d.name.match re}
     else
       @documents = @organization.documents_without_model.select { |d| d.name.match re} 
     end
@@ -30,12 +32,20 @@ class DocumentsController < ApplicationController
   def list
     @query || params[:query]
     @query ||=  params[:document][:name] if params[:document]
-    if params[:show_document_models]
-      @title = _('Listing Document Models')
-      @documents = @query.blank? ? @organization.documents_model : @organization.documents_model.full_text_search(@query)
-    else
-      @title = _('Listing Documents without Models')
-      @documents = @query.blank? ? @organization.documents_without_model : @organization.documents_without_model.full_text_search(@query)
+    begin
+      @documents = @query.blank? ? @organization.documents_by_model(params[:document_model_id]) : @organization.documents_by_model(params[:document_model_id]).full_text_search(@query)
+      @title = _('Listing Documents from Model %s') % Document.find(params[:document_model_id]).name
+    rescue
+      if params[:models_list]
+        @title = _('Listing Document Models')
+        @documents = @query.blank? ? @organization.documents_model : @organization.documents_model.full_text_search(@query)
+        @document_pages, @documents = paginate_by_collection @documents
+        render :template => 'documents/list_models'
+        return
+      else
+        @title = _('Listing Documents without Models')
+        @documents = @query.blank? ? @organization.documents_without_model : @organization.documents_without_model.full_text_search(@query)
+      end
     end
     @document_pages, @documents = paginate_by_collection @documents
   end
@@ -47,10 +57,10 @@ class DocumentsController < ApplicationController
 
   def new
     begin 
-      @document = Document.find(params[:document_model]).dclone
-      @document.save
-      redirect_to :action => 'edit', :id => @document.id, :document_model => @document.document_model.id
+      @document = Document.find(params[:document_model_id]).dclone
+      @title = _('New Document from model %s') % Document.find(params[:document_model_id]).name
     rescue
+      params[:models_list] ? @title = _('New Document Model') : @title = _('New Blank Document')
       @document = Document.new
     end
     @departments = @organization.departments
@@ -59,24 +69,22 @@ class DocumentsController < ApplicationController
   def create
     @document = Document.new(params[:document])  
     @document.organization = @organization
-    @document.is_model = true
      
     if @document.save
       flash[:notice] = _('The document was successfully created.')
-      redirect_to :action => 'edit', :id => @document.id
+      redirect_to :action => 'list', :models_list => params[:models_list]
     else
       @departments = @organization.departments
-      render :action => 'new'
+      render :action => 'new', :models_list => params[:models_list], :document_model_id => params[:document_model_id]
     end
   end
 
   def edit
     @document = @organization.documents.find(params[:id])
     @departments = @organization.departments
-    @sections = @document.document_sections
+    params[:models_list] ? @title = _('Editing Model Document') : @title = _('Editing Document')
   end
 
-#TODO see if it's usefull
   def update
     @document = Document.find(params[:id])
     if @document.update_attributes(params[:document])
@@ -89,7 +97,6 @@ class DocumentsController < ApplicationController
     end
   end
 
-#TODO see if it's usefull
   def destroy
     Document.find(params[:id]).destroy
     redirect_to :action => 'list'
@@ -97,16 +104,16 @@ class DocumentsController < ApplicationController
 
   def create_tabs
     t = add_tab do      
-      links_to :controller => 'document_models', :action => 'list', :show_document_models => 'true'
+      links_to :controller => 'documents', :action => 'list', :models_list => 'true'
       in_set 'first'
-      highlights_on :controller => 'document_models', :show_document_models => 'true'
+      highlights_on :controller => 'documents', :models_list => 'true'
     end
     t.named _("Models")
    
     t = add_tab do      
       links_to :controller => 'documents'
       in_set 'first'
-      highlights_off :controller => 'documents', :show_document_models => 'true'
+      highlights_off :controller => 'documents', :models_list => 'true'
     end
     t.named _('Other Documents')
   end

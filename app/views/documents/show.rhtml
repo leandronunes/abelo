@@ -1,11 +1,6 @@
 
 <%= title @document.name %>
 
-<p> <b><%= _('Name') %>:</b> <%= @document.name %></p>
-<% for department in @departments %>
-  <p> <b><%= _('Department') %>:</b> <%= department.name %></p>
-<% end %>
-<p> <b><%= _('Body') %>:</b> <%= @document.body %></p>
+<%= display_show_info @document, :models_list => params[:models_list] %>
 
-<%= button('back', _('Back'), :list, :action => 'list', :document_model => params[:document_model]) %> 
-<%= button('edit', _('Edit'), :edit, :action => 'edit', :id => @document, :document_model => params[:document_model]) %> 
+<%= display_show_info_options(@document, :models_list => params[:models_list]) %> 

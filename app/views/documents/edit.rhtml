@@ -1,16 +1,6 @@
-<%= title('Editing Document') %>
+<%= title(@title) %>
 
-
-<div class='left_content'>
-  <% form_tag :action => 'update', :id => @document, :document_model => params[:document_model] do %>
+<% form_tag :action => 'update', :id => @document, :document_model => params[:document_model] do %>
   <%= render :partial => 'form' %>
-  <%= render :partial => 'budget' %>
-  <%= button 'view', _('Show'), :show, :action => 'show', :id => @document, :document_model => params[:document_model] %>
-  <%= button 'back',_('Back'), :back,  :action => 'list', :document_model => params[:document_model] %>
-  <%= button 'save', _('Edit'), :save%>
+  <%= display_edit_info_options(@document, :models_list => params[:models_list])%>
 <% end %>
-</div>
-
-<div id='new_component',class='right_content'>
-</div>
-

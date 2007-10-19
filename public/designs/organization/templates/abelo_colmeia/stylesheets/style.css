@@ -1,9 +1,11 @@
 /* Autor: Valessio S Brito <valessio@colivre.coop.br>  */
 
-@import "colors.css";
-@import "nav.css";
-@import "box.css";
-@import "pointsales.css";
+@import url("box.css");
+@import url("colors.css");
+@import url("nav.css");
+@import url("nav.css.comeia");
+@import url("pointsales.css");
+@import url("tabs.css");
 
 body {
   margin:0px;

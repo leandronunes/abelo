@@ -97,9 +97,9 @@ class DocumentsController < ApplicationController
 
   def create_tabs
     t = add_tab do      
-      links_to :controller => 'documents', :action => 'list', :show_document_models => 'true'
+      links_to :controller => 'document_models', :action => 'list', :show_document_models => 'true'
       in_set 'first'
-      highlights_on :controller => 'documents', :show_document_models => 'true'
+      highlights_on :controller => 'document_models', :show_document_models => 'true'
     end
     t.named _("Models")
    

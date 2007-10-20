@@ -13,6 +13,7 @@ class WorkerDisplayTest < Test::Unit::TestCase
       rg
       birthday
       actor_type
+      info
   ]
   def test_available_fields
     assert_equal AVAILABLE_FIELDS_TEST, WorkerDisplay.available_fields

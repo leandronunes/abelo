@@ -14,6 +14,8 @@ class Product < ActiveRecord::Base
 
   validates_presence_of :category_id, :message => _('Every product must belong to a category')
 
+  has_many :sale_items
+
   acts_as_ferret
 
   def self.full_text_search(q, options = {})
@@ -21,6 +23,10 @@ class Product < ActiveRecord::Base
     options = default_options.merge options
     self.find_by_contents(q, options)
   end
+
+def customers
+  self.sale_items.map{|i| i.sale}.uniq.map{|i| i.customer}
+end
 
   def amount_in_stock
     self.connection.select_value('select sum(amount) from stocks where product_id = %d' % self.id).to_f

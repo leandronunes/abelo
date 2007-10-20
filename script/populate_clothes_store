@@ -397,9 +397,12 @@ gerente = Worker.create!(:name => 'Carla Alves', :cpf => '53170430424', :address
 
 ############Sales###################################
 Sale.destroy_all
+sale_one = Sale.create!(:organization => organization, :customer => cliente_one, :status => 0, :date => '2007-05-03', :salesman => sales_person )
 
 ############Sale Items##############################
 SaleItem.destroy_all
+sale_item_one = SaleItem.create!(:sale => sale_one, :product => camisa, :amount => 2.0, :unitary_price => camisa.sell_price)
+sale_item_two = SaleItem.create!(:sale => sale_one, :product => calca, :amount => 3.0, :unitary_price => calca.sell_price)
 
 ############Mass Mail###############################
 MassMail.destroy_all

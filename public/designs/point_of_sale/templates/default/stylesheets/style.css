@@ -1,5 +1,9 @@
 /* Autor: Valessio S Brito <valessio@colivre.coop.br>  */
 
+
+@import url("error.css");
+@import url("button.css");
+
 html {
   height: 100%;
   margin: 0px;

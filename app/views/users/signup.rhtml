@@ -1,10 +1,21 @@
-<div id='loginform'>
+<div id="loginform">
+
 <%= error_messages_for :user %>
+
 <% form_tag :action => 'signup' do %>
-<%= render :partial => 'form' %>
-<div class='button_bar'>
-<%= button 'save', _('Sign up'), :save %>
-<%= button 'cancel', _('Cancel'), :cancel, :action => 'index' %>
-</div>
+
+  <%= render :partial => 'form' %>
+
+  <div class="button_bar">
+    <div class="beault_button">
+      <%= button 'save', _('Sign up'), :save, nil,
+          {:class => 'button button_save_signup with_text'} %>
+    </div>
+    <div class="beault_button">
+      <%= button 'cancel', _('Cancel'), :cancel, {:action => 'index'},
+          {:class => 'button with_text'} %>
+    </div>
+  </div>
+
 <% end %>
 </div>

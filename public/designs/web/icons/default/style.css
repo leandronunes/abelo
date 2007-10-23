@@ -1,9 +1,8 @@
 
-.none_add   { background-image: url('none.png') }
-.add        { background-image: url('add.png') }
 .search     { background-image: url('search.png') }
 .edit_small { background-image: url('edit_small.png') }
 .view_small { background-image: url('view_small.png') }
+.del        { background-image: url('del.png') }
 .del_small  { background-image: url('del_small.png') }
 .edit       { background-image: url('edit.png') }
 .save       { background-image: url('save.png') }
@@ -18,6 +17,10 @@
 .new_entry  { background-image: url('new_entry.png') }
 .history    { background-image: url('history.png') }
 .help       { background-image: url('help.png') }
+.none_add   { background-image: url('none.png') }
+.button_save_signup,
+.add        { background-image: url('add.png') }
+.cancel     { background-image: url('cancel.png') }
 
 /* * * Menu Icons * * */
 
@@ -31,6 +34,6 @@
 .permissions   { background-image: url('permissions.png') }
 .mass_mails    { background-image: url('mass_mails.png') }
 .store         { background-image: url('store.png') }
-.organizations  { background-image: url('organizations.png') }
+.organizations { background-image: url('organizations.png') }
 .banks         { background-image: url('banks.png') }
 

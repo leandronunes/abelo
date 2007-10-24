@@ -121,4 +121,13 @@ class DocumentsController < ApplicationController
     t.named _('Other Documents')
   end
 
+  def list_owners
+    @document = Document.new(params[:document])
+    @owner_type = params[:value]
+    @customers = @organization.customers
+    @workers = @organization.workers
+    @suppliers = @organization.suppliers
+    render :partial => 'owners_list'
+  end
+
 end

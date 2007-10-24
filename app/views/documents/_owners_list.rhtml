@@ -1,0 +1,23 @@
+<%= display_field_form(@document, 'owner', 
+    :title => DocumentDisplay.describe(@owner_type),
+    :content => select('document', 'owner', instance_variable_get("@#{@owner_type}s").collect { |o| [ o.name, o.id ]}, { :include_blank => true } )
+  )
+%>
+  <%= observe_field('document_owner_type_customer',
+        :update => 'owners_list',
+        :url => {:action => 'list_owners'},
+        :with => "'value=' + escape(value)"
+      )
+  %>
+  <%= observe_field('document_owner_type_supplier',
+        :update => 'owners_list',
+        :url => {:action => 'list_owners'},
+        :with => "'value=' + escape(value)"
+      )
+  %>
+  <%= observe_field('document_owner_type_worker',
+        :update => 'owners_list',
+        :url => {:action => 'list_owners'},
+        :with => "'value=' + escape(value)"
+      )
+  %>

@@ -24,9 +24,9 @@ class Product < ActiveRecord::Base
     self.find_by_contents(q, options)
   end
 
-def customers
-  self.sale_items.map{|i| i.sale}.uniq.map{|i| i.customer}
-end
+  def customers
+    self.sale_items.map{|i| i.sale}.uniq.map{|i| i.customer}
+  end
 
   def amount_in_stock
     self.connection.select_value('select sum(amount) from stocks where product_id = %d' % self.id).to_f

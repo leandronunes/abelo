@@ -1,7 +1,7 @@
 class ProductDisplay < DisplayConfiguration
 
   def self.available_fields
-    ['image', 'name', 'size', 'color', 'description', 'sell_price', 'unit', 'category', 'suppliers', 'amount_in_stock', 'minimum_amount','info']
+    ['image', 'name', 'size', 'color', 'description', 'sell_price', 'unit', 'category', 'suppliers', 'amount_in_stock', 'minimum_amount', 'info']
   end
 
   def self.describe(field)

@@ -37,6 +37,7 @@ class ProductsController < ApplicationController
 
   def show
     @product = @organization.products.find(params[:id])
+    @customers = @product.customers
   end
 
   def new

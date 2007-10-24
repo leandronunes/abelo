@@ -3,6 +3,13 @@
 
 <%= display_show_info @product %>
 
+<strong><%= _('Customers') %>:</strong>
+
+<ul>
+<% for customer in @customers %>
+  <li><%= link_to _(" %s ") % customer.name , :controller => 'system_actors', :action => 'show', :id => customer, :actor => 'customer'  %></li>
+<% end %>
+</ul>
 <%= display_show_info_options(@product) %> 
 
 <%= render :partial => 'list_images' %>

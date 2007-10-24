@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class DocumentTest < Test::Unit::TestCase
-  fixtures :documents, :departments_documents, :document_sections, :organizations, :departments
+  fixtures :documents, :departments_documents, :document_sections, :organizations, :departments, :system_actors
 
   def test_mandatory_field_organization
     d = Document.new()
@@ -19,32 +19,6 @@ class DocumentTest < Test::Unit::TestCase
     d.name = "Another name"
     d.valid?
     assert !d.errors.invalid?(:name)
-  end
-
-  def test_mandatory_field_document_model_if_is_not_a_model_itself
-    d = Document.new()
-    d.valid?
-    assert d.errors.invalid?(:document_model_id)
-    model = Document.new(:name => 'Anohter Document', :organization_id => 1, :is_model => true)
-    departments = Organization.find(1).departments
-    model.departments = departments
-    assert model.save
-    d.document_model = model
-    d.valid?
-    assert !d.errors.invalid?(:document_model_id)
-  end
-
-  def test_the_presence_of_document_model_if_its_a_model_itself
-    model = Document.new(:name => 'Anohter Document', :organization_id => 1, :is_model => true)
-    departments = Organization.find(1).departments
-    model.departments = departments
-    assert model.save
-
-    d = Document.new(:name => 'Anohter Document Again', :organization_id => 1, :is_model => true)
-    departments = Organization.find(1).departments
-    d.departments = departments
-    d.document_model = model
-    assert !d.save
   end
 
   def test_uniqueness_of_name
@@ -77,9 +51,45 @@ class DocumentTest < Test::Unit::TestCase
     assert_equal 2, d.departments.count
   end
 
+  def test_owner
+    d = Document.find(1)
+    c = Customer.find(:first)
+    d.owner = c
+    assert_equal c, d.owner
+  end
+
   def test_organization
     d = Document.find(1)
     assert_equal d.organization, Organization.find(1)
+  end
+
+  def test_document_model
+    d = Document.find(3)
+    assert_equal Document.find(1), d.document_model
+  end
+
+  def test_the_presence_of_document_model_if_its_a_model_itself
+    model = Document.new(:name => 'Anohter Document', :organization_id => 1, :is_model => true)
+    departments = Organization.find(1).departments
+    model.departments = departments
+    assert model.save
+
+    d = Document.new(:name => 'Anohter Document Again', :organization_id => 1, :is_model => true)
+    departments = Organization.find(1).departments
+    d.departments = departments
+    d.document_model = model
+    assert !d.save
+  end
+
+  def test_presence_of_department
+    Document.destroy_all
+    d = Document.new(:name => 'Anohter Document Again', :organization_id => 1, :is_model => true)
+    departments = Organization.find(1).departments
+    d.departments = departments
+    assert d.save
+    documents = Document.full_text_search('Ano*')
+    assert_equal 1, documents.length
+    assert documents.include?(d)
   end
 
 end

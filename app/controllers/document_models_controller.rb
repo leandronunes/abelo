@@ -1,4 +1,0 @@
-class DocumentModelsController < DocumentsController
-
-
-end

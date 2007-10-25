@@ -92,4 +92,24 @@ class DocumentTest < Test::Unit::TestCase
     assert documents.include?(d)
   end
 
+  def test_dclone
+    d = Document.new(:name => 'Anohter Document Again', :organization_id => 1, :is_model => true)
+    departments = Organization.find(1).departments
+    d.departments = departments
+    assert d.save
+    doc_copy = d.dclone
+    assert_equal  d.departments, doc_copy.departments
+  end
+
+  def test_dclone_not_model_document
+    d = Document.new(:name => 'Anohter Document Again', :organization_id => 1, :is_model => false)
+    departments = Organization.find(1).departments
+    d.departments = departments
+    assert d.save
+    doc_copy = d.dclone
+    assert_equal  d.departments, doc_copy.departments
+    assert !doc_copy.valid?
+    assert doc_copy.errors.invalid?(:document_model_id)
+  end
+
 end

@@ -17,8 +17,9 @@ class Document < ActiveRecord::Base
   def validate
     self.errors.add(:document_model_id, _('You cannot have a document model in a model document')) if self.is_model? and not self.document_model.nil?
     self.errors.add( _('You have to choose almost an department to the document')) if  (not self.organization.nil?) and (not self.organization.departments.empty?) and (self.departments.empty?)
-    self.errors.add( _("You can't destroy this model: Exist at least a document that references it.")) if self.is_model? and 
-    self.organization.documents_by_model(self).size > 0
+    self.errors.add( _("You can't destroy this model: Exist at least a document that references it.")) if self.is_model? and self.organization.documents_by_model(self).size > 0
+  self.errors.add(:document_model_id, _('You cannot create a document from another that is not a model')) if !self.is_model? and !self.document_model.nil? and  !self.document_model.is_model?
+
   end
 
   def self.full_text_search(q, options = {})
@@ -28,9 +29,10 @@ class Document < ActiveRecord::Base
     return results
   end
 
+
   def dclone
     d = self.clone 
-    d.name = self.name + " " + Document.count.to_s
+    d.name = " "
     d.is_model = false
     d.departments = self.departments
     d.document_model = self

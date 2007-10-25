@@ -24,12 +24,7 @@
   display: none;
 }
 
-.button_show    { width: 16px; height: 16px }
-.list_item_button .button_edit { width: 16px; height: 16px }
-.button_remove,
-.button_destroy { width: 16px; height: 16px }
-.button_new_entry { width: 16px; height: 16px }
-.button_history { width: 16px; height: 16px }
+.list_item_button .button { width: 16px; height: 16px }
 
 .with_text {
   padding: 3px 0px;

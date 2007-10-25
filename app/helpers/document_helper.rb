@@ -38,12 +38,18 @@ module DocumentHelper
   def display_document_model_collection_options(item, params ={})
     content_tag(:div,
       [
-        button('view_small', _('Show'), :show, {:action => 'show', :id => item.id}.merge(params)),
-        button('edit_small', _('Edit'), :edit, {:action => 'edit', :id => item.id}.merge(params)),
-        button('del_small', _('Destroy'), :destroy, {:action => 'destroy', :id => item.id}.merge(params),
+        button('view_small', _('Show'), :show,
+              {:action => 'show', :id => item.id}.merge(params)),
+        button('edit_small', _('Edit'), :edit,
+              {:action => 'edit', :id => item.id}.merge(params)),
+        button('del_small', _('Destroy'), :destroy,
+              {:action => 'destroy', :id => item.id}.merge(params),
                :method => 'post', :confirm => _('Are you sure?')),
-        button('document_small', _('Documents'), :list, {:action => 'list', :show_documents => true}.merge(params)),
-        button('add_document_small', _('New Document'), :new, {:action => 'new', :document_model_id => params[:document_model_id] }.merge(params))
+        button('document_small', _('Documents'), :list,
+              {:action => 'list', :show_documents => true}.merge(params)),
+        button('new_document_small', _('New Document'), :new,
+              {:action => 'new',
+               :document_model_id => params[:document_model_id] }.merge(params))
       ].join("\n"),
       :class => 'list_item_button'
     )

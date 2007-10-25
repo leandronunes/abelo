@@ -39,12 +39,27 @@ module DocumentsHelper
   def display_document_model_collection_options(item, params ={})
     content_tag(:div,
       [
-        button('view_small', _('Show'), :show, {:action => 'show', :id => item.id, :models_list => true}.merge(params)),
-        button('edit_small', _('Edit'), :edit, {:action => 'edit', :id => item.id, :models_list => true}.merge(params)),
-        button('del_small', _('Destroy'), :destroy, {:action => 'destroy', :id => item.id, :models_list => true}.merge(params),
-               :method => 'post', :confirm => _('Are you sure?')),
-        button('show_documents_small', _('Documents'), :list, {:action => 'list', :document_model_id => item.id, :models_list => true}.merge(params)),
-        button('add_document_small', _('New Document'), :new, {:action => 'new', :document_model_id => item.id, :models_list => true }.merge(params))
+        button('view_small', _('Show'), :show,
+              { :action => 'show',
+                :id => item.id,
+                :models_list => true }.merge(params) ),
+        button('edit_small', _('Edit'), :edit,
+              { :action => 'edit',
+                :id => item.id,
+                :models_list => true }.merge(params) ),
+        button('del_small', _('Destroy'), :destroy,
+              { :action => 'destroy',
+                :id => item.id,
+                :models_list => true }.merge(params),
+                :method => 'post', :confirm => _('Are you sure?') ),
+        button('documents_small', _('Documents'), :list,
+              { :action => 'list',
+                :document_model_id => item.id,
+                :models_list => true }.merge(params) ),
+        button('new_document_small', _('New Document'), :new,
+              { :action => 'new',
+                :document_model_id => item.id,
+                :models_list => true }.merge(params) )
       ].join("\n"),
       :class => 'list_item_button'
     )

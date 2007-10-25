@@ -12,7 +12,7 @@ class DocumentsController < ApplicationController
     escaped_string = Regexp.escape(params[:document][:name])
     re = Regexp.new(escaped_string, "i")
     if params[:document_model_id]
-      @documents = @organization.documents_by_model.select { |d| d.name.match re}
+      @documents = @organization.documents_by_model(params[:document_model_id]).select { |d| d.name.match re}
     elsif params[:models_list]
       @documents = @organization.documents_model.select { |d| d.name.match re}
     else

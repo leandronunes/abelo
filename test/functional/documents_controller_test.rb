@@ -41,10 +41,11 @@ class DocumentsControllerTest < Test::Unit::TestCase
   def test_autocomplete_name_for_document_with_model
     Document.destroy_all
     model = Document.create(:name => 'Model', :is_model => true, :organization_id => 1, :department_ids => [1])
-    document_with_model = Document.create(:name => 'Document', :is_model => false, :organization_id => 1, :department_ids => [1], :document_model_id => model.id)
-    get :autocomplete_name, :document => {:name => 'Model'}, :document_model_id => model.id, :models_list => true
+    document = Document.create(:name => 'document', :is_model => false, :organization_id => 1, :department_ids => [1], :document_model_id => model.id)
+    get :autocomplete_name, :document => {:name => 'document'}, :document_model_id => model.id, :models_list => true
     assert_not_nil assigns(:documents)
-    assert assigns(:documents).empty?
+    assert Organization.find(1).documents_by_model(model).include?(document)
+#    assert assigns(:documents).include?(document)
   end
 
   def test_index
@@ -53,18 +54,24 @@ class DocumentsControllerTest < Test::Unit::TestCase
     assert_redirected_to :action => 'list'
   end
 
-  def test_basic_variables_on_list_method_without_document_model_param
-    get :list
+  def test_list_documents_with_model
+    Document.destroy_all
+    model = Document.create(:name => 'Model', :is_model => true, :organization_id => 1, :department_ids => [1])
+    document_with_model = Document.create(:name => 'Document', :is_model => false, :organization_id => 1, :department_ids => [1], :document_model_id => model.id)
+
+    get :list, :document_model_id => 1 
 
     assert_response :success
-    assert_template 'list'
+    assert_template 'list', :document_model_id => model.id
 
     assert_not_nil assigns(:documents)
     assert_not_nil assigns(:document_pages)
     assert_not_nil assigns(:title)
+    assert Organization.find(1).documents_by_model(model).include?(document_with_model)
+#   assert assigns(:documents).include?(document_with_model)
   end
 
-  def test_basic_variables_on_list_method_with_document_model_param
+  def test_list_models
     document_model_id = 1
     d = Document.find(document_model_id)
     assert d.valid?

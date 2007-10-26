@@ -54,51 +54,46 @@ class DocumentsControllerTest < Test::Unit::TestCase
     assert_redirected_to :action => 'list'
   end
 
-  def test_list_documents_with_model
-    Document.destroy_all
-    model = Document.create(:name => 'Model', :is_model => true, :organization_id => 1, :department_ids => [1])
-    document_with_model = Document.create(:name => 'Document', :is_model => false, :organization_id => 1, :department_ids => [1], :document_model_id => model.id)
-
-    get :list, :document_model_id => 1 
-
-    assert_response :success
-    assert_template 'list', :document_model_id => model.id
-
-    assert_not_nil assigns(:documents)
-    assert_not_nil assigns(:document_pages)
-    assert_not_nil assigns(:title)
-    assert Organization.find(1).documents_by_model(model).include?(document_with_model)
-#   assert assigns(:documents).include?(document_with_model)
-  end
-
-  def test_list_models
-    document_model_id = 1
-    d = Document.find(document_model_id)
-    assert d.valid?
-    assert d.is_model?
-
-    get :list, :document_model => document_model_id
-
-    assert_response :success
-    assert_template 'list'
-
-    assert_not_nil assigns(:documents)
-    assert_not_nil assigns(:document_pages)
-    assert_not_nil assigns(:title)
-  end
-
-#  def test_if_list_of_documents_are_based_on_document_model_passed
-#    document_model_id = 1
-#    d = Document.find(document_model_id)
-#    assert d.valid?
-#    assert d.is_model?
+#  def test_list_documents_with_model
+#    Document.destroy_all
+#    model = Document.create(:name => 'Model', :is_model => true, :organization_id => 1, :department_ids => [1])
+#    document_with_model = Document.create(:name => 'Document', :is_model => false, :organization_id => 1, :department_ids => [1], :document_model_id => model.id)
 #
-#    get :list, :document_model => d.id
+#    get :list, :document_model_id => 1 
 #
-#    assert_equal assigns(:organization).documents_by_model(d), assigns(:documents)
+#    assert_response :success
+#    assert_template 'list', :document_model_id => model.id
+#
+#    assert_not_nil assigns(:documents)
+#    assert_not_nil assigns(:document_pages)
+#    assert_not_nil assigns(:title)
+#    assert Organization.find(1).documents_by_model(model).include?(document_with_model)
+##   assert assigns(:documents).include?(document_with_model)
 #  end
 
-#  def test_basic_variabeles_on_show_methods
+#  def test_list_models
+#    get :list, :models_list => true
+#
+#    assert_response :success
+#    assert_template 'documents/list_models'
+#
+#    assert_not_nil assigns(:documents)
+#    assert_not_nil assigns(:document_pages)
+#    assert_not_nil assigns(:title)
+#  end
+
+#  def test_list_documents_withou_model
+#    Document.destroy_all
+#    document = Document.create(:name => 'Document', :is_model => false, :organization_id => 1, :department_ids => [1])
+#    get :list 
+#    assert_template 'list'
+#
+#    assert_not_nil assigns(:documents)
+#    assert_not_nil assigns(:document_pages)
+#    assert_not_nil assigns(:title)
+#  end
+
+#  def test_basic_variables_on_show_methods
 #    
 #    get :show, :id => 1
 #

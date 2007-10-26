@@ -9,4 +9,8 @@ two:
   configuration_id: 1
   type: 'ProductDisplay'
   field: 'size'
-
+three:
+  id: 3
+  configuration_id: 1
+  type: 'DocumentDisplay'
+  field: 'name'

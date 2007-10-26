@@ -32,20 +32,19 @@ class DocumentsController < ApplicationController
   def list
     @query || params[:query]
     @query ||=  params[:document][:name] if params[:document]
-    begin
-      @documents = @query.blank? ? @organization.documents_by_model(params[:document_model_id]) : @organization.documents_by_model(params[:document_model_id]).full_text_search(@query)
-      @title = _('Listing Documents from Model %s') % Document.find(params[:document_model_id]).name
-    rescue
-      if params[:models_list]
-        @title = _('Listing Document Models')
-        @documents = @query.blank? ? @organization.documents_model : @organization.documents_model.full_text_search(@query)
-        @document_pages, @documents = paginate_by_collection @documents
-        render :template => 'documents/list_models'
-        return
-      else
-        @title = _('Listing Documents without Models')
-        @documents = @query.blank? ? @organization.documents_without_model : @organization.documents_without_model.full_text_search(@query)
-      end
+    if params[:document_model_id]
+      model = Document.find(params[:document_model_id])
+      @documents = @query.blank? ? @organization.documents_by_model(model) : @organization.documents_by_model(model).full_text_search(@query)
+      @title = _('Listing Documents from Model %s') % model.name
+    elsif params[:models_list]
+      @title = _('Listing Document Models')
+      @documents = @query.blank? ? @organization.documents_model : @organization.documents_model.full_text_search(@query)
+      @document_pages, @documents = paginate_by_collection @documents
+      render :template => 'documents/list_models'
+      return
+    else
+      @title = _('Listing Documents without Models')
+      @documents = @query.blank? ? @organization.documents_without_model : @organization.documents_without_model.full_text_search(@query)
     end
     @document_pages, @documents = paginate_by_collection @documents
   end

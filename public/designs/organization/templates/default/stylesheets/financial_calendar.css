@@ -1,59 +1,59 @@
-.financial_calendar {
+.financialforecasting {
   font-size: 10px;
 }
 
-.financial_calendar table {
+.financialforecasting table {
   width: 100%;
   margin: 0px;
   border: none;
   border-collapse: collapse;
 }
 
-.financial_calendar .line_odd td {
+.financialforecasting .line_odd td {
   background-color: #FCFAF0;
 }
-.financial_calendar .line_pair:hover td,
-.financial_calendar .line_odd:hover td {
+.financialforecasting .line_pair:hover td,
+.financialforecasting .line_odd:hover td {
   background-color: #F8F0A0;
 }
 
-.financial_calendar th, .financial_calendar td {
+.financialforecasting th, .financialforecasting td {
   border-left: 1px dotted #CA8;
   text-align: center;
   line-height: 14px;
 }
 
-.financial_calendar .frist_col {
+.financialforecasting .frist_col {
   border: none;
 }
 
-.financial_calendar .category_name {
+.financialforecasting .category_name {
   line-height: 12px;
 }
 
-.financial_calendar .month_header {
+.financialforecasting .month_header {
   border-bottom: 1px dotted #CA8;
 }
 
-.financial_calendar .month_header div {
+.financialforecasting .month_header div {
   position: relative;
 }
 
-.financial_calendar .table_footer {
+.financialforecasting .table_footer {
   border-top: 1px dotted #CA8;
 }
-.financial_calendar .table_footer th.balance {
+.financialforecasting .table_footer th.balance {
   border-left: none;
 }
 
-.financial_calendar .month_1, .financial_calendar .month_3 {
+.financialforecasting .month_1, .financialforecasting .month_3 {
   display: block;
   position: absolute;
   top: 0px;
   left: 3px;
   font-weight: normal;
 }
-.financial_calendar .month_3 {
+.financialforecasting .month_3 {
   left: inherit;
   right: 3px;
 }

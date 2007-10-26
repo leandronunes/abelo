@@ -2,7 +2,7 @@
     <tr class='page'>
       <th>
         <% if @ledger_pages.current.previous%>
-          <%= button_remote( 'previous_page', _('Previous'),:back, :update => 'financial_table', :url => {:action => 'display_table', :page => @ledger_pages.current.previous, :accounts => @chosen_accounts.ids, :query => @query, :tags => @chosen_tags.join(','), :categories => @chosen_categories.ids }) %>
+          <%= button_remote( 'previous_page', _('Previous'),:back, :update => 'financial_table', :url => {:action => 'display_table', :page => @ledger_pages.current.previous, :accounts => @chosen_accounts.ids, :query => @query, :tags => @chosen_tags.join(','), :categories => @chosen_categories.ids, :start_date_day => @start_date_day, :start_date_month => @start_date_month, :start_date_year => @start_date_year, :end_date_day => @end_date_day, :end_date_month => @end_date_month, :end_date_year => @end_date_year}) %>
         <% end %>
       </th>
       <th colspan='4'>
@@ -13,7 +13,11 @@
       </th>
       <th>
         <% if @ledger_pages.current.next %>
-          <%= button_remote('next_page', _('Next'), :next, :update => 'financial_table', :url => {:action => 'display_table', :page => @ledger_pages.current.next , :accounts => @chosen_accounts.ids, :query => @query, :tags => @chosen_tags.join(','), :categories => @chosen_categories.ids }) %>
+          <%= button_remote('next_page', _('Next'), :next, :update => 'financial_table', 
+           :url => {:action => 'display_table', :page => @ledger_pages.current.next , :accounts => @chosen_accounts.ids, :query => @query, :tags => @chosen_tags.join(','), :categories => @chosen_categories.ids, 
+:start_date_day => @start_date_day, :start_date_month => @start_date_month, :start_date_year => @start_date_year, :end_date_day => @end_date_day, :end_date_month => @end_date_month, :end_date_year => @end_date_year}
+          ) %>
+
         <% end %>
       </th>
     </tr>

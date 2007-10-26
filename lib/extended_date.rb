@@ -23,4 +23,10 @@ class Date
 
   end
 
+  def self.civil_by_string(string)
+    d = string.split('-')
+    return '' if d.length != 3
+    Date.civil(d[0].to_i, d[1].to_i, d[2].to_i)
+  end
+
 end

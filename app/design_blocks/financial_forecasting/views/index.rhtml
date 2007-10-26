@@ -1,13 +1,14 @@
-<div class="financial_calendar" >
+<h2> <%= _('Financial Forecasting') %> </h2>
+
 <table>
   <tr>
     <th class="frist_col month_header" colspan="3"><div> 
-      <%= link_to_remote @earlier_month.strftime('%b/%Y'),
-          {:url => {:action => 'find_categories', :date => @earlier_month.to_date.to_s} },
+      <%= design_link_to_remote @earlier_month.strftime('%b/%Y'),
+          {:url => {:action => 'index', :date => @earlier_month.to_date.to_s}},
           { :class => 'month_1' } %>    
       <b class="month_2"><%= @date.strftime('%b/%Y') %></b>
-      <%= link_to_remote @last_month.strftime('%b/%Y'),
-          { :url => {:action => 'find_categories', :date => @last_month.to_date.to_s} },
+      <%= design_link_to_remote @last_month.strftime('%b/%Y'),
+          { :url => {:action => 'index', :date => @last_month.to_date.to_s}},
           { :class => 'month_3' } %>
     </div></th>
   </tr>
@@ -17,12 +18,12 @@
     <th> <%= _('Real') %></th>
   </tr>
   <tbody>
-    <% i = 0 %>
+    <% line_class = '' %>
     <% for category in @categories %>
-      <% i = ( i==0 )? 1 : 0 %>
-      <tr class="line_<%= ( i==0 )? 'odd' : 'pair' %>" title="<%= category.name %>">
+      <% line_class = (line_class == 'odd') ? 'pair' : 'odd' %>
+      <tr class="line_<%= line_class %>" title="<%= category.name %>">
         <td class="frist_col category_name">
-          <%= limit_string(category_with_sign(category), 17) %>
+          <%= limit_string(category.name_with_sign, 17) %>
         </td>
         <td>
           <%= category.foreseen_value_by_date(@date) %>
@@ -44,4 +45,3 @@
     </th>
   </tr>
 </table>
-</div>

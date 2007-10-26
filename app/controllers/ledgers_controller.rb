@@ -240,12 +240,4 @@ class LedgersController < ApplicationController
     render :partial => 'display_table'
   end
 
-  #TODO remove this function when its block implementation be done
-  def test_budgets 
-    @date = params[:date].nil? ? Date.today : params[:date].to_time
-    @earlier_month = @date << 1
-    @last_month = @date >> 1
-    @categories = @organization.ledger_categories
-  end
- 
 end

@@ -152,6 +152,7 @@ class Organization < ActiveRecord::Base
 
   # Return the organization ledgers by bank accounts passed as arguments
   def ledgers_by_bank_account(accounts = [])
+    accounts = [accounts] unless accounts.kind_of?(Array)
     return [] unless accounts.all?{|a| self.bank_accounts.include?(a)}
     if(accounts.class == Array)
       ledgers = accounts.collect{|b| b.ledgers}.flatten

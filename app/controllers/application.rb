@@ -185,7 +185,10 @@ class ApplicationController < ActionController::Base
   def load_organization
     @organization = current_user.organizations.find_by_identifier(params[:organization_nickname])
     if @organization.nil?
-      render_error(_("There is no organization with nickname %s") % params[:organization_nickname])
+#FIXME See the better way to generate the exception.
+#I think the raise way it's better
+#      render_error(_("There is no organization with nickname %s") % params[:organization_nickname])
+      raise "There is no organization with nickname %s" % params[:organization_nickname]
     end
   end
 

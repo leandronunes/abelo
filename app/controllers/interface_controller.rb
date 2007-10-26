@@ -2,17 +2,19 @@ class InterfaceController < ApplicationController
 
   needs_organization
 
-  before_filter :create_configurations_tabs
+  uses_configurations_tabs
 
   design_editor :holder => 'organization', :autosave => true, :block_types => :block_types
 
    def block_types
-    {
-      'ListBlock' => _("List Block"),
-      'LinkBlock' => _("Link Block"),
-      'Design::MainBlock' => _('Main content block'),
-    }
+    %w[
+       FavoriteLinks
+       FinancialForecasting
+     ] 
   end
 
+  def index
+    redirect_to :action => 'design_editor_change_template'
+  end
 
 end

@@ -1,0 +1,30 @@
+
+<!-- 
+  The plugin needs the parameters :block_id => 'number_of_current_block' and the :controller
+   be passed between the actions.
+
+  In all actions of the controller you have the object @design_block that it's the current block
+  manipulated by the controller
+
+  This code above is an example of usage of the plugin. Uncomment the lines and see the results
+ -->
+
+<!-- link_to_remote( 'Back to index', :url => {:action => 'index', :block_id => @design_block.id, :controller => financial_forecasting_controllers } ) -->
+<!-- or use the method bellow. They are the same -->
+<!-- design_link_to_remote( 'Back to index', :url => {:action => 'index'} ) -->
+
+<h2> Editing </h2>
+
+<!--form_remote_tag( :url => {:action => 'save', :block_id => @design_block.id, :controller => financial_forecasting_controllers}) do -->
+<!-- or use the method bellow. They are the same -->
+<!-- design_form_remote_tag( :url => {:action => 'save'}) do -->
+
+  <p>
+    <label for="design_block_title">  Title </label>
+    <!-- text_field 'design_block', 'title' -->
+  </p>
+
+  <!-- submit_tag _('Save') -->
+
+<!-- end -->
+

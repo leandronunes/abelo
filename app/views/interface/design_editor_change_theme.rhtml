@@ -1,0 +1,9 @@
+<%= render :partial => 'interface_menu' %>
+
+<h2><%= _('Change block theme') %></h2>
+
+<div>
+<% for theme in @themes do %>
+    <%= link_to(design_thumbnail_for(theme), { :action => :design_editor, :theme => theme.name }, :method => 'post') %>
+<% end %>
+</div>

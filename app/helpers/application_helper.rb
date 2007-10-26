@@ -292,7 +292,7 @@ module ApplicationHelper
   end
 
   def limit_string(s,tam=50)
-    (!s.nil? && !s.empty? && s.size > tam) ? s.first(tam)+"..." : s
+    (!s.blank? && s.size > tam) ? s.first(tam)+"..." : s
   end
 
   def show_item_bar(element_id,title)

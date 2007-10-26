@@ -99,6 +99,8 @@ class Profile < ActiveRecord::Base
       { 'controller' => 'interface', 'action' => '*' },
       { 'controller' => 'content_viewer', 'action' => '*' },
       { 'controller' => 'periodicities', 'action' => '*' },
+      { 'controller' => 'favorite_links', 'action' => '*' },
+      { 'controller' => 'financial_forecasting', 'action' => '*' },
     ],
     'other' => []
   }

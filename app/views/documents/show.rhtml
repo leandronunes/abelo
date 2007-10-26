@@ -1,6 +1,6 @@
 
 <%= title @document.name %>
 
-<%= display_show_info @document, :models_list => params[:models_list] %>
+<%= display_show_info @document, :models_list => params[:models_list], :document_model_id => params[:document_model_id] %>
 
-<%= display_show_info_options(@document, :models_list => params[:models_list]) %> 
+<%= display_show_info_options(@document, :models_list => params[:models_list], :document_model_id => params[:document_model_id]) %> 

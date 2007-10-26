@@ -104,31 +104,102 @@ class DocumentsControllerTest < Test::Unit::TestCase
 #    assert_not_nil assigns(:departments)
 #  end
 
-  def test_basic_variable_on_new_method
+  def test_new_document_from_model
+    model = Document.create(:name => 'Model', :is_model => true, :organization_id => 1, :department_ids => [1])
+
+    get :new, :document_model_id => model.id
+
+    assert_response :success
+    assert_template 'new'
+
+    assert_not_nil assigns(:document)
+    assert_not_nil assigns(:title)
+    assert_not_nil assigns(:departments)
+    assert_kind_of Array, assigns(:departments)
+    assigns(:departments).each do |d|
+      assert d.valid?
+    end
+    assert_not_nil assigns(:customers)
+    assert_not_nil assigns(:workers)
+    assert_not_nil assigns(:suppliers)
+  end
+
+  def test_new_blank_document
     get :new
 
     assert_response :success
     assert_template 'new'
 
     assert_not_nil assigns(:document)
+    assert_not_nil assigns(:title)
     assert_not_nil assigns(:departments)
     assert_kind_of Array, assigns(:departments)
     assigns(:departments).each do |d|
       assert d.valid?
     end
+    assert_not_nil assigns(:customers)
+    assert_not_nil assigns(:workers)
+    assert_not_nil assigns(:suppliers)
   end
 
-#  def test_create_correct_params
-#    num_documents = Document.count
-#
-#    post :create, :document => {:organization_id => 1, :name => 'Any Name', :department_ids => [1,2] }
-#
-#    assert_valid assigns(:document)
-#    assert_response :redirect
-#    assert_redirected_to :action => 'edit'
-#
-#    assert_equal num_documents + 1, Document.count
-#  end
+  def test_new_document_model
+    get :new, :models_list => true
+
+    assert_response :success
+    assert_template 'new'
+
+    assert_not_nil assigns(:document)
+    assert_not_nil assigns(:title)
+    assert_not_nil assigns(:departments)
+    assert_kind_of Array, assigns(:departments)
+    assigns(:departments).each do |d|
+      assert d.valid?
+    end
+    assert_not_nil assigns(:customers)
+    assert_not_nil assigns(:workers)
+    assert_not_nil assigns(:suppliers)
+  end
+
+  def test_create_document_with_model
+    model = Document.create(:name => 'Model', :is_model => true, :organization_id => 1, :department_ids => [1])
+
+    num_documents = Document.count
+
+    post :create, :document_model_id => model.id, :document => {:name => 'document', :is_model => false, :organization_id => 1, :department_ids => [1]}
+    assert_valid assigns(:document)
+    assert_not_nil assigns(:document)
+    assert_response :redirect
+    assert_redirected_to :action => 'list' 
+
+    assert Organization.find(1).documents_by_model(model).include?(assigns(:document))
+    assert_equal num_documents + 1, Document.count
+  end
+
+  def test_create_document_model
+    num_documents = Document.count
+
+    post :create, :document => {:name => 'document', :organization_id => 1, :department_ids => [1]}, :models_list => true
+    assert_valid assigns(:document)
+    assert_not_nil assigns(:document)
+    assert_response :redirect
+    assert_redirected_to :action => 'list' 
+
+    assert Organization.find(1).documents_model.include?(assigns(:document))
+    assert_equal num_documents + 1, Document.count
+  end
+
+  def test_create_document_without_model
+    num_documents = Document.count
+
+    post :create, :document => {:name => 'document', :organization_id => 1, :department_ids => [1]}
+    assert_valid assigns(:document)
+    assert_not_nil assigns(:document)
+    assert_response :redirect
+    assert_redirected_to :action => 'list' 
+
+    assert Organization.find(1).documents_without_model.include?(assigns(:document))
+    assert_equal num_documents + 1, Document.count
+  end
 
   def test_create_wrong_params
     num_documents = Document.count

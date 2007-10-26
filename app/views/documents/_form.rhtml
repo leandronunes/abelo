@@ -12,7 +12,7 @@
 
   <%= display_field_form(item, 'departments', 
         :title => _('Departments'),
-        :content => multiple_select('document', 'departments', @departments),
+        :content => multiple_select('document', 'department_ids', @departments),
         :html_options => {:class => 'break_line'}
       )
   %>

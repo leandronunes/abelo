@@ -55,9 +55,10 @@ class DocumentsController < ApplicationController
   end
 
   def new
-    begin 
-      @document = Document.find(params[:document_model_id]).dclone
-      @title = _('New Document from model %s') % Document.find(params[:document_model_id]).name
+    begin
+      model = Document.find(params[:document_model_id])
+      @document = model.dclone
+      @title = _('New Document from model %s') % model.name
     rescue
       params[:models_list] ? @title = _('New Document Model') : @title = _('New Blank Document')
       @document = Document.new
@@ -71,10 +72,11 @@ class DocumentsController < ApplicationController
   def create
     @document = Document.new(params[:document])  
     @document.organization = @organization
-     
+    @document.document_model_id = params[:document_model_id] if params[:document_model_id]
+    @document.is_model = true if params[:models_list] and !params[:document_model_id]
     if @document.save
       flash[:notice] = _('The document was successfully created.')
-      redirect_to :action => 'list', :models_list => params[:models_list]
+      redirect_to :action => 'list', :models_list => params[:models_list], :document_model_id => params[:document_model_id]
     else
       @departments = @organization.departments
       render :action => 'new', :models_list => params[:models_list], :document_model_id => params[:document_model_id]

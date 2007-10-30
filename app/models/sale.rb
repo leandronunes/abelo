@@ -22,6 +22,11 @@ class Sale < ActiveRecord::Base
 
   end
 
+  def self.ledgers_by_customer(customer)
+    sales = Sale.find(:all, :conditions => {:organization_id => customer.organization, :customer_id => customer })
+    sales.collect{|s| s.ledgers}.flatten
+  end
+
   # gives the pending (open) sales for a given organization and user.
   def self.pending(org, user)
     return nil if org.nil? or user.nil?

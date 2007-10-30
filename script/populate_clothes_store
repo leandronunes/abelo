@@ -422,11 +422,11 @@ nota_computador = Document.create!(:name => 'Nota Fiscal Computador', :is_model 
 
 ###########Document Section################
 DocumentSection.destroy_all
-section_one = DocumentSection.create!(:name => 'máquinas', :document => proposal)
+#section_one = DocumentSection.create!(:name => 'máquinas', :document => proposal)
 
 ############Document Items#################
 DocumentItem.destroy_all
-item_one = DocumentItem.create!(:document_section => section_one, :quantity => '10', :unitary_value => 400.00,:product => monitor)
+#item_one = DocumentItem.create!(:document_section => section_one, :quantity => '10', :unitary_value => 400.00,:product => monitor)
 
 ########### Bank ###################
 Bank.delete_all

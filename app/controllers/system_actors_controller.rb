@@ -46,6 +46,7 @@ class SystemActorsController < ApplicationController
   def show
     check_actor_presence
     @system_actor = @organization.system_actors.find(params[:id])
+    @ledger_sales = @system_actor.ledgers_by_sales
   end
 
   def new

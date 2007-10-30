@@ -4,5 +4,11 @@
 
 <%= display_show_info @system_actor, :class => 'view_data'%>
 
+<h2> Sales of Customers </h2>
+
+<% @ledger_sales.each do |item| %> 
+  <%= item.value %>
+<% end %> 
+
 <%= display_show_info_options(@system_actor,{:actor => @actor}) %>
 

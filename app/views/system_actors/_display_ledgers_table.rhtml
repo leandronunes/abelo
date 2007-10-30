@@ -1,0 +1,35 @@
+  <table>
+    <tr>
+      <th> <%= _('Date') %> </th>
+      <th> <%= _('Category') %> </th>
+      <th> <%= _('Description') %> </th>
+      <th> <%= _('Value (R$)') %></th>
+      <th> <%= _('Operation') %></th>
+    </tr>
+
+    <% for ledger in @ledger_sales %>
+      <tr id="list_ledger_<%=ledger.id %>">
+        <td><%= ledger.date.strftime('%d/%m/%Y') %></td>
+        <% if ledger.class.to_s == 'AddCash' %>
+          <td> <%= _('Point of Sale: Add Cash') %></td>
+        <% elsif ledger.class.to_s == 'RemoveCash' %>
+          <td> <%= _('Point of Sale: Remove Cash') %></td>
+        <% else %>
+          <td> <%= ledger.category.name %></td>
+        <% end %>
+        <td><%= ledger.description %></td>
+    	  <td><% if Payment.income?(ledger.type_of) %>
+          <%= ledger.value %>
+          <%= _('I') %>
+        <% elsif Payment.expense?(ledger.type_of) %>
+          <%= ledger.value %>
+          <%= _('E') %>
+        <% end %>
+        </td>
+        <td>
+          <%= button 'view_small', _('Show'), :show, :controller => 'ledgers', :action => 'show', :id => ledger %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+

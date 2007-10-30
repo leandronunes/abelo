@@ -25,7 +25,7 @@ class Product < ActiveRecord::Base
   end
 
   def customers
-    self.sale_items.map{|i| i.sale}.uniq.map{|i| i.customer}
+    self.sale_items.map{|i| i.sale}.uniq.map{|i| i.customer}.uniq
   end
 
   def amount_in_stock

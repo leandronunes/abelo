@@ -383,7 +383,7 @@ perfil_sales_supervisor.save!
 Customer.destroy_all
 cliente_one = Customer.create!(:name => 'João da Silva', :email => 'joao@colibre.coop.br', :birthday => '1984-08-15', :address => 'Rua Pará, nº 221, Pituba', :cpf => '74676743920', :organization => organization, :category => consumidor_empresa)
 cliente_two = Customer.create!(:name => 'Alice Soares', :email => 'livia@localhost', :birthday => '1970-10-22', :address => 'Rua João das Botas, nº 15, Canela', :cpf => '93791122894', :organization => organization, :category => consumidor_pessoa)
-cliente_one = Customer.create!(:name => 'Lívia Barreiros', :email => 'livinhaba@gmail.com', :birthday => '1982-03-05', :address => 'Rua Prado Valadares, nº 19, apt202, Nazaré', :cpf => '01652747516', :organization => organization, :category => consumidor_pessoa)
+cliente_three = Customer.create!(:name => 'Lívia Barreiros', :email => 'livinhaba@gmail.com', :birthday => '1982-03-05', :address => 'Rua Prado Valadares, nº 19, apt202, Nazaré', :cpf => '01652747516', :organization => organization, :category => consumidor_pessoa)
 
 ############Contacts###############################
 Contact.destroy_all
@@ -403,6 +403,8 @@ sale_one = Sale.create!(:organization => organization, :customer => cliente_one,
 SaleItem.destroy_all
 sale_item_one = SaleItem.create!(:sale => sale_one, :product => camisa, :amount => 2.0, :unitary_price => camisa.sell_price)
 sale_item_two = SaleItem.create!(:sale => sale_one, :product => calca, :amount => 3.0, :unitary_price => calca.sell_price)
+
+sale_one.save
 
 ############Mass Mail###############################
 MassMail.destroy_all

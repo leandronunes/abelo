@@ -17,6 +17,10 @@ class SystemActor < ActiveRecord::Base
   validates_uniqueness_of :cnpj, :scope => :organization_id, :if => lambda { |user| ! user.cnpj.blank? }, :message => _('This %{fn} already exist')
   validates_uniqueness_of :cpf, :scope => :organization_id, :if => lambda { |user| ! user.cpf.blank? }, :message => _('This %{fn} already exist')
 
+  def ledgers_by_sales
+    Sale.ledgers_by_customer(self)  
+  end
+
   def actor_type
     self.type_person ||= self.cnpj.nil? ? _('Natural Person') : _('Juristic Person')
   end

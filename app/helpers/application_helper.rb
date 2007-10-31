@@ -606,13 +606,16 @@ module ApplicationHelper
   end
 
 #Display link of tags in list getting tag_list like argument
-  def display_tag_list(content, url_options)
+  def display_tag_list(collection)
     content_tag(:div,
     [
       content_tag(:label, _('Tags')),
       content_tag(:ul,
-        content.names.map do |t|
-          content_tag(:li, link_to_remote(t, url_options) )
+        collection.map do |item|
+          content = item.tag_list
+          content.names.map do |t|
+            content_tag(:li, link_to_remote(t, :url => {:action => 'find_by_tag', :tag => t, :collection => collection.collect {|item| item.id }.join(',')}, :update => 'content_list') )
+          end
         end,
         :class => 'tag_list'
       )

@@ -143,4 +143,11 @@ class DocumentsController < ApplicationController
     render :partial => 'owners_list'
   end
 
+  def find_by_tag
+    @documents = params[:collection].split(',').map{|id| Document.find(id)}
+    @documents = @documents && Document.find_tagged_with(params[:tag])
+    @document_pages, @documents = paginate_by_collection @documents
+    render :partial => 'documents_list'
+  end
+
 end

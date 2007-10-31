@@ -3,12 +3,6 @@
 
 <%= display_list_options 'document', 'name', :document_model_id => params[:document_model_id], :models_list => params[:models_list] %>
 
-<% for d in @documents %>
+<%= display_tag_list @documents %>
 
-<%= display_tag_list d.tag_list, :action => 'filter_by_tag' %>
-
-<% end %>
-
-<%= display_collection @documents, :document_model_id => params[:document_model_id], :models_list => params[:models_list] %>
-
-<%= pagination_links(@document_pages, :params => {:query => @query, :document_model_id => params[:document_model_id], :models_list => params[:models_list] } ) %>
+<%= render :partial => 'documents_list' %>

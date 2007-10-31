@@ -3,6 +3,7 @@ class SystemActor < ActiveRecord::Base
   #relationships 
   belongs_to :organization
   has_many :contacts 
+  has_many :documents, :as => :owner
 
   attr_accessor :type_person
 

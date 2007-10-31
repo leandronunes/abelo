@@ -79,6 +79,9 @@ class DocumentsController < ApplicationController
       redirect_to :action => 'list', :models_list => params[:models_list], :document_model_id => params[:document_model_id]
     else
       @departments = @organization.departments
+      @customers = @organization.customers
+      @workers = @organization.workers
+      @suppliers = @organization.suppliers
       render :action => 'new', :models_list => params[:models_list], :document_model_id => params[:document_model_id]
     end
   end
@@ -86,24 +89,33 @@ class DocumentsController < ApplicationController
   def edit
     @document = @organization.documents.find(params[:id])
     @departments = @organization.departments
-    params[:models_list] ? @title = _('Editing Model Document') : @title = _('Editing Document')
+    @customers = @organization.customers
+    @workers = @organization.workers
+    @suppliers = @organization.suppliers
+    if params[:models_list] and params[:document_model_id].nil?
+      @title = _('Editing Model Document')
+    else
+      @title = _('Editing Document')
+    end
   end
 
   def update
     @document = Document.find(params[:id])
     if @document.update_attributes(params[:document])
       flash[:notice] = 'Document was successfully updated.'
-      redirect_to :action => 'show', :id => @document
+      redirect_to :action => 'show', :id => @document, :models_list => params[:models_list], :document_model_id => params[:document_model_id]
     else
       @departments = @organization.departments
-      @sections = @document.document_sections
+      @customers = @organization.customers
+      @workers = @organization.workers
+      @suppliers = @organization.suppliers
       render :action => 'edit'
     end
   end
 
   def destroy
     Document.find(params[:id]).destroy
-    redirect_to :action => 'list'
+    redirect_to :action => 'list', :models_list => params[:models_list], :document_model_id => params[:document_model_id]
   end
 
   def create_tabs

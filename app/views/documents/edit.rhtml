@@ -1,6 +1,6 @@
 <%= title(@title) %>
 
-<% form_tag :action => 'update', :id => @document, :document_model => params[:document_model] do %>
+<% form_tag :action => 'update', :id => @document, :document_model_id => params[:document_model_id], :models_list => params[:models_list] do %>
   <%= render :partial => 'form' %>
-  <%= display_edit_info_options(@document, :models_list => params[:models_list])%>
+  <%= display_edit_info_options(@document, :document_model_id => params[:document_model_id], :models_list => params[:models_list])%>
 <% end %>

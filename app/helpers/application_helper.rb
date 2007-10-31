@@ -605,4 +605,19 @@ module ApplicationHelper
     end
   end
 
+#Display link of tags in list getting tag_list like argument
+  def display_tag_list(content, url_options)
+    content_tag(:div,
+    [
+      content_tag(:label, _('Tags')),
+      content_tag(:ul,
+        content.names.map do |t|
+          content_tag(:li, link_to_remote(t, url_options) )
+        end,
+        :class => 'tag_list'
+      )
+    ]
+  )
+  end
+
 end 

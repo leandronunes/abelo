@@ -418,9 +418,9 @@ departamento_vendas = Department.create!(:name => 'Vendas', :organization => org
 
 ############Document######################
 Document.destroy_all
-proposta_toca = Document.create!(:name => 'Estruturação do espaço de eventos', :is_model => false, :organization => organization, :body => 'Parceria com a Colivre para estruturação do espaço para realização de cursos de sofware livre.', :departments => [marketing_department])
-nota = Document.create!(:name => 'Nota Fiscal', :is_model => true, :organization => organization, :body => 'Recebido o valor de R$ X.XXX,XX. Data XX/XX/XXXX. Assinatura:', :departments => [departamento_vendas])
-nota_computador = Document.create!(:name => 'Nota Fiscal Computador', :is_model => false, :organization => organization, :body => 'Recebido o valor de R$ 800,00. Data 26/10/2007. Assinatura:', :departments => [departamento_vendas], :document_model_id => nota.id)
+proposta_toca = Document.create!(:name => 'Estruturação do espaço de eventos', :is_model => false, :organization => organization, :body => 'Parceria com a Colivre para estruturação do espaço para realização de cursos de sofware livre.', :departments => [marketing_department], :tag_list => 'evento, cursos')
+nota = Document.create!(:name => 'Nota Fiscal', :is_model => true, :organization => organization, :body => 'Recebido o valor de R$ X.XXX,XX. Data XX/XX/XXXX. Assinatura:', :departments => [departamento_vendas], :tag_list => 'notas, vendas, recibos')
+nota_computador = Document.create!(:name => 'Nota Fiscal Computador', :is_model => false, :organization => organization, :body => 'Recebido o valor de R$ 800,00. Data 26/10/2007. Assinatura:', :departments => [departamento_vendas], :document_model_id => nota.id, :tag_list => 'notas, vendas, recibos')
 
 ###########Document Section################
 DocumentSection.destroy_all

@@ -3,6 +3,12 @@
 
 <%= display_list_options 'document', 'name', :models_list => params[:models_list] %>
 
+<% for d in @documents %>
+
+<%= display_tag_list d.tag_list %>
+
+<% end %>
+
 <%= display_document_model_collection @documents %>
 
 <%= pagination_links(@document_pages, :params => {:query => @query } ) %>

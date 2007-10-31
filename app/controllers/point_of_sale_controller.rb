@@ -223,8 +223,8 @@ class PointOfSaleController < ApplicationController
   def test_printer
      send_data('testando algo',
           :disposition => 'inline',
-          :type => 'printer/apy',
-          :filename => "printer.apy")
+          :type => '	text/plain',
+          :filename => "printer.txt")
 #    redirect_to :action => 'main'
   end
 

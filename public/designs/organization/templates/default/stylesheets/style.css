@@ -15,6 +15,7 @@
 @import url("localist.css");
 @import url("sidebar.css");
 @import url("tabs.css");
+@import url("extra_blocks.css");
 
 body {
   margin:0px;

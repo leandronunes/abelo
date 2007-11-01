@@ -39,9 +39,6 @@ class DocumentsController < ApplicationController
     elsif params[:models_list]
       @title = _('Listing Document Models')
       @documents = @query.blank? ? @organization.documents_model : @organization.documents_model.full_text_search(@query)
-      @document_pages, @documents = paginate_by_collection @documents
-      render :template => 'documents/list_models'
-      return
     else
       @title = _('Listing Documents without Models')
       @documents = @query.blank? ? @organization.documents_without_model : @organization.documents_without_model.full_text_search(@query)
@@ -144,10 +141,11 @@ class DocumentsController < ApplicationController
   end
 
   def find_by_tag
-    @documents = params[:collection].split(',').map{|id| Document.find(id)}
-    @documents = @documents && Document.find_tagged_with(params[:tag])
+    @collection = params[:collection].split(',').map{|id| Document.find(id)}
+    @documents = Document.find_tagged_with(params[:tag]) & @collection
     @document_pages, @documents = paginate_by_collection @documents
+    @model = true if @collection.first.is_model? 
     render :partial => 'documents_list'
-  end
+  end 
 
 end

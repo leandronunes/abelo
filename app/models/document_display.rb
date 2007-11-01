@@ -9,12 +9,12 @@ class DocumentDisplay < DisplayConfiguration
       'name' => _('Name'),
       'body' => _('Body'),
       'departments' => _('Departments'),
-      'owner' => _('Owner'),
-      'owner_type' => _('Owner Type'),
+      'owner' => _('Person/Organization Name'),
+      'owner_type' => _('Person/Organization Type'),
       'customer' => _('Customer'),
       'supplier' => _('Supplier'),
       'worker' => _('Worker'),
-      'tag_list' => _('Tag List')
+      'tag_list' => _('Tag_list')
     }[field] || field
   end
 

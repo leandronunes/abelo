@@ -1,7 +1,10 @@
 <div id="content_list">
 
-<%= display_collection @documents, :document_model_id => params[:document_model_id], :models_list => params[:models_list] %>
-
+<% if @model || params[:models_list] %>
+  <%= display_document_model_collection @documents %>
+<% else %>
+  <%= display_collection @documents, :document_model_id => params[:document_model_id], :models_list => params[:models_list] %>
+<% end %>
 <%= pagination_links(@document_pages, :params => {:query => @query, :document_model_id => params[:document_model_id], :models_list => params[:models_list] } ) %>
 
 </div>

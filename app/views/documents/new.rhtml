@@ -1,8 +1,6 @@
 <%= title @title %>
 
-<%= error_messages_for "document" %>
-
-<% form_tag :action => 'create' do %>
+<% form_tag :action => 'create', :models_list => params[:models_list], :document_model_id => params[:document_model_id] do %>
   <%= render :partial => 'form' %>
   <%= display_new_info_options @document, :models_list => params[:models_list], :document_model_id => params[:document_model_id] %>
 <% end %>

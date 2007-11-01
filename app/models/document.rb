@@ -14,6 +14,18 @@ class Document < ActiveRecord::Base
   belongs_to :organization
   belongs_to :document_model, :class_name => 'Document', :foreign_key => 'document_model_id'
 
+  def owner_class
+    Document.describe(self.owner.class.to_s) unless owner.nil?
+  end
+
+  def self.describe(field)
+    {
+      'Customer' => _('Customer'),
+      'Supplier' => _('Supplier'),
+      'Worker' => _('Worker')
+    }[field] || field
+  end
+
   def validate
     self.errors.add(:document_model_id, _('You cannot have a document model in a model document')) if self.is_model? and not self.document_model.nil?
     self.errors.add( _('You have to choose almost an department to the document')) if  (not self.organization.nil?) and (not self.organization.departments.empty?) and (self.departments.empty?)

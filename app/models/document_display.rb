@@ -1,7 +1,7 @@
 class DocumentDisplay < DisplayConfiguration
 
   def self.available_fields
-    ['name', 'body', 'departments', 'owner', 'owner_type', 'tag_list'] 
+    ['name', 'body', 'departments', 'owner', 'owner_class', 'tag_list'] 
   end
 
   def self.describe(field)
@@ -10,7 +10,7 @@ class DocumentDisplay < DisplayConfiguration
       'body' => _('Body'),
       'departments' => _('Departments'),
       'owner' => _('Person/Organization Name'),
-      'owner_type' => _('Person/Organization Type'),
+      'owner_class' => _('Person/Organization Type'),
       'customer' => _('Customer'),
       'supplier' => _('Supplier'),
       'worker' => _('Worker'),

@@ -188,7 +188,7 @@ configuration.set_mass_mail_displays=(params)
 DocumentDisplay.delete_all
 params = {}
 DocumentDisplay.available_fields.collect { |d|
-  in_list = ['name', 'departments', 'owner', 'owner_type'].include?(d) ? true :false
+  in_list = ['name', 'departments', 'owner', 'owner_class'].include?(d) ? true :false
   params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
 }
 configuration.set_document_displays=(params)
@@ -418,9 +418,12 @@ departamento_vendas = Department.create!(:name => 'Vendas', :organization => org
 
 ############Document######################
 Document.destroy_all
-proposta_toca = Document.create!(:name => 'Estruturação do espaço de eventos', :is_model => false, :organization => organization, :body => 'Parceria com a Colivre para estruturação do espaço para realização de cursos de sofware livre.', :departments => [marketing_department], :tag_list => 'evento, cursos')
-nota = Document.create!(:name => 'Nota Fiscal', :is_model => true, :organization => organization, :body => 'Recebido o valor de R$ X.XXX,XX. Data XX/XX/XXXX. Assinatura:', :departments => [departamento_vendas], :tag_list => 'notas, vendas, recibos')
-nota_computador = Document.create!(:name => 'Nota Fiscal Computador', :is_model => false, :organization => organization, :body => 'Recebido o valor de R$ 800,00. Data 26/10/2007. Assinatura:', :departments => [departamento_vendas], :document_model_id => nota.id, :tag_list => 'notas, vendas, recibos')
+proposta_toca = Document.create!(:name => 'Estruturação do espaço de eventos', :is_model => false, :organization => organization, :body => 'Parceria com a Colivre para estruturação do espaço para realização de cursos de sofware livre.', :departments => [marketing_department], :tag_list => 'evento, cursos', :owner => cliente_one)
+divulgacao_cursos = Document.create!(:name => 'Cursos de SL', :is_model => false, :organization => organization, :body => 'Divulgacao de cursos de sofware livre.', :departments => [marketing_department], :tag_list => 'cursos', :owner => cliente_two)
+nota = Document.create!(:name => 'Nota Fiscal', :is_model => true, :organization => organization, :body => 'Recebido o valor de R$ X.XXX,XX. Data XX/XX/XXXX. Assinatura:', :departments => [departamento_vendas], :tag_list => 'notas, vendas, recibos', :owner => hering)
+ficha = Document.create!(:name => 'Ficha de Matrícula', :is_model => true, :organization => organization, :body => 'N.º de matrícula: 000. Nome: ', :departments => [departamento_vendas], :tag_list => 'cadastro', :owner => gerente)
+nota_computador = Document.create!(:name => 'Nota Fiscal Computador', :is_model => false, :organization => organization, :body => 'Recebido o valor de R$ 800,00. Data 26/10/2007. Assinatura:', :departments => [departamento_vendas], :document_model_id => nota.id, :tag_list => 'notas, vendas, recibos', :owner => gerente)
+nota_agua = Document.create!(:name => 'Nota Fiscal Água', :is_model => false, :organization => organization, :body => 'Recebido o valor de R$ 3,50. Data 26/10/2007. Assinatura:', :departments => [departamento_vendas], :document_model_id => nota.id, :tag_list => 'notas', :owner => vendedor)
 
 ###########Document Section################
 DocumentSection.destroy_all

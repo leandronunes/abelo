@@ -606,16 +606,23 @@ module ApplicationHelper
   end
 
 #Display link of tags in list getting tag_list like argument
-  def display_tag_list(collection, url_options={})
+  def display_tag_list(collection)
+
+    #Create a list of tags without duplicates
+    tags = Array.new 
+    collection.map do |item|
+      content = item.tag_list
+      content.names.map do |t|
+        tags.push(t) unless tags.include?(t)
+      end
+    end
+  
     content_tag(:div,
     [
       content_tag(:label, _('Tags')),
       content_tag(:ul,
-        collection.map do |item|
-          content = item.tag_list
-          content.names.map do |t|
-            content_tag(:li, link_to_remote(t, :url => {:action => 'find_by_tag', :tag => t, :collection => collection.collect {|item| item.id }.join(',')}.merge(url_options), :update => 'content_list') )
-          end
+          tags.map do |t|
+            content_tag(:li, link_to_remote(t, :url => {:action => 'find_by_tag', :tag => t, :collection => collection.collect {|item| item.id }.join(',')}, :update => 'content_list') )
         end,
         :class => 'tag_list'
       )

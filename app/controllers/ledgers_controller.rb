@@ -4,6 +4,9 @@ class LedgersController < ApplicationController
 
   needs_organization
 
+  protect [:index, :list, :show, :autocomplete_name, :department_tabs], 'view_ledger', :organization
+  protect [:new, :edit, :create, :update ], 'edit_ledger', :organization
+
   uses_financial_tabs
 
   def autocomplete_description

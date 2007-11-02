@@ -490,6 +490,7 @@ camisa_saida = StockIn.create!(:supplier => hering, :amount => 10, :price => 10,
 ########### Creating Profiles (Role/RoleAssigment) ###############
 RoleAssignment.destroy_all
 Role.destroy_all
-organization_management = Role.create!(:name => 'Deparment', :permissions => ['manage_department', 'view_department'])
+organization_management = Role.create!(:name => 'Management', :permissions => ['manage_department', 'view_department', 'view_ledger', 'edit_ledger'])
+
 RoleAssignment.create!(:accessor => gerente, :role => organization_management, :resource => organization)
 

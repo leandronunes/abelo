@@ -1,8 +1,12 @@
 class DepartmentsController < ApplicationController
 
+
   auto_complete_for :department, :name
 
   needs_organization
+
+  protect [:index, :list, :show, :autocomplete_name, :department_tabs ], 'view_department', :organization
+  protect [:new, :edit, :create, :update ], 'edit_department', :organization
 
   before_filter :department_tabs
 
@@ -19,8 +23,7 @@ class DepartmentsController < ApplicationController
   end
 
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
-  verify :method => :post, :only => [ :destroy, :create, :update ],
-         :redirect_to => { :action => :list }
+  post_only [ :destroy, :create, :update ]
 
   def list
     @query = params[:query]
@@ -71,10 +74,6 @@ class DepartmentsController < ApplicationController
   def destroy
     @organization.departments.find(params[:id]).destroy
     redirect_to :action => 'list'
-  end
-
-  def reset
-    render :partial => 'form'
   end
 
   def department_tabs

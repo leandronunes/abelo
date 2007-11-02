@@ -1,6 +1,9 @@
 require "digest/sha1"
 
 class User < Person
+
+  acts_as_accessor
+
   # Virtual attribute for the unencrypted password
   attr_accessor :password
   attr_accessor :profile_organization
@@ -56,6 +59,10 @@ class User < Person
 
   def template= value
     self.profile_template = value
+  end
+
+  def user
+    self
   end
 
   def template

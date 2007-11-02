@@ -14,14 +14,16 @@ class DepartmentsControllerTest < Test::Unit::TestCase
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     login_as("quentin")
+    @user = User.find_by_login('quentin')
+    @organization = Organization.find_by_identifier('one')
   end
 
-#  def test_index
-#    get :index
-#    assert_response :success
-#    assert_template 'list'
-#  end
-#
+  def test_index
+    get :index
+    assert_response :success
+    assert_template 'list'
+  end
+
   def test_list
     get :list
 
@@ -140,6 +142,22 @@ class DepartmentsControllerTest < Test::Unit::TestCase
     assert_raise(ActiveRecord::RecordNotFound) {
       Department.find(1)
     }
+  end
+
+  #######################
+  # Permissions tests
+  #######################
+  ['index', 'list', 'show', 'autocomplete_name', 'department_tabs', 'new', 'edit', 'create', 'update' ].each do |action|
+    define_method("test_dont_have_permission_on_#{action}") do 
+      RoleAssignment.destroy_all
+      Role.destroy_all
+      r = Role.create!(:name => 'Some', :permissions => ['none'])
+      RoleAssignment.create!(:accessor => @user, :role => r, :resource => @organization)
+   
+      get action.to_sym
+      assert_response :success
+      assert_template 'access_denied.rhtml'
+    end
   end
 
 end

@@ -392,8 +392,8 @@ Contact.destroy_all
 
 ############Workers################################
 Worker.destroy_all
-vendedor = Worker.create!(:name => 'José Fernandes', :cpf => '63358421813', :address => 'Rua do Timbó, nº 45, Itaigara', :birthday => '1975-06-14', :category => salesman_category, :organization => organization, :email => 'jose@toca.com')
-gerente = Worker.create!(:name => 'Carla Alves', :cpf => '53170430424', :address => 'Alameda das Pintagueiras, nº 37, Caminho das Árvores', :birthday => '1979-07-18', :category => manager_category, :organization => organization, :email => 'carla@toca.com')
+worker_vendedor = Worker.create!(:name => 'José Fernandes', :cpf => '63358421813', :address => 'Rua do Timbó, nº 45, Itaigara', :birthday => '1975-06-14', :category => salesman_category, :organization => organization, :email => 'jose@toca.com')
+worker_gerente = Worker.create!(:name => 'Carla Alves', :cpf => '53170430424', :address => 'Alameda das Pintagueiras, nº 37, Caminho das Árvores', :birthday => '1979-07-18', :category => manager_category, :organization => organization, :email => 'carla@toca.com')
 
 ############Sales###################################
 Sale.destroy_all
@@ -421,9 +421,9 @@ Document.destroy_all
 proposta_toca = Document.create!(:name => 'Estruturação do espaço de eventos', :is_model => false, :organization => organization, :body => 'Parceria com a Colivre para estruturação do espaço para realização de cursos de sofware livre.', :departments => [marketing_department], :tag_list => 'evento, cursos', :owner => cliente_one)
 divulgacao_cursos = Document.create!(:name => 'Cursos de SL', :is_model => false, :organization => organization, :body => 'Divulgacao de cursos de sofware livre.', :departments => [marketing_department], :tag_list => 'cursos', :owner => cliente_two)
 nota = Document.create!(:name => 'Nota Fiscal', :is_model => true, :organization => organization, :body => 'Recebido o valor de R$ X.XXX,XX. Data XX/XX/XXXX. Assinatura:', :departments => [departamento_vendas], :tag_list => 'notas, vendas, recibos', :owner => hering)
-ficha = Document.create!(:name => 'Ficha de Matrícula', :is_model => true, :organization => organization, :body => 'N.º de matrícula: 000. Nome: ', :departments => [departamento_vendas], :tag_list => 'cadastro', :owner => gerente)
-nota_computador = Document.create!(:name => 'Nota Fiscal Computador', :is_model => false, :organization => organization, :body => 'Recebido o valor de R$ 800,00. Data 26/10/2007. Assinatura:', :departments => [departamento_vendas], :document_model_id => nota.id, :tag_list => 'notas, vendas, recibos', :owner => gerente)
-nota_agua = Document.create!(:name => 'Nota Fiscal Água', :is_model => false, :organization => organization, :body => 'Recebido o valor de R$ 3,50. Data 26/10/2007. Assinatura:', :departments => [departamento_vendas], :document_model_id => nota.id, :tag_list => 'notas', :owner => vendedor)
+ficha = Document.create!(:name => 'Ficha de Matrícula', :is_model => true, :organization => organization, :body => 'N.º de matrícula: 000. Nome: ', :departments => [departamento_vendas], :tag_list => 'cadastro', :owner => worker_gerente)
+nota_computador = Document.create!(:name => 'Nota Fiscal Computador', :is_model => false, :organization => organization, :body => 'Recebido o valor de R$ 800,00. Data 26/10/2007. Assinatura:', :departments => [departamento_vendas], :document_model_id => nota.id, :tag_list => 'notas, vendas, recibos', :owner => worker_gerente)
+nota_agua = Document.create!(:name => 'Nota Fiscal Água', :is_model => false, :organization => organization, :body => 'Recebido o valor de R$ 3,50. Data 26/10/2007. Assinatura:', :departments => [departamento_vendas], :document_model_id => nota.id, :tag_list => 'notas', :owner =>worker_vendedor)
 
 ###########Document Section################
 DocumentSection.destroy_all
@@ -485,3 +485,11 @@ money_stock_in = Money.create_ledger!(:category => money_expense, :value => 12.3
 calca_entrada = StockIn.create!(:supplier => hering, :amount => 50, :price => 10, :date => '2007-07-01', :product => calca,  :validity => Date.today)
 money_stock_in = Money.create_ledger!(:category => money_expense, :value => 12.3, :bank_account => account, :date => Date.today, :owner => organization, :payment_method => 'money')
 camisa_saida = StockIn.create!(:supplier => hering, :amount => 10, :price => 10, :date => '2007-07-05', :product => camisa,  :validity => Date.today)
+
+
+########### Creating Profiles (Role/RoleAssigment) ###############
+RoleAssignment.destroy_all
+Role.destroy_all
+organization_management = Role.create!(:name => 'Deparment', :permissions => ['manage_department', 'view_department'])
+RoleAssignment.create!(:accessor => gerente, :role => organization_management, :resource => organization)
+

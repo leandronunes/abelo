@@ -2,6 +2,7 @@
 # Likewise, all the methods added will be available for all controllers.
 class ApplicationController < ActionController::Base
 
+
   require 'extended_array'
   require 'extended_date'
   
@@ -211,6 +212,12 @@ class ApplicationController < ActionController::Base
     @error = error
     @environment = Environment.default
     render :template => 'shared/error'
+  end
+
+  # Access Control Plugin 
+  extend PermissionCheck
+  def organization
+    @organization
   end
 
 end

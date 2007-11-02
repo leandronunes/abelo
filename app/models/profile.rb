@@ -1,5 +1,52 @@
 class Profile < ActiveRecord::Base
 
+  
+  PERMISSIONS[:department] = {
+    'manage_department' => N_('Manage Department'),
+    'view_deparment' => N_('View Department'),
+  }
+
+  PERMISSIONS[:stock] = {
+    'manage_stock' => N_('Manage Department'),
+    'view_stock' => N_('View Department'),
+  }
+
+  PERMISSIONS[:configuration] = {
+    'manage_category' => N_('Manage Category'),
+    'manage_interface' => N_('Manage Interface'),
+    'manage_content' => N_('Manage Content'),
+    'manage_periodicity' => N_('Manage Periodicity'),
+  }
+
+  PERMISSIONS[:financial] = {
+    'manage_ledger' => N_('Manage Ledger'),
+    'view_ledger' => N_('View Ledger'),
+    'manage_bank_account' => N_('Manage Bank Account'),
+    'manage_ledger_category' => N_('Manage Ledger Category'),
+  }
+
+  PERMISSIONS[:point_of_sale] = {
+    'point_of_sale_sell' => N_('Make Sell of Point of Sale'),
+    'point_of_sale_cancel' => N_('Cancel Sell of Point of Sale'),
+    'point_of_sale_add_cash' => N_('Add Cash of Point of Sale'),
+    'point_of_sale_remove_cash' => N_('Remove Cash of Point of Sale'),
+  }
+
+  PERMISSIONS[:register] = {
+    'manage_worker_register' => N_('Manage Worker Register'),
+    'manage_customer_register' => N_('Manage Customer Register'),
+    'manage_supplier_register' => N_('Manage Supplier Register'),
+    'manage_product_register' => N_('Manage Product Register'),
+    'view_worker_register' => N_('View Worker Register'),
+    'view_customer_register' => N_('View Customer Register'),
+    'view_supplier_register' => N_('View Supplier Register'),
+    'view_product_register' => N_('View Product Register'),
+  }
+
+
+  acts_as_accessible
+
+
   belongs_to :organization
   belongs_to :user
   belongs_to :environment

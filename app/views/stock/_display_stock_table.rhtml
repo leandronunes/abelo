@@ -1,0 +1,22 @@
+  <table>
+    <tr>
+      <th> <%= _('Supplier') %></th>
+      <th> <%= _('Date') %> </th>
+      <th> <%= _('Price (R$) ') %> </th>
+      <th> <%= _('Amount') %> </th>
+      <th> <%= _('Operation') %></th>
+    </tr>
+
+    <% for product in @stocks %>
+      <tr id="list_product_<%=product.id %>">
+        <td><%= product.supplier.name %></td>
+        <td><%= product.date.strftime('%d/%m/%Y') %></td>
+        <td><%= product.price %></td>
+        <td><%= product.amount %></td>
+        <td>
+          <%= button 'view_small', _('Show'), :show, :action => 'show', :id => product %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+

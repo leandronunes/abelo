@@ -7,14 +7,16 @@
       <th> <%= _('Operation') %></th>
     </tr>
 
-    <% for product in @stocks %>
-      <tr id="list_product_<%=product.id %>">
-        <td><%= product.supplier.name %></td>
-        <td><%= product.date.strftime('%d/%m/%Y') %></td>
-        <td><%= product.price %></td>
-        <td><%= product.amount %></td>
+    <% for item in @stocks %>
+      <tr id="list_item_<%=item.id %>">
+        <td><%= item.supplier.name %></td>
+        <td><%= item.date.strftime('%d/%m/%Y') %></td>
+        <td><%= item.price %></td>
+        <td><%= item.amount %></td>
         <td>
-          <%= button 'view_small', _('Show'), :show, :action => 'show', :id => product %>
+          <%= button 'view_small', _('Show'), :show, :action => 'show', :id => item, :product_id => @product %>
+          <%= button('edit_small', _('Edit'), :edit, {:action => 'edit', :id => item, :product_id => @product}) %>
+          <%= button('del_small', _('Destroy'), :destroy, {:action => 'destroy', :id => item, :product_id => @product}) %>
         </td>
       </tr>
     <% end %>

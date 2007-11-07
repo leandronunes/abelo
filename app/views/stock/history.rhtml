@@ -7,15 +7,11 @@
   </div>
   <div id="auto_list" style='display: none;' >
   </div>
-
   <%=  button('search', _('Search'), :search) %>
   <%=  button('add', _("Add New"), :new, {:action => 'new', :product_id => @product} ) %>
   <%=  button('reset', _('Reset search'), :list, {:action => 'history', :product_id => @product}) %>
 <% end %>
 
-
-<%= display_collection @stocks, :product_id => @product %>
-
-  <div id="financial_table">
-    <%= render :partial => 'display_stock_table' %>
-  </div>
+<div id="financial_table">
+  <%= render :partial => 'display_stock_table' %>
+</div>

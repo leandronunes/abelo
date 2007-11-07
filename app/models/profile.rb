@@ -130,6 +130,7 @@ class Profile < ActiveRecord::Base
     'organization_management' => [
       { 'controller' => 'categories', 'action' => '*' },
       { 'controller' => 'stock', 'action' => '*' },
+      { 'controller' => 'stock_in', 'action' => '*' },
       { 'controller' => 'store', 'action' => '*' },
       { 'controller' => 'permissions', 'action' => '*' },
       { 'controller' => 'system_actors', 'action' => '*' },

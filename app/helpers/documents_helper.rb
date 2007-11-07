@@ -65,5 +65,16 @@ module DocumentsHelper
     )
   end
 
+  def display_show_info_documents_options(object, params = {},  html_options = {})
+    content_tag(:div,
+      [
+        button('back', _('Back'), :back, {:action => 'list'}.merge(params)),
+        button('edit', _('Edit'), :edit, {:action => 'edit', :id => object.id}.merge(params)),
+        button('print', _('Print'), :print, {:action => 'print'}.merge(params))
+      ].join("\n"),
+      html_options
+    )
+  end
+
 
 end

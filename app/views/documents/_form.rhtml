@@ -19,12 +19,12 @@
 
   <%= display_field_form(item, 'owner_type', 
         :title => _('Customer'),
-        :content => radio_button('document', 'owner_type', 'customer'),
+        :content => radio_button_tag('owner_type', 'customer'),
         :html_options => {:class => 'break_line'}
       )
   %>
 
-  <%= observe_field('document_owner_type_customer',
+  <%= observe_field('owner_type_customer',
         :update => 'owners_list',
         :url => {:action => 'list_owners'},
         :with => "'value=' + escape(value)"
@@ -33,11 +33,11 @@
  
   <%= display_field_form(item, 'owner_type', 
         :title => _('Supplier'),
-        :content => radio_button('document', 'owner_type', 'supplier')
+        :content => radio_button_tag('owner_type', 'supplier')
       )
   %>
 
-  <%= observe_field('document_owner_type_supplier',
+  <%= observe_field('owner_type_supplier',
         :update => 'owners_list',
         :url => {:action => 'list_owners'},
         :with => "'value=' + escape(value)"
@@ -46,11 +46,11 @@
 
   <%= display_field_form(item, 'owner_type', 
         :title => _('Worker'),
-        :content => radio_button('document', 'owner_type', 'worker')
+        :content => radio_button_tag('owner_type', 'worker')
       )
   %>
 
-  <%= observe_field('document_owner_type_worker',
+  <%= observe_field('owner_type_worker',
         :update => 'owners_list',
         :url => {:action => 'list_owners'},
         :with => "'value=' + escape(value)"

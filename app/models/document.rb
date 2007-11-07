@@ -14,6 +14,7 @@ class Document < ActiveRecord::Base
   belongs_to :organization
   belongs_to :document_model, :class_name => 'Document', :foreign_key => 'document_model_id'
 
+  #Allow gettext'
   def owner_class
     Document.describe(self.owner.class.to_s) unless owner.nil?
   end

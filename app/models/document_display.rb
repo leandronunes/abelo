@@ -1,7 +1,7 @@
 class DocumentDisplay < DisplayConfiguration
 
   def self.available_fields
-    ['name', 'body', 'departments', 'owner', 'owner_class', 'tag_list'] 
+    ['name', 'body', 'departments', 'owner', 'owner_class', 'owner_type', 'tag_list'] 
   end
 
   def self.describe(field)

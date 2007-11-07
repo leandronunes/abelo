@@ -55,6 +55,12 @@ class SystemActorsController < ApplicationController
     @ledger_sales = @system_actor.ledgers_by_sales
   end
 
+  def show_documents
+    check_actor_presence
+    @system_actor = @organization.system_actors.find(params[:id])
+    @documents = @system_actor.documents
+  end
+
   def new
     check_actor_presence
     @system_actor =  @actor.camelize.constantize.new() 

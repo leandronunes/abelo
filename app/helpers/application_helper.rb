@@ -271,6 +271,10 @@ module ApplicationHelper
     fckeditor_textarea(object, method, options.merge({:toolbarSet => 'Simple', :height => '250px', :width => '550px' }))
   end
 
+  def rich_text_editor_default(object, method, options = {})
+    fckeditor_textarea(object, method, options.merge({:toolbarSet => 'Default', :height => '550px', :width => '700px' }))
+  end
+
   def select_categories(object, category_type)
     @organization.send("#{category_type}_categories").map { |c|
       content_tag('div',

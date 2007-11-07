@@ -146,6 +146,12 @@ class DocumentsController < ApplicationController
     @document_pages, @documents = paginate_by_collection @documents
     @model = true if @collection.first.is_model? 
     render :partial => 'documents_list'
-  end 
+  end
+
+  def print
+    @document = @organization.documents.find(params[:id])
+    @departments = @document.departments
+    render :template => 'documents/print', :layout => false
+  end
 
 end

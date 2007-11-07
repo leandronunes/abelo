@@ -70,7 +70,7 @@ module DocumentsHelper
       [
         button('back', _('Back'), :back, {:action => 'list'}.merge(params)),
         button('edit', _('Edit'), :edit, {:action => 'edit', :id => object.id}.merge(params)),
-        button('print', _('Print'), :print, {:action => 'print'}.merge(params))
+        button('print', _('Print'), :print, {:action => 'print', :id => object.id}.merge(params), :popup => ['menubar=1'])
       ].join("\n"),
       html_options
     )

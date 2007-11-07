@@ -5,15 +5,4 @@
 
 <%= display_show_info @system_actor, :class => 'view_data'%>
 
-<% unless @ledger_sales.empty? %> 
-
-  <h2> <%= _('Ledgers') %>  </h2>
-
-  <div id="financial_table">
-    <%= render :partial => 'display_ledgers_table' %>
-  </div>
-
-<% end %>
-
 <%= display_show_info_options(@system_actor,{:actor => @actor}) %>
-

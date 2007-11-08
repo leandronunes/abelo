@@ -1,8 +1,8 @@
 class FavoriteLinksController < ApplicationController
 
-  needs_organization
+#  needs_organization
 
-  acts_as_design_block
+#  acts_as_design_block
 
   CONTROL_ACTION_OPTIONS = {
     'edit' => _('Edit'),
@@ -11,17 +11,17 @@ class FavoriteLinksController < ApplicationController
 
   def index
     get_favorite_links
-    design_render
+    design_render :controller => 'favorite_links', :action => 'index'
   end
 
   def edit
-    design_render_on_edit
+    design_render_on_edit :controller => 'favorite_links', :action => 'edit'
   end
 
   def save
     if @design_block.update_attributes(params[:design_block])
       get_favorite_links
-      design_render_on_edit :action => 'manage_links'
+      design_render_on_edit :controller => 'favorite_links', :action => 'manage_links'
     else
       design_render_on_edit :nothing => true
     end
@@ -29,17 +29,17 @@ class FavoriteLinksController < ApplicationController
 
   def manage_links
     get_favorite_links
-    design_render_on_edit
+    design_render_on_edit :controller => 'favorite_links', :action => 'manage_links'
   end
 
   def add_link
-    design_render_on_edit
+    design_render_on_edit :controller => 'favorite_links', :action => 'add_link'
   end
 
   def remove_link
     @design_block.delete_link(params[:link])
     get_favorite_links
-    design_render_on_edit :action => 'manage_links'
+    design_render_on_edit :controller => 'favorite_links', :action => 'manage_links'
   end
 
   def get_favorite_links

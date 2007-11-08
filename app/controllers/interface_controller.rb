@@ -8,7 +8,7 @@ class InterfaceController < ApplicationController
 
    def block_types
     %w[
-       FavoriteLinks
+       FavoriteLinksOrganization
        FinancialForecasting
      ] 
   end

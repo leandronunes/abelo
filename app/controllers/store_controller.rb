@@ -1,4 +1,6 @@
 class StoreController < ApplicationController
+
+  #FIXME remove this controller. See something can be reutilized
   
   needs_organization
   skip_before_filter :login_required

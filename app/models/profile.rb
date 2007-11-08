@@ -149,6 +149,9 @@ class Profile < ActiveRecord::Base
       { 'controller' => 'periodicities', 'action' => '*' },
       { 'controller' => 'favorite_links', 'action' => '*' },
       { 'controller' => 'financial_forecasting', 'action' => '*' },
+      { 'controller' => 'web_site_interface', 'action' => '*' },
+      { 'controller' => 'favorite_links_web_site', 'action' => '*' },
+      { 'controller' => 'favorite_links_organization', 'action' => '*' },
     ],
     'other' => []
   }

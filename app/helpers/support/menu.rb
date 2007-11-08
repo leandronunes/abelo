@@ -4,7 +4,7 @@
     menu_items = {
       'categories'                          => _('Configurations'),
       'stock'                               => _('Stock'),
-      'store'                               => _('Store'),
+      'web_site_interface'                  => _('Web Site'),
       'permissions'                         => _('User administration'),
       'system_actors'                       => _('Registers'),
       'point_of_sale'                       => _('Point of sale'),

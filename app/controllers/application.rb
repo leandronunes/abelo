@@ -13,7 +13,8 @@ class ApplicationController < ActionController::Base
 
   uses_tabbed_navigation
 
-  design :holder => 'organization'
+#FIXME See if it's needed define a default holder
+#  design :holder => 'environment'
 
   # declares that the given <tt>actions</tt> cannot be accessed by other HTTP
   # method besides POST.
@@ -101,6 +102,7 @@ class ApplicationController < ActionController::Base
   require 'tabs/register'
   require 'tabs/financial'
   require 'tabs/admin_organization'
+  require 'tabs/web_site'
 
   def self.uses_register_tabs
     before_filter :create_register_tabs
@@ -112,6 +114,10 @@ class ApplicationController < ActionController::Base
  
   def self.uses_financial_tabs
     before_filter :create_financial_tabs
+  end 
+ 
+  def self.uses_web_site_tabs
+    before_filter :create_web_site_tabs
   end 
  
   def self.uses_admin_organization_tabs
@@ -164,7 +170,7 @@ class ApplicationController < ActionController::Base
 
   def self.default_environment
     design :holder => 'environment'
-    before_filter :load_environment
+    before_filter :load_default_environment
     layout 'default'
   end
 
@@ -179,6 +185,7 @@ class ApplicationController < ActionController::Base
   end  
 
   def self.needs_organization
+    design :holder => 'organization'
     before_filter :load_organization
     layout 'organization'
   end
@@ -194,21 +201,37 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def self.needs_environment
+    design :holder => 'environment'
+    layout 'default'
+    before_filter :load_organization
+    before_filter :load_environment
+  end
+
   def load_environment
-    return nil unless @environment.nil?
-    if @organization.nil?
-      @environment = Environment.default 
-    else
-      @environment = @organization.environment 
+    @environment = @organization.environment
+    if @environment.nil?
+      raise "There is no environment associated to organization %s" % @organization.name
     end
   end
 
+  def load_default_environment
+    @environment = Environment.default 
+  end
+
+
   def render_access_denied_screen
-    @environment = Environment.default
-    render :template => 'users/access_denied'
+    raise "You don't have permission"
+# FIXME see a better way to do this
+#    design :holder => 'environment'
+#    before_filter :load_default_environment
+#    layout 'default'
+#    render :template => 'users/access_denied'
   end
 
   def render_error(message = nil, error = nil)
+# FIXME see a better way to do this
+    raise "Some erro happen"
     @message = message ||  _("This system didn't works correctly. Please contact the administrator and inform the message below.")    
     @error = error
     @environment = Environment.default

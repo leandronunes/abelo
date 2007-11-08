@@ -68,7 +68,7 @@ class SystemActorsController < ApplicationController
   def list_documents
     check_actor_presence
     @query || params[:query]
-    @query ||=  params[:document][:name] if params[:document]
+    @query ||=  params[:document][:document_name] if params[:document]
     @system_actor = @organization.system_actors.find(params[:id])
     @documents = @query.blank? ? @system_actor.documents : @system_actor.documents.full_text_search(@query)
     @document_pages, @documents = paginate_by_collection @documents

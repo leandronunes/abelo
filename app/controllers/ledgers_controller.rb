@@ -4,8 +4,8 @@ class LedgersController < ApplicationController
 
   needs_organization
 
-  protect [:index, :list, :show, :autocomplete_description, :select_category, :get_periodicity_informations, :get_interval_informations], 'view_ledger', :organization
-  protect [:new, :edit, :create, :update ], 'edit_ledger', :organization
+#  protect [:index, :list, :show, :autocomplete_description, :select_category, :get_periodicity_informations, :get_interval_informations], 'view_ledger', :organization
+#  protect [:new, :edit, :create, :update ], 'edit_ledger', :organization
 
   uses_financial_tabs
 

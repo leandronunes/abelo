@@ -3,24 +3,18 @@
     return '' if params[:organization_nickname].nil? 
     menu_items = {
       'categories'                          => _('Configurations'),
-#TODO the commented menu items are the items that would be implemented on the next
-#version 0.3.1.
-#
-#Uncomment this when the version 0.3.1 be implemented
-#
-#
       'stock'                               => _('Stock'),
-#      'store'                               => _('Store'),
+      'store'                               => _('Store'),
       'permissions'                         => _('User administration'),
       'system_actors'                       => _('Registers'),
       'point_of_sale'                       => _('Point of sale'),
-#      'mass_mails'                          => _('Mass mail'),
+#      'mass_mails'                          => _('Mass mail'), #TODO implements this function
       'ledgers'                             => _('Financial'),
-#      'documents'                           => _('Documents'),
+      'documents'                           => _('Documents'),
       'departments'                         => _('Departments'),
-#      'admin_configurations'                => _('Configurations'),
+      'admin_configurations'                => _('Configurations'),
       'organizations'                       => _('Organizations'),
-#      'banks'                               => _('Banks'),
+      'banks'                               => _('Banks'),
     }
     x = 0
    content_tag(

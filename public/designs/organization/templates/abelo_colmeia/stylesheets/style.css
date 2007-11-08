@@ -1,98 +1,173 @@
 /* Autor: Valessio S Brito <valessio@colivre.coop.br>  */
 
-@import url("colors.css");
-@import url("nav.css.comeia");
-/*
- @import url("nav.css"); 
-@import url("pointsales.css");
-@import url("tabs.css");
 @import url("autocomplete.css");
 @import url("content.css");
 @import url("form.css");
 @import url("login.css");
+@import url("menu.css");
 @import url("userbar.css");
 @import url("box.css");
 @import url("financial_calendar.css");
 @import url("listing.css");
+@import url("header.css");
 @import url("table.css");
 @import url("button.css");
 @import url("footer.css");
 @import url("localist.css");
 @import url("sidebar.css");
 @import url("tabs.css");
-*/
 
 body {
   margin:0px;
   padding:0px;
-}
-
-#header {
-  position: relative;
-  margin:0px;
-  padding:0px;
-  height: 110px;
-}
-
-#sidebar {
-float: right;
-width: 300px;
+  color: #545454;
+  font: 14px/1.5em Verdana, Arial, sans-Serif;
+  background: #fffaf0 url('../images/bgbody.png') top right repeat-y;
 }
 
 #info_org {
-  padding-left: 80px;
-  padding-right: 160px;
+  font-size: 17px;
+  color: #C4A000;
   height: 78px;
   display:table-cell;
   vertical-align: middle;
 }
 
-#userbar {
-height: 30px;
+#info_org span {
+  font-size: 19px;
+  font-weight: bold;
 }
-
-div.login_bar {
-float: right;
-}
-
+  
 #logo_org {
-position: absolute;
-top: 2px;
-left: 2px;
-margin-right: 5px;
+  float: left;
+  margin-left: 5px;
+  width: 75px;
+  height: 75px;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
 }
+#logo_org span {
+  display: none;
+}
+
+
 
 #banner_top {
-position: absolute;
-top: 2px;
-right: 5px;
+  position: absolute;
+  top: 2px;
+  right: 5px;
+  background: url('../images/bannerabelo_213x66.png') 50% no-repeat;
+  width: 213px;
+  height: 75px;
 }
-
-#nav {
-position: absolute;
-right: 3px;
-z-index: 999;
-}
-
-#content {
-position: relative;
-margin: 0px;
-padding: 10px;
+#banner_top span {
+  display: none;
 }
 
 #footer {
-margin-top: 50px;
-padding-left: 60px;
-bottom: 0;
-height: 50px;
+  margin-top: 50px;
+  padding-left: 60px;
+  bottom: 0;
+  height: 50px;
 }
 
-/* Others */
+.clear{
+  clear: both;
+}
 
-#show_cash_flows {
-position: absolute;
-display: none;
-width: 250px;
-height: 191px;
+.product_color{
+  width: 140px;
+  height: 22px;
+}
+
+.error{
+  position: absolute;
+  border: 2px solid red;
+  background-color: white;
+  width: 300px;
+  padding: 40px;
+  left: 50%;
+  margin-left: -150px;
+}
+
+.subtitle{
+  clear:both;
+}
+
+.controller-stock.action-history .main_title b {
+  font-size: 120%;
+  letter-spacing: -2px;
+  color: #E80;
+}
+
+#image_list div {
+  float: left;
+  margin: 0px 5px 20px 0px;
+}
+#image_list img {
+  border: 1px solid #642;
+  padding: 3px;
+}
+
+/* Boxes and Blocks */
+#box_1 { 
+  margin-right: 220px;
+  border: 2px solid black;
+#  float: left;
+}
+
+#box_2 {
+  border: 2px solid black;
+#  float: left;
+}
+
+#boxes_footer{
+  clear: both;
+}
+
+/* Edition Mode */
+
+#design_editor .blocks {
+  list-style: none;
+  margin: 0px;
+  padding: 3px;
+}
+
+#design_editor .box {
+  border: 2px solid transparent;
+}
+
+#design_editor .hover {
+  border: 2px dotted red;
+  background: #ff6;
+}
+
+#design_editor_toolbar {
+  padding: 5px;
+}
+
+#design_editor .blocks {
+  border: 2px dotted green;
+}
+
+#design_editor .blocks .hover {
+  border: 2px dotted red;
+  background: blue;
+}
+
+#design_editor_toolbar h3 {
+  font-size: 10px;
+  background: #dfdfdf;
+  margin: 0px;
+  padding: 1px;
+  text-align: right;
+  color: #545454;
+}
+
+#design_editor_toolbar a {
+  font-size: 10px;
+  padding: 5px;
+  background: #dfdfdf;
+  color: black;
 }
 

@@ -184,7 +184,8 @@ class ApplicationController < ActionController::Base
   end
 
   def load_organization
-    @organization = current_user.organizations.find_by_identifier(params[:organization_nickname])
+    @organization = Organization.find_by_identifier(params[:organization_nickname])
+
     if @organization.nil?
 #FIXME See the better way to generate the exception.
 #I think the raise way it's better

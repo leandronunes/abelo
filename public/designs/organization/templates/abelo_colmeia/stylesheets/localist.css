@@ -1,9 +1,29 @@
 /* Autor: Valessio S Brito <valessio@colivre.coop.br>  */
 
-#localist_menu {
-  display: inline;
-}
-
+#localist_menu,
 #localist_menu li {
   display: inline;
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+  font-size: 1px;
 }
+#localist_menu {
+  position: absolute;
+  top: 85px;
+  left: 12px;
+}
+#localist_menu img {
+  border: none;
+  margin-right: 3px;
+}
+
+.localist_unselected a {
+  opacity: 0.4
+}
+.localist_unselected a:hover {
+  opacity: 1
+}
+
+
+

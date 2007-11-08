@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title> Abelo </title>
+  <script src="./javascripts/prototype.js" type="text/javascript"></script>
+  <script src="./javascripts/effects.js" type="text/javascript"></script>
+  <script src="./javascripts/dragdrop.js" type="text/javascript"></script>
+  <script src="./javascripts/controls.js" type="text/javascript"></script>
+  <script src="./javascripts/application.js" type="text/javascript"></script>
+  <script src="./javascripts/clientSideInclude.js" type="text/javascript"></script>
+  <link href="../stylesheets/style.css" media="screen" rel="Stylesheet" type="text/css" />
+  <link href="./icons/icons.css" media="screen" rel="Stylesheet" type="text/css" />
+</head>
+
+<body onLoad="clientSideInclude('includeone', 'content.html');">
+
+  <div id="warp">
+      <div id="frame">
+        <div id="menu" style="display : none;">
+          <div>
+            <ul>
+              <li>
+                <a href="#" class="button_main pos_1 none_departments departments" id="departments"><span>Departments</span></a>
+              </li>
+              <li>
+                <a href="#" class="button_main pos_2 none_ledgers ledgers" id="ledgers"><span>Financial</span></a>
+              </li>
+              <li>
+                <a href="#" class="button_main pos_3 none_point_of_sale point_of_sale" id="point_of_sale"><span>Point Of Sale</span></a>
+              </li>
+              <li>
+                <a href="#" class="button_main pos_4 none_stock stock" id="stock"><span>Stock</span></a>
+              </li>
+              <li>
+                <a href="#" class="button_main pos_5 none_store store" id="store"><span>Store</span></a>
+              </li>
+              <li> 
+                <a href="#" class="button_main pos_6 none_documents documents" id="documents"><span>Documents</span></a>
+              </li>
+              <li>
+                <a href="#" class="button_main pos_7 none_categories categories" id="categories"><span>Configuration</span></a>
+              </li>
+              <li>
+                <a href="#" class="button_main pos_8 none_system_actors system_actors" id="system_actors"><span>Register</span></a>
+              </li>
+              <li>
+                <a href="#" class="button_main pos_9 none_permissions permissions" id="permissions"><span>Permissions</span></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div id="header">
+          <div style="background-image: url('./images/org_toca.png')" id="logo_org"> 
+            <span> Organization</span> 
+          </div> <!-- End: logo_org -->
+
+          <div id="info_org">
+            <span>Toca</span><br />
+            CNPJ: 05359933000193
+          </div> <!-- End: info_org -->
+
+          <div id="banner_top">
+            <span>Abelo</span>
+          </div> <!-- End: banner_top -->
+
+          <div id="userbar">
+            <div class="login_bar">
+              <a accesskey="g" class="none_go-jump go-jump" href="#" id="goto"
+onclick="Effect.toggle(&quot;menu&quot;,'slide',{duration:0.6});; new Ajax.Request('', {asynchronous:true,
+evalScripts:true}); return false;"><span>Go to</span></a>
+              <a href="#" accesskey="e" class="none_edit_small edit_small"
+id="edit_profile"><span>My Account</span></a> 
+              <a href="#" accesskey="q" class="none_system-log-out system-log-out" id="logout" onclick="confirm('Logout of the system?')"><span>Logout</span></a>
+            </div> <!-- End: login_bar -->
+
+            <div class="navigation_bar">
+              <div class="control_header">
+                <a accesskey="z" class="hide" onclick="$('warp').style.marginTop='-77px';"></a>
+                <a accesskey="x" class="show" onClick="$('warp').style.marginTop='0px';"></a>
+              </div> <!-- End: control_header -->
+              <a href="#">Toca</a>
+            </div> <!-- End: navigation_bar -->
+          </div> <!-- End: userbar -->
+        </div><!-- End: header -->
+
+
+        <div id="content">
+          <div class="boxes" id="boxes">
+            <div>
+              <div class="box" id="box_2">
+                <div class="blocks" id="blocks_4">
+                  <div class="block favoritelinks" id="block_6">
+                    <h3 class="block_header" id="block_header_6">
+                      <ul class="block_control_list">
+                        <li class="block_control_item">
+                          <a class="button_block_hide button_block" href="#" onclick="Effect.toggle(&quot;block_content_6&quot;,'slide',{duration:0.5});; ; return false;"><span>Hide</span></a>
+                        </li>
+                      </ul>
+                      Other Links
+                    </h3> 
+                    <div class="block_content" id="block_content_6">
+                      <div>
+                        <ul>
+                          <li>
+                            <a href="http://abelo.com.br" onclick="window.open(this.href);return false;">http://abelo.com.br</a>
+                          </li>
+                          <li>
+                            <a href="http://www.colivre.coop.br" onclick="window.open(this.href);return false;">http://www.colivre.coop.br</a>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="block_content_footer" id="block_content_footer_6">
+                      </div>
+                    </div> <!-- End: block_content -->
+                    <div class="block_footer" id="block_footer_6">
+                    </div>
+                  </div> <!-- End: block favoritelinks id:block_6 -->
+                  <div class="blocks_footer"></div>
+                </div> <!-- End: blocks id:blocks_4 -->
+                <div class="box_footer" id="box_footer_4"></div>
+              </div> <!-- End: box id:box_2-->
+
+              <div class="box" id="box_1">
+
+                <div class="blocks" id="blocks_3">
+                  <div class="block design_mainblock" id="block_2">
+                    <div class="block_content" id="block_content_2">
+                      <div> 
+                        <span id="includeone"> </span>
+                      </div>
+                      <div class="block_content_footer" id="block_content_footer_2"></div>
+                    </div> <!-- End: block_content id:block_content_2-->
+                    <div class="block_footer" id="block_footer_2"></div>
+                  </div> <!-- End: block design_mainblock id: block_2 -->
+
+                  <div class="block favoritelinks" id="block_7">
+                    <h3 class="block_header" id="block_header_7">
+                      <ul class="block_control_list">
+                        <li class="block_control_item">
+                          <a class="button_block_hide button_block" href="#" onclick="Effect.toggle(&quot;block_content_7&quot;,'slide',{duration:0.5});; ; return false;"><span>Hide</span></a>
+                        </li>
+                      </ul>
+                      My Links
+                    </h3>
+                    <div class="block_content" id="block_content_7">
+                      <div>
+                        <ul>
+                          <li>
+                            <a href="http://abelo.com.br" onclick="window.open(this.href);return false;">http://abelo.com.br</a>
+                          </li>
+                          <li>
+                            <a href="http://www.colivre.coop.br" onclick="window.open(this.href);return false;">http://www.colivre.coop.br</a>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="block_content_footer" id="block_content_footer_7"></div>
+                    </div> <!-- End: block_content id:block_content_7-->
+                    <div class="block_footer" id="block_footer_7"></div>
+                  </div>  <!-- End: block design_mainblock id: block_7 -->
+
+                  <div class="blocks_footer"></div>
+                </div>  <!-- End: blocks -->
+                <div class="box_footer" id="box_footer_3"></div>
+              </div>  <!-- End: box id: box_1 -->
+              <div class="boxes_footer" id="boxes_footer"></div>
+            </div>
+          </div>  <!-- End: boxes -->
+        </div> <!-- End: content -->
+
+        <div id="footer">
+          Abelo 0.4.0 - Copyrigth &copy; 2007 <a href="http://www.colivre.coop.br" alt="Cooperativa de Tecnologias Livres">Colivre</a>. 
+            This software is under <a href="http://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>
+        </div>
+
+      </div> <!-- End: frame -->
+    </div> <!-- End: warp -->
+
+    <ul class="localist_menu" id="localist_menu">
+      <li class="localist_unselected">
+        <a href="#"><span><img alt="Us" class="localist_unselected_flag" src="./images/us.png" /></span></a>
+      </li>
+      <li class="localist_selected">
+        <img alt="Br" class="localist_selected_flag" src="./images/br.png" />
+      </li>
+    </ul>
+
+  </body>
+</html>
+

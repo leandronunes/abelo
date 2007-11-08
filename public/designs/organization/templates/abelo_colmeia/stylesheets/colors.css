@@ -444,29 +444,3 @@ td.option a:hover {
 background-position: top !important;
 }
 
-
-/* OThers */
-#show_cash_flows {
-position: absolute;
-left: 50%;
-margin-left: -150px;
-top: 50%;
-margin-top: -95px;
-background: url('../images/boxfloat_250px.png') no-repeat;
-padding: 8px;
-}
-
-/* Footer */
-#footer {
-font-size: 10px;
-text-align: center;
-}
-
-#footer a {
-color: #545454;
-}
-
-#footer a:hover {
-color: #000000;
-}
-

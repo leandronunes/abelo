@@ -1,8 +1,8 @@
 #nav ul {
-width: 530px;
-height: 360px;
-margin: 0px;
-padding: 0px;
+  width: 530px;
+  height: 360px;
+  margin: 0px;
+  padding: 0px;
 }
 
 #nav {

@@ -65,7 +65,7 @@ class SystemActorsController < ApplicationController
     @ledger_sales = @system_actor.ledgers_by_sales
   end
 
-  def show_documents
+  def list_documents
     check_actor_presence
     @query || params[:query]
     @query ||=  params[:document][:name] if params[:document]
@@ -146,6 +146,15 @@ class SystemActorsController < ApplicationController
       render_error(_("This actor it's not valid"))
       return
     end
+  end
+
+  def choose_document
+    @document = Document.new
+    @document_models = @organization.documents_model
+  end
+
+  def new_document
+    
   end
 
 end

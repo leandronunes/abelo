@@ -1,0 +1,13 @@
+<%=  title _('Document Model')%>
+
+<label for='document_models' ><%= _('Document Model') %></label>
+
+<% for document in @document_models  %>
+
+<%= radio_button_tag('document', 'document_model_id', document.id) %><label for='document_model'><%= document.name %></label>
+
+<% end %>
+
+<%= radio_button_tag('document', 'document_model_id') %><label for='document_model'><%= _('Blank Document') %></label>
+
+

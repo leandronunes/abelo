@@ -2,6 +2,8 @@ class SystemActorsController < ApplicationController
 
   auto_complete_for :system_actor, :name
 
+  auto_complete_for :document, :document_name
+
   needs_organization
 
   uses_register_tabs
@@ -17,6 +19,14 @@ class SystemActorsController < ApplicationController
     escaped_string = Regexp.escape(params[:system_actor][:name])
     re = Regexp.new(escaped_string, "i")
     @system_actors = SystemActor.find(:all, :conditions => [ "type = ?", actor ]).select { |sa| sa.name.match re}
+    render :layout=>false
+  end
+
+  def autocomplete_document_name
+    actor = SystemActor.find(params[:id])
+    escaped_string = Regexp.escape(params[:document][:document_name])
+    re = Regexp.new(escaped_string, "i")
+    @documents = actor.documents.find(:all).select { |sa| sa.name.match re}
     render :layout=>false
   end
 

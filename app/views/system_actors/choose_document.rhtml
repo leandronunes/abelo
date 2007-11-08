@@ -1,13 +1,12 @@
+<%= render :partial => 'menu' %>
+
 <%=  title _('Document Model')%>
 
-<label for='document_models' ><%= _('Document Model') %></label>
+<label for='document_models' ><%= _('Choose Document Model') %>:</label>
 
-<% for document in @document_models  %>
-
-<%= radio_button_tag('document', 'document_model_id', document.id) %><label for='document_model'><%= document.name %></label>
-
-<% end %>
-
-<%= radio_button_tag('document', 'document_model_id') %><label for='document_model'><%= _('Blank Document') %></label>
-
-
+<ul>
+  <% for document in @document_models  %>
+    <li><%= link_to document.name, {:action => 'new_document', :model_id => document.id, :actor => params[:actor], :id => params[:id]} %></li>
+  <% end %>
+  <li><%= link_to _('Blank Document'), {:action => 'new_document', :actor => params[:actor], :id => params[:id]} %></li>
+</ul>

@@ -1,3 +1,5 @@
+<%= render :partial => 'menu' %>
+
 <%= title _('Documents')%>
 
 <%= display_documents_list_options 'document', 'document_name', :actor => params[:actor], :id => params[:id] %>

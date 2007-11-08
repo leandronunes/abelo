@@ -149,12 +149,34 @@ class SystemActorsController < ApplicationController
   end
 
   def choose_document
-    @document = Document.new
     @document_models = @organization.documents_model
   end
 
   def new_document
-    
+    check_actor_presence
+    model = Document.find(params[:model_id])
+    if params[:model_id]
+      @document = model.dclone
+      @title = _('New Document from model %s') % model.name
+    else
+      @document = Document.new
+      @title =  _('New Blank Document')
+    end
+    @departments = @organization.departments
+  end
+
+  def create_document
+    check_actor_presence
+    @document = Document.new(params[:document])
+    @document.organization = @organization
+    @document.owner = SystemActor.find(params[:id])
+    if @document.save
+      flash[:notice] = _('The document was successfully created.')
+      redirect_to :action => 'list_documents', :actor => params[:actor], :id => params[:id]
+    else
+      @departments = @organization.departments
+      render :action => 'new_document', :actor => params[:actor], :id => params[:id]
+    end
   end
 
 end

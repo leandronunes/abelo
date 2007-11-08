@@ -1,18 +1,45 @@
-#nav ul {
+#menu {
+  position: absolute;
+  width: 530px;
+  height: 360px;
+  background: url('../images/bgmenu.png') top left no-repeat;
+  z-index: 999;
+}
+
+#menu ul {
   width: 530px;
   height: 360px;
   margin: 0px;
   padding: 0px;
 }
 
-#nav {
-position: relative;
-background: url('../images/bggradeicons18.jpg') top left no-repeat;
-width: 530px;
-height: 360px;
+/*
+#menu li {
+width: 250px;
+margin: 3px;
+list-style: none;
 }
 
-#nav a {
+#menu a {
+display: block;
+background-position: top left;
+background-repeat: no-repeat;
+padding: 10px 0px 0px 50px;
+max-height: 37px;
+height: 47px;
+font-size: 18px;
+color: #545454;
+text-decoration: none;
+}
+
+#menu a:hover {
+color: #000000;
+text-decoration: underline;
+}
+
+*/
+
+#menu a {
 display: block;
 list-style: none;
 text-decoration: none;
@@ -23,16 +50,15 @@ margin: 0px;
 padding: 0px;
 }
 
-#nav a span {
+#menu a span {
 display: none;
-vertical-align: text-bottom;
 }
 
-#nav a:hover {
+#menu a:hover {
 z-index: 999;
 }
 
-#nav a:hover span {
+#menu a:hover span {
 position: absolute;
 display:table-cell;
 background: url('../images/fundo_teste.png') bottom right no-repeat;
@@ -48,106 +74,107 @@ z-index: 998;
 }
 
 
-/* Position icons */
+/* Positions */
 
-.pos_1 {
+#menu li a.pos_1 {
 position: absolute;
 top: 75px;
 left: 28px;
 }
 
-.pos_2 {
+#menu li a.pos_2 {
 position: absolute;
 top: 35px;
 left: 96px;
 }
 
-.pos_3 {
+#menu li a.pos_3 {
 position: absolute;
 top: 115px;
 left: 96px;
 }
 
-.pos_4 {
+#menu li a.pos_4 {
 position: absolute;
 top: 75px;
 left: 159px;
 }
 
-.pos_5 {
+#menu li a.pos_5 {
 position: absolute;
 top: 35px;
 left: 225px;
 }
 
-.pos_6 {
+#menu li a.pos_6 {
 position: absolute;
 top: 190px;
 left: 96px;
 }
 
-.pos_7 {
+#menu li a.pos_7 {
 position: absolute;
 top: 150px;
 left: 159px;
 }
 
-.pos_8 {
+#menu li a.pos_8 {
 position: absolute;
 top: 115px;
 left: 225px;
 }
 
-.pos_9 {
+#menu li a.pos_9 {
 position: absolute;
 top: 75px;
 left: 290px;
 }
 
-.pos_10 {
+#menu li a.pos_10 {
 position: absolute;
 top: 225px;
 left: 159px;
 }
 
-.pos_11 {
+#menu li a.pos_11 {
 position: absolute;
 top: 265px;
 left: 96px;
 }
 
-.pos_12 {
+#menu li a.pos_12 {
 position: absolute;
 top: 195px;
 left: 225px;
 }
 
-.pos_13 {
+#menu li a.pos_13 {
 position: absolute;
 top: 150px;
 left: 290px;
 }
 
-.pos_14 {
+#menu li a.pos_14 {
 position: absolute;
 top: 35px;
 left: 355px;
 }
 
-.pos_15 {
+#menu li a.pos_15 {
 position: absolute;
 top: 115px;
 left: 355px;
 }
 
-.pos_16 {
+#menu li a.pos_16 {
 position: absolute;
 top: 265px;
 left: 225px;
 }
 
-.pos_17 {
+#menu li a.pos_17 {
 position: absolute;
 top: 225px;
 left: 290px;
+
 }

@@ -1,2 +1,3 @@
+<%= button "personal_data", _("Personal Data"), :show, { :action => 'show', :actor => params[:actor], :id => params[:id]} %>
 <%= button "ledgers", _("Ledgers"), :list, { :action => 'show_ledgers', :actor => params[:actor], :id => params[:id] } %>
 <%= button "documents", _('Documents'), :list, { :action => 'show_documents', :actor => params[:actor], :id => params[:id] }%>

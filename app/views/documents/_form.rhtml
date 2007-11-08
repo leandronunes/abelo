@@ -17,6 +17,8 @@
       )
   %>
 
+<% unless (params[:models_list] and not params[:document_model_id]) %>
+
   <%= display_field_form(item, 'owner_type', 
         :title => _('Customer'),
         :content => radio_button_tag('owner_type', 'customer'),
@@ -62,6 +64,8 @@
       <%= render :partial => 'owners_list', @owner_type => @document.owner_type %>
     <% end %>
   </div>
+
+<% end %>
 
   <%= display_field_form(item, 'tag_list',
         :title => _('Tags (separated by comma):'),

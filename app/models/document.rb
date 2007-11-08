@@ -50,10 +50,11 @@ class Document < ActiveRecord::Base
 
   def dclone
     d = self.clone 
-    d.name = " "
+    d.name = _("Change me")
     d.is_model = false
     d.departments = self.departments
     d.document_model = self
+    d.tag_list = self.tag_list.names
     d
   end
 

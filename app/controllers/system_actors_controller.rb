@@ -57,9 +57,21 @@ class SystemActorsController < ApplicationController
 
   def show_documents
     check_actor_presence
+    @query || params[:query]
+    @query ||=  params[:document][:name] if params[:document]
     @system_actor = @organization.system_actors.find(params[:id])
-    @documents = @system_actor.documents
+    @documents = @query.blank? ? @system_actor.documents : @system_actor.documents.full_text_search(@query)
+    @document_pages, @documents = paginate_by_collection @documents
   end
+
+  def find_by_tag
+    @collection = params[:collection].split(',').map{|id| Document.find(id)}
+    @documents = Document.find_tagged_with(params[:tag]) & @collection
+    @document_pages, @documents = paginate_by_collection @documents
+    @model = true if @collection.first.is_model? 
+    render :partial => 'documents_list'
+  end
+  
 
   def new
     check_actor_presence

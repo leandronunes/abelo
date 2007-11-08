@@ -24,6 +24,7 @@
 .documents_small      { background-image: url(documents-16x16.png) }
 .new_document_small   { background-image: url(doc-new-16x16.png) }
 .print           { background-image: url(save.png) }
+.personal_data           { background-image: url(permissions.png) }
 
 /* * * Menu Icons * * */
 

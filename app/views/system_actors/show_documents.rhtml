@@ -1,1 +1,8 @@
 <%= title _('Documents')%>
+
+<%= display_list_options 'document', 'name', :actor => params[:actor], :id => params[:id] %>
+
+<%= display_tag_list @documents %>
+
+<%= render :partial => 'documents_list' %>
+

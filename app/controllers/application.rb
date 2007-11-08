@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
 
   require 'extended_array'
   require 'extended_date'
+  include LoadOrganization
+  include LoadEnvironment
   
 #TODO uncomment this when needed
 #  def rescue_action(e)
@@ -190,17 +192,6 @@ class ApplicationController < ActionController::Base
     layout 'organization'
   end
 
-  def load_organization
-    @organization = Organization.find_by_identifier(params[:organization_nickname])
-
-    if @organization.nil?
-#FIXME See the better way to generate the exception.
-#I think the raise way it's better
-#      render_error(_("There is no organization with nickname %s") % params[:organization_nickname])
-      raise "There is no organization with nickname %s" % params[:organization_nickname]
-    end
-  end
-
   def self.needs_environment
     design :holder => 'environment'
     layout 'default'
@@ -208,17 +199,9 @@ class ApplicationController < ActionController::Base
     before_filter :load_environment
   end
 
-  def load_environment
-    @environment = @organization.environment
-    if @environment.nil?
-      raise "There is no environment associated to organization %s" % @organization.name
-    end
-  end
-
   def load_default_environment
     @environment = Environment.default 
   end
-
 
   def render_access_denied_screen
     raise "You don't have permission"

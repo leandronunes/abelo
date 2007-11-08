@@ -37,4 +37,5 @@ ActionController::Routing::Routes.draw do |map|
   map.homepage '/homepage/:organization_nickname/*page', :controller => 'content_viewer', :action => 'view_page'
 
   map.connect ':controller/:action/:id'
+
 end

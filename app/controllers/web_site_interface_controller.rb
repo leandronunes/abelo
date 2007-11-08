@@ -6,6 +6,8 @@ class WebSiteInterfaceController < ApplicationController
 
   design_editor :content_holder => 'environment', :interface_holder => 'organization', :autosave => true, :block_types => :block_types
 
+  layout 'organization'
+
   def index
     redirect_to :action => 'design_editor'
   end

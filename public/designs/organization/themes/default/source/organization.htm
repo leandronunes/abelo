@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title> Abelo </title>
+  <script src="./javascripts/prototype.js" type="text/javascript"></script>
+  <script src="./javascripts/effects.js" type="text/javascript"></script>
+  <script src="./javascripts/dragdrop.js" type="text/javascript"></script>
+  <script src="./javascripts/controls.js" type="text/javascript"></script>
+  <script src="./javascripts/application.js" type="text/javascript"></script>
+  <link href="../style.css" media="screen" rel="Stylesheet" type="text/css" />
+</head>
+
+<body>
+
+  <div class="block favoritelinks" id="block_6">
+    <h3 class="block_header">
+      <ul class="block_control_list">
+        <li class="block_control_item">
+          <a class="button_block_hide button_block" href="#" onclick="Effect.toggle(&quot;block_content_n&quot;,'slide',{duration:0.5});; ; return false;"><span>Hide</span></a>
+        </li>
+      </ul>
+      Other Links
+    </h3> 
+    <!-- The id 'block_content_n' is used only to demostrate the javascript Hide function don't use it to define style -->
+    <div class="block_content" id="block_content_n">
+      <div>
+        <ul>
+          <li>
+            <a href="http://abelo.com.br" onclick="window.open(this.href);return false;">http://abelo.com.br</a>
+          </li>
+          <li>
+            <a href="http://www.colivre.coop.br" onclick="window.open(this.href);return false;">http://www.colivre.coop.br</a>
+          </li>
+        </ul>
+      </div>
+      <div class="block_content_footer">
+      </div>
+    </div> <!-- End: block_content -->
+    <div class="block_footer">
+    </div>
+  </div> <!-- End: block favoritelinks id:block_6 -->
+
+</body>
+
+</html>
+

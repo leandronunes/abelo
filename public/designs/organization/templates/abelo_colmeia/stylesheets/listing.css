@@ -1,0 +1,68 @@
+
+.filter_field {
+  border: 1px solid #C96;
+  color: #753;
+  padding: 2px 0px;
+  text-align: center;
+  width: 200px;
+  float: left;
+}
+
+.info_list {
+  clear: left;
+  margin: 0px;
+  padding: 5px 0px 0px 0px;
+  list-style: none;
+  width: 500px;
+}
+
+.info_list li {
+  margin: 5px 0px;
+  padding: 4px 4px 4px 6px;
+  list-style: none;
+  background: #FFFCF8;
+  border: 2px solid #864;
+  float: left;
+}
+
+.info_list li ul li {
+  margin: 0px;
+  border: none;
+}
+
+.info_list div {
+  display: inline;
+  padding: 0px 4px;
+}
+
+.info_list .item_image img {
+  float: left;
+  margin: 0px 8px 0px -6px;
+  padding: 3px;
+  background: #FFF;
+  border: 2px solid #B97;
+}
+.info_list .item_image strong {
+  display: none;
+}
+
+.info_list div.list_item_button {
+  float: right;
+  margin: -3px -6px 0px 0px;
+}
+.info_list div.list_item_button .button {
+  float: none;
+  margin: 2px;
+}
+
+.info_list .line_item {
+  display: block;
+}
+
+.info_list .field_item {
+  float: left;
+}
+
+.info_list .break_line {
+  clear: left;
+}

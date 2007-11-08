@@ -1,0 +1,83 @@
+#userbar {
+height: 30px;
+}
+
+#userbar {
+  color: #545454;
+  font: 14px/2.2em Verdana, Arial, sans-Serif;
+}
+
+#userbar a {
+  color: #000;
+  text-decoration: none;
+  margin: 0px 3px 2px 3px;
+}
+#userbar .navigation_bar a {
+  color: #654;
+}
+#userbar .navigation_bar a:hover {
+  color: #000;
+  margin-bottom: 0px;
+}
+#userbar .navigation_bar {
+  padding-left: 60px;
+}
+
+#userbar .navigation_bar .control_header{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 35px;
+  height: 22px;
+}
+
+#userbar .navigation_bar .control_header a {
+  margin:0px;
+  padding:0px;
+  border:0px;
+  width: 15px;
+  height: 22px
+}
+
+#userbar .navigation_bar .control_header a:hover {
+  display: table-cell;
+  border: 0px;
+  margin: 0px;
+  padding: 0px;
+}
+
+#userbar .navigation_bar div.control_header a.show {
+  background: url('../images/downbar.png') top left no-repeat;
+}
+
+#userbar .navigation_bar .control_header a.hide {
+  background: url('../images/upbar.png') top left no-repeat;
+}
+
+#userbar .navigation_bar .control_header span {
+  display: none;
+}
+
+#userbar .login_bar a {
+  opacity: 0.4;
+}
+#userbar .login_bar a#goto {
+  opacity: 0.6;
+}
+
+#userbar .login_bar a#goto:hover,
+#userbar .login_bar a:hover {
+  opacity: 1;
+}
+
+div.login_bar {
+  float: right;
+}
+
+div.login_bar a {
+  background-position: top left;
+  background-repeat: no-repeat;
+  padding-left: 18px;
+  height: 26px;
+  padding-bottom: 2px;
+}

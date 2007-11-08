@@ -1,0 +1,83 @@
+.button {
+  float: left;
+  border: none;
+  display: block;
+  opacity: 0.6;
+  margin-left: 5px;
+  width: 24px;
+  height: 24px;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+
+.bt_small {
+  width: 16px;
+  height: 16px;
+}
+
+.button:hover {
+  opacity: 1;
+}
+
+.button span {
+  display: none;
+}
+
+.list_item_button .button { width: 16px; height: 16px }
+
+.with_text {
+  padding: 3px 0px;
+  padding-left: 24px;
+  background-position: 0px 50%;
+  width: inherit !important;
+  display: inline !important;
+}
+.bt_small.with_text {
+  padding-left: 18px;
+}
+input.with_text {
+  background-position: 0px 50%;
+}
+.with_text span {
+  display: inline !important;
+}
+.with_text:hover {
+  text-decoration: none;
+}
+
+#loginform .button {
+  float: none;
+}
+
+.beault_button {
+  margin: 5px;
+  height: 33px;
+  padding-top: 5px;
+  background: url('../images/bgbutton.png') no-repeat 50% 50%;
+}
+
+.beault_button span, .beault_button input {
+  color: #654;
+  height: 30px;
+  line-height: 30px;
+  font-size: 13px;
+  font-weight: 800;
+}
+.beault_button a {
+  position: relative;
+  top: 1px;
+}
+.beault_button a span {
+  position: relative;
+  top: -2px;
+}
+
+.beault_button :hover {
+  color: #543 !important;
+}
+
+.beault_button .button_new {
+  padding-left: 28px;
+}
+

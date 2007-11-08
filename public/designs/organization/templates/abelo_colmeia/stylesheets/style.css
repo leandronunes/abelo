@@ -1,10 +1,23 @@
 /* Autor: Valessio S Brito <valessio@colivre.coop.br>  */
 
-@import url("box.css");
 @import url("colors.css");
 @import url("nav.css");
 @import url("nav.css.comeia");
 @import url("pointsales.css");
+@import url("tabs.css");
+@import url("autocomplete.css");
+@import url("content.css");
+@import url("form.css");
+@import url("login.css");
+@import url("userbar.css");
+@import url("box.css");
+@import url("financial_calendar.css");
+@import url("listing.css");
+@import url("table.css");
+@import url("button.css");
+@import url("footer.css");
+@import url("localist.css");
+@import url("sidebar.css");
 @import url("tabs.css");
 
 body {

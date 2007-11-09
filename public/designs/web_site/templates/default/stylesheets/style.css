@@ -1,134 +1,194 @@
-/* Autor: Valessio S Brito <valessio@colivre.coop.br>  */
-
-@import url("autocomplete.css");
-@import url("content.css");
-@import url("form.css");
-@import url("userbar.css");
-@import url("box.css");
-/* @import url("financial_calendar.css"); */
-@import url("listing.css");
-@import url("menu.css");
-@import url("table.css");
-@import url("button.css");
-@import url("footer.css");
-@import url("localist.css");
-@import url("sidebar.css");
-@import url("tabs.css");
-
-
 body {
-  margin:0px;
+  background-color: #ffffff;
+  font-size: 12px;
+  font-family: Verdana, Arial, Helvetica, Sans-serif;
+  color: #00290d;
   padding:0px;
-  color: #545454;
-  font: 14px/1.5em Verdana, Arial, sans-Serif;
-  background: #fffaf0 url('../images/bgbody.png') top right repeat-y;
-}
-
-#header {
   margin:0px;
-  padding:0px;
-  height: 110px;
-  background: #ffffff url('../images/bgheader.png') bottom left repeat-x;
 }
 
-#info_org {
-  font-size: 17px;
-  color: #C4A000;
-  height: 78px;
-  display:table-cell;
-  vertical-align: middle;
+#warp {
+  position:absolute;
+  height:420px;
+  width:754px;
+  background: url('../images/fundo.jpg');
+  margin:-210px 0px 0px -377px;
+  top: 50%;
+  left: 50%;
+  text-align: left;
+  padding: 0px;
+  border: 0px;
+  overflow: none;
+  z-index: 1;
 }
 
-#info_org span {
-  font-size: 19px;
-  font-weight: bold;
+#frame { 	
+  position:absolute;
+  height:420px; 
+  width:754px;
+  margin:-210px 0px 0px -377px;
+  top: 50%; 
+  left: 50%;
+  text-align: left;
+  padding: 0px;
+  border: 0px;
+  overflow: none;
+  z-index: 2;
 }
 
-#logo_org {
-  float: left;
-  margin-left: 5px;
-  width: 75px;
-  height: 75px;
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
+#menu { 	
+  position:relative;
+  height:420px; 
+  width:165px;
+  margin:0px;
+  padding: 0px;
+  top: 0px; 
+  left: 0px;
+  border: 0px;
+  z-index: 3;
 }
-#logo_org span {
-  display: none;
+#menu a {
+font-weight: bold;
+color: #00290d;
+text-decoration: none;
 }
 
-#banner_top {
+#menu a:hover {
+color: #000000;
+}
+
+#options_site{
   position: absolute;
-  top: 2px;
-  right: 5px;
-  background: url('../images/bannerabelo_213x66.png') 50% no-repeat;
-  width: 213px;
-  height: 75px;
+  top: 214px;
+  right: 0;
+  border: 0px;
+  z-index: 4;
 }
-#banner_top span {
-  display: none;
+
+#options_idioma{
+  position: absolute;
+  width: 97px;
+  bottom: 30px;
+  left: 58px;
+  border: 0px;
+  z-index: 4;
+}
+#control_container {
+position:absolute;
+width:60px; 
+height: 25px;
+left:370px;
+bottom:47px;
+z-index:1; 
+}
+
+#container{
+position:absolute;
+width:245px;
+height:240px;
+overflow:hidden;
+top:110px;
+left:177px;
+clip:rect(0,245,240,0);
+#visibility:hidden;
+z-index: 1;
+}
+
+#content{
+position:absolute;
+top:0px;
+left:0px;
+z-index: 1;
+}
+#path_away {
+position:absolute;
+overflow:hidden;
+width: 280px;
+left:140px;
+top:42px;
+font-size: 9px;
+text-align: right;
+color: #6d3718;
+border: 0px;
+z-index:1; 
+}
+#path_away a {
+text-decoration: none;
+color: #6d3718;
+}
+#path_away a.active {
+text-decoration: underline;
+color: #000000;
+}
+#path_away a:hover {
+text-decoration: none;
+color: #000000;
+}
+#userbar {
+position:absolute;
+margin:0;
+padding:0;
+width:280px;
+height: 45px;
+left:140px;
+top:65px;
+font-size: 12px;
+z-index:1; 
+}
+
+#userbar ul {
+vertical-align: middle;
+margin:0;
+padding:0;
+}
+#userbar li {
+list-style: none;
+display: block;
+float: right;
+text-align: right;
+margin-left: 5px;
+padding-right: 5px;
+margin-top: 0px;
+margin-bottom: 0px;
+border-right: 1px solid black;
+}
+
+#userbar a {
+color: #000000;
+text-decoration: none;
+}
+
+#userbar a.active {
+font-weight: bold;
+}
+
+#userbar a:hover {
+color: #00290d;
+text-decoration: underline;
+}
+#others {
+position: absolute;
+right: 0px;
+top: 0px;
+width: 320px;
+height: 424px;
+margin: 0;
+padding: 0;
+border: 0px;
+}
+
+#others iframe {
+width: 320px;
+height: 424px;
+border: 0px;
 }
 
 #footer {
-  margin-top: 50px;
-  padding-left: 60px;
-  bottom: 0;
-  height: 50px;
-}
-
-.clear{
-  clear: both;
-}
-
-.product_color{
-  width: 140px;
-  height: 22px;
-}
-
-/* Main Content */
-#box_1 {
-  margin-right: 220px;
-}
-
-.error{
-  position: absolute;
-  border: 2px solid red;
-  background-color: white;
-  width: 300px;
-  padding: 40px;
-  left: 50%;
-  margin-left: -150px;
-}
-
-.subtitle{
-  clear:both;
-}
-
-.navigation_bar {
-  padding-left: 20px;
-}
-
-#localist_menu,
-#localist_menu li {
-  display: inline;
-  list-style: none;
-  margin: 0px;
-  padding: 0px;
-  font-size: 1px;
-}
-#localist_menu {
-  position: absolute;
-  top: 85px;
-  left: 12px;
-}
-#localist_menu img {
-  border: none;
-  margin-right: 3px;
-}
-
-.localist_unselected a {
-  opacity: 0.4
-}
-.localist_unselected a:hover {
-  opacity: 1
+position: absolute;
+bottom: 0;
+text-align: center;
+width: 100%;
+font-size: 8px;
+color: #545454;
 }
 

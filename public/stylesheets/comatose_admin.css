@@ -1,0 +1,37 @@
+#content .page-list.collapsed {
+  display: none;
+}
+#content .handle, #content .do-reorder UL LI .handle {
+  display: none;
+}
+
+#content .do-reorder LI .handle {
+  display: inline;
+  cursor: move;
+}
+
+#content .page-list .do-reorder .commands A {
+  display: none;
+}
+
+#content #go-btn {
+  display: none;
+}
+
+/* When JavaScript is Turned Off... We need to adjust some things... */
+.noscript #more-options,
+.noscript #preview-area,
+.noscript #preview-btn,
+.noscript .tree-controller {
+  display: none;
+}
+.noscript .page-list.collapsed {
+  display: block !important;
+}
+.noscript #content .page-form #page_title,
+.noscript #content .page-form #page_slug,
+.noscript #content .page-form #page_parent,
+.noscript #content .page-form #page_keywords,
+.noscript #content .page-form #page_body {
+  width: 100% !important;
+}

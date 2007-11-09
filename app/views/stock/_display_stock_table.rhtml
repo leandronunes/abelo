@@ -1,4 +1,5 @@
   <table>
+    <% show_supplier = (@stocks.find(:first).type != StockOut) %>
     <tr>
       <th> <%= _('Supplier') %></th>
       <th> <%= _('Date') %> </th>
@@ -9,7 +10,11 @@
 
     <% for item in @stocks %>
       <tr id="list_item_<%=item.id %>">
-        <td><%= item.supplier.name %></td>
+        <% if item.type != StockOut %>
+          <td><%= item.supplier.name %></td>
+        <% else %>
+          <td> - </td>
+        <% end %>
         <td><%= item.date.strftime('%d/%m/%Y') %></td>
         <td><%= item.price %></td>
         <td><%= item.amount %></td>

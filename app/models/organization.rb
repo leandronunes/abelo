@@ -291,7 +291,12 @@ class Organization < ActiveRecord::Base
 
   def stock_virtual_ins
     StockVirtual.create_virtual_ins(self.products)
+  end
+
+  def stock_virtual_outs
+    StockVirtual.create_virtual_outs(self.products)
   end 
+
 
   #TODO see if it's useful
   def customers_by_products(list_products)

@@ -28,31 +28,11 @@ class StockBaseController < ApplicationController
     redirect_to :action => 'list'
   end
 
-  def list
-    @query = params[:query]
-    @query ||= params[:product][:name] if params[:product]
-
-    if @query.nil?
-      @stocks = @organization.stock_virtuals
-      @stock_pages, @stocks = paginate_by_collection @stocks
-    else
-      @stocks = StockVirtual.create_virtuals(@organization.products.full_text_search(@query))
-      @stock_pages, @stocks = paginate_by_collection @stocks
-    end
-  end
-
   def show
     @stock = Stock.find(params[:id])
     @ledgers = @stock.ledgers
-  end
-  
-  def history
-    begin
-      @product = @organization.products.find(params[:product_id])
-      @stocks = @product.stocks
-    rescue
-      redirect_to :action => 'index'
-    end
+
+    render :template => 'stock/show'
   end
 
   def new
@@ -64,6 +44,8 @@ class StockBaseController < ApplicationController
     rescue
       redirect_to :controller => 'products', :action => 'new'
     end
+
+    render :template => 'stock/new'
   end
 
   def create
@@ -84,14 +66,14 @@ class StockBaseController < ApplicationController
         @ledger = Ledger.new_ledger
         @ledger_categories =  @organization.ledger_categories_by_payment_method(@ledger.payment_method)
         render :update do |page|
-          page.replace_html 'add_payment', :partial => 'edit'
+          page.replace_html 'add_payment', :partial => 'stock/edit'
         end
       end
     else
       @ledgers = @stock.ledgers
       @suppliers = product.suppliers
       render :update do |page|
-        page.replace_html 'stock_form', :partial => 'form'
+        page.replace_html 'stock_form', :partial => 'stock/form'
       end
     end
   end
@@ -104,7 +86,7 @@ class StockBaseController < ApplicationController
     @banks = Bank.find(:all)
     @ledger_categories =  @organization.ledger_categories_by_payment_method(@ledger.payment_method)
     render :update do |page|
-      page.replace_html 'payment', :partial => 'payment'
+      page.replace_html 'payment', :partial => 'stock/payment'
       page.replace_html 'stock_options', " "
     end
   end  
@@ -121,7 +103,7 @@ class StockBaseController < ApplicationController
       @suppliers = @product.suppliers
       @ledger_categories =  @organization.ledger_categories_by_payment_method(ledger.payment_method)
       render :update do |page|
-        page.replace_html 'partial_edit', :partial => 'edit'
+        page.replace_html 'partial_edit', :partial => 'stock/edit'
       end
     else
       @ledger = ledger
@@ -130,7 +112,7 @@ class StockBaseController < ApplicationController
       @banks = Bank.find(:all)
       @ledger_categories =  @organization.ledger_categories_by_payment_method(@ledger.payment_method)
       render :update do |page|
-        page.replace_html 'payment', :partial => 'payment'
+        page.replace_html 'payment', :partial => 'stock/payment'
       end
     end
   end
@@ -141,6 +123,8 @@ class StockBaseController < ApplicationController
     @product = @stock.product
     @suppliers = @product.suppliers
     @ledgers = @stock.ledgers
+
+    render :template => 'stock/edit'
   end
 
   def update
@@ -180,6 +164,14 @@ class StockBaseController < ApplicationController
       highlights_on :controller => 'stock_in'
     end
     t.named _('Stock In Control')
+
+    t = add_tab do
+      links_to :controller => 'stock_out'
+      in_set 'first'
+      highlights_on :controller => 'stock_out'
+    end
+    t.named _('Stock Out Control')
+
   end
 
   def select_category

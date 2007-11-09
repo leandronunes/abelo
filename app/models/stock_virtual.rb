@@ -18,11 +18,17 @@ class StockVirtual < Stock
   def self.create_virtual_ins(products)
     return Array.new if (products.nil?) 
     virtual_ins = products.map do |p|
-      unless p.stock_ins.empty?
-        StockVirtual.new(:product_in_list => p, :amount_in_list => p.amount_in_stock )
-      end
+      StockVirtual.new(:product_in_list => p, :amount_in_list => p.amount_in_stock_in )
     end
     virtual_ins.compact
+  end
+
+  def self.create_virtual_outs(products)
+    return Array.new if (products.nil?) 
+    virtual_outs = products.map do |p|
+      StockVirtual.new(:product_in_list => p, :amount_in_list => p.amount_in_stock_out )
+    end
+    virtual_outs.compact
   end
 
 

@@ -13,4 +13,14 @@ class StockController < StockBaseController
     end
   end
 
+  def history
+    begin
+      @product = @organization.products.find(params[:product_id])
+      @stocks = @product.stocks
+    rescue
+      redirect_to :action => 'index'
+    end
+  end
+
+
 end

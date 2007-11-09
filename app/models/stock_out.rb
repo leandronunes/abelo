@@ -1,5 +1,7 @@
 class StockOut < Stock
 
+  has_many :ledgers, :as => :owner
+
   validates_inclusion_of :amount, :in => InfiniteSet::NEGATIVES, :if => lambda { |entry| !entry.amount.nil? }
 
   def validate

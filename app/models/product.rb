@@ -6,6 +6,8 @@ class Product < ActiveRecord::Base
   has_and_belongs_to_many :suppliers
   has_many :stocks
   has_many :stock_ins
+  has_many :stock_outs
+
   validates_uniqueness_of :code, :scope => :organization_id
 
   validates_presence_of :name, :sell_price, :unit
@@ -29,8 +31,17 @@ class Product < ActiveRecord::Base
   end
 
   def amount_in_stock
-    self.connection.select_value('select sum(amount) from stocks where product_id = %d' % self.id).to_f
+    self.stocks.sum('amount').to_f
   end
+
+  def amount_in_stock_in
+    self.stock_ins.sum('amount').to_f
+  end
+
+  def amount_in_stock_out
+    self.stocks.sum('amount', :conditions => "type = 'StockOut'").to_f
+  end
+
 
   def total_cost
     total = 0

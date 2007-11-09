@@ -1,6 +1,6 @@
 <div id="partial_edit">
 <% form_tag :action => 'update', :product_id => @stock.product, :id => @stock do %>
-  <%= render :partial => 'form'%>
+  <%= render :partial => 'stock/form'%>
 
   <%= subtitle _("Payments [%s]") % link_to_remote( _('Add'), :url => {:action => 'add_payment', :id => @stock}) %>
 

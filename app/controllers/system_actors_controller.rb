@@ -154,8 +154,8 @@ class SystemActorsController < ApplicationController
 
   def new_document
     check_actor_presence
-    model = Document.find(params[:model_id])
     if params[:model_id]
+      model = @organization.documents.find(params[:model_id])
       @document = model.dclone
       @title = _('New Document from model %s') % model.name
     else
@@ -177,6 +177,35 @@ class SystemActorsController < ApplicationController
       @departments = @organization.departments
       render :action => 'new_document', :actor => params[:actor], :id => params[:id]
     end
+  end
+
+  def show_document
+    check_actor_presence
+    @document = @organization.documents.find(params[:document_id])
+  end
+
+  def edit_document
+    check_actor_presence
+    @document = @organization.documents.find(params[:document_id])
+    @departments = @organization.departments
+    @title = _('Editing Document')
+  end
+
+  def update_document
+    check_actor_presence
+    @document = @organization.documents.find(params[:document_id])
+    if @document.update_attributes(params[:document])
+      flash[:notice] = 'Document was successfully updated.'
+      redirect_to :action => 'show_document', :document_id => @document, :actor => params[:actor], :id => params[:id]
+    else
+      @departments = @organization.departments
+      render :action => 'edit_document'
+    end
+  end
+
+  def destroy_document
+    @document = @organization.documents.find(params[:document_id]).destroy
+    redirect_to :action => 'list_documents', :actor => params[:actor], :id => params[:id]
   end
 
 end

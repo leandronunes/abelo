@@ -58,14 +58,14 @@ class StockOutController < StockBaseController
         @ledger = Ledger.new_ledger
         @ledger_categories =  @organization.ledger_categories_by_payment_method(@ledger.payment_method)
         render :update do |page|
-          page.replace_html 'add_payment', :partial => 'edit'
+          page.replace_html 'add_payment', :partial => 'stock/edit'
         end
       end
     else
       @ledgers = @stock.ledgers
       @suppliers = product.suppliers
       render :update do |page|
-        page.replace_html 'stock_form', :partial => 'form'
+        page.replace_html 'stock_form', :partial => 'stock/form'
       end
     end
   end

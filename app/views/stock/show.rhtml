@@ -1,9 +1,10 @@
 <%= title _("Movement in stock on %s") % @stock.date %>
 
 <%= display_show_info @stock, :product_id => @stock.product %>
-
-<%= subtitle _("Payments [%s]") % link_to_remote( _('Add'), :url => {:action => 'add_payment', :id => @stock}) %>
-<%= render :partial => 'shared_payments/table_ledgers'%>
+<% if @stock.type != StockOut %>
+  <%= subtitle _("Payments [%s]") % link_to_remote( _('Add'), :url => {:action => 'add_payment', :id => @stock}) %>
+  <%= render :partial => 'shared_payments/table_ledgers'%>
+<% end %>
 
 <%= button('back', _('Back'), :back, {:action => 'history', :product_id => @stock.product}) %>
 <%= button('edit', _('Edit'), :edit, {:action => 'edit', :id => @stock.id}) %>

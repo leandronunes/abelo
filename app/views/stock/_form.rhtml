@@ -4,13 +4,17 @@
 
 <% display_form_info @stock do |item | %>
 
-  <% if @stock.type != StockOut %>
+  <% if @stock.type != StockOut 
+       business = _('Buy Price')
+     else 
+       business = _('Sell Price')
+     end
+  %>
   <%= display_field_form( item, 'supplier',
         :title => _('Supplier'),
         :content => select( 'stock', 'supplier_id', @suppliers.map { |s| [ s.name, s.id] } ) 
     )
   %>
-  <% end %>
 
   <%= display_field_form( item, 'amount',
         :title => _('Amount'),
@@ -25,7 +29,7 @@
   %>
 
   <%= display_field_form( item, 'price',
-        :title => _('Buy Price'),
+        :title => business,
         :content => text_field( 'stock', 'price')
     )
   %>

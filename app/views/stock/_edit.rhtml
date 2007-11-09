@@ -1,21 +1,24 @@
 <div id="partial_edit">
 <% form_tag :action => 'update', :product_id => @stock.product, :id => @stock do %>
   <%= render :partial => 'stock/form'%>
+  <% if @stock.type != StockOut %>
 
-  <%= subtitle _("Payments [%s]") % link_to_remote( _('Add'), :url => {:action => 'add_payment', :id => @stock}) %>
+    <%= subtitle _("Payments [%s]") % link_to_remote( _('Add'), :url => {:action => 'add_payment', :id => @stock}) %>
+
 
   <div id="stock_options">
-  <% if @ledger.nil? %>
-    <%= render :partial => 'shared_payments/table_ledgers'%>
-    <%= display_edit_info_options @stock, :action => 'history', :product_id => @stock.product %>
+    <% if @ledger.nil? %>
+      <%= render :partial => 'shared_payments/table_ledgers'%>
+    <% end %>
+    </div>
   <% end %>
-  </div>
+  <%= display_edit_info_options @stock, :action => 'history', :product_id => @stock.product %>
 
 <% end %>
 
 <div id='payment'>
   <% unless @ledger.nil? %>
-    <%= render :partial => 'payment' %>
+    <%= render :partial => 'stock/payment' %>
   <% end %>
 </div>
 

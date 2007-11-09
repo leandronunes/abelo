@@ -8,7 +8,7 @@ class WorkersControllerTest < Test::Unit::TestCase
 
   under_organization :one
 
-  fixtures :organizations, :system_actors, :categories
+  fixtures :organizations, :system_actors, :categories, :configurations
 
   def setup
     @controller = SystemActorsController.new

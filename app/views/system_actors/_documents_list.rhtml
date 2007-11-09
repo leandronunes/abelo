@@ -1,3 +1,7 @@
+<div id="content_list">
+
 <%= display_collection @documents %>
 
 <%= pagination_links(@document_pages, :params => {:query => @query, :actor => params[:actor], :id => params[:id]} ) %>
+
+</div>

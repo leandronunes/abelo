@@ -66,15 +66,15 @@ var ComatoseList = {
     }
   },
   
-  toggle_reorder: function(node, anc, id) {
+  toggle_reorder: function(node, anc, id, reorder_text, finished_text) {
     if( $(node).hasClassName('do-reorder') ) {
       $(node).removeClassName( 'do-reorder' );
       $(anc).removeClassName('reordering');
-      $(anc).innerHTML = "reorder children";
+      $(anc).innerHTML = reorder_text;
     } else {
       $(node).addClassName( 'do-reorder' );
       $(anc).addClassName('reordering');
-      $(anc).innerHTML = "finished reordering";
+      $(anc).innerHTML = finished_text;
       // Make sure the children are visible...
       ComatoseList.expand_node(id);
     }
@@ -101,7 +101,7 @@ var ComatoseEditForm = {
   last_preview: {},
   last_title_slug: '',
   mode : null,
-  liquid_horiz: true,
+  liquid_horiz: false, // changed from true to false by terceiro
   width_offset: 325,
 
   // Initialize the page...
@@ -149,8 +149,8 @@ var ComatoseEditForm = {
     this.last_title = slug.value;
   },
   // Todo: Make the meta fields remember their visibility?
-  toggle_extra_fields : function(anchor) {
-    if(anchor.innerHTML == "More...") {
+  toggle_extra_fields : function(anchor, more_label, less_label) {
+    if(anchor.innerHTML == more_label) {
       Show.these(
         'slug_row',
         'keywords_row',
@@ -158,7 +158,7 @@ var ComatoseEditForm = {
         'filter_row',
         'created_row'
       );
-      anchor.innerHTML = 'Less...';
+      anchor.innerHTML = less_label;
     } else {
       Hide.these(
         'slug_row',
@@ -167,15 +167,15 @@ var ComatoseEditForm = {
         'filter_row',
         'created_row'
       );
-      anchor.innerHTML = 'More...';
+      anchor.innerHTML = more_label;
     }
   },
   // Uses server to create preview of content...
-  preview_content : function(preview_url) {
+  preview_content : function(preview_url, preview_label) {
     $('preview-area').show();
     var params = Form.serialize(document.forms[0]);
     if( params != this.last_preview ) {
-      $('preview-panel').innerHTML = "<span style='color:blue;'>Loading Preview...</span>";
+      $('preview-panel').innerHTML = "<span style='color:blue;'>" + preview_label + "</span>";
       new Ajax.Updater(
          'preview-panel',
          preview_url,
@@ -184,11 +184,11 @@ var ComatoseEditForm = {
     }
     this.last_preview = params;
   },
-  cancel : function(url) {
+  cancel : function(url, cancel_warning) {
     var current_data = Form.serialize(document.forms[0]);
     var data_changed = (this.default_data != current_data) 
     if(data_changed) {
-      if( confirm('Changes detected. You will lose all the updates you have made if you proceed...') ) {
+      if( confirm(cancel_warning) ) {
         location.href = url;
       }
     } else {
@@ -290,7 +290,30 @@ Object.extend(String.prototype, {
   toSlug: function() {
     // M@: Modified from Radiant's version, removes multple --'s next to each other
     // This is the same RegExp as the one on the page model...
-    return this.strip().downcase().replace(/[^-a-z0-9~\s\.:;+=_]/g, '').replace(/[\s\.:;=_+]+/g, '-').replace(/[\-]{2,}/g, '-');
+    return this.strip().transliterate().downcase().replace(/[^-a-z0-9~\s\.:;+=_]/g, '').replace(/[\s\.:;=_+]+/g, '-').replace(/[\-]{2,}/g, '-');
+  },
+  transliterate: function() {
+    var substitutions = [
+      { from: [ 'Á', 'À', 'À', 'Â', 'Ã', 'Ä' ], to: 'A' },
+      { from: [ 'á', 'à', 'à', 'â', 'ã', 'ä', 'ª' ], to: 'a' },
+      { from: [ 'É', 'È', 'Ê', 'Ë' ], to: 'E' },
+      { from: [ 'é', 'è', 'ê', 'ë' ], to: 'e' },
+      { from: [ 'Í', 'Ì', 'Î', 'Ï' ], to: 'I' },
+      { from: [ 'í', 'ì', 'î', 'ï' ], to: 'i' },
+      { from: [ 'Ó', 'Ò', 'Ô', 'Ö', 'Õ', 'º' ], to: 'O' },
+      { from: [ 'ó', 'ò', 'ô', 'ö', 'õ', 'º' ], to: 'o' },
+      { from: [ 'Ú', 'Ù', 'Û', 'Ü' ], to: 'U' },
+      { from: [ 'ú', 'ù', 'û', 'ü' ], to: 'u' },
+      { from: [ 'Ç' ], to: 'C' },
+      { from: [ 'ç' ], to: 'c' },
+      { from: [ 'Ñ' ], to: 'N' },
+      { from: [ 'ñ' ], to: 'n' },
+      { from: [ 'Ÿ' ], to: 'Y' },
+      { from: [ 'ÿ' ], to: 'y' },
+    ]
+    var res = this;
+    for (i in substitutions) { for (from in substitutions[i].from) { res = res.replace(substitutions[i].from[from], substitutions[i].to); } };
+    return res;
   }
 });
 

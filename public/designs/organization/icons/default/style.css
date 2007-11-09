@@ -26,6 +26,13 @@
 .print           { background-image: url(save.png) }
 .personal_data           { background-image: url(permissions.png) }
 
+/* * * Content Menu Icons * * */
+
+.product_icon  { background-image: url(product_icon.png); border: 2px solid red  }
+.worker_icon   { background-image: url(worker_icon.png); border: 2px solid red  }
+.supplier_icon { background-image: url(supplier_icon.png); border: 2px solid red  }
+.customer_icon { background-image: url(customer_icon.png); border: 2px solid red  }
+
 /* * * Menu Icons * * */
 
 .departments   { background-image: url(departments.png) }
@@ -40,8 +47,5 @@
 .store         { background-image: url(store.png) }
 .organizations { background-image: url(organizations.png) }
 .banks         { background-image: url(banks.png) }
-.product_icon  { background-image: url(banks.png); border: 2px solid red  }
-.worker_icon   { background-image: url(banks.png); border: 2px solid red  }
-.supplier_icon { background-image: url(banks.png); border: 2px solid red  }
-.customer_icon { background-image: url(banks.png); border: 2px solid red  }
+
 

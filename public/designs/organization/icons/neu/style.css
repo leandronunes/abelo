@@ -3,29 +3,53 @@
 /* Icons Dropline Neu (c) GPL, Silvestre Herrera <silvestre.herrera@gmail.com> */
 
 
-/* Icons Main */
+/* Menu Icons */
+.departments { background-image: url('48x48/network-workgroup.png'); }
+.ledgers { background-image: url('48x48/x-office-spreadsheet.png'); }
+.point_of_sale { background-image: url('48x48/window-new.png'); }
+.stock { background-image: url('48x48/package-x-generic.png'); }
+.documents { background-image: url('48x48/edit-paste.png'); }
+.categories { background-image: url('48x48/edit-select-all.png'); }
+.system_actors { background-image: url('48x48/graphics-svg-editor.png'); }
+.web_site_interface { background-image: url('48x48/applications-internet.png'); }
+.organizations { background-image: url('48x48/preferences-desktop.png'); }
+.banks { background-image: url('48x48/dialog-question.png'); }
+.permissions { background-image: url('48x48/system-lock-screen.png'); }
 
-#configuration { background-image: url('48x48/preferences-desktop.png'); }
-#ledgers { background-image: url('48x48/document-properties.png'); }
-#suppliers { background-image: url('48x48/dialog-question.png'); }
-#departments { background-image: url('48x48/network-offline.png'); }
-#customers { background-image: url('48x48/system-run.png'); }
-#point_of_sale { background-image: url('48x48/window-new.png'); }
-#contact_positions { background-image: url('48x48/preferences-user-information.png'); }
-#stock { background-image: url('48x48/package-x-generic.png'); }
-#products { background-image: url('48x48/help-about.png'); }
-#commercial_proposals { background-image: url('48x48/edit-paste.png'); }
-#store { background-image: url('48x48/emblem-pictures.png'); }
-#categories { background-image: url('48x48/edit-select-all.png'); }
-#cash_flows { background-image: url('48x48/x-office-spreadsheet.png'); }
-#permissions { background-image: url('48x48/system-lock-screen.png'); }
-#mass_mails { background-image: url('48x48/mail-reply-all.png'); }
-#workers { background-image: url('48x48/graphics-svg-editor.png'); }
-#previous_page { background-image: url('48x48/edit-redo.png'); }
-#next_page { background-image: url('48x48/edit-unredo.png'); }
+.product_icon  { background-image: url(48x48/address-book-new.png); border: 2px solid red  }
+.worker_icon   { background-image: url(48x48/applications-development.png); border: 2px solid red  }
+.supplier_icon { background-image: url(48x48/document-save.png); border: 2px solid red  }
+.customer_icon { background-image: url(48x48/battery-caution.png); border: 2px solid red  }
+
 
 /* Icons Bar Login */
-div.login_bar #goto { background-image: url('16x16/go-jump.png'); }
-div.login_bar #edit_profile { background-image: url('16x16/accessories-text-editor.png'); }
-div.login_bar #logout { background-image: url('16x16/system-log-out.png'); }
+.none_add       { background-image: url(none.png) }
+.add            { background-image: url(24x24/list-add.png) }
+.search         { background-image: url(24x24/system-search.png) }
+.edit_small     { background-image: url(16x16/accessories-text-editor.png) }
+.view_small     { background-image: url(16x16/x-office-document.png) }
+.del_small      { background-image: url(16x16/dialog-cancel.png) }
+.edit           { background-image: url(24x24/accessories-text-editor.png) }
+.save           { background-image: url(24x24/media-floppy.png) }
+.back           { background-image: url(24x24/go-previous.png) }
+.reset          { background-image: url(24x24/x-office-document.png) }
+.image          { background-image: url(24x24/applications-games.png) }
+.password       { background-image: url(24x24/dialog-password.png) }
+
+.go-jump { background-image: url('16x16/go-jump.png'); }
+.system-log-out { background-image: url('16x16/system-log-out.png'); }
+
+.previous_page  { background-image: url(16x16/go-previous.png) }
+.next_page      { background-image: url(16x16/go-next.png) }
+.new_entry      { background-image: url(16x16/list-add.png) }
+.history        { background-image: url(16x16/system-run.png) }
+.help           { background-image: url(16x16/dialog-question.png) }
+
+.show_documents_small { background-image: url(16x16/x-office-document.png) }
+.add_document_small   { background-image: url(16x16/edit-copy.png) }
+.document_small       { background-image: url(16x16/x-office-document.png) }
+.documents_small      { background-image: url(16x16/edit-copy.png) }
+.new_document_small   { background-image: url(16x16/edit-select-all.png) }
+.print           { background-image: url(16x16/printer.png) }
+.personal_data           { background-image: url(16x16/dialog-password.png) }
 

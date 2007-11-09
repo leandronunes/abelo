@@ -1,7 +1,18 @@
-<%= button "customer_icon", _("Customer"), :list, { :action => 'list', :category_type => 'customer' } %>
+<ul class='content_menu' >
+  <li>
+    <%= button 'customer_icon', _('Customer'), :list, { :action => 'list', :category_type => 'customer' } %>
+  </li>
 
-<%= button 'product_icon', _("Product"), :list, { :action => 'list', :category_type => 'product' } %>
+  <li>
+    <%= button 'product_icon', _('Product'), :list, { :action => 'list', :category_type => 'product' } %>
+  </li>
 
-<%= button "worker_icon", _("Worker"), :list, { :action => 'list', :category_type => 'worker' } %>
+  <li>
+    <%= button 'worker_icon', _('Worker'), :list, { :action => 'list', :category_type => 'worker' } %>
+  </li>
 
-<%= button "supplier_icon", _("Supplier"), :list, { :action => 'list', :category_type => 'supplier' } %>
+  <li>
+    <%= button 'supplier_icon', _('Supplier'), :list, { :action => 'list', :category_type => 'supplier' } %>
+  </li>
+
+</ul>

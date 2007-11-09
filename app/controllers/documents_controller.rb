@@ -22,7 +22,7 @@ class DocumentsController < ApplicationController
   end
 
   def index
-    redirect_to :action => 'list'
+    redirect_to :action => 'list', :models_list => true
   end
 
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)

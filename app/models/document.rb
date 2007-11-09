@@ -30,6 +30,7 @@ class Document < ActiveRecord::Base
   def validate
     self.errors.add(:document_model_id, _('You cannot have a document model in a model document')) if self.is_model? and not self.document_model.nil?
     self.errors.add( _('You have to choose almost an department to the document')) if  (not self.organization.nil?) and (not self.organization.departments.empty?) and (self.departments.empty?)
+    self.errors.add( _("You can't associate a person/organization to a document model'")) if self.is_model? and not self.owner.nil?
  # self.errors.add(:document_model_id, _('You cannot create a document from another that is not a model')) if !self.is_model? and !self.document_model.nil? and  !self.document_model.is_model?
 
   end

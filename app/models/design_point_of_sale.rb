@@ -1,17 +1,25 @@
 class DesignPointOfSale
 
-  attr_accessor :settings
+  attr_accessor :organization
+
+  def initialize(organization)
+    self.organization = organization 
+  end
 
   def self.design_root
     File.join('designs', 'point_of_sale')
   end
 
+  def self.public_filesystem_root
+    nil
+  end
+
   def design_data
-    self.settings ||= {}
+    self.organization.point_of_sale_design_data ||= {}
   end
 
   def design_data= data
-    self.settings = data
+    self.organization.point_of_sale_design_data = data
   end
 
   def template 

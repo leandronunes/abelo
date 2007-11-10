@@ -13,8 +13,7 @@ class PointOfSaleController < ApplicationController
   design :holder => :design_point_of_sale, :root => File.join('designs','point_of_sale')
 
   def design_point_of_sale
-    point_of_sale = DesignPointOfSale.new 
-    point_of_sale.design_data = @organization.point_of_sale_design_data unless @organization.nil?
+    point_of_sale = DesignPointOfSale.new(@organization)
     point_of_sale
   end
 

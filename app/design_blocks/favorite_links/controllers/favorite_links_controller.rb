@@ -48,7 +48,12 @@ class FavoriteLinksController < ApplicationController
   end
 
   def paginate_by_collection(collection, options = {})
-    page = params[:page].blank? ? 1 : params[:page].to_i
+#    page = params[:page].blank? ? 1 : params[:page].to_i
+    begin
+      page = params[:page].to_i
+    rescue Exception => e
+      page = 1
+    end
     items_per_page = @design_block.limit_number
     offset = (page - 1) * items_per_page
     link_pages = Paginator.new(self, collection.size, items_per_page, page)

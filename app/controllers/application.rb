@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   uses_tabbed_navigation
 
 #FIXME See if it's needed define a default holder
-#  design :holder => 'environment'
+#  design :holder => 'web_site'
 
   # declares that the given <tt>actions</tt> cannot be accessed by other HTTP
   # method besides POST.
@@ -176,12 +176,14 @@ class ApplicationController < ActionController::Base
     layout 'default'
   end
 
-  before_filter :detect_stuff_by_domain
-
   # TODO: move this logic somewhere else (Domain class?)
   def detect_stuff_by_domain
     @domain = Domain.find_by_name(request.host)
-    unless @domain.nil?
+    if @domain.nil?
+      path = request.path.split('/')
+      @organization = Organization.find_by_identifier(path[2]) if path[1] == 'homepage'
+      @environment = @organization.environment
+    else
       @environment = @domain.environment
     end
   end  

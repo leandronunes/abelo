@@ -1,9 +1,10 @@
 class ContentViewerController < ApplicationController
 
+  layout 'web_site'
 
-  def index
-    redirect_to :action => 'view_page'
-  end
+  design :holder => 'environment'
+
+  before_filter :detect_stuff_by_domain
 
   def view_page
     path = params[:page].clone

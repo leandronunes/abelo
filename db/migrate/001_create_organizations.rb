@@ -6,6 +6,7 @@ class CreateOrganizations < ActiveRecord::Migration
       t.column :cnpj,                        :string, :limit => 14
       t.column :design_data,                 :text
       t.column :point_of_sale_design_data,   :text
+      t.column :web_site_design_data,        :text
       t.column :presentation,                :text
       t.column :identifier,                  :string, :null => false
     end

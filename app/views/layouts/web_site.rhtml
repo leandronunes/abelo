@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+<html class="controller-<%= params[:controller] %> action-<%= params[:action] %>">
+  <head>
+    <title> <%= @organization.name %> </title>
+    <%= design_all_header_tags %>
+    <link rel="shortcut icon" href="<%=image_path('logo.ico')%>" />
+  </head>
+
+  <body >
+    <div id="warp">
+      <div id="frame">
+
+        <div id="header">
+          <div id="path_away"> </div>
+          <div id="userbar"> </div>
+        </div>
+        <div id="container">
+          <div id="content">
+            <%= design_display(yield) %>
+          </div>
+        </div>
+
+        <div id="control_container">
+        </div>
+
+        <div id="others">
+        </div>
+
+      </div>
+
+      <div id='menu'>
+      </div>
+
+    </div>
+
+    <div id="footer">
+      <%= footer %>
+    </div>
+  </body>
+</html>

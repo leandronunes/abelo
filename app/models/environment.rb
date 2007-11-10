@@ -7,7 +7,15 @@ class Environment < ActiveRecord::Base
   # Relationships and applied behaviour
   # #################################################
 
-  acts_as_design :root => File.join('designs', 'web') 
+  acts_as_design 
+
+  def design_root
+    if self.is_default?
+      File.join('designs', 'organization')
+    else
+      File.join('designs', 'web_site')
+    end
+  end
 
   # One Environment can be reached by many domains
   has_many :domains, :as => :owner
@@ -35,6 +43,10 @@ class Environment < ActiveRecord::Base
   # the default Environment.
   def self.default
     self.find(:first, :conditions => [ 'is_default = ?', true ] )
+  end
+
+  def is_default?
+    self.is_default == true
   end
 
 end

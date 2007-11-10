@@ -8,7 +8,8 @@ class CmsController < ComatoseAdminController
 
   uses_tabbed_navigation
 
-  design :holder => 'environment'
+  design :interface_holder => 'organization', :content_holder => 'environment'
+
   before_filter :load_organization
   before_filter :load_environment
   before_filter :create_web_site_tabs

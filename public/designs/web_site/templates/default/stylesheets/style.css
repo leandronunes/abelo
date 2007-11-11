@@ -84,8 +84,8 @@ z-index:1;
 
 #container{
 position:absolute;
-width:245px;
-height:240px;
+width:745px; /*FIXME 245 */
+height:540px; /*FXIME 240*/
 overflow:hidden;
 top:110px;
 left:177px;

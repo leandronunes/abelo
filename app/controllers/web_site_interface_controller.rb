@@ -16,6 +16,7 @@ class WebSiteInterfaceController < ApplicationController
     %w[
        FavoriteLinksWebSite
        ComatoseMenuWebSite
+       ProductStore
      ] 
   end
 

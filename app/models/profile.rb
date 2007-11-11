@@ -154,6 +154,7 @@ class Profile < ActiveRecord::Base
       { 'controller' => 'favorite_links_web_site', 'action' => '*' },
       { 'controller' => 'favorite_links_organization', 'action' => '*' },
       { 'controller' => 'comatose_menu_web_site', 'action' => '*' },
+      { 'controller' => 'product_store', 'action' => '*' },
     ],
     'other' => []
   }

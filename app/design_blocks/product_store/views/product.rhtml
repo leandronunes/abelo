@@ -1,0 +1,16 @@
+<%= category_hierarchy @product.category %> 
+
+<h2><%= @product.description %></h2>
+<% @product.images.each do |i|%>
+<%= show_image i %>
+<% end %>
+<ul>
+  <li> <%= product_title(_('Price:')) %>  <%= @product.sell_price  %></li>
+  <li> <%= product_title(_('Unit:')) %> <%= @product.unit %></li>
+  <% if !@product.size.blank? %>
+    <li>  <%= product_title(_('Size:')) + @product.size %></li>
+  <% end %>
+  <% if !@product.color.blank? %>
+    <li> <%= product_title(_('Color:')) + @product.color %></li>
+  <% end %>
+</ul>

@@ -1,6 +1,5 @@
 # Methods added to this helper will be available to all templates in the application.
 module ComatoseMenuHelper
-
   def comatose_menu(menu_itens, html_class = '',  father_path = '')
     content_tag(:ul,
       menu_itens.map do |menu|

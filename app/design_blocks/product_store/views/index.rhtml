@@ -1,0 +1,10 @@
+<%= category_hierarchy @category %>
+
+<ul id="store_list">
+  <% @categories.each do |pc| %>
+    <li>
+       <%= image_link randon(pc.category_images), :url => { :action => 'category', :category_id => pc } %> 
+       <%= design_link_to_remote pc.name, :url => { :action => 'category', :category_id => pc } %> 
+    </li>
+  <% end %>
+</ul>

@@ -7,7 +7,7 @@ class Environment < ActiveRecord::Base
   # Relationships and applied behaviour
   # #################################################
 
-  acts_as_design 
+  acts_as_design :root =>  File.join('designs', 'organization')
 
   def design_root
     if self.is_default?

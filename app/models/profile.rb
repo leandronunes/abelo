@@ -153,6 +153,7 @@ class Profile < ActiveRecord::Base
       { 'controller' => 'web_site_interface', 'action' => '*' },
       { 'controller' => 'favorite_links_web_site', 'action' => '*' },
       { 'controller' => 'favorite_links_organization', 'action' => '*' },
+      { 'controller' => 'comatose_menu_web_site', 'action' => '*' },
     ],
     'other' => []
   }

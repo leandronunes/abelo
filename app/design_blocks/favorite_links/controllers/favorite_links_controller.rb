@@ -1,9 +1,5 @@
 class FavoriteLinksController < ApplicationController
 
-#  needs_organization
-
-#  acts_as_design_block
-
   CONTROL_ACTION_OPTIONS = {
     'edit' => _('Edit'),
     'manage_links' => _('Manage Links')
@@ -48,12 +44,7 @@ class FavoriteLinksController < ApplicationController
   end
 
   def paginate_by_collection(collection, options = {})
-#    page = params[:page].blank? ? 1 : params[:page].to_i
-    begin
-      page = params[:page].to_i
-    rescue Exception => e
-      page = 1
-    end
+    page = params[:favorite_link_page].blank? ? 1 : params[:favorite_link_page].to_i
     items_per_page = @design_block.limit_number
     offset = (page - 1) * items_per_page
     link_pages = Paginator.new(self, collection.size, items_per_page, page)

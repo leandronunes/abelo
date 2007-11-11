@@ -1,7 +1,5 @@
 class ContentViewerController < ApplicationController
 
-  layout 'web_site'
-
   design :holder => 'environment'
 
   before_filter :detect_stuff_by_domain
@@ -14,6 +12,7 @@ class ContentViewerController < ApplicationController
     if @page.nil?
       render :action => 'not_found', :status => 404
     end
+    render :action => params[:action], :layout => File.join('organizations', params[:organization_nickname])
   end
 
 end

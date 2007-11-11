@@ -1,12 +1,9 @@
 class DepartmentsController < ApplicationController
 
-
-  auto_complete_for :department, :name
-
   needs_organization
 
-  protect [:index, :list, :show, :autocomplete_name, :department_tabs ], 'view_department', :organization
-  protect [:new, :edit, :create, :update ], 'edit_department', :organization
+#  protect [:index, :list, :show, :autocomplete_name, :department_tabs ], 'view_department', :organization
+#  protect [:new, :edit, :create, :update ], 'edit_department', :organization
 
   before_filter :department_tabs
 

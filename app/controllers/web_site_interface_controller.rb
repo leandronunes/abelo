@@ -15,6 +15,7 @@ class WebSiteInterfaceController < ApplicationController
    def block_types
     %w[
        FavoriteLinksWebSite
+       ComatoseMenuWebSite
      ] 
   end
 

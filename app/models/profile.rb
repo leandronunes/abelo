@@ -132,7 +132,6 @@ class Profile < ActiveRecord::Base
       { 'controller' => 'stock', 'action' => '*' },
       { 'controller' => 'stock_in', 'action' => '*' },
       { 'controller' => 'stock_out', 'action' => '*' },
-      { 'controller' => 'store', 'action' => '*' },
       { 'controller' => 'permissions', 'action' => '*' },
       { 'controller' => 'system_actors', 'action' => '*' },
       { 'controller' => 'point_of_sale', 'action' => '*' },

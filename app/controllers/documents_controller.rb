@@ -48,12 +48,11 @@ class DocumentsController < ApplicationController
 
   def show
     @document = @organization.documents.find(params[:id])
-    @departments = @document.departments
   end
 
   def new
     begin
-      model = Document.find(params[:document_model_id])
+      model = @organization.documents.find(params[:document_model_id])
       @document = model.dclone
       @title = _('New Document from model %s') % model.name
     rescue

@@ -184,7 +184,7 @@ class SystemActorsController < ApplicationController
     check_actor_presence
     @document = Document.new(params[:document])
     @document.organization = @organization
-    @document.owner = SystemActor.find(params[:id])
+    @document.owner = @organization.system_actors.find(params[:id])
     if @document.save
       flash[:notice] = _('The document was successfully created.')
       redirect_to :action => 'list_documents', :actor => params[:actor], :id => params[:id]

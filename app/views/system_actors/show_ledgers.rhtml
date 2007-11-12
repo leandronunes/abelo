@@ -1,12 +1,7 @@
+
+<%= render :partial => 'menu' %>
+
 <%= title _('Listing Ledgers') %>
 
-<% unless @ledger_sales.empty? %> 
-
-  <h2> <%= _('Ledgers') %>  </h2>
-
-  <div id="financial_table">
-    <%= render :partial => 'display_ledgers_table' %>
-  </div>
-
-<% end %>
+<%= render :partial => 'shared_financial/display_financial_table' %>
 

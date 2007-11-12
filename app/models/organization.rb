@@ -205,7 +205,6 @@ class Organization < ActiveRecord::Base
   def ledgers_by_all(accounts, tags, categories, start_date, end_date, query = nil)
     return [] if accounts.blank? or !accounts.all?{|a| self.bank_accounts.include?(a)}
     ledger_banks = ledgers_by_bank_account(accounts)
-    tags = tags_by_bank_account(accounts).collect{|t| t.name}.join(',') if tags.blank?
     ledger_tags = ledgers_by_tag(tags, accounts)
     ledger_dates = ledgers_by_dates(start_date, end_date, accounts)
     ledger_categories = ledgers_by_categories(categories, accounts)

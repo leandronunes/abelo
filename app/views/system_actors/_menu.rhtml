@@ -1,3 +1,5 @@
-<%= button "personal_data", _("Personal Data"), :show, { :action => 'show', :actor => params[:actor], :id => params[:id]} %>
-<%= button "ledgers", _("Ledgers"), :list, { :action => 'show_ledgers', :actor => params[:actor], :id => params[:id] } %>
-<%= button "documents", _('Documents'), :list, { :action => 'list_documents', :actor => params[:actor], :id => params[:id] }%>
+<ul class="content_menu">
+  <li> <%= button "personal_data", _("Personal Data"), :show, { :action => 'show', :actor => params[:actor], :id => params[:id]} %> </li>
+  <li> <%= button "ledgers", _("Ledgers"), :list, { :action => 'show_ledgers', :actor => params[:actor], :id => params[:id] } %> </li>
+  <li> <%= button "documents", _('Documents'), :list, { :action => 'list_documents', :actor => params[:actor], :id => params[:id] }%> </li>
+</ul>

@@ -3,8 +3,6 @@
 
 <%= display_list_options 'ledger', 'description', :chosen_accounts => @chosen_accounts.ids, :tags => @chosen_tags.join(','), :accounts => @chosen_accounts.ids, :categories => @chosen_categories.ids  %>
 
-<div id="financial_table">
-  <%= render :partial => 'display_table' %>
-</div>
+<%= render :partial => 'shared_financial/display_financial_table' %>
  
  

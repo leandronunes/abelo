@@ -8,6 +8,8 @@ class SystemActorsController < ApplicationController
 
   uses_register_tabs
 
+  include FinancialInformation
+
   SYSTEM_ACTORS = {
     'customer' => _('Customer'),
     'worker' => _('Workers'),
@@ -56,13 +58,26 @@ class SystemActorsController < ApplicationController
   def show
     check_actor_presence
     @system_actor = @organization.system_actors.find(params[:id])
-    @ledger_sales = @system_actor.ledgers_by_sales
   end
+
+
 
   def show_ledgers
     check_actor_presence
     @system_actor = @organization.system_actors.find(params[:id])
-    @ledger_sales = @system_actor.ledgers_by_sales
+    get_financial_variables(@system_actor)
+    ledgers = @system_actor.sale_ledgers_by_all(@chosen_accounts, @chosen_tags, @chosen_categories, @start_date, @end_date, @query)
+    @ledger_pages, @ledgers = paginate_by_collection ledgers
+
+  end
+
+  def display_financial_table
+    system_actor = @organization.system_actors.find(params[:id])
+    get_financial_variables(system_actor)
+    ledgers = system_actor.sale_ledgers_by_all(@chosen_accounts, @chosen_tags, @chosen_categories, @start_date, @end_date, @query)
+    @ledger_pages, @ledgers = paginate_by_collection ledgers
+
+    render :partial => 'shared_financial/display_financial_table'
   end
 
   def list_documents

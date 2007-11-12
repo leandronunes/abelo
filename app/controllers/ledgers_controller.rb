@@ -4,6 +4,8 @@ class LedgersController < ApplicationController
 
   needs_organization
 
+  include FinancialInformation
+
 #  protect [:index, :list, :show, :autocomplete_description, :select_category, :get_periodicity_informations, :get_interval_informations], 'view_ledger', :organization
 #  protect [:new, :edit, :create, :update ], 'edit_ledger', :organization
 
@@ -29,45 +31,9 @@ class LedgersController < ApplicationController
   # The ledgers are of the bank account passed as parameter. If no bank account is passed
   # as parameter the ledgers are of the default bank account of the organization.
   def list
-    @chosen_categories = params[:categories].blank? ? Array.new : params[:categories].split(',') 
-    @chosen_categories.delete(params[:chosen_category])
+    get_financial_variables(@organization)
 
-    @chosen_tags = params[:tags].blank? ? Array.new : params[:tags].split(',') 
-    @chosen_tags.delete(params[:chosen_tag])
-
-
-    @query = params[:query]
-    @query ||= params[:ledger][:description] if params[:ledger]
-
-    begin
-      @chosen_accounts = params[:accounts].split(',')
-      @chosen_accounts.delete(params[:chosen_account])
-      @chosen_accounts = @organization.bank_accounts.find(@chosen_accounts)
-    rescue
-      @chosen_accounts = [@organization.default_bank_account]
-    end
-    
-    begin
-      @chosen_categories = @organization.ledger_categories.find(@chosen_categories)
-    rescue
-      @chosen_categories = Array.new
-    end
-    
-    start_date = Date.new(Date.today.year, Date.today.month, 1)
-    @start_date_day = start_date.day
-    @start_date_month = start_date.month
-    @start_date_year = start_date.year
-
-    end_date = Date.end_of_month(start_date)
-    @end_date_day = end_date.day
-    @end_date_month = end_date.month
-    @end_date_year = end_date.year
-
-    @bank_accounts = @organization.bank_accounts
-    @ledger_categories = @organization.ledger_categories
-    @tags = @organization.tags_by_bank_account(@chosen_accounts)
-
-    ledgers = @organization.ledgers_by_all(@chosen_accounts, @chosen_tags, @chosen_categories, start_date, end_date, @query)
+    ledgers = @organization.ledgers_by_all(@chosen_accounts, @chosen_tags, @chosen_categories, @start_date, @end_date, @query)
 
     @ledger_pages, @ledgers = paginate_by_collection ledgers
 
@@ -77,56 +43,14 @@ class LedgersController < ApplicationController
   # organization. 
   # If no bank account is passed as parameter it displays the ledgers
   # of the default bank account.
-  def display_table
-    @chosen_categories = params[:categories].blank? ? Array.new : params[:categories].split(',') 
-    @chosen_categories.delete(params[:chosen_category])
+  def display_financial_table
+    get_financial_variables(@organization)
 
-    @chosen_tags = params[:tags].blank? ? Array.new : params[:tags].split(',') 
-    @chosen_tags.delete(params[:chosen_tag])
-
-    @chosen_accounts = params[:accounts].split(',')
-    @chosen_accounts.delete(params[:chosen_account])
-   
-    begin 
-      end_date = Date.new(params[:end_date_year].to_i, params[:end_date_month].to_i, params[:end_date_day].to_i)
-    rescue
-      end_date = Date.new
-    end
-     
-    begin
-      start_date = Date.new(params[:start_date_year].to_i, params[:start_date_month].to_i, params[:start_date_day].to_i)
-    rescue
-      start_date = Date.new
-    end
-
-    end_date = Date.end_of_month(start_date) if end_date < start_date 
-    @start_date_day = start_date.day
-    @start_date_month = start_date.month
-    @start_date_year = start_date.year
-
-    @end_date_day = end_date.day
-    @end_date_month = end_date.month
-    @end_date_year = end_date.year
-    @query = params[:query]
-
-    begin
-      @chosen_accounts = @organization.bank_accounts.find(@chosen_accounts)
-      @chosen_categories = @organization.ledger_categories.find(@chosen_categories)
-    rescue
-      @chosen_categories = Array.new
-      @chosen_accounts = Array.new
-    end
-    
-
-    @bank_accounts = @organization.bank_accounts
-    @ledger_categories = @organization.ledger_categories
-    @tags = @organization.tags_by_bank_account(@chosen_accounts)
-
-    ledgers = @organization.ledgers_by_all(@chosen_accounts, @chosen_tags, @chosen_categories, start_date, end_date, @query)
+    ledgers = @organization.ledgers_by_all(@chosen_accounts, @chosen_tags, @chosen_categories, @start_date, @end_date, @query)
 
     @ledger_pages, @ledgers = paginate_by_collection ledgers
 
-    render :partial => 'display_table'
+    render :partial => 'shared_financial/display_financial_table'
   end
 
   def show
@@ -227,20 +151,13 @@ class LedgersController < ApplicationController
       render :template => 'shared/not_found'
       return
     end
-
-    @chosen_categories = Array.new
-    @chosen_tags = Array.new 
-
-    @chosen_accounts = [ledger.bank_account]
     ledger.destroy
-    ledgers = @organization.ledgers_by_bank_account(@chosen_accounts)
+    get_financial_variables(@organization)
+    ledgers = @organization.ledgers_by_all(@chosen_accounts, @chosen_tags, @chosen_categories, @start_date, @end_date, @query)
+
     @ledger_pages, @ledgers = paginate_by_collection ledgers
 
-    @bank_accounts = @organization.bank_accounts
-    @ledger_categories = @organization.ledger_categories
-    @tags = @organization.tags_by_bank_account(@chosen_accounts)
-
-    render :partial => 'display_table'
+    render :partial => 'shared_financial/display_financial_table'
   end
 
 end

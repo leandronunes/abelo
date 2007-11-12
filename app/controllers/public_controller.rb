@@ -9,17 +9,14 @@ class PublicController < ApplicationController
   end
 
   def edit_user
-#   render :text => params.inspect
-#   return
     @user = current_user
-   # @user = User.find(params[:id])
   end 
 
   def update_user
-    @user = User.find(params[:id])
+    @user = current_user
     if @user.update_attributes(params[:user])
       flash[:notice] = _('User was successfully updated.')
-      redirect_to :action => 'list'
+      redirect_to :action => 'index'
     else
       render :action => 'edit'
     end

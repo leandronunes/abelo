@@ -491,7 +491,7 @@ module ApplicationHelper
   alias :display_new_info_options :display_edit_info_options 
 
   # Deprecated use display_field_form function
-  def display_field_edit(object, field, info = {})
+  def display_field_form(object, field, info = {})
     return '' if @organization.nil? and !current_user.administrator?
     return '' if !current_user.administrator? and @organization.send("#{object.class.to_s}Display".tableize).detect{|d| d.field == field}.nil?
 
@@ -507,7 +507,7 @@ module ApplicationHelper
     )
   end
 
-  alias :display_field_form :display_field_edit
+  alias :display_field_edit :display_field_form
  
   #######################################
   # Display Field Methods

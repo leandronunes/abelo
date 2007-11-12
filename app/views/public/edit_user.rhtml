@@ -1,6 +1,32 @@
 
 <%= title(_('Editing user')) %>
-<% form_tag :action => 'update_user', :id => @user do %>
-  <%= render :partial => 'form' %>   
+<% form_tag :action => 'update_user' do %>
+  <%= error_messages_for 'user' %>
+
+  <!--[form:user]-->
+  <div id='info_form'>
+  
+    <div class='info_field'>
+      <label> <%= _('Login') %></label>
+      <span class='field'> <%= text_field('user', 'login') %> </span>
+    </div>
+  
+    <div class='info_field'>
+      <label> <%=  _('E-mail') %></label>
+      <span class='field'> <%= text_field('user', 'email') %> </span>
+    </div>
+    <div class='info_field'>
+      <label> <%= _('Password') %></label>
+      <span class='field'> <%= text_field('user', 'password') %> </span>
+    </div>
+  
+    <div class='info_field'>
+      <label> <%= _('Confirm Password') %></label>
+      <span class='field'> <%= text_field('user', 'password_confirmation') %> </span>
+    </div>
+  
+    <br style= 'clear: left;' />
+  </div>
+ 
   <%= display_edit_info_options(@user) %>
 <% end %>

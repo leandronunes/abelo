@@ -2,6 +2,13 @@ class BanksController < ApplicationController
 
   needs_administrator
 
+  def autocomplete_name
+    escaped_string = Regexp.escape(params[:bank][:name])
+    re = Regexp.new(escaped_string, "i")
+    @banks = Bank.find(:all).select { |b| b.name.match re}
+    render :layout=>false
+  end
+
   def index
     redirect_to :action => 'list'
   end

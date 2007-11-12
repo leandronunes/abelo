@@ -1,7 +1,5 @@
 class ProductsController < ApplicationController
 
-  auto_complete_for :product, :name
-
   needs_organization
 
   uses_register_tabs

@@ -1,8 +1,8 @@
-<h1>New bank</h1>
+<%= title(_('New Bank')) %>
 
 <% form_tag :action => 'create' do %>
   <%= render :partial => 'form' %>
-  <%= submit_tag "Create" %>
+
+  <%= display_new_info_options @bank %>
 <% end %>
 
-<%= link_to 'Back', :action => 'list' %>

@@ -1,42 +1,8 @@
 <%= title _('List of banks') %>
 
-<% display_collection @banks do |item|%>
-  <div class="list_item_name">
-    <strong> <%= _('Name:') %> </strong>
-    <span> <%= item.name %>  </span>
-  </div>
-  <div class="list_item_code">
-    <strong> <%= _('Code:') %>   </strong>
-    <span> <%= item.code %>  </span>
-  </div>
-  <div class="list_item_site">
-    <strong> <%= _('Site:') %>   </strong>
-    <span> <%= item.site %>  </span>
-  </div>
-<% end %>
-
-<table>
-  <tr>
-  <% for column in Bank.content_columns %>
-    <th><%= column.human_name %></th>
-  <% end %>
-  </tr>
+<%= display_list_options 'bank', 'name' %>
+    
+<%= display_collection @banks %>
   
-<% for bank in @banks %>
-  <tr>
-  <% for column in Bank.content_columns %>
-    <td><%=h bank.send(column.name) %></td>
-  <% end %>
-    <td><%= link_to 'Show', :action => 'show', :id => bank %></td>
-    <td><%= link_to 'Edit', :action => 'edit', :id => bank %></td>
-    <td><%= link_to 'Destroy', { :action => 'destroy', :id => bank }, :confirm => 'Are you sure?', :method => :post %></td>
-  </tr>
-<% end %>
-</table>
+<%= pagination_links(@bank_pages, :params => {:query => @query}) %>
 
-<%= link_to 'Previous page', { :page => @bank_pages.current.previous } if @bank_pages.current.previous %>
-<%= link_to 'Next page', { :page => @bank_pages.current.next } if @bank_pages.current.next %> 
-
-<br />
-
-<%= link_to 'New bank', :action => 'new' %>

@@ -1,10 +1,25 @@
 <%= error_messages_for 'bank' %>
 
-<!--[form:bank]-->
-<p><label for="bank_name">Name</label><br/>
-<%= text_field 'bank', 'name'  %></p>
+<% display_form_info @product do |item| %>
 
-<p><label for="bank_code">Code</label><br/>
-<%= text_field 'bank', 'code'  %></p>
+  <%= display_field_form(item, 'name',
+        :title => _('Name'),
+        :content => text_field('bank', 'name')
+      )
+  %>
+
+  <%= display_field_form(item, 'code',
+        :title => _('Code'),
+        :content => text_field('bank', 'code')
+      )
+  %>
+
+  <%= display_field_form(item, 'site',
+        :title => _('Web Site'),
+        :content => text_field('bank', 'site')
+      )
+  %>
+<% end %>
+
 <!--[eoform:bank]-->
 

@@ -12,7 +12,6 @@
       'ledgers'                             => _('Financial'),
       'documents'                           => _('Documents'),
       'departments'                         => _('Departments'),
-      'admin_configurations'                => _('Configurations'),
       'organizations'                       => _('Organizations'),
       'banks'                               => _('Banks'),
     }

@@ -1,9 +1,6 @@
-<h1>Editing bank</h1>
+<%= title(_('Editing Bank')) %>
 
 <% form_tag :action => 'update', :id => @bank do %>
   <%= render :partial => 'form' %>
-  <%= submit_tag 'Edit' %>
+  <%= display_edit_info_options(@bank) %>
 <% end %>
-
-<%= link_to 'Show', :action => 'show', :id => @bank %> |
-<%= link_to 'Back', :action => 'list' %>

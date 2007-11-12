@@ -7,16 +7,13 @@ class ApplicationController < ActionController::Base
   require 'extended_date'
   include LoadOrganization
   include LoadEnvironment
-  
+
 #TODO uncomment this when needed
 #  def rescue_action(e)
 #    render_error('', e)
 #  end
 
   uses_tabbed_navigation
-
-#FIXME See if it's needed define a default holder
-#  design :holder => 'web_site'
 
   # declares that the given <tt>actions</tt> cannot be accessed by other HTTP
   # method besides POST.

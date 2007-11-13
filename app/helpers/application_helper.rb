@@ -277,7 +277,7 @@ module ApplicationHelper
         [
           collection.map do |c|
             content_tag(:li, 
-              c.field.camelcase +
+              c.class.describe(c.field) +
               set_of_organization_display_configuration(object, display_class, c).join("\n"),
               :id => "item_#{c.id}"
             )  

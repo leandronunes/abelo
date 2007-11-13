@@ -37,6 +37,7 @@ class Organization < ActiveRecord::Base
   has_many :periodicity_displays, :through => :configuration
   has_many :mass_mail_displays, :through => :configuration
   has_many :document_displays, :through => :configuration
+  has_many :display_configurations, :through => :configuration
   # End displays has_many methods
   
   has_many :departments

@@ -1,0 +1,2 @@
+module OrganizationConfigurationHelper
+end

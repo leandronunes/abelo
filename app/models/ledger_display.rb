@@ -34,7 +34,7 @@ class LedgerDisplay < DisplayConfiguration
       'interests' => _('Interests'),
       'interests_days' => _('Periodicity of Intersts'),
       'number_of_parcels' => _('Number of Parcels'),
-      'parcel_number' => _('Number of Parcels'),
+      'parcel_number' => _('Parcel Number'),
       'operational' => _('Is Operational?'),
       'bank_account_id' => _('Bank Account'),
       'is_foreseen' => _('Is foreseen'),

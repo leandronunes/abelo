@@ -1,0 +1,263 @@
+<%= title _("Fields Configuration of %s") % @organization.name %>
+
+<% if @configuration.has_worker_module? %>
+<div class="field_item">
+  <div>
+    <strong><%= _('Worker Fields') %></strong>
+    <ul>
+      <% @worker_fields.each do |@field| %>
+        <%= render :partial => 'field_display' %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<% end %>
+
+<% if @configuration.has_worker_category_module? %>
+<div class="field_item">
+  <div>
+    <strong><%= _('Worker Category Fields') %></strong>
+    <ul>
+      <% @worker_category_fields.each do |@field| %>
+        <%= render :partial => 'field_display' %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<% end %>
+
+<% if @configuration.has_customer_module? %>
+<div class="field_item">
+  <div>
+    <strong><%= _('Customer Fields') %></strong>
+    <ul>
+      <% @customer_fields.each do |@field| %>
+        <%= render :partial => 'field_display' %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<% end %>
+
+<% if @configuration.has_customer_category_module? %>
+<div class="field_item">
+  <div>
+    <strong><%= _('Customer Category Fields') %></strong>
+    <ul>
+      <% @customer_category_fields.each do |@field| %>
+        <%= render :partial => 'field_display' %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<% end %>
+
+<% if @configuration.has_supplier_module? %>
+<div class="field_item">
+  <div>
+    <strong><%= _('Supplier Fields') %></strong>
+    <ul>
+      <% @supplier_fields.each do |@field| %>
+        <%= render :partial => 'field_display' %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<% end %>
+
+<% if @configuration.has_supplier_category_module? %>
+<div class="field_item">
+  <div>
+    <strong><%= _('Supplier Category Fields') %></strong>
+    <ul>
+      <% @supplier_category_fields.each do |@field| %>
+        <%= render :partial => 'field_display' %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<% end %>
+
+<% if @configuration.has_product_module? %>
+<div class="field_item">
+  <div>
+    <strong><%= _('Product Fields') %></strong>
+    <ul>
+      <% @product_fields.each do |@field| %>
+        <%= render :partial => 'field_display' %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<% end %>
+
+<% if @configuration.has_product_category_module? %>
+<div class="field_item">
+  <div>
+    <strong><%= _('Product Category Fields') %></strong>
+    <ul>
+      <% @product_category_fields.each do |@field| %>
+        <%= render :partial => 'field_display' %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<% end %>
+
+<% if @configuration.has_department_module? %>
+<div class="field_item">
+  <div>
+    <strong><%= _('Department Fields') %></strong>
+    <ul>
+      <% @department_fields.each do |@field| %>
+        <%= render :partial => 'field_display' %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<% end %>
+
+<% if @configuration.has_ledger_category_module? %>
+<div class="field_item">
+  <div>
+    <strong><%= _('Ledger Category Fields') %></strong>
+    <ul>
+      <% @ledger_category_fields.each do |@field| %>
+        <%= render :partial => 'field_display' %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<% end %>
+
+<% if @configuration.has_bank_account_module? %>
+<div class="field_item">
+  <div>
+    <strong><%= _('Bank Account Fields') %></strong>
+    <ul>
+      <% @bank_account_fields.each do |@field| %>
+        <%= render :partial => 'field_display' %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<% end %>
+
+<% if @configuration.has_money_module? %>
+<div class="field_item">
+  <div>
+    <strong><%= _('Money Fields') %></strong>
+    <ul>
+      <% @money_fields.each do |@field| %>
+        <%= render :partial => 'field_display' %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<% end %>
+
+<% if @configuration.has_check_module? %>
+<div class="field_item">
+  <div>
+    <strong><%= _('Check Fields') %></strong>
+    <ul>
+      <% @check_fields.each do |@field| %>
+        <%= render :partial => 'field_display' %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<% end %>
+
+<% if @configuration.has_credit_card_module? %>
+<div class="field_item">
+  <div>
+    <strong><%= _('Credit Card Fields') %></strong>
+    <ul>
+      <% @credit_card_fields.each do |@field| %>
+        <%= render :partial => 'field_display' %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<% end %>
+
+<% if @configuration.has_debit_card_module? %>
+<div class="field_item">
+  <div>
+    <strong><%= _('Debit Card Fields') %></strong>
+    <ul>
+      <% @debit_card_fields.each do |@field| %>
+        <%= render :partial => 'field_display' %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<% end %>
+
+<% if @configuration.has_stock_virtual_module? %>
+<div class="field_item">
+  <div>
+    <strong><%= _('Stock Virtual Fields') %></strong>
+    <ul>
+      <% @stock_virtual_fields.each do |@field| %>
+        <%= render :partial => 'field_display' %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<% end %>
+
+<% if @configuration.has_stock_in_module? %>
+<div class="field_item">
+  <div>
+    <strong><%= _('Stock In Fields') %></strong>
+    <ul>
+      <% @stock_in_fields.each do |@field| %>
+        <%= render :partial => 'field_display' %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<% end %>
+
+<% if @configuration.has_stock_out_module? %>
+<div class="field_item">
+  <div>
+    <strong><%= _('Stock Out Fields') %></strong>
+    <ul>
+      <% @stock_out_fields.each do |@field| %>
+        <%= render :partial => 'field_display' %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<% end %>
+
+<% if @configuration.has_user_module? %>
+<div class="field_item">
+  <div>
+    <strong><%= _('User Fields') %></strong>
+    <ul>
+      <% @user_fields.each do |@field| %>
+        <%= render :partial => 'field_display' %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<% end %>
+
+<% if @configuration.has_periodicity_module? %>
+<div class="field_item">
+  <div>
+    <strong><%= _('Periodicity Fields') %></strong>
+    <ul>
+      <% @periodicity_fields.each do |@field| %>
+        <%= render :partial => 'field_display' %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<% end %>
+
+<%= button('edit', _('Edit'), :list, :action => 'edit') %> 

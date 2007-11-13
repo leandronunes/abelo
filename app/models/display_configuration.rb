@@ -2,7 +2,15 @@ class DisplayConfiguration < ActiveRecord::Base
 
   belongs_to :configuration
 
+  validates_presence_of :configuration_id
   validates_uniqueness_of :field, :scope => :configuration_id
+#  validates_uniqueness_of :position, :scope => :configuration_id
+
+  before_validation_on_create do |display|
+    unless display.configuration.nil?
+      display.position ||= (display.configuration.send(display.class.name.tableize).map(&:position).max || 0) + 1
+    end
+  end
 
   def validate
     self.errors.add(:field, _("The field %s is not a valid field") % self.field ) unless self.class.available_fields.include?(self.field)
@@ -16,6 +24,18 @@ class DisplayConfiguration < ActiveRecord::Base
 
   def self.title
     raise "You have to define a title class method to class "
+  end
+
+  def switch(field)
+    field = field.class.find(field.id) #FIXME see a better way to the object don't came as read only
+    temp_position = self.position
+    self.position = field.position
+    field.position = temp_position
+  
+    transaction do 
+      field.save!
+      self.save!
+    end
   end
 
   def settings

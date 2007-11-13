@@ -25,6 +25,7 @@ class Configuration < ActiveRecord::Base
   has_many :user_displays, :dependent => :destroy
   has_many :periodicity_displays, :dependent => :destroy
   has_many :document_displays, :dependent => :destroy
+  has_many :display_configurations, :dependent => :destroy
 
   serialize :settings 
 
@@ -71,48 +72,80 @@ class Configuration < ActiveRecord::Base
     self.settings["organization_name"]
   end
 
+  def organization_name_on_plural
+    self.settings["organization_name_on_plural"]
+  end
+
   def product_name
     self.settings["product_name"]
+  end
+
+  def product_name_on_plural
+    self.settings["product_name_on_plural"]
   end
 
   def department_name
     self.settings["department_name"]
   end
 
+  def department_name_on_plural
+    self.settings["department_name_on_plural"]
+  end
+
   def customer_name
     self.settings["customer_name"]
+  end
+
+  def customer_name_on_plural
+    self.settings["customer_name_on_plural"]
   end
 
   def document_name
     self.settings["document_name"]
   end
 
-  def periodicity_name
-    self.settings["periodicity_name"]
+  def document_name_on_plural
+    self.settings["document_name_on_plural"]
   end
 
   def organization_name=(name)
     self.settings["organization_name"] = name
   end
 
+  def organization_name_on_plural=(name)
+    self.settings["organization_name_on_plural"] = name
+  end
+
   def product_name=(name)
     self.settings["product_name"] = name
+  end
+
+  def product_name_on_plural=(name)
+    self.settings["product_name_on_plural"] = name
   end
 
   def department_name=(name)
     self.settings["department_name"] = name
   end
 
+  def department_name_on_plural=(name)
+    self.settings["department_name_on_plural"] = name
+  end
+
   def customer_name=(name)
     self.settings["customer_name"] = name
+  end
+
+  def customer_name_on_plural=(name)
+    self.settings["customer_name_on_plural"] = name
   end
 
   def document_name=(name)
     self.settings["document_name"] = name
   end
 
-  def periodicity_name=(name)
-    self.settings["periodicity_name"] = name
+  def document_name_on_plural=(name)
+    self.settings["document_name_on_plural"] = name
   end
 
 #TODO see if all of this fields are needed
@@ -156,6 +189,27 @@ class Configuration < ActiveRecord::Base
     PeriodicityDisplay
     DocumentDisplay
   ]
+
+  DISPLAY_CONFIGURATION_CLASSES.each do |item|
+    define_method("sorted_#{item.tableize}") do 
+      self.send(item.tableize).sort{|x,y| x.position <=> y.position}
+    end
+  end
+
+  DISPLAY_CONFIGURATION_CLASSES.each do |item|
+    str = item.gsub('Display', '').underscore
+    define_method("has_#{str}_module?") do 
+      self.send("#{str}_module") == true
+    end
+
+    define_method("#{str}_module") do 
+      self.settings["#{str}_module"] == true
+    end
+
+    define_method("#{str}_module=") do |value|
+      self.settings["#{str}_module"] = value.to_s == 'true' ? true : false
+    end
+  end
 
   #######################################
   # Configuration Object Methods
@@ -218,6 +272,19 @@ class Configuration < ActiveRecord::Base
         end
       end
 
+    end
+  end
+
+  DISPLAY_CONFIGURATION_CLASSES.each do |item|
+    define_method("set_lite_#{item.tableize}=") do |params|
+      params.each do |k,v|
+        display = self.send(item.tableize).find_by_field(k)
+
+        display = v[:break_line] == 'true' if !v[:break_line].nil?
+        display = v[:display_in_list] == 'true' if !v[:display_in_list].nil?
+        display = v[:display_title] == 'true' if !v[:display_title].nil?
+        display.save
+      end
     end
   end
 

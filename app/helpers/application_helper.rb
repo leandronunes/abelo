@@ -217,6 +217,7 @@ module ApplicationHelper
     )
   end
 
+
   # Used by select_display_configuration to generate the checkbox options
   # to be choosed by user.
   # 
@@ -262,6 +263,73 @@ module ApplicationHelper
         }.merge(value)
        )
 
+
+      checkbox_fields
+  end
+
+
+  def select_organization_display_configuration(object, display_class, collection=[])
+    instance_object = controller.instance_variable_get("@#{object}")
+    block_id = "#{display_class}_" + "#{instance_object.id}"
+    content_tag('div', 
+      [
+      content_tag(:ul, 
+        [
+          collection.map do |c|
+            content_tag(:li, 
+              c.field.camelcase +
+              set_of_organization_display_configuration(object, display_class, c).join("\n"),
+              :id => "item_#{c.id}"
+            )  
+          end
+        ].join("\n"),
+        :id => block_id
+      ),
+      sortable_element(block_id,
+              :url => {:action => 'set_fields_order', :configuration_id => instance_object.id, :display_class => display_class },
+              :complete => visual_effect(:highlight, block_id),
+              :failure => "$('#{block_id}').innerHTML= request.responseText"
+            )
+
+      ].join("\n")
+    )
+  end
+
+  # Used by select_display_configuration to generate the checkbox options
+  # to be choosed by user.
+  # 
+  def set_of_organization_display_configuration(object, display_class, display_obj)
+      checkbox_fields = []
+
+      checkbox_fields << hidden_field_tag("#{object}[#{"SetLite#{display_class}".tableize}][#{display_obj.field}][none]")
+
+      value = (!display_obj.nil? and display_obj.break_line?) ? {:checked => 'checked'} : {}
+      checkbox_fields << content_tag('input', 
+        _('Break Line'), 
+        {
+          :name => "#{object}[#{"Set#{display_class}".tableize}][#{display_obj.field}][break_line]", 
+          :type => 'checkbox', :value => true
+        }.merge(value)
+       )
+
+      value = (!display_obj.nil?  and display_obj.display_in_list?) ? {:checked => 'checked'} : {}
+      checkbox_fields << content_tag('input', 
+        _('Display in List?'), 
+        {
+          :name => "#{object}[#{"Set#{display_class}".tableize}][#{display_obj.field}][display_in_list]", 
+          :type => 'checkbox', :value => true
+        }.merge(value)
+       )
+
+
+      value = (!display_obj.nil?  and display_obj.display_title?) ? {:checked => 'checked'} : {}
+      checkbox_fields << content_tag('input', 
+        _('Display Title?'), 
+        {
+          :name => "#{object}[#{"Set#{display_class}".tableize}][#{display_obj.field}][display_title]", 
+          :type => 'checkbox', :value => true
+        }.merge(value)
+       )
 
       checkbox_fields
   end
@@ -461,7 +529,7 @@ module ApplicationHelper
 
 
   #DEPRECATED. Use the method 'display_form_info'
-  def display_edit_info(object, html_options = {}, &block)
+  def display_form_info(object, html_options = {}, &block)
     content = capture(object, &block)
     concat(
       content_tag(:div,
@@ -475,7 +543,7 @@ module ApplicationHelper
     )
   end
 
-  alias :display_form_info :display_edit_info
+  alias :display_edit_info :display_form_info
 
   def display_edit_info_options(object, params = {}, html_options = {})
     content_tag(:div,

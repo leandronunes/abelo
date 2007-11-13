@@ -11,7 +11,7 @@
 #      'mass_mails'                          => _('Mass mail'), #TODO implements this function
       'ledgers'                             => _('Financial'),
       'documents'                           => _('Documents'),
-      'departments'                         => _('Departments'),
+      'departments'                         => @organization.nil? ? '' : @organization.configuration.department_name,
       'organizations'                       => _('Organizations'),
       'banks'                               => _('Banks'),
     }

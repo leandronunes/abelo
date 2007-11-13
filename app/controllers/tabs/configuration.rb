@@ -27,16 +27,17 @@ def create_configurations_tabs
   t.named _('Manage Content')
 
   t = add_tab do
+    links_to :controller => 'organization_configuration'
+    in_set 'first'
+    highlights_on :controller => 'organization_configuration'
+  end
+  t.named _('Fields Configurations')
+
+  t = add_tab do
     links_to :controller => 'periodicities'
     in_set 'first'
     highlights_on :controller => 'periodicities'
   end
   t.named _('Periodicties')
 
-#    t = add_tab do
-#      links_to :controller => 'organization_configuration'
-#      in_set 'first'
-#      highlights_on :controller => 'organization_configuration'
-#    end
-#    t.named _('Field Configuration')
 end

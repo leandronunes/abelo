@@ -7,9 +7,21 @@
       )
   %>
 
+  <%= display_field_form(@configuration, 'organization_name',
+        :title => _('Organization Name Plural'),
+        :content => text_field('configuration', 'organization_name_on_plural')
+      )
+  %>
+
   <%= display_field_form(@configuration, 'department_name',
         :title => _('Department Name'),
         :content => text_field('configuration', 'department_name')
+      )
+  %>
+
+  <%= display_field_form(@configuration, 'department_name',
+        :title => _('Department Name Plural'),
+        :content => text_field('configuration', 'department_name_on_plural')
       )
   %>
 
@@ -19,9 +31,21 @@
       )
   %>
 
+  <%= display_field_form(@configuration, 'customer_name',
+        :title => _('Customer Name Plural'),
+        :content => text_field('configuration', 'customer_name_on_plural')
+      )
+  %>
+
   <%= display_field_form(@configuration, 'document_name',
         :title => _('Document Name'),
         :content => text_field('configuration', 'document_name')
+      )
+  %>
+
+  <%= display_field_form(@configuration, 'document_name',
+        :title => _('Document Name Plural'),
+        :content => text_field('configuration', 'document_name_on_plural')
       )
   %>
 
@@ -31,122 +55,394 @@
       )
   %>
 
-  <%= display_field_form(@configuration, 'worker_displays',
-        :title => _('Worker Display Configuration'),
-        :content => select_display_configuration('configuration', 'WorkerDisplay', @worker_fields)
+  <%= display_field_form(@configuration, 'product_name',
+        :title => _('Product Name Plural'),
+        :content => text_field('configuration', 'product_name_on_plural')
       )
   %>
 
-  <%= display_field_form(@configuration, 'worker_category_displays',
-        :title => _('Worker Category Display Configuration'),
-        :content => select_display_configuration('configuration', 'WorkerCategoryDisplay', @worker_category_fields)
+  <%= display_field_form(@configuration, 'worker_module',
+        :title => _('Has Worker Module'),
+        :content => check_box('configuration', 'worker_module',{}, true, false)
       )
   %>
 
-  <%= display_field_form(@configuration, 'customer_displays',
-        :title => _('Customer Display Configuration'),
-        :content => select_display_configuration('configuration', 'CustomerDisplay', @customer_fields)
+  <%= observe_field('configuration_worker_module',
+          :function => "if($('configuration_worker').style.display == 'none'){$('configuration_worker').show()}else{$('configuration_worker').hide()} "
+        )
+      %>
+
+  <div id="configuration_worker" style="<%= unless @configuration.has_worker_module?; 'display: none;' end %>" >
+    <%= display_field_form(@configuration, 'worker_displays',
+          :title => _('Worker Display Configuration'),
+          :content => select_display_configuration('configuration', 'WorkerDisplay', @worker_fields)
+        )
+    %>
+  </div>
+
+  <%= display_field_form(@configuration, 'worker_category_module',
+        :title => _('Has Worker Category Module'),
+        :content => check_box('configuration', 'worker_category_module',{}, true, false)
       )
   %>
 
-  <%= display_field_form(@configuration, 'customer_category_displays',
-        :title => _('Customer Categorory Display Configuration'),
-        :content => select_display_configuration('configuration', 'CustomerCategoryDisplay', @customer_category_fields)
+  <%= observe_field('configuration_worker_category_module',
+          :function => "if($('configuration_worker_category').style.display == 'none'){$('configuration_worker_category').show()}else{$('configuration_worker_category').hide()} "
+        )
+      %>
+
+  <div id="configuration_worker_category" style="<%= unless @configuration.has_worker_category_module?; 'display: none;' end %>" >
+    <%= display_field_form(@configuration, 'worker_category_displays',
+          :title => _('Worker Category Display Configuration'),
+          :content => select_display_configuration('configuration', 'WorkerCategoryDisplay', @worker_category_fields)
+        )
+    %>
+  </div>
+
+  <%= display_field_form(@configuration, 'customer_module',
+        :title => _('Has Customer Module'),
+        :content => check_box('configuration', 'customer_module',{}, true, false)
       )
   %>
 
-  <%= display_field_form(@configuration, 'supplier_displays',
-        :title => _('Supplier Display Configuration'),
-        :content => select_display_configuration('configuration', 'SupplierDisplay', @supplier_fields)
+  <%= observe_field('configuration_customer_module',
+          :function => "if($('configuration_customer').style.display == 'none'){$('configuration_customer').show()}else{$('configuration_customer').hide()} "
+        )
+      %>
+
+  <div id="configuration_customer" style="<%= unless @configuration.has_customer_module?; 'display: none;' end %>" >
+    <%= display_field_form(@configuration, 'customer_displays',
+          :title => _('Customer Display Configuration'),
+          :content => select_display_configuration('configuration', 'CustomerDisplay', @customer_fields)
+        )
+    %>
+  </div>
+
+  <%= display_field_form(@configuration, 'customer_category_module',
+        :title => _('Has Customer Category Module'),
+        :content => check_box('configuration', 'customer_category_module',{}, true, false)
       )
   %>
 
-  <%= display_field_form(@configuration, 'supplier_category_displays',
-        :title => _('Supplier Category Display Configuration'),
-        :content => select_display_configuration('configuration', 'SupplierCategoryDisplay', @supplier_category_fields)
+  <%= observe_field('configuration_customer_category_module',
+          :function => "if($('configuration_customer_category').style.display == 'none'){$('configuration_customer_category').show()}else{$('configuration_customer_category').hide()} "
+        )
+      %>
+
+  <div id="configuration_customer_category" style="<%= unless @configuration.has_customer_category_module?; 'display: none;' end %>" >
+    <%= display_field_form(@configuration, 'customer_category_displays',
+          :title => _('Customer Category Display Configuration'),
+          :content => select_display_configuration('configuration', 'CustomerCategoryDisplay', @customer_category_fields)
+        )
+    %>
+  </div>
+
+  <%= display_field_form(@configuration, 'supplier_module',
+        :title => _('Has Supplier Module'),
+        :content => check_box('configuration', 'supplier_module',{}, true, false)
       )
   %>
 
-  <%= display_field_form(@configuration, 'product_displays',
-        :title => _('Product Display Configuration'),
-        :content => select_display_configuration('configuration', 'ProductDisplay', @product_fields)
+  <%= observe_field('configuration_supplier_module',
+          :function => "if($('configuration_supplier').style.display == 'none'){$('configuration_supplier').show()}else{$('configuration_supplier').hide()} "
+        )
+      %>
+
+  <div id="configuration_supplier" style="<%= unless @configuration.has_supplier_module?; 'display: none;' end %>" >
+    <%= display_field_form(@configuration, 'supplier_displays',
+          :title => _('Supplier Display Configuration'),
+          :content => select_display_configuration('configuration', 'SupplierDisplay', @supplier_fields)
+        )
+    %>
+  </div>
+
+
+  <%= display_field_form(@configuration, 'supplier_category_module',
+        :title => _('Has Supplier Category Module'),
+        :content => check_box('configuration', 'supplier_category_module',{}, true, false)
       )
   %>
 
-  <%= display_field_form(@configuration, 'product_category_displays',
-        :title => _('Product Category Display Configuration'),
-        :content => select_display_configuration('configuration', 'ProductCategoryDisplay', @product_category_fields)
+  <%= observe_field('configuration_supplier_category_module',
+          :function => "if($('configuration_supplier_category').style.display == 'none'){$('configuration_supplier_category').show()}else{$('configuration_supplier_category').hide()} "
+        )
+      %>
+
+  <div id="configuration_supplier_category" style="<%= unless @configuration.has_supplier_category_module?; 'display: none;' end %>" >
+    <%= display_field_form(@configuration, 'supplier_category_displays',
+          :title => _('Supplier Category Display Configuration'),
+          :content => select_display_configuration('configuration', 'SupplierCategoryDisplay', @supplier_category_fields)
+        )
+    %>
+  </div>
+
+  <%= display_field_form(@configuration, 'product_module',
+        :title => _('Has Product Module'),
+        :content => check_box('configuration', 'product_module',{}, true, false)
       )
   %>
 
-  <%= display_field_form(@configuration, 'department_displays',
-        :title => _('Department Display Configuration'),
-        :content => select_display_configuration('configuration', 'DepartmentDisplay', @department_fields)
+  <%= observe_field('configuration_product_module',
+          :function => "if($('configuration_product').style.display == 'none'){$('configuration_product').show()}else{$('configuration_product').hide()} "
+        )
+      %>
+
+  <div id="configuration_product" style="<%= unless @configuration.has_product_module?; 'display: none;' end %>" >
+    <%= display_field_form(@configuration, 'product_displays',
+          :title => _('Product Display Configuration'),
+          :content => select_display_configuration('configuration', 'ProductDisplay', @product_fields)
+        )
+    %>
+  </div>
+
+  <%= display_field_form(@configuration, 'product_category_module',
+        :title => _('Has Product Category Module'),
+        :content => check_box('configuration', 'product_category_module',{}, true, false)
       )
   %>
 
-  <%= display_field_form(@configuration, 'ledger_category_displays',
-        :title => _('LedgerCategory Display Configuration'),
-        :content => select_display_configuration('configuration', 'LedgerCategoryDisplay', @ledger_category_fields)
+  <%= observe_field('configuration_product_category_module',
+          :function => "if($('configuration_product_category').style.display == 'none'){$('configuration_product_category').show()}else{$('configuration_product_category').hide()} "
+        )
+      %>
+
+  <div id="configuration_product_category" style="<%= unless @configuration.has_product_category_module?; 'display: none;' end %>" >
+    <%= display_field_form(@configuration, 'product_category_displays',
+          :title => _('Product Category Display Configuration'),
+          :content => select_display_configuration('configuration', 'ProductCategoryDisplay', @product_category_fields)
+        )
+    %>
+  </div>
+
+  <%= display_field_form(@configuration, 'department_module',
+        :title => _('Has Department Module'),
+        :content => check_box('configuration', 'department_module',{}, true, false)
       )
   %>
 
-  <%= display_field_form(@configuration, 'bank_account_displays',
-        :title => _('BankAccount Display Configuration'),
-        :content => select_display_configuration('configuration', 'BankAccountDisplay', @bank_account_fields)
+  <%= observe_field('configuration_department_module',
+          :function => "if($('configuration_department').style.display == 'none'){$('configuration_department').show()}else{$('configuration_department').hide()} "
+        )
+      %>
+
+  <div id="configuration_department" style="<%= unless @configuration.has_department_module?; 'display: none;' end %>" >
+    <%= display_field_form(@configuration, 'department_displays',
+          :title => _('Department Display Configuration'),
+          :content => select_display_configuration('configuration', 'DepartmentDisplay', @department_fields)
+        )
+    %>
+  </div>
+
+  <%= display_field_form(@configuration, 'ledger_category_module',
+        :title => _('Has Ledger Category Module'),
+        :content => check_box('configuration', 'ledger_category_module',{}, true, false)
       )
   %>
 
-  <%= display_field_form(@configuration, 'money_displays',
-        :title => _('Money Display Configuration'),
-        :content => select_display_configuration('configuration', 'MoneyDisplay', @money_fields)
+  <%= observe_field('configuration_ledger_category_module',
+          :function => "if($('configuration_ledger_category').style.display == 'none'){$('configuration_ledger_category').show()}else{$('configuration_ledger_category').hide()} "
+        )
+      %>
+
+  <div id="configuration_ledger_category" style="<%= unless @configuration.has_ledger_category_module?; 'display: none;' end %>" >
+    <%= display_field_form(@configuration, 'ledger_category_displays',
+          :title => _('Ledger Category Display Configuration'),
+          :content => select_display_configuration('configuration', 'LedgerCategoryDisplay', @ledger_category_fields)
+        )
+    %>
+  </div>
+
+  <%= display_field_form(@configuration, 'bank_account_module',
+        :title => _('Has BankAccount Module'),
+        :content => check_box('configuration', 'bank_account_module',{}, true, false)
       )
   %>
 
-  <%= display_field_form(@configuration, 'check_displays',
-        :title => _('Check Display Configuration'),
-        :content => select_display_configuration('configuration', 'CheckDisplay', @check_fields)
-      )
-  %>
-  
-  <%= display_field_form(@configuration, 'credit_card_displays',
-        :title => _('Credit Card Display Configuration'),
-        :content => select_display_configuration('configuration', 'CreditCardDisplay', @credit_card_fields)
+  <%= observe_field('configuration_bank_account_module',
+          :function => "if($('configuration_bank_account').style.display == 'none'){$('configuration_bank_account').show()}else{$('configuration_bank_account').hide()} "
+        )
+      %>
+
+  <div id="configuration_bank_account" style="<%= unless @configuration.has_bank_account_module?; 'display: none;' end %>" >
+    <%= display_field_form(@configuration, 'bank_account_displays',
+          :title => _('BankAccount Display Configuration'),
+          :content => select_display_configuration('configuration', 'BankAccountDisplay', @bank_account_fields)
+        )
+    %>
+  </div>
+
+
+  <%= display_field_form(@configuration, 'money_module',
+        :title => _('Has Money Module'),
+        :content => check_box('configuration', 'money_module',{}, true, false)
       )
   %>
 
-  <%= display_field_form(@configuration, 'debit_card_displays',
-        :title => _('Debit Card Display Configuration'),
-        :content => select_display_configuration('configuration', 'DebitCardDisplay', @debit_card_fields)
-      )
-  %>
-  
-  <%= display_field_form(@configuration, 'stock_virtual_displays',
-        :title => _('Stock Virtual Display Configuration'),
-        :content => select_display_configuration('configuration', 'StockVirtualDisplay', @stock_virtual_fields)
-      )
-  %>
-  
-  <%= display_field_form(@configuration, 'stock_in_displays',
-        :title => _('Stock In Display Configuration'),
-        :content => select_display_configuration('configuration', 'StockInDisplay', @stock_in_fields)
+  <%= observe_field('configuration_money_module',
+          :function => "if($('configuration_money').style.display == 'none'){$('configuration_money').show()}else{$('configuration_money').hide()} "
+        )
+      %>
+
+  <div id="configuration_money" style="<%= unless @configuration.has_money_module?; 'display: none;' end %>" >
+    <%= display_field_form(@configuration, 'money_displays',
+          :title => _('Money Display Configuration'),
+          :content => select_display_configuration('configuration', 'MoneyDisplay', @money_fields)
+        )
+    %>
+  </div>
+
+  <%= display_field_form(@configuration, 'check_module',
+        :title => _('Has Check Module'),
+        :content => check_box('configuration', 'check_module',{}, true, false)
       )
   %>
 
-  <%= display_field_form(@configuration, 'stock_out_displays',
-        :title => _('Stock Out Display Configuration'),
-        :content => select_display_configuration('configuration', 'StockOutDisplay', @stock_out_fields)
+  <%= observe_field('configuration_check_module',
+          :function => "if($('configuration_check').style.display == 'none'){$('configuration_check').show()}else{$('configuration_check').hide()} "
+        )
+      %>
+
+  <div id="configuration_check" style="<%= unless @configuration.has_check_module?; 'display: none;' end %>" >
+    <%= display_field_form(@configuration, 'check_displays',
+          :title => _('Check Display Configuration'),
+          :content => select_display_configuration('configuration', 'CheckDisplay', @check_fields)
+        )
+    %>
+  </div>
+
+  <%= display_field_form(@configuration, 'credit_card_module',
+        :title => _('Has CreditCard Module'),
+        :content => check_box('configuration', 'credit_card_module',{}, true, false)
       )
   %>
 
-  <%= display_field_form(@configuration, 'user_displays',
-        :title => _('User Display Configuration'),
-        :content => select_display_configuration('configuration', 'UserDisplay', @user_fields)
+  <%= observe_field('configuration_credit_card_module',
+          :function => "if($('configuration_credit_card').style.display == 'none'){$('configuration_credit_card').show()}else{$('configuration_credit_card').hide()} "
+        )
+      %>
+
+  <div id="configuration_credit_card" style="<%= unless @configuration.has_credit_card_module?; 'display: none;' end %>" >
+    <%= display_field_form(@configuration, 'credit_card_displays',
+          :title => _('CreditCard Display Configuration'),
+          :content => select_display_configuration('configuration', 'CreditCardDisplay', @credit_card_fields)
+        )
+    %>
+  </div>
+
+
+  <%= display_field_form(@configuration, 'debit_card_module',
+        :title => _('Has DebitCard Module'),
+        :content => check_box('configuration', 'debit_card_module',{}, true, false)
       )
   %>
-  
-  <%= display_field_form(@configuration, 'periodicity_displays',
-        :title => _('Periodicity Display Configuration'),
-        :content => select_display_configuration('configuration', 'PeriodicityDisplay', @periodicity_fields)
+
+  <%= observe_field('configuration_debit_card_module',
+          :function => "if($('configuration_debit_card').style.display == 'none'){$('configuration_debit_card').show()}else{$('configuration_debit_card').hide()} "
+        )
+      %>
+
+  <div id="configuration_debit_card" style="<%= unless @configuration.has_debit_card_module?; 'display: none;' end %>" >
+    <%= display_field_form(@configuration, 'debit_card_displays',
+          :title => _('DebitCard Display Configuration'),
+          :content => select_display_configuration('configuration', 'DebitCardDisplay', @debit_card_fields)
+        )
+    %>
+  </div>
+
+
+  <%= display_field_form(@configuration, 'stock_virtual_module',
+        :title => _('Has Stock Virtual Module'),
+        :content => check_box('configuration', 'stock_virtual_module',{}, true, false)
       )
   %>
+
+  <%= observe_field('configuration_stock_virtual_module',
+          :function => "if($('configuration_stock_virtual').style.display == 'none'){$('configuration_stock_virtual').show()}else{$('configuration_stock_virtual').hide()} "
+        )
+      %>
+
+  <div id="configuration_stock_virtual" style="<%= unless @configuration.has_stock_virtual_module?; 'display: none;' end %>" >
+    <%= display_field_form(@configuration, 'stock_virtual_displays',
+          :title => _('Stock Virtual Display Configuration'),
+          :content => select_display_configuration('configuration', 'StockVirtualDisplay', @stock_virtual_fields)
+        )
+    %>
+  </div>
+
+
+  <%= display_field_form(@configuration, 'stock_in_module',
+        :title => _('Has Stock In Module'),
+        :content => check_box('configuration', 'stock_in_module',{}, true, false)
+      )
+  %>
+
+  <%= observe_field('configuration_stock_in_module',
+          :function => "if($('configuration_stock_in').style.display == 'none'){$('configuration_stock_in').show()}else{$('configuration_stock_in').hide()} "
+        )
+      %>
+
+  <div id="configuration_stock_in" style="<%= unless @configuration.has_stock_in_module?; 'display: none;' end %>" >
+    <%= display_field_form(@configuration, 'stock_in_displays',
+          :title => _('Stock In Display Configuration'),
+          :content => select_display_configuration('configuration', 'StockInDisplay', @stock_in_fields)
+        )
+    %>
+  </div>
+
+  <%= display_field_form(@configuration, 'stock_out_module',
+        :title => _('Has Stock Out Module'),
+        :content => check_box('configuration', 'stock_out_module',{}, true, false)
+      )
+  %>
+
+  <%= observe_field('configuration_stock_out_module',
+          :function => "if($('configuration_stock_out').style.display == 'none'){$('configuration_stock_out').show()}else{$('configuration_stock_out').hide()} "
+        )
+      %>
+
+  <div id="configuration_stock_out" style="<%= unless @configuration.has_stock_out_module?; 'display: none;' end %>" >
+    <%= display_field_form(@configuration, 'stock_out_displays',
+          :title => _('Stock Out Display Configuration'),
+          :content => select_display_configuration('configuration', 'StockOutDisplay', @stock_out_fields)
+        )
+    %>
+  </div>
+
+  <%= display_field_form(@configuration, 'user_module',
+        :title => _('Has User Module'),
+        :content => check_box('configuration', 'user_module',{}, true, false)
+      )
+  %>
+
+  <%= observe_field('configuration_user_module',
+          :function => "if($('configuration_user').style.display == 'none'){$('configuration_user').show()}else{$('configuration_user').hide()} "
+        )
+      %>
+
+  <div id="configuration_user" style="<%= unless @configuration.has_user_module?; 'display: none;' end %>" >
+    <%= display_field_form(@configuration, 'user_displays',
+          :title => _('User Display Configuration'),
+          :content => select_display_configuration('configuration', 'UserDisplay', @user_fields)
+        )
+    %>
+  </div>
+
+  <%= display_field_form(@configuration, 'periodicity_module',
+        :title => _('Has Periodicity Module'),
+        :content => check_box('configuration', 'periodicity_module',{}, true, false)
+      )
+  %>
+
+  <%= observe_field('configuration_periodicity_module',
+          :function => "if($('configuration_periodicity').style.display == 'none'){$('configuration_periodicity').show()}else{$('configuration_periodicity').hide()} "
+        )
+      %>
+
+  <div id="configuration_periodicity" style="<%= unless @configuration.has_periodicity_module?; 'display: none;' end %>" >
+    <%= display_field_form(@configuration, 'periodicity_displays',
+          :title => _('Periodicity Display Configuration'),
+          :content => select_display_configuration('configuration', 'PeriodicityDisplay', @periodicity_fields)
+        )
+    %>
+  </div>
+

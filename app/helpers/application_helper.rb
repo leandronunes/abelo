@@ -702,4 +702,10 @@ module ApplicationHelper
   )
   end
 
-end 
+  def beta_info
+    '<div id="beta_info" title="BETA">' +
+    '<span>BETA</span>' +
+    '</div>'
+  end
+
+end

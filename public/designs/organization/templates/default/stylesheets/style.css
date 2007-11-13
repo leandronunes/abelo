@@ -179,3 +179,15 @@ body {
   color: black;
 }
 
+#beta_info {
+  background: url('../images/beta.png');
+  width: 80px;
+  height: 58px;
+  position: absolute;
+  top: -20px;
+  right: 10px;
+}
+#beta_info span {
+  display: none;
+}
+

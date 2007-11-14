@@ -145,6 +145,14 @@
         <span class='field'> <%=  select_organization_display_configuration('configuration', 'PeriodicityDisplay', @periodicity_fields) %> </span>
       </div>
     <% end %>
+
+    <% if @configuration.has_document_module? %>
+      <div class='info_field'>
+        <label> <%= _('Document Display Configuration') %> </label>
+        <span class='field'> <%=  select_organization_display_configuration('configuration', 'DocumentDisplay', @document_fields) %> </span>
+      </div>
+    <% end %>
+  
   
       <br style='clear: left;'/>
     </div>

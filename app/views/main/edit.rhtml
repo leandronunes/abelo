@@ -1,0 +1,11 @@
+<%= title _('Editing Presetation') %>
+
+<%= error_messages_for 'organization' %>
+
+<% form_tag :controller => 'main', :action => 'update' do %>
+  <%= rich_text_editor_default('organization', 'presentation' ) %>
+  <%= submit_tag _('save') %>
+  <%= display_edit_info_options @organization %>
+<% end %>
+
+

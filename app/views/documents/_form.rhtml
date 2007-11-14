@@ -21,47 +21,47 @@
 
   <%= display_field_form(item, 'owner_type', 
         :title => _('Customer'),
-        :content => radio_button_tag('owner_type', 'customer'),
+        :content => radio_button('document', 'document_owner_type', 'customer'),
         :html_options => {:class => 'break_line'}
       )
   %>
 
-  <%= observe_field('owner_type_customer',
-        :update => 'owners_list',
-        :url => {:action => 'list_owners'},
-        :with => "'value=' + escape(value)"
-      )
-  %>
- 
   <%= display_field_form(item, 'owner_type', 
         :title => _('Supplier'),
-        :content => radio_button_tag('owner_type', 'supplier')
-      )
-  %>
-
-  <%= observe_field('owner_type_supplier',
-        :update => 'owners_list',
-        :url => {:action => 'list_owners'},
-        :with => "'value=' + escape(value)"
+        :content => radio_button('document', 'document_owner_type', 'supplier')
       )
   %>
 
   <%= display_field_form(item, 'owner_type', 
         :title => _('Worker'),
-        :content => radio_button_tag('owner_type', 'worker')
+        :content => radio_button('document', 'document_owner_type', 'worker')
       )
   %>
 
-  <%= observe_field('owner_type_worker',
+  <%= observe_field('document_document_owner_type_customer',
         :update => 'owners_list',
         :url => {:action => 'list_owners'},
         :with => "'value=' + escape(value)"
       )
   %>
 
+
+  <%= observe_field('document_document_owner_type_supplier',
+        :update => 'owners_list',
+        :url => {:action => 'list_owners'},
+        :with => "'value=' + escape(value)"
+      )
+  %>
+
+  <%= observe_field('document_document_owner_type_worker',
+        :update => 'owners_list',
+        :url => {:action => 'list_owners'},
+        :with => "'value=' + escape(value)"
+      )
+  %>
   <div id='owners_list'>
-    <% unless @owner_type.nil?  %>
-      <%= render :partial => 'owners_list', @owner_type => @document.owner_type %>
+    <% unless @document.owner_type.nil?  %>
+      <%= render :partial => 'owners_list' %>
     <% end %>
   </div>
 

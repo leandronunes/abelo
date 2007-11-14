@@ -1,0 +1,16 @@
+
+
+.tag_list{
+  list-style: none;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  clear: both;
+  margin: 10px;
+  padding-top: 10px;
+}
+
+.tag_list li{
+  margin: 10px;
+  display: inline;
+}

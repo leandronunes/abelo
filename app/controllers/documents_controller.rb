@@ -98,7 +98,7 @@ class DocumentsController < ApplicationController
   def update
     @document = Document.find(params[:id])
     if @document.update_attributes(params[:document])
-      flash[:notice] = 'Document was successfully updated.'
+      flash[:notice] = _('Document was successfully updated.')
       redirect_to :action => 'show', :id => @document, :models_list => params[:models_list], :document_model_id => params[:document_model_id]
     else
       @departments = @organization.departments
@@ -123,8 +123,9 @@ class DocumentsController < ApplicationController
     t.named _("Models")
    
     t = add_tab do      
-      links_to :controller => 'documents'
+      links_to :controller => 'documents', :action => 'list'
       in_set 'first'
+      highlights_on :controller => 'documents'
       highlights_off :controller => 'documents', :models_list => 'true'
     end
     t.named _('Other Documents')
@@ -132,7 +133,7 @@ class DocumentsController < ApplicationController
 
   def list_owners
     @document = Document.new(params[:document])
-    @owner_type = params[:value]
+    @owner_type = params[:value].downcase
     @customers = @organization.customers
     @workers = @organization.workers
     @suppliers = @organization.suppliers

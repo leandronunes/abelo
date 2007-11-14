@@ -691,15 +691,17 @@ module ApplicationHelper
   
     content_tag(:div,
     [
-      content_tag(:label, _('Tags')),
       content_tag(:ul,
-          tags.map do |t|
+        [
+        content_tag(:label, _('Tags:')),
+        tags.map do |t|
             content_tag(:li, link_to_remote(t, :url => {:action => 'find_by_tag', :tag => t, :collection => collection.collect {|item| item.id }.join(',')}, :update => 'content_list') )
-        end,
+        end
+        ].join("\n"),
         :class => 'tag_list'
       )
-    ]
-  )
+    ].join("\n")
+    )
   end
 
   def beta_info

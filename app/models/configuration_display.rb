@@ -28,6 +28,7 @@ class ConfigurationDisplay < ActiveRecord::Base
       stock_out_displays
       user_displays
       periodicity_displays
+      document_displays
     ]
   end
 
@@ -59,6 +60,7 @@ class ConfigurationDisplay < ActiveRecord::Base
       'stock_out_displays' => _('Stock Out Fields'),
       'user_displays' => _('User Fields'),
       'periodicity_displays' => _('Periodicity Fields'),
+      'document_displays' => _('Document Fields'),
     }[field] || field
   end
 

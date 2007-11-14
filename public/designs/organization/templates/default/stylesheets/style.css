@@ -16,6 +16,8 @@
 @import url("localist.css");
 @import url("sidebar.css");
 @import url("tabs.css");
+@import url("design_editor.css");
+@import url("tag_list.css");
 
 body {
   margin:0px;
@@ -118,18 +120,16 @@ body {
 /* Box and block css */
 
 /* Main Content */
-#box_1 {
+#design_box_1 {
   margin-right: 220px;
-  border: 2px solid black;
 #  float: left;
 }
 
-#box_2 {
-  border: 2px solid black;
+#design_box_2 {
 #  float: left;
 }
 
-#boxes_footer{
+#design_boxes_footer{
   clear: both;
 }
 

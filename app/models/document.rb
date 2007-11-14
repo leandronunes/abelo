@@ -1,5 +1,7 @@
 class Document < ActiveRecord::Base
 
+  attr_accessor :document_owner 
+
   validates_presence_of :organization_id
   validates_presence_of :name
   validates_uniqueness_of :name, :scope => :organization_id
@@ -18,6 +20,15 @@ class Document < ActiveRecord::Base
   def owner_class
     Document.describe(self.owner.class.to_s) unless owner.nil?
   end
+
+  def document_owner_type
+    self.owner.nil? ? self.document_owner : self.owner.class.name.downcase 
+  end  
+
+  def document_owner_type= value
+    self.document_owner = self.owner.nil? ? value : self.owner.class.name.downcase 
+  end  
+
 
   def self.describe(field)
     {

@@ -1,0 +1,211 @@
+/* Default Plain Theme for design_blocks */
+
+.design_blocks{
+  margin: 0px;
+  padding: 10px;
+}
+
+
+#design_box_2 .design_block
+{
+  list-style: none;
+	border: 1px solid #bc861f;
+	margin-bottom: 10px;
+}
+
+.design_block_control_list
+{
+	margin-left: 15px;
+   z-index: 10000;
+}
+
+.design_block_control_list li{
+	list-style: none;
+}
+
+.design_block h3
+{
+	color: #FFFFFF;
+	background: #bb9955;
+	font-family: Sans-serif;
+	font-size: 15px;
+	font-weight: bold;
+	border-bottom: 1px solid black;
+	height: 27px;
+	margin: 0px;
+	line-height: 27px;
+	padding-left: 10px;
+   text-align: center;
+}
+
+.design_block span {
+display: none;
+}
+
+.design_block a.design_button_block:hover span {
+  display: inline;
+  position: absolute;
+  color: #ffffff;
+  background: #bb9955;
+  border: 1px solid white;
+  font-family: Sans-serif;
+  font-size: 13px;
+  font-weight: normal;
+  margin: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.design_block a.design_button_block {
+  display: block !important;
+  width: 10px !important;
+  height: 10px !important;
+  margin-top: 10px !important;
+  margin-right: 5px !important;
+  float: left !important;
+}
+
+.design_block a.button_block_hide {
+border-bottom: 3px solid #ffffff;
+}
+
+
+.design_block_content 
+{
+	padding: 5px;
+}
+
+.design_block ul {
+  padding-left: 0px;
+  margin: 0px;
+}
+
+.design_block ul li a:link,
+.design_block ul li a:hover {
+  display: block;
+  color: #000;
+}
+.design_block ul li a:hover {
+  background: #ddd;
+  color: red;
+}
+
+/* Favorite Links */
+.favorite_links_organization ul{
+  list-style: none;
+}
+
+.favorite_links_organization input{
+  width: 90%;
+}
+
+/* Financial Forecasting Details */
+
+.financial_forecasting .design_block_content{
+  margin: 0px;
+  padding: 0px;
+}
+
+.financial_forecasting {
+  font-size: 10px;
+} 
+
+.financial_forecasting table{
+  width: 100%;
+  margin: 0px;
+  border: none;
+  border-collapse: collapse;
+}
+
+.financial_forecasting .line_odd td {
+  background-color: #FCFAF0;
+}
+
+.financial_forecasting .line_pair:hover td,
+.financial_forecasting .line_odd:hover td {
+  background-color: #F8F0A0;
+} 
+
+.financial_forecasting th, .financial_forecasting td {
+  border-left: 1px dotted #CA8;
+  text-align: center;
+  line-height: 14px;
+}
+
+.financial_forecasting .frist_col {
+  border: none;
+}
+
+.financial_forecasting .category_name {
+  line-height: 12px;
+}
+
+.financial_forecasting .month_header {
+  border-bottom: 1px dotted #CA8;
+}
+
+.financial_forecasting .month_header div {
+  position: relative;
+}
+  
+.financial_forecasting .table_footer {
+  border-top: 1px dotted #CA8;
+}
+.financial_forecasting .table_footer th.balance {
+  border-left: none;
+} 
+
+.financial_forecasting .month_1, .financial_forecasting .month_3 {
+  display: block;
+  position: absolute;
+  top: 0px;
+  left: 3px;
+  font-weight: normal;
+}
+
+.financial_forecasting .month_3 {
+  left: inherit;
+  right: 3px;
+}
+
+#design_editor .financial_forecasting {
+  font-size: 14px;
+} 
+
+#design_editor .financial_forecasting input{
+  width: 90%;
+}
+
+/*Editor Informations*/
+
+#design_editor .design_block {
+  list-style: none;
+}
+
+#design_editor .design_block ul{
+  list-style: none;
+}
+#design_editor .design_box {
+  border: 3px dotted #bb9955;
+}
+
+
+.design_block a.design_button_block_remove,
+.design_block a.design_button_block_options {
+  background: #e0ba70;
+}
+
+.design_block a:hover.design_button_block_remove,
+.design_block a:hover.design_button_block_options {
+  background: #d9c49b;
+}
+
+
+#design_editor a.design_button_block_remove,
+#design_editor a.design_button_block_options {
+border: 2px solid #a2751f;
+}
+
+#design_editor a.design_button_block {
+  float: right !important;
+}

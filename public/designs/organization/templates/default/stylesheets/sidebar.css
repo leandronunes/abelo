@@ -1,4 +1,4 @@
-#box_2 a.show_itembar {
+#design_box_2 a.show_itembar {
 background: url('../images/itembar_down.png') bottom right no-repeat;
 display: table-cell;
 text-decoration: none !important;
@@ -13,10 +13,10 @@ color: #545454 !important;
 font-size: 18px;
 }
 
-#box_2 a:hover.show_itembar, #box_2 a:hover.hide_itembar {
+#design_box_2 a:hover.show_itembar, #design_box_2 a:hover.hide_itembar {
 color: #c4a000 !important;
 }
-#box_2 a.hide_itembar {
+#design_box_2 a.hide_itembar {
 display: table-cell;
 position: absolute;
 right: 6px;
@@ -31,7 +31,7 @@ margin: 0px;
 color: #545454 !important;
 font-size: 10px;
 }
-#box_2 .itembar {
+#design_box_2 .itembar {
 position: relative;
 background: url('../images/bgtransparent_300px.png') top left repeat-x;
 margin: 0px;
@@ -41,39 +41,39 @@ border-bottom: 1px solid #c4a000;
 border-left: 1px solid #c4a000;
 }
 
-#box_2 .itembar p {
+#design_box_2 .itembar p {
 text-align: left;
 padding: 5px;
 margin: 10px 0px 10px 0px;
 }
-#box_2 .itembar label {
+#design_box_2 .itembar label {
   color: black;
   font-weight: bold;
   display: block;
 }
 
-#box_2 .button_bar {
+#design_box_2 .button_bar {
   text-align: center;
 }
 
-#box_2 .button_bar input{
+#design_box_2 .button_bar input{
   border: 1px solid #c4a000;
   background-color: #f4edcf;
   color: #918247;
 }
-#box_2 .button_bar a {
+#design_box_2 .button_bar a {
   border: 1px solid #c4a000;
   background-color: #f4edcf;
   color: #918247;
   padding: 1px 12px 2px 12px;
 }
 
-#box_2 textarea{
+#design_box_2 textarea{
   width: 240px;
   height: 140px;
 }
 
-#box_2 {
+#design_box_2 {
 float: right;
 width: 200px;
 padding: 0px;

@@ -3,21 +3,5 @@
     :content => select('document', 'owner_id', instance_variable_get("@#{@owner_type}s").collect { |o| [ o.name, o.id ]}, { :include_blank => true } )
   )
 %>
-  <%= observe_field('document_owner_type_customer',
-        :update => 'owners_list',
-        :url => {:action => 'list_owners'},
-        :with => "'value=' + escape(value)"
-      )
-  %>
-  <%= observe_field('document_owner_type_supplier',
-        :update => 'owners_list',
-        :url => {:action => 'list_owners'},
-        :with => "'value=' + escape(value)"
-      )
-  %>
-  <%= observe_field('document_owner_type_worker',
-        :update => 'owners_list',
-        :url => {:action => 'list_owners'},
-        :with => "'value=' + escape(value)"
-      )
-  %>
+
+<%= hidden_field 'document', 'owner_type', :value => 'SystemActor' %>

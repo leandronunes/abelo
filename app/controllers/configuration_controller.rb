@@ -105,6 +105,7 @@ class ConfigurationController < ApplicationController
     @user_fields = UserDisplay.available_fields
     @periodicity_fields = PeriodicityDisplay.available_fields
     @mass_mail_fields = MassMailDisplay.available_fields
+    @document_fields = DocumentDisplay.available_fields
   end
 
 

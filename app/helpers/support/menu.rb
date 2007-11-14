@@ -10,8 +10,8 @@
       'point_of_sale'                       => _('Point of sale'),
 #      'mass_mails'                          => _('Mass mail'), #TODO implements this function
       'ledgers'                             => _('Financial'),
-      'documents'                           => _('Documents'),
-      'departments'                         => @organization.nil? ? '' : @organization.configuration.department_name,
+      'documents'                           => (@organization.nil? or @organization.id.nil?) ? '' : @organization.configuration.document_name_on_plural.camelcase, 
+      'departments'                         => (@organization.nil? or @organization.id.nil?) ? '' : @organization.configuration.department_name_on_plural.camelcase, #TODO see a better way to do that
       'organizations'                       => _('Organizations'),
       'banks'                               => _('Banks'),
     }

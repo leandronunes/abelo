@@ -323,7 +323,7 @@
 
   <div id="configuration_credit_card" style="<%= unless @configuration.has_credit_card_module?; 'display: none;' end %>" >
     <%= display_field_form(@configuration, 'credit_card_displays',
-          :title => _('CreditCard Display Configuration'),
+          :title => _('Credit Card Display Configuration'),
           :content => select_display_configuration('configuration', 'CreditCardDisplay', @credit_card_fields)
         )
     %>
@@ -442,6 +442,26 @@
     <%= display_field_form(@configuration, 'periodicity_displays',
           :title => _('Periodicity Display Configuration'),
           :content => select_display_configuration('configuration', 'PeriodicityDisplay', @periodicity_fields)
+        )
+    %>
+  </div>
+
+
+  <%= display_field_form(@configuration, 'document_module',
+        :title => _('Has Document Module'),
+        :content => check_box('configuration', 'document_module',{}, true, false)
+      )
+  %>
+
+  <%= observe_field('configuration_document_module',
+          :function => "if($('configuration_document').style.display == 'none'){$('configuration_document').show()}else{$('configuration_document').hide()} "
+        )
+      %>
+
+  <div id="configuration_document" style="<%= unless @configuration.has_document_module?; 'display: none;' end %>" >
+    <%= display_field_form(@configuration, 'document_displays',
+          :title => _('Document Display Configuration'),
+          :content => select_display_configuration('configuration', 'DocumentDisplay', @document_fields)
         )
     %>
   </div>

@@ -60,7 +60,7 @@ class LedgersController < ApplicationController
   end
 
   def new
-    @ledger = Ledger.new_ledger
+    @ledger = Ledger.new_ledger(:bank_account => @organization.default_bank_account)
     @bank_accounts = @organization.bank_accounts
     @ledger_categories =  @organization.ledger_categories_by_payment_method(@ledger.payment_method)
   end

@@ -1,9 +1,9 @@
 <div id="partial_edit">
 <% form_tag :action => 'update', :product_id => @stock.product, :id => @stock do %>
-  <%= render :partial => 'stock/form'%>
+  <%= render :partial => 'stock_base/form'%>
   <% if @stock.type != StockOut %>
 
-    <%= subtitle _("Payments [%s]") % link_to_remote( _('Add'), :url => {:action => 'add_payment', :id => @stock}) %>
+    <%= subtitle _("Payments %s") % button_remote('add', _('Add'), :url => {:action => 'add_payment', :id => @stock}) %>
 
 
   <div id="stock_options">

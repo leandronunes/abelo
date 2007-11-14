@@ -1,8 +1,8 @@
 class Unit < ActiveRecord::Base
 
   UNIT = {
-    'U' => _('Units'),
-    'K' => _('Kilograms'),
+    'U' => _('Unit'),
+    'K' => _('Kilogram'),
   }
 
   def self.find(*args)

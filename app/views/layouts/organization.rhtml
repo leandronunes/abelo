@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
-<html class="controller-<%= params[:controller] %> action-<%= params[:action] %>">
+<html>
   <head>
     <title> <%= _('Abelo') %> </title>
     <%= javascript_include_tag 'scriptaculousx' %>
@@ -11,7 +11,7 @@
     <link rel="shortcut icon" href="<%=image_path('logo.ico')%>" />
   </head>
 
-  <body >
+  <body class="controller-<%= params[:controller] %> action-<%= params[:action] %>" >
   <%= image_tag 'spinner.gif', :id=>'spinner', :align=>'absmiddle', :style=>'display:none; float:left;' %>
 
     <div id="warp">

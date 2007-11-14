@@ -6,6 +6,14 @@ class BankAccount < ActiveRecord::Base
   validates_presence_of :bank_id, :message => _('Bank Accounts must be associated to an Bank')
   validates_presence_of :owner
 
+  after_save do |account|
+    if account.is_default?
+      default_account = account.owner.default_bank_account
+      default_account.is_default = false
+      default_account.save
+    end
+  end
+
   acts_as_ferret
 
   def name 

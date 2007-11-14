@@ -5,11 +5,18 @@
 <% display_edit_info @bank_account, :class => 'view_data' do |item| %>
 
   <%= display_field_edit(item, 'bank',
-        :title => _('Agency'),
+        :title => _('Bank'),
         :content => select_item('bank_account', 'bank_id', @banks),
         :html_options => {:class => 'line_item'}
       )
   %>
+
+  <%= display_field_edit(item, 'is_default',
+        :title => _('Is it the default bank account?'),
+        :content => check_box('bank_account', 'is_default')
+      )
+  %>
+
 
   <%= display_field_edit(item, 'agency',
         :title => _('Agency'),

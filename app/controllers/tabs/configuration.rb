@@ -10,21 +10,22 @@ def create_configurations_tabs
   end
   t.named _('Categories')
 
-  t = add_tab do
-    links_to :controller => 'interface'
-    in_set 'first'
-    highlights_on :controller => 'interface', :action => 'design_editor_change_template'
-    highlights_on :controller => 'interface', :action => 'design_editor_change_icon_theme'
-    highlights_on :controller => 'interface', :action => 'design_editor_change_theme'
-  end
-  t.named _('Manage Interface')
-
-  t = add_tab do
-    links_to :controller => 'interface', :action => 'design_editor'
-    in_set 'first'
-    highlights_on :controller => 'interface', :action => 'design_editor'
-  end
-  t.named _('Manage Content')
+# TODO implements it
+#  t = add_tab do
+#    links_to :controller => 'interface'
+#    in_set 'first'
+#    highlights_on :controller => 'interface', :action => 'design_editor_change_template'
+#    highlights_on :controller => 'interface', :action => 'design_editor_change_icon_theme'
+#    highlights_on :controller => 'interface', :action => 'design_editor_change_theme'
+#  end
+#  t.named _('Manage Interface')
+#
+#  t = add_tab do
+#    links_to :controller => 'interface', :action => 'design_editor'
+#    in_set 'first'
+#    highlights_on :controller => 'interface', :action => 'design_editor'
+#  end
+#  t.named _('Manage Content')
 
 #TODO put it to works
 #  t = add_tab do

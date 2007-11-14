@@ -32,7 +32,7 @@ class StockBaseController < ApplicationController
     @stock = Stock.find(params[:id])
     @ledgers = @stock.ledgers
 
-    render :template => 'stock/show'
+    render :template => 'stock_base/show'
   end
 
   def new
@@ -41,11 +41,10 @@ class StockBaseController < ApplicationController
       @stock = StockIn.new
       @stock.product = product
       @suppliers = product.suppliers
+      render :template => 'stock_base/new'
     rescue
       redirect_to :controller => 'products', :action => 'new'
     end
-
-    render :template => 'stock/new'
   end
 
   def create
@@ -66,14 +65,14 @@ class StockBaseController < ApplicationController
         @ledger = Ledger.new_ledger
         @ledger_categories =  @organization.ledger_categories_by_payment_method(@ledger.payment_method)
         render :update do |page|
-          page.replace_html 'add_payment', :partial => 'stock/edit'
+          page.replace_html 'add_payment', :partial => 'stock_base/edit'
         end
       end
     else
       @ledgers = @stock.ledgers
       @suppliers = product.suppliers
       render :update do |page|
-        page.replace_html 'stock_form', :partial => 'stock/form'
+        page.replace_html 'stock_form', :partial => 'stock_base/form'
       end
     end
   end
@@ -86,7 +85,7 @@ class StockBaseController < ApplicationController
     @banks = Bank.find(:all)
     @ledger_categories =  @organization.ledger_categories_by_payment_method(@ledger.payment_method)
     render :update do |page|
-      page.replace_html 'payment', :partial => 'stock/payment'
+      page.replace_html 'payment', :partial => 'stock_base/payment'
       page.replace_html 'stock_options', " "
     end
   end  
@@ -103,7 +102,7 @@ class StockBaseController < ApplicationController
       @suppliers = @product.suppliers
       @ledger_categories =  @organization.ledger_categories_by_payment_method(ledger.payment_method)
       render :update do |page|
-        page.replace_html 'partial_edit', :partial => 'stock/edit'
+        page.replace_html 'partial_edit', :partial => 'stock_base/edit'
       end
     else
       @ledger = ledger
@@ -112,7 +111,7 @@ class StockBaseController < ApplicationController
       @banks = Bank.find(:all)
       @ledger_categories =  @organization.ledger_categories_by_payment_method(@ledger.payment_method)
       render :update do |page|
-        page.replace_html 'payment', :partial => 'stock/payment'
+        page.replace_html 'payment', :partial => 'stock_base/payment'
       end
     end
   end
@@ -124,7 +123,7 @@ class StockBaseController < ApplicationController
     @suppliers = @product.suppliers
     @ledgers = @stock.ledgers
 
-    render :template => 'stock/edit'
+    render :template => 'stock_base/edit'
   end
 
   def update

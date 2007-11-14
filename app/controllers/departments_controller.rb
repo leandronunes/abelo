@@ -79,7 +79,7 @@ class DepartmentsController < ApplicationController
       in_set 'first'
       highlights_on :controller => 'departments'
     end
-    t.named _('Departments')
+    t.named @organization.camel_department_name_pl
   end
 
 end

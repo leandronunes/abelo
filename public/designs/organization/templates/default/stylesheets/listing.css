@@ -66,3 +66,12 @@
 .info_list .break_line {
   clear: left;
 }
+
+
+.controller-documents ul{
+  list-style: none;
+}
+
+.controller-documents ul li{
+   display: inline;
+}

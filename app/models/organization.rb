@@ -319,4 +319,17 @@ class Organization < ActiveRecord::Base
     return customers
   end
 
+  # Configuration Stuff
+  def camel_department_name
+    self.configuration.department_name.camelcase
+  end
+
+  def camel_department_name_pl
+    self.configuration.department_name_on_plural.camelcase
+  end
+
+  def department_name_pl
+    self.configuration.department_name_on_plural.downcase
+  end
+
 end

@@ -4,21 +4,33 @@ class StockBaseController < ApplicationController
 
   before_filter :create_tabs
 
-  def autocomplete_supplier
-    escaped_string = Regexp.escape(params[:supplier][:name])
-    re = Regexp.new(escaped_string, "i")
-    stocks = @organization.products.find(params[:product_id]).stocks
-    suppliers = stocks.map{|s| s.supplier}
-    @suppliers = suppliers.select{|s| s.name.match re}
-    @suppliers.uniq!
-    render :layout=>false
+  def list_core(virtual_type)
+    @query = params[:query]
+    @query ||= params[:product][:name] if params[:product]
+
+    if @query.nil?
+      @stocks = @organization.send("stock_#{virtual_type.pluralize}")
+      @stock_pages, @stocks = paginate_by_collection @stocks
+    else
+      @stocks = StockVirtual.send("create_#{virtual_type.pluralize}", @organization.products.full_text_search(@query))
+      @stock_pages, @stocks = paginate_by_collection @stocks
+    end
+    render :template => 'stock_base/list'
   end
 
-  def autocomplete_name
+
+  def autocomplete_supplier_name
+    escaped_string = Regexp.escape(params[:supplier][:name])
+    re = Regexp.new(escaped_string, "i")
+    @suppliers = @organization.suppliers.select{|s| s.name.match re}
+    render :template => 'stock_base/autocomplete_supplier', :layout=>false
+  end
+
+  def autocomplete_product_name
     escaped_string = Regexp.escape(params[:product][:name])
     re = Regexp.new(escaped_string, "i")
     @products = @organization.products.select{|p| p.name.match re}
-    render :layout=>false
+    render :template => 'stock_base/autocomplete_name', :layout=>false
   end
 
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
@@ -30,100 +42,46 @@ class StockBaseController < ApplicationController
 
   def show
     @stock = Stock.find(params[:id])
-    @ledgers = @stock.ledgers
+    @ledgers = @stock.ledgers if @stock.respond_to?('ledgers')
 
     render :template => 'stock_base/show'
   end
 
-  def new
+  def new_core(virtual_type)
     begin
       product = @organization.products.find(params[:product_id])
-      @stock = StockIn.new
-      @stock.product = product
+      @stock = virtual_type.camelcase.constantize.new(:product => product, :date => Date.today, :amount => 1)
       @suppliers = product.suppliers
       render :template => 'stock_base/new'
     rescue
+      flash[:notice] = _('The product with identification %s is not of your organization') % params[:product_id]
       redirect_to :controller => 'products', :action => 'new'
     end
   end
 
-  def create
+  def create_core(stock_type)
     product = @organization.products.find(params[:product_id])
-    @stock = StockIn.new(params[:stock])
+    @stock = stock_type.camelcase.constantize.new(params[:stock])
     @stock.product = product
-
-    display_layout =  !request.xml_http_request?
 
     if @stock.save
       flash[:notice] = _('It was successfully created.')
-      if display_layout
-        redirect_to :action => 'history', :product_id => product
-      else
-        @product = @stock.product
-        @suppliers = @product.suppliers 
-        @banks = Bank.find(:all)
-        @ledger = Ledger.new_ledger
-        @ledger_categories =  @organization.ledger_categories_by_payment_method(@ledger.payment_method)
-        render :update do |page|
-          page.replace_html 'add_payment', :partial => 'stock_base/edit'
-        end
-      end
+      redirect_to :action => 'history', :product_id => product
     else
-      @ledgers = @stock.ledgers
-      @suppliers = product.suppliers
-      render :update do |page|
-        page.replace_html 'stock_form', :partial => 'stock_base/form'
-      end
+      @suppliers = []
+      render :template => 'stock_base/new'
     end
   end
-
-  def add_payment
-    @stock = @organization.stocks.find(params[:id])
-    @product = @stock.product
-    @suppliers = @product.suppliers
-    @ledger = Ledger.new_ledger()
-    @banks = Bank.find(:all)
-    @ledger_categories =  @organization.ledger_categories_by_payment_method(@ledger.payment_method)
-    render :update do |page|
-      page.replace_html 'payment', :partial => 'stock_base/payment'
-      page.replace_html 'stock_options', " "
-    end
-  end  
-
-  def create_payment
-    @stock = @organization.stocks.find(params[:id])
-    ledger = Ledger.new_ledger(params[:ledger])
-    ledger.owner = @stock
-    ledger.bank_account = @stock.default_bank_account
-
-    if ledger.save
-      @ledgers = @stock.ledgers
-      @product = @stock.product
-      @suppliers = @product.suppliers
-      @ledger_categories =  @organization.ledger_categories_by_payment_method(ledger.payment_method)
-      render :update do |page|
-        page.replace_html 'partial_edit', :partial => 'stock_base/edit'
-      end
-    else
-      @ledger = ledger
-      @product = @stock.product
-      @suppliers = @product.suppliers
-      @banks = Bank.find(:all)
-      @ledger_categories =  @organization.ledger_categories_by_payment_method(@ledger.payment_method)
-      render :update do |page|
-        page.replace_html 'payment', :partial => 'stock_base/payment'
-      end
-    end
-  end
-
 
   def edit
     @stock = Stock.find(params[:id])
     @product = @stock.product
     @suppliers = @product.suppliers
-    @ledgers = @stock.ledgers
+    @ledgers = @stock.ledgers if @stock.respond_to?('ledgers')
 
-    render :template => 'stock_base/edit'
+    if !@stock.kind_of?(StockIn)
+      render :template => 'stock_base/edit'
+    end
   end
 
   def update
@@ -135,6 +93,16 @@ class StockBaseController < ApplicationController
       @suppliers = @stock.product.suppliers
       @ledgers = @stock.ledgers
       render :action => 'edit'
+    end
+  end
+
+  def history_core(stock_type)
+    begin
+      @product = @organization.products.find(params[:product_id])
+      @stocks = @product.send(stock_type.pluralize)
+      render :template => 'stock_base/history'
+    rescue
+      redirect_to :action => 'index'
     end
   end
 
@@ -162,7 +130,7 @@ class StockBaseController < ApplicationController
       in_set 'first'
       highlights_on :controller => 'stock_in'
     end
-    t.named _('Stock In Control')
+    t.named _('Devolution Control')
 
     t = add_tab do
       links_to :controller => 'stock_out'

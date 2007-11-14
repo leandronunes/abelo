@@ -3,7 +3,6 @@ class StockIn < Stock
   belongs_to :supplier
   validates_presence_of :supplier_id
   has_many :ledgers, :as => :owner
-  validates_presence_of :validity
   validates_presence_of :price
   validates_numericality_of :price
   validates_inclusion_of :amount, :in => InfiniteSet::POSITIVES, :if => lambda { |s| !s.amount.nil? } , :message => _('The amount must be a positive number')

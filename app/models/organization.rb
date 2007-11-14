@@ -32,6 +32,8 @@ class Organization < ActiveRecord::Base
   has_many :debit_card_displays, :through => :configuration
   has_many :bank_account_displays, :through => :configuration
   has_many :stock_in_displays, :through => :configuration
+  has_many :stock_devolution_displays, :through => :configuration
+  has_many :stock_down_displays, :through => :configuration
   has_many :stock_out_displays, :through => :configuration
   has_many :user_displays, :through => :configuration
   has_many :periodicity_displays, :through => :configuration
@@ -86,6 +88,11 @@ class Organization < ActiveRecord::Base
       configuration.department_name = _('Department')
       configuration.customer_name = _('Customer')
       configuration.document_name = _('Commercial Proposal')
+      configuration.organization_name_on_plural = _('Organizations')
+      configuration.product_name_on_plural = _('Products')
+      configuration.department_name_on_plural = _('Departments')
+      configuration.customer_name_on_plural = _('Customers')
+      configuration.document_name_on_plural = _('Commercial Proposals')
       configuration.is_model = false
       configuration.save!
 
@@ -289,12 +296,20 @@ class Organization < ActiveRecord::Base
     StockVirtual.create_virtuals(self.products)
   end 
 
+  def stock_virtual_devolutions
+    StockVirtual.create_virtual_devolutions(self.products)
+  end
+
   def stock_virtual_ins
     StockVirtual.create_virtual_ins(self.products)
   end
 
   def stock_virtual_outs
     StockVirtual.create_virtual_outs(self.products)
+  end 
+
+  def stock_virtual_downs
+    StockVirtual.create_virtual_downs(self.products)
   end 
 
 

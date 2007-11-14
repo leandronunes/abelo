@@ -1,30 +1,19 @@
 class StockInController < StockBaseController
 
   def list
-    @query = params[:query]
-    @query ||= params[:product][:name] if params[:product]
+    list_core('virtual_devolution')
+  end
 
-    if @query.nil?
-      @stocks = @organization.stock_virtual_ins
-      @stock_pages, @stocks = paginate_by_collection @stocks
-    else
-      @stocks = StockVirtual.create_virtual_ins(@organization.products.full_text_search(@query))
-      @stock_pages, @stocks = paginate_by_collection @stocks
-    end
+  def new
+    new_core('stock_devolution')
+  end
 
-    render :template => 'stock/list'
+  def create
+    create_core('stock_devolution')
   end
 
   def history
-    begin
-      @product = @organization.products.find(params[:product_id])
-      @stocks = @product.stock_ins
-    rescue
-      redirect_to :action => 'index'
-    end
-
-    render :template => 'stock/history'
+    history_core('stock_devolution')
   end
-
 
 end

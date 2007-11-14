@@ -14,7 +14,7 @@ class CreateStocks < ActiveRecord::Migration
       ### Fields common for both StockIn and StockOut
       ###############################################
       # the product that is entering/exiting the stock
-      t.column :price, :float, :null => false
+      t.column :price, :float
       t.column :product_id, :integer, :null => false
       # how much of it
       t.column :amount, :float, :null => false
@@ -23,8 +23,9 @@ class CreateStocks < ActiveRecord::Migration
       # that the item are getting into the stock to be used in a production
       # process.
       t.column :purpose, :integer, :default => 0
+      t.column :status, :integer, :default => 0
       # the date when the entry is created
-      t.column :date, :date, :null => false
+      t.column :date, :date
 
       ###############################
       ### fields used only by StockIn

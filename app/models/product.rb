@@ -6,7 +6,9 @@ class Product < ActiveRecord::Base
   has_and_belongs_to_many :suppliers
   has_many :stocks
   has_many :stock_ins
+  has_many :stock_devolutions
   has_many :stock_outs
+  has_many :stock_downs
 
   validates_uniqueness_of :code, :scope => :organization_id
 
@@ -38,8 +40,16 @@ class Product < ActiveRecord::Base
     self.stock_ins.sum('amount').to_f
   end
 
+  def amount_in_stock_devolution
+    self.stock_devolutions.sum('amount').to_f
+  end
+
   def amount_in_stock_out
-    self.stocks.sum('amount', :conditions => "type = 'StockOut'").to_f
+    self.stock_outs.sum('amount').to_f
+  end
+
+  def amount_in_stock_down
+    self.stock_downs.sum('amount').to_f
   end
 
 

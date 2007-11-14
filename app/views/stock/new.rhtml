@@ -1,0 +1,17 @@
+<%= title _('New stock entry for %s') % content_tag(:b, @stock.product.name) %>
+
+<div id="stock_in_entry">
+
+<% form_tag( :action => 'create', :product_id => @stock.product )  do %>
+
+  <div id="stock_form">
+    <%= render :partial => 'stock_base/form'%>
+  </div>
+
+  <%= subtitle _("Payments %s") % content_tag(:p, button_submit_to_remote( 'add', 'payment_button' , _('Add'), {:url => {:action => 'create', :product_id => @stock.product, :id => @stock}, :failure => "$('add_payment').innerHTML=request.responseText"}) ) %>
+
+    <%= display_new_info_options @product %> 
+
+<% end %>
+
+</div>

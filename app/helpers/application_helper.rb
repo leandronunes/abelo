@@ -71,7 +71,7 @@ module ApplicationHelper
     [
       text_field(object, method, :class => 'filter_field'),
       content_tag(:div,
-        auto_complete_field("#{object}_#{method}", :url => {:action => "autocomplete_#{method}"}.merge(params), :indicator => 'auto_list'),
+        auto_complete_field("#{object}_#{method}", :url => {:action => "autocomplete_#{object}_#{method}"}.merge(params), :indicator => 'auto_list'),
         :class => 'auto_complete', :id => "#{object}_#{method}_auto_complete"
       ),
       content_tag(:div, '', :id => 'auto_list', :style => 'display: none;' )
@@ -386,7 +386,7 @@ module ApplicationHelper
   end
 
   def subtitle(subtitle)
-    content_tag('h2', subtitle, :class => 'subtitle')
+    content_tag('h2', content_tag(:p, subtitle), :class => 'subtitle')
   end
 
   def footer
@@ -546,13 +546,15 @@ module ApplicationHelper
   alias :display_edit_info :display_form_info
 
   def display_edit_info_options(object, params = {}, html_options = {})
+    local_html_options = {}
+    local_html_options[:class] = 'display_info_options ' + (html_options[:class].nil? ? '' : html_options[:class])
     content_tag(:div,
       [
         button('back', _('Back'), :back, {:action => 'list'}.merge(params)),
         button('save', _('Save'), :save),
         button('reset', _('Reset'), :reset, {}, {:type => 'reset'} ),
       ].join("\n"),
-      html_options
+      local_html_options
     )
   end
 

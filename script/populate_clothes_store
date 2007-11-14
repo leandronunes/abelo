@@ -145,6 +145,23 @@ StockInDisplay.available_fields.collect { |d|
 }
 configuration.set_stock_in_displays=(params)
 
+
+StockDevolutionDisplay.delete_all
+params = {}
+StockDevolutionDisplay.available_fields.collect { |d|
+  in_list = ['date', 'amount', 'product'].include?(d) ? true : false
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
+}
+configuration.set_stock_devolution_displays=(params)
+
+StockDownDisplay.delete_all
+params = {}
+StockDownDisplay.available_fields.collect { |d|
+  in_list = ['date', 'amount', 'product'].include?(d) ? true : false
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
+}
+configuration.set_stock_down_displays=(params)
+
 StockOutDisplay.delete_all
 params = {}
 StockOutDisplay.available_fields.collect { |d|

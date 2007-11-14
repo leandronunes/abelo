@@ -10,13 +10,13 @@
 
     <% for item in @stocks %>
       <tr id="list_item_<%=item.id %>">
-        <% if item.type != StockOut %>
+        <% if item.kind_of?(StockIn) %>
           <td><%= item.supplier.name %></td>
         <% else %>
           <td> - </td>
         <% end %>
         <td><%= item.date.strftime('%d/%m/%Y') %></td>
-        <td><%= item.price %></td>
+        <td><%= item.price || '-' %></td>
         <td><%= item.amount %></td>
         <td>
           <%= button 'view_small', _('Show'), :show, :action => 'show', :id => item, :product_id => @product %>

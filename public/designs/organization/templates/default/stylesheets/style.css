@@ -101,12 +101,6 @@ body {
   clear:both;
 }
 
-.controller-stock.action-history .main_title b {
-  font-size: 120%;
-  letter-spacing: -2px;
-  color: #E80;
-}
-
 #image_list div {
   float: left;
   margin: 0px 5px 20px 0px;
@@ -190,4 +184,11 @@ body {
 #beta_info span {
   display: none;
 }
+
+.main_title b {
+  font-size: 120%;
+  letter-spacing: -2px;
+  color: #E80;
+}
+
 

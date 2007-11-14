@@ -20,6 +20,8 @@ class Configuration < ActiveRecord::Base
   has_many :mass_mail_displays, :dependent => :destroy
   has_many :stock_virtual_displays, :dependent => :destroy
   has_many :stock_in_displays, :dependent => :destroy
+  has_many :stock_devolution_displays, :dependent => :destroy
+  has_many :stock_down_displays, :dependent => :destroy
   has_many :stock_out_displays, :dependent => :destroy
   has_many :profile_displays, :dependent => :destroy
   has_many :user_displays, :dependent => :destroy
@@ -42,13 +44,21 @@ class Configuration < ActiveRecord::Base
       self.errors.add( 'organization_name', _('Organization name cannot be blank') )  
     end
 
+    if self.organization_name_on_plural.blank?
+      self.errors.add( 'organization_name_on_plural', _('Organization name on plural cannot be blank') )  
+    end
+
     self.errors.add( 'product_name', _('Product name cannot be blank') )  if self.product_name.blank?
+    self.errors.add( 'product_name_on_plural', _('Product name on plural cannot be blank') )  if self.product_name_on_plural.blank?
 
     self.errors.add( 'department_name', _('Department name cannot be blank') )  if self.department_name.blank?
+    self.errors.add( 'department_name_on_plural', _('Department name on plural cannot be blank') )  if self.department_name_on_plural.blank?
 
     self.errors.add( 'customer_name', _('Customer name cannot be blank') )  if self.customer_name.blank?
+    self.errors.add( 'customer_name_on_plural', _('Customer name on plural cannot be blank') )  if self.customer_name_on_plural.blank?
 
     self.errors.add( 'document_name', _('Document name cannot be blank') )  if self.document_name.blank?
+    self.errors.add( 'document_name_on_plural', _('Document name on plural cannot be blank') )  if self.document_name_on_plural.blank?
   end
 
   def settings
@@ -183,6 +193,8 @@ class Configuration < ActiveRecord::Base
     MassMailDisplay
     StockVirtualDisplay
     StockInDisplay
+    StockDevolutionDisplay
+    StockDownDisplay
     StockOutDisplay
     ProfileDisplay
     UserDisplay

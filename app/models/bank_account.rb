@@ -9,8 +9,10 @@ class BankAccount < ActiveRecord::Base
   after_save do |account|
     if account.is_default?
       default_account = account.owner.default_bank_account
-      default_account.is_default = false
-      default_account.save
+      if default_account != account
+        default_account.is_default = false
+        default_account.save
+      end
     end
   end
 

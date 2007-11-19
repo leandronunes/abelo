@@ -28,6 +28,7 @@ class ConfigurationDisplayTest < Test::Unit::TestCase
       stock_out_displays
       user_displays
       periodicity_displays
+      document_displays
   ]
 
   def test_describe

@@ -8,7 +8,19 @@ class ConfigurationTest < Test::Unit::TestCase
     @organization = Organization.find_by_identifier('six') 
     @configuration = Configuration.create(:is_model => true, :organization_name => 'Some Name', 
                        :product_name => 'Some name', :department_name => 'Some Name', 
-                        :customer_name => 'Some name', :document_name => 'Some Name', :name => 'A name')
+                        :customer_name => 'Some name', :document_name => 'Some Name', :name => 'A name',
+                        :organization_name_on_plural => 'Organizations Name', :product_name_on_plural => 'Products name', 
+                        :department_name_on_plural => 'Departments Name', :customer_name_on_plural => 'Customers name', 
+                        :document_name_on_plural => 'Documents Name')
+  end
+
+  def create_configuration(params = {})
+    Configuration.create!(:is_model => params[:is_model] || false, :organization_name => 'some name', 
+      :product_name => 'some name', :department_name => 'some name',  :customer_name => 'some name', 
+      :document_name => 'some name', :organization_name_on_plural => 'Organizations Name',
+      :product_name_on_plural => 'Productsname', :department_name_on_plural => 'Departments Name', 
+      :customer_name_on_plural => 'Customers name', :document_name_on_plural => 'Documents Name', 
+      :name => params[:name] || 'some name', :organization => params[:organization])
   end
 
   def test_setup
@@ -35,6 +47,8 @@ class ConfigurationTest < Test::Unit::TestCase
     MassMailDisplay
     StockVirtualDisplay
     StockInDisplay
+    StockDevolutionDisplay
+    StockDownDisplay
     StockOutDisplay
     ProfileDisplay
     UserDisplay
@@ -57,9 +71,11 @@ class ConfigurationTest < Test::Unit::TestCase
 
   def test_uniqueness_of_name_when_is_model
     Configuration.delete_all
-    Configuration.create(:is_model => true, :organization_name => 'Some Name', 
-      :product_name => 'Some name', :department_name => 'Some Name',  :customer_name => 'Some name', 
-      :document_name => 'Some Name', :name => 'some name')
+    Configuration.create!(:is_model => true, :organization_name => 'some name', 
+      :product_name => 'some name', :department_name => 'some name',  :customer_name => 'some name', 
+      :document_name => 'some name', :name => 'some name', :organization_name_on_plural => 'Organizations Name',
+      :product_name_on_plural => 'Productsname', :department_name_on_plural => 'Departments Name', 
+      :customer_name_on_plural => 'Customers name', :document_name_on_plural => 'Documents Name')
     c = Configuration.new(:is_model => true, :name => 'some name')  
     c.valid?
     assert c.errors.invalid?(:name)
@@ -141,26 +157,15 @@ class ConfigurationTest < Test::Unit::TestCase
 
   def test_find_configuration_models
     Configuration.delete_all
-    Configuration.create(:is_model => true, :organization_name => 'Some Name', 
-                         :product_name => 'Some name', :department_name => 'Some Name', 
-                          :customer_name => 'Some name', :document_name => 'Some Name', 
-                          :name => 'name 1')
-    Configuration.create(:is_model => true, :organization_name => 'Some Name', 
-                         :product_name => 'Some name', :department_name => 'Some Name', 
-                          :customer_name => 'Some name', :document_name => 'Some Name',
-                          :name => 'name 2')
-    Configuration.create(:is_model => false, :organization_name => 'Some Name', 
-                         :product_name => 'Some name', :department_name => 'Some Name', 
-                          :customer_name => 'Some name', :document_name => 'Some Name',
-                          :name => 'name 3')
+    create_configuration(:name => 'name 1', :is_model => true)
+    create_configuration(:name => 'name 2', :is_model => true)
+    create_configuration(:name => 'name 3', :organization => @organization)
+
     assert_equal 2, Configuration.models.length
   end
 
   def test_is_model_with_valid_id
-    c = Configuration.create(:is_model => true, :organization_name => 'Some Name', 
-                         :product_name => 'Some name', :department_name => 'Some Name', 
-                          :customer_name => 'Some name', :document_name => 'Some Name', 
-                          :name => 'name 1')
+    c = create_configuration(:name => 'name 1', :is_model => true)
 
     assert Configuration.is_model?(c.id)
     c.is_model=false
@@ -186,7 +191,7 @@ class ConfigurationTest < Test::Unit::TestCase
   def test_product_name
     name = 'some name'
     @configuration.product_name = name
-    assert @configuration.save
+    assert @configuration.save!
     assert_equal name, @configuration.product_name
   end
 
@@ -209,13 +214,6 @@ class ConfigurationTest < Test::Unit::TestCase
     @configuration.document_name = name
     assert @configuration.save
     assert_equal name, @configuration.document_name
-  end
-
-  def test_periodicity_name
-    name = 'some name'
-    @configuration.periodicity_name = name
-    assert @configuration.save
-    assert_equal name, @configuration.periodicity_name
   end
 
   def test_organization_name=
@@ -251,13 +249,6 @@ class ConfigurationTest < Test::Unit::TestCase
     @configuration.document_name = name
     assert @configuration.save
     assert_equal @configuration.settings['document_name'], @configuration.document_name
-  end
-
-  def test_periodicity_name=
-    name = 'some name'
-    @configuration.periodicity_name = name
-    assert @configuration.save
-    assert_equal @configuration.settings['periodicity_name'], @configuration.periodicity_name
   end
 
   # Test set_display_configuration= functions to each DISPLAY_CONFIGURATION_CLASSES_TEST

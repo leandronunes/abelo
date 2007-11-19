@@ -7,6 +7,7 @@ class BankAccountDisplayTest < Test::Unit::TestCase
       agency
       variation
       account
+      is_default
   ]
   def test_available_fields
     assert_equal AVAILABLE_FIELDS_TEST, BankAccountDisplay.available_fields

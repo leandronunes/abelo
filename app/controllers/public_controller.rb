@@ -12,6 +12,10 @@ class PublicController < ApplicationController
     @user = current_user
   end 
 
+  def test_action
+    render :text => 'bli' 
+  end
+
   def update_user
     @user = current_user
     if @user.update_attributes(params[:user])

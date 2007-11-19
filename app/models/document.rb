@@ -47,7 +47,7 @@ class Document < ActiveRecord::Base
   end
 
   def validate_on_destroy
-    if self.is_model? !and self.organization.nil? and self.organization.documents_by_model(self).size > 0
+    if self.is_model? and !self.organization.nil? and self.organization.documents_by_model(self).size > 0
       self.errors.add( _("You can't destroy this model: Exist at least a document that references it.")) if self.is_model? and self.organization.documents_by_model(self).size > 0
     end
   end

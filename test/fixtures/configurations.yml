@@ -2,8 +2,8 @@
 one:
   id: 1  
   organization_id: 1
-  settings: {organization_name: organization, product_name: product, department_name: department, customer_name: customer, document_name: document}
+  settings: {organization_name: organization, product_name: product, department_name: department, customer_name: customer, document_name: document, organization_name_on_plural: organization, product_name_on_plural: product, department_name_on_plural: department, customer_name_on_plural: customer, document_name_on_plural: document}
 two:
   id: 2
   organization_id: 2
-  settings: {organization_name: organization, product_name: product, department_name: department, customer_name: customer, document_name: document}
+  settings: {organization_name: organization, product_name: product, department_name: department, customer_name: customer, document_name: document, organization_name_on_plural: organization, product_name_on_plural: product, department_name_on_plural: department, customer_name_on_plural: customer, document_name_on_plural: document}

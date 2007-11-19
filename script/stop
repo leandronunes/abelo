@@ -1,1 +1,1 @@
-mongrel_rails cluster:stop
+mongrel_rails cluster::stop

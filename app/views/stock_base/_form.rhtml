@@ -5,7 +5,7 @@
 
 <% display_form_info @stock do |item | %>
 
-  <% if @stock.kind_of(StockOut)
+  <% if @stock.kind_of?(StockOut)
        business = _('Buy Price')
      else 
        business = _('Sell Price')

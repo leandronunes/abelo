@@ -1,5 +1,5 @@
   <table>
-    <% show_supplier = (@stocks.find(:first).type != StockOut) %>
+    <% show_supplier = (@stocks.find(:first).kind_of?(StockOut)) %>
     <tr>
       <th> <%= _('Supplier') %></th>
       <th> <%= _('Date') %> </th>
@@ -11,7 +11,7 @@
     <% for item in @stocks %>
       <tr id="list_item_<%=item.id %>">
         <% if item.kind_of?(StockIn) %>
-          <td><%= item.supplier.name %></td>
+          <td><%= item.supplier.name unless item.supplier.nil? %></td>
         <% else %>
           <td> - </td>
         <% end %>

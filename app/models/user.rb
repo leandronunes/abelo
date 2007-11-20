@@ -3,6 +3,7 @@ require "digest/sha1"
 class User < Person
 
   acts_as_accessor
+  acts_as_ferret
 
   # Virtual attribute for the unencrypted password
   attr_accessor :password

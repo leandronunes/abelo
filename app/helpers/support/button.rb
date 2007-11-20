@@ -20,7 +20,7 @@
   end
 
   def button_submit_to_remote(button, name, title, options = {}, html_options = {})
-    local_html_options = html_options.merge({ :class => "button button_#{type}" })
+    local_html_options = html_options.merge({ :class => "button button_submit" })
 
     design_display_button_submit_to_remote(button, name,  ( (local_html_options[:class]['with_text'])? title : '' ), options, local_html_options)
   end

@@ -75,7 +75,7 @@ class DocumentsControllerTest < Test::Unit::TestCase
     get :list, :models_list => true
 
     assert_response :success
-    assert_template 'documents/list_models'
+    assert_template 'list'
 
     assert_not_nil assigns(:documents)
     assert_not_nil assigns(:document_pages)
@@ -101,7 +101,6 @@ class DocumentsControllerTest < Test::Unit::TestCase
     assert_template 'show'
 
     assert_not_nil assigns(:document)
-    assert_not_nil assigns(:departments)
   end
 
   def test_new_document_from_model

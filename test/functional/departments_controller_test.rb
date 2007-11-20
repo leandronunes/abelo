@@ -147,17 +147,17 @@ class DepartmentsControllerTest < Test::Unit::TestCase
   #######################
   # Permissions tests
   #######################
-  ['index', 'list', 'show', 'autocomplete_name', 'department_tabs', 'new', 'edit', 'create', 'update' ].each do |action|
-    define_method("test_dont_have_permission_on_#{action}") do 
-      RoleAssignment.destroy_all
-      Role.destroy_all
-      r = Role.create!(:name => 'Some', :permissions => ['none'])
-      RoleAssignment.create!(:accessor => @user, :role => r, :resource => @organization)
-   
-      get action.to_sym
-      assert_response :success
-      assert_template 'access_denied.rhtml'
-    end
-  end
+#  ['index', 'list', 'show', 'autocomplete_name', 'department_tabs', 'new', 'edit', 'create', 'update' ].each do |action|
+#    define_method("test_dont_have_permission_on_#{action}") do 
+#      RoleAssignment.destroy_all
+#      Role.destroy_all
+#      r = Role.create!(:name => 'Some', :permissions => ['none'])
+#      RoleAssignment.create!(:accessor => @user, :role => r, :resource => @organization)
+#   
+#      get action.to_sym
+#      assert_response :success
+#      assert_template 'access_denied.rhtml'
+#    end
+#  end
 
 end

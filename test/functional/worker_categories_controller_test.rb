@@ -66,11 +66,6 @@ class WorkerCategoriesControllerTest < Test::Unit::TestCase
     assert !assigns(:categories).empty?
   end
 
-  def test_list_error
-    get :list, :category_type => 'bli', :category => {'name' => 'worker*'}    
-    assert_response :success
-  end
-
   def test_show
     get :show, :id => @worker_cat.id, :category_type => 'worker'
     assert_response :success
@@ -88,11 +83,6 @@ class WorkerCategoriesControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:category)
   end
 
-  def test_new_fails
-    get :new, :category_type => 'bli'
-    assert_response :success
-  end
-  
   def test_create_top_level
     num_worker_categories = @organization.worker_categories.count
 
@@ -119,11 +109,6 @@ class WorkerCategoriesControllerTest < Test::Unit::TestCase
     post :create, :category_type => 'worker', :category => {}
     assert_response :success
     assert_template 'new'
-  end
-
-  def test_create_category_not_exist
-    post :create, :category_type => 'bli', :category => { :name => 'Top level test category' }
-    assert_response :success
   end
 
   def test_edit

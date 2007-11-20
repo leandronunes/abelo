@@ -68,11 +68,6 @@ class CustomerCategoriesControllerTest < Test::Unit::TestCase
     assert !assigns(:categories).empty?
   end
 
-  def test_list_error
-    get :list, :category_type => 'bli', :category => {'name' => 'customer*'}    
-    assert_response :success
-  end
-
   def test_show
     get :show, :id => @cust_cat.id, :category_type => 'customer'
     assert_response :success
@@ -90,11 +85,6 @@ class CustomerCategoriesControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:category)
   end
 
-  def test_new_fails
-    get :new, :category_type => 'bli'
-    assert_response :success
-  end
-  
   def test_create_top_level
     num_customer_categories = @organization.customer_categories.count
 
@@ -121,11 +111,6 @@ class CustomerCategoriesControllerTest < Test::Unit::TestCase
     post :create, :category_type => 'customer', :category => {}
     assert_response :success
     assert_template 'new'
-  end
-
-  def test_create_category_not_exist
-    post :create, :category_type => 'bli', :category => { :name => 'Top level test category' }
-    assert_response :success
   end
 
   def test_edit

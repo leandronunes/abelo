@@ -103,10 +103,10 @@ class LedgersControllerTest < Test::Unit::TestCase
   end
 
   def test_display_table_with_default_bank_account
-    post :display_table, :accounts => @default_bank_account.id
+    post :display_financial_table, :accounts => @default_bank_account.id
 
     assert_response :success
-    assert_template '_display_table'
+    assert_template '_display_financial_table'
     
     assert_not_nil assigns(:chosen_accounts)
     assert_not_nil assigns(:chosen_categories)
@@ -120,10 +120,10 @@ class LedgersControllerTest < Test::Unit::TestCase
   end
 
   def test_display_table_without_default_bank_account
-    post :display_table, :accounts => @another_bank_account.id
+    post :display_financial_table, :accounts => @another_bank_account.id
 
     assert_response :success
-    assert_template '_display_table'
+    assert_template '_display_financial_table'
 
     assert_not_nil assigns(:chosen_accounts)
     assert_not_nil assigns(:chosen_categories)

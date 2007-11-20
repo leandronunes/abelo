@@ -124,9 +124,9 @@ class StockControllerTest < Test::Unit::TestCase
     post :create, :product_id => @product.id
 
     assert_response :success
-    assert_template '_form'
+    assert_template 'new'
     assert_equal count, StockIn.count
-    assert assigns(:ledgers)
+    assert assigns(:stock)
     assert assigns(:suppliers)
   end
 
@@ -137,9 +137,7 @@ class StockControllerTest < Test::Unit::TestCase
     assert_template '_payment'
 
     assert assigns(:stock)
-    assert assigns(:product)
     assert assigns(:ledger)
-    assert assigns(:banks)
     assert assigns(:ledger_categories)
   end
 

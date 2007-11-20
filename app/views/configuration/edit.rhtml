@@ -13,6 +13,6 @@
     <%= render :partial => 'form' %>
   <% end %>
 
-  <%= display_edit_info_options(@configuration, :organization_id => @organization.id) %>
+  <%= display_edit_info_options(@configuration, :organization_id => (@organization.id unless @organization.nil?) ) %>
 <% end %>
 

@@ -14,13 +14,28 @@ class ConfigurationControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
     login_as('admin')
     @organization = Organization.find(:first)
-    @configuration = Configuration.create!(:is_model => true, :organization_name => 'Some Name',
-      :product_name => 'Some name', :department_name => 'Some Name',
-      :customer_name => 'Some name', :document_name => 'Some Name', :name => 'A name')
-    @configuration_organization = Configuration.create!( :organization_name => 'Some Name',
-      :product_name => 'Some name', :department_name => 'Some Name',
-      :customer_name => 'Some name', :document_name => 'Some Name',:organization => @organization)
+    @configuration = create_configuration(:is_model => true, :name => 'A different name')
+    @configuration_organization = create_configuration( :organization => @organization)
+  end
 
+  def create_configuration(params = {})
+    Configuration.create!(params_configuration(params))
+  end
+
+  def params_configuration(params = {})
+    {:is_model => params[:is_model] || false, 
+      :organization_name => params[:organization_name] || 'some name',
+      :product_name => params[:product_name] || 'some name', 
+      :department_name => params[:department_name] || 'some name',  
+      :customer_name => params[:customer_name] || 'some name',
+      :document_name => params[:document_name] || 'some name', 
+      :organization_name_on_plural => params[:organization_name_on_plural] || 'Organizations Name',
+      :product_name_on_plural => params[:product_name_on_plural] || 'Products name', 
+      :department_name_on_plural => params[:department_name_on_plural] || 'Departments Name',
+      :customer_name_on_plural =>  params[:customer_name_on_plural] || 'Customers name', 
+      :document_name_on_plural => params[:document_name_on_plural] || 'Documents Name', 
+      :name => params[:name] || 'some name', 
+      :organization => params[:organization] || nil}
   end
 
   def test_setup
@@ -31,35 +46,19 @@ class ConfigurationControllerTest < Test::Unit::TestCase
 
   def test_only_admin_has_access
     login_as('aaron')
-    get :index
-    assert_response :success
-    assert_template 'users/access_denied'
-    get :list
-    assert_response :success
-    assert_template 'users/access_denied'
-    get :new
-    assert_response :success
-    assert_template 'users/access_denied'
-    get :edit
-    assert_response :success
-    assert_template 'users/access_denied'
-    get :create
-    assert_response :success
-    assert_template 'users/access_denied'
-    get :update
-    assert_response :success
-    assert_template 'users/access_denied'
+    assert_raise(RuntimeError){get :index}
+    assert_raise(RuntimeError){get :list}
+    assert_raise(RuntimeError){get :new}
+    assert_raise(RuntimeError){get :edit}
+    assert_raise(RuntimeError){get :create}
+    assert_raise(RuntimeError){get :update}
   end
 
   def test_autocomplete_name
     Configuration.destroy_all
 
-    Configuration.create(:is_model => true, :organization_name => 'Some Name',
-      :product_name => 'Some name', :department_name => 'Some Name',
-      :customer_name => 'Some name', :document_name => 'Some Name', :name => 'name')
-    Configuration.create(:is_model => true, :organization_name => 'Some Name',
-      :product_name => 'Some name', :department_name => 'Some Name',
-      :customer_name => 'Some name', :document_name => 'Some Name', :name => 'name test')
+    create_configuration(:is_model => true, :name => 'name')
+    create_configuration(:is_model => true, :name => 'name test')
 
     get :autocomplete_name, :configuration => { :name => 'test'}
     assert_not_nil assigns(:configurations)
@@ -112,89 +111,15 @@ class ConfigurationControllerTest < Test::Unit::TestCase
   end
 
   def test_successfully_create
-    num = Configuration.count
-
-    post :create, :configuration => {:name => 'Some Name', :organization_name => 'Some Name',
-      :product_name => 'Some name', :department_name => 'Some Name',
-      :customer_name => 'Some name', :document_name => 'Some Name'}
+    Configuration.destroy_all
+    post :create, :configuration => params_configuration(:is_model => true)
 
     assert_response :redirect
     assert_redirected_to :action => 'list'
 
-    assert_equal num + 1, Configuration.count
+    assert_equal 1, Configuration.count
   end
 
-  def test_save_name_on_create
-    Configuration.delete_all
-    name = "Some name"
-    post :create, :configuration => {:name => name, :organization_name => 'Another Name',
-      :product_name => 'Some name', :department_name => 'Another Name',
-      :customer_name => 'Some name', :document_name => 'Another Name'}
-    
-    c = Configuration.find(:first)
-    assert_not_nil c
-    assert_equal name, c.name
-  end
-
-  def test_save_organization_name_on_create
-    Configuration.delete_all
-    name = "Some name"
-    post :create, :configuration => {:name => 'Another Name', :organization_name => name,
-      :product_name => 'Some name', :department_name => 'Another Name',
-      :customer_name => 'Some name', :document_name => 'Another Name'}
-    
-    c = Configuration.find(:first)
-    assert_not_nil c
-    assert_equal name, c.organization_name
-  end
-
-  def test_save_product_name_on_create
-    Configuration.delete_all
-    name = "Some name"
-    post :create, :configuration => {:name => 'Another Name', :organization_name => 'Another Name',
-      :product_name => name, :department_name => 'Another Name',
-      :customer_name => 'Some name', :document_name => 'Another Name'}
-    
-    c = Configuration.find(:first)
-    assert_not_nil c
-    assert_equal name, c.product_name
-  end
-
-  def test_save_department_name_on_create
-    Configuration.delete_all
-    name = "Some name"
-    post :create, :configuration => {:name => 'Another Name', :organization_name => 'Another Name',
-      :product_name => 'Some name', :department_name => name,
-      :customer_name => 'Some name', :document_name => 'Another Name'}
-    
-    c = Configuration.find(:first)
-    assert_not_nil c
-    assert_equal name, c.department_name
-  end
-
-  def test_save_customer_name_on_create
-    Configuration.delete_all
-    name = "Some name"
-    post :create, :configuration => {:name => 'Another Name', :organization_name => 'Another Name',
-      :product_name => 'Some name', :department_name => 'Another Name',
-      :customer_name => name, :document_name => 'Another Name'}
-    
-    c = Configuration.find(:first)
-    assert_not_nil c
-    assert_equal name, c.customer_name
-  end
-
-  def test_save_document_name_on_create
-    Configuration.delete_all
-    name = "Some name"
-    post :create, :configuration => {:name => 'Another Name', :organization_name => 'Another Name',
-      :product_name => 'Some name', :department_name => 'Another Name',
-      :customer_name => 'Some name', :document_name => name}
-    
-    c = Configuration.find(:first)
-    assert_not_nil c
-    assert_equal name, c.document_name
-  end
 
   def test_save_worker_displays_on_create
     Configuration.delete_all
@@ -258,58 +183,51 @@ class ConfigurationControllerTest < Test::Unit::TestCase
     assert_redirected_to :action => 'show'
   end
 
-  def test_update_name
-    name = "Another name"
-    id = @configuration.id
-    post :update, :id => id, :configuration => {:name => name}
-    
-    c = Configuration.find(id)
-    assert_equal name, c.name
+  NAMES_ACTIONS = %w[
+    name
+    organization_name
+    organization_name_on_plural
+    product_name
+    product_name_on_plural
+    department_name
+    department_name_on_plural
+    customer_name
+    customer_name_on_plural
+    document_name
+    document_name_on_plural
+  ]
+
+  NAMES_ACTIONS.each do |action|
+    define_method("test_save_#{action}_on_create") do 
+      Configuration.destroy_all
+      name = "another name #{action}"
+      post :create, :configuration => params_configuration(action.to_sym => name, :is_model => true)
+      c = Configuration.find(:first)
+      assert_not_nil c
+      assert_equal name, c.send(action)
+    end
   end
 
-  def test_update_organization_name
-    organization_name = "Another organization_name"
-    id = @configuration.id
-    post :update, :id => id, :configuration => {:organization_name => organization_name}
-    
-    c = Configuration.find(id)
-    assert_equal organization_name, c.organization_name
+  NAMES_ACTIONS.each do |action|
+    define_method("test_update_#{action}_on_configuration_model") do
+      Configuration.destroy_all
+      id = create_configuration(action.to_sym => 'name', :is_model => true).id
+      name = "Another #{action}"
+      assert_not_equal name, @configuration.send(action)
+      post :update, :id => id, :configuration => {action.to_sym => name}
+      c = Configuration.find(id)
+      assert_equal name, c.send(action)
+    end
   end
 
-  def test_update_product_name
-    product_name = "Another product_name"
-    id = @configuration.id
-    post :update, :id => id, :configuration => {:product_name => product_name}
-    
-    c = Configuration.find(id)
-    assert_equal product_name, c.product_name
-  end
-
-  def test_update_department_name
-    department_name = "Another department_name"
-    id = @configuration.id
-    post :update, :id => id, :configuration => {:department_name => department_name}
-    
-    c = Configuration.find(id)
-    assert_equal department_name, c.department_name
-  end
-
-  def test_update_customer_name
-    customer_name = "Another customer_name"
-    id = @configuration.id
-    post :update, :id => id, :configuration => {:customer_name => customer_name}
-    
-    c = Configuration.find(id)
-    assert_equal customer_name, c.customer_name
-  end
-
-  def test_update_document_name
-    document_name = "Another document_name"
-    id = @configuration.id
-    post :update, :id => id, :configuration => {:document_name => document_name}
-    
-    c = Configuration.find(id)
-    assert_equal document_name, c.document_name
+  NAMES_ACTIONS.reject{|r| r == 'update_name'}.each do |action|
+    define_method("test_update_#{action}_on_organization_configuration") do
+      id = @configuration_organization.id
+      name = "Another #{action}"
+      post :update, :id => id, :configuration => {action.to_sym => name}, :organization_id => @configuration_organization.organization
+      c = Configuration.find(id)
+      assert_equal name, c.send(action)
+    end
   end
 
   def test_unsuccessfully_update

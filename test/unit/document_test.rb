@@ -3,6 +3,10 @@ require File.dirname(__FILE__) + '/../test_helper'
 class DocumentTest < Test::Unit::TestCase
   fixtures :documents, :departments_documents, :document_sections, :organizations, :departments, :system_actors
 
+  def create_document(params = {})
+    Document.create(:name => 'Anohter Document Again', :organization_id => 1, :is_model => params[:is_model] || false)
+  end
+
   def test_mandatory_field_organization
     d = Document.new()
     d.valid?
@@ -101,15 +105,11 @@ class DocumentTest < Test::Unit::TestCase
     assert_equal  d.departments, doc_copy.departments
   end
 
-  def test_dclone_not_model_document
-    d = Document.new(:name => 'Anohter Document Again', :organization_id => 1, :is_model => false)
-    departments = Organization.find(1).departments
-    d.departments = departments
-    assert d.save
-    doc_copy = d.dclone
-    assert_equal  d.departments, doc_copy.departments
-    assert !doc_copy.valid?
-    assert doc_copy.errors.invalid?(:document_model_id)
+  def test_cannot_clone_a_non_model_document
+    d = create_document(:is_model => false)
+    assert !d.is_model?
+    d_clone = d.dclone
+    assert_nil d_clone
   end
 
 end

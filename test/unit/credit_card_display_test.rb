@@ -45,7 +45,7 @@ class CreditCardDisplayTest < Test::Unit::TestCase
     assert m.errors.invalid?(:field)
 
     m.field = 'interests'
-    m.save!
+    m.valid?
     assert !m.errors.invalid?(:field)
   end
 

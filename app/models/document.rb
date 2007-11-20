@@ -63,6 +63,7 @@ class Document < ActiveRecord::Base
 
 
   def dclone
+    return nil unless self.is_model
     d = self.clone 
     d.name = _("Change me")
     d.is_model = false

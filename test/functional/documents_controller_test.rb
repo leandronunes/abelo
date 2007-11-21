@@ -5,14 +5,37 @@ require 'documents_controller'
 class DocumentsController; def rescue_action(e) raise e end; end
 
 class DocumentsControllerTest < Test::Unit::TestCase
-  fixtures :documents, :departments, :document_sections, :organizations, :departments_documents, :document_items, :configurations
+  fixtures :documents, :departments, :document_sections, :organizations, :departments_documents, :document_items, :configurations, :system_actors
   under_organization :one
 
   def setup
     @controller = DocumentsController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
+    @organization = Organization.find_by_identifier('one')
+    @department = Department.find(:first)
+    @customer = Customer.find(:first)
     login_as("quentin")
+  end
+
+  def create_document(params ={})
+    Document.create(params_create_document(params))
+  end
+  def params_create_document(params = {})
+    {
+      :name => params[:name] || 'Some Name', 
+      :is_model => params[:is_model] || false, 
+      :organization => @organization, 
+      :departments => [@department],
+      :owner => params[:owner] || (params[:is_model] ? nil : @customer),
+      :document_model => params[:document_model]
+    }
+  end
+
+  def test_setup
+    assert @organization.valid?
+    assert @department.valid?
+    assert @customer.valid?
   end
 
   def test_used_fixtures_on_this_test
@@ -23,8 +46,7 @@ class DocumentsControllerTest < Test::Unit::TestCase
 
   def test_autocomplete_name_for_document_without_model
     Document.destroy_all
-    document = Document.new(:name => 'document', :is_model => false, :organization_id => 1, :department_ids => [1])
-    assert document.save
+    document = create_document(:is_model => false, :name => 'document')
     get :autocomplete_name, :document => {:name => 'document'}
     assert_not_nil assigns(:documents)
     assert assigns(:documents).include?(document)
@@ -32,7 +54,7 @@ class DocumentsControllerTest < Test::Unit::TestCase
 
   def test_autocomplete_name_for_model
     Document.destroy_all
-    model = Document.create(:name => 'Model', :is_model => true, :organization_id => 1, :department_ids => [1])
+    model = create_document(:name => 'Model', :is_model => true)
     get :autocomplete_name, :document => {:name => 'Model'}, :models_list => true
     assert_not_nil assigns(:documents)
     assert assigns(:documents).include?(model)
@@ -40,8 +62,8 @@ class DocumentsControllerTest < Test::Unit::TestCase
 
   def test_autocomplete_name_for_document_with_model
     Document.destroy_all
-    model = Document.create(:name => 'Model', :is_model => true, :organization_id => 1, :department_ids => [1])
-    document = Document.create(:name => 'document', :is_model => false, :organization_id => 1, :department_ids => [1], :document_model_id => model.id)
+    model = create_document(:is_model => true, :name => 'Model')
+    document = create_document(:is_model => false, :document_model => model)
     get :autocomplete_name, :document => {:name => 'document'}, :document_model_id => model.id, :models_list => true
     assert_not_nil assigns(:documents)
     assert Organization.find(1).documents_by_model(model).include?(document)
@@ -160,11 +182,11 @@ class DocumentsControllerTest < Test::Unit::TestCase
   end
 
   def test_create_document_with_model
-    model = Document.create(:name => 'Model', :is_model => true, :organization_id => 1, :department_ids => [1])
+    model = create_document(:is_model => true)
 
     num_documents = Document.count
 
-    post :create, :document_model_id => model.id, :document => {:name => 'document', :is_model => false, :organization_id => 1, :department_ids => [1]}, :models_list => true
+    post :create, :document_model_id => model.id, :document => params_create_document(:is_model => false), :models_list => true
     assert_valid assigns(:document)
     assert_not_nil assigns(:document)
     assert_response :redirect
@@ -190,7 +212,7 @@ class DocumentsControllerTest < Test::Unit::TestCase
   def test_create_document_without_model
     num_documents = Document.count
 
-    post :create, :document => {:name => 'document', :organization_id => 1, :department_ids => [1]}
+    post :create, :document => params_create_document
     assert_valid assigns(:document)
     assert_not_nil assigns(:document)
     assert_response :redirect
@@ -220,7 +242,7 @@ class DocumentsControllerTest < Test::Unit::TestCase
 
 
   def test_edit_document_with_model
-    document = Document.create(:name => 'Model', :is_model => false, :organization_id => 1, :department_ids => [1], :document_model_id => 1)
+    document = create_document(:is_model => false, :document_model => Document.models(:first))
 
     get :edit, :id => document.id, :document_model_id => 1, :models_list => true
 
@@ -237,7 +259,7 @@ class DocumentsControllerTest < Test::Unit::TestCase
   end
 
   def test_edit_document_without_model
-    model = Document.create(:name => 'Model', :is_model => false, :organization_id => 1, :department_ids => [1])
+    model = create_document(:is_model => false)
     
     get :edit, :id => model.id
 
@@ -252,6 +274,20 @@ class DocumentsControllerTest < Test::Unit::TestCase
       assert_valid d
     end
   end
+
+
+  def test_edit_document_without_model_with_owner_type
+    document = create_document()
+    customer =  Customer.find(:first)
+    assert customer.valid?
+    customer.documents << document
+    
+    get :edit, :id => document.id
+
+    assert_response :success
+    assert_template 'edit'
+  end
+
 
   def test_edit_document_model
     model = Document.create(:name => 'Model', :is_model => true, :organization_id => 1, :department_ids => [1])

@@ -75,9 +75,10 @@ class DocumentsController < ApplicationController
       redirect_to :action => 'list', :models_list => params[:models_list], :document_model_id => params[:document_model_id]
     else
       @departments = @organization.departments
-      @customers = @organization.customers
-      @workers = @organization.workers
-      @suppliers = @organization.suppliers
+      unless @document.is_model?
+        @owner_type = @document.document_owner_type
+        self.instance_variable_set("@#{@document.document_owner_type.pluralize}", @organization.send(@document.document_owner_type.pluralize))
+      end
       render :action => 'new', :models_list => params[:models_list], :document_model_id => params[:document_model_id]
     end
   end
@@ -85,9 +86,12 @@ class DocumentsController < ApplicationController
   def edit
     @document = @organization.documents.find(params[:id])
     @departments = @organization.departments
-    @customers = @organization.customers
-    @workers = @organization.workers
-    @suppliers = @organization.suppliers
+
+    unless @document.is_model?
+      @owner_type = @document.document_owner_type
+      self.instance_variable_set("@#{@document.document_owner_type.pluralize}", @organization.send(@document.document_owner_type.pluralize))
+    end
+
     if params[:models_list] and params[:document_model_id].nil?
       @title = _('Editing Model Document')
     else
@@ -128,7 +132,7 @@ class DocumentsController < ApplicationController
       highlights_on :controller => 'documents'
       highlights_off :controller => 'documents', :models_list => 'true'
     end
-    t.named _('Other Documents')
+    t.named _('Documents')
   end
 
   def list_owners

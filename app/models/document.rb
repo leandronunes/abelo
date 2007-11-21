@@ -42,8 +42,7 @@ class Document < ActiveRecord::Base
     self.errors.add(:document_model_id, _('You cannot have a document model in a model document')) if self.is_model? and not self.document_model.nil?
     self.errors.add( _('You have to choose almost an department to the document')) if  (not self.organization.nil?) and (not self.organization.departments.empty?) and (self.departments.empty?)
     self.errors.add( _("You can't associate a person/organization to a document model'")) if self.is_model? and not self.owner.nil?
- # self.errors.add(:document_model_id, _('You cannot create a document from another that is not a model')) if !self.is_model? and !self.document_model.nil? and  !self.document_model.is_model?
-
+    self.errors.add(:owner, _('You cannot have a non document model whitout a customer, supplier or worker associated to him')) if !self.is_model? and (self.owner_type.nil? or self.owner_id.nil?)
   end
 
   def validate_on_destroy
@@ -61,6 +60,10 @@ class Document < ActiveRecord::Base
     return results
   end
 
+  def self.models(options = {})
+    local_options  = options.blank? ? :all : options
+    self.find(local_options, :conditions => {:is_model => true})
+  end
 
   def dclone
     return nil unless self.is_model

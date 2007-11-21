@@ -59,8 +59,11 @@
         :with => "'value=' + escape(value)"
       )
   %>
+
+  <%= hidden_field 'document', 'owner_type', :value => 'SystemActor' %>
+
   <div id='owners_list'>
-    <% unless @document.owner_type.nil?  %>
+    <% unless @document.document_owner_type.nil?  %>
       <%= render :partial => 'owners_list' %>
     <% end %>
   </div>

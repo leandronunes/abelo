@@ -3,8 +3,22 @@ require File.dirname(__FILE__) + '/../test_helper'
 class DocumentTest < Test::Unit::TestCase
   fixtures :documents, :departments_documents, :document_sections, :organizations, :departments, :system_actors
 
+  def setup
+    @organization = Organization.find(:first)
+    @department = Department.find(:first)
+  end
+
   def create_document(params = {})
-    Document.create(:name => 'Anohter Document Again', :organization_id => 1, :is_model => params[:is_model] || false)
+    Document.create(:name => 'Anohter Document Again', :organization => @organization, :is_model => params[:is_model] || false)
+  end
+
+  def new_document(params = {})
+    Document.new(:name => 'Anohter Document Again', :organization => @organization, :is_model => params[:is_model] || false, :departments => [@department])
+  end
+
+  def test_setup
+    assert @organization.valid?
+    assert @department.valid?
   end
 
   def test_mandatory_field_organization
@@ -110,6 +124,12 @@ class DocumentTest < Test::Unit::TestCase
     assert !d.is_model?
     d_clone = d.dclone
     assert_nil d_clone
+  end
+
+  def test_has_owner_when_is_not_a_model
+    d = new_document(:is_model => false)    
+    d.valid?
+    assert d.errors.invalid?(:owner)
   end
 
 end

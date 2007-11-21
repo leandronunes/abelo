@@ -54,13 +54,13 @@ class ConfigurationControllerTest < Test::Unit::TestCase
     assert_raise(RuntimeError){get :update}
   end
 
-  def test_autocomplete_name
+  def test_autocomplete_configuration_name
     Configuration.destroy_all
 
     create_configuration(:is_model => true, :name => 'name')
     create_configuration(:is_model => true, :name => 'name test')
 
-    get :autocomplete_name, :configuration => { :name => 'test'}
+    get :autocomplete_configuration_name, :configuration => { :name => 'test'}
     assert_not_nil assigns(:configurations)
     assert_kind_of Array, assigns(:configurations)
     assert_equal 1, assigns(:configurations).length

@@ -2,7 +2,9 @@ class BanksController < ApplicationController
 
   needs_administrator
 
-  def autocomplete_name
+  before_filter :create_tabs
+
+  def autocomplete_bank_name
     escaped_string = Regexp.escape(params[:bank][:name])
     re = Regexp.new(escaped_string, "i")
     @banks = Bank.find(:all).select { |b| b.name.match re}
@@ -57,4 +59,14 @@ class BanksController < ApplicationController
     Bank.find(params[:id]).destroy
     redirect_to :action => 'list'
   end
+
+  def create_tabs
+    t = add_tab do      
+      links_to :controller => 'banks'
+      in_set 'first'
+      highlights_on :controller => 'banks'
+    end
+    t.named _("Banks")
+  end
+
 end

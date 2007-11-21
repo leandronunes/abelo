@@ -44,27 +44,27 @@ class DocumentsControllerTest < Test::Unit::TestCase
     assert Department.find(1).valid?
   end
 
-  def test_autocomplete_name_for_document_without_model
+  def test_autocomplete_document_name_for_document_without_model
     Document.destroy_all
     document = create_document(:is_model => false, :name => 'document')
-    get :autocomplete_name, :document => {:name => 'document'}
+    get :autocomplete_document_name, :document => {:name => 'document'}
     assert_not_nil assigns(:documents)
     assert assigns(:documents).include?(document)
   end
 
-  def test_autocomplete_name_for_model
+  def test_autocomplete_document_name_for_model
     Document.destroy_all
     model = create_document(:name => 'Model', :is_model => true)
-    get :autocomplete_name, :document => {:name => 'Model'}, :models_list => true
+    get :autocomplete_document_name, :document => {:name => 'Model'}, :models_list => true
     assert_not_nil assigns(:documents)
     assert assigns(:documents).include?(model)
   end
 
-  def test_autocomplete_name_for_document_with_model
+  def test_autocomplete_document_name_for_document_with_model
     Document.destroy_all
     model = create_document(:is_model => true, :name => 'Model')
     document = create_document(:is_model => false, :document_model => model)
-    get :autocomplete_name, :document => {:name => 'document'}, :document_model_id => model.id, :models_list => true
+    get :autocomplete_document_name, :document => {:name => 'document'}, :document_model_id => model.id, :models_list => true
     assert_not_nil assigns(:documents)
     assert Organization.find(1).documents_by_model(model).include?(document)
 #    assert assigns(:documents).include?(document)

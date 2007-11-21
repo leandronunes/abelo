@@ -27,10 +27,10 @@ class SupplierCategoriesControllerTest < Test::Unit::TestCase
     assert_redirected_to :action => 'list', :category_type => 'customer'
   end
 
-  def test_autocomplete_name
+  def test_autocomplete_category_name
     SupplierCategory.delete_all
     supp_cat = SupplierCategory.create(:name => 'Category for testing', :organization => @organization)
-    get :autocomplete_name, :category => { :name => 'test'}, :category_type => 'supplier'
+    get :autocomplete_category_name, :category => { :name => 'test'}, :category_type => 'supplier'
     assert_not_nil assigns(:categories)
     assert_kind_of Array, assigns(:categories)
     assert_equal 1, assigns(:categories).length

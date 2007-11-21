@@ -25,10 +25,10 @@ class WorkerCategoriesControllerTest < Test::Unit::TestCase
     assert_redirected_to :action => 'list', :category_type => 'customer'
   end
 
-  def test_autocomplete_name
+  def test_autocomplete_category_name
     WorkerCategory.delete_all
     worker_cat = WorkerCategory.create(:name => 'Category for testing', :organization => @organization)
-    get :autocomplete_name, :category => { :name => 'test'}, :category_type => 'worker'
+    get :autocomplete_category_name, :category => { :name => 'test'}, :category_type => 'worker'
     assert_not_nil assigns(:categories)
     assert_kind_of Array, assigns(:categories)
     assert_equal 1, assigns(:categories).length

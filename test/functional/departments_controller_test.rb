@@ -18,6 +18,25 @@ class DepartmentsControllerTest < Test::Unit::TestCase
     @organization = Organization.find_by_identifier('one')
   end
 
+  def create_department(params)
+    Department.create!(
+      { 
+        :name => 'test department',
+        :organization => @organization,
+      }.merge(params)
+    )
+  end
+
+  def test_autocomplete_department_name
+    Department.delete_all
+    create_department(:name => 'test department')
+    create_department(:name => 'another department')
+    get :autocomplete_department_name, :department => { :name => 'test'}
+    assert_not_nil assigns(:departments)
+    assert_kind_of Array, assigns(:departments)
+    assert_equal 1, assigns(:departments).length
+  end
+
   def test_index
     get :index
     assert_response :success

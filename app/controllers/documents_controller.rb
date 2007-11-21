@@ -8,7 +8,7 @@ class DocumentsController < ApplicationController
 
 
 #Search on a non model document of based on a given model or a document without a model
-  def autocomplete_name
+  def autocomplete_document_name
     escaped_string = Regexp.escape(params[:document][:name])
     re = Regexp.new(escaped_string, "i")
     if params[:document_model_id]

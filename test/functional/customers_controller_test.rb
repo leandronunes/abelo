@@ -32,6 +32,30 @@ class CustomersControllerTest < Test::Unit::TestCase
       assert item.category.valid?
     end
   end
+
+  def create_customer(params = {})
+    Customer.create!(
+      {
+        :name => "Some Name",
+        :cpf => '182.465.232-10',
+        :category_id => '20',
+        :email => 'test@test.com',
+        :organization => @organization
+      }.merge(params)
+    )
+  end
+
+  def test_autocomplete_system_actor_name
+    Customer.delete_all
+    create_customer(:name => 'test customer', :cpf => '022.779.766-36')
+    create_customer(:name => 'another customer', :cpf => '622.783.368-19')
+    get :autocomplete_system_actor_name, :system_actor => { :name => 'test'}, :actor => 'customer'
+    assert_not_nil assigns(:system_actors)
+    assert_kind_of Array, assigns(:system_actors)
+    assert_equal 1, assigns(:system_actors).length
+  end
+
+
   def test_list
     get :list, :actor => 'customer'
 

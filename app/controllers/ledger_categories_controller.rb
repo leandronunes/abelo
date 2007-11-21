@@ -6,7 +6,7 @@ class LedgerCategoriesController < ApplicationController
 
   uses_financial_tabs
 
-  def autocomplete_name
+  def autocomplete_category_name
     escaped_string = Regexp.escape(params[:category][:name])
     re = Regexp.new(escaped_string, "i")
     @categories = @organization.ledger_categories.select { |lc| lc.name.match re}

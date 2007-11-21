@@ -22,7 +22,7 @@ class CategoriesController < ApplicationController
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
   post_only [ :destroy, :create, :update ]
 
-  def autocomplete_name
+  def autocomplete_category_name
     escaped_string = Regexp.escape(params[:category][:name])
     re = Regexp.new(escaped_string, "i")
     @category_type = params[:category_type] if CATEGORY_TYPES.include?(params[:category_type])

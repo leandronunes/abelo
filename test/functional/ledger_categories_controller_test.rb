@@ -24,15 +24,15 @@ class LedgerCategoriesControllerTest < Test::Unit::TestCase
     assert @organization.valid?
   end
 
-  def test_autocomplete
+  def test_autocomplete_category_name
     LedgerCategory.delete_all
     LedgerCategory.create!(:type_of => 'I', :name => 'some  category', :organization => @organization, :payment_methods => ['money'])
     LedgerCategory.create!(:type_of => 'I', :name => 'another category', :organization => @organization, :payment_methods => ['money'])
-    post :autocomplete_name, :category => {:name => 'category' }
+    post :autocomplete_category_name, :category => {:name => 'category' }
     assert_not_nil assigns(:categories)
     assert_equal 2, assigns(:categories).length
     assert_response :success
-    assert_template 'autocomplete_name'
+    assert_template 'autocomplete_category_name'
   end
 
   def test_index

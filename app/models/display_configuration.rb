@@ -2,9 +2,7 @@ class DisplayConfiguration < ActiveRecord::Base
 
   belongs_to :configuration
 
-  validates_presence_of :configuration_id
   validates_uniqueness_of :field, :scope => :configuration_id
-#  validates_uniqueness_of :position, :scope => :configuration_id
 
   before_validation_on_create do |display|
     unless display.configuration.nil?

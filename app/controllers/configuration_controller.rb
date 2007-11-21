@@ -6,7 +6,7 @@ class ConfigurationController < ApplicationController
 
   uses_admin_organization_tabs
 
-  def autocomplete_name
+  def autocomplete_configuration_name
     escaped_string = Regexp.escape(params[:configuration][:name])
     re = Regexp.new(escaped_string, "i")
     @configurations = Configuration.models.select { |c| c.name.match re}
@@ -44,11 +44,9 @@ class ConfigurationController < ApplicationController
 
   def create
     parse_params_configuration(params)
-#render :text => params.inspect
-#return
     @configuration = Configuration.new(params[:configuration])
     @configuration.is_model = true
-    if @configuration.save!
+    if @configuration.save
       flash[:notice] = _('The configurations was successfully updated.')
       redirect_to :action => 'list'
     else

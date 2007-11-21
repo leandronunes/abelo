@@ -18,21 +18,40 @@ class BanksControllerTest < Test::Unit::TestCase
     @bank = Bank.create!(:name => 'The Name', :code => 'The Code')
   end
 
+  def create_bank(params = {})
+    Bank.create!(
+      {
+        :name => 'Some Name',
+        :code => 'Some Code',
+        :site => 'Some Site',
+      }.merge(params)
+      )
+  end
+
   def test_index
     get :index
     assert_response :redirect
     assert_redirected_to :action => 'list'
   end
 
-## TODO: this show erro when run, verify the controller
-#  def test_list
-#    get :list
-#
-#    assert_response :success
-#    assert_template 'list'
-#
-#    assert_not_nil assigns(:banks)
-#  end
+  def test_list
+    get :list
+
+    assert_response :success
+    assert_template 'list'
+
+    assert_not_nil assigns(:banks)
+  end
+
+  def test_autocomplete_bank_name
+    Bank.delete_all
+    create_bank(:name => 'bank', :code => 'another code')
+    create_bank(:name => 'another bank', :code => 'code')
+    get :autocomplete_bank_name, :bank => { :name => 'another'}
+    assert_not_nil assigns(:banks)
+    assert_kind_of Array, assigns(:banks)
+    assert_equal 1, assigns(:banks).length
+  end
 
   def test_show
     get :show, :id => @bank.id

@@ -16,11 +16,11 @@ class SystemActorsController < ApplicationController
     'supplier' => _('Supplier'),
   }
 
-  def autocomplete_name
+  def autocomplete_system_actor_name
     actor = params[:actor].camelize
     escaped_string = Regexp.escape(params[:system_actor][:name])
     re = Regexp.new(escaped_string, "i")
-    @system_actors = SystemActor.find(:all, :conditions => [ "type = ?", actor ]).select { |sa| sa.name.match re}
+    @system_actors = actor.constantize.find(:all).select{ |sa| sa.name.match re}
     render :layout=>false
   end
 

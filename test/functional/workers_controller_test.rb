@@ -16,8 +16,31 @@ class WorkersControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
     @organization = Organization.find_by_identifier 'one'
     login_as("quentin")
-    @system_actor = Worker.create!(:name => "Another Name to Test", :cpf => '874.923.844-24', :category_id => '20', :email => 'test@test.com', :organization_id => 1)
+    @system_actor = create_worker
   end
+
+  def create_worker(params = {})
+    Worker.create!(
+      {
+        :name => "Some Name", 
+        :cpf => '182.465.232-10', 
+        :category_id => '20', 
+        :email => 'test@test.com', 
+        :organization => @organization
+      }.merge(params)
+    )
+  end
+
+  def test_autocomplete_system_actor_name
+    Worker.delete_all
+    create_worker(:name => 'test worker', :cpf => '022.779.766-36')
+    create_worker(:name => 'another worker', :cpf => '622.783.368-19')
+    get :autocomplete_system_actor_name, :system_actor => { :name => 'test'}, :actor => 'worker'
+    assert_not_nil assigns(:system_actors)
+    assert_kind_of Array, assigns(:system_actors)
+    assert_equal 1, assigns(:system_actors).length
+  end
+
 
   def test_list
     get :list, :actor => 'worker'

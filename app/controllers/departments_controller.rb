@@ -7,7 +7,7 @@ class DepartmentsController < ApplicationController
 
   before_filter :department_tabs
 
-  def autocomplete_name
+  def autocomplete_department_name
     escaped_string = Regexp.escape(params[:department][:name])
     re = Regexp.new(escaped_string, "i")
     @departments = @organization.departments.select { |dp| dp.name.match re}

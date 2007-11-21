@@ -400,7 +400,6 @@ module ApplicationHelper
   end
 
   def autocomplete_list(collection, method = 'name' )
-    return '' if (collection.blank?)
     content_tag(:ul,
       collection.map do |c|
         content_tag(:li, 

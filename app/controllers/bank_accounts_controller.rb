@@ -6,7 +6,7 @@ class BankAccountsController < ApplicationController
 
   uses_financial_tabs
 
-  def autocomplete_account
+  def autocomplete_bank_account_account
     escaped_string = Regexp.escape(params[:bank_account][:account])
     re = Regexp.new(escaped_string, "i")
     @bank_accounts = @organization.bank_accounts.select { |ba| ba.account.match re}

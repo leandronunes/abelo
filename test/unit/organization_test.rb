@@ -2,10 +2,12 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class OrganizationTest < Test::Unit::TestCase
 
-  fixtures :bank_accounts, :organizations, :banks
+  fixtures :bank_accounts, :organizations, :banks, :system_actors, :departments
 
   def setup
     @organization = Organization.find_by_identifier('one')
+    @customer = Customer.find(:first)
+    @department = Department.find(:first)
     
     @cat_prod = ProductCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
     @cat_cust = CustomerCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
@@ -13,6 +15,17 @@ class OrganizationTest < Test::Unit::TestCase
     @cat_supp = SupplierCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
 
     @user = User.create!("salt"=>"7e3041ebc2fc05a40c60028e2c4901a81035d3cd", "updated_at"=>nil, "crypted_password"=>"00742970dc9e6319f8019fd54864d3ea740f04b1", "type"=>"User", "remember_token_expires_at"=>nil, "id"=>"1", "administrator"=>false, "remember_token"=>nil, "login"=>"new_user", "email"=>"new_user@example.com", "created_at"=>"2007-07-14 18:03:29")
+  end
+
+  def create_document(params = {})
+    Document.create!(
+      {
+        :name => 'Anohter Document Again', 
+        :organization => @organization, 
+        :is_model => false,
+        :departments => [@department]
+      }.merge(params)
+    )
   end
 
   def test_setup
@@ -178,9 +191,7 @@ class OrganizationTest < Test::Unit::TestCase
   end
 
   def test_document_not_model
-    dept = Department.create!(:name => 'Department for testing', :organization_id => @organization.id)
-    model = Document.create!(:name => 'Document model', :organization_id => @organization.id, :is_model => true, :department_ids => [dept.id])
-    doc = Document.create!(:name => 'Commercial Proposal', :organization_id => @organization.id, :is_model => false, :department_ids => [dept.id], :document_model_id => model.id)
+    doc = create_document(:is_model => false, :owner => @customer)
     assert @organization.documents_not_model.include?(doc) 
   end
 

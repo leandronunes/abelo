@@ -6,7 +6,7 @@ class OrganizationsController < ApplicationController
 
   uses_admin_organization_tabs
 
-  def autocomplete_name
+  def autocomplete_organization_name
     escaped_string = Regexp.escape(params[:organization][:name])
     re = Regexp.new(escaped_string, "i")
     @organizations = Organization.find(:all).select { |o| o.name.match re}

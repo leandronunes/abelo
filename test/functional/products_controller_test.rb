@@ -40,10 +40,10 @@ class ProductsControllerTest < Test::Unit::TestCase
     assert_kind_of Array, assigns(:products)
   end
 
-  def test_autocomplete_name
+  def test_autocomplete_product_name
     Product.delete_all
     product = Product.create!(:name => 'test product', :sell_price => 2.0, :unit => 'kg', :organization => @organization, :category => @category)
-    get :autocomplete_name, :product => { :name => 'test'}
+    get :autocomplete_product_name, :product => { :name => 'test'}
     assert_not_nil assigns(:products)
     assert_kind_of Array, assigns(:products)
     assert_equal 1, assigns(:products).length

@@ -30,11 +30,11 @@ class OrganizationsControllerTest < Test::Unit::TestCase
     assert_raise(RuntimeError){get :update}
   end
 
-  def test_autocomplete_name
+  def test_autocomplete_organization_name
     Organization.delete_all
     product = Organization.create!(:name => 'test product', :identifier => 'some', :cnpj => '84.021.301/0001-91')
     product = Organization.create!(:name => ' product', :identifier => 'anothersome', :cnpj => '73.417.283/0001-45')
-    get :autocomplete_name, :organization => { :name => 'test'}
+    get :autocomplete_organization_name, :organization => { :name => 'test'}
     assert_not_nil assigns(:organizations)
     assert_kind_of Array, assigns(:organizations)
     assert_equal 1, assigns(:organizations).length

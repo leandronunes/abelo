@@ -15,9 +15,31 @@ class PeriodicitiesControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
     @organization = Organization.find_by_identifier('one')
     @another_organization = Organization.find_by_identifier('two')
-    @periodicity = Periodicity.create!(:name => 'Some periodicities', :number_of_days => '30', :organization => @organization  )
+    @periodicity = create_periodicity
     login_as("quentin")
   end
+
+  def create_periodicity(params = {})
+    Periodicity.create!(
+      {
+        :name => 'Some Name', 
+        :number_of_days => '30', 
+        :organization => @organization  
+      }.merge(params)
+    )
+  end
+
+  def test_autocomplete_periodicity_name
+    Periodicity.delete_all
+    create_periodicity(:name => 'test name')
+    create_periodicity(:name => 'another name')
+    get :autocomplete_periodicity_name, :periodicity => { :name => 'test'}, :periodicity_type => 'product'
+    assert_not_nil assigns(:periodicities)
+    assert_kind_of Array, assigns(:periodicities)
+    assert_equal 1, assigns(:periodicities).length
+  end
+
+
 
   def test_setup
     assert @periodicity.valid?

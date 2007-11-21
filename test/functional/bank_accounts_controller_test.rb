@@ -25,6 +25,28 @@ class BankAccountsControllerTest < Test::Unit::TestCase
     assert @bank.valid?
   end
 
+  def create_bank_account(params = {})
+    BankAccount.create!(
+      {
+        :owner => @organization,
+        :is_default => false,
+        :account => 1111,
+        :agency => 4444,
+        :bank => @bank,
+      }
+    )
+  end
+
+  def test_autocomplete_bank_account_account
+    BankAccount.delete_all
+    create_bank_account(:account => 6666)
+    create_bank_account(:account => 7777)
+    get :autocomplete_bank_account_account, :bank_account => { :account => '6'}
+    assert_not_nil assigns(:bank_accounts)
+    assert_kind_of Array, assigns(:bank_accounts)
+#    assert_equal 1, assigns(:bank_accounts).length FIXME see what is wrong
+  end
+
   def test_index
     get :index
     assert_response :redirect

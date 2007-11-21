@@ -6,7 +6,7 @@ class PeriodicitiesController < ApplicationController
 
   uses_configurations_tabs
 
-  def autocomplete_name
+  def autocomplete_periodicity_name
     escaped_string = Regexp.escape(params[:periodicity][:name])
     re = Regexp.new(escaped_string, "i")
 

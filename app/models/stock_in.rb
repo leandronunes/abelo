@@ -17,7 +17,6 @@ class StockIn < Stock
     if !self.validity.nil? and (self.validity < self.date)
       self.errors.add('validity', '%{fn} is before this entry date. A invalid product cannot enter the stock.')
     end
-
   end
 
 end

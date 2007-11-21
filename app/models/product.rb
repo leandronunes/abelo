@@ -52,6 +52,14 @@ class Product < ActiveRecord::Base
     self.stock_downs.sum('amount').to_f
   end
 
+  def amount_consumed_by_customer(customer)
+    customer.amount_consumed_by_product(self)
+  end
+
+  def amount_purchased_of_supplier(supplier)
+    supplier.amount_purchased_of_product(self)
+  end
+
 
   def total_cost
     total = 0

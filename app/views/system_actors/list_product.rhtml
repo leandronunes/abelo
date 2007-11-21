@@ -1,0 +1,21 @@
+<%= render :partial => 'menu' %>
+
+<%= title _('%s Products') % @system_actor.name %>
+
+<table>
+  <tr> 
+    <th> <%= _('Product') %> </th>
+    <% if @system_actor.kind_of?(Customer) %>
+      <th> <%= _('Sale Quantity') %> </th>
+    <% else %>
+      <th> <%= _('Purchased Quantity') %> </th>
+    <% end %>
+  </tr>
+  <% @product_virtuals.each do |stock| %>
+    <tr> 
+      <td> <%= stock.product_in_list.name %> </td>
+      <td> <%= stock.amount_in_list.inspect %> </td>
+    </tr>
+  <% end %>
+</table>
+

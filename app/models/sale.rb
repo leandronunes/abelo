@@ -22,10 +22,23 @@ class Sale < ActiveRecord::Base
 
   end
 
-  def self.ledgers_by_customer(customer)
-    sales = Sale.find(:all, :conditions => {:organization_id => customer.organization, :customer_id => customer })
+  def self.sale_ledgers_by_customer(customer)
+    sales = self.sale_by_customer(customer)
     sales.collect{|s| s.ledgers}.flatten
   end
+
+  def self.sale_by_customer(customer)
+    Sale.find(:all, :conditions => {:organization_id => customer.organization, :customer_id => customer })
+  end
+
+  def self.products_by_customer(customer)
+    sales = self.sale_by_customer(customer)
+    return SaleItem.products_by_sale(sales)
+  end 
+
+  def amount_consumed_by_product(product)
+    self.items.find(:all, :conditions => {:product_id => product}).sum(&:amount).to_f
+  end 
 
   # gives the pending (open) sales for a given organization and user.
   def self.pending(org, user)

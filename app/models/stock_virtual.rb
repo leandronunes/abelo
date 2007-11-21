@@ -47,5 +47,20 @@ class StockVirtual < Stock
     virtual_downs.compact
   end
 
+  def self.create_virtual_customer(customer)
+    return [] unless customer.kind_of?(Customer)
+    virtual_customer = customer.products.map do |p|
+      StockVirtual.new(:product_in_list => p, :amount_in_list => p.amount_consumed_by_customer(customer) )
+    end
+    virtual_customer.compact
+  end
+
+  def self.create_virtual_supplier(supplier)
+    return [] unless supplier.kind_of?(Supplier)
+    virtual_customer = supplier.products.map do |p|
+      StockVirtual.new(:product_in_list => p, :amount_in_list => p.amount_purchased_of_supplier(supplier) )
+    end
+    virtual_customer.compact
+  end
 
 end

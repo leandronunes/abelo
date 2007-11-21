@@ -72,7 +72,7 @@ class SystemActor < ActiveRecord::Base
     ledger_dates = ledgers_by_dates(start_date, end_date, accounts)
     ledger_categories = ledgers_by_categories(categories, accounts)
     ledger_search = ledgers_by_search(query, accounts)
-    ledger_sale = Sale.ledgers_by_customer(self)  
+    ledger_sale = Sale.sale_ledgers_by_customer(self)  
 
     all_leders = ledger_banks 
     all_leders = all_leders & ledger_tags unless ledger_tags.blank?

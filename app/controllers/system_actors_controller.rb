@@ -13,7 +13,7 @@ class SystemActorsController < ApplicationController
 
   acts_as_documentable(:model => 'system_actor')
 
-  before_filter :check_actor_presence
+  before_filter :check_actor_presence, :except => ['index', 'list']
 
   SYSTEM_ACTORS = {
     'customer' => _('Customer'),
@@ -139,6 +139,11 @@ class SystemActorsController < ApplicationController
     else
       render :partial => 'natural_person'
     end
+  end
+
+  def list_product
+    @system_actor =  @organization.send(@actor.pluralize).find(params[:id])
+    @product_virtuals = @system_actor.stock_virtuals
   end
 
   private

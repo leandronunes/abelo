@@ -5,14 +5,14 @@ class Organization < ActiveRecord::Base
 
   # These names cannot be used as identifiers for Organizations
   RESERVED_IDENTIFIERS = %w[
-  admin
-  system
-  myprofile
-  profile
-  cms
-  community
-  homepage
-  test
+    admin
+    system
+    myprofile
+    profile
+    cms
+    community
+    homepage
+    test
   ]
 
   acts_as_design :root => File.join('designs', 'organization')

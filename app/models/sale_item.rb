@@ -42,4 +42,20 @@ class SaleItem < ActiveRecord::Base
     self.unitary_price * self.amount
   end
 
+  def self.products_by_sale(sales)
+    sale_itens = []
+    if sales.kind_of?(Array)
+      sales.each do |sale|
+        sale_itens = sale_itens + SaleItem.find(:all, :conditions =>{:sale_id => sale})
+      end
+    else
+      sale_itens = SaleItem.find(:all, :conditions =>{:sale => sale})
+    end
+
+    products = sale_itens.map do |item|
+      item.product
+    end 
+    products.uniq
+  end
+
 end

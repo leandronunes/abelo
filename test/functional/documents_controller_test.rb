@@ -19,7 +19,7 @@ class DocumentsControllerTest < Test::Unit::TestCase
   end
 
   def create_document(params ={})
-    Document.create(params_create_document(params))
+    Document.create!(params_create_document(params))
   end
   def params_create_document(params = {})
     {
@@ -78,8 +78,8 @@ class DocumentsControllerTest < Test::Unit::TestCase
 
   def test_list_documents_with_model
     Document.destroy_all
-    model = Document.create!(:name => 'Model', :is_model => true, :organization_id => 1, :department_ids => [1])
-    document_with_model = Document.create!(:name => 'Document', :is_model => false, :organization_id => 1, :department_ids => [1], :document_model_id => model.id)
+    model = create_document(:is_model => true)
+    document_with_model = create_document(:name => 'Another name', :is_model => false, :document_model => model)
 
     get :list, :document_model_id => 1, :models_list => true 
 
@@ -89,7 +89,7 @@ class DocumentsControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:documents)
     assert_not_nil assigns(:document_pages)
     assert_not_nil assigns(:title)
-    assert Organization.find(1).documents_by_model(model).include?(document_with_model)
+    assert @organization.documents_by_model(model).include?(document_with_model)
 #   assert assigns(:documents).include?(document_with_model)
   end
 
@@ -186,7 +186,7 @@ class DocumentsControllerTest < Test::Unit::TestCase
 
     num_documents = Document.count
 
-    post :create, :document_model_id => model.id, :document => params_create_document(:is_model => false), :models_list => true
+    post :create, :document_model_id => model.id, :document => params_create_document(:name => 'Some name', :is_model => false), :models_list => true
     assert_valid assigns(:document)
     assert_not_nil assigns(:document)
     assert_response :redirect

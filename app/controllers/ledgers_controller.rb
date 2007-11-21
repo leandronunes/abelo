@@ -11,11 +11,13 @@ class LedgersController < ApplicationController
 
   uses_financial_tabs
 
-  def autocomplete_description
+  def autocomplete_ledger_description
     escaped_string = Regexp.escape(params[:ledger][:description])
     re = Regexp.new(escaped_string, "i")
-    bank_accounts = @organization.bank_accounts(params[:chosen_accounts])
-    @ledgers = @organization.ledgers_by_bank_account(bank_accounts).select{|l| l.description.match re}
+    get_financial_variables(@organization)
+
+    @ledgers = @organization.ledgers_by_all(@chosen_accounts, @chosen_tags, @chosen_categories, @start_date, @end_date, @query)
+    @ledgers = @ledgers.select{|l| l.description.match re}
     render :layout=>false
   end
 
@@ -32,7 +34,7 @@ class LedgersController < ApplicationController
   # as parameter the ledgers are of the default bank account of the organization.
   def list
     get_financial_variables(@organization)
-
+    @query ||= params[:ledger][:description] unless params[:ledger].nil?
     ledgers = @organization.ledgers_by_all(@chosen_accounts, @chosen_tags, @chosen_categories, @start_date, @end_date, @query)
 
     @ledger_pages, @ledgers = paginate_by_collection ledgers

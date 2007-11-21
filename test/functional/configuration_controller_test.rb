@@ -23,19 +23,19 @@ class ConfigurationControllerTest < Test::Unit::TestCase
   end
 
   def params_configuration(params = {})
-    {:is_model => params[:is_model] || false, 
-      :organization_name => params[:organization_name] || 'some name',
-      :product_name => params[:product_name] || 'some name', 
-      :department_name => params[:department_name] || 'some name',  
-      :customer_name => params[:customer_name] || 'some name',
-      :document_name => params[:document_name] || 'some name', 
-      :organization_name_on_plural => params[:organization_name_on_plural] || 'Organizations Name',
-      :product_name_on_plural => params[:product_name_on_plural] || 'Products name', 
-      :department_name_on_plural => params[:department_name_on_plural] || 'Departments Name',
-      :customer_name_on_plural =>  params[:customer_name_on_plural] || 'Customers name', 
-      :document_name_on_plural => params[:document_name_on_plural] || 'Documents Name', 
-      :name => params[:name] || 'some name', 
-      :organization => params[:organization] || nil}
+    {:is_model => false, 
+      :organization_name => 'some name',
+      :product_name => 'some name', 
+      :department_name => 'some name',  
+      :customer_name => 'some name',
+      :document_name => 'some name', 
+      :organization_name_on_plural => 'Organizations Name',
+      :product_name_on_plural => 'Products name', 
+      :department_name_on_plural => 'Departments Name',
+      :customer_name_on_plural => 'Customers name', 
+      :document_name_on_plural => 'Documents Name', 
+      :name => 'some name', 
+      :organization => nil}.merge(params)
   end
 
   def test_setup
@@ -124,10 +124,7 @@ class ConfigurationControllerTest < Test::Unit::TestCase
   def test_save_worker_displays_on_create
     Configuration.delete_all
     WorkerDisplay.delete_all
-    post :create, :configuration => {:name => 'Another Name', :organization_name => 'Another Name',
-      :product_name => 'Some name', :department_name => 'Another Name',
-      :customer_name => 'Some name', :document_name => 'Another Name', 
-      'set_worker_displays' =>{"name"=>{"none" => "", "field" => "name"} }}
+    post :create, :configuration => params_configuration(:set_worker_displays =>{"name"=>{"none" => "", "field" => "name"} })
     
     c = Configuration.find(:first)
     assert_not_nil c

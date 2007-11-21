@@ -75,7 +75,7 @@ class DocumentsController < ApplicationController
       redirect_to :action => 'list', :models_list => params[:models_list], :document_model_id => params[:document_model_id]
     else
       @departments = @organization.departments
-      unless @document.is_model?
+      if !@document.is_model? and !@document.document_owner_type.nil?
         @owner_type = @document.document_owner_type
         self.instance_variable_set("@#{@document.document_owner_type.pluralize}", @organization.send(@document.document_owner_type.pluralize))
       end

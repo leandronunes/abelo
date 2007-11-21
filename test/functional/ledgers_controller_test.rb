@@ -20,6 +20,16 @@ class LedgersControllerTest < Test::Unit::TestCase
     @default_bank_account = BankAccount.find(1)
   end
 
+  def create_money(params = {})
+    Money.create!(:date => params[:date] || Date.today, 
+       :value => params[:value] || 10, 
+       :description => params[:description] || 'Some Description', 
+       :bank_account => @default_bank_account, 
+       :category => @ledger_category, 
+       :operational => false, :is_foreseen => false, 
+       :owner => @organization)
+  end
+
   def test_setup
     assert @another_bank_account.valid?
     assert @default_bank_account.valid?
@@ -82,11 +92,11 @@ class LedgersControllerTest < Test::Unit::TestCase
   end
 
   def test_list_when_query_param_not_nil
-    Ledger.delete_all
-    l = Money.create!(:date => Date.today, :value => 34, :description => 'Some Description', :bank_account => @another_bank_account, :category => @ledger_category, :operational => false, :is_foreseen => false, :owner => @organization)
-    l = Money.create!(:date => Date.today, :value => 50, :description => 'Another Some Description', :bank_account => @another_bank_account, :category => @ledger_category, :operational => false, :is_foreseen => false, :owner => @organization)
+    Ledger.destroy_all
+    create_money(:value => 34, :description => 'Some Description')
+    create_money(:value => 50, :description => 'Another Some Description')
     
-    get :list, :accounts => @another_bank_account.id, :ledger => {:description => 'Another'}
+    get :list, :ledger => {:description => 'Another'}
 
     assert_response :success
     assert_template 'list'
@@ -94,7 +104,7 @@ class LedgersControllerTest < Test::Unit::TestCase
     assert_equal 1, assigns(:ledgers).length
 
 
-    get :list, :accounts => @another_bank_account.id, :ledger => {:description => 'Description'}
+    get :list, :ledger => {:description => 'Description'}
 
     assert_response :success
     assert_template 'list'

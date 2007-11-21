@@ -278,7 +278,7 @@ class Configuration < ActiveRecord::Base
         if display.nil?
           display = item.constantize.new(d_params) 
           conf_a.push display
-          self.send("#{item.tableize}=", conf_a)
+          self.send("#{item.tableize}") << conf_a
         else
           display.update_attributes(d_params)
         end

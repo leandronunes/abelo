@@ -4,7 +4,7 @@ class ProductsController < ApplicationController
 
   uses_register_tabs
 
-  def autocomplete_name
+  def autocomplete_product_name
     escaped_string = Regexp.escape(params[:product][:name])
     re = Regexp.new(escaped_string, "i")
     @products = @organization.products.select { |pr| pr.name.match re}

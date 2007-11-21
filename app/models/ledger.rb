@@ -2,7 +2,7 @@ class Ledger < ActiveRecord::Base
 
   acts_as_taggable
 
-  acts_as_ferret
+  acts_as_ferret :fields => ['description', 'category', 'tags']
   
   attr_accessor :schedule_repeat, :schedule_interval, :payment_method_choosen
   @schedule_periodicity

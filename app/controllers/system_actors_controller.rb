@@ -9,6 +9,11 @@ class SystemActorsController < ApplicationController
   uses_register_tabs
 
   include FinancialInformation
+  include DocumentInformation
+
+  acts_as_documentable(:model => 'system_actor')
+
+  before_filter :check_actor_presence
 
   SYSTEM_ACTORS = {
     'customer' => _('Customer'),
@@ -17,18 +22,10 @@ class SystemActorsController < ApplicationController
   }
 
   def autocomplete_system_actor_name
-    actor = params[:actor].camelize
+    actor = params[:actor]
     escaped_string = Regexp.escape(params[:system_actor][:name])
     re = Regexp.new(escaped_string, "i")
-    @system_actors = actor.constantize.find(:all).select{ |sa| sa.name.match re}
-    render :layout=>false
-  end
-
-  def autocomplete_document_name
-    actor = SystemActor.find(params[:id])
-    escaped_string = Regexp.escape(params[:document][:document_name])
-    re = Regexp.new(escaped_string, "i")
-    @documents = actor.documents.find(:all).select { |sa| sa.name.match re}
+    @system_actors = @organization.send(actor.pluralize).select{ |sa| sa.name.match re}
     render :layout=>false
   end
 
@@ -78,15 +75,6 @@ class SystemActorsController < ApplicationController
     @ledger_pages, @ledgers = paginate_by_collection ledgers
 
     render :partial => 'shared_financial/display_financial_table'
-  end
-
-  def list_documents
-    check_actor_presence
-    @query || params[:query]
-    @query ||=  params[:document][:document_name] if params[:document]
-    @system_actor = @organization.system_actors.find(params[:id])
-    @documents = @query.blank? ? @system_actor.documents : @system_actor.documents.full_text_search(@query)
-    @document_pages, @documents = paginate_by_collection @documents
   end
 
   def find_by_tag
@@ -153,6 +141,8 @@ class SystemActorsController < ApplicationController
     end
   end
 
+  private
+
   def check_actor_presence
     @actor = params[:actor]
     begin
@@ -161,66 +151,6 @@ class SystemActorsController < ApplicationController
       render_error(_("This actor it's not valid"))
       return
     end
-  end
-
-  def choose_document
-    @document_models = @organization.documents_model
-  end
-
-  def new_document
-    check_actor_presence
-    if params[:model_id]
-      model = @organization.documents.find(params[:model_id])
-      @document = model.dclone
-      @title = _('New Document from model %s') % model.name
-    else
-      @document = Document.new
-      @title =  _('New Blank Document')
-    end
-    @departments = @organization.departments
-  end
-
-  def create_document
-    check_actor_presence
-    @document = Document.new(params[:document])
-    @document.organization = @organization
-    @document.owner = @organization.system_actors.find(params[:id])
-    if @document.save
-      flash[:notice] = _('The document was successfully created.')
-      redirect_to :action => 'list_documents', :actor => params[:actor], :id => params[:id]
-    else
-      @departments = @organization.departments
-      render :action => 'new_document', :actor => params[:actor], :id => params[:id]
-    end
-  end
-
-  def show_document
-    check_actor_presence
-    @document = @organization.documents.find(params[:document_id])
-  end
-
-  def edit_document
-    check_actor_presence
-    @document = @organization.documents.find(params[:document_id])
-    @departments = @organization.departments
-    @title = _('Editing Document')
-  end
-
-  def update_document
-    check_actor_presence
-    @document = @organization.documents.find(params[:document_id])
-    if @document.update_attributes(params[:document])
-      flash[:notice] = 'Document was successfully updated.'
-      redirect_to :action => 'show_document', :document_id => @document, :actor => params[:actor], :id => params[:id]
-    else
-      @departments = @organization.departments
-      render :action => 'edit_document'
-    end
-  end
-
-  def destroy_document
-    @document = @organization.documents.find(params[:document_id]).destroy
-    redirect_to :action => 'list_documents', :actor => params[:actor], :id => params[:id]
   end
 
 end

@@ -1,6 +1,7 @@
-<%= title(@title) %>
 
-<% form_tag :action => 'update_document', :actor => params[:actor], :id => params[:id], :document_id => params[:document_id] do %>
-  <%= render :partial => 'document_form' %>
-  <%= display_edit_info_options(@document, :action => 'list_documents', :actor => params[:actor], :id => params[:id], :document_id => params[:document_id] )%>
-<% end %>
+<%= render :partial => 'menu' %>
+
+<%= title( _('Editing %s %s') % [@document.name, @system_actor.name] ) %>
+
+<%= render :partial => 'shared_document/document_edit', :locals => { :parameters => {:actor => @actor} } %>
+

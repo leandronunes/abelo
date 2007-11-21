@@ -10,7 +10,7 @@ class DocumentDisplay < DisplayConfiguration
       'body' => _('Body'),
       'departments' => _('Departments'),
       'owner' => _('Person/Organization Name'),
-      'owner_class' => _('Person/Organization Type'),
+      'owner_class' => _('Person/Organization Function'),
       'customer' => _('Customer'),
       'supplier' => _('Supplier'),
       'worker' => _('Worker'),

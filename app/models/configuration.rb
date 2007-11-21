@@ -78,84 +78,31 @@ class Configuration < ActiveRecord::Base
     end
   end
 
-  def organization_name
-    self.settings["organization_name"]
-  end
+  CONFIGURATION_NAMES = %w[
+    organization
+    product
+    department
+    customer
+    document
+  ]
 
-  def organization_name_on_plural
-    self.settings["organization_name_on_plural"]
-  end
+  CONFIGURATION_NAMES.each do |item|
+    define_method("#{item}_name") do
+      self.settings["#{item}_name"]
+    end
 
-  def product_name
-    self.settings["product_name"]
-  end
+    define_method("#{item}_name_on_plural") do
+      self.settings["#{item}_name_on_plural"]
+    end
 
-  def product_name_on_plural
-    self.settings["product_name_on_plural"]
-  end
+    define_method("#{item}_name=") do |name|
+      self.settings["#{item}_name"] = name
+    end
 
-  def department_name
-    self.settings["department_name"]
-  end
+    define_method("#{item}_name_on_plural=") do |name|
+      self.settings["#{item}_name_on_plural"] = name
+    end
 
-  def department_name_on_plural
-    self.settings["department_name_on_plural"]
-  end
-
-  def customer_name
-    self.settings["customer_name"]
-  end
-
-  def customer_name_on_plural
-    self.settings["customer_name_on_plural"]
-  end
-
-  def document_name
-    self.settings["document_name"]
-  end
-
-  def document_name_on_plural
-    self.settings["document_name_on_plural"]
-  end
-
-  def organization_name=(name)
-    self.settings["organization_name"] = name
-  end
-
-  def organization_name_on_plural=(name)
-    self.settings["organization_name_on_plural"] = name
-  end
-
-  def product_name=(name)
-    self.settings["product_name"] = name
-  end
-
-  def product_name_on_plural=(name)
-    self.settings["product_name_on_plural"] = name
-  end
-
-  def department_name=(name)
-    self.settings["department_name"] = name
-  end
-
-  def department_name_on_plural=(name)
-    self.settings["department_name_on_plural"] = name
-  end
-
-  def customer_name=(name)
-    self.settings["customer_name"] = name
-  end
-
-  def customer_name_on_plural=(name)
-    self.settings["customer_name_on_plural"] = name
-  end
-
-  def document_name=(name)
-    self.settings["document_name"] = name
-  end
-
-  def document_name_on_plural=(name)
-    self.settings["document_name_on_plural"] = name
   end
 
 #TODO see if all of this fields are needed

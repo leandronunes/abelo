@@ -7,6 +7,10 @@ class DepartmentsController < ApplicationController
 
   before_filter :department_tabs
 
+  include DocumentInformation
+
+  acts_as_documentable(:model => 'department')
+
   def autocomplete_department_name
     escaped_string = Regexp.escape(params[:department][:name])
     re = Regexp.new(escaped_string, "i")

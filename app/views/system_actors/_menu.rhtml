@@ -1,8 +1,8 @@
 <ul class="content_menu">
   <li> <%= button "personal_data", _("Personal Data"), :show, { :action => 'show', :actor => params[:actor], :id => params[:id]} %> </li>
   <li> <%= button "ledgers", _("Ledgers"), :list, { :action => 'show_ledgers', :actor => params[:actor], :id => params[:id] } %> </li>
-  <li> <%= button "documents", _('Documents'), :list, { :action => 'list_documents', :actor => params[:actor], :id => params[:id] }%> </li>
+  <li> <%= button "documents", _('Documents'), :list, { :action => 'list_document', :actor => params[:actor], :id => params[:id] }%> </li>
   <% if @actor == 'supplier' %>
-  <li> <%= button "product_icon", _('Products'), :list, { :action => 'list_products', :actor => params[:actor], :id => params[:id] }%> </li>
+  <li> <%= button "product_icon", _('Products'), :list, { :action => 'list_product', :actor => params[:actor], :id => params[:id] }%> </li>
   <% end %>
 </ul>

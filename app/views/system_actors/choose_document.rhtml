@@ -1,12 +1,6 @@
 <%= render :partial => 'menu' %>
 
-<%=  title _('Document Model')%>
+<%=  title _('%s for %s %s') % [@organization.camel_document_name, @system_actor.name.camelcase, SystemActor.describe(@actor)]%>
 
-<label for='document_models' ><%= _('Choose Document Model') %>:</label>
+<%= render :partial => 'shared_document/document_choose', :locals => { :parameters => {:actor => @actor} } %>
 
-<ul>
-  <% for document in @document_models  %>
-    <li><%= link_to document.name, {:action => 'new_document', :model_id => document.id, :actor => params[:actor], :id => params[:id]} %></li>
-  <% end %>
-  <li><%= link_to _('Blank Document'), {:action => 'new_document', :actor => params[:actor], :id => params[:id]} %></li>
-</ul>

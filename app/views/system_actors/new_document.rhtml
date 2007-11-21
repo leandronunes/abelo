@@ -1,6 +1,5 @@
+<%= render :partial => 'menu' %>
+
 <%= title @title  %>
 
-<% form_tag :action => 'create_document', :actor=> params[:actor], :id => params[:id] do %>
-  <%= render :partial => 'document_form' %>
-  <%= display_new_info_options @document, :action => 'list_documents', :actor=> params[:actor], :id => params[:id] %>
-<% end %>
+<%= render :partial => 'shared_document/document_new', :locals => { :parameters => {:actor => @actor} } %>

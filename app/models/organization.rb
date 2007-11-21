@@ -334,17 +334,27 @@ class Organization < ActiveRecord::Base
     return customers
   end
 
-  # Configuration Stuff
-  def camel_department_name
-    self.configuration.department_name.camelcase
-  end
+  ################################
+  # Configuration Actions
+  ################################
 
-  def camel_department_name_pl
-    self.configuration.department_name_on_plural.camelcase
-  end
+  Configuration::CONFIGURATION_NAMES.each do |item|
+    define_method("camel_#{item}_name") do 
+      self.configuration.send("#{item}_name").camelcase
+    end
 
-  def department_name_pl
-    self.configuration.department_name_on_plural.downcase
+    define_method("#{item}_name") do 
+      self.configuration.send("#{item}_name").downcase
+    end
+
+    define_method("camel_#{item}_name_pl") do 
+      self.configuration.send("#{item}_name_on_plural").camelcase
+    end
+
+    define_method("#{item}_name_pl") do 
+      self.configuration.send("#{item}_name_on_plural").downcase
+    end
+
   end
 
 end

@@ -440,7 +440,8 @@ divulgacao_cursos = Document.create!(:name => 'Cursos de SL', :is_model => false
 nota = Document.create!(:name => 'Nota Fiscal', :is_model => true, :organization => organization, :body => 'Recebido o valor de R$ X.XXX,XX. Data XX/XX/XXXX. Assinatura:', :departments => [departamento_vendas], :tag_list => 'notas, vendas, recibos')
 ficha = Document.create!(:name => 'Ficha de Matrícula', :is_model => true, :organization => organization, :body => 'N.º de matrícula: 000. Nome: ', :departments => [departamento_vendas], :tag_list => 'cadastro')
 nota_computador = Document.create!(:name => 'Nota Fiscal Computador', :is_model => false, :organization => organization, :body => 'Recebido o valor de R$ 800,00. Data 26/10/2007. Assinatura:', :departments => [departamento_vendas], :document_model_id => nota.id, :tag_list => 'notas, vendas, recibos', :owner => worker_gerente)
-nota_agua = Document.create!(:name => 'Nota Fiscal Água', :is_model => false, :organization => organization, :body => 'Recebido o valor de R$ 3,50. Data 26/10/2007. Assinatura:', :departments => [departamento_vendas], :document_model_id => nota.id, :tag_list => 'notas', :owner =>worker_vendedor)
+nota_agua = Document.create!(:name => 'Nota Fiscal Água', :is_model => false, :organization => organization, :body => 'Recebido o valor de R$ 3,50. Data 26/10/2007. Assinatura:', :departments => [departamento_vendas], :document_model_id => nota.id, :tag_list => 'notas', :owner => worker_vendedor)
+nota_luz = Document.create!(:name => 'Nota Fiscal Luz', :is_model => false, :organization => organization, :body => 'Recebido o valor de R$ 13,60. Data 05/10/2007. Assinatura:', :departments => [departamento_vendas], :document_model_id => nota.id, :tag_list => 'notas', :owner => worker_vendedor)
 
 ###########Document Section################
 DocumentSection.destroy_all

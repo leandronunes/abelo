@@ -1,5 +1,2 @@
-<ul class="autocomplete_list">
-  <% @documents.each do |d| %>
-  <li class="autocomplete_item"><%= d.name %></li>
-  <% end %>
-</ul>
+
+<%= autocomplete_list @documents %>

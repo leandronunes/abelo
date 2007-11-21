@@ -1,0 +1,6 @@
+<%= render :partial => 'menu' %>
+
+<%=  title _('%s for %s %s') % [@organization.camel_document_name, @department.name, @organization.department_name.camelcase]%>
+
+<%= render :partial => 'shared_document/document_choose' %>
+

@@ -1,0 +1,7 @@
+
+<% parameters ||= nil %>
+
+<% form_tag({:action => 'update_document', :id => params[:id], :document_id => params[:document_id]}.merge(parameters.nil? ? {} : parameters)) do %>
+  <%= render :partial => 'shared_document/document_form' %>
+  <%= display_edit_info_options(@document, :action => 'list_documents', :actor => params[:actor], :id => params[:id], :document_id => params[:document_id] )%>
+<% end %>

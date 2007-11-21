@@ -1,0 +1,13 @@
+<% parameters ||= nil %>
+
+<%= display_documents_list_options 'document', 'name', {:id => params[:id]}.merge( parameters.nil? ? {} : parameters) %>
+
+<%= display_tag_list @documents %>
+
+<div id="content_list">
+
+<%= display_document_collection @documents, {:id => params[:id]}.merge(parameters.nil? ? {} : parameters) %>
+
+<%= pagination_links(@document_pages, :params => {:query => @query, :id => params[:id]}.merge( parameters.nil? ? {} : parameters) ) %>
+
+</div>

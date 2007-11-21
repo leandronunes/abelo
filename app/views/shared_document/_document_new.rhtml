@@ -1,0 +1,6 @@
+<% parameters ||= nil %>
+
+<% form_tag({:action => 'create_document', :id => params[:id]}.merge(parameters.nil? ? {} : parameters) )do %>
+  <%= render :partial => 'shared_document/document_form' %>
+  <%= display_new_info_options @document, {:action => 'list_document', :id => params[:id]}.merge(parameters.nil? ? {} : parameters)  %>
+<% end %>

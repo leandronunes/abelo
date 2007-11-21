@@ -1,0 +1,5 @@
+<% parameters ||= nil %>
+
+<%= display_show_info @document %>
+
+<%= display_show_info_documents_options(@document, {:id => params[:id]}.merge(parameters.nil? ? {} : parameters) ) %> 

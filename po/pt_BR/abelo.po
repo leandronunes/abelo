@@ -9,10 +9,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: abelo 0.4.0\n"
 "POT-Creation-Date: 2007-11-21 19:53-0300\n"
-"PO-Revision-Date: 2007-11-21 16:13-0300\n"
-"Last-Translator: Orivaldo Vieira de Santana Jr <oriva@colivre.coop.br>\n"
-"Language-Team: Krishnamurti Lelis Lima Vieira Nunes <krishna@colivre.coop."
-"br>\n"
+"PO-Revision-Date: 2007-11-21 20:03-0300\n"
+"Last-Translator: Leandro Nunes dos Santos <leandronunes@colivre.coop.br>\n"
+"Language-Team: Krishnamurti Lelis Lima Vieira Nunes "
+"<krishna@colivre.coop.br>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2314,12 +2314,12 @@ msgid "You can't associate a person/organization to a document model'"
 msgstr "Você não pode associar um modelo a uma organização ou pessoa"
 
 #: app/models/document.rb:45
-#, fuzzy
 msgid ""
 "You cannot have a non document model whitout a customer, supplier or worker "
 "associated to him"
 msgstr ""
-"Você não pode ter um modelo de documento dentro de um modelo de documento"
+"Você não pode ter um não documento modelo sem um consumidor, fornecedor ou "
+"trabalhador associado a ele"
 
 #: app/models/document.rb:50
 msgid ""
@@ -2375,9 +2375,8 @@ msgid "Person/Organization Name"
 msgstr "Nome da Organização"
 
 #: app/models/document_display.rb:13
-#, fuzzy
 msgid "Person/Organization Function"
-msgstr "Nome da Organização"
+msgstr "Função da Pessoa/Organização"
 
 #: app/models/document_display.rb:17
 msgid "Tag_list"
@@ -3983,14 +3982,12 @@ msgstr "Editando Configurações da Organização %s"
 
 #: app/views/shared_document/list_documents.rhtml:3
 #: app/views/system_actors/list_document.rhtml:3
-#, fuzzy
 msgid "%s Documents"
-msgstr "Documentos"
+msgstr "Documentos de %s "
 
 #: app/views/shared_document/_document_choose.rhtml:3
-#, fuzzy
 msgid "Choose a Document Model"
-msgstr "Escolher Modelo de Documento"
+msgstr "Escolha um Modelo de Documento"
 
 #: app/views/shared_document/_document_choose.rhtml:9
 msgid "Blank Document"
@@ -4021,9 +4018,8 @@ msgid "Manage Organizations"
 msgstr "Gerenciando organizações"
 
 #: app/views/departments/_menu.rhtml:2
-#, fuzzy
 msgid "%s Data"
-msgstr "Data Pessoal"
+msgstr "Informações do %s"
 
 #: app/views/departments/new.rhtml:1 app/views/system_actors/new.rhtml:1
 #: app/views/system_actors/_new.rhtml:2 app/views/categories/new.rhtml:3
@@ -4045,21 +4041,19 @@ msgstr "Listando %s"
 
 #: app/views/departments/edit_document.rhtml:4
 #: app/views/system_actors/edit_document.rhtml:4
-#, fuzzy
 msgid "Editing %s %s"
-msgstr "Editando %s"
+msgstr "Editando %s %s"
 
 #: app/views/departments/choose_document.rhtml:3
 #: app/views/system_actors/choose_document.rhtml:3
 msgid "%s for %s %s"
-msgstr ""
+msgstr "%s para %s %s"
 
 #: app/views/departments/show_document.rhtml:4
 #: app/views/departments/list_document.rhtml:3
 #: app/views/system_actors/show_document.rhtml:4
-#, fuzzy
 msgid "%s %s"
-msgstr "_%s_"
+msgstr "%s %s"
 
 #: app/views/departments/show.rhtml:4
 msgid "Department %s"
@@ -4260,19 +4254,16 @@ msgid "Personal Data"
 msgstr "Data Pessoal"
 
 #: app/views/system_actors/list_product.rhtml:3
-#, fuzzy
 msgid "%s Products"
-msgstr "Produtos"
+msgstr "Produtos de %s"
 
 #: app/views/system_actors/list_product.rhtml:9
-#, fuzzy
 msgid "Sale Quantity"
-msgstr "Quantidade de Lançamentos"
+msgstr "Quantidade de Vendas"
 
 #: app/views/system_actors/list_product.rhtml:11
-#, fuzzy
 msgid "Purchased Quantity"
-msgstr "Quantidade de Lançamentos"
+msgstr "Quantidade Comprada"
 
 #: app/views/system_actors/_show.rhtml:3
 msgid "Birthday:"
@@ -4303,9 +4294,8 @@ msgid "Born Day"
 msgstr "Dia de nascimento"
 
 #: app/views/system_actors/show_ledgers.rhtml:4
-#, fuzzy
 msgid " %s Ledgers"
-msgstr "Lançamentos"
+msgstr "Lançamentos de %s"
 
 #: app/views/system_actors/show.rhtml:4
 msgid "%s"

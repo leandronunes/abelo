@@ -8,11 +8,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: abelo 0.4.0\n"
-"POT-Creation-Date: 2007-11-14 18:58-0300\n"
+"POT-Creation-Date: 2007-11-21 19:53-0300\n"
 "PO-Revision-Date: 2007-11-21 16:13-0300\n"
 "Last-Translator: Orivaldo Vieira de Santana Jr <oriva@colivre.coop.br>\n"
-"Language-Team: Krishnamurti Lelis Lima Vieira Nunes "
-"<krishna@colivre.coop.br>\n"
+"Language-Team: Krishnamurti Lelis Lima Vieira Nunes <krishna@colivre.coop."
+"br>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -23,13 +23,11 @@ msgstr ""
 #: app/design_blocks/financial_forecasting/controllers/financial_forecasting_controller.rb:8
 #: app/design_blocks/favorite_links/controllers/favorite_links_controller.rb:4
 #: app/design_blocks/product_store/controllers/product_store_controller.rb:8
-#: app/helpers/system_actors_helper.rb:34
-#: app/helpers/system_actors_helper.rb:46 app/helpers/documents_helper.rb:46
-#: app/helpers/documents_helper.rb:72
+#: app/helpers/documents_helper.rb:46 app/helpers/documents_helper.rb:72
 #: app/helpers/support/display_actions.rb:189
 #: app/helpers/support/display_actions.rb:313
 #: app/helpers/organizations_helper.rb:11 app/helpers/document_helper.rb:43
-#: app/helpers/application_helper.rb:524 app/helpers/application_helper.rb:650
+#: app/helpers/application_helper.rb:523 app/helpers/application_helper.rb:649
 #: app/views/main/index.rhtml:1 app/views/users/list.rhtml:11
 #: app/views/shared_financial/_display_financial_table.rhtml:180
 #: app/views/document_items/_list.rhtml:5
@@ -41,6 +39,7 @@ msgstr ""
 #: app/views/product_categories/_list.rhtml:4
 #: app/views/mass_mails/show.rhtml:16 app/views/categories/_list.rhtml:4
 #: app/views/organization_configuration/show.rhtml:263
+#: lib/document_information.rb:137 lib/document_information.rb:148
 msgid "Edit"
 msgstr "Editar"
 
@@ -73,7 +72,7 @@ msgstr "Produto"
 msgid "Start"
 msgstr "Iniciar"
 
-#: app/controllers/system_actors_controller.rb:14
+#: app/controllers/system_actors_controller.rb:19
 #: app/models/system_actor.rb:54 app/models/document.rb:35
 #: app/models/document_display.rb:14 app/models/category.rb:42
 #: app/models/organization.rb:89
@@ -83,12 +82,12 @@ msgstr "Iniciar"
 msgid "Customer"
 msgstr "Consumidor"
 
-#: app/controllers/system_actors_controller.rb:15
+#: app/controllers/system_actors_controller.rb:20
 #: app/controllers/tabs/register.rb:7 app/models/category.rb:41
 msgid "Workers"
 msgstr "Trabalhadores"
 
-#: app/controllers/system_actors_controller.rb:16
+#: app/controllers/system_actors_controller.rb:21
 #: app/models/system_actor.rb:56 app/models/document.rb:36
 #: app/models/document_display.rb:15 app/models/category.rb:38
 #: app/models/stock_in_display.rb:11 app/views/documents/_form.rhtml:30
@@ -99,37 +98,17 @@ msgstr "Trabalhadores"
 msgid "Supplier"
 msgstr "Fornecedor"
 
-#: app/controllers/system_actors_controller.rb:113
+#: app/controllers/system_actors_controller.rb:101
 msgid "%s was successfully created."
 msgstr "%s foi criado com sucesso."
 
-#: app/controllers/system_actors_controller.rb:131
+#: app/controllers/system_actors_controller.rb:119
 msgid "%s was successfully updated."
 msgstr "%s foi atualizado com sucesso."
 
-#: app/controllers/system_actors_controller.rb:161
+#: app/controllers/system_actors_controller.rb:156
 msgid "This actor it's not valid"
 msgstr "Este ator não é válido"
-
-#: app/controllers/system_actors_controller.rb:175
-#: app/controllers/documents_controller.rb:57
-msgid "New Document from model %s"
-msgstr "Novo documento a partir do modelo %s"
-
-#: app/controllers/system_actors_controller.rb:178
-#: app/controllers/documents_controller.rb:59
-msgid "New Blank Document"
-msgstr "Novo Documento em Branco"
-
-#: app/controllers/system_actors_controller.rb:189
-#: app/controllers/documents_controller.rb:74
-msgid "The document was successfully created."
-msgstr "Documento criado com sucesso."
-
-#: app/controllers/system_actors_controller.rb:206
-#: app/controllers/documents_controller.rb:94
-msgid "Editing Document"
-msgstr "Editando Documento"
 
 #: app/controllers/tabs/configuration.rb:11
 #: app/views/mass_mails/filter_categories.rhtml:3
@@ -172,31 +151,32 @@ msgid "Ledger Category"
 msgstr "Categoria contábil"
 
 #: app/controllers/tabs/admin_organization.rb:13
-#: app/helpers/system_actors_helper.rb:33 app/helpers/documents_helper.rb:42
+#: app/helpers/documents_helper.rb:42
 #: app/helpers/support/display_actions.rb:312
 #: app/helpers/organizations_helper.rb:10 app/helpers/document_helper.rb:41
-#: app/helpers/application_helper.rb:649
+#: app/helpers/application_helper.rb:648
 #: app/views/shared_financial/_display_financial_table.rhtml:178
 #: app/views/stock_base/_display_stock_table.rhtml:22
+#: lib/document_information.rb:136
 msgid "Show"
 msgstr "Mostrar"
 
-#: app/controllers/tabs/admin_organization.rb:30 app/helpers/support/menu.rb:5
+#: app/controllers/tabs/admin_organization.rb:21 app/helpers/support/menu.rb:5
 #: lib/describe_menu.rb:7
 msgid "Configurations"
 msgstr "Configurações"
 
-#: app/controllers/tabs/admin_organization.rb:38
+#: app/controllers/tabs/admin_organization.rb:29
 msgid "Users and Permissions"
 msgstr "Usuários e Permissões"
 
-#: app/controllers/tabs/admin_organization.rb:46 app/models/organization.rb:91
+#: app/controllers/tabs/admin_organization.rb:37 app/models/organization.rb:91
 #: app/helpers/support/menu.rb:15 app/views/users/_admin.rhtml:6
 #: app/views/public/index.rhtml:8 lib/describe_menu.rb:20
 msgid "Organizations"
 msgstr "Organizações"
 
-#: app/controllers/tabs/admin_organization.rb:54
+#: app/controllers/tabs/admin_organization.rb:45
 msgid "Organizations Profiles"
 msgstr "Perfis de Organizações"
 
@@ -212,31 +192,49 @@ msgstr "Listando Modelos de Documentos"
 msgid "Listing Documents without Models"
 msgstr "Listando Documentos sem Modelos"
 
+#: app/controllers/documents_controller.rb:57 lib/document_information.rb:56
+msgid "New Document from model %s"
+msgstr "Novo documento a partir do modelo %s"
+
 #: app/controllers/documents_controller.rb:59
 msgid "New Document Model"
 msgstr "Novo Modelo de Documento"
 
-#: app/controllers/documents_controller.rb:92
+#: app/controllers/documents_controller.rb:59 lib/document_information.rb:59
+msgid "New Blank Document"
+msgstr "Novo Documento em Branco"
+
+#: app/controllers/documents_controller.rb:74 lib/document_information.rb:69
+msgid "The document was successfully created."
+msgstr "Documento criado com sucesso."
+
+#: app/controllers/documents_controller.rb:96
 msgid "Editing Model Document"
 msgstr "Editando Modelo de Documento"
 
-#: app/controllers/documents_controller.rb:101
+#: app/controllers/documents_controller.rb:98
+msgid "Editing Document"
+msgstr "Editando Documento"
+
+#: app/controllers/documents_controller.rb:105
 msgid "Document was successfully updated."
 msgstr "Documento atualizado com sucesso."
 
-#: app/controllers/documents_controller.rb:123
+#: app/controllers/documents_controller.rb:127
 msgid "Models"
 msgstr "Modelos"
 
-#: app/controllers/documents_controller.rb:131
-msgid "Other Documents"
-msgstr "Outros Documentos"
+#: app/controllers/documents_controller.rb:135
+#: app/helpers/documents_helper.rb:55 app/helpers/document_helper.rb:48
+#: app/views/departments/_menu.rhtml:3 app/views/system_actors/_menu.rhtml:4
+msgid "Documents"
+msgstr "Documentos"
 
-#: app/controllers/departments_controller.rb:50
+#: app/controllers/departments_controller.rb:54
 msgid "Department was successfully created."
 msgstr "Departamento criado com sucesso."
 
-#: app/controllers/departments_controller.rb:64
+#: app/controllers/departments_controller.rb:68
 msgid "Department was successfully updated."
 msgstr "Departamento atualizado com sucesso."
 
@@ -292,16 +290,16 @@ msgstr "Categoria criada com sucesso."
 msgid "Category was successfully updated."
 msgstr "Categoria atualizada com sucesso."
 
-#: app/controllers/ledgers_controller.rb:104
-#: app/controllers/ledgers_controller.rb:134
+#: app/controllers/ledgers_controller.rb:106
+#: app/controllers/ledgers_controller.rb:136
 msgid "The ledger was successfully created"
 msgstr "Usuário criado com sucesso."
 
-#: app/controllers/ledgers_controller.rb:128
+#: app/controllers/ledgers_controller.rb:130
 msgid "Cannot edit ledger with id %s"
 msgstr "Impossível editar lançamento com identificador %s"
 
-#: app/controllers/ledgers_controller.rb:150
+#: app/controllers/ledgers_controller.rb:152
 msgid "Cannot remove ledger with id %s it wasn't found"
 msgstr "Impossível remover lançamento com identificador %s: não encontrado"
 
@@ -363,16 +361,20 @@ msgid "Attachment was successfully added."
 msgstr "Arquivo anexado com sucesso."
 
 #: app/controllers/organization_configuration_controller.rb:28
-#: app/controllers/configuration_controller.rb:46
-#: app/controllers/configuration_controller.rb:66
+#: app/controllers/configuration_controller.rb:50
+#: app/controllers/configuration_controller.rb:70
 msgid "The configurations was successfully updated."
 msgstr "Configurações atualizadas com sucesso."
 
-#: app/controllers/configuration_controller.rb:78
+#: app/controllers/banks_controller.rb:69 app/helpers/support/menu.rb:16
+msgid "Banks"
+msgstr "Bancos"
+
+#: app/controllers/configuration_controller.rb:82
 msgid "The configuration model was successfully removed"
 msgstr "Configurações do modelo removidas com sucesso."
 
-#: app/controllers/configuration_controller.rb:80
+#: app/controllers/configuration_controller.rb:84
 msgid "This configuration cannot be removed"
 msgstr "Esta configuração não pode ser removida."
 
@@ -544,12 +546,11 @@ msgstr "mostrar organização"
 #: app/views/organizations/new.rhtml:10 app/views/organizations/_form.rhtml:6
 #: app/views/organizations/show.rhtml:4 app/views/organizations/edit.rhtml:10
 #: app/views/documents/_form.rhtml:8 app/views/configuration/new.rhtml:10
+#: app/views/shared_document/_document_form.rhtml:9
 #: app/views/departments/_form.rhtml:8 app/views/periodicities/_form.rhtml:8
 #: app/views/product_categories/list.rhtml:5 app/views/products/_form.rhtml:8
 #: app/views/document_sections/edit.rhtml:9
-#: app/views/system_actors/_form.rhtml:10
-#: app/views/system_actors/_document_form.rhtml:9
-#: app/views/categories/_form.rhtml:4
+#: app/views/system_actors/_form.rhtml:10 app/views/categories/_form.rhtml:4
 #: app/design_blocks/financial_forecasting/views/index.rhtml:14
 msgid "Name"
 msgstr "Nome"
@@ -572,6 +573,7 @@ msgstr "Nome da Apresentação"
 #: app/models/stock_devolution_display.rb:11 app/models/category.rb:36
 #: app/models/stock_in_display.rb:12 app/models/organization.rb:87
 #: app/models/stock_down_display.rb:11 app/views/point_of_sale/_table.rhtml:8
+#: app/views/system_actors/list_product.rhtml:7
 #: app/views/categories/_menu.rhtml:7 app/views/categories/index.rhtml:4
 msgid "Product"
 msgstr "Produto"
@@ -849,9 +851,9 @@ msgstr "Intervalo do agendamento"
 msgid "Credit"
 msgstr "Crédito"
 
-#: app/models/ledger_display.rb:45 app/models/display_configuration.rb:50
-#: app/models/display_configuration.rb:62
-#: app/models/display_configuration.rb:74
+#: app/models/ledger_display.rb:45 app/models/display_configuration.rb:48
+#: app/models/display_configuration.rb:60
+#: app/models/display_configuration.rb:72
 msgid "No"
 msgstr "Não"
 
@@ -1092,7 +1094,7 @@ msgstr "Usuário"
 msgid "You cannot have two pendings sale"
 msgstr "Você não pode ter duas vendas pendentes"
 
-#: app/models/sale.rb:52
+#: app/models/sale.rb:65
 msgid "Only open sales can be cancelled"
 msgstr "Somente vendas abertas podem ser canceladas"
 
@@ -2215,12 +2217,12 @@ msgstr "Conta"
 msgid "Is it default?"
 msgstr "É padrão?"
 
-#: app/models/user.rb:54
+#: app/models/user.rb:55
 msgid "You cannot change the user properties on demonstration version"
 msgstr ""
 "Você não pode mudar as propriedades do usuário na versão de demonstração"
 
-#: app/models/user.rb:56
+#: app/models/user.rb:57
 msgid ""
 "You don't have permissions to create a user with template %s. This template "
 msgstr ""
@@ -2260,8 +2262,9 @@ msgid "Subject"
 msgstr "Assunto"
 
 #: app/models/mass_mail_display.rb:10 app/models/document_display.rb:10
-#: app/views/documents/_form.rhtml:78 app/views/mass_mails/_form.rhtml:28
-#: app/views/system_actors/_document_form.rhtml:29
+#: app/views/documents/_form.rhtml:81
+#: app/views/shared_document/_document_form.rhtml:29
+#: app/views/mass_mails/_form.rhtml:28
 msgid "Body"
 msgstr "Corpo"
 
@@ -2310,6 +2313,14 @@ msgstr "Você tem que escolher um departamento para a documento"
 msgid "You can't associate a person/organization to a document model'"
 msgstr "Você não pode associar um modelo a uma organização ou pessoa"
 
+#: app/models/document.rb:45
+#, fuzzy
+msgid ""
+"You cannot have a non document model whitout a customer, supplier or worker "
+"associated to him"
+msgstr ""
+"Você não pode ter um modelo de documento dentro de um modelo de documento"
+
 #: app/models/document.rb:50
 msgid ""
 "You can't destroy this model: Exist at least a document that references it."
@@ -2317,7 +2328,7 @@ msgstr ""
 "Você não pode destruir este modelo: Existe pelo menos um documento associado "
 "a ele. "
 
-#: app/models/document.rb:65
+#: app/models/document.rb:71
 msgid "Change me"
 msgstr "Me Atualize"
 
@@ -2355,7 +2366,7 @@ msgstr "O nome %{fn} para categoria de produto já foi usado."
 
 #: app/models/document_display.rb:11 app/models/organization.rb:93
 #: app/views/documents/_form.rhtml:14
-#: app/views/system_actors/_document_form.rhtml:15 lib/describe_menu.rb:19
+#: app/views/shared_document/_document_form.rhtml:15 lib/describe_menu.rb:19
 msgid "Departments"
 msgstr "Departamentos"
 
@@ -2364,8 +2375,9 @@ msgid "Person/Organization Name"
 msgstr "Nome da Organização"
 
 #: app/models/document_display.rb:13
-msgid "Person/Organization Type"
-msgstr "Tipo da Organização"
+#, fuzzy
+msgid "Person/Organization Function"
+msgstr "Nome da Organização"
 
 #: app/models/document_display.rb:17
 msgid "Tag_list"
@@ -2452,13 +2464,13 @@ msgstr "Posição"
 msgid "DisplayConfiguration|Settings"
 msgstr "Configurações"
 
-#: app/models/display_configuration.rb:16
+#: app/models/display_configuration.rb:14
 msgid "The field %s is not a valid field"
 msgstr "O campo %s não é um campo válido"
 
-#: app/models/display_configuration.rb:50
-#: app/models/display_configuration.rb:62
-#: app/models/display_configuration.rb:74
+#: app/models/display_configuration.rb:48
+#: app/models/display_configuration.rb:60
+#: app/models/display_configuration.rb:72
 msgid "Yes"
 msgstr "Sim"
 
@@ -2890,71 +2902,53 @@ msgid "Search"
 msgstr "Busca"
 
 #: app/helpers/stock_helper.rb:22 app/helpers/support/display_actions.rb:326
-#: app/helpers/stock_base_helper.rb:22 app/helpers/application_helper.rb:663
+#: app/helpers/stock_base_helper.rb:22 app/helpers/application_helper.rb:662
 msgid "New entry"
 msgstr "Nova entrada"
 
 #: app/helpers/stock_helper.rb:23 app/helpers/support/display_actions.rb:327
-#: app/helpers/stock_base_helper.rb:23 app/helpers/application_helper.rb:664
+#: app/helpers/stock_base_helper.rb:23 app/helpers/application_helper.rb:663
 msgid "History"
 msgstr "Histórico"
 
-#: app/helpers/system_actors_helper.rb:7
-msgid "Search Document"
-msgstr "Procurar Documento"
-
-#: app/helpers/system_actors_helper.rb:8
-msgid "Add New Document"
-msgstr "Adicionar um Novo documento"
-
-#: app/helpers/system_actors_helper.rb:9
-msgid "Reset document search"
-msgstr "Zerar pesquisa de documento"
-
-#: app/helpers/system_actors_helper.rb:35 app/helpers/documents_helper.rb:50
+#: app/helpers/documents_helper.rb:50
 #: app/helpers/support/display_actions.rb:314
 #: app/helpers/organizations_helper.rb:12 app/helpers/document_helper.rb:45
-#: app/helpers/application_helper.rb:52 app/helpers/application_helper.rb:651
+#: app/helpers/application_helper.rb:52 app/helpers/application_helper.rb:650
 #: app/views/customer_categories/_list.rhtml:5
 #: app/views/stock_base/_display_stock_table.rhtml:24
 #: app/views/contact_positions/list.rhtml:16
 #: app/views/product_categories/_list.rhtml:5
-#: app/views/categories/_list.rhtml:5
+#: app/views/categories/_list.rhtml:5 lib/document_information.rb:138
 msgid "Destroy"
 msgstr "Destruir"
 
-#: app/helpers/system_actors_helper.rb:36 app/helpers/documents_helper.rb:54
+#: app/helpers/documents_helper.rb:54
 #: app/helpers/support/display_actions.rb:315
 #: app/helpers/organizations_helper.rb:13 app/helpers/document_helper.rb:47
-#: app/helpers/application_helper.rb:52 app/helpers/application_helper.rb:652
+#: app/helpers/application_helper.rb:52 app/helpers/application_helper.rb:651
 #: app/views/customer_categories/_list.rhtml:5
 #: app/views/contact_positions/list.rhtml:16
 #: app/views/product_categories/_list.rhtml:5
-#: app/views/categories/_list.rhtml:5
+#: app/views/categories/_list.rhtml:5 lib/document_information.rb:139
 msgid "Are you sure?"
 msgstr "Tem certeza?"
-
-#: app/helpers/system_actors_helper.rb:45 app/helpers/documents_helper.rb:71
-#: app/helpers/support/display_actions.rb:188
-#: app/helpers/support/display_actions.rb:216
-#: app/helpers/application_helper.rb:523 app/helpers/application_helper.rb:553
-#: app/views/organizations/show.rhtml:8 app/views/stock_base/show.rhtml:10
-#: app/views/departments/edit.rhtml:5 app/views/products/images.rhtml:28
-#: app/views/mass_mails/show.rhtml:17
-#: app/views/mass_mails/filter_categories.rhtml:8
-#: app/views/mass_mails/attach.rhtml:10
-msgid "Back"
-msgstr "Voltar"
-
-#: app/helpers/documents_helper.rb:55 app/helpers/document_helper.rb:48
-#: app/views/system_actors/_menu.rhtml:4
-#: app/views/system_actors/list_documents.rhtml:3
-msgid "Documents"
-msgstr "Documentos"
 
 #: app/helpers/documents_helper.rb:59 app/helpers/document_helper.rb:50
 msgid "New Document"
 msgstr "Novo documento"
+
+#: app/helpers/documents_helper.rb:71
+#: app/helpers/support/display_actions.rb:188
+#: app/helpers/support/display_actions.rb:216
+#: app/helpers/application_helper.rb:522 app/helpers/application_helper.rb:552
+#: app/views/organizations/show.rhtml:8 app/views/stock_base/show.rhtml:10
+#: app/views/departments/edit.rhtml:5 app/views/products/images.rhtml:28
+#: app/views/mass_mails/show.rhtml:17
+#: app/views/mass_mails/filter_categories.rhtml:8
+#: app/views/mass_mails/attach.rhtml:10 lib/document_information.rb:147
+msgid "Back"
+msgstr "Voltar"
 
 #: app/helpers/documents_helper.rb:73
 msgid "Print"
@@ -2972,10 +2966,6 @@ msgstr "Administração de usuários"
 msgid "Registers"
 msgstr "Cadastro"
 
-#: app/helpers/support/menu.rb:16
-msgid "Banks"
-msgstr "Bancos"
-
 #: app/helpers/support/display_actions.rb:14
 #: app/helpers/application_helper.rb:63
 msgid "Add New"
@@ -2987,7 +2977,7 @@ msgid "Reset search"
 msgstr "Zerar pesquisa"
 
 #: app/helpers/support/display_actions.rb:217
-#: app/helpers/application_helper.rb:554 app/views/users/new.rhtml:5
+#: app/helpers/application_helper.rb:553 app/views/users/new.rhtml:5
 #: app/views/users/edit.rhtml:5 app/views/point_of_sale/add_cash.rhtml:7
 #: app/views/point_of_sale/remove_cash.rhtml:7
 #: app/views/document_items/_edit.rhtml:9
@@ -3003,19 +2993,19 @@ msgid "Save"
 msgstr "Salvar"
 
 #: app/helpers/support/display_actions.rb:218
-#: app/helpers/application_helper.rb:555 app/views/departments/new.rhtml:8
+#: app/helpers/application_helper.rb:554 app/views/departments/new.rhtml:8
 #: app/views/departments/_new.rhtml:9 app/views/products/_new.rhtml:9
 #: app/views/system_actors/_new.rhtml:10
 msgid "Reset"
 msgstr "Reiniciar"
 
 #: app/helpers/support/display_actions.rb:270
-#: app/helpers/application_helper.rb:607
+#: app/helpers/application_helper.rb:606
 msgid "False"
 msgstr "Falso"
 
 #: app/helpers/support/display_actions.rb:274
-#: app/helpers/application_helper.rb:611
+#: app/helpers/application_helper.rb:610
 msgid "True"
 msgstr "Verdadeiro"
 
@@ -3055,7 +3045,7 @@ msgstr "Colivre"
 msgid "GPLv3"
 msgstr "GPLv3"
 
-#: app/helpers/application_helper.rb:698
+#: app/helpers/application_helper.rb:697
 msgid "Tags:"
 msgstr "Tags:"
 
@@ -3297,10 +3287,6 @@ msgstr "Lista de Documentos"
 msgid "Editing Presetation"
 msgstr "Editando Apresentação"
 
-#: app/views/main/edit.rhtml:7
-msgid "save"
-msgstr "salvar"
-
 #: app/views/shared_payments/_select_category.rhtml:2
 msgid "Category:"
 msgstr "Categoria:"
@@ -3477,8 +3463,8 @@ msgstr "Repetir esse lançamento previsto?"
 msgid "Description:"
 msgstr "Descrição:"
 
-#: app/views/ledgers/_form.rhtml:73 app/views/documents/_form.rhtml:71
-#: app/views/system_actors/_document_form.rhtml:22
+#: app/views/ledgers/_form.rhtml:73 app/views/documents/_form.rhtml:74
+#: app/views/shared_document/_document_form.rhtml:22
 msgid "Tags (separated by comma):"
 msgstr "Tags (separadas por vírgula):"
 
@@ -3995,6 +3981,21 @@ msgstr "Editando Configuração %s"
 msgid "Editing Configuration of Organization %s"
 msgstr "Editando Configurações da Organização %s"
 
+#: app/views/shared_document/list_documents.rhtml:3
+#: app/views/system_actors/list_document.rhtml:3
+#, fuzzy
+msgid "%s Documents"
+msgstr "Documentos"
+
+#: app/views/shared_document/_document_choose.rhtml:3
+#, fuzzy
+msgid "Choose a Document Model"
+msgstr "Escolher Modelo de Documento"
+
+#: app/views/shared_document/_document_choose.rhtml:9
+msgid "Blank Document"
+msgstr "Documento em Branco"
+
 #: app/views/stock_base/show.rhtml:1
 msgid "Movement in stock on %s"
 msgstr "Movimento no estoque em %s"
@@ -4019,6 +4020,11 @@ msgstr "Olá, %s!"
 msgid "Manage Organizations"
 msgstr "Gerenciando organizações"
 
+#: app/views/departments/_menu.rhtml:2
+#, fuzzy
+msgid "%s Data"
+msgstr "Data Pessoal"
+
 #: app/views/departments/new.rhtml:1 app/views/system_actors/new.rhtml:1
 #: app/views/system_actors/_new.rhtml:2 app/views/categories/new.rhtml:3
 msgid "New %s"
@@ -4037,7 +4043,25 @@ msgstr "Editar departamento"
 msgid "Listing %s"
 msgstr "Listando %s"
 
-#: app/views/departments/show.rhtml:2
+#: app/views/departments/edit_document.rhtml:4
+#: app/views/system_actors/edit_document.rhtml:4
+#, fuzzy
+msgid "Editing %s %s"
+msgstr "Editando %s"
+
+#: app/views/departments/choose_document.rhtml:3
+#: app/views/system_actors/choose_document.rhtml:3
+msgid "%s for %s %s"
+msgstr ""
+
+#: app/views/departments/show_document.rhtml:4
+#: app/views/departments/list_document.rhtml:3
+#: app/views/system_actors/show_document.rhtml:4
+#, fuzzy
+msgid "%s %s"
+msgstr "_%s_"
+
+#: app/views/departments/show.rhtml:4
 msgid "Department %s"
 msgstr "Departamento %s"
 
@@ -4235,6 +4259,21 @@ msgstr "Usuários %s"
 msgid "Personal Data"
 msgstr "Data Pessoal"
 
+#: app/views/system_actors/list_product.rhtml:3
+#, fuzzy
+msgid "%s Products"
+msgstr "Produtos"
+
+#: app/views/system_actors/list_product.rhtml:9
+#, fuzzy
+msgid "Sale Quantity"
+msgstr "Quantidade de Lançamentos"
+
+#: app/views/system_actors/list_product.rhtml:11
+#, fuzzy
+msgid "Purchased Quantity"
+msgstr "Quantidade de Lançamentos"
+
 #: app/views/system_actors/_show.rhtml:3
 msgid "Birthday:"
 msgstr "Data de nascimento:"
@@ -4263,21 +4302,10 @@ msgstr "Editar %s"
 msgid "Born Day"
 msgstr "Dia de nascimento"
 
-#: app/views/system_actors/choose_document.rhtml:3
-msgid "Document Model"
-msgstr "Modelo de Documento"
-
-#: app/views/system_actors/choose_document.rhtml:5
-msgid "Choose Document Model"
-msgstr "Escolher Modelo de Documento"
-
-#: app/views/system_actors/choose_document.rhtml:11
-msgid "Blank Document"
-msgstr "Documento em Branco"
-
 #: app/views/system_actors/show_ledgers.rhtml:4
-msgid "Listing Ledgers"
-msgstr "Listando Lançamentos"
+#, fuzzy
+msgid " %s Ledgers"
+msgstr "Lançamentos"
 
 #: app/views/system_actors/show.rhtml:4
 msgid "%s"
@@ -4364,6 +4392,18 @@ msgstr "Cor:"
 msgid "Manage Layout"
 msgstr "Gerenciar Aparência"
 
+#: lib/document_information.rb:111
+msgid "Search Document"
+msgstr "Procurar Documento"
+
+#: lib/document_information.rb:112
+msgid "Add New Document"
+msgstr "Adicionar um Novo documento"
+
+#: lib/document_information.rb:113
+msgid "Reset document search"
+msgstr "Zerar pesquisa de documento"
+
 #: lib/describe_menu.rb:6
 msgid "Register"
 msgstr "Cadastro"
@@ -4399,6 +4439,21 @@ msgstr "Administração de usuários"
 #: lib/describe_menu.rb:18
 msgid "Point of sale"
 msgstr "Ponto de venda"
+
+#~ msgid "Other Documents"
+#~ msgstr "Outros Documentos"
+
+#~ msgid "Person/Organization Type"
+#~ msgstr "Tipo da Organização"
+
+#~ msgid "save"
+#~ msgstr "salvar"
+
+#~ msgid "Document Model"
+#~ msgstr "Modelo de Documento"
+
+#~ msgid "Listing Ledgers"
+#~ msgstr "Listando Lançamentos"
 
 #~ msgid "Worker categories"
 #~ msgstr "Categorias de Trabalhadoras/es"
@@ -4758,9 +4813,6 @@ msgstr "Ponto de venda"
 
 #~ msgid "description"
 #~ msgstr "descrição"
-
-#~ msgid "Ledgers Quantity"
-#~ msgstr "Quantidade de Lançamentos"
 
 #~ msgid "Operations"
 #~ msgstr "Operações"

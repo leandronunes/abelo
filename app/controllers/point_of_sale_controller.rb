@@ -267,6 +267,17 @@ class PointOfSaleController < ApplicationController
     f.write('fudeu papai')
     f.close
   end
+
+  def test_ajax_request
+    f = File.new('/tmp/bla','w+')
+    f.write('fudeu papai')
+    f.close
+raise 'fudeu'
+    "escrevi o arquivo /tmp/bla"
+  end
+
+
+
 end
 
 

@@ -6,6 +6,10 @@ class AddCash < Money
       self.errors.add(:date, _('You cannot schedule an add cash')) 
     end
 
+    if self.value <= 0
+      self.errors.add(:value, _('The value must be greater or equal to 0')) 
+    end
+
     if self.type_of != Payment::TYPE_OF_INCOME
       self.errors.add(:type_of, _('You cannot have an add cash with type different of %s') % Payment::TYPE_OF_INCOME) 
     end

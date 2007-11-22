@@ -1,4 +1,9 @@
 <%= error_messages_for 'cash' %>
+
 <p><label name="cash_value"> <%= _('Value') %> </label>
   <%= text_field('cash', 'value') %>
+</p>
+
+<p><label name="cash_description"> <%= _('Description') %> </label>
+  <%= text_field('cash', 'description') %>
 </p>

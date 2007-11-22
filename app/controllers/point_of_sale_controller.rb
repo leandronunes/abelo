@@ -1,4 +1,10 @@
 class PointOfSaleController < ApplicationController
+  # Code Conventions:
+  # - The create methods have printer operations associated to him.
+  #
+  # I think it's a gooda idea we have a class only to manipulate the printer.
+  # this class can see what is the better way to follow when someting wrong happen.
+  #
 
   needs_organization
 
@@ -16,7 +22,7 @@ class PointOfSaleController < ApplicationController
     point_of_sale = DesignPointOfSale.new(@organization)
     point_of_sale
   end
-
+  
   def autocomplete_customer
     @sale = @organization.sales.find(params[:id])
     escaped_string = Regexp.escape(params[:sale][:customer_identifier])
@@ -25,20 +31,67 @@ class PointOfSaleController < ApplicationController
     render :layout=>false
   end
 
-#TODO make this test
-  def check_coupon_cancel
-    supervisor = User.authenticate(params[:user][:login], params[:user][:password])
-    if supervisor.nil? 
-      render_access_denied_screen(_("You don't have permissions to cancel a coupon."))
-    elsif !supervisor.allowed_to?(:controller => 'point_of_sale', :action => 'coupon_cancel')
-      render_access_denied_screen(_("You don't have permissions to cancel a coupon."))
-    end
+  def index
+    # Chech if the till is open or not.
+    # If it's open we have to redirec to action till_open
+#    @pending_sale = Sale.pending(@organization, current_user)
   end
 
-  def index
+  def create_till_open
+    # Make the open operation on fiscal printer 
+    # I think we have o create a object the keep the till open operations
+    # We can have the option of switch the user that is on till.
+    # We keep the object with the old user and his respective sell associated to him and create another object
+    # tha will keep the printer operations after this point
+    @printer_command = "till_open"
+    redirect_to :action => 'till_open'
+  end
+
+  def till_open
+    @printer_command = "till_open"
     @pending_sale = Sale.pending(@organization, current_user)
   end
 
+  def add_cash
+    @cash = AddCash.new
+  end
+
+  def create_add_cash
+    @cash = AddCash.new(params[:cash])
+    @cash.payment_method = 'money'
+    @cash.date = Date.today
+    @cash.bank_account = @organization.default_bank_account
+    @cash.type_of = Payment::TYPE_OF_INCOME
+    @cash.owner = @organization
+    if @cash.save
+      # We hae to print the coupon on fiscal printer here. With transactional if possible
+      flash[:notice] = _('The cash was added with sucess')
+      redirect_to :action => 'till_open'
+    else
+      render :action => 'add_cash'
+    end
+  end
+
+  def remove_cash
+    @cash = RemoveCash.new
+  end
+
+  def create_remove_cash
+    @cash = RemoveCash.new(params[:cash])
+    @cash.payment_method = 'money'
+    @cash.date = Date.today
+    @cash.bank_account = @organization.default_bank_account
+    @cash.type_of = Payment::TYPE_OF_EXPENSE
+    @cash.owner = @organization
+    if @cash.save
+      # We hae to print the coupon on fiscal printer here
+      flash[:notice] = _('The cash was removed with sucess')
+      redirect_to :action => 'till_open'
+    else
+      render :action => 'remove_cash'
+    end
+  end
+  
   def coupon_open
     pending_sale = Sale.pending(@organization, current_user)    
     if pending_sale.nil?
@@ -55,6 +108,17 @@ class PointOfSaleController < ApplicationController
     @total = @sale.total_value 
     @total_payment = @sale.total_payment 
     @payments = @sale.ledgers
+  end
+
+
+#TODO make this test
+  def check_coupon_cancel
+    supervisor = User.authenticate(params[:user][:login], params[:user][:password])
+    if supervisor.nil? 
+      render_access_denied_screen(_("You don't have permissions to cancel a coupon."))
+    elsif !supervisor.allowed_to?(:controller => 'point_of_sale', :action => 'coupon_cancel')
+      render_access_denied_screen(_("You don't have permissions to cancel a coupon."))
+    end
   end
 
 
@@ -170,46 +234,11 @@ class PointOfSaleController < ApplicationController
   def coupon_close
     @sale = @organization.sales.find(params[:id])
     @sale.close!      
+    str = "close_till "
+    test_printer(str)
     redirect_to :action => 'index'
   end
 
-  def add_cash
-    @cash = AddCash.new
-  end
-
-  def create_add_cash
-    @cash = AddCash.new(params[:cash])
-    @cash.payment_method = 'money'
-    @cash.date = Date.today
-    @cash.bank_account = @organization.default_bank_account
-    @cash.type_of = Payment::TYPE_OF_INCOME
-    @cash.owner = @organization
-    if @cash.save
-      flash[:notice] = _('The cash was added with sucess')
-      redirect_to :action => 'index'
-    else
-      render :action => 'add_cash'
-    end
-  end
-
-  def remove_cash
-    @cash = RemoveCash.new
-  end
-
-  def create_remove_cash
-    @cash = RemoveCash.new(params[:cash])
-    @cash.payment_method = 'money'
-    @cash.date = Date.today
-    @cash.bank_account = @organization.default_bank_account
-    @cash.type_of = Payment::TYPE_OF_EXPENSE
-    @cash.owner = @organization
-    if @cash.save
-      flash[:notice] = _('The cash was removed with sucess')
-      redirect_to :action => 'index'
-    else
-      render :action => 'remove_cash'
-    end
-  end
 
   def render_access_denied_screen(message = nil)
     flash[:notice] = message || _("You don't have permissions to access this function")
@@ -220,11 +249,26 @@ class PointOfSaleController < ApplicationController
   #The file sent to the desktop must be opened by the software
   #test_printer
   def test_printer
+    f = File.new('/tmp/bli','w+')
+    f.write('fudeu papai')
+    f.close
+
+    
      send_data('testando algo',
           :disposition => 'inline',
-          :type => '	text/plain',
-          :filename => "printer.txt")
+#          :type => 'text/plain',
+          :type => 'printer/apy',
+          :filename => "printer.apy")
 #    redirect_to :action => 'main'
   end
 
+  def accept_printer_cmd
+    f = File.new('/tmp/bli','w+')
+    f.write('fudeu papai')
+    f.close
+  end
 end
+
+
+
+

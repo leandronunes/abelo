@@ -1,0 +1,27 @@
+body {
+  background: none;
+}
+
+form,
+#cash_value{
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+#cash_value {
+  width: 60px;
+  text-align: right;
+  border: 1px solid #CBA;
+}
+
+#cash_description {
+  width: 250px;
+  height: 100px;
+}
+.save {
+  margin: auto;
+  float: inherit !important;
+}
+
+

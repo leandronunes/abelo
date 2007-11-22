@@ -29,15 +29,6 @@ class Document < ActiveRecord::Base
     self.document_owner = self.owner.nil? ? value : self.owner.class.name.downcase 
   end  
 
-
-  def self.describe(field)
-    {
-      'Customer' => _('Customer'),
-      'Supplier' => _('Supplier'),
-      'Worker' => _('Worker')
-    }[field] || field
-  end
-
   def validate
     self.errors.add(:document_model_id, _('You cannot have a document model in a model document')) if self.is_model? and not self.document_model.nil?
     self.errors.add( _('You have to choose almost an department to the document')) if  (not self.organization.nil?) and (not self.organization.departments.empty?) and (self.departments.empty?)
@@ -74,6 +65,16 @@ class Document < ActiveRecord::Base
     d.document_model = self
     d.tag_list = self.tag_list.names
     d
+  end
+
+  private
+
+  def self.describe(field)
+    {
+      'Customer' => _('Customer'),
+      'Supplier' => _('Supplier'),
+      'Worker' => _('Worker')
+    }[field] || field
   end
 
 end

@@ -27,6 +27,13 @@ class SupplierTest < Test::Unit::TestCase
     assert supplier.contacts.include?(contact)
   end
 
+  def test_relation_with_documents
+    supplier = Customer.new
+    d = Document.new(:name => 'Some Another Document', :organization_id => 1, :is_model => true)
+    supplier.documents.concat(d)
+    assert supplier.documents.include?(d)
+  end
+
   def test_mandatory_field_name
     supplier = Supplier.create(:email => 'teste@teste', :organization_id => 1, :category_id => @category.id, :cpf => '23831442312')
     assert supplier.errors.invalid?(:name)

@@ -86,6 +86,25 @@ class DocumentTest < Test::Unit::TestCase
     assert_equal Document.find(1), d.document_model
   end
 
+  def test_owner_class
+    doc = Document.new
+    doc.owner = Customer.find(:first)
+    assert_equal 'Consumidor', doc.owner_class
+  end
+
+  def test_document_owner_type
+    doc = Document.new
+    doc.owner = Customer.find(:first)
+    assert_equal 'SystemActor', doc.owner_type 
+    assert_equal 'customer', doc.document_owner_type
+  end
+
+  def test_document_owner_type=
+    doc = Document.new
+    doc.document_owner_type = 'customer'
+    assert_equal 'customer', doc.document_owner_type
+  end
+
   def test_the_presence_of_document_model_if_its_a_model_itself
     model = Document.new(:name => 'Anohter Document', :organization_id => 1, :is_model => true)
     departments = Organization.find(1).departments
@@ -110,6 +129,27 @@ class DocumentTest < Test::Unit::TestCase
     assert documents.include?(d)
   end
 
+  def test_presence_owner_model_document
+    d = Document.new(:name => 'Some Another Document', :organization_id => 1, :is_model => true)
+    d.owner = Customer.find(:first)
+    departments = Organization.find(1).departments
+    d.departments = departments
+    d.save
+    assert d.errors.size > 0
+  end
+
+  def test_presence_owner_document
+    d = Document.new(:name => 'Some Another Document', :organization_id => 1, :is_model => false)
+    d.save
+    assert d.errors.invalid?(:owner)    
+  end
+
+  def test_model
+    Document.models.each do |item|
+      assert item.is_model
+    end
+  end
+
   def test_dclone
     d = Document.new(:name => 'Anohter Document Again', :organization_id => 1, :is_model => true)
     departments = Organization.find(1).departments
@@ -124,12 +164,6 @@ class DocumentTest < Test::Unit::TestCase
     assert !d.is_model?
     d_clone = d.dclone
     assert_nil d_clone
-  end
-
-  def test_has_owner_when_is_not_a_model
-    d = new_document(:is_model => false)    
-    d.valid?
-    assert d.errors.invalid?(:owner)
   end
 
 end

@@ -28,6 +28,13 @@ class WorkerTest < Test::Unit::TestCase
     assert worker.contacts.include?(contact)
   end
 
+  def test_relation_with_documents
+    worker = Customer.new
+    d = Document.new(:name => 'Some Another Document', :organization_id => 1, :is_model => true)
+    worker.documents.concat(d)
+    assert worker.documents.include?(d)
+  end
+
   def test_mandatory_field_name
     worker = Worker.create(:email => 'teste@teste', :organization_id => 1, :category_id => @category.id, :cpf => '23831442312')
     assert worker.errors.invalid?(:name)

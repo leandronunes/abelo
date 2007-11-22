@@ -27,6 +27,13 @@ class CustomerTest < Test::Unit::TestCase
     assert customer.contacts.include?(contact)
   end
 
+  def test_relation_with_documents
+    customer = Customer.new
+    d = Document.new(:name => 'Some Another Document', :organization_id => 1, :is_model => true)
+    customer.documents.concat(d)
+    assert customer.documents.include?(d)
+  end
+
   def test_mandatory_field_name
     customer = Customer.create(:email => 'teste@teste', :organization_id => 1, :category_id => @category.id, :cpf => '23831442312')
     assert customer.errors.invalid?(:name)

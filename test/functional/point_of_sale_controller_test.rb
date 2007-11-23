@@ -59,7 +59,6 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
     get :index
     assert_response :success 
     assert_template 'index'
-    assert_not_nil assigns(:pending_sale)
   end
  
   def test_coupon_open_with_new_sale
@@ -317,7 +316,7 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   def test_create_add_cash_successfully
     get :create_add_cash, :cash => {:value => 12}
     assert_response :redirect
-    assert_redirected_to :action => 'index'
+    assert_redirected_to :action => 'till_open'
     assert assigns(:cash)
     assert_equal 'money', assigns(:cash).payment_method
     assert_equal Date.today, assigns(:cash).date
@@ -341,7 +340,7 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   def test_create_remove_cash_successfully
     get :create_remove_cash, :cash => {:value => 12}
     assert_response :redirect
-    assert_redirected_to :action => 'index'
+    assert_redirected_to :action => 'till_open'
     assert assigns(:cash)
     assert_equal 'money', assigns(:cash).payment_method
     assert_equal Date.today, assigns(:cash).date

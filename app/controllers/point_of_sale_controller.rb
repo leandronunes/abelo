@@ -20,7 +20,7 @@ class PointOfSaleController < ApplicationController
 
   def design_point_of_sale
     point_of_sale = DesignPointOfSale.new(@organization)
-    point_of_sale
+    point_of_sale 
   end
   
   def autocomplete_customer
@@ -234,8 +234,6 @@ class PointOfSaleController < ApplicationController
   def coupon_close
     @sale = @organization.sales.find(params[:id])
     @sale.close!      
-    str = "close_till "
-    test_printer(str)
     redirect_to :action => 'index'
   end
 
@@ -272,7 +270,6 @@ class PointOfSaleController < ApplicationController
     f = File.new('/tmp/bla','w+')
     f.write('fudeu papai')
     f.close
-raise 'fudeu'
     "escrevi o arquivo /tmp/bla"
   end
 

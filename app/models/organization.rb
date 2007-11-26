@@ -69,9 +69,10 @@ class Organization < ActiveRecord::Base
   has_many :domains, :as => :owner
 
 
-  validates_presence_of :name, :cnpj
-  validates_uniqueness_of :name, :cnpj
-  validates_as_cnpj :cnpj
+  validates_presence_of :name
+  validates_uniqueness_of :name
+  validates_uniqueness_of :cnpj, :if => lambda{|organization| not organization.cnpj.blank?}
+  validates_as_cnpj :cnpj, :message => _('%{fn} is not valid.')
   validates_presence_of :identifier, :name
   validates_uniqueness_of :identifier
   validates_format_of :identifier, :with => IDENTIFIER_FORMAT

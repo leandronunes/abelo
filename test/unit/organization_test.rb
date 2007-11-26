@@ -121,10 +121,11 @@ class OrganizationTest < Test::Unit::TestCase
     assert org.errors.invalid?(:name) 
   end
 
-  def test_mandatory_field_cnpj
-    org = Organization.create(:name => 'Organization for testing', :identifier => 'org')
-    assert org.errors.invalid?(:cnpj) 
-  end
+# FIXME:  remove this some day. This is not necessary anymore
+#  def test_mandatory_field_cnpj
+#    org = Organization.create(:name => 'Organization for testing', :identifier => 'org')
+#    assert org.errors.invalid?(:cnpj) 
+#  end
   
   def test_mandatory_field_identifier
     org = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151')

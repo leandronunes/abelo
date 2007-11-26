@@ -99,34 +99,35 @@ class WorkerTest < Test::Unit::TestCase
     assert c3.errors.empty?
   end
 
-  def test_presence_of_cnpj_or_cpf
-    c = Worker.new(:name => 'Testing unique CNPJ (first)', :email => 'teste2@teste', :organization => @organizationanization, :category => @categoryegory)
-    c.valid?
-    assert c.errors.invalid?(:person_type)
-    c.person_type = 'natural'
-    c.cpf = '864.517.456-18'
-    c.valid?
-    assert !c.errors.invalid?(:cnpj)
-    assert !c.errors.invalid?(:cpf)
-    c.cpf = nil
-    c.valid?
-    assert c.errors.invalid?(:person_type)
-    c.person_type = 'juristic'
-    c.cnpj = '45.581.212/0001-48'
-    c.valid?
-    assert !c.errors.invalid?(:cnpj)
-    assert !c.errors.invalid?(:cpf)
-  end
-
-  def test_presence_of_cnpj
-    c = Worker.new(:name => 'Testing unique CNPJ (first)', :email => 'teste2@teste', :organization => @organizationanization, :category => @categoryegory)
-    c.person_type = 'juristic'
-    c.valid?
-    assert c.errors.invalid?(:cnpj)
-    c.cnpj = '45.581.212/0001-48'
-    c.valid?
-    assert !c.errors.invalid?(:cnpj)
-  end
+# FIXME:  remove this some day. This is not necessary anymore
+#  def test_presence_of_cnpj_or_cpf
+#    c = Worker.new(:name => 'Testing unique CNPJ (first)', :email => 'teste2@teste', :organization => @organizationanization, :category => @categoryegory)
+#    c.valid?
+#    assert c.errors.invalid?(:person_type)
+#    c.person_type = 'natural'
+#    c.cpf = '864.517.456-18'
+#    c.valid?
+#    assert !c.errors.invalid?(:cnpj)
+#    assert !c.errors.invalid?(:cpf)
+#    c.cpf = nil
+#    c.valid?
+#    assert c.errors.invalid?(:person_type)
+#    c.person_type = 'juristic'
+#    c.cnpj = '45.581.212/0001-48'
+#    c.valid?
+#    assert !c.errors.invalid?(:cnpj)
+#    assert !c.errors.invalid?(:cpf)
+#  end
+#
+#  def test_presence_of_cnpj
+#    c = Worker.new(:name => 'Testing unique CNPJ (first)', :email => 'teste2@teste', :organization => @organizationanization, :category => @categoryegory)
+#    c.person_type = 'juristic'
+#    c.valid?
+#    assert c.errors.invalid?(:cnpj)
+#    c.cnpj = '45.581.212/0001-48'
+#    c.valid?
+#    assert !c.errors.invalid?(:cnpj)
+#  end
 
   def test_presence_of_cpf
     c = Worker.new(:name => 'Testing unique CNPJ (first)', :email => 'teste2@teste', :organization => @organizationanization, :category => @categoryegory)

@@ -4,8 +4,14 @@ class PublicController < ApplicationController
 
   default_environment
 
+  post_only :update_user
+
   def index
     @organizations = current_user.organizations
+  end
+
+  def list
+    redirect_to :action => 'index'
   end
 
   def edit_user
@@ -18,7 +24,7 @@ class PublicController < ApplicationController
       flash[:notice] = _('User was successfully updated.')
       redirect_to :action => 'index'
     else
-      render :action => 'edit'
+      render :action => 'edit_user'
     end
   end
 

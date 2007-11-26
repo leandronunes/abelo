@@ -10,11 +10,12 @@ class SystemActor < ActiveRecord::Base
 
   acts_as_ferret :fields => ['name', 'description']
 
-  #validations
-  validates_presence_of :name, :organization_id, :category_id,:email    
+  ###########################
+  # Validations
+  ###########################
+  validates_presence_of :name, :organization_id, :category_id, :email    
   validates_as_cnpj :cnpj
   validates_as_cpf :cpf
-  validates_presence_of :cnpj, :scope => :organization_id, :if  => lambda { |actor| actor.person_type == 'juristic' }, :message => _('This %{fn} already exist')
   validates_presence_of :cpf, :scope => :organization_id, :if  => lambda { |actor| actor.person_type == 'natural' }, :message => _('This %{fn} already exist')
   validates_uniqueness_of :cnpj, :scope => :organization_id, :if => lambda { |user| ! user.cnpj.blank? }, :message => _('This %{fn} already exist')
   validates_uniqueness_of :cpf, :scope => :organization_id, :if => lambda { |user| ! user.cpf.blank? }, :message => _('This %{fn} already exist')
@@ -29,12 +30,6 @@ class SystemActor < ActiveRecord::Base
 
   def person_type= type
     self.type_person = type
-  end
-
-  def validate
-    if (self.cpf.blank? && self.cnpj.blank?)
-      errors.add('person_type', 'Either %{fn} or CPF must be filled, and they cannot be filled at the same time.')
-    end
   end
 
   def identifier

@@ -7,7 +7,7 @@
 #      'web_site_interface'                  => _('Web Site'), TODO implements it
       'permissions'                         => _('User administration'),
       'system_actors'                       => _('Registers'),
-      'point_of_sale'                       => _('Point of sale'),
+#      'point_of_sale'                       => _('Point of sale'),
 #      'mass_mails'                          => _('Mass mail'), #TODO implements this function
       'ledgers'                             => _('Financial'),
       'documents'                           => (@organization.nil? or @organization.id.nil?) ? '' : @organization.configuration.document_name_on_plural.camelcase, 

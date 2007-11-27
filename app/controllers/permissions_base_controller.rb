@@ -53,14 +53,10 @@ class PermissionsBaseController < ApplicationController
       @user.template_valid = true
     end
     
-    begin
-      if @user.save
-        flash[:notice] = _('User successfully created.')
-        redirect_to :action => 'list', :organization_id => @organization
-      else
-        render :template => 'permissions_base/new'
-      end
-    rescue
+    if @user.save
+      flash[:notice] = _('User successfully created.')
+      redirect_to :action => 'list', :organization_id => @organization
+    else
       render :template => 'permissions_base/new'
     end
   end

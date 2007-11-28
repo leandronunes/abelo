@@ -10,6 +10,10 @@ class Product < ActiveRecord::Base
   has_many :stock_outs
   has_many :stock_downs
 
+  before_save  do |p|
+    p.code ||=(self.organization.products.map(&:code).max || 0) + 1
+  end
+
   validates_uniqueness_of :code, :scope => :organization_id
 
   validates_presence_of :name, :sell_price, :unit

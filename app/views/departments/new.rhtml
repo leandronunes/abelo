@@ -2,9 +2,5 @@
 
 <% form_tag :action => 'create' do %>
   <%= render :partial => 'form' %>
-  <div class='button_bar'>
-    <%= button 'save', _('Create'), :save %>
-    <%= button 'cancel', _('Cancel'), :cancel, :action => 'list' %>
-    <%= button_remote('', :reset , {:update => 'form_reg', :url => {:action => 'reset'}}, :title => _('Reset')) %>
-  </div>
+  <%= display_new_info_options @product %>
 <% end %>

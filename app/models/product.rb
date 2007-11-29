@@ -10,13 +10,13 @@ class Product < ActiveRecord::Base
   has_many :stock_outs
   has_many :stock_downs
 
-  before_save  do |p|
-    p.code ||=(self.organization.products.map(&:code).max || 0) + 1
+  before_create  do |product|
+    product.code ||=(Product.maximum(:code, :conditions => {:organization_id => product.organization}) || 0).to_i + 1
   end
 
   validates_uniqueness_of :code, :scope => :organization_id
 
-  validates_presence_of :name, :sell_price, :unit
+  validates_presence_of :name, :sell_price
 
   validates_presence_of :organization_id, :message => _('Products must be associated to an organization')
 

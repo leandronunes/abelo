@@ -1,6 +1,6 @@
 production:
   host: localhost
-  port: 9090
+  port: 9010
   pid_file: log/ferret.pid
 development:
   host: localhost
@@ -8,5 +8,5 @@ development:
   pid_file: log/ferret.pid
 test:
   host: localhost
-  port: 9009
+  port: 9011
   pid_file: log/ferret.pid

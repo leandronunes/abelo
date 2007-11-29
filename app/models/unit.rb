@@ -1,6 +1,7 @@
 class Unit < ActiveRecord::Base
 
   UNIT = {
+    'L' => _('Liter'),
     'U' => _('Unit'),
     'K' => _('Kilogram'),
   }

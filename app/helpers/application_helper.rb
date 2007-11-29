@@ -399,6 +399,20 @@ module ApplicationHelper
     select(object, method, collection.map{|c| [c.send(text_method), c.send(value_method)]}, :include_blank => true) 
   end
 
+  def select_color(object, method, collection=[], text_method=:name, value_method=:id)
+    text_method = text_method.to_s
+    value_method = value_method.to_s
+    content_tag(:select,
+      collection.map{ |c| 
+        content_tag(:option,
+          c.send(text_method),
+          :style => "background-color: #{c.send(value_method)};"
+        )
+      },
+      :id => "#{object}_#{method}", :name => "#{object}[#{method}]"
+    )
+  end
+
   def autocomplete_list(collection, method = 'name' )
     content_tag(:ul,
       collection.map do |c|

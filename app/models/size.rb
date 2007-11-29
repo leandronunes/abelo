@@ -1,6 +1,7 @@
 class Size < ActiveRecord::Base
 
   SIZE = {
+    'P' => _('Extra Small'),
     'S' => _('Small'),
     'M' => _('Medium'),
     'L' => _('Large'),

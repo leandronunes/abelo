@@ -1,7 +1,7 @@
 
 
   def button(button, title, type, url_options = {}, html_options = {})
-    html_options[:class] ||= "button button_#{type}"
+    html_options[:class] ||= "button_#{type}"
     if html_options[:addclass] then
       html_options[:class] += " " + html_options[:addclass]
       html_options[:addclass] = nil

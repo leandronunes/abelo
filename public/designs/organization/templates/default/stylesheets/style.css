@@ -17,6 +17,7 @@
 @import url("tabs.css");
 @import url("design_editor.css");
 @import url("tag_list.css");
+@import url("spinner.css");
 
 body {
   margin:0px;

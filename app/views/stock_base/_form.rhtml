@@ -5,12 +5,6 @@
 
 <% display_form_info @stock do |item | %>
 
-  <% if @stock.kind_of?(StockOut)
-       business = _('Buy Price')
-     else 
-       business = _('Sell Price')
-     end
-  %>
   <%= display_field_form( item, 'supplier',
         :title => _('Supplier'),
         :content => select( 'stock', 'supplier_id', @suppliers.map { |s| [ s.name, s.id] } ) 
@@ -30,7 +24,7 @@
   %>
 
   <%= display_field_form( item, 'price',
-        :title => business,
+        :title =>  _('Buy Price'),
         :content => text_field( 'stock', 'price')
     )
   %>

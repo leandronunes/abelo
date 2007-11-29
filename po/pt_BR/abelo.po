@@ -9,10 +9,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: abelo 0.4.1\n"
 "POT-Creation-Date: 2007-11-29 08:57-0300\n"
-"PO-Revision-Date: 2007-11-21 20:03-0300\n"
+"PO-Revision-Date: 2007-11-29 08:59-0300\n"
 "Last-Translator: Leandro Nunes dos Santos <leandronunes@colivre.coop.br>\n"
-"Language-Team: Krishnamurti Lelis Lima Vieira Nunes <krishna@colivre.coop."
-"br>\n"
+"Language-Team: Krishnamurti Lelis Lima Vieira Nunes "
+"<krishna@colivre.coop.br>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1148,9 +1148,8 @@ msgid "size"
 msgstr "Tamanho"
 
 #: app/models/size.rb:4
-#, fuzzy
 msgid "Extra Small"
-msgstr "Extra Grande"
+msgstr "Extra Pequeno"
 
 #: app/models/size.rb:5
 msgid "Small"
@@ -2022,9 +2021,8 @@ msgid "You cannot schedule an add cash"
 msgstr "Você não pode agendar um pagamento em dinheiro"
 
 #: app/models/add_cash.rb:10
-#, fuzzy
 msgid "The value must be greater or equal to 0"
-msgstr "O valor deve ser menor ou igual  a %s"
+msgstr "O valor deve ser maior ou igual  a 0"
 
 #: app/models/add_cash.rb:14 app/models/remove_cash.rb:18
 msgid "You cannot have an add cash with type different of %s"
@@ -2142,9 +2140,8 @@ msgid "unit"
 msgstr "unidade"
 
 #: app/models/unit.rb:4
-#, fuzzy
 msgid "Liter"
-msgstr "Filtrar"
+msgstr "Litro"
 
 #: app/models/unit.rb:6
 msgid "Kilogram"
@@ -2201,9 +2198,8 @@ msgid "Natural Person or Juristic Person"
 msgstr "Pessoa física ou Pessoa jurídica"
 
 #: app/models/remove_cash.rb:14
-#, fuzzy
 msgid "The value must be minor or equal to 0"
-msgstr "O valor deve ser menor ou igual  a %s"
+msgstr "O valor deve ser menor ou igual  a 0"
 
 #: app/models/bank_account_display.rb:10 app/models/check_display.rb:20
 #: app/models/debit_card_display.rb:17
@@ -2835,9 +2831,8 @@ msgid "Organization|Identifier"
 msgstr "Identificador"
 
 #: app/models/organization.rb:75
-#, fuzzy
 msgid "%{fn} is not valid."
-msgstr "%{fn} não deve começar com www."
+msgstr "%{fn} não é válido."
 
 #: app/models/organization.rb:87
 msgid "Organization"
@@ -3701,13 +3696,12 @@ msgid "Supervisor"
 msgstr "Supervisor"
 
 #: app/views/point_of_sale/index.rhtml:1
-#, fuzzy
 msgid "Till"
-msgstr "Título"
+msgstr "Caixa"
 
 #: app/views/point_of_sale/index.rhtml:4
 msgid "Open Till"
-msgstr ""
+msgstr "Abrir Caixa"
 
 #: app/views/document_items/_new.rhtml:3
 msgid "New item"

@@ -402,16 +402,36 @@ module ApplicationHelper
   def select_color(object, method, collection=[], text_method=:name, value_method=:id)
     text_method = text_method.to_s
     value_method = value_method.to_s
-    content_tag(:select,
-      collection.map{ |c| 
-        content_tag(:option,
-          c.send(text_method),
-          :style => "background-color: #{c.send(value_method)};"
-        )
-      },
-      :id => "#{object}_#{method}", :name => "#{object}[#{method}]"
-    )
+    select_tag("#{object}[#{method}]", 
+      options_for_select_color( collection.map{|c| [c.send(text_method), c.send(value_method), "style='background-color: #{c.send(value_method)};'"]}, 
+        instance_variable_get("@#{object}").send(method)
+       ), 
+       :id => "#{object}_#{method}", 
+       :style => "background-color: #{instance_variable_get('@'+object).send(method)};"
+     )
   end
+
+
+  def options_for_select_color(container, selected = nil)
+    container = container.to_a if Hash === container
+
+    options_for_select_color = container.inject([]) do |options, element|
+      if !element.is_a?(String) and element.respond_to?(:first) and element.respond_to?(:last)
+        is_selected = ( (selected.respond_to?(:include?) && !selected.is_a?(String) ? selected.include?(element[1]) : element[1] == selected) )
+        if is_selected
+          options << "<option value=\"#{html_escape(element[1].to_s)}\" selected=\"selected\" #{element[2].to_s} >#{html_escape(element[0].to_s)}</option>"
+        else
+          options << "<option value=\"#{html_escape(element[1].to_s)}\" #{element[2].to_s} >#{html_escape(element[0].to_s)}</option>"
+        end
+      else
+        is_selected = ( (selected.respond_to?(:include?) && !selected.is_a?(String) ? selected.include?(element) : element == selected) )
+        options << ((is_selected) ? "<option value=\"#{html_escape(element.to_s)}\" selected=\"selected\">#{html_escape(element.to_s)}</option>" : "<option value=\"#{html_escape(element.to_s)}\">#{html_escape(element.to_s)}</option>")
+      end
+    end
+
+    options_for_select_color.join("\n")
+  end
+
 
   def autocomplete_list(collection, method = 'name' )
     content_tag(:ul,

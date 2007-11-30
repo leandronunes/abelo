@@ -15,7 +15,6 @@
 @import url("localist.css");
 @import url("sidebar.css");
 @import url("tabs.css");
-@import url("design_editor.css");
 @import url("tag_list.css");
 @import url("spinner.css");
 
@@ -129,13 +128,13 @@ body {
 
 /* Edition Mode */
 
-#design_editor .blocks {
+#design_editor .design_blocks {
   list-style: none;
   margin: 0px;
   padding: 3px;
 }
 
-#design_editor .box {
+#design_editor .design_box {
   border: 2px solid transparent;
 }
 
@@ -148,11 +147,11 @@ body {
   padding: 5px;
 }
 
-#design_editor .blocks {
+#design_editor .design_blocks {
   border: 2px dotted green;
 }
 
-#design_editor .blocks .hover {
+#design_editor .design_blocks .hover {
   border: 2px dotted red;
   background: blue;
 }

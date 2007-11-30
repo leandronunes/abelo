@@ -29,9 +29,9 @@
           <div id="banner_top"><span>Abelo</span></div>
           <div id="userbar">
             <div class="login_bar">
-              <%= design_display_function_button( 'go-jump', _('Go to'),visual_effect(:toggle_slide, 'menu', :duration => 0.6), {:id => "goto", :accesskey => "g"}) %>
-              <%= design_display_button( 'edit_small' , _('My account'), {:controller => 'public', :action => 'edit_user', :id => self.current_user}, :id => "edit_profile", :accesskey => "e") %> 
-              <%= design_display_button( 'system-log-out', _('Logout'), {:organization_nickname => nil, :controller => 'users', :action => 'logout'}, :id => "logout", :accesskey => "q", :confirm => _('Exit from system?'), :method => 'post') %>
+              <%= design_display_function_button( 'with_text go-jump', _('Go to'),visual_effect(:toggle_slide, 'menu', :duration => 0.6), {:id => "goto", :accesskey => "g"}) %>
+              <%= design_display_button( 'with_text edit_small' , _('My account'), {:controller => 'public', :action => 'edit_user', :id => self.current_user}, :id => "edit_profile", :accesskey => "e") %> 
+              <%= design_display_button( 'with_text system-log-out', _('Logout'), {:organization_nickname => nil, :controller => 'users', :action => 'logout'}, :id => "logout", :accesskey => "q", :confirm => _('Exit from system?'), :method => 'post') %>
             </div>
             <%= display_navigation_bar %> 
           </div>

@@ -11,6 +11,29 @@
   background-position: 50% 50%;
 }
 
+.button_main{
+  float: none;
+  border: 2px solid black;
+  display: block;
+  opacity: 1;
+  width: 24px;
+  height: 24px;
+  background-color: red;
+  background-repeat: no-repeat;
+  background-position: 0%;
+}
+
+.with_text.edit_small,
+.with_text.go-jump,
+.with_text.system-log-out{
+  float: none;
+  display: inline;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: 100% 100%;
+  margin: 10px;
+}
+
 .bt_small {
   width: 16px;
   height: 16px;
@@ -33,6 +56,11 @@
   width: inherit !important;
   display: inline !important;
 }
+
+.button_main.with_text {
+  display: block !important;
+}
+
 .bt_small.with_text {
   padding-left: 18px;
 }

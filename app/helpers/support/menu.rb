@@ -29,7 +29,7 @@
             content_tag('li',  
               design_display_button(controller, menu_items[controller], 
                   { :organization_nickname => params[:organization_nickname], :controller => controller }, 
-                  :id => controller, :class => "button_main pos_#{x}"))
+                  :id => controller, :class => "button_main pos_#{x} with_text"))
           end.join("\n")) ]
        ), :id => 'menu', :style => "display : none;" )
   end

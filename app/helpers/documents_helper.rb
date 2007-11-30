@@ -66,6 +66,7 @@ module DocumentsHelper
   end
 
   def display_show_info_documents_options(object, params = {},  html_options = {})
+    html_options[:class] = html_options[:class].nil? ? 'display_info_options' : 'display_show ' + html_options[:class]
     content_tag(:div,
       [
         button('back', _('Back'), :back, {:action => 'list'}.merge(params)),

@@ -808,7 +808,7 @@ msgstr "Date"
 #: app/models/ledger_display.rb:34 app/models/ledger_category_display.rb:10
 #: app/views/ledger_categories/_form.rhtml:41
 msgid "Interests"
-msgstr "Interesses"
+msgstr "Juros"
 
 #: app/models/ledger_display.rb:35
 msgid "Periodicity of Intersts"
@@ -3515,7 +3515,7 @@ msgstr "Nova Categoria de Lançamento"
 
 #: app/views/ledger_categories/_form.rhtml:47
 msgid "Interests days"
-msgstr "Dias de interesse"
+msgstr "Dias dos juros"
 
 #: app/views/ledger_categories/_form.rhtml:53
 msgid "Number of parcels"

@@ -94,6 +94,16 @@ input.with_text {
   height: 33px;
   padding-top: 5px;
   background: url('../images/bgbutton.png') no-repeat 50% 50%;
+  display: block;
+  border: none;
+}
+.beault_button .button {
+  border: none;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: 0% 100%;
+  padding: 2px;
+  text-align: right;
 }
 
 .beault_button span, .beault_button input {
@@ -103,6 +113,7 @@ input.with_text {
   font-size: 13px;
   font-weight: 800;
 }
+  
 .beault_button a {
   position: relative;
   top: 1px;
@@ -112,6 +123,10 @@ input.with_text {
   top: -2px;
 }
 
+.beault_button .button span {
+  margin-left: 25px;
+  text-decoration: none;
+}
 .beault_button :hover {
   color: #543 !important;
 }

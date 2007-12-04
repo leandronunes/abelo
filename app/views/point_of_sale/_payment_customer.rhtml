@@ -1,0 +1,18 @@
+<label name="sale_customer"> <%= _('Customer') %>: </label>
+<span class="field">
+  <%= text_field 'sale', 'customer_identifier', :class => 'filter_field' %>
+  <div class='auto_complete' id='sale_customer_identifier_auto_complete' >
+    <%= auto_complete_field("sale_customer_identifier", :url => {:action => "autocomplete_customer", :id => @sale.id}, :indicator => 'auto_list') %>
+  </div> 
+  <div id='auto_list' style='display: none;' >
+  </div>
+</span><!-- fim class="field" -->
+
+<%= hidden_field 'sale', 'customer_id' %>
+  
+<%=   
+  observe_field('sale_customer_identifier',
+        :url => {:action => 'save_customer'},
+        :with => "'customer_cpf=' + escape(value)"
+  )   
+%>  

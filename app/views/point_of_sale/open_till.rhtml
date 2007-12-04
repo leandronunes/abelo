@@ -1,0 +1,17 @@
+<%= title _("Open Till") %>
+
+<%= notice_box flash[:notice] %>
+
+<% form_remote_tag :url => {:action => 'create_till_open'} do %>
+
+  <%= error_messages_for 'cash' %>
+  <%= error_messages_for 'till' %>
+
+  <p><label name="cash_value"> <%= _('Value') %> </label>
+    <%= text_field('cash', 'value') %>
+  </p>
+
+  <%= button 'cancel', _('Cancel'), :cancel, :action => 'index' %>
+  <%= button 'save', _('Save'), :save %>
+<% end %>
+

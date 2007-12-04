@@ -1,0 +1,13 @@
+
+<%= title _('Coupon Open') %>
+
+  <div id="cumpom_bar">
+    <%= link_to content_tag('span', _('Cancel Sale')), {:action => 'cancel', :id => @sale}, :accesskey => 'c', :class => 'button bt_big cancel_sale with_text' %>
+    <%= link_to content_tag('span', _('Cancel Payment')), {:action => 'coupon_open', :id => @sale}, :accesskey => 'p', :class => 'button bt_big currency_minus with_text' %>
+  </div>
+
+<div id="sale">
+
+  <%= render :partial => 'payment' %>
+
+</div>

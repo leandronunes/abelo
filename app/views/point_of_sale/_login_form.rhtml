@@ -1,0 +1,11 @@
+<div id="abelo_login_form">
+  <%= notice_box flash[:notice] %>
+
+  <p><label for="login"> <%= _("Supervisor") %> </label><br />
+    <span><%= text_field 'user', 'login' %></span>
+  </p>
+  <p><label for="password"><%= _("Password") %> </label><br />
+    <span><%= password_field 'user', 'password' %></span>
+  </p>
+</div>
+

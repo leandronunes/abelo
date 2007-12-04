@@ -7,18 +7,17 @@
   <%= link_to content_tag('span', 'Search product'), {}, :class => "button button_search", :accesskey => "p" %>
 </div>
     
-<% form_remote_tag :url => { :action => 'coupon_add_item', :id => @sale }, :update => 'sale' do %>
+<% form_remote_tag :url => { :action => 'create_coupon_add_item', :id => @sale }, :update => 'sale' do %>
         
   <%= submit_tag '', :title => _('Add item'), :id => 'button_add_product', :accesskey => 'x' %>
         
   <div id="code_product">
     <h1><%= _('Product code') %></h1>
-    <%= text_field('sale_item', 'product_code',:accesskey => "c", :id => 'product_code') %>
-    <%= observe_field('product_code',
-            :update => 'add_item_panel',
+    <%= text_field('sale_item', 'product_code',:accesskey => "c") %>
+    <%= observe_field('sale_item_product_code',
             :url => {:action => 'refresh_product'},
-            :with => "'product_code=' + escape(value) + '&id=' + escape(#{@sale.id})"
-         )
+            :with => "'product_code=' + escape(value)"
+        )
     %>
   </div>
   <div id="insert_amount">

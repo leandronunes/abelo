@@ -1,22 +1,12 @@
-
-
-<% form_tag( { :action => 'coupon_add_payment', :id => @sale }, :id => 'payment_form' ) do %>
+<div id="payment_form">
+<% form_remote_tag( :url => { :action => 'create_coupon_add_payment', :id => @sale }) do %>
 
 <%= error_messages_for :ledger %>
 
 <div id="payment_details">
-
-  <div class="info_field">
-    <label name="sale_customer"> <%= _('Customer') %>: </label>
-    <span class="field">
-      <%= text_field 'sale', 'customer_identifier', :class => 'filter_field' %> 
-      <div class='auto_complete' id='sale_customer_identifier_auto_complete' >
-        <%= auto_complete_field("sale_customer_identifier", :url => {:action => "autocomplete_customer", :id => @sale.id}, :indicator => 'auto_list') %>
-      </div>
-      <div id='auto_list' style='display: none;' >
-      </div>
-    </span><!-- fim class="field" -->
-  </div><!-- fim class="info_field" -->
+  <div class="info_field" id="abelo_payment_customer">
+    <%= render :partial => 'payment_customer' %> 
+  </div>
 
   <div class="info_field">
     <label name="sale_value"> <%= _('Value') %>: </label>
@@ -41,7 +31,8 @@
         :with => "'payment_method=' + escape(value) + '&sale_id=' + escape(#{@sale.id})"
   )
 %>
-<h2>Detalhes da forma de pagamento:</h2>
+<h2> <%= _('Payment method details:') %> </h2>
+
 <div id="category">
   <% if !@ledger.payment_method.nil? %>
     <%= render :partial => 'shared_payments/select_category' %>
@@ -51,3 +42,4 @@
 <%= button 'pay', _('Pay'), :save, {}, {:class => 'button bt_big with_text'} %>
 
 <% end %>
+</div>

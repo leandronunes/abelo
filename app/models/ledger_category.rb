@@ -79,7 +79,7 @@ class LedgerCategory < ActiveRecord::Base
   end
 
   def effective_value_by_date(date = Date.today)
-    ledgers = self.ledgers.select{|l| !l.is_foreseen? and l.date.month == date.month}
+    ledgers = self.ledgers.select{|l| !l.pending? and l.date.month == date.month}
     value = 0
     ledgers.collect{|l| value = value + l.effective_value }
     value

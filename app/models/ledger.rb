@@ -1,5 +1,6 @@
 class Ledger < ActiveRecord::Base
 
+  include Status
   acts_as_taggable
 
   acts_as_ferret :fields => ['description', 'category', 'tags']
@@ -11,32 +12,37 @@ class Ledger < ActiveRecord::Base
   belongs_to :schedule_ledger
   belongs_to :bank_account
   belongs_to :owner, :polymorphic => true
-  validates_presence_of :owner_type
-  validates_presence_of :owner_id
+  has_one :printer_command, :as => :owner
   validates_presence_of :foreseen_value
-  validates_presence_of :effective_value, :if => lambda{ |ledger| not ledger.is_foreseen? }
+  validates_presence_of :effective_value, :if => lambda{ |ledger| not ledger.pending? }
   validates_presence_of :bank_account_id
   validates_presence_of :foreseen_date
-  validates_presence_of :effective_date, :if => lambda{ |ledger| not ledger.is_foreseen? }
+  validates_presence_of :effective_date, :if => lambda{ |ledger| not ledger.pending? }
   validates_presence_of :schedule_repeat, :if => lambda{ |l| !l.schedule_periodicity.blank? or  !l.schedule_interval.blank? }
   validates_presence_of :schedule_periodicity, :if => lambda{ |l| l.schedule_repeat? or !l.schedule_interval.blank? }
   validates_presence_of :schedule_interval, :if => lambda{ |l| l.schedule_repeat? or  !l.schedule_periodicity.blank? }
   validates_inclusion_of :payment_method, :in => Payment::PAYMENT_METHODS
   validates_presence_of :type_of
   validates_inclusion_of :type_of, :in => Payment::TYPE_OF
+  validates_presence_of :owner_id
 
   before_validation do |l|
     l.type_of = l.category.type_of unless l.category.nil?
+    l.effective_value ||= l.foreseen_value unless l.pending?
+    l.effective_date ||= l.foreseen_date unless l.pending?
   end
 
   after_create do |l|
+    if l.owner.kind_of?(Sale)
+      l.printer_command = PrinterCommand.new(l.owner.owner, [PrinterCommand::ADD_PAYMENT])
+    end
 
     transaction do 
       if l.schedule_repeat?
         sl = ScheduleLedger.create(:periodicity => l.schedule_periodicity, :start_date => l.foreseen_date, :interval => l.schedule_interval)
         (1..l.schedule_interval.to_i).each do |n|
           ledger_schedule = l.clone
-          ledger_schedule.is_foreseen = true
+          ledger_schedule.pending!
           ledger_schedule.date = l.date + l.schedule_periodicity.number_of_days * n
           ledger_schedule.schedule_ledger = sl
           ledger_schedule.payment_method = l.payment_method
@@ -48,6 +54,14 @@ class Ledger < ActiveRecord::Base
     end
   end
 
+  def accept_printer_cmd!(command)
+    self.status = STATUS_DONE 
+    if self.owner.balance == 0
+      self.owner.close!
+    end
+    self.save!
+  end
+
   def payment_type
     self.class.to_s.tableize.singularize
   end
@@ -57,7 +71,7 @@ class Ledger < ActiveRecord::Base
   end
 
   def payment_method
-    (self.payment_method_choosen.nil? and self.class != Ledger ) ? self.class.to_s.tableize.singularize : self.payment_method_choosen
+    self.payment_method_choosen
   end
 
   def reload
@@ -65,9 +79,9 @@ class Ledger < ActiveRecord::Base
   end
 
   @@original_new = self.method(:new)
-  def self.new(*args)
-    (self == Ledger) ? (raise "cannot create an instance of Ledger") : super(*args)
-  end
+#  def self.new(*args)
+#    (self == Ledger) ? (raise "cannot create an instance of Ledger") : super(*args)
+#  end
 
   def self.create_ledger!(*args)
     object = self.new_ledger(*args)
@@ -105,43 +119,54 @@ class Ledger < ActiveRecord::Base
   end
 
   def value= value
-    self[:foreseen_value] = self.is_foreseen? ? (value) : (self[:foreseen_value] || value)
-    self[:effective_value] = value unless self.is_foreseen? 
+    self[:foreseen_value] = self.pending? ? (value.kind_of?(String) ? value.gsub(',', '.') : value) : (self[:foreseen_value] || (value.kind_of?(String) ? value.gsub(',', '.') : value))
+    self[:effective_value] = value unless self.pending? 
   end
 
   def value
-    value = self.is_foreseen == true ? self[:foreseen_value] :  self[:effective_value]
+    value = self.pending? ? self[:foreseen_value] :  self[:effective_value]
     value ||= 0
   end
 
   def date
-    self.is_foreseen? ? self[:foreseen_date] : self[:effective_date]
+    self.pending? ? self[:foreseen_date] : self[:effective_date]
   end
 
   def date= date  
     self[:foreseen_date] = date
-    self[:effective_date] = date unless self.is_foreseen?
+    self[:effective_date] = date unless self.pending?
   end
 
-#  #This method cannot be access directly. 
-#  #You have to access the date method and this method
-#  #set the correct value of effective_date attribute
-  def effective_date= date
-    raise _('This function cannot be accessed directly')
+  def cancel!
+    self.status = STATUS_CANCELLED
+    self.save
   end
+
+  def cancel?
+    self.status == STATUS_CANCELLED
+  end
+
+  def done!
+    self.status = STATUS_DONE
+  end
+
+  def done?
+    self.status == STATUS_DONE
+  end
+
+  def pending!
+    self.status = STATUS_PENDING
+  end
+
+  def pending?
+    self.status == STATUS_PENDING
+  end
+
 
 #  #This method cannot be access directly. 
 #  #You have to access the date method and this method
 #  #set the correct value of foreseen_date attribute
   def foreseen_date= date
-    raise _('This function cannot be accessed directly')
-  end
-
-
-#  #This method cannot be access directly. 
-#  #You have to access the value method and this method
-#  #set the correct value of effective_value attribute
-  def effective_value= value
     raise _('This function cannot be accessed directly')
   end
 
@@ -170,7 +195,7 @@ class Ledger < ActiveRecord::Base
     end
    
     # Ledgers of sales must have values minor or equal the sale value
-    if !self.owner.nil? and self.owner.class.class_name == "Sale" and (self.owner.balance - self.value < 0)
+    if((self.owner.kind_of?(Sale)) and(self.owner.ledgers.include?(self) ? (self.owner.balance < 0) : (self.owner.balance - self.value < 0)))
       self.errors.add(:value, _('The value must be minor or equal to %s') % self.owner.balance)
     end
   end

@@ -1,6 +1,6 @@
 <%= title _("Remove Cash") %>
 
-<% form_tag :action => 'create_remove_cash' do %>
+<% form_remote_tag  :url => {:action => 'create_remove_cash'} do %>
 
   <%= render :partial => 'cash_form' %>
 

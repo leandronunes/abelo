@@ -1,9 +1,12 @@
 <%= title _("Add Cash") %>
 
-<% form_tag :action => 'create_add_cash' do %>
+<%= notice_box flash[:notice] %>
+
+<% form_remote_tag :url => {:action => 'create_add_cash'} do -%>
 
   <%= render :partial => 'cash_form' %>
 
   <%= button 'save', _('Save'), :save, {}, {:class => 'button'} %>
-<% end %>
+
+<% end -%>
 

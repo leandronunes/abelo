@@ -1,8 +1,7 @@
 <%= title _("Till") %>
 
-  <div id="new_sale">
-    <%= link_to content_tag(:span, _('Open Till')), { :action => 'create_till_open' }, { :method => 'post' } %>
-  </div>
+<%= notice_box flash[:notice] %>
 
-<div id="here">
+<div id="new_sale">
+  <%= link_to content_tag(:span, _('Open Till')), { :action => 'open_till' }, { :method => 'post' } %>
 </div>

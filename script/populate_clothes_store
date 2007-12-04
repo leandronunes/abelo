@@ -412,16 +412,22 @@ Worker.destroy_all
 worker_vendedor = Worker.create!(:name => 'José Fernandes', :cpf => '63358421813', :address => 'Rua do Timbó, nº 45, Itaigara', :birthday => '1975-06-14', :category => salesman_category, :organization => organization, :email => 'jose@toca.com')
 worker_gerente = Worker.create!(:name => 'Carla Alves', :cpf => '53170430424', :address => 'Alameda das Pintagueiras, nº 37, Caminho das Árvores', :birthday => '1979-07-18', :category => manager_category, :organization => organization, :email => 'carla@toca.com')
 
+############Till###################################
+Till.destroy_all
+till_one = Till.new(organization, gerente, '1' )
+till_one.save!
+
 ############Sales###################################
 Sale.destroy_all
-sale_one = Sale.create!(:organization => organization, :customer => cliente_one, :status => 0, :date => '2007-05-03', :salesman => sales_person )
+sale_one = Sale.new(till_one)
+sale_one.save!
 
 ############Sale Items##############################
 SaleItem.destroy_all
-sale_item_one = SaleItem.create!(:sale => sale_one, :product => camisa, :amount => 2.0, :unitary_price => camisa.sell_price)
-sale_item_two = SaleItem.create!(:sale => sale_one, :product => calca, :amount => 3.0, :unitary_price => calca.sell_price)
-
-sale_one.save
+sale_item_one = SaleItem.new(sale_one, :product => camisa, :amount => 2.0)
+sale_item_one.save!
+sale_item_two = SaleItem.new(sale_one, :product => calca, :amount => 3.0)
+sale_item_two.save!
 
 ############Mass Mail###############################
 MassMail.destroy_all

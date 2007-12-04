@@ -16,6 +16,10 @@ class CreditCard < Ledger
     self.type_person = type == PersonType::JURISTIC ? PersonType::JURISTIC : PersonType::NATURAL
   end
 
+  def payment_method
+    self.payment_method_choosen.nil? ? 'credit_card' : self.payment_method_choosen
+  end
+
   protected
 
   attr_accessor :type_person

@@ -1,25 +1,49 @@
 class Sale < ActiveRecord::Base
 
-  STATUS_OPEN = 0
-  STATUS_CLOSED = 1 
-  STATUS_CANCELLED = 2
-
-  ALL_STATUS = [ STATUS_OPEN,STATUS_CANCELLED, STATUS_CLOSED ]
+  include Status
 
   belongs_to :organization
   belongs_to :customer
   belongs_to :salesman, :class_name => 'User', :foreign_key => :user_id
-  has_many :items, :class_name => 'SaleItem', :dependent => :delete_all
+  belongs_to :owner, :polymorphic => true
+  has_many :printer_commands, :as => :owner, :dependent => :destroy
+  has_many :items, :class_name => 'SaleItem', :dependent => :destroy
   has_many :ledgers, :as => :owner, :dependent => :delete_all
 
   validates_presence_of :date, :organization_id, :user_id
   validates_inclusion_of :status, :in => ALL_STATUS
 
+  after_create do |sale|
+    sale.printer_commands << PrinterCommand.new(sale.owner, [PrinterCommand::OPEN])
+  end
+
   def validate
-    if !Sale.pending(self.organization, self.salesman).nil? and Sale.pending(self.organization, self.salesman) != self
+    pending = Sale.pending(self.owner)
+    pending ||= self
+    if pending != self
       errors.add(:status, _('You cannot have two pendings sale'))
     end
+  end
 
+  def initialize(till, *args)
+    super(*args)
+    self.organization = till.organization
+    self.salesman = till.user
+    self.owner = till
+    self.date = Date.today
+  end
+
+  def accept_printer_cmd!(command)
+    self.status = STATUS_DONE if command.cmd == PrinterCommand::CLOSE
+
+    if command.cmd == PrinterCommand::CANCEL
+      self.status = STATUS_CANCELLED
+      transaction do 
+        self.items.map{|i| i.cancel!}
+        self.ledgers.map{|l| l.cancel!}
+      end
+    end
+    self.save!
   end
 
   def self.sale_ledgers_by_customer(customer)
@@ -41,14 +65,14 @@ class Sale < ActiveRecord::Base
   end 
 
   # gives the pending (open) sales for a given organization and user.
-  def self.pending(org, user)
-    return nil if org.nil? or user.nil?
-    self.find(:first, :conditions => [ 'organization_id = ? AND user_id = ? AND status = ?', org.id, user.id, STATUS_OPEN ])
+  def self.pending(till)
+    return nil if till.nil?
+    self.find(:first, :conditions => {:owner_id => till.id, :owner_type => till.class.class_name, :status => STATUS_PENDING} )
   end
 
   # is this sale open?
   def open?
-    self.status == STATUS_OPEN
+    self.status == STATUS_PENDING
   end
 
   # was this sale cancelled?
@@ -56,17 +80,14 @@ class Sale < ActiveRecord::Base
     self.status == STATUS_CANCELLED
   end
 
-  # cancels a sale
-  #
-  # TODO: any further stuff that needs to be done when a sale is cancelled
-  #       See if it's needs to remove all items associated to a coupon in de cancel! action
+  # Cancels a sale
   def cancel!
-    if self.status != STATUS_OPEN
+    if self.status != STATUS_PENDING
       self.errors.add('status', _('Only open sales can be cancelled')) 
       return false
     end
-    self.status = STATUS_CANCELLED
-    self.save!
+    self.printer_commands << PrinterCommand.new(self.owner, [PrinterCommand::CANCEL])
+    true
   end
 
   # closes a sale. No item can be added to it anymore
@@ -74,14 +95,14 @@ class Sale < ActiveRecord::Base
   # TODO: actually check and stop adding items to a closed sale
   # TODO: see if sale with no item need a payment
   def close!
-    raise ArgumentError.new('Only open sales can be closed') if self.status != STATUS_OPEN
-    self.status = STATUS_CLOSED  if self.balance == 0
+    raise ArgumentError.new('Only open sales can be closed') if self.status != STATUS_PENDING
+    self.status = STATUS_DONE  if self.balance == 0
     self.save
   end
   
   # is this sale closed?
   def closed?
-    self.status == STATUS_CLOSED
+    self.status == STATUS_DONE
   end
 
   # Return the total price of the sale. The total price is

@@ -1,3 +1,2 @@
 module LedgersHelper
-
 end

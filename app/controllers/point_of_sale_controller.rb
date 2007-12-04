@@ -10,11 +10,11 @@ class PointOfSaleController < ApplicationController
 
   layout 'point_of_sale'
 
-  post_only [ :new, :add_item, :refresh_product, :coupon_cancel ]
+  post_only [ :new, :add_item, :refresh_product, :create_coupon_cancel ]
 
-  skip_before_filter :check_access_control, :only => ['coupon_cancel']
+  skip_before_filter :check_access_control, :only => ['create_coupon_cancel']
 
-  before_filter :check_coupon_cancel, :only => ['coupon_cancel']
+  before_filter :check_coupon_cancel, :only => ['create_coupon_cancel']
   
   design :holder => :design_point_of_sale, :root => File.join('designs','point_of_sale')
 
@@ -22,135 +22,201 @@ class PointOfSaleController < ApplicationController
     point_of_sale = DesignPointOfSale.new(@organization)
     point_of_sale 
   end
-  
+
   def autocomplete_customer
     @sale = @organization.sales.find(params[:id])
     escaped_string = Regexp.escape(params[:sale][:customer_identifier])
     re = Regexp.new(escaped_string, "i")
     @customers = @organization.customers.select { |c| c.identifier.match re}
-    render :layout=>false
+    render :layout => false
   end
 
   def index
-    # Chech if the till is open or not.
-    # If it's open we have to redirec to action till_open
-#    @pending_sale = Sale.pending(@organization, current_user)
+    till = Till.load(@organization, current_user, (cookies[:printer_id].first unless cookies[:printer_id].nil?))
+    #FIXME how to put the printer id on cookie before call the action?
+    unless till.nil?
+      @printer_command = PrinterCommand.pending_command(till)
+      redirect_to :action => 'till_open'
+    end
+  end
+
+  def open_till
+    if cookies[:printer_id].nil?
+      flash[:notice] = _("You don't have a printer configured.")
+      render :action => 'index' 
+      return
+    end
+
+    till = Till.load(@organization, current_user, (cookies[:printer_id].first unless cookies[:printer_id].nil?))
+    printer_command = PrinterCommand.pending_command(till)
+    if till.nil?
+      @cash = Money.new
+    elsif !printer_command.nil?
+      @cash = printer_command.owner
+      @printer_command = printer_command.str_command
+    else
+      redirect_to :action => 'till_open'
+    end
   end
 
   def create_till_open
-    # Make the open operation on fiscal printer 
-    # I think we have o create a object the keep the till open operations
-    # We can have the option of switch the user that is on till.
-    # We keep the object with the old user and his respective sell associated to him and create another object
-    # tha will keep the printer operations after this point
-    @printer_command = "till_open"
-    redirect_to :action => 'till_open'
+    @till = Till.new(@organization, current_user, cookies[:printer_id].first)
+
+    unless params[:cash].nil?
+      @cash = AddCash.new(@till, params[:cash])
+    end
+
+    if @till.save!
+      @till.add_cashs << @cash unless @cash.nil?
+      @printer_command = PrinterCommand.str_pending_command(@till)
+      render :update do |page| 
+        page.replace_html('fiscal_printer_info', @printer_command)
+      end
+    else
+      render :nothing => true
+    end
+  end
+
+  def create_close_till
+    till = Till.load(@organization, current_user, cookies[:printer_id].first)
+    if till.close
+      render :update do |page|
+        @printer_command = PrinterCommand.str_pending_command(till)
+        page.replace_html('fiscal_printer_info', @printer_command)
+      end
+    else
+      render :nothing => true
+    end
   end
 
   def till_open
-    @printer_command = "till_open"
-    @pending_sale = Sale.pending(@organization, current_user)
+    till = Till.load(@organization, current_user, cookies[:printer_id].first)
+    @printer_command = PrinterCommand.str_pending_command(till)
+    @pending_sale = Sale.pending(till)
   end
 
   def add_cash
-    @cash = AddCash.new
+    @cash = Money.new
   end
 
   def create_add_cash
-    @cash = AddCash.new(params[:cash])
-    @cash.payment_method = 'money'
-    @cash.date = Date.today
-    @cash.bank_account = @organization.default_bank_account
-    @cash.type_of = Payment::TYPE_OF_INCOME
-    @cash.owner = @organization
+    till = Till.load(@organization, current_user, cookies[:printer_id].first)
+    redirect_to :action => 'index' if till.nil?
+    @cash = AddCash.new(till, params[:cash])
+
     if @cash.save
-      # We hae to print the coupon on fiscal printer here. With transactional if possible
-      flash[:notice] = _('The cash was added with sucess')
-      redirect_to :action => 'till_open'
+      flash[:notice] = _('The cash was added with success')
+      render :update do |page|
+        @printer_command = PrinterCommand.str_pending_command(till)
+        page.replace_html('fiscal_printer_info', @printer_command)
+      end
     else
-      render :action => 'add_cash'
+      render :update do |page|
+        page.replace_html('abelo_cash_form', :partial => 'cash_form' )
+      end
     end
   end
 
   def remove_cash
-    @cash = RemoveCash.new
+    @cash = Money.new
   end
 
   def create_remove_cash
-    @cash = RemoveCash.new(params[:cash])
-    @cash.payment_method = 'money'
-    @cash.date = Date.today
-    @cash.bank_account = @organization.default_bank_account
-    @cash.type_of = Payment::TYPE_OF_EXPENSE
-    @cash.owner = @organization
+    till = Till.load(@organization, current_user, cookies[:printer_id].first)
+    redirect_to :action => 'index' if till.nil?
+    @cash = RemoveCash.new(till, params[:cash])
+
     if @cash.save
-      # We hae to print the coupon on fiscal printer here
-      flash[:notice] = _('The cash was removed with sucess')
-      redirect_to :action => 'till_open'
+      flash[:notice] = _('The cash was removed with success')
+      render :update do |page|
+        @printer_command = PrinterCommand.str_pending_command(till)
+        page.replace_html('fiscal_printer_info', @printer_command)
+      end
     else
-      render :action => 'remove_cash'
+      render :update do |page|
+        page.replace_html('abelo_cash_form', :partial => 'cash_form' )
+      end
+    end
+  end
+
+  def create_coupon_open
+    till = Till.load(@organization, current_user, cookies[:printer_id].first)
+    @sale =  Sale.new(till)
+    if @sale.save
+      render :update do |page|
+        @printer_command = PrinterCommand.str_pending_command(till)
+        page.replace_html('fiscal_printer_info', @printer_command)
+      end
+    else
+      render :nothing => true
     end
   end
   
   def coupon_open
-    pending_sale = Sale.pending(@organization, current_user)    
-    if pending_sale.nil?
-      @sale = Sale.new
-      @sale.date = Date.today
-      @sale.organization = @organization
-      @sale.salesman = current_user
-      @sale.save
+    till = Till.load(@organization, current_user, cookies[:printer_id].first)
+    @sale = Sale.pending(till)
+    if @sale.nil?
+      render :nothing => true
     else
-      @sale = pending_sale
-      flash.now[:notice] = _('You have a pending sale. Close or Cancel it before open a new one')
+      @sale_item = SaleItem.new(@sale)
+      @total = @sale.total_value 
+      @total_payment = @sale.total_payment 
+      @payments = @sale.ledgers
+      render :action => 'coupon_open'
     end
-    @sale_item = SaleItem.new 
-    @total = @sale.total_value 
-    @total_payment = @sale.total_payment 
-    @payments = @sale.ledgers
   end
 
-
-#TODO make this test
   def check_coupon_cancel
     supervisor = User.authenticate(params[:user][:login], params[:user][:password])
-    if supervisor.nil? 
-      render_access_denied_screen(_("You don't have permissions to cancel a coupon."))
-    elsif !supervisor.allowed_to?(:controller => 'point_of_sale', :action => 'coupon_cancel')
-      render_access_denied_screen(_("You don't have permissions to cancel a coupon."))
+    supervisor ||= current_user
+    if !supervisor.allowed_to?(:controller => 'point_of_sale', :action => 'create_coupon_cancel')
+      flash.now[:notice] = _("You don't have permissions to cancel a coupon.")
+      render :update do |page|
+        page.replace_html('abelo_login_form', :partial => 'login_form' )
+      end
     end
   end
-
 
   def refresh_product
-    @sale = @organization.sales.find(params[:id])
-    @product = @organization.products.find_by_code(params[:product_code])
-    @sale_item = SaleItem.new
-    @sale_item.product = @product
-    flash.now[:notice] = _('This is not a product code valid') if @product.nil?
-    render :partial => 'product_info'
+    till = Till.load(@organization, current_user, cookies[:printer_id].first)
+    sale = Sale.pending(till)
+    @sale_item = SaleItem.new(sale)
+    @sale_item.product_code = params[:product_code]
+    @product = @sale_item.product
+    flash.now[:notice] = _('This is not a product code valid') if @sale_item.product.nil?
+    render :update do |page|
+      page.replace_html('product_identification', @product.name )
+      page.replace_html('value_product', @product.sell_price )
+    end
   end
 
-  def coupon_add_item
-    @sale = @organization.sales.find(params[:id])
-    begin
-      item = SaleItem.new(params[:sale_item])
-      item.product = @organization.products.find_by_code(params[:sale_item][:product_code])
-      item.valid?
-      (item.errors.length != 1) ? raise(ActiveRecord::RecordInvalid) :   @sale.items << item 
-    rescue 
-      flash[:notice] = _('There is no product with this code')
+  def create_coupon_add_item
+    till = Till.load(@organization, current_user, cookies[:printer_id].first)
+    @sale = Sale.pending(till)
+    @sale_item = SaleItem.new(@sale, params[:sale_item])
+
+    if @sale_item.save!
+      render :update do |page|
+        @product = @sale_item.product
+        page.replace_html('add_item_panel', :partial => 'product_info')
+        @printer_command = PrinterCommand.str_pending_command(till)
+        page.replace_html('fiscal_printer_info', @printer_command)
+      end
+    else
+      @total = @sale.total_value 
+      @total_payment = @sale.total_payment 
+      @payments = @sale.ledgers
+      render :update do |page|
+        page.replace_html('abelo_sale', :partial => 'sale')
+      end
     end
-    @total = @sale.total_value 
-    @total_payment = @sale.total_payment 
-    @payments = @sale.ledgers
-    render :partial => 'sale'
   end
 
   def cancel
-    @sale = @organization.sales.find(params[:id])
+    till = Till.load(@organization, current_user, cookies[:printer_id].first)
+    @sale = Sale.pending(till)
 
-    unless can(:controller => 'point_of_sale', :action => 'coupon_cancel')
+    unless can(:controller => 'point_of_sale', :action => 'create_coupon_cancel')
       flash[:notice] = _('Only sales supervisor can cancel a coupon') if flash[:notice].nil?
     end
     @total = @sale.total_value 
@@ -158,20 +224,31 @@ class PointOfSaleController < ApplicationController
     @payments = @sale.ledgers
   end
 
-  def coupon_cancel
-    @sale = @organization.sales.find(params[:id])
+  def create_coupon_cancel
+    till = Till.load(@organization, current_user, cookies[:printer_id].first)
+    @sale = Sale.pending(till)
+
     if @sale.cancel!
-      redirect_to :action => 'index'
+      render :update do |page|
+        @printer_command = PrinterCommand.str_pending_command(till)
+        page.replace_html('fiscal_printer_info', @printer_command)
+      end
     else
       @total = @sale.total_value 
       @total_payment = @sale.total_payment 
       @payments = @sale.ledgers
-      render :action => 'cancel'
+      render :update do |page|
+        page.replace_html('fiscal_printer_info', @printer_command)
+      end
     end
   end
 
-  def payment
-    @sale = @organization.sales.find(params[:id])
+  def add_payment
+    till = Till.load(@organization, current_user, cookies[:printer_id].first)
+    @sale = Sale.pending(till)
+#FIXME remove this it's to test on firefox browser
+#@sale = Sale.find(params[:id])
+
     @total = @sale.total_value 
     @total_payment = @sale.total_payment 
     @payments = @sale.ledgers
@@ -181,13 +258,13 @@ class PointOfSaleController < ApplicationController
   end
 
   def save_customer
-    sale = @organization.sales.find(params[:id])
-    if params[:customer_id].blank?
-      sale.customer = nil
-    else
-      sale.customer = @organization.customers.find(params[:customer_id]) 
+    till = Till.load(@organization, current_user, cookies[:printer_id].first)
+    @sale = Sale.pending(till)
+    @sale.customer = @organization.customers.find_by_cpf(params[:customer_cpf]) 
+    @sale.save
+    render :update do |page|
+      page.replace_html('abelo_payment_customer', :partial => 'payment_customer')
     end
-    sale.save
     redirect_to :action => 'payment', :id => sale.id
   end
 
@@ -204,21 +281,19 @@ class PointOfSaleController < ApplicationController
     end
   end
 
-  def coupon_add_payment
-    @sale = @organization.sales.find(params[:id])
+  def create_coupon_add_payment
+    till = Till.load(@organization, current_user, cookies[:printer_id].first)
+    @sale = Sale.pending(till)
      
     @ledger = Ledger.new_ledger(params['ledger'])
     @ledger.date = Date.today
     @ledger.owner = @sale
     @ledger.bank_account = @organization.default_bank_account
     
-    if @ledger.valid?
-      @sale.ledgers << @ledger
-      if @sale.balance == 0
-        flash[:notice] = _('Payment successfully realized.')
-        redirect_to :action => :coupon_close, :id => @sale.id
-      else
-        redirect_to :action => :payment, :id => @sale.id
+    if(@ledger.save and (@sale.reload.balance == 0))
+      @printer_command = PrinterCommand.str_pending_command(till)
+      render :update do |page| 
+        page.replace_html('fiscal_printer_info', @printer_command)
       end
     else
       @ledger_categories =  @organization.sale_ledger_categories_by_payment_method(@ledger.payment_method)
@@ -226,7 +301,11 @@ class PointOfSaleController < ApplicationController
       @total_payment = @sale.total_payment 
       @payments = @sale.ledgers
       @banks = Bank.find(:all)
-      render :action => 'payment'
+      @printer_command = PrinterCommand.str_pending_command(till)
+      render :update do |page| 
+        page.replace_html('sale', :partial => 'payment')
+        page.replace_html('fiscal_printer_info', @printer_command)
+      end
     end
 
   end
@@ -237,46 +316,24 @@ class PointOfSaleController < ApplicationController
     redirect_to :action => 'index'
   end
 
-
-  def render_access_denied_screen(message = nil)
-    flash[:notice] = message || _("You don't have permissions to access this function")
-    redirect_to :back    
-  end
-
-  #TODO remove this when the printer test is finished
-  #The file sent to the desktop must be opened by the software
-  #test_printer
-  def test_printer
-    f = File.new('/tmp/bli','w+')
-    f.write('fudeu papai')
-    f.close
-
-    
-     send_data('testando algo',
-          :disposition => 'inline',
-#          :type => 'text/plain',
-          :type => 'printer/apy',
-          :filename => "printer.apy")
-#    redirect_to :action => 'main'
-  end
+#  def update_printer_command
+#    @printer_command = PrinterCommand.str_pending_command(@till)
+#    render :update do |page| 
+#      page.replace_html('fiscal_printer_info', @printer_command)
+#    end
+#  end
 
   def accept_printer_cmd
-    f = File.new('/tmp/bli','w+')
-    f.write('fudeu papai')
-    f.close
+    till = Till.load(@organization, current_user, cookies[:printer_id].first)
+    command = PrinterCommand.find_pending_by_sequence_number(till, params[:command_id])
+    if command.response_command(params[:response])
+      redirect_to :action => command.action_success
+    else
+      flash[:notice] = command.action_error_notice
+      redirect_to :action => command.action_error(params[:response])
+    end
   end
-
-  def test_ajax_request
-    f = File.new('/tmp/bla','w+')
-    f.write('fudeu papai')
-    f.close
-    "escrevi o arquivo /tmp/bla"
-  end
-
-
 
 end
-
-
 
 

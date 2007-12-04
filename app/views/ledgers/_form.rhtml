@@ -35,9 +35,9 @@
     )
   %>
 
-  <%= display_field_form(item, 'is_foreseen',
+  <%= display_field_form(item, 'status',
         :title => _('Is it a foreseen?'),
-        :content => check_box('ledger', 'is_foreseen', {}, true, false ),
+        :content => check_box('ledger', 'status', {}, Status::STATUS_PENDING, Status::STATUS_DONE ),
         :html_options => {:style => 'clear: left;'}
       )
   %>

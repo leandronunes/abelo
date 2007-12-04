@@ -3,6 +3,7 @@
 
 @import url("error.css");
 @import url("button.css");
+@import url("spinner.css");
 
 html {
   height: 100%;
@@ -141,24 +142,36 @@ h1.main_title {
   height: 100%;
 }
 
-#pending_sale, #new_sale{
+#pending_sale, #new_sale, #close_till{
   border: 8px solid black;
   -moz-border-radius: 30px;
   text-align: center;
-  margin: 100px 30%;
+  margin: 80px 30% 0px 30%;
   font-weight: 800;
   font-size: 20px;
 }
-#pending_sale{
-  border-color: #FFE8E8;
-  background: #F8C8C8;
+
+#close_till{
+  margin-top: 20px;
 }
-#new_sale{
+
+#new_sale, #pending_sale, #close_till{
   border-color: #F8F4B0;
   background: #F8E890;
   font-size: 30px;
 }
-#pending_sale a, #new_sale a{
+
+#pending_sale{
+  border-color: #FFE8E8;
+  background: #F8C8C8;
+}
+
+#close_till{
+  border-color: #AACCFF;
+  background: #5588FF;
+}
+
+#pending_sale a, #new_sale a, #close_till a{
   display: block;
   padding: 20px 0px;
   color: #C80;
@@ -166,7 +179,9 @@ h1.main_title {
 #pending_sale a{
   color: #A00;
 }
-
+#close_till a{
+  color: #05C;
+}
 #cumpom_bar {
   position: absolute;
   margin: 0px;
@@ -369,7 +384,7 @@ td.cell_number {
   margin: 5px 60px 5px 0px;
 }
 
-input#product_code {
+input#sale_item_product_code {
   font-weight: bold;
   font-size: 30px;
   width: 99%;

@@ -235,7 +235,7 @@ class Organization < ActiveRecord::Base
   end
 
   def sum_effective_value_by_date(bank_account, date = Date.today)
-    ledgers = self.ledgers_by_bank_account(bank_account).select{|l| !l.is_foreseen? and l.date.month == date.month}
+    ledgers = self.ledgers_by_bank_account(bank_account).select{|l| !l.pending? and l.date.month == date.month}
     value = 0
     ledgers.collect{|l| value = value + l.foreseen_value }
     value

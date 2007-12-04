@@ -3,7 +3,6 @@
 
 <%= link_to content_tag('span', _('Voltar')), {:action => 'coupon_open', :id => @sale}, :accesskey => 'v', :class => 'button back' %>
 
-<%= notice_box flash[:notice] %>
 
 <%= render :partial => 'table' %>
 
@@ -12,18 +11,10 @@
 
 <%= error_messages_for 'sale' %>
 
-<% form_tag :action => 'coupon_cancel', :id => @sale do %>
-
-  <p><label for="login"> <%= _("Supervisor") %> </label><br />
-    <span><%= text_field 'user', 'login' %></span>
-  </p>
-
-  <p><label for="password"><%= _("Password") %> </label><br />
-    <span><%= password_field 'user', 'password' %></span>
-  </p>
+<% form_remote_tag :url => {:action => 'create_coupon_cancel', :id => @sale } do %>
+  <%= render :partial => 'login_form' %>
 
   <%= button 'password', _('Cancel Sale'), :save, {}, {:class => 'button button_login with_text'} %>
-
 <% end %>
 
 </div>

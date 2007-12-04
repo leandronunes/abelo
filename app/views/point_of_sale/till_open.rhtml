@@ -6,17 +6,16 @@
 </div>
 
 <% if !@pending_sale.nil? %>
-
   <div id="pending_sale">
-    <%= link_to '<span>'+_('You have a pending sale!')+'</span>', :action => 'coupon_open', :id => @pending_sale.id %>
+    <%= link_to '<span>'+_('You have a pending sale!')+'</span>', {:action => 'coupon_open', :id => @pending_sale.id} %>
   </div>
-
 <% else %>
-
   <div id="new_sale">
-    <%= link_to '<span>'+_('New sale')+'</span>', { :action => 'coupon_open' }, { :method => 'post' } %>
+    <%= link_to_remote '<span>'+_('New Sale')+'</span>', :url => { :action => 'create_coupon_open' } %>
   </div>
-
 <% end %>
+  <div id="close_till">
+    <%= link_to_remote '<span>'+_('End Till')+'</span>', :url => { :action => 'create_close_till' } %>
+  </div>
 
 

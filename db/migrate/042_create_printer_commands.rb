@@ -9,6 +9,7 @@ class CreatePrinterCommands < ActiveRecord::Migration
       t.column :datetime,                :datetime, :null => false
       t.column :till_id,                 :integer, :null => false
       t.column :sequence_number,         :integer, :null => false
+      t.column :cmd_id,                  :integer, :null => false
     end
   end
 

@@ -20,15 +20,25 @@ class SaleItem < ActiveRecord::Base
     sale_item.product ||= sale_item.sale.organization.products.find_by_code(sale_item.product_code)
   end
 
-  after_create do |sale_item|
-    sale_item.printer_command = PrinterCommand.new(sale_item.sale.owner, [PrinterCommand::ADD_ITEM])
+  after_create do |item|
+    item.printer_command = PrinterCommand.new(item.sale.owner, 
+        [
+          PrinterCommand::ADD_ITEM, item.code,  
+          item.description, item.unitary_price, item.taxcode,
+          item.amount, item.unit, item.discount,
+          item.surcharge, item.unit_desc
+        ])
+
   end
 
   def validate
+    if self.unitary_price <= 0
+      self.errors.add(:unitary_price, _('The price must be greater than 0'))
+    end
 #FIXME I have to validates this?
-#    if !self.sale.organization.product_ids.include?(self.product.id)
-#      self.errors.add(:product_id, _("You cannot add a item with the product with id: %s") % self.product.id)
-#    end
+    if !self.sale.organization.product_ids.include?(self.product.id)
+      self.errors.add(:product_id, _("You cannot add a item with the product with id: %s") % self.product.id)
+    end
   end
 
   def initialize(sale, *args)
@@ -48,12 +58,42 @@ class SaleItem < ActiveRecord::Base
 
   # This function load a valid product with the code passed
   def product_code= code
-    self.product = self.sale.organization.products.find_by_code(code) unless self.sale.nil?
+    self.product = Product.find_by_code(code) 
     self.item_product_code = code
   end
 
   def product_code
     self.product.nil? ? self.item_product_code : self.product.code
+  end
+
+  def surcharge
+    0
+  end
+
+  def unit_desc
+    'un'
+#    self.product.nil? ? '' : self.product.unit
+  end
+
+  def unit
+    'un'
+#    self.product.nil? ? '' : self.product.unit
+  end
+
+  def discount
+    0
+  end
+
+  def taxcode
+    'T01'
+  end
+
+  def code
+    self.product_code
+  end
+
+  def description
+    self.product.description
   end
 
   def amount= amount

@@ -47,23 +47,23 @@ class PointOfSaleController < ApplicationController
       return
     end
 
-    till = Till.load(@organization, current_user, (cookies[:printer_id].first unless cookies[:printer_id].nil?))
+    till = Till.load(@organization, current_user, cookies[:printer_id].first)
     printer_command = PrinterCommand.pending_command(till)
     if till.nil?
       @cash = Money.new
-    elsif !printer_command.nil?
-      @cash = printer_command.owner
-      @printer_command = printer_command.str_command
     else
+      @printer_command = printer_command.str_command
       redirect_to :action => 'till_open'
     end
   end
 
   def create_till_open
-    @till = Till.new(@organization, current_user, cookies[:printer_id].first)
+    @till = Till.load(@organization, current_user, (cookies[:printer_id].first unless cookies[:printer_id].nil?))
+    @till ||= Till.new(@organization, current_user, cookies[:printer_id].first)
 
     unless params[:cash].nil?
-      @cash = AddCash.new(@till, params[:cash])
+      @cash = @till.add_cashs.first
+      @cash ||= AddCash.new(@till, params[:cash])
     end
 
     if @till.save!
@@ -193,9 +193,12 @@ class PointOfSaleController < ApplicationController
   def create_coupon_add_item
     till = Till.load(@organization, current_user, cookies[:printer_id].first)
     @sale = Sale.pending(till)
+#raise 'fudeu: ' + @sale.inspect
     @sale_item = SaleItem.new(@sale, params[:sale_item])
-
-    if @sale_item.save!
+#raise 'ble: ' + @sale_item.sale.inspect
+#raise 'bla: ' + params.inspect
+#raise 'bli: ' + @sale_item.product.inspect
+    if @sale_item.save
       render :update do |page|
         @product = @sale_item.product
         page.replace_html('add_item_panel', :partial => 'product_info')
@@ -204,7 +207,8 @@ class PointOfSaleController < ApplicationController
       end
     else
       @total = @sale.total_value 
-      @total_payment = @sale.total_payment 
+      @total_payment = @sale.total_payment
+      @product = @sale_item.product 
       @payments = @sale.ledgers
       render :update do |page|
         page.replace_html('abelo_sale', :partial => 'sale')
@@ -316,21 +320,16 @@ class PointOfSaleController < ApplicationController
     redirect_to :action => 'index'
   end
 
-#  def update_printer_command
-#    @printer_command = PrinterCommand.str_pending_command(@till)
-#    render :update do |page| 
-#      page.replace_html('fiscal_printer_info', @printer_command)
-#    end
-#  end
 
   def accept_printer_cmd
     till = Till.load(@organization, current_user, cookies[:printer_id].first)
-    command = PrinterCommand.find_pending_by_sequence_number(till, params[:command_id])
+    command = PrinterCommand.find_pending_by_cmd_id(till, params[:command_id])
     if command.response_command(params[:response])
       redirect_to :action => command.action_success
     else
       flash[:notice] = command.action_error_notice
-      redirect_to :action => command.action_error(params[:response])
+      flash.keep(:notice)
+      redirect_to :action =>  command.action_error(params[:response])
     end
   end
 

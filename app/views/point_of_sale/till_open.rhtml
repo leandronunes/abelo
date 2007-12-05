@@ -1,5 +1,7 @@
 <%= title _("Till Open") %>
 
+<%= notice_box flash[:notice] %>
+
 <div id="cumpom_bar">
     <%= link_to content_tag('span', _('Add Cash')), {:controller => 'point_of_sale', :action => 'add_cash', :id => @sale}, :accesskey => "r", :class => 'button bt_big currency_plus with_text' %>
     <%= link_to content_tag('span', _('Remove Cash')), {:controller => 'point_of_sale', :action => 'remove_cash', :id => @sale}, :accesskey => 's', :class => 'button bt_big currency_minus with_text' %>

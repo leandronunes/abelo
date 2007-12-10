@@ -8,11 +8,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: abelo 0.4.1\n"
-"POT-Creation-Date: 2007-11-29 08:57-0300\n"
+"POT-Creation-Date: 2007-12-10 16:07-0300\n"
 "PO-Revision-Date: 2007-11-29 08:59-0300\n"
 "Last-Translator: Leandro Nunes dos Santos <leandronunes@colivre.coop.br>\n"
-"Language-Team: Krishnamurti Lelis Lima Vieira Nunes "
-"<krishna@colivre.coop.br>\n"
+"Language-Team: Krishnamurti Lelis Lima Vieira Nunes <krishna@colivre.coop."
+"br>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -23,11 +23,11 @@ msgstr ""
 #: app/design_blocks/financial_forecasting/controllers/financial_forecasting_controller.rb:8
 #: app/design_blocks/favorite_links/controllers/favorite_links_controller.rb:4
 #: app/design_blocks/product_store/controllers/product_store_controller.rb:8
-#: app/helpers/documents_helper.rb:46 app/helpers/documents_helper.rb:72
+#: app/helpers/documents_helper.rb:46 app/helpers/documents_helper.rb:73
 #: app/helpers/support/display_actions.rb:189
 #: app/helpers/support/display_actions.rb:313
 #: app/helpers/organizations_helper.rb:11 app/helpers/document_helper.rb:43
-#: app/helpers/application_helper.rb:557 app/helpers/application_helper.rb:683
+#: app/helpers/application_helper.rb:559 app/helpers/application_helper.rb:685
 #: app/views/main/index.rhtml:1 app/views/users/list.rhtml:11
 #: app/views/shared_financial/_display_financial_table.rhtml:180
 #: app/views/document_items/_list.rhtml:5
@@ -76,7 +76,7 @@ msgstr "Iniciar"
 #: app/models/system_actor.rb:49 app/models/document.rb:74
 #: app/models/document_display.rb:14 app/models/category.rb:42
 #: app/models/organization.rb:90
-#: app/views/point_of_sale/_payment_details.rhtml:10
+#: app/views/point_of_sale/_payment_customer.rhtml:1
 #: app/views/documents/_form.rhtml:23 app/views/categories/_menu.rhtml:3
 #: app/views/categories/index.rhtml:5
 msgid "Customer"
@@ -154,7 +154,7 @@ msgstr "Categoria contábil"
 #: app/helpers/documents_helper.rb:42
 #: app/helpers/support/display_actions.rb:312
 #: app/helpers/organizations_helper.rb:10 app/helpers/document_helper.rb:41
-#: app/helpers/application_helper.rb:682
+#: app/helpers/application_helper.rb:684
 #: app/views/shared_financial/_display_financial_table.rhtml:178
 #: app/views/stock_base/_display_stock_table.rhtml:22
 #: lib/document_information.rb:136
@@ -312,44 +312,32 @@ msgstr "Usuário atualizado com sucesso."
 msgid "Document proposal item was successfuly updated."
 msgstr "Item proposta comercial atualizado com sucesso."
 
-#: app/controllers/point_of_sale_controller.rb:68
-msgid "The cash was added with sucess"
+#: app/controllers/point_of_sale_controller.rb:45
+#, fuzzy
+msgid "You don't have a printer configured."
+msgstr "Você não tem permissão para cancelar um cupom."
+
+#: app/controllers/point_of_sale_controller.rb:108
+#, fuzzy
+msgid "The cash was added with success"
 msgstr "O dinheiro foi adicionado com sucesso"
 
-#: app/controllers/point_of_sale_controller.rb:88
-msgid "The cash was removed with sucess"
+#: app/controllers/point_of_sale_controller.rb:130
+#, fuzzy
+msgid "The cash was removed with success"
 msgstr "O dinheiro foi removido com sucesso"
 
-#: app/controllers/point_of_sale_controller.rb:105
-msgid "You have a pending sale. Close or Cancel it before open a new one"
-msgstr ""
-"Você tem uma venda pendente. Feche ou cancele-a antes de abrir uma nova "
-"venda."
-
-#: app/controllers/point_of_sale_controller.rb:118
-#: app/controllers/point_of_sale_controller.rb:120
+#: app/controllers/point_of_sale_controller.rb:173
 msgid "You don't have permissions to cancel a coupon."
 msgstr "Você não tem permissão para cancelar um cupom."
 
-#: app/controllers/point_of_sale_controller.rb:130
+#: app/controllers/point_of_sale_controller.rb:186
 msgid "This is not a product code valid"
 msgstr "Este não é um código de produto válido."
 
-#: app/controllers/point_of_sale_controller.rb:142
-msgid "There is no product with this code"
-msgstr "Não há nenhum produto com este código"
-
-#: app/controllers/point_of_sale_controller.rb:154
+#: app/controllers/point_of_sale_controller.rb:224
 msgid "Only sales supervisor can cancel a coupon"
 msgstr "Somente supervisores de vendas podem cancelar um cupom."
-
-#: app/controllers/point_of_sale_controller.rb:218
-msgid "Payment successfully realized."
-msgstr "Pagamento realizado com sucesso."
-
-#: app/controllers/point_of_sale_controller.rb:242
-msgid "You don't have permissions to access this function"
-msgstr "Você não tem permissão para acessar esta função"
 
 #: app/controllers/document_sections_controller.rb:32
 msgid "Document section was successfuly updated."
@@ -569,6 +557,53 @@ msgstr "CNPJ"
 msgid "Presentation Name"
 msgstr "Nome da Apresentação"
 
+#: app/models/printer_command.rb:-
+msgid "printer command"
+msgstr ""
+
+#: app/models/printer_command.rb:-
+msgid "PrinterCommand|Cmd"
+msgstr ""
+
+#: app/models/printer_command.rb:-
+msgid "PrinterCommand|Cmd params"
+msgstr ""
+
+#: app/models/printer_command.rb:-
+#, fuzzy
+msgid "PrinterCommand|Owner"
+msgstr "Dono"
+
+#: app/models/printer_command.rb:-
+#, fuzzy
+msgid "PrinterCommand|Owner type"
+msgstr "Tipo de dono"
+
+#: app/models/printer_command.rb:-
+msgid "PrinterCommand|Status"
+msgstr ""
+
+#: app/models/printer_command.rb:-
+msgid "PrinterCommand|Datetime"
+msgstr ""
+
+#: app/models/printer_command.rb:-
+msgid "PrinterCommand|Till"
+msgstr ""
+
+#: app/models/printer_command.rb:-
+msgid "PrinterCommand|Sequence number"
+msgstr ""
+
+#: app/models/printer_command.rb:26
+#, fuzzy
+msgid "You cannot have more than one %s command pending"
+msgstr "Você não pode ter duas vendas pendentes"
+
+#: app/models/printer_command.rb:103
+msgid "Some error happen and you have to solve it"
+msgstr ""
+
 #: app/models/stock_virtual_display.rb:9
 #: app/models/stock_devolution_display.rb:11 app/models/category.rb:36
 #: app/models/stock_in_display.rb:12 app/models/organization.rb:88
@@ -582,7 +617,7 @@ msgstr "Produto"
 #: app/models/stock_devolution_display.rb:10
 #: app/models/stock_out_display.rb:10 app/models/stock_in_display.rb:10
 #: app/models/stock_down_display.rb:10 app/views/point_of_sale/_table.rhtml:10
-#: app/views/point_of_sale/_product_info.rhtml:31
+#: app/views/point_of_sale/_product_info.rhtml:30
 #: app/views/stock_base/_form.rhtml:15
 #: app/views/stock_base/_display_stock_table.rhtml:7
 #: app/views/products/_new_stock_entry.rhtml:14
@@ -767,15 +802,16 @@ msgstr "Categoria"
 
 #: app/models/ledger_display.rb:29 app/views/stock/_payment_form.rhtml:17
 #: app/views/ledgers/_form.rhtml:20
-#: app/views/point_of_sale/_payment_details.rhtml:29
+#: app/views/point_of_sale/_payment_details.rhtml:19
 msgid "Payment Method"
 msgstr "Forma de Pagamento"
 
 #: app/models/ledger_display.rb:30
 #: app/views/shared_payments/_table_ledgers.rhtml:10
 #: app/views/stock/_payment_form.rhtml:11
-#: app/views/point_of_sale/_payment_details.rhtml:22
-#: app/views/point_of_sale/_cash_form.rhtml:3
+#: app/views/point_of_sale/open_till.rhtml:10
+#: app/views/point_of_sale/_payment_details.rhtml:12
+#: app/views/point_of_sale/_cash_form.rhtml:5
 msgid "Value"
 msgstr "Valor"
 
@@ -783,7 +819,7 @@ msgstr "Valor"
 #: app/models/system_actor_display.rb:17
 #: app/views/shared_payments/_table_ledgers.rhtml:9
 #: app/views/shared_financial/_display_financial_table.rhtml:158
-#: app/views/point_of_sale/_cash_form.rhtml:7
+#: app/views/point_of_sale/_cash_form.rhtml:9
 #: app/views/configuration/new.rhtml:15 app/views/products/_form.rhtml:53
 #: app/views/products/images.rhtml:18 app/views/system_actors/_form.rhtml:69
 msgid "Description"
@@ -1091,11 +1127,21 @@ msgstr "Estado"
 msgid "Sale|User"
 msgstr "Usuário"
 
-#: app/models/sale.rb:20
+#: app/models/sale.rb:-
+#, fuzzy
+msgid "Sale|Owner type"
+msgstr "Tipo de dono"
+
+#: app/models/sale.rb:-
+#, fuzzy
+msgid "Sale|Owner"
+msgstr "Usuário"
+
+#: app/models/sale.rb:24
 msgid "You cannot have two pendings sale"
 msgstr "Você não pode ter duas vendas pendentes"
 
-#: app/models/sale.rb:65
+#: app/models/sale.rb:86
 msgid "Only open sales can be cancelled"
 msgstr "Somente vendas abertas podem ser canceladas"
 
@@ -1219,6 +1265,21 @@ msgstr "Quantidade"
 msgid "SaleItem|Unitary price"
 msgstr "Preço unitário"
 
+#: app/models/sale_item.rb:-
+#, fuzzy
+msgid "SaleItem|Status"
+msgstr "Estado"
+
+#: app/models/sale_item.rb:36
+#, fuzzy
+msgid "The price must be greater than 0"
+msgstr "O valor deve ser maior ou igual  a 0"
+
+#: app/models/sale_item.rb:40
+#, fuzzy
+msgid "You cannot add a item with the product with id: %s"
+msgstr "Você não pode adicionar dinheiro com o tipo diferente de %s"
+
 #: app/models/department.rb:-
 msgid "department"
 msgstr "departamento"
@@ -1258,6 +1319,42 @@ msgstr "Cartão de débito"
 #: app/models/payment.rb:41
 msgid "Money"
 msgstr "Dinheiro"
+
+#: app/models/till.rb:-
+#, fuzzy
+msgid "till"
+msgstr "Caixa"
+
+#: app/models/till.rb:-
+msgid "Till|Datetime"
+msgstr ""
+
+#: app/models/till.rb:-
+#, fuzzy
+msgid "Till|Status"
+msgstr "Estado"
+
+#: app/models/till.rb:-
+msgid "Till|Printer"
+msgstr ""
+
+#: app/models/till.rb:-
+#, fuzzy
+msgid "Till|User"
+msgstr "Usuário"
+
+#: app/models/till.rb:-
+#, fuzzy
+msgid "Till|Organization"
+msgstr "Organização"
+
+#: app/models/till.rb:22
+msgid "You already have a till open."
+msgstr ""
+
+#: app/models/till.rb:26
+msgid "You cannot open a till whithout the printer command"
+msgstr ""
 
 #: app/models/mass_mail.rb:-
 msgid "mass mail"
@@ -2016,17 +2113,21 @@ msgstr "Pessoa Jurídica"
 msgid "Worker"
 msgstr "Trabalhador(a)"
 
-#: app/models/add_cash.rb:6 app/models/remove_cash.rb:10
+#: app/models/add_cash.rb:12 app/models/remove_cash.rb:13
 msgid "You cannot schedule an add cash"
 msgstr "Você não pode agendar um pagamento em dinheiro"
 
-#: app/models/add_cash.rb:10
+#: app/models/add_cash.rb:16
 msgid "The value must be greater or equal to 0"
 msgstr "O valor deve ser maior ou igual  a 0"
 
-#: app/models/add_cash.rb:14 app/models/remove_cash.rb:18
+#: app/models/add_cash.rb:20 app/models/remove_cash.rb:21
 msgid "You cannot have an add cash with type different of %s"
 msgstr "Você não pode adicionar dinheiro com o tipo diferente de %s"
+
+#: app/models/add_cash.rb:24 app/models/remove_cash.rb:25
+msgid "You cannot add money on till without create the printer command"
+msgstr ""
 
 #: app/models/stock_devolution.rb:3 app/models/stock_in.rb:8
 msgid "The amount must be a positive number"
@@ -2160,7 +2261,7 @@ msgid "E-mail"
 msgstr "Email"
 
 #: app/models/user_display.rb:11 app/views/users/login.rhtml:9
-#: app/views/users/_form.rhtml:10 app/views/point_of_sale/cancel.rhtml:21
+#: app/views/users/_form.rhtml:10 app/views/point_of_sale/_login_form.rhtml:7
 #: app/views/public/edit_user.rhtml:19
 #: app/views/permissions_base/_form.rhtml:20
 msgid "Password"
@@ -2197,7 +2298,7 @@ msgstr "Data de nascimento"
 msgid "Natural Person or Juristic Person"
 msgstr "Pessoa física ou Pessoa jurídica"
 
-#: app/models/remove_cash.rb:14
+#: app/models/remove_cash.rb:17
 msgid "The value must be minor or equal to 0"
 msgstr "O valor deve ser menor ou igual  a 0"
 
@@ -2671,10 +2772,6 @@ msgid "Ledger|Bank account"
 msgstr "Conta bancária"
 
 #: app/models/ledger.rb:-
-msgid "Ledger|Is foreseen"
-msgstr "É previsto para"
-
-#: app/models/ledger.rb:-
 msgid "Ledger|Is operational"
 msgstr "É operacional"
 
@@ -2762,30 +2859,34 @@ msgstr "Agência da conta de débito automático "
 msgid "Ledger|Automatic debit account number"
 msgstr "Número da conta do débito automático"
 
-#: app/models/ledger.rb:130 app/models/ledger.rb:137 app/models/ledger.rb:145
-#: app/models/ledger.rb:152
+#: app/models/ledger.rb:-
+#, fuzzy
+msgid "Ledger|Status"
+msgstr "Data"
+
+#: app/models/ledger.rb:170 app/models/ledger.rb:177
 msgid "This function cannot be accessed directly"
 msgstr "Essa função não pode ser acessada diretamente"
 
-#: app/models/ledger.rb:162
+#: app/models/ledger.rb:187
 msgid "The value should be at least 0.01"
 msgstr "O valor deveria ser pelo menos 0.01"
 
-#: app/models/ledger.rb:164
+#: app/models/ledger.rb:189
 msgid "Date cannot be set"
 msgstr "Data não pode ser ajustada"
 
-#: app/models/ledger.rb:166
+#: app/models/ledger.rb:191
 msgid "You don't have a payment method associated to this ledger."
 msgstr "Não há uma forma de pagamento associado a esse lançamento."
 
-#: app/models/ledger.rb:169
+#: app/models/ledger.rb:194
 msgid "You canno't have a payment method not include in payment category list."
 msgstr ""
 "Não pode haver uma forma de pagamento não inclusa na lista de categorias de "
 "pagamentos."
 
-#: app/models/ledger.rb:174
+#: app/models/ledger.rb:199
 msgid "The value must be minor or equal to %s"
 msgstr "O valor deve ser menor ou igual  a %s"
 
@@ -2922,19 +3023,19 @@ msgid "Search"
 msgstr "Busca"
 
 #: app/helpers/stock_helper.rb:22 app/helpers/support/display_actions.rb:326
-#: app/helpers/stock_base_helper.rb:22 app/helpers/application_helper.rb:696
+#: app/helpers/stock_base_helper.rb:22 app/helpers/application_helper.rb:698
 msgid "New entry"
 msgstr "Nova entrada"
 
 #: app/helpers/stock_helper.rb:23 app/helpers/support/display_actions.rb:327
-#: app/helpers/stock_base_helper.rb:23 app/helpers/application_helper.rb:697
+#: app/helpers/stock_base_helper.rb:23 app/helpers/application_helper.rb:699
 msgid "History"
 msgstr "Histórico"
 
 #: app/helpers/documents_helper.rb:50
 #: app/helpers/support/display_actions.rb:314
 #: app/helpers/organizations_helper.rb:12 app/helpers/document_helper.rb:45
-#: app/helpers/application_helper.rb:52 app/helpers/application_helper.rb:684
+#: app/helpers/application_helper.rb:52 app/helpers/application_helper.rb:686
 #: app/views/customer_categories/_list.rhtml:5
 #: app/views/stock_base/_display_stock_table.rhtml:24
 #: app/views/contact_positions/list.rhtml:16
@@ -2946,7 +3047,7 @@ msgstr "Destruir"
 #: app/helpers/documents_helper.rb:54
 #: app/helpers/support/display_actions.rb:315
 #: app/helpers/organizations_helper.rb:13 app/helpers/document_helper.rb:47
-#: app/helpers/application_helper.rb:52 app/helpers/application_helper.rb:685
+#: app/helpers/application_helper.rb:52 app/helpers/application_helper.rb:687
 #: app/views/customer_categories/_list.rhtml:5
 #: app/views/contact_positions/list.rhtml:16
 #: app/views/product_categories/_list.rhtml:5
@@ -2958,19 +3059,18 @@ msgstr "Tem certeza?"
 msgid "New Document"
 msgstr "Novo documento"
 
-#: app/helpers/documents_helper.rb:71
+#: app/helpers/documents_helper.rb:72
 #: app/helpers/support/display_actions.rb:188
 #: app/helpers/support/display_actions.rb:216
-#: app/helpers/application_helper.rb:556 app/helpers/application_helper.rb:586
+#: app/helpers/application_helper.rb:558 app/helpers/application_helper.rb:588
 #: app/views/organizations/show.rhtml:8 app/views/stock_base/show.rhtml:10
-#: app/views/departments/edit.rhtml:5 app/views/products/images.rhtml:28
-#: app/views/mass_mails/show.rhtml:17
+#: app/views/products/images.rhtml:28 app/views/mass_mails/show.rhtml:17
 #: app/views/mass_mails/filter_categories.rhtml:8
 #: app/views/mass_mails/attach.rhtml:10 lib/document_information.rb:147
 msgid "Back"
 msgstr "Voltar"
 
-#: app/helpers/documents_helper.rb:73
+#: app/helpers/documents_helper.rb:74
 msgid "Print"
 msgstr "Imprimir"
 
@@ -2986,6 +3086,10 @@ msgstr "Administração de usuários"
 msgid "Registers"
 msgstr "Cadastro"
 
+#: app/helpers/support/menu.rb:10 lib/describe_menu.rb:18
+msgid "Point of sale"
+msgstr "Ponto de venda"
+
 #: app/helpers/support/display_actions.rb:14
 #: app/helpers/application_helper.rb:63
 msgid "Add New"
@@ -2997,12 +3101,13 @@ msgid "Reset search"
 msgstr "Zerar pesquisa"
 
 #: app/helpers/support/display_actions.rb:217
-#: app/helpers/application_helper.rb:587 app/views/users/new.rhtml:5
-#: app/views/users/edit.rhtml:5 app/views/point_of_sale/add_cash.rhtml:7
+#: app/helpers/application_helper.rb:589 app/views/users/new.rhtml:5
+#: app/views/users/edit.rhtml:5 app/views/point_of_sale/open_till.rhtml:15
+#: app/views/point_of_sale/add_cash.rhtml:9
 #: app/views/point_of_sale/remove_cash.rhtml:7
 #: app/views/document_items/_edit.rhtml:9
 #: app/views/customer_categories/edit.rhtml:6
-#: app/views/departments/_edit.rhtml:8 app/views/departments/edit.rhtml:6
+#: app/views/departments/_edit.rhtml:8
 #: app/views/contact_positions/edit.rhtml:6
 #: app/views/product_categories/edit.rhtml:6
 #: app/views/document_sections/edit.rhtml:12
@@ -3013,19 +3118,18 @@ msgid "Save"
 msgstr "Salvar"
 
 #: app/helpers/support/display_actions.rb:218
-#: app/helpers/application_helper.rb:588 app/views/departments/new.rhtml:8
-#: app/views/departments/_new.rhtml:9 app/views/products/_new.rhtml:9
-#: app/views/system_actors/_new.rhtml:10
+#: app/helpers/application_helper.rb:590 app/views/departments/_new.rhtml:9
+#: app/views/products/_new.rhtml:9 app/views/system_actors/_new.rhtml:10
 msgid "Reset"
 msgstr "Reiniciar"
 
 #: app/helpers/support/display_actions.rb:270
-#: app/helpers/application_helper.rb:640
+#: app/helpers/application_helper.rb:642
 msgid "False"
 msgstr "Falso"
 
 #: app/helpers/support/display_actions.rb:274
-#: app/helpers/application_helper.rb:644
+#: app/helpers/application_helper.rb:646
 msgid "True"
 msgstr "Verdadeiro"
 
@@ -3036,7 +3140,7 @@ msgstr "%{year}/%{month}/%{day}"
 #: app/helpers/application_helper.rb:112 app/views/layouts/login.rhtml:5
 #: app/views/layouts/organization.rhtml:5 app/views/layouts/default.rhtml:28
 #: app/views/layouts/point_of_sale.rhtml:5
-#: app/views/layouts/point_of_sale.rhtml:42
+#: app/views/layouts/point_of_sale.rhtml:46
 #: app/views/layouts/comatose_admin.rhtml:5
 msgid "Abelo"
 msgstr "Abelo"
@@ -3065,7 +3169,7 @@ msgstr "Colivre"
 msgid "GPLv3"
 msgstr "GPLv3"
 
-#: app/helpers/application_helper.rb:731
+#: app/helpers/application_helper.rb:733
 msgid "Tags:"
 msgstr "Tags:"
 
@@ -3195,11 +3299,11 @@ msgstr ""
 #: app/views/cms/_form.rhtml:69 app/views/cms/delete.rhtml:16
 #: app/views/cms/versions.rhtml:25 app/views/users/new.rhtml:6
 #: app/views/users/signup.rhtml:15 app/views/users/edit.rhtml:7
-#: app/views/users/edit.rhtml:9 app/views/document_items/_edit.rhtml:8
+#: app/views/users/edit.rhtml:9 app/views/point_of_sale/open_till.rhtml:14
+#: app/views/document_items/_edit.rhtml:8
 #: app/views/customer_categories/new.rhtml:7
 #: app/views/customer_categories/edit.rhtml:7
-#: app/views/departments/new.rhtml:7 app/views/departments/_edit.rhtml:9
-#: app/views/contact_positions/new.rhtml:7
+#: app/views/departments/_edit.rhtml:9 app/views/contact_positions/new.rhtml:7
 #: app/views/contact_positions/edit.rhtml:7
 #: app/views/product_categories/new.rhtml:7
 #: app/views/product_categories/edit.rhtml:7
@@ -3412,13 +3516,13 @@ msgid "My account"
 msgstr "Minha conta"
 
 #: app/views/layouts/organization.rhtml:34 app/views/layouts/default.rhtml:40
-#: app/views/layouts/point_of_sale.rhtml:20
+#: app/views/layouts/point_of_sale.rhtml:22
 #: app/views/layouts/comatose_admin.rhtml:34
 msgid "Logout"
 msgstr "Sair"
 
 #: app/views/layouts/organization.rhtml:34 app/views/layouts/default.rhtml:40
-#: app/views/layouts/point_of_sale.rhtml:20
+#: app/views/layouts/point_of_sale.rhtml:22
 #: app/views/layouts/comatose_admin.rhtml:34
 msgid "Exit from system?"
 msgstr "Sair do sistema?"
@@ -3431,15 +3535,15 @@ msgstr "Administração do Abelo"
 msgid "My Account"
 msgstr "Minha conta"
 
-#: app/views/layouts/point_of_sale.rhtml:19
+#: app/views/layouts/point_of_sale.rhtml:21
 msgid "Edit prederences"
 msgstr "Editar preferências"
 
-#: app/views/layouts/point_of_sale.rhtml:25
+#: app/views/layouts/point_of_sale.rhtml:27
 msgid "Salesman: <i>%s</i>"
 msgstr "Vendedor: <i>%s</i>"
 
-#: app/views/layouts/point_of_sale.rhtml:46
+#: app/views/layouts/point_of_sale.rhtml:50
 msgid "Access Keys Help"
 msgstr "Ajuda para senhas"
 
@@ -3621,6 +3725,23 @@ msgstr "Total: %s"
 msgid "Payments"
 msgstr "Pagamentos"
 
+#: app/views/point_of_sale/add_payment.rhtml:2
+#: app/views/point_of_sale/payment.rhtml:2
+#: app/views/point_of_sale/coupon_open.rhtml:4
+msgid "Coupon Open"
+msgstr "Abrir Cupom"
+
+#: app/views/point_of_sale/add_payment.rhtml:5
+#: app/views/point_of_sale/payment.rhtml:5
+#: app/views/point_of_sale/cancel.rhtml:17
+msgid "Cancel Sale"
+msgstr "Cancelar venda"
+
+#: app/views/point_of_sale/add_payment.rhtml:6
+#: app/views/point_of_sale/payment.rhtml:6
+msgid "Cancel Payment"
+msgstr "Cancelar pagamento"
+
 #: app/views/point_of_sale/_product_info.rhtml:12
 #: app/views/document_items/_new.rhtml:9
 msgid "Add item"
@@ -3630,7 +3751,7 @@ msgstr "Adicionar item"
 msgid "Product code"
 msgstr "Código do produto"
 
-#: app/views/point_of_sale/_product_info.rhtml:26
+#: app/views/point_of_sale/_product_info.rhtml:25
 msgid "Unitary Value"
 msgstr "Valor Unitário"
 
@@ -3639,41 +3760,47 @@ msgstr "Valor Unitário"
 msgid "Till Open"
 msgstr "Venda Aberta"
 
-#: app/views/point_of_sale/till_open.rhtml:4
+#: app/views/point_of_sale/till_open.rhtml:6
 #: app/views/point_of_sale/add_cash.rhtml:1
 msgid "Add Cash"
 msgstr "Adicionar Dinheiro"
 
-#: app/views/point_of_sale/till_open.rhtml:5
+#: app/views/point_of_sale/till_open.rhtml:7
 #: app/views/point_of_sale/remove_cash.rhtml:1
 msgid "Remove Cash"
 msgstr "Remover Dinheiro"
 
-#: app/views/point_of_sale/till_open.rhtml:11
+#: app/views/point_of_sale/till_open.rhtml:12
 msgid "You have a pending sale!"
 msgstr "Você tem uma venda pendente!"
 
-#: app/views/point_of_sale/till_open.rhtml:17
-msgid "New sale"
+#: app/views/point_of_sale/till_open.rhtml:16
+#, fuzzy
+msgid "New Sale"
 msgstr "Nova venda"
 
-#: app/views/point_of_sale/_payment_details.rhtml:51
+#: app/views/point_of_sale/till_open.rhtml:20
+#, fuzzy
+msgid "End Till"
+msgstr "Abrir Caixa"
+
+#: app/views/point_of_sale/open_till.rhtml:1
+#: app/views/point_of_sale/index.rhtml:6
+msgid "Open Till"
+msgstr "Abrir Caixa"
+
+#: app/views/point_of_sale/_payment_details.rhtml:34
+#, fuzzy
+msgid "Payment method details:"
+msgstr "Formas de Pagamento"
+
+#: app/views/point_of_sale/_payment_details.rhtml:42
 msgid "Pay"
 msgstr "Pagamento"
 
-#: app/views/point_of_sale/payment.rhtml:2
-#: app/views/point_of_sale/coupon_open.rhtml:4
-msgid "Coupon Open"
-msgstr "Abrir Cupom"
-
-#: app/views/point_of_sale/payment.rhtml:5
-#: app/views/point_of_sale/cancel.rhtml:25
-msgid "Cancel Sale"
-msgstr "Cancelar venda"
-
-#: app/views/point_of_sale/payment.rhtml:6
-msgid "Cancel Payment"
-msgstr "Cancelar pagamento"
+#: app/views/point_of_sale/_login_form.rhtml:4
+msgid "Supervisor"
+msgstr "Supervisor"
 
 #: app/views/point_of_sale/coupon_open.rhtml:7
 msgid "Cancel sale"
@@ -3691,17 +3818,9 @@ msgstr "Cancelar Cupom"
 msgid "Voltar"
 msgstr "Voltar"
 
-#: app/views/point_of_sale/cancel.rhtml:17
-msgid "Supervisor"
-msgstr "Supervisor"
-
 #: app/views/point_of_sale/index.rhtml:1
 msgid "Till"
 msgstr "Caixa"
-
-#: app/views/point_of_sale/index.rhtml:4
-msgid "Open Till"
-msgstr "Abrir Caixa"
 
 #: app/views/document_items/_new.rhtml:3
 msgid "New item"
@@ -3733,7 +3852,7 @@ msgstr "Você tem certeza"
 msgid "New customer_category"
 msgstr "Nova categoria_consumidor"
 
-#: app/views/customer_categories/new.rhtml:6 app/views/departments/new.rhtml:6
+#: app/views/customer_categories/new.rhtml:6
 #: app/views/departments/_new.rhtml:8 app/views/contact_positions/new.rhtml:6
 #: app/views/product_categories/new.rhtml:6 app/views/products/_new.rhtml:8
 #: app/views/system_actors/_new.rhtml:9
@@ -4455,9 +4574,22 @@ msgstr "Loja"
 msgid "Administration of users"
 msgstr "Administração de usuários"
 
-#: lib/describe_menu.rb:18
-msgid "Point of sale"
-msgstr "Ponto de venda"
+#~ msgid "You have a pending sale. Close or Cancel it before open a new one"
+#~ msgstr ""
+#~ "Você tem uma venda pendente. Feche ou cancele-a antes de abrir uma nova "
+#~ "venda."
+
+#~ msgid "There is no product with this code"
+#~ msgstr "Não há nenhum produto com este código"
+
+#~ msgid "Payment successfully realized."
+#~ msgstr "Pagamento realizado com sucesso."
+
+#~ msgid "You don't have permissions to access this function"
+#~ msgstr "Você não tem permissão para acessar esta função"
+
+#~ msgid "Ledger|Is foreseen"
+#~ msgstr "É previsto para"
 
 #~ msgid "Other Documents"
 #~ msgstr "Outros Documentos"

@@ -1,6 +1,7 @@
 class SaleItem < ActiveRecord::Base
 
   include Status
+  require 'codenames'
 
   #TODO validate when we made a paymente cannot add more items
 
@@ -93,7 +94,8 @@ class SaleItem < ActiveRecord::Base
   end
 
   def description
-    self.product.description
+    str_desc = (self.product.nil? ? '' : (self.product.description || self.product.name))
+    str_desc.transliterate
   end
 
   def amount= amount

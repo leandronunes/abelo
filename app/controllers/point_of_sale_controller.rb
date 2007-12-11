@@ -52,7 +52,7 @@ class PointOfSaleController < ApplicationController
     if till.nil?
       @cash = Money.new
     else
-      @printer_command = printer_command.str_command
+      @printer_command = printer_command.str_command unless printer_command.nil?
       redirect_to :action => 'till_open'
     end
   end

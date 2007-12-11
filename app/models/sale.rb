@@ -86,8 +86,12 @@ class Sale < ActiveRecord::Base
       self.errors.add('status', _('Only open sales can be cancelled')) 
       return false
     end
-    self.printer_commands << PrinterCommand.new(self.owner, [PrinterCommand::CANCEL])
-    true
+    if self.owner.has_fiscal_printer?
+      self.printer_commands << PrinterCommand.new(self.owner, [PrinterCommand::CANCEL])
+    else
+      self.status = STATUS_CANCELLED
+      self.save
+    end
   end
 
   # closes a sale. No item can be added to it anymore

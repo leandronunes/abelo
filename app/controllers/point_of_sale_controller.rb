@@ -20,6 +20,17 @@ class PointOfSaleController < ApplicationController
 
   before_filter :check_fiscal_printer, :except => 'index'
 
+  def check_coupon_cancel
+    supervisor = User.authenticate(params[:user][:login], params[:user][:password])
+    supervisor ||= current_user
+    if !supervisor.allowed_to?(:controller => 'point_of_sale', :action => 'create_coupon_cancel')
+      flash.now[:notice] = _("You don't have permissions to cancel a coupon.")
+      render :update do |page|
+        page.replace_html('abelo_login_form', :partial => 'login_form' )
+      end
+    end
+  end
+
   def design_point_of_sale
     point_of_sale = DesignPointOfSale.new(@organization)
     point_of_sale 
@@ -226,6 +237,7 @@ class PointOfSaleController < ApplicationController
     @payments = @sale.ledgers
   end
 
+  #FIXME make this tests
   def create_coupon_add_item
     till = load_current_till
     @sale = Sale.pending(till)
@@ -257,7 +269,6 @@ class PointOfSaleController < ApplicationController
     end
   end
 
-
   def refresh_product
     @product = @organization.products.find_by_code(params[:product_code])
     render :update do |page|
@@ -266,21 +277,8 @@ class PointOfSaleController < ApplicationController
     end
   end
 
-
-  def check_coupon_cancel
-    supervisor = User.authenticate(params[:user][:login], params[:user][:password])
-    supervisor ||= current_user
-    if !supervisor.allowed_to?(:controller => 'point_of_sale', :action => 'create_coupon_cancel')
-      flash.now[:notice] = _("You don't have permissions to cancel a coupon.")
-      render :update do |page|
-        page.replace_html('abelo_login_form', :partial => 'login_form' )
-      end
-    end
-  end
-
-
   def cancel
-    till = Till.load(@organization, current_user, cookies[:printer_id].first)
+    till = load_current_till
     @sale = Sale.pending(till)
 
     unless can(:controller => 'point_of_sale', :action => 'create_coupon_cancel')
@@ -292,21 +290,32 @@ class PointOfSaleController < ApplicationController
   end
 
   def create_coupon_cancel
-    till = Till.load(@organization, current_user, cookies[:printer_id].first)
+    till = load_current_till
     @sale = Sale.pending(till)
 
     if @sale.cancel!
-      render :update do |page|
-        @printer_command = PrinterCommand.str_pending_command(till)
-        page.replace_html('fiscal_printer_info', @printer_command)
-      end
+      redirect_to :action => 'till_open'
     else
       @total = @sale.total_value 
       @total_payment = @sale.total_payment 
       @payments = @sale.ledgers
-      render :update do |page|
-        page.replace_html('fiscal_printer_info', @printer_command)
-      end
+      render :action => 'cancel'
+    end
+  end
+
+  def printer_create_coupon_cancel
+    till = load_current_till
+    @sale = Sale.pending(till)
+
+    unless @sale.cancel!
+      @total = @sale.total_value 
+      @total_payment = @sale.total_payment 
+      @payments = @sale.ledgers
+    end
+
+    render :update do |page|
+      @printer_command = PrinterCommand.str_pending_command(till)
+      page.replace_html('fiscal_printer_info', @printer_command)
     end
   end
 

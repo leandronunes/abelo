@@ -78,6 +78,18 @@ class Configuration < ActiveRecord::Base
     end
   end
 
+  def has_fiscal_printer?
+    self.fiscal_printer
+  end
+
+  def fiscal_printer= value
+    self.settings[:printer] = (value.to_s == 'true' ? true : false)
+  end
+
+  def fiscal_printer
+    self.settings[:printer] == true
+  end
+
   CONFIGURATION_NAMES = %w[
     organization
     product

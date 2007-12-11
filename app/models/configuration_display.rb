@@ -8,6 +8,7 @@ class ConfigurationDisplay < ActiveRecord::Base
       department_name
       customer_name
       document_name
+      fiscal_printer
       worker_displays
       worker_category_displays
       customer_displays
@@ -61,6 +62,7 @@ class ConfigurationDisplay < ActiveRecord::Base
       'user_displays' => _('User Fields'),
       'periodicity_displays' => _('Periodicity Fields'),
       'document_displays' => _('Document Fields'),
+      'fiscal_printer' => _('Has Fiscal Printer'),
     }[field] || field
   end
 

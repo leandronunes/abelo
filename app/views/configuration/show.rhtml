@@ -6,4 +6,7 @@
 
 <%= display_show_info @configuration %>
 
-<%= button('edit', _('Edit'), :list, :action => 'edit', :id => @configuration, :organization_id => @organization) %> 
+<div class="display_info_options">
+  <%= button('edit', _('Edit'), :edit, :action => 'edit', :id => @configuration, :organization_id => @organization) %> 
+</div>
+

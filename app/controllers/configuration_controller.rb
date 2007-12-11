@@ -63,7 +63,6 @@ class ConfigurationController < ApplicationController
 
   def update
     parse_params_configuration(params)
-
     @configuration = Configuration.find(params[:id])
     @organization = @configuration.organization
     if @configuration.update_attributes(params[:configuration])

@@ -17,6 +17,12 @@ organization.save!
 ############Configuration#########################
 configuration = organization.configuration
 
+Configuration::DISPLAY_CONFIGURATION_CLASSES.each do |item|
+  str = item.gsub('Display', '').underscore
+  configuration.send("#{str}_module=", true)
+end
+
+
 ProductDisplay.delete_all
 params = {}
 ProductDisplay.available_fields.collect { |d|

@@ -61,9 +61,18 @@
       )
   %>
 
+  <%= display_field_form(@configuration, 'fiscal_printer',
+        :title => _('Has Fiscal Printer'),
+        :content => check_box('configuration', 'fiscal_printer',{}, true, false),
+        :html_options => {:class => 'break_line'}
+      )
+  %>
+
+
   <%= display_field_form(@configuration, 'worker_module',
         :title => _('Has Worker Module'),
-        :content => check_box('configuration', 'worker_module',{}, true, false)
+        :content => check_box('configuration', 'worker_module',{}, true, false),
+        :html_options => {:class => 'break_line'}
       )
   %>
 

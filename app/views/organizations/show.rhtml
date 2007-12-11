@@ -5,5 +5,7 @@
 <p> <b><%= _('CNPJ') %>:</b> <%= @organization.cnpj %></p>
 <p> <b><%= _('Nickname') %>:</b> <%= @organization.identifier %></p>
 
-<%= button('back', _('Back'), :list, :action => 'list' ) %>
-<%= button('edit', _('Edit'), :list, :action => 'edit', :organization_id => @organization) %> 
+<div class="display_info_options">
+  <%= button('back', _('Back'), :list, :action => 'list' ) %>
+  <%= button('edit', _('Edit'), :list, :action => 'edit', :organization_id => @organization) %> 
+</div>

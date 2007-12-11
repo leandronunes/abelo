@@ -1,12 +1,13 @@
 <%= title _("Add Cash") %>
 
-<%= notice_box flash[:notice] %>
+<% if @organization.has_fiscal_printer? %>
+  <% form_remote_tag :url => {:action => 'printer_create_add_cash'}, :failure => "$('abelo_action').innerHTML= request.responseText" do -%>
+    <%= render :partial => 'cash_form' %>
+  <% end -%>
+<% else %>
+  <% form_tag :action => 'create_add_cash' do -%>
+    <%= render :partial => 'cash_form' %>
+  <% end -%>
+<% end %>
 
-<% form_remote_tag :url => {:action => 'create_add_cash'}, :failure => "$('abelo_action').innerHTML= request.responseText" do -%>
-
-  <%= render :partial => 'cash_form' %>
-
-  <%= button 'save', _('Save'), :save, {}, {:class => 'button'} %>
-
-<% end -%>
 

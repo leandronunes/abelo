@@ -1,2 +1,32 @@
+<%= title _("Till Open") %>
 
-<%= render :partial => 'till_open' %>
+<%= notice_box flash[:notice] %>
+
+<div id="cumpom_bar">
+    <%= link_to content_tag('span', _('Add Cash')), {:action => 'add_cash', :id => @sale}, :accesskey => "r", :class => 'button bt_big currency_plus with_text' %>
+    <%= link_to content_tag('span', _('Remove Cash')), { :action => 'remove_cash', :id => @sale}, :accesskey => 's', :class => 'button bt_big currency_minus with_text' %>
+</div>
+
+<% if !@pending_sale.nil? %>
+  <div id="pending_sale">
+    <%= link_to '<span>'+_('You have a pending sale!')+'</span>', {:action => 'coupon_open', :id => @pending_sale.id} %>
+  </div>
+<% else %>
+  <div id="new_sale">
+    <% if @organization.has_fiscal_printer? %>
+      <%= link_to_remote '<span>'+_('New Sale')+'</span>', :url => { :action => 'printer_create_coupon_open' }, :failure => "$('abelo_action').innerHTML= request.responseText" %>
+    <% else %>
+      <%= link_to '<span>'+_('New Sale')+'</span>', :action => 'create_coupon_open' %>
+    <% end %>
+  </div>
+<% end %>
+
+<div id="close_till">
+  <% if @organization.has_fiscal_printer? %>
+    <%= link_to_remote '<span>'+_('End Till')+'</span>', :url => { :action => 'printer_create_close_till' }, :failure => "$('abelo_action').innerHTML= request.responseText" %>
+  <% else %>
+    <%= link_to '<span>'+_('End Till')+'</span>', :action => 'create_close_till' %>
+  <% end %>
+</div>
+
+

@@ -45,15 +45,15 @@ class PrinterCommand < ActiveRecord::Base
   end
 
   def self.str_pending_command(till)
-    make_command(pending_command(till))
+    make_command(pending_command(till)) if till.has_fiscal_printer?
   end
 
   def self.pending_command(till)
-    self.find(:first, :conditions => {:till_id => till, :status => STATUS_PENDING}, :order => 'sequence_number')
+    self.find(:first, :conditions => {:till_id => till, :status => STATUS_PENDING}, :order => 'sequence_number') if till.has_fiscal_printer?
   end
 
   def self.pending_commands(till)
-    self.find(:all, :conditions => {:till_id => till, :status => STATUS_PENDING}, :order => 'sequence_number')
+    till.has_fiscal_printer? ? self.find(:all, :conditions => {:till_id => till, :status => STATUS_PENDING}, :order => 'sequence_number') : []
   end
 
   def self.find_pending_by_cmd_id(till, cmd_id)

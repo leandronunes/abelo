@@ -60,15 +60,26 @@ class PointOfSaleController < ApplicationController
 
     if @till.save
       @till.add_cashs << @cash unless @cash.nil?
-      if @organization.has_fiscal_printer?
-        @printer_command = PrinterCommand.str_pending_command(@till)
-        render :update do |page| 
-          page.replace_html('fiscal_printer_info', @printer_command)
-        end
-      else
-        render :update do |page| 
-          page.replace_html('abelo_action', :partial => 'till_open')
-        end
+      redirect_to :action => 'till_open'
+    else
+      render :action => 'open_till'
+    end
+  end
+
+  def printer_create_till_open
+    printer_id = get_printer_id
+    @till = Till.load(@organization, current_user, printer_id)
+    @till ||= Till.new(@organization, current_user, printer_id)
+
+    unless params[:cash].nil?
+      @cash ||= AddCash.new(@till, params[:cash])
+    end
+
+    if @till.save
+      @till.add_cashs << @cash unless @cash.nil?
+      @printer_command = PrinterCommand.str_pending_command(@till)
+      render :update do |page| 
+        page.replace_html('fiscal_printer_info', @printer_command)
       end
     else
       render :update do |page| 
@@ -93,16 +104,21 @@ class PointOfSaleController < ApplicationController
 
     if @cash.save
       flash[:notice] = _('The cash was added with success')
+      redirect_to :action => 'till_open'
+    else
+      render :action => 'add_cash'
+    end
+  end
 
-      if @organization.has_fiscal_printer?
-        @printer_command = PrinterCommand.str_pending_command(till)
-        render :update do |page| 
-          page.replace_html('fiscal_printer_info', @printer_command)
-        end
-      else
-        render :update do |page| 
-          page.replace_html('abelo_action', :partial => 'till_open')
-        end
+  def printer_create_add_cash
+    till = load_current_till
+    @cash = AddCash.new(till, params[:cash])
+
+    if @cash.save
+      flash[:notice] = _('The cash was added with success')
+      @printer_command = PrinterCommand.str_pending_command(till)
+      render :update do |page| 
+        page.replace_html('fiscal_printer_info', @printer_command)
       end
     else
       render :update do |page|
@@ -120,16 +136,22 @@ class PointOfSaleController < ApplicationController
     @cash = RemoveCash.new(till, params[:cash])
 
     if @cash.save
+      flash[:notice] = _('The cash was added with success')
+      redirect_to :action => 'till_open'
+    else
+      render :action => 'remove_cash'
+    end
+  end
+
+  def printer_create_remove_cash
+    till = load_current_till
+    @cash = RemoveCash.new(till, params[:cash])
+
+    if @cash.save
       flash[:notice] = _('The cash was removed with success')
-      if @organization.has_fiscal_printer?
-        @printer_command = PrinterCommand.str_pending_command(till)
-        render :update do |page| 
-          page.replace_html('fiscal_printer_info', @printer_command)
-        end
-      else
-        render :update do |page| 
-          page.replace_html('abelo_action', :partial => 'till_open')
-        end
+      @printer_command = PrinterCommand.str_pending_command(till)
+      render :update do |page| 
+        page.replace_html('fiscal_printer_info', @printer_command)
       end
     else
       render :update do |page|
@@ -142,9 +164,21 @@ class PointOfSaleController < ApplicationController
     till = load_current_till
 
     if till.close
-      render :update do |page|
-        @printer_command = PrinterCommand.str_pending_command(till)
-        page.replace_html('abelo_action', :partial => 'index')
+      redirect_to :action => 'index'
+    else
+      render :action => 'till_open'
+    end
+  end
+
+
+  def printer_create_close_till
+    till = load_current_till
+
+    if till.close
+      flash[:notice] = _('Closing Till')
+      @printer_command = PrinterCommand.str_pending_command(till)
+      render :update do |page| 
+        page.replace_html('fiscal_printer_info', @printer_command)
       end
     else
       render :update do |page| 
@@ -154,12 +188,29 @@ class PointOfSaleController < ApplicationController
   end
 
   def create_coupon_open
-    till = Till.load(@organization, current_user, cookies[:printer_id].first)
+    till = load_current_till
     @sale =  Sale.new(till)
     if @sale.save
-      render :update do |page|
+      redirect_to :action => 'coupon_open'
+    else
+      flash[:notice] = @sale.errors.full_messages
+      render :action => 'till_open'
+    end
+  end
+
+  def printer_create_coupon_open
+    till = load_current_till
+    @sale =  Sale.new(till)
+    if @sale.save
+      if @organization.has_fiscal_printer?
         @printer_command = PrinterCommand.str_pending_command(till)
-        page.replace_html('fiscal_printer_info', @printer_command)
+        render :update do |page| 
+          page.replace_html('fiscal_printer_info', @printer_command)
+        end
+      else
+        render :update do |page| 
+          page.replace_html('abelo_action', :partial => 'coupon_open')
+        end
       end
     else
       render :nothing => true
@@ -167,17 +218,12 @@ class PointOfSaleController < ApplicationController
   end
   
   def coupon_open
-    till = Till.load(@organization, current_user, cookies[:printer_id].first)
+    till = load_current_till
     @sale = Sale.pending(till)
-    if @sale.nil?
-      render :nothing => true
-    else
-      @sale_item = SaleItem.new(@sale)
-      @total = @sale.total_value 
-      @total_payment = @sale.total_payment 
-      @payments = @sale.ledgers
-      render :action => 'coupon_open'
-    end
+    @sale_item = SaleItem.new(@sale)
+    @total = @sale.total_value 
+    @total_payment = @sale.total_payment 
+    @payments = @sale.ledgers
   end
 
   def check_coupon_cancel

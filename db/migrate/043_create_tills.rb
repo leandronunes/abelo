@@ -3,7 +3,7 @@ class CreateTills < ActiveRecord::Migration
     create_table :tills do |t|
       t.column :datetime,           :datetime, :null => false
       t.column :status,             :integer, :default => 0
-      t.column :printer_id,         :string, :null => false
+      t.column :printer_id,         :string
       t.column :user_id,            :integer, :null => false
       t.column :organization_id,    :integer, :null => false
     end

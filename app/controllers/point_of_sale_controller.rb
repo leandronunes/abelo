@@ -41,13 +41,14 @@ class PointOfSaleController < ApplicationController
   end
 
   def open_till
-    if cookies[:printer_id].nil?
-      flash[:notice] = _("You don't have a printer configured.")
-      render :action => 'index' 
-      return
-    end
+#    if cookies[:printer_id].nil?
+#      flash[:notice] = _("You don't have a printer configured.")
+#      render :action => 'index' 
+#      return
+#    end
 
-    till = Till.load(@organization, current_user, cookies[:printer_id].first)
+    printer_id = get_printer_id
+    till = Till.load(@organization, current_user, printer_id)
     printer_command = PrinterCommand.pending_command(till)
     if till.nil?
       @cash = Money.new
@@ -58,19 +59,27 @@ class PointOfSaleController < ApplicationController
   end
 
   def create_till_open
-    @till = Till.load(@organization, current_user, (cookies[:printer_id].first unless cookies[:printer_id].nil?))
-    @till ||= Till.new(@organization, current_user, cookies[:printer_id].first)
+    printer_id = get_printer_id
+    @till = Till.load(@organization, current_user, printer_id)
+    @till ||= Till.new(@organization, current_user, printer_id)
 
     unless params[:cash].nil?
       @cash = @till.add_cashs.first
       @cash ||= AddCash.new(@till, params[:cash])
     end
 
-    if @till.save!
+    if @till.save
       @till.add_cashs << @cash unless @cash.nil?
-      @printer_command = PrinterCommand.str_pending_command(@till)
-      render :update do |page| 
-        page.replace_html('fiscal_printer_info', @printer_command)
+      if @organization.has_fiscal_printer?
+        @printer_command = PrinterCommand.str_pending_command(@till)
+        render :update do |page| 
+          page.replace_html('fiscal_printer_info', @printer_command)
+        end
+      else
+        render :update do |page| 
+raise 'put the write partial here'
+          page.replace_html('abelo_action', :partial => 'lalal')
+        end
       end
     else
       render :nothing => true
@@ -89,8 +98,9 @@ class PointOfSaleController < ApplicationController
     end
   end
 
-  def till_open
-    till = Till.load(@organization, current_user, cookies[:printer_id].first)
+  def till_open 
+    printer_id = get_printer_id
+    till = Till.load(@organization, current_user, printer_id)
     @printer_command = PrinterCommand.str_pending_command(till)
     @pending_sale = Sale.pending(till)
   end
@@ -332,6 +342,13 @@ class PointOfSaleController < ApplicationController
       redirect_to :action =>  command.action_error(params[:response])
     end
   end
+
+  private
+
+  def get_printer_id
+    cookies[:printer_id].first unless cookies[:printer_id].nil?
+  end
+
 
 end
 

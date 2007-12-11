@@ -339,6 +339,10 @@ class Organization < ActiveRecord::Base
   # Configuration Actions
   ################################
 
+  def has_fiscal_printer?
+    self.configuration.has_fiscal_printer?
+  end
+
   Configuration::CONFIGURATION_NAMES.each do |item|
     define_method("camel_#{item}_name") do 
       self.configuration.send("#{item}_name").camelcase

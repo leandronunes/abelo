@@ -226,44 +226,25 @@ class PointOfSaleController < ApplicationController
     @payments = @sale.ledgers
   end
 
-  def check_coupon_cancel
-    supervisor = User.authenticate(params[:user][:login], params[:user][:password])
-    supervisor ||= current_user
-    if !supervisor.allowed_to?(:controller => 'point_of_sale', :action => 'create_coupon_cancel')
-      flash.now[:notice] = _("You don't have permissions to cancel a coupon.")
-      render :update do |page|
-        page.replace_html('abelo_login_form', :partial => 'login_form' )
-      end
-    end
-  end
-
-  def refresh_product
-    till = Till.load(@organization, current_user, cookies[:printer_id].first)
-    sale = Sale.pending(till)
-    @sale_item = SaleItem.new(sale)
-    @sale_item.product_code = params[:product_code]
-    @product = @sale_item.product
-    flash.now[:notice] = _('This is not a product code valid') if @sale_item.product.nil?
-    render :update do |page|
-      page.replace_html('product_identification', @product.name )
-      page.replace_html('value_product', @product.sell_price )
-    end
-  end
-
   def create_coupon_add_item
-    till = Till.load(@organization, current_user, cookies[:printer_id].first)
+    till = load_current_till
     @sale = Sale.pending(till)
-#raise 'fudeu: ' + @sale.inspect
     @sale_item = SaleItem.new(@sale, params[:sale_item])
-#raise 'ble: ' + @sale_item.sale.inspect
-#raise 'bla: ' + params.inspect
-#raise 'bli: ' + @sale_item.product.inspect
     if @sale_item.save
       render :update do |page|
-        @product = @sale_item.product
-        page.replace_html('add_item_panel', :partial => 'product_info')
-        @printer_command = PrinterCommand.str_pending_command(till)
-        page.replace_html('fiscal_printer_info', @printer_command)
+        if @organization.has_fiscal_printer?
+          @product = @sale_item.product
+          @printer_command = PrinterCommand.str_pending_command(till)
+          page.replace_html('abelo_add_item_panel', :partial => 'product_info')
+          page.replace_html('fiscal_printer_info', @printer_command)
+        else
+          @sale_item = SaleItem.new(@sale)
+          @total = @sale.total_value 
+          @total_payment = @sale.total_payment
+          @payments = @sale.ledgers
+          page.replace_html('abelo_table_items', :partial => 'table')
+          page.replace_html('abelo_add_item_panel', :partial => 'product_info')
+        end
       end
     else
       @total = @sale.total_value 
@@ -275,6 +256,28 @@ class PointOfSaleController < ApplicationController
       end
     end
   end
+
+
+  def refresh_product
+    @product = @organization.products.find_by_code(params[:product_code])
+    render :update do |page|
+      page.replace_html('product_identification', @product.name )
+      page.replace_html('value_product', @product.sell_price )
+    end
+  end
+
+
+  def check_coupon_cancel
+    supervisor = User.authenticate(params[:user][:login], params[:user][:password])
+    supervisor ||= current_user
+    if !supervisor.allowed_to?(:controller => 'point_of_sale', :action => 'create_coupon_cancel')
+      flash.now[:notice] = _("You don't have permissions to cancel a coupon.")
+      render :update do |page|
+        page.replace_html('abelo_login_form', :partial => 'login_form' )
+      end
+    end
+  end
+
 
   def cancel
     till = Till.load(@organization, current_user, cookies[:printer_id].first)

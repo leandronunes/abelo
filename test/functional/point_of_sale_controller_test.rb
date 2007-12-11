@@ -40,6 +40,14 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   def create_till
     till = Till.new(@organization, @user, nil)
     till.save
+    till
+  end
+
+  def create_sale
+    till = create_till
+    sale = Sale.new(till)
+    sale.save
+    sale
   end
 
   def test_design_point_of_sale
@@ -189,37 +197,43 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
     assert_equal 0, PrinterCommand.count, 'You cannot add printer command without a printer configured'
   end
 
+  def test_create_coupon_open_sucessfully
+    Sale.delete_all
+    Till.destroy_all
+    create_till 
+    get :create_coupon_open
+    assert_response :redirect
+    assert_redirected_to :action => 'coupon_open'
+    assert_equal 1, Sale.find(:all).length
+  end
+
+  def test_create_coupon_open_unsucessfully
+    Sale.delete_all
+    Till.destroy_all
+    create_sale 
+    get :create_coupon_open
+    assert_response :success
+    assert_template 'till_open'
+    assert_equal 1, Sale.find(:all).length
+  end
+
+  def test_coupon_open
+    Sale.delete_all
+    Till.destroy_all
+    create_sale 
+
+    get :coupon_open
+    assert_response :success
+    assert_template 'coupon_open'
+    assert_not_nil assigns(:sale)
+    assert_not_nil assigns(:sale_item)
+    assert_not_nil assigns(:total)
+    assert_not_nil assigns(:total_payment)
+    assert_not_nil assigns(:payments)
+  end
 
 #FIXME Stop the tests here
  
-  def test_coupon_open_with_new_sale
-    Sale.delete_all
- 
-    get :coupon_open
-    assert_response :success
-    assert_template 'coupon_open'
-    assert_equal 1, Sale.find(:all).length
-    assert_not_nil assigns(:sale)
-    assert_not_nil assigns(:sale_item)
-    assert_not_nil assigns(:total)
-    assert_not_nil assigns(:total_payment)
-    assert_not_nil assigns(:payments)
-  end
-
-  def test_coupon_open_with_pending_sale
-    Sale.delete_all
-    sale = Sale.create!(:date => '2007-08-04', :organization => @organization, :salesman => @user)
- 
-    get :coupon_open
-    assert_response :success
-    assert_template 'coupon_open'
-    assert_not_nil assigns(:sale)
-    assert_not_nil assigns(:sale_item)
-    assert_not_nil assigns(:total)
-    assert_not_nil assigns(:total_payment)
-    assert_not_nil assigns(:payments)
-  end
-
   def test_refresh_product_with_a_valid_product_code
     post :refresh_product, :id => @sale.id, :product_code => @product.code
     assert_response :success

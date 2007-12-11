@@ -1,0 +1,13 @@
+<% @sale.items.each do |item| %>
+  <tr>
+    <td class="cell_desc"> <%= item.product_code %> </td>
+    <td class="cell_desc"> <%= item.product.nil? ? '' : item.product.name %> </td>
+    <td class="cell_un_price cell_number"><%= num_to_currency item.unitary_price %></td>
+    <td class="cell_amount cell_number">&times; <%= item.amount.round %></td>
+    <td class="cell_price cell_number"><%= num_to_currency item.price %></td>
+  </tr>
+<% end %>
+
+<tr> <td colspan="5" class="cell_tot"> <%= _("Total: %s" ) % num_to_currency(@total) %> </td></tr>
+
+

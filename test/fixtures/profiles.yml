@@ -100,6 +100,8 @@ for_salesperson:
   - controller: 'point_of_sale'
     action: 'coupon_open'
   - controller: 'point_of_sale'
+    action: 'create_coupon_add_item'
+  - controller: 'point_of_sale'
     action: 'refresh_product'
   - controller: 'point_of_sale'
     action: 'coupon_add_item'

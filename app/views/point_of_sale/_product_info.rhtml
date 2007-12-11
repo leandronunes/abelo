@@ -7,7 +7,7 @@
   <%= link_to content_tag('span', 'Search product'), {}, :class => "button button_search", :accesskey => "p" %>
 </div>
     
-<% form_remote_tag :url => { :action => 'create_coupon_add_item', :id => @sale }, :update => 'sale' do %>
+<% form_remote_tag :url => { :action => 'create_coupon_add_item', :id => @sale }, :failure => "$('abelo_action').innerHTML = request.responseText" do %>
         
   <%= submit_tag '', :title => _('Add item'), :id => 'button_add_product', :accesskey => 'x' %>
         
@@ -16,7 +16,9 @@
     <%= text_field('sale_item', 'product_code',:accesskey => "c") %>
     <%= observe_field('sale_item_product_code',
             :url => {:action => 'refresh_product'},
-            :with => "'product_code=' + escape(value)"
+            :with => "'product_code=' + escape(value)",
+            :failure => "$('abelo_action').innerHTML= request.responseText"
+  
         )
     %>
   </div>
@@ -28,11 +30,12 @@
       </div>
     </div>
     <h1><%= _('Amount') %></h1>
-    <%= text_field('sale_item', 'amount', :id => 'amount', :value => '1') %>
+    <%= text_field('sale_item', 'amount', :value => '1') %>
   </div>
 <% end %>
 </div><!-- add_item_panel -->
 
+<!-- FIXME See if this javascript it's working -->
 <script type="text/javascript">
 
   document.onkeyup = function(ev) {
@@ -42,14 +45,14 @@
     ev.stopPropagation();
   }
   
-  $("amount").onkeypress = function(ev) {
+  $("sale_item_amount").onkeypress = function(ev) {
     if ( ev.keyCode == 9 ) {
       setTimeout('$("product_code").focus()', 10)
     }
   }
 
-  $("product_code").focus();
-  $("amount").value = 1;
+  $("sale_item_product_code").focus();
+  $("sale_item_amount").value = 1;
 
 </script>
 

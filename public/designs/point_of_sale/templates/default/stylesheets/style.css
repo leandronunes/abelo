@@ -321,24 +321,24 @@ td.cell_number {
 }
 
 
-#add_item_panel {
+#abelo_add_item_panel {
   position: relative;
   text-align: left;
 }
 
-#add_item_panel h1 {
+#abelo_add_item_panel h1 {
   color: #204A87;
   font-size: 20px;
   margin: 0px;
 }
 
-#add_item_panel input {
+#abelo_add_item_panel input {
   background: #cfdbe5;
   color: #204a87;
   border: 1px solid transparent;
 }
 
-#add_item_panel input:focus, #add_item_panel input:hover {
+#abelo_add_item_panel input:focus, #abelo_add_item_panel input:hover {
   background: #e7ebeb;
   color: #545454;
   border: 1px solid #545454;
@@ -410,7 +410,7 @@ input#sale_item_product_code {
   text-align: left;
 }
 
-input#amount {
+input#sale_item_amount {
   font-weight: bold;
   font-size: 30px;
   width: 44%;

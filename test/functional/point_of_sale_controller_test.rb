@@ -6,7 +6,7 @@ class PointOfSaleController; def rescue_action(e) raise e end; end
 
 class PointOfSaleControllerTest < Test::Unit::TestCase
 
-  fixtures :sales, :sale_items, :system_actors, :people, :products, :ledger_categories, :bank_accounts
+  fixtures :sales, :sale_items, :system_actors, :people, :products, :ledger_categories, :bank_accounts, :configurations
 
   under_organization :one
 
@@ -37,6 +37,11 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
     assert @category.valid?
   end
 
+  def create_till
+    till = Till.new(@organization, @user, nil)
+    till.save
+  end
+
   def test_design_point_of_sale
     design = @controller.design_point_of_sale
     assert_kind_of DesignPointOfSale, design
@@ -60,6 +65,115 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
     assert_response :success 
     assert_template 'index'
   end
+
+  def test_index_with_existing_till
+    Till.destroy_all
+    create_till
+    get :index
+    assert_response :redirect
+    assert_redirected_to :action => 'till_open'
+  end
+
+  def test_open_till_whithout_till
+    Till.destroy_all
+    get :open_till
+    assert_response :success 
+    assert_template 'open_till'
+    assert_not_nil assigns(:cash)
+  end
+
+  def test_open_till_with_existing_till
+    Till.destroy_all
+    create_till
+    get :open_till
+    assert_response :redirect
+    assert_redirected_to :action => 'till_open'
+  end
+
+  def test_access_create_till_open_only_with_post_method
+    get :create_till_open
+    assert :redirect
+    assert_redirected_to :action => 'index'
+
+    post :create_till_open
+    assert :success
+  end
+  
+  def test_create_till_open
+    PrinterCommand.destroy_all
+    post :create_till_open
+    assert_response :success
+    assert_template '_till_open'
+    assert_equal 0, PrinterCommand.count, 'You cannot add printer command without a printer configured'
+  end
+
+  def test_create_till_open_with_cash
+    PrinterCommand.destroy_all
+    post :create_till_open, :cash => {:value => 12}
+    assert_response :success
+    assert_template '_till_open'
+    assert_equal 0, PrinterCommand.count, 'You cannot add printer command without a printer configured'
+  end
+
+  def test_add_cash
+    get :add_cash
+    assert_response :success
+    assert_template 'add_cash'
+    assert assigns(:cash)
+  end
+
+  def test_create_add_cash_successfully
+    Till.destroy_all
+    create_till
+    PrinterCommand.destroy_all
+    get :create_add_cash, :cash => {:value => 12}
+    assert_response :success
+    assert_template '_till_open'
+    assert_not_nil assigns(:cash)
+    assert_equal 12, assigns(:cash).value
+    assert_equal 0, PrinterCommand.count, 'You cannot add printer command without a printer configured'
+  end
+
+  def test_create_add_cash_unsuccessfully
+    Till.destroy_all
+    create_till
+    # The method expect a value different of nil
+    get :create_add_cash, :cash => {:value => nil}
+    assert_response :success
+    assert_template '_cash_form'
+  end
+
+  def test_remove_cash
+    get :remove_cash
+    assert_response :success
+    assert_template 'remove_cash'
+    assert assigns(:cash)
+  end
+
+  def test_create_remove_cash_successfully
+    Till.destroy_all
+    create_till
+    PrinterCommand.destroy_all
+    get :create_remove_cash, :cash => {:value => 12}
+    assert_response :success
+    assert_template '_till_open'
+    assert assigns(:cash)
+    assert_equal -12, assigns(:cash).value
+    assert_equal 0, PrinterCommand.count, 'You cannot add printer command without a printer configured'
+  end
+
+  def test_create_remove_cash_unsuccessfully
+    Till.destroy_all
+    create_till
+    # The method expect a value different of nil
+    get :create_remove_cash, :cash => {:value => nil}
+    assert_response :success
+    assert_template '_cash_form'
+  end
+
+
+
+#FIXME Stop the tests here
  
   def test_coupon_open_with_new_sale
     Sale.delete_all
@@ -304,54 +418,6 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
 
     assert_response :redirect
     assert_redirected_to :action => 'index'
-  end
-
-  def test_add_cash
-    get :add_cash
-    assert_response :success
-    assert_template 'add_cash'
-    assert assigns(:cash)
-  end
-
-  def test_create_add_cash_successfully
-    get :create_add_cash, :cash => {:value => 12}
-    assert_response :redirect
-    assert_redirected_to :action => 'till_open'
-    assert assigns(:cash)
-    assert_equal 'money', assigns(:cash).payment_method
-    assert_equal Date.today, assigns(:cash).date
-    assert_equal Payment::TYPE_OF_INCOME, assigns(:cash).type_of
-  end
-
-  def test_create_add_cash_unsuccessfully
-    # The method expect a value different of nil
-    get :create_add_cash, :cash => {:value => nil}
-    assert_response :success
-    assert_template 'add_cash'
-  end
-
-  def test_remove_cash
-    get :remove_cash
-    assert_response :success
-    assert_template 'remove_cash'
-    assert assigns(:cash)
-  end
-
-  def test_create_remove_cash_successfully
-    get :create_remove_cash, :cash => {:value => 12}
-    assert_response :redirect
-    assert_redirected_to :action => 'till_open'
-    assert assigns(:cash)
-    assert_equal 'money', assigns(:cash).payment_method
-    assert_equal Date.today, assigns(:cash).date
-    assert_equal Payment::TYPE_OF_EXPENSE, assigns(:cash).type_of
-  end
-
-  def test_create_remove_cash_unsuccessfully
-    # The method expect a value different of nil
-    get :create_remove_cash, :cash => {:value => nil}
-    assert_response :success
-    assert_template 'remove_cash'
   end
 
 

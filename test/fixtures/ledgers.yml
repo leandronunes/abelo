@@ -12,7 +12,6 @@ expense:
   description: 'teste'
   category_id: 1
   operational: false
-  is_foreseen: false
   bank_account_id: 1
 income:
   id: 2
@@ -27,7 +26,6 @@ income:
   description: teste
   category_id: 2
   operational: false
-  is_foreseen: false
   bank_account_id: 1
 check:
   id: 3
@@ -42,7 +40,6 @@ check:
   description: teste
   category_id: 2
   operational: false
-  is_foreseen: false
   bank_account_id: 1
   check_owner_name: 'Some name'
   check_bank_id: 1
@@ -63,7 +60,6 @@ credit_card:
   description: teste
   category_id: 3
   operational: false
-  is_foreseen: false
   bank_account_id: 1
   check_owner_name: 'Some name'
   credit_card_number: 334432
@@ -84,7 +80,6 @@ debit_card:
   description: teste
   category_id: 4
   operational: false
-  is_foreseen: false
   bank_account_id: 1
   automatic_debit_owner_name: 'Some name'
   automatic_debit_bank_id: 1

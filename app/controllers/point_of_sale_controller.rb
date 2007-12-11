@@ -10,13 +10,15 @@ class PointOfSaleController < ApplicationController
 
   layout 'point_of_sale'
 
-  post_only [ :new, :add_item, :refresh_product, :create_coupon_cancel ]
+  post_only [ :create_till_open]
 
   skip_before_filter :check_access_control, :only => ['create_coupon_cancel']
 
   before_filter :check_coupon_cancel, :only => ['create_coupon_cancel']
   
   design :holder => :design_point_of_sale, :root => File.join('designs','point_of_sale')
+
+  before_filter :check_fiscal_printer, :except => 'index'
 
   def design_point_of_sale
     point_of_sale = DesignPointOfSale.new(@organization)
@@ -32,28 +34,17 @@ class PointOfSaleController < ApplicationController
   end
 
   def index
-    till = Till.load(@organization, current_user, (cookies[:printer_id].first unless cookies[:printer_id].nil?))
-    #FIXME how to put the printer id on cookie before call the action?
+    till = Till.load(@organization, current_user, get_printer_id)
     unless till.nil?
-      @printer_command = PrinterCommand.pending_command(till)
       redirect_to :action => 'till_open'
     end
   end
 
   def open_till
-#    if cookies[:printer_id].nil?
-#      flash[:notice] = _("You don't have a printer configured.")
-#      render :action => 'index' 
-#      return
-#    end
-
-    printer_id = get_printer_id
-    till = Till.load(@organization, current_user, printer_id)
-    printer_command = PrinterCommand.pending_command(till)
+    till = Till.load(@organization, current_user, get_printer_id)
     if till.nil?
       @cash = Money.new
     else
-      @printer_command = printer_command.str_command unless printer_command.nil?
       redirect_to :action => 'till_open'
     end
   end
@@ -64,7 +55,6 @@ class PointOfSaleController < ApplicationController
     @till ||= Till.new(@organization, current_user, printer_id)
 
     unless params[:cash].nil?
-      @cash = @till.add_cashs.first
       @cash ||= AddCash.new(@till, params[:cash])
     end
 
@@ -77,30 +67,18 @@ class PointOfSaleController < ApplicationController
         end
       else
         render :update do |page| 
-raise 'put the write partial here'
-          page.replace_html('abelo_action', :partial => 'lalal')
+          page.replace_html('abelo_action', :partial => 'till_open')
         end
       end
     else
-      render :nothing => true
-    end
-  end
-
-  def create_close_till
-    till = Till.load(@organization, current_user, cookies[:printer_id].first)
-    if till.close
-      render :update do |page|
-        @printer_command = PrinterCommand.str_pending_command(till)
-        page.replace_html('fiscal_printer_info', @printer_command)
+      render :update do |page| 
+        page.replace_html('abelo_open_till', :partial => 'form_open_till')
       end
-    else
-      render :nothing => true
     end
   end
 
-  def till_open 
-    printer_id = get_printer_id
-    till = Till.load(@organization, current_user, printer_id)
+  def till_open
+    till = load_current_till 
     @printer_command = PrinterCommand.str_pending_command(till)
     @pending_sale = Sale.pending(till)
   end
@@ -110,15 +88,21 @@ raise 'put the write partial here'
   end
 
   def create_add_cash
-    till = Till.load(@organization, current_user, cookies[:printer_id].first)
-    redirect_to :action => 'index' if till.nil?
+    till = load_current_till
     @cash = AddCash.new(till, params[:cash])
 
     if @cash.save
       flash[:notice] = _('The cash was added with success')
-      render :update do |page|
+
+      if @organization.has_fiscal_printer?
         @printer_command = PrinterCommand.str_pending_command(till)
-        page.replace_html('fiscal_printer_info', @printer_command)
+        render :update do |page| 
+          page.replace_html('fiscal_printer_info', @printer_command)
+        end
+      else
+        render :update do |page| 
+          page.replace_html('abelo_action', :partial => 'till_open')
+        end
       end
     else
       render :update do |page|
@@ -132,19 +116,39 @@ raise 'put the write partial here'
   end
 
   def create_remove_cash
-    till = Till.load(@organization, current_user, cookies[:printer_id].first)
-    redirect_to :action => 'index' if till.nil?
+    till = load_current_till
     @cash = RemoveCash.new(till, params[:cash])
 
     if @cash.save
       flash[:notice] = _('The cash was removed with success')
-      render :update do |page|
+      if @organization.has_fiscal_printer?
         @printer_command = PrinterCommand.str_pending_command(till)
-        page.replace_html('fiscal_printer_info', @printer_command)
+        render :update do |page| 
+          page.replace_html('fiscal_printer_info', @printer_command)
+        end
+      else
+        render :update do |page| 
+          page.replace_html('abelo_action', :partial => 'till_open')
+        end
       end
     else
       render :update do |page|
         page.replace_html('abelo_cash_form', :partial => 'cash_form' )
+      end
+    end
+  end
+
+  def create_close_till
+    till = load_current_till
+
+    if till.close
+      render :update do |page|
+        @printer_command = PrinterCommand.str_pending_command(till)
+        page.replace_html('abelo_action', :partial => 'index')
+      end
+    else
+      render :update do |page| 
+        page.replace_html('abelo_action', :partial => 'till_open')
       end
     end
   end
@@ -346,7 +350,18 @@ raise 'put the write partial here'
   private
 
   def get_printer_id
-    cookies[:printer_id].first unless cookies[:printer_id].nil?
+    cookies[:printer_id].nil? ? nil :  cookies[:printer_id].first
+  end
+
+  def load_current_till
+    Till.load(@organization, current_user, get_printer_id)
+  end
+
+  def check_fiscal_printer
+    if @organization.has_fiscal_printer? and get_printer_id.nil?
+      flash[:notice] = _('you cannot access this functionality whitou a fiscal printer')
+      redirect_to :action => 'index'
+    end
   end
 
 

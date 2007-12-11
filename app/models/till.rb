@@ -12,7 +12,7 @@ class Till < ActiveRecord::Base
   validates_inclusion_of :status, :in => ALL_STATUS
 
   before_validation do |till|
-    till.printer_command ||= PrinterCommand.new(till, [PrinterCommand::SUMMARIZE])
+    till.printer_command ||= PrinterCommand.new(till, [PrinterCommand::SUMMARIZE]) if till.organization.has_fiscal_printer?
   end
 
   def validate
@@ -22,11 +22,14 @@ class Till < ActiveRecord::Base
       self.errors.add(_('You already have a till open.'))
     end
 
-    if self.printer_command.nil?
+    if self.printer_command.nil? and self.has_fiscal_printer?
       self.errors.add(_('You cannot open a till whithout the printer command'))
     end
   end
 
+  def has_fiscal_printer?
+    self.organization.has_fiscal_printer? 
+  end
 
   def initialize(organization, user, printer, *args)
     super(*args)
@@ -50,11 +53,14 @@ class Till < ActiveRecord::Base
   end
 
   def close
-    p = PrinterCommand.new(self, [PrinterCommand::CLOSE_TILL, false] )
-#    p = PrinterCommand.new(self, [PrinterCommand::CLOSE_TILL], ((self.datetime < Date.today) ? false : true) ) FIXME
-#    fix it
-    p.owner = self
-    self.printer_commands << p
+    if self.has_fiscal_printer?
+      p = PrinterCommand.new(self, [PrinterCommand::CLOSE_TILL, false] )
+      p.owner = self
+      self.printer_commands << p
+    else
+      self.status = STATUS_DONE
+      self.save
+    end
   end
 
 end

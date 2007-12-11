@@ -4,13 +4,9 @@
 
 <% form_remote_tag :url => {:action => 'create_till_open'}, :failure => "$('abelo_action').innerHTML = request.responseText" do %>
 
-  <%= error_messages_for 'cash' %>
-  <%= error_messages_for 'till' %>
-
-  <p><label name="cash_value"> <%= _('Value') %> </label>
-    <%= text_field('cash', 'value') %>
-  </p>
-
+  <div id="abelo_open_till">
+    <%= render :partial => 'form_open_till' %>
+  </div>
   <%= button 'cancel', _('Cancel'), :cancel, :action => 'index' %>
   <%= button 'save', _('Save'), :save %>
 <% end %>

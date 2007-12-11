@@ -4,7 +4,7 @@ class AddCash < Money
   has_one :printer_command, :as => :owner
 
   before_validation do |add_cash|
-    add_cash.printer_command ||= PrinterCommand.new(add_cash.owner ,[PrinterCommand::TILL_ADD_CASH, add_cash.value])
+    add_cash.printer_command ||= PrinterCommand.new(add_cash.owner ,[PrinterCommand::TILL_ADD_CASH, add_cash.value]) if add_cash.owner.has_fiscal_printer?
   end
 
   def validate
@@ -20,7 +20,7 @@ class AddCash < Money
       self.errors.add(:type_of, _('You cannot have an add cash with type different of %s') % Payment::TYPE_OF_INCOME) 
     end
 
-    if self.printer_command.nil?
+    if self.printer_command.nil? and self.owner.has_fiscal_printer?
       self.errors.add(_('You cannot add money on till without create the printer command')) 
     end
   end

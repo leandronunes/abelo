@@ -2,7 +2,7 @@
 
 <%= notice_box flash[:notice] %>
 
-<% form_remote_tag :url => {:action => 'create_add_cash'} do -%>
+<% form_remote_tag :url => {:action => 'create_add_cash'}, :failure => "$('abelo_action').innerHTML= request.responseText" do -%>
 
   <%= render :partial => 'cash_form' %>
 

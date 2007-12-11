@@ -5,7 +5,7 @@ class RemoveCash < Money
 
   before_validation do |cash|
     cash.value = cash.value * -1 if cash.value > 0
-    cash.printer_command ||= PrinterCommand.new(cash.owner ,[PrinterCommand::TILL_REMOVE_CASH, cash.value])
+    cash.printer_command ||= PrinterCommand.new(cash.owner ,[PrinterCommand::TILL_REMOVE_CASH, cash.value]) if cash.owner.has_fiscal_printer?
   end
 
   def validate
@@ -21,7 +21,7 @@ class RemoveCash < Money
       self.errors.add(:type_of, _('You cannot have an add cash with type different of %s') % Payment::TYPE_OF_EXPENSE)
     end
 
-    if self.printer_command.nil?
+    if self.printer_command.nil? and self.owner.has_fiscal_printer?
       self.errors.add(_('You cannot add money on till without create the printer command'))
     end
 

@@ -337,12 +337,10 @@ class PointOfSaleController < ApplicationController
 
 #FIXME put this to works
   def save_customer
-render :text => 'leandro'
-return
-raise 'bla'
     till = load_current_till
     @sale = Sale.pending(till)
     @sale.customer = @organization.customers.find_by_cpf(params[:customer_cpf]) 
+raise params.inspect
     @sale.save
     render :update do |page|
       page.replace_html('abelo_payment_customer', :partial => 'payment_customer')

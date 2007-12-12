@@ -5,15 +5,10 @@
 
 <%= hidden_field 'sale', 'customer_id' %>
 
-<div id="bli"> 
-fudeu
-</div>
- 
 <%=   
   observe_field('sale_customer_identifier',
-        :update => 'bli',
         :url => {:action => 'save_customer'},
         :with => "'customer_cpf=' + escape(value)",
-        :on => 'onblur'
+        :failure => "$('abelo_action').innerHTML= request.responseText"
   )   
 %>  

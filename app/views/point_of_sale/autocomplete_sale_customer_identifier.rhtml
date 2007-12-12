@@ -1,0 +1,9 @@
+<%= # autocomplete_list @customers, 'cpf' 
+%>
+
+<ul>
+  <% @customers.each do |c| %>
+    <li><%= link_to_remote(c.cpf, :url => {:action => 'save_customer', :customer_id => c.id}, :update => 'sale') %></li>
+  <% end %>
+</ul>
+~           

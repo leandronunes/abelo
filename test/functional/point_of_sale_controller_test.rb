@@ -281,7 +281,10 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   end
 
   def test_cancel_without_permissions
-    get :cancel , :id => @sale.id
+    Sale.delete_all
+    Till.destroy_all
+    sale = create_sale 
+    get :cancel , :id => sale.id
 
     assert_response :success
     assert_template 'cancel'
@@ -294,41 +297,27 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   end
 
   def test_coupon_cancel_without_permissions
+    Sale.delete_all
+    Till.destroy_all
+    sale = create_sale 
     User.create!("administrator"=>false, "login"=>"any_login", "email"=>"any_login@example.com", :password => 'test', :password_confirmation => 'test')
-    post :cancel , :id => @sale.id, :user => {:login => 'some', :password => 'test'}
+    post :create_coupon_cancel, :id => sale.id, :user => {:login => 'any_login', :password => 'test'}
 
-    assert_response :success
-    assert_template 'cancel'
-
-    assert assigns(:sale)
-    assert assigns(:total)
-    assert_not_nil assigns(:total_payment)
-    assert_not_nil assigns(:payments)
+    assert_response :redirect
+    assert_redirected_to :action => 'cancel'
     assert_not_nil flash[:notice]
   end
 
   def test_cancel_open_coupon_with_supervisor_permissions
     Sale.delete_all
-    sale = Sale.create!(:date => '2007-08-04', :organization => @organization, :salesman => @user)
-    post :coupon_cancel , :id => sale.id, :user => {:login => @supervisor.login, :password => @supervisor.password}
+    Till.destroy_all
+    sale = create_sale 
+    post :create_coupon_cancel, :id => sale.id, :user => {:login => @supervisor.login, :password => @supervisor.password}
 
     assert_response :redirect
-    assert_redirected_to :action => 'index'
+    assert_redirected_to :action => 'till_open'
   end
 
-  def test_coupon_cancel_when_the_coupon_is_closed
-    Sale.delete_all
-    sale = Sale.create(:date => '2007-08-04', :organization => @organization, :salesman => @user)
-    sale.cancel!
-    assert sale.save
-    post :coupon_cancel, :id => sale.id, :user => {:login => @supervisor.login, :password => @supervisor.password}
-    assert_response :success
-    assert_template 'cancel'
-    assert assigns(:total)
-    assert_not_nil assigns(:total_payment)
-    assert_not_nil assigns(:payments)
-  end
-  
   def test_payment
     get :payment, :id => @sale.id
     assert_response :success
@@ -341,7 +330,6 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:ledger_categories)
     assert_equal @sale.balance, assigns(:ledger).value
   end
-
 
   def test_save_customer
     post :save_customer, :id => @sale.id, :customer_id => @customer

@@ -24,9 +24,14 @@ class PointOfSaleController < ApplicationController
     supervisor = User.authenticate(params[:user][:login], params[:user][:password])
     supervisor ||= current_user
     if !supervisor.allowed_to?(:controller => 'point_of_sale', :action => 'create_coupon_cancel')
-      flash.now[:notice] = _("You don't have permissions to cancel a coupon.")
-      render :update do |page|
-        page.replace_html('abelo_login_form', :partial => 'login_form' )
+      flash[:notice] = _("The user %s don't have permissions to cancel a coupon." % supervisor.login )
+      flash.keep(:notice)
+      if @organization.has_fiscal_printer?
+        render :update do |page|
+          page.replace_html('abelo_login_form', :partial => 'login_form' )
+        end
+      else
+        redirect_to :action => 'cancel'
       end
     end
   end
@@ -36,8 +41,7 @@ class PointOfSaleController < ApplicationController
     point_of_sale 
   end
 
-  def autocomplete_customer
-    @sale = @organization.sales.find(params[:id])
+  def autocomplete_sale_customer_identifier
     escaped_string = Regexp.escape(params[:sale][:customer_identifier])
     re = Regexp.new(escaped_string, "i")
     @customers = @organization.customers.select { |c| c.identifier.match re}
@@ -320,10 +324,8 @@ class PointOfSaleController < ApplicationController
   end
 
   def add_payment
-    till = Till.load(@organization, current_user, cookies[:printer_id].first)
+    till = load_current_till
     @sale = Sale.pending(till)
-#FIXME remove this it's to test on firefox browser
-#@sale = Sale.find(params[:id])
 
     @total = @sale.total_value 
     @total_payment = @sale.total_payment 
@@ -333,15 +335,19 @@ class PointOfSaleController < ApplicationController
     @ledger_categories =  @organization.sale_ledger_categories_by_payment_method(@ledger.payment_method)
   end
 
+#FIXME put this to works
   def save_customer
-    till = Till.load(@organization, current_user, cookies[:printer_id].first)
+render :text => 'leandro'
+return
+raise 'bla'
+    till = load_current_till
     @sale = Sale.pending(till)
     @sale.customer = @organization.customers.find_by_cpf(params[:customer_cpf]) 
     @sale.save
     render :update do |page|
       page.replace_html('abelo_payment_customer', :partial => 'payment_customer')
     end
-    redirect_to :action => 'payment', :id => sale.id
+#    redirect_to :action => 'payment', :id => sale.id
   end
 
   def select_category
@@ -358,7 +364,34 @@ class PointOfSaleController < ApplicationController
   end
 
   def create_coupon_add_payment
-    till = Till.load(@organization, current_user, cookies[:printer_id].first)
+    till = load_current_till
+    @sale = Sale.pending(till)
+     
+    @ledger = Ledger.new_ledger(params['ledger'])
+    @ledger.date = Date.today
+    @ledger.owner = @sale
+    @ledger.bank_account = @organization.default_bank_account
+    
+    if @ledger.save
+      redirect_to :action => 'return' if @sale.reload.balance == 0
+      @ledger_categories =  @organization.sale_ledger_categories_by_payment_method(@ledger.payment_method)
+      @total = @sale.total_value 
+      @total_payment = @sale.total_payment 
+      @payments = @sale.ledgers
+      @banks = Bank.find(:all)
+      render :action => 'add_payment' 
+    else
+      @ledger_categories =  @organization.sale_ledger_categories_by_payment_method(@ledger.payment_method)
+      @total = @sale.total_value 
+      @total_payment = @sale.total_payment 
+      @payments = @sale.ledgers
+      @banks = Bank.find(:all)
+      render :action => 'add_payment' 
+    end
+  end
+
+  def printer_create_coupon_add_payment
+    till = load_current_till
     @sale = Sale.pending(till)
      
     @ledger = Ledger.new_ledger(params['ledger'])
@@ -383,15 +416,14 @@ class PointOfSaleController < ApplicationController
         page.replace_html('fiscal_printer_info', @printer_command)
       end
     end
-
   end
+
 
   def coupon_close
     @sale = @organization.sales.find(params[:id])
     @sale.close!      
     redirect_to :action => 'index'
   end
-
 
   def accept_printer_cmd
     till = Till.load(@organization, current_user, cookies[:printer_id].first)

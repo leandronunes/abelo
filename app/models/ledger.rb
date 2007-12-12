@@ -35,7 +35,7 @@ class Ledger < ActiveRecord::Base
   after_create do |l|
     if l.owner.kind_of?(Sale)
       sale = l.owner
-      l.printer_command = PrinterCommand.new(l.owner.owner, [PrinterCommand::ADD_PAYMENT, sale.value])
+      l.printer_command = PrinterCommand.new(l.owner.owner, [PrinterCommand::ADD_PAYMENT, l.value])
     end
 
     transaction do 

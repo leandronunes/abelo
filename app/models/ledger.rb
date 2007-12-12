@@ -194,11 +194,6 @@ class Ledger < ActiveRecord::Base
     if !self.category.nil? and !self.category.payment_methods.include?(self.payment_method)
       self.errors.add(:payment_method, _("You canno't have a payment method not include in payment category list.")) 
     end
-   
-    # Ledgers of sales must have values minor or equal the sale value
-    if((self.owner.kind_of?(Sale)) and(self.owner.ledgers.include?(self) ? (self.owner.balance < 0) : (self.owner.balance - self.value < 0)))
-      self.errors.add(:value, _('The value must be minor or equal to %s') % self.owner.balance)
-    end
   end
 
   private

@@ -8,6 +8,8 @@ class PointOfSaleController < ApplicationController
 
   needs_organization
 
+  uses_popup_plugin
+
   layout 'point_of_sale'
 
   post_only [ :create_till_open]
@@ -39,13 +41,6 @@ class PointOfSaleController < ApplicationController
   def design_point_of_sale
     point_of_sale = DesignPointOfSale.new(@organization)
     point_of_sale 
-  end
-
-  def autocomplete_sale_customer_identifier
-    escaped_string = Regexp.escape(params[:sale][:customer_identifier])
-    re = Regexp.new(escaped_string, "i")
-    @customers = @organization.customers.select { |c| c.identifier.match re}
-    render :layout => false
   end
 
   def index
@@ -236,6 +231,10 @@ class PointOfSaleController < ApplicationController
     till = load_current_till
     @sale = Sale.pending(till)
     @sale_item = SaleItem.new(@sale)
+    unless params[:product_code].nil?
+      @sale_item.product_code = params[:product_code] 
+      @product = @sale_item.product
+    end
     @total = @sale.total_value 
     @total_payment = @sale.total_payment 
     @payments = @sale.ledgers
@@ -326,26 +325,16 @@ class PointOfSaleController < ApplicationController
   def add_payment
     till = load_current_till
     @sale = Sale.pending(till)
-
+    unless params[:customer_id].nil?
+      @sale.customer = @organization.customers.find(params[:customer_id])
+      @sale.save
+    end
     @total = @sale.total_value 
     @total_payment = @sale.total_payment 
     @payments = @sale.ledgers
     @ledger = Ledger.new_ledger
     @ledger.value = @sale.balance
     @ledger_categories =  @organization.sale_ledger_categories_by_payment_method(@ledger.payment_method)
-  end
-
-#FIXME put this to works
-  def save_customer
-    till = load_current_till
-    @sale = Sale.pending(till)
-    @sale.customer = @organization.customers.find_by_cpf(params[:customer_cpf]) 
-raise params.inspect
-    @sale.save
-    render :update do |page|
-      page.replace_html('abelo_payment_customer', :partial => 'payment_customer')
-    end
-#    redirect_to :action => 'payment', :id => sale.id
   end
 
   def select_category
@@ -361,6 +350,13 @@ raise params.inspect
     end
   end
 
+  def change
+    till = load_current_till
+    sale = Sale.pending(till)
+    @total = sale.total_value 
+    @total_payment = sale.total_payment 
+  end
+
   def create_coupon_add_payment
     till = load_current_till
     @sale = Sale.pending(till)
@@ -369,21 +365,23 @@ raise params.inspect
     @ledger.date = Date.today
     @ledger.owner = @sale
     @ledger.bank_account = @organization.default_bank_account
+    @ledger_categories =  @organization.sale_ledger_categories_by_payment_method(@ledger.payment_method)
+    @total = @sale.total_value 
+    @total_payment = @sale.total_payment 
+    @payments = @sale.ledgers
+    @banks = Bank.find(:all) if @ledger.kind_of? Check
     
     if @ledger.save
-      redirect_to :action => 'return' if @sale.reload.balance == 0
-      @ledger_categories =  @organization.sale_ledger_categories_by_payment_method(@ledger.payment_method)
-      @total = @sale.total_value 
-      @total_payment = @sale.total_payment 
-      @payments = @sale.ledgers
-      @banks = Bank.find(:all)
+      @sale.reload
+      if @sale.balance == 0
+        redirect_to :action => 'till_open'
+        return
+      elsif @sale.balance < 0
+        redirect_to :action => 'change'
+        return
+      end
       render :action => 'add_payment' 
     else
-      @ledger_categories =  @organization.sale_ledger_categories_by_payment_method(@ledger.payment_method)
-      @total = @sale.total_value 
-      @total_payment = @sale.total_payment 
-      @payments = @sale.ledgers
-      @banks = Bank.find(:all)
       render :action => 'add_payment' 
     end
   end
@@ -416,6 +414,31 @@ raise params.inspect
     end
   end
 
+  def popup_product
+    render :action => 'popup_product', :layout => false
+  end
+
+  def search_product
+    @products = @organization.products.full_text_search(params[:search])
+    render :action => 'search_product', :layout => false
+  end
+
+  def select_product
+    redirect_to :action => 'coupon_open', :product_code => params[:product_code]
+  end
+
+  def popup_customer
+    render :action => 'popup_customer', :layout => false
+  end
+
+  def search_customer
+    @customers = @organization.customers.full_text_search(params[:search])
+    render :action => 'search_customer', :layout => false
+  end
+
+  def select_customer
+    redirect_to :action => 'add_payment', :customer_id => params[:customer_id]
+  end
 
   def coupon_close
     @sale = @organization.sales.find(params[:id])

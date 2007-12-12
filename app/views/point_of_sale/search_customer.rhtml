@@ -1,13 +1,6 @@
-<div id="information" >
+<ul>
+  <% @customers.each do |c| %>
+    <li> <%= link_to c.name, :action => 'select_customer', :customer_id => c.id %> </li>
+  <% end %>
+</ul>
 
-<%= link_to_close_popup " ", {:class => 'button_close'}%>
-
-<%= search_customer ('customer_search')  %>
-
-<%= popup_form_tag({ :action => 'show_customers', :id => params[:id]}) %>
-<div id='people_search'>
-</div>
-
-<%= end_form_tag %>
-
-</div>

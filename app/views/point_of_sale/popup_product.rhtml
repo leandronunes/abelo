@@ -1,0 +1,9 @@
+<%= link_to_close_popup "fechar", {:class => 'button_close'}%>
+
+<% form_remote_tag :url => params.merge({ :action => 'search_product'}), :update => 'product_search' do %>
+  <%= text_field_tag('search') %>
+  <%= submit_tag _('Search') %>
+<% end %> 
+
+<div id='product_search'>
+</div>

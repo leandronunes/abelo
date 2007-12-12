@@ -1,0 +1,5 @@
+<ul>
+  <% @products.each do |p| %>
+    <li> <%= link_to p.name, :action => 'select_product', :product_code => p.code %> </li>
+  <% end %>
+</ul>

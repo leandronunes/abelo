@@ -271,7 +271,7 @@ brinco = Product.new(:name => 'brinco madreperola', :size => '4', :color => 'bra
 brinco.organization = organization
 brinco.category = acessorio
 brinco.save!
-monitor = Product.new(:name => 'monitor lcd', :size => '15', :color => 'preto', :sell_price => 0.00, :unit => 'polegadas', :code => 5)
+monitor = Product.new(:name => 'monitor lcd', :size => '15', :color => 'preto', :sell_price => 6.00, :unit => 'polegadas', :code => 5)
 monitor.organization = organization
 monitor.category = acessorio
 monitor.save!

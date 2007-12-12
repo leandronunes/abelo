@@ -1,0 +1,46 @@
+#popup_list{
+  list-style:none;
+  text-align: center;
+}
+
+#popup_list li {
+  margin: 10px 0px 15px 0px;
+  padding: 2px;
+}
+
+.popup {
+  display: none;
+  position: absolute;
+  width: 500px;
+  left: 50%;
+  margin-left: -200px;
+  z-index: 100;
+  border: 2px solid #69D;
+  background: white;
+  padding: 0.5em;
+  padding-top: 2px;
+  top: 50%;
+  margin-top: -100px;
+  z-index: 1002;
+}
+.popup h2 {
+  background: #69D;
+  color: white;
+  margin: 0px;
+  margin-bottom: 0.5em;
+  padding: 0.25em;
+}
+
+.popup_background{
+  background-image: url(../images/wall.jpg);
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  opacity: 0.5;
+  z-index: 1001;
+  height: 2000px;
+}
+
+

@@ -135,6 +135,7 @@ class Profile < ActiveRecord::Base
       { 'controller' => 'permissions', 'action' => '*' },
       { 'controller' => 'system_actors', 'action' => '*' },
       { 'controller' => 'point_of_sale', 'action' => '*' },
+      { 'controller' => 'sales', 'action' => '*' },
       { 'controller' => 'mass_mails', 'action' => '*' },
       { 'controller' => 'ledgers', 'action' => '*' },
       { 'controller' => 'ledger_categories', 'action' => '*' },

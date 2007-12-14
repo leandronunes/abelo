@@ -1,0 +1,18 @@
+  <table>
+    <tr>
+      <th> <%= _('Status') %></th>
+      <th> <%= _('Customer') %></th>
+      <th> <%= _('Date') %> </th>
+      <th> <%= _('Total') %> </th>
+    </tr>
+
+    <% for item in @sales %>
+      <tr id="list_item_<%=item.id %>">
+        <td><%= item.status %></td>
+        <td><%= item.customer_description %></td>
+        <td><%= item.datetime %></td>
+        <td><%= item.total_payment %></td>
+      </tr>
+    <% end %>
+  </table>
+

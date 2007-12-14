@@ -10,7 +10,7 @@ class Sale < ActiveRecord::Base
   has_many :items, :class_name => 'SaleItem', :dependent => :destroy
   has_many :ledgers, :as => :owner, :dependent => :delete_all
 
-  validates_presence_of :date, :organization_id, :user_id
+  validates_presence_of :datetime, :organization_id, :user_id
   validates_inclusion_of :status, :in => ALL_STATUS
 
   after_create do |sale|
@@ -30,7 +30,7 @@ class Sale < ActiveRecord::Base
     self.organization = till.organization
     self.salesman = till.user
     self.owner = till
-    self.date = Date.today
+    self.datetime = Time.now
   end
 
   def accept_printer_cmd!(command)
@@ -138,6 +138,11 @@ class Sale < ActiveRecord::Base
   def customer_identifier
     self.customer.cpf unless self.customer.nil?
   end
+
+  def customer_description
+    self.customer.nil? ? _('None') :  self.customer.name
+  end
+
 
 #TODO remove this if it's don't needed
 #  def reload

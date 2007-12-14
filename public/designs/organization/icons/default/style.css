@@ -38,6 +38,7 @@
 .departments   { background-image: url(departments.png) }
 .ledgers       { background-image: url(ledgers.png) }
 .point_of_sale { background-image: url(point_of_sale.png) }
+.sales         { background-image: url(point_of_sale.png) }
 .stock         { background-image: url(stock.png) }
 .documents     { background-image: url(documents.png) }
 .categories    { background-image: url(categories.png) }

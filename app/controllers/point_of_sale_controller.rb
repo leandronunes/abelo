@@ -368,8 +368,8 @@ class PointOfSaleController < ApplicationController
     @ledger_categories =  @organization.sale_ledger_categories_by_payment_method(@ledger.payment_method)
     @total = @sale.total_value 
     @total_payment = @sale.total_payment 
-    @payments = @sale.ledgers
     @banks = Bank.find(:all) if @ledger.kind_of? Check
+    @printer_command = PrinterCommand.str_pending_command(till) if @organization.has_fiscal_printer?
     
     if @ledger.save
       @sale.reload
@@ -380,8 +380,12 @@ class PointOfSaleController < ApplicationController
         redirect_to :action => 'change'
         return
       end
+      @payments = @sale.ledgers
+      @ledger = Ledger.new_ledger
+      @ledger.value = @sale.balance
       render :action => 'add_payment' 
     else
+      @payments = @sale.ledgers
       render :action => 'add_payment' 
     end
   end

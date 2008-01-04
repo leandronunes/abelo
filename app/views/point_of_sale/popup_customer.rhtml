@@ -1,4 +1,7 @@
-<%= link_to_close_popup "fechar", {:class => 'button_close'}%>
+<h2>
+  <%= _('Search Product') %>
+  <%= link_to_close_popup _('Close'), {:class => 'button_close'}%>
+</h2> 
 
 <% form_remote_tag :url => params.merge({ :action => 'search_customer'}), :update => 'customer_search' do %>
   <%= text_field_tag('search') %>

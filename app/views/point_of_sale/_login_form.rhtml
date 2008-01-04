@@ -9,5 +9,5 @@
   </p>
 </div>
 
+<%= button 'back', content_tag('span', _('Voltar')), :back, {:action => 'coupon_open', :id => @sale}, :accesskey => 'v', :class => 'button back with_text' %>
 <%= button 'password', _('Cancel Sale'), :save, {}, {:class => 'button button_login with_text'} %>
-

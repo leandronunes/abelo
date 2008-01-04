@@ -1,11 +1,5 @@
 <div id='payment_form'>
-  <% if @organization.has_fiscal_printer? %>   
-    <% form_remote_tag :url => {:action => 'create_coupon_add_payment', :id => @sale}, :update => 'abelo_action', :failure => "$('abelo_action').innerHTML= request.responseText" do %>
-      <%= render :partial => 'payment_form'%>
-    <% end %>
-  <% else %>
-    <% form_tag :action => 'create_coupon_add_payment', :id => @sale do %>
-      <%= render :partial => 'payment_form'%>
-    <% end %>
+  <% form_tag :action => 'create_coupon_add_payment', :id => @sale do %>
+    <%= render :partial => 'payment_form'%>
   <% end %>
 </div>

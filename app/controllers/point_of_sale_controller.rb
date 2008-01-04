@@ -417,7 +417,8 @@ class PointOfSaleController < ApplicationController
   end
 
   def search_product
-    @products = @organization.products.full_text_search(params[:search])
+    str = params[:search].blank? ? '*' : params[:search]
+    @products = @organization.products.full_text_search(str)
     render :action => 'search_product', :layout => false
   end
 
@@ -430,7 +431,8 @@ class PointOfSaleController < ApplicationController
   end
 
   def search_customer
-    @customers = @organization.customers.full_text_search(params[:search])
+    str = params[:search].blank? ? '*' : params[:search]
+    @customers = @organization.customers.full_text_search(str)
     render :action => 'search_customer', :layout => false
   end
 

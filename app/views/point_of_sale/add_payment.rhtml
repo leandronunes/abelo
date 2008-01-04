@@ -2,6 +2,7 @@
 <%= title _('Coupon Open') %>
 
   <div id="cumpom_bar">
+    <%= link_to_popup content_tag('span', _('Search Customer')), {:action => 'popup_customer'}, {:accesskey => 'p', :class => 'button bt_big search_customer with_text'}, 'select_customer', 'abelo_payment_customer'  %>
     <%= link_to content_tag('span', _('Cancel Sale')), {:action => 'cancel', :id => @sale}, :accesskey => 'c', :class => 'button bt_big cancel_sale with_text' %>
     <%= link_to content_tag('span', _('Cancel Payment')), {:action => 'coupon_open', :id => @sale}, :accesskey => 'p', :class => 'button bt_big currency_minus with_text' %>
   </div>

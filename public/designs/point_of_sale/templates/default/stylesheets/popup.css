@@ -1,11 +1,13 @@
-#popup_list{
+#product_search li,
+#customer_search li {
   list-style:none;
-  text-align: center;
+  margin: 10px 0px 0px 0px;
+  padding: 2px;
 }
 
-#popup_list li {
-  margin: 10px 0px 15px 0px;
-  padding: 2px;
+#product_search li a,
+#customer_search li a{
+  color: #a96f36;
 }
 
 .popup {
@@ -15,7 +17,7 @@
   left: 50%;
   margin-left: -200px;
   z-index: 100;
-  border: 2px solid #69D;
+  border: 2px solid #a86;
   background: white;
   padding: 0.5em;
   padding-top: 2px;
@@ -24,15 +26,19 @@
   z-index: 1002;
 }
 .popup h2 {
-  background: #69D;
+  background: #dc7;
   color: white;
   margin: 0px;
-  margin-bottom: 0.5em;
-  padding: 0.25em;
+  margin-bottom: 5px;
+  padding: 2px;
 }
 
+.popup h2 a{
+  font-size: 80%;
+  color: #a96f36;
+}
 .popup_background{
-  background-image: url(../images/wall.jpg);
+  background-color: #dbc775;
   position: absolute;
   left: 0px;
   right: 0px;
@@ -40,7 +46,4 @@
   bottom: 0px;
   opacity: 0.5;
   z-index: 1001;
-  height: 2000px;
 }
-
-

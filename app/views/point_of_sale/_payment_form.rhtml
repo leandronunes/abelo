@@ -1,9 +1,4 @@
 <%= error_messages_for :ledger %>
-
-<div id="search_product">
-  <%= link_to_popup content_tag('span', _('Search Customer')), {:action => 'popup_customer'}, {:accesskey => 'p', :class => 'button button_search'}, 'select_customer', 'abelo_payment_customer'  %>
-</div>
-
 <div id="payment_details">
   <div class="info_field" id="abelo_payment_customer">
     <label name="sale_customer"> <%= _('Customer') %>: </label>

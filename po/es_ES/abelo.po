@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: abelo 0.4.1\n"
-"POT-Creation-Date: 2007-12-26 14:39-0300\n"
+"POT-Creation-Date: 2008-01-04 12:20-0300\n"
 "PO-Revision-Date: 2007-01-06 10:39-0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -76,7 +76,7 @@ msgstr ""
 #: app/models/system_actor.rb:49 app/models/document.rb:74
 #: app/models/document_display.rb:14 app/models/category.rb:42
 #: app/models/organization.rb:90 app/views/sales/_sales_table.rhtml:4
-#: app/views/point_of_sale/_payment_form.rhtml:9
+#: app/views/point_of_sale/_payment_form.rhtml:4
 #: app/views/documents/_form.rhtml:23 app/views/categories/_menu.rhtml:3
 #: app/views/categories/index.rhtml:5
 msgid "Customer"
@@ -251,8 +251,7 @@ msgstr "Departamento criado com sucesso."
 msgid "Department was successfully updated."
 msgstr "Departamento atualizado com sucesso."
 
-#: app/controllers/sales_controller.rb:21 app/helpers/support/menu.rb:11
-#: app/views/sales/list.rhtml:2
+#: app/controllers/sales_controller.rb:21 app/views/sales/list.rhtml:2
 #, fuzzy
 msgid "Sales"
 msgstr "Usuário"
@@ -336,26 +335,26 @@ msgstr "Item do documento atualizado com sucesso."
 msgid "The user %s don't have permissions to cancel a coupon."
 msgstr ""
 
-#: app/controllers/point_of_sale_controller.rb:116
-#: app/controllers/point_of_sale_controller.rb:128
-#: app/controllers/point_of_sale_controller.rb:149
+#: app/controllers/point_of_sale_controller.rb:110
+#: app/controllers/point_of_sale_controller.rb:122
+#: app/controllers/point_of_sale_controller.rb:143
 msgid "The cash was added with success"
 msgstr ""
 
-#: app/controllers/point_of_sale_controller.rb:161
+#: app/controllers/point_of_sale_controller.rb:155
 msgid "The cash was removed with success"
 msgstr ""
 
-#: app/controllers/point_of_sale_controller.rb:188
+#: app/controllers/point_of_sale_controller.rb:182
 #, fuzzy
 msgid "Closing Till"
 msgstr "Loja"
 
-#: app/controllers/point_of_sale_controller.rb:288
+#: app/controllers/point_of_sale_controller.rb:282
 msgid "Only sales supervisor can cancel a coupon"
 msgstr ""
 
-#: app/controllers/point_of_sale_controller.rb:477
+#: app/controllers/point_of_sale_controller.rb:473
 msgid "you cannot access this functionality whitou a fiscal printer"
 msgstr ""
 
@@ -870,7 +869,7 @@ msgstr "Categoria"
 
 #: app/models/ledger_display.rb:29 app/views/stock/_payment_form.rhtml:17
 #: app/views/ledgers/_form.rhtml:20
-#: app/views/point_of_sale/_payment_form.rhtml:23
+#: app/views/point_of_sale/_payment_form.rhtml:18
 #, fuzzy
 msgid "Payment Method"
 msgstr "Venda"
@@ -878,7 +877,7 @@ msgstr "Venda"
 #: app/models/ledger_display.rb:30
 #: app/views/shared_payments/_table_ledgers.rhtml:10
 #: app/views/stock/_payment_form.rhtml:11
-#: app/views/point_of_sale/_payment_form.rhtml:16
+#: app/views/point_of_sale/_payment_form.rhtml:11
 #: app/views/point_of_sale/_cash_form.rhtml:5
 #: app/views/point_of_sale/_form_open_till.rhtml:3
 #, fuzzy
@@ -1394,7 +1393,7 @@ msgid "The price must be greater than 0"
 msgstr ""
 
 #: app/models/sale_item.rb:41
-msgid "You cannot add a item with the product with id: %s"
+msgid "You cannot add a item with the product code %s"
 msgstr ""
 
 #: app/models/department.rb:-
@@ -3220,8 +3219,8 @@ msgstr ""
 #: app/helpers/point_of_sale_helper.rb:12
 #: app/helpers/support/display_actions.rb:13
 #: app/helpers/application_helper.rb:62
-#: app/views/point_of_sale/popup_product.rhtml:5
-#: app/views/point_of_sale/popup_customer.rhtml:5
+#: app/views/point_of_sale/popup_product.rhtml:8
+#: app/views/point_of_sale/popup_customer.rhtml:8
 msgid "Search"
 msgstr ""
 
@@ -3346,7 +3345,7 @@ msgstr ""
 #: app/helpers/application_helper.rb:112 app/views/layouts/login.rhtml:5
 #: app/views/layouts/organization.rhtml:5 app/views/layouts/default.rhtml:27
 #: app/views/layouts/point_of_sale.rhtml:5
-#: app/views/layouts/point_of_sale.rhtml:45
+#: app/views/layouts/point_of_sale.rhtml:42
 #: app/views/layouts/comatose_admin.rhtml:5
 msgid "Abelo"
 msgstr ""
@@ -3781,7 +3780,7 @@ msgstr "departamento"
 msgid "Salesman: <i>%s</i>"
 msgstr ""
 
-#: app/views/layouts/point_of_sale.rhtml:49
+#: app/views/layouts/point_of_sale.rhtml:45
 msgid "Access Keys Help"
 msgstr ""
 
@@ -3949,6 +3948,20 @@ msgstr ""
 msgid "Remove"
 msgstr ""
 
+#: app/views/point_of_sale/popup_product.rhtml:2
+#: app/views/point_of_sale/popup_customer.rhtml:2
+#: app/views/point_of_sale/_product_info.rhtml:7
+#, fuzzy
+msgid "Search Product"
+msgstr "Busca produto"
+
+#: app/views/point_of_sale/popup_product.rhtml:3
+#: app/views/point_of_sale/popup_customer.rhtml:3
+#: app/views/document_items/_new.rhtml:8
+#: app/views/document_sections/_new.rhtml:8
+msgid "Close"
+msgstr ""
+
 #: app/views/point_of_sale/_table.rhtml:9
 msgid "Unitary price"
 msgstr ""
@@ -3995,20 +4008,20 @@ msgid "Coupon Open"
 msgstr ""
 
 #: app/views/point_of_sale/add_payment.rhtml:5
-#: app/views/point_of_sale/_login_form.rhtml:12
+#, fuzzy
+msgid "Search Customer"
+msgstr "Cliente"
+
+#: app/views/point_of_sale/add_payment.rhtml:6
+#: app/views/point_of_sale/_login_form.rhtml:13
 #: app/views/point_of_sale/payment.rhtml:5
 msgid "Cancel Sale"
 msgstr ""
 
-#: app/views/point_of_sale/add_payment.rhtml:6
+#: app/views/point_of_sale/add_payment.rhtml:7
 #: app/views/point_of_sale/payment.rhtml:6
 msgid "Cancel Payment"
 msgstr ""
-
-#: app/views/point_of_sale/_product_info.rhtml:7
-#, fuzzy
-msgid "Search Product"
-msgstr "Busca produto"
 
 #: app/views/point_of_sale/_product_info.rhtml:12
 #: app/views/document_items/_new.rhtml:9
@@ -4024,17 +4037,12 @@ msgstr "Tamanho"
 msgid "Unitary Value"
 msgstr ""
 
-#: app/views/point_of_sale/_payment_form.rhtml:4
-#, fuzzy
-msgid "Search Customer"
-msgstr "Cliente"
-
-#: app/views/point_of_sale/_payment_form.rhtml:39
+#: app/views/point_of_sale/_payment_form.rhtml:34
 #, fuzzy
 msgid "Payment method details:"
 msgstr "Venda"
 
-#: app/views/point_of_sale/_payment_form.rhtml:47
+#: app/views/point_of_sale/_payment_form.rhtml:42
 msgid "Pay"
 msgstr ""
 
@@ -4078,6 +4086,10 @@ msgstr ""
 msgid "Supervisor"
 msgstr "Fornecedores"
 
+#: app/views/point_of_sale/_login_form.rhtml:12
+msgid "Voltar"
+msgstr ""
+
 #: app/views/point_of_sale/coupon_open.rhtml:7
 msgid "Cancel sale"
 msgstr ""
@@ -4090,10 +4102,6 @@ msgstr ""
 msgid "Coupon Cancel"
 msgstr ""
 
-#: app/views/point_of_sale/cancel.rhtml:4
-msgid "Voltar"
-msgstr ""
-
 #: app/views/point_of_sale/index.rhtml:1
 #, fuzzy
 msgid "Till"
@@ -4101,11 +4109,6 @@ msgstr "Loja"
 
 #: app/views/document_items/_new.rhtml:3
 msgid "New item"
-msgstr ""
-
-#: app/views/document_items/_new.rhtml:8
-#: app/views/document_sections/_new.rhtml:8
-msgid "Close"
 msgstr ""
 
 #: app/views/document_items/_form.rhtml:4

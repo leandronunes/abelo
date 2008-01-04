@@ -8,11 +8,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: abelo 0.4.1\n"
-"POT-Creation-Date: 2007-12-26 14:39-0300\n"
-"PO-Revision-Date: 2007-11-29 08:59-0300\n"
+"POT-Creation-Date: 2008-01-04 12:20-0300\n"
+"PO-Revision-Date: 2008-01-04 12:49-0300\n"
 "Last-Translator: Leandro Nunes dos Santos <leandronunes@colivre.coop.br>\n"
-"Language-Team: Krishnamurti Lelis Lima Vieira Nunes <krishna@colivre.coop."
-"br>\n"
+"Language-Team: Krishnamurti Lelis Lima Vieira Nunes "
+"<krishna@colivre.coop.br>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -76,7 +76,7 @@ msgstr "Iniciar"
 #: app/models/system_actor.rb:49 app/models/document.rb:74
 #: app/models/document_display.rb:14 app/models/category.rb:42
 #: app/models/organization.rb:90 app/views/sales/_sales_table.rhtml:4
-#: app/views/point_of_sale/_payment_form.rhtml:9
+#: app/views/point_of_sale/_payment_form.rhtml:4
 #: app/views/documents/_form.rhtml:23 app/views/categories/_menu.rhtml:3
 #: app/views/categories/index.rhtml:5
 msgid "Customer"
@@ -238,11 +238,9 @@ msgstr "Departamento criado com sucesso."
 msgid "Department was successfully updated."
 msgstr "Departamento atualizado com sucesso."
 
-#: app/controllers/sales_controller.rb:21 app/helpers/support/menu.rb:11
-#: app/views/sales/list.rhtml:2
-#, fuzzy
+#: app/controllers/sales_controller.rb:21 app/views/sales/list.rhtml:2
 msgid "Sales"
-msgstr "Usuário"
+msgstr "Vendas"
 
 #: app/controllers/products_controller.rb:68
 msgid "The product was successfully created and added to stock."
@@ -319,34 +317,30 @@ msgid "Document proposal item was successfuly updated."
 msgstr "Item proposta comercial atualizado com sucesso."
 
 #: app/controllers/point_of_sale_controller.rb:29
-#, fuzzy
 msgid "The user %s don't have permissions to cancel a coupon."
-msgstr "Você não tem permissão para cancelar um cupom."
+msgstr "O usuário %s não tem permissão para cancelar um cupom."
 
-#: app/controllers/point_of_sale_controller.rb:116
-#: app/controllers/point_of_sale_controller.rb:128
-#: app/controllers/point_of_sale_controller.rb:149
-#, fuzzy
+#: app/controllers/point_of_sale_controller.rb:110
+#: app/controllers/point_of_sale_controller.rb:122
+#: app/controllers/point_of_sale_controller.rb:143
 msgid "The cash was added with success"
 msgstr "O dinheiro foi adicionado com sucesso"
 
-#: app/controllers/point_of_sale_controller.rb:161
-#, fuzzy
+#: app/controllers/point_of_sale_controller.rb:155
 msgid "The cash was removed with success"
 msgstr "O dinheiro foi removido com sucesso"
 
-#: app/controllers/point_of_sale_controller.rb:188
-#, fuzzy
+#: app/controllers/point_of_sale_controller.rb:182
 msgid "Closing Till"
-msgstr "Abrir Caixa"
+msgstr "Fechando Caixa"
 
-#: app/controllers/point_of_sale_controller.rb:288
+#: app/controllers/point_of_sale_controller.rb:282
 msgid "Only sales supervisor can cancel a coupon"
 msgstr "Somente supervisores de vendas podem cancelar um cupom."
 
-#: app/controllers/point_of_sale_controller.rb:477
+#: app/controllers/point_of_sale_controller.rb:473
 msgid "you cannot access this functionality whitou a fiscal printer"
-msgstr ""
+msgstr "você não pode acessar esta funcionalidade se uma impressora fiscal"
 
 #: app/controllers/document_sections_controller.rb:32
 msgid "Document section was successfuly updated."
@@ -568,50 +562,47 @@ msgstr "Nome da Apresentação"
 
 #: app/models/printer_command.rb:-
 msgid "printer command"
-msgstr ""
+msgstr "comando de impressão"
 
 #: app/models/printer_command.rb:-
 msgid "PrinterCommand|Cmd"
-msgstr ""
+msgstr "cmd"
 
 #: app/models/printer_command.rb:-
 msgid "PrinterCommand|Cmd params"
-msgstr ""
+msgstr "cmd parametros"
 
 #: app/models/printer_command.rb:-
-#, fuzzy
 msgid "PrinterCommand|Owner"
 msgstr "Dono"
 
 #: app/models/printer_command.rb:-
-#, fuzzy
 msgid "PrinterCommand|Owner type"
 msgstr "Tipo de dono"
 
 #: app/models/printer_command.rb:-
 msgid "PrinterCommand|Status"
-msgstr ""
+msgstr "Status"
 
 #: app/models/printer_command.rb:-
 msgid "PrinterCommand|Datetime"
-msgstr ""
+msgstr "Data"
 
 #: app/models/printer_command.rb:-
 msgid "PrinterCommand|Till"
-msgstr ""
+msgstr "Venda"
 
 #: app/models/printer_command.rb:-
 msgid "PrinterCommand|Sequence number"
-msgstr ""
+msgstr "Número de sequência"
 
 #: app/models/printer_command.rb:26
-#, fuzzy
 msgid "You cannot have more than one %s command pending"
-msgstr "Você não pode ter duas vendas pendentes"
+msgstr "Você não pode ter mais de um %s comando pendente"
 
 #: app/models/printer_command.rb:103
 msgid "Some error happen and you have to solve it"
-msgstr ""
+msgstr "Algum erro aconteceu e você tem que resolvê-lo"
 
 #: app/models/stock_virtual_display.rb:9
 #: app/models/stock_devolution_display.rb:11 app/models/category.rb:36
@@ -789,7 +780,7 @@ msgstr "Campos do Documento"
 #: app/models/configuration_display.rb:65
 #: app/views/configuration/_form.rhtml:65
 msgid "Has Fiscal Printer"
-msgstr ""
+msgstr "Tem impressora fiscal"
 
 #: app/models/costumer_category_display.rb:12
 #: app/models/category_display.rb:10
@@ -816,14 +807,14 @@ msgstr "Categoria"
 
 #: app/models/ledger_display.rb:29 app/views/stock/_payment_form.rhtml:17
 #: app/views/ledgers/_form.rhtml:20
-#: app/views/point_of_sale/_payment_form.rhtml:23
+#: app/views/point_of_sale/_payment_form.rhtml:18
 msgid "Payment Method"
 msgstr "Forma de Pagamento"
 
 #: app/models/ledger_display.rb:30
 #: app/views/shared_payments/_table_ledgers.rhtml:10
 #: app/views/stock/_payment_form.rhtml:11
-#: app/views/point_of_sale/_payment_form.rhtml:16
+#: app/views/point_of_sale/_payment_form.rhtml:11
 #: app/views/point_of_sale/_cash_form.rhtml:5
 #: app/views/point_of_sale/_form_open_till.rhtml:3
 msgid "Value"
@@ -1138,17 +1129,14 @@ msgid "Sale|User"
 msgstr "Usuário"
 
 #: app/models/sale.rb:-
-#, fuzzy
 msgid "Sale|Owner type"
 msgstr "Tipo de dono"
 
 #: app/models/sale.rb:-
-#, fuzzy
 msgid "Sale|Owner"
-msgstr "Usuário"
+msgstr "Dono"
 
 #: app/models/sale.rb:-
-#, fuzzy
 msgid "Sale|Datetime"
 msgstr "Data"
 
@@ -1161,9 +1149,8 @@ msgid "Only open sales can be cancelled"
 msgstr "Somente vendas abertas podem ser canceladas"
 
 #: app/models/sale.rb:143
-#, fuzzy
 msgid "None"
-msgstr "Não"
+msgstr "Nenhum"
 
 #: app/models/document_section.rb:-
 msgid "document section"
@@ -1286,19 +1273,16 @@ msgid "SaleItem|Unitary price"
 msgstr "Preço unitário"
 
 #: app/models/sale_item.rb:-
-#, fuzzy
 msgid "SaleItem|Status"
 msgstr "Estado"
 
 #: app/models/sale_item.rb:37
-#, fuzzy
 msgid "The price must be greater than 0"
-msgstr "O valor deve ser maior ou igual  a 0"
+msgstr "O preço deve ser maior ou igual  a 0"
 
 #: app/models/sale_item.rb:41
-#, fuzzy
-msgid "You cannot add a item with the product with id: %s"
-msgstr "Você não pode adicionar dinheiro com o tipo diferente de %s"
+msgid "You cannot add a item with the product code %s"
+msgstr "Você não pode adicionar um ítem com o código do produto %s"
 
 #: app/models/department.rb:-
 msgid "department"
@@ -1341,40 +1325,36 @@ msgid "Money"
 msgstr "Dinheiro"
 
 #: app/models/till.rb:-
-#, fuzzy
 msgid "till"
-msgstr "Caixa"
+msgstr "caixa"
 
 #: app/models/till.rb:-
 msgid "Till|Datetime"
-msgstr ""
+msgstr "Data"
 
 #: app/models/till.rb:-
-#, fuzzy
 msgid "Till|Status"
 msgstr "Estado"
 
 #: app/models/till.rb:-
 msgid "Till|Printer"
-msgstr ""
+msgstr "Impressora"
 
 #: app/models/till.rb:-
-#, fuzzy
 msgid "Till|User"
 msgstr "Usuário"
 
 #: app/models/till.rb:-
-#, fuzzy
 msgid "Till|Organization"
 msgstr "Organização"
 
 #: app/models/till.rb:22
 msgid "You already have a till open."
-msgstr ""
+msgstr "Você já tem uma venda aberta."
 
 #: app/models/till.rb:26
 msgid "You cannot open a till whithout the printer command"
-msgstr ""
+msgstr "Você não pode abrir uma venda sem um comando de impressora"
 
 #: app/models/mass_mail.rb:-
 msgid "mass mail"
@@ -2148,6 +2128,7 @@ msgstr "Você não pode adicionar dinheiro com o tipo diferente de %s"
 #: app/models/add_cash.rb:24 app/models/remove_cash.rb:25
 msgid "You cannot add money on till without create the printer command"
 msgstr ""
+"Você não pode adicionar dinheiro na venda sem criar um comando de impressora"
 
 #: app/models/stock_devolution.rb:3 app/models/stock_in.rb:8
 msgid "The amount must be a positive number"
@@ -2323,9 +2304,8 @@ msgid "The value must be minor or equal to 0"
 msgstr "O valor deve ser menor ou igual  a 0"
 
 #: app/models/sintegra.rb:-
-#, fuzzy
 msgid "sintegra"
-msgstr "Litro"
+msgstr "sintegra"
 
 #: app/models/bank_account_display.rb:10 app/models/check_display.rb:20
 #: app/models/debit_card_display.rb:17
@@ -2885,9 +2865,8 @@ msgid "Ledger|Automatic debit account number"
 msgstr "Número da conta do débito automático"
 
 #: app/models/ledger.rb:-
-#, fuzzy
 msgid "Ledger|Status"
-msgstr "Data"
+msgstr "Estado"
 
 #: app/models/ledger.rb:171 app/models/ledger.rb:178
 msgid "This function cannot be accessed directly"
@@ -3040,8 +3019,8 @@ msgstr "RG"
 #: app/helpers/point_of_sale_helper.rb:12
 #: app/helpers/support/display_actions.rb:13
 #: app/helpers/application_helper.rb:62
-#: app/views/point_of_sale/popup_product.rhtml:5
-#: app/views/point_of_sale/popup_customer.rhtml:5
+#: app/views/point_of_sale/popup_product.rhtml:8
+#: app/views/point_of_sale/popup_customer.rhtml:8
 msgid "Search"
 msgstr "Busca"
 
@@ -3162,7 +3141,7 @@ msgstr "%{year}/%{month}/%{day}"
 #: app/helpers/application_helper.rb:112 app/views/layouts/login.rhtml:5
 #: app/views/layouts/organization.rhtml:5 app/views/layouts/default.rhtml:27
 #: app/views/layouts/point_of_sale.rhtml:5
-#: app/views/layouts/point_of_sale.rhtml:45
+#: app/views/layouts/point_of_sale.rhtml:42
 #: app/views/layouts/comatose_admin.rhtml:5
 msgid "Abelo"
 msgstr "Abelo"
@@ -3467,9 +3446,8 @@ msgid "There is no such page: %s"
 msgstr "Essa página não existe: %s"
 
 #: app/views/sales/_sales_table.rhtml:3
-#, fuzzy
 msgid "Status"
-msgstr "Iniciar"
+msgstr "Estado"
 
 #: app/views/sales/_sales_table.rhtml:6 app/views/ledgers/_budget.rhtml:37
 #: app/views/point_of_sale/_table.rhtml:27
@@ -3577,7 +3555,7 @@ msgstr "Editar preferências"
 msgid "Salesman: <i>%s</i>"
 msgstr "Vendedor: <i>%s</i>"
 
-#: app/views/layouts/point_of_sale.rhtml:49
+#: app/views/layouts/point_of_sale.rhtml:45
 msgid "Access Keys Help"
 msgstr "Ajuda para senhas"
 
@@ -3738,6 +3716,19 @@ msgstr "Ponto de venda: Remove Dinheiro"
 msgid "Remove"
 msgstr "Remover"
 
+#: app/views/point_of_sale/popup_product.rhtml:2
+#: app/views/point_of_sale/popup_customer.rhtml:2
+#: app/views/point_of_sale/_product_info.rhtml:7
+msgid "Search Product"
+msgstr "Procurar Produto"
+
+#: app/views/point_of_sale/popup_product.rhtml:3
+#: app/views/point_of_sale/popup_customer.rhtml:3
+#: app/views/document_items/_new.rhtml:8
+#: app/views/document_sections/_new.rhtml:8
+msgid "Close"
+msgstr "Fechar"
+
 #: app/views/point_of_sale/_table.rhtml:9
 msgid "Unitary price"
 msgstr "Preço unitário"
@@ -3751,9 +3742,8 @@ msgid "Payments"
 msgstr "Pagamentos"
 
 #: app/views/point_of_sale/change.rhtml:2
-#, fuzzy
 msgid "Change"
-msgstr "Me Atualize"
+msgstr "Atualizar"
 
 #: app/views/point_of_sale/change.rhtml:6
 #: app/views/point_of_sale/change.rhtml:10
@@ -3763,20 +3753,17 @@ msgstr "Total: %s"
 
 #: app/views/point_of_sale/change.rhtml:7
 #: app/views/point_of_sale/change.rhtml:11
-#, fuzzy
 msgid "Total Payment: %s"
-msgstr "Pagamentos %s"
+msgstr "Total de Pagamentos: %s"
 
 #: app/views/point_of_sale/change.rhtml:8
 #: app/views/point_of_sale/change.rhtml:12
-#, fuzzy
 msgid "Change: %s"
-msgstr "Me Atualize"
+msgstr "Troco: %s"
 
 #: app/views/point_of_sale/change.rhtml:13
-#, fuzzy
 msgid "End Sale"
-msgstr "Cancelar venda"
+msgstr "Finalizar Venda"
 
 #: app/views/point_of_sale/add_payment.rhtml:2
 #: app/views/point_of_sale/payment.rhtml:2
@@ -3785,20 +3772,19 @@ msgid "Coupon Open"
 msgstr "Abrir Cupom"
 
 #: app/views/point_of_sale/add_payment.rhtml:5
-#: app/views/point_of_sale/_login_form.rhtml:12
+msgid "Search Customer"
+msgstr "Procurar Consumidor"
+
+#: app/views/point_of_sale/add_payment.rhtml:6
+#: app/views/point_of_sale/_login_form.rhtml:13
 #: app/views/point_of_sale/payment.rhtml:5
 msgid "Cancel Sale"
 msgstr "Cancelar venda"
 
-#: app/views/point_of_sale/add_payment.rhtml:6
+#: app/views/point_of_sale/add_payment.rhtml:7
 #: app/views/point_of_sale/payment.rhtml:6
 msgid "Cancel Payment"
 msgstr "Cancelar pagamento"
-
-#: app/views/point_of_sale/_product_info.rhtml:7
-#, fuzzy
-msgid "Search Product"
-msgstr "Busca produto"
 
 #: app/views/point_of_sale/_product_info.rhtml:12
 #: app/views/document_items/_new.rhtml:9
@@ -3813,17 +3799,11 @@ msgstr "Código do produto"
 msgid "Unitary Value"
 msgstr "Valor Unitário"
 
-#: app/views/point_of_sale/_payment_form.rhtml:4
-#, fuzzy
-msgid "Search Customer"
-msgstr "Selecionar consumidor"
-
-#: app/views/point_of_sale/_payment_form.rhtml:39
-#, fuzzy
+#: app/views/point_of_sale/_payment_form.rhtml:34
 msgid "Payment method details:"
-msgstr "Formas de Pagamento"
+msgstr "Detalhes das formas de pagamento:"
 
-#: app/views/point_of_sale/_payment_form.rhtml:47
+#: app/views/point_of_sale/_payment_form.rhtml:42
 msgid "Pay"
 msgstr "Pagamento"
 
@@ -3848,15 +3828,13 @@ msgstr "Você tem uma venda pendente!"
 
 #: app/views/point_of_sale/till_open.rhtml:17
 #: app/views/point_of_sale/till_open.rhtml:19
-#, fuzzy
 msgid "New Sale"
-msgstr "Nova venda"
+msgstr "Nova Venda"
 
 #: app/views/point_of_sale/till_open.rhtml:26
 #: app/views/point_of_sale/till_open.rhtml:28
-#, fuzzy
 msgid "End Till"
-msgstr "Abrir Caixa"
+msgstr "Fechar Caixa"
 
 #: app/views/point_of_sale/open_till.rhtml:1
 #: app/views/point_of_sale/index.rhtml:6
@@ -3866,6 +3844,10 @@ msgstr "Abrir Caixa"
 #: app/views/point_of_sale/_login_form.rhtml:4
 msgid "Supervisor"
 msgstr "Supervisor"
+
+#: app/views/point_of_sale/_login_form.rhtml:12
+msgid "Voltar"
+msgstr "Voltar"
 
 #: app/views/point_of_sale/coupon_open.rhtml:7
 msgid "Cancel sale"
@@ -3879,10 +3861,6 @@ msgstr "Pagamento"
 msgid "Coupon Cancel"
 msgstr "Cancelar Cupom"
 
-#: app/views/point_of_sale/cancel.rhtml:4
-msgid "Voltar"
-msgstr "Voltar"
-
 #: app/views/point_of_sale/index.rhtml:1
 msgid "Till"
 msgstr "Caixa"
@@ -3890,11 +3868,6 @@ msgstr "Caixa"
 #: app/views/document_items/_new.rhtml:3
 msgid "New item"
 msgstr "Novo item"
-
-#: app/views/document_items/_new.rhtml:8
-#: app/views/document_sections/_new.rhtml:8
-msgid "Close"
-msgstr "Fechar"
 
 #: app/views/document_items/_form.rhtml:4
 msgid "quantity"
@@ -4366,9 +4339,8 @@ msgid "Payment status ok?"
 msgstr "Estado do pagamento OK?"
 
 #: app/views/products/list.rhtml:1
-#, fuzzy
 msgid "Listing Products"
-msgstr "Listando produtos"
+msgstr "Listando Produtos"
 
 #: app/views/products/show.rhtml:2
 msgid "Product %s"

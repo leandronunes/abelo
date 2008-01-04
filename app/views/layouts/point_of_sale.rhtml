@@ -33,17 +33,13 @@
 
 <div id="content">
   <div id='abelo_action'>
-  <%= yield %>
+    <%= yield %>
   </div>
-  <div id="fiscal_printer_info"><%= @printer_command %></div>
-
 </div><!-- content -->
 
 
 <div id="footer">
-
-<div id="banner_bottom"><span> <%= _('Abelo') %> </span></div>
-
+  <div id="banner_bottom"><span> <%= _('Abelo') %> </span></div>
 </div><!-- footer -->
 
 <%= link_to_function content_tag(:span,_('Access Keys Help')), "showAccessKeys({intro: '#{_('This are the access keys on this page:')}'})", :id => 'show_access_keys', :class => 'button help', :accesskey => 'h' %> 

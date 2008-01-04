@@ -10,14 +10,8 @@
 <div id="sale_details">
 
   <%= error_messages_for 'sale' %>
-  <% if @organization.has_fiscal_printer? %>
-    <% form_remote_tag :url => {:action => 'printer_create_coupon_cancel', :id => @sale }, :failure => "$('abelo_action').innerHTML= request.responseText" do %>
-      <%= render :partial => 'login_form' %>
-    <% end %>
-  <% else %>
-    <% form_tag :action => 'create_coupon_cancel', :id => @sale do %>
-      <%= render :partial => 'login_form' %>
-    <% end %>
+  <% form_tag :action => 'create_coupon_cancel', :id => @sale do %>
+    <%= render :partial => 'login_form' %>
   <% end %>
 
 </div>

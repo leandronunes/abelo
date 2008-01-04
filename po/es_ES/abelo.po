@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: abelo 0.4.1\n"
-"POT-Creation-Date: 2007-12-10 16:07-0300\n"
+"POT-Creation-Date: 2007-12-26 14:39-0300\n"
 "PO-Revision-Date: 2007-01-06 10:39-0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,7 +29,7 @@ msgstr ""
 #: app/views/shared_financial/_display_financial_table.rhtml:180
 #: app/views/document_items/_list.rhtml:5
 #: app/views/customer_categories/_list.rhtml:4
-#: app/views/organizations/show.rhtml:9 app/views/configuration/show.rhtml:9
+#: app/views/organizations/show.rhtml:10 app/views/configuration/show.rhtml:10
 #: app/views/stock_base/show.rhtml:11
 #: app/views/stock_base/_display_stock_table.rhtml:23
 #: app/views/contact_positions/list.rhtml:15
@@ -75,8 +75,8 @@ msgstr ""
 #: app/controllers/system_actors_controller.rb:19
 #: app/models/system_actor.rb:49 app/models/document.rb:74
 #: app/models/document_display.rb:14 app/models/category.rb:42
-#: app/models/organization.rb:90
-#: app/views/point_of_sale/_payment_customer.rhtml:1
+#: app/models/organization.rb:90 app/views/sales/_sales_table.rhtml:4
+#: app/views/point_of_sale/_payment_form.rhtml:9
 #: app/views/documents/_form.rhtml:23 app/views/categories/_menu.rhtml:3
 #: app/views/categories/index.rhtml:5
 msgid "Customer"
@@ -174,7 +174,7 @@ msgid "Users and Permissions"
 msgstr "departamento"
 
 #: app/controllers/tabs/admin_organization.rb:37 app/models/organization.rb:92
-#: app/helpers/support/menu.rb:15 app/views/users/_admin.rhtml:6
+#: app/helpers/support/menu.rb:16 app/views/users/_admin.rhtml:6
 #: app/views/public/index.rhtml:8 lib/describe_menu.rb:20
 msgid "Organizations"
 msgstr ""
@@ -251,6 +251,12 @@ msgstr "Departamento criado com sucesso."
 msgid "Department was successfully updated."
 msgstr "Departamento atualizado com sucesso."
 
+#: app/controllers/sales_controller.rb:21 app/helpers/support/menu.rb:11
+#: app/views/sales/list.rhtml:2
+#, fuzzy
+msgid "Sales"
+msgstr "Usuário"
+
 #: app/controllers/products_controller.rb:68
 #, fuzzy
 msgid "The product was successfully created and added to stock."
@@ -326,28 +332,31 @@ msgstr "Usuário atualizado com sucesso"
 msgid "Document proposal item was successfuly updated."
 msgstr "Item do documento atualizado com sucesso."
 
-#: app/controllers/point_of_sale_controller.rb:45
-msgid "You don't have a printer configured."
+#: app/controllers/point_of_sale_controller.rb:29
+msgid "The user %s don't have permissions to cancel a coupon."
 msgstr ""
 
-#: app/controllers/point_of_sale_controller.rb:108
+#: app/controllers/point_of_sale_controller.rb:116
+#: app/controllers/point_of_sale_controller.rb:128
+#: app/controllers/point_of_sale_controller.rb:149
 msgid "The cash was added with success"
 msgstr ""
 
-#: app/controllers/point_of_sale_controller.rb:130
+#: app/controllers/point_of_sale_controller.rb:161
 msgid "The cash was removed with success"
 msgstr ""
 
-#: app/controllers/point_of_sale_controller.rb:173
-msgid "You don't have permissions to cancel a coupon."
-msgstr ""
+#: app/controllers/point_of_sale_controller.rb:188
+#, fuzzy
+msgid "Closing Till"
+msgstr "Loja"
 
-#: app/controllers/point_of_sale_controller.rb:186
-msgid "This is not a product code valid"
-msgstr ""
-
-#: app/controllers/point_of_sale_controller.rb:224
+#: app/controllers/point_of_sale_controller.rb:288
 msgid "Only sales supervisor can cancel a coupon"
+msgstr ""
+
+#: app/controllers/point_of_sale_controller.rb:477
+msgid "you cannot access this functionality whitou a fiscal printer"
 msgstr ""
 
 #: app/controllers/document_sections_controller.rb:32
@@ -361,21 +370,21 @@ msgstr "Imagem adicionada com sucesso."
 
 #: app/controllers/organization_configuration_controller.rb:28
 #: app/controllers/configuration_controller.rb:50
-#: app/controllers/configuration_controller.rb:70
+#: app/controllers/configuration_controller.rb:69
 #, fuzzy
 msgid "The configurations was successfully updated."
 msgstr "Usuário atualizado com sucesso"
 
-#: app/controllers/banks_controller.rb:69 app/helpers/support/menu.rb:16
+#: app/controllers/banks_controller.rb:69 app/helpers/support/menu.rb:17
 msgid "Banks"
 msgstr ""
 
-#: app/controllers/configuration_controller.rb:82
+#: app/controllers/configuration_controller.rb:81
 #, fuzzy
 msgid "The configuration model was successfully removed"
 msgstr "Usuário atualizado com sucesso"
 
-#: app/controllers/configuration_controller.rb:84
+#: app/controllers/configuration_controller.rb:83
 msgid "This configuration cannot be removed"
 msgstr ""
 
@@ -543,14 +552,14 @@ msgstr ""
 msgid "organization display"
 msgstr "organização"
 
-#: app/models/organization_display.rb:9 app/models/configuration_display.rb:37
+#: app/models/organization_display.rb:9 app/models/configuration_display.rb:38
 #: app/models/costumer_category_display.rb:8 app/models/profile_display.rb:8
 #: app/models/credit_card_display.rb:20 app/models/category_display.rb:9
 #: app/models/ledger_category_display.rb:9 app/models/product_display.rb:10
 #: app/models/system_actor_display.rb:9 app/models/bank_display.rb:13
 #: app/models/document_display.rb:9 app/models/check_display.rb:19
 #: app/models/periodicity_display.rb:9 app/models/department_display.rb:9
-#: app/models/debit_card_display.rb:16 app/helpers/point_of_sale_helper.rb:9
+#: app/models/debit_card_display.rb:16 app/helpers/point_of_sale_helper.rb:10
 #: app/views/shared_payments/_payment_credit_card.rhtml:22
 #: app/views/shared_payments/_payment_check.rhtml:10
 #: app/views/shared_payments/_payment_debit_card.rhtml:10
@@ -642,7 +651,7 @@ msgstr ""
 #: app/models/stock_devolution_display.rb:10
 #: app/models/stock_out_display.rb:10 app/models/stock_in_display.rb:10
 #: app/models/stock_down_display.rb:10 app/views/point_of_sale/_table.rhtml:10
-#: app/views/point_of_sale/_product_info.rhtml:30
+#: app/views/point_of_sale/_product_info.rhtml:32
 #: app/views/stock_base/_form.rhtml:15
 #: app/views/stock_base/_display_stock_table.rhtml:7
 #: app/views/products/_new_stock_entry.rhtml:14
@@ -674,160 +683,165 @@ msgstr ""
 msgid "configuration display"
 msgstr "Configurações"
 
-#: app/models/configuration_display.rb:38
+#: app/models/configuration_display.rb:39
 #: app/views/configuration/_form.rhtml:5
 #, fuzzy
 msgid "Organization Name"
 msgstr "Nome"
 
-#: app/models/configuration_display.rb:39
+#: app/models/configuration_display.rb:40
 #: app/views/configuration/_form.rhtml:53
 #, fuzzy
 msgid "Product Name"
 msgstr "Tamanho"
 
-#: app/models/configuration_display.rb:40
+#: app/models/configuration_display.rb:41
 #: app/views/configuration/_form.rhtml:17
 #, fuzzy
 msgid "Department Name"
 msgstr "Nome"
 
-#: app/models/configuration_display.rb:41
+#: app/models/configuration_display.rb:42
 #: app/views/configuration/_form.rhtml:29
 #, fuzzy
 msgid "Customer Name"
 msgstr "Cliente"
 
-#: app/models/configuration_display.rb:42
+#: app/models/configuration_display.rb:43
 #: app/views/configuration/_form.rhtml:41
 #, fuzzy
 msgid "Document Name"
 msgstr "Nome"
 
-#: app/models/configuration_display.rb:43
+#: app/models/configuration_display.rb:44
 #: app/views/organization_configuration/show.rhtml:6
 #, fuzzy
 msgid "Worker Fields"
 msgstr "Trabalhadores"
 
-#: app/models/configuration_display.rb:44
+#: app/models/configuration_display.rb:45
 #: app/views/organization_configuration/show.rhtml:19
 #, fuzzy
 msgid "Worker Category Fields"
 msgstr "Categorias de Trabalhadores"
 
-#: app/models/configuration_display.rb:45
+#: app/models/configuration_display.rb:46
 #: app/views/organization_configuration/show.rhtml:32
 #, fuzzy
 msgid "Customer Fields"
 msgstr "Consumidores"
 
-#: app/models/configuration_display.rb:46
+#: app/models/configuration_display.rb:47
 #: app/views/organization_configuration/show.rhtml:45
 #, fuzzy
 msgid "Customer Category Fields"
 msgstr "Categorias de Consumidores"
 
-#: app/models/configuration_display.rb:47
+#: app/models/configuration_display.rb:48
 #: app/views/organization_configuration/show.rhtml:58
 #, fuzzy
 msgid "Supplier Fields"
 msgstr "Fornecedores"
 
-#: app/models/configuration_display.rb:48
+#: app/models/configuration_display.rb:49
 #: app/views/organization_configuration/show.rhtml:71
 #, fuzzy
 msgid "Supplier Category Fields"
 msgstr "Categorias de Fornecedores"
 
-#: app/models/configuration_display.rb:49
+#: app/models/configuration_display.rb:50
 #: app/views/organization_configuration/show.rhtml:84
 #, fuzzy
 msgid "Product Fields"
 msgstr "Produtos"
 
-#: app/models/configuration_display.rb:50
+#: app/models/configuration_display.rb:51
 #: app/views/organization_configuration/show.rhtml:97
 #, fuzzy
 msgid "Product Category Fields"
 msgstr "Categorias de Produtos"
 
-#: app/models/configuration_display.rb:51
+#: app/models/configuration_display.rb:52
 #: app/views/organization_configuration/show.rhtml:110
 #, fuzzy
 msgid "Department Fields"
 msgstr "departamento"
 
-#: app/models/configuration_display.rb:52
+#: app/models/configuration_display.rb:53
 #: app/views/organization_configuration/show.rhtml:123
 #, fuzzy
 msgid "Ledger Category Fields"
 msgstr "Categorias de Livro Caixa"
 
-#: app/models/configuration_display.rb:53
+#: app/models/configuration_display.rb:54
 #: app/views/organization_configuration/show.rhtml:136
 #, fuzzy
 msgid "Bank Account Fields"
 msgstr "departamento"
 
-#: app/models/configuration_display.rb:54
+#: app/models/configuration_display.rb:55
 #: app/views/organization_configuration/show.rhtml:149
 #, fuzzy
 msgid "Money Fields"
 msgstr "Trabalhadores"
 
-#: app/models/configuration_display.rb:55
+#: app/models/configuration_display.rb:56
 #: app/views/organization_configuration/show.rhtml:162
 #, fuzzy
 msgid "Check Fields"
 msgstr "Consumidores"
 
-#: app/models/configuration_display.rb:56
+#: app/models/configuration_display.rb:57
 #: app/views/organization_configuration/show.rhtml:175
 #, fuzzy
 msgid "Credit Card Fields"
 msgstr "Validade do cartão de crédito"
 
-#: app/models/configuration_display.rb:57
+#: app/models/configuration_display.rb:58
 #: app/views/organization_configuration/show.rhtml:188
 #, fuzzy
 msgid "Debit Card Fields"
 msgstr "departamento"
 
-#: app/models/configuration_display.rb:58
+#: app/models/configuration_display.rb:59
 #: app/views/organization_configuration/show.rhtml:201
 #, fuzzy
 msgid "Stock Virtual Fields"
 msgstr "Trabalhadores"
 
-#: app/models/configuration_display.rb:59
+#: app/models/configuration_display.rb:60
 #: app/views/organization_configuration/show.rhtml:214
 #, fuzzy
 msgid "Stock In Fields"
 msgstr "Trabalhadores"
 
-#: app/models/configuration_display.rb:60
+#: app/models/configuration_display.rb:61
 #: app/views/organization_configuration/show.rhtml:227
 #, fuzzy
 msgid "Stock Out Fields"
 msgstr "Produtos"
 
-#: app/models/configuration_display.rb:61
+#: app/models/configuration_display.rb:62
 #: app/views/organization_configuration/show.rhtml:240
 #, fuzzy
 msgid "User Fields"
 msgstr "Consumidores"
 
-#: app/models/configuration_display.rb:62
+#: app/models/configuration_display.rb:63
 #: app/views/organization_configuration/show.rhtml:253
 #, fuzzy
 msgid "Periodicity Fields"
 msgstr "Produtos"
 
-#: app/models/configuration_display.rb:63
+#: app/models/configuration_display.rb:64
 #, fuzzy
 msgid "Document Fields"
 msgstr "Nome"
+
+#: app/models/configuration_display.rb:65
+#: app/views/configuration/_form.rhtml:65
+msgid "Has Fiscal Printer"
+msgstr ""
 
 #: app/models/costumer_category_display.rb:12
 #: app/models/category_display.rb:10
@@ -856,7 +870,7 @@ msgstr "Categoria"
 
 #: app/models/ledger_display.rb:29 app/views/stock/_payment_form.rhtml:17
 #: app/views/ledgers/_form.rhtml:20
-#: app/views/point_of_sale/_payment_details.rhtml:19
+#: app/views/point_of_sale/_payment_form.rhtml:23
 #, fuzzy
 msgid "Payment Method"
 msgstr "Venda"
@@ -864,9 +878,9 @@ msgstr "Venda"
 #: app/models/ledger_display.rb:30
 #: app/views/shared_payments/_table_ledgers.rhtml:10
 #: app/views/stock/_payment_form.rhtml:11
-#: app/views/point_of_sale/open_till.rhtml:10
-#: app/views/point_of_sale/_payment_details.rhtml:12
+#: app/views/point_of_sale/_payment_form.rhtml:16
 #: app/views/point_of_sale/_cash_form.rhtml:5
+#: app/views/point_of_sale/_form_open_till.rhtml:3
 #, fuzzy
 msgid "Value"
 msgstr "venda"
@@ -889,7 +903,7 @@ msgstr ""
 #: app/models/stock_out_display.rb:9 app/models/stock_in_display.rb:9
 #: app/models/stock_down_display.rb:9
 #: app/views/shared_payments/_table_ledgers.rhtml:6
-#: app/views/stock/_payment_form.rhtml:4
+#: app/views/sales/_sales_table.rhtml:5 app/views/stock/_payment_form.rhtml:4
 #: app/views/shared_financial/_display_financial_table.rhtml:156
 #: app/views/stock_base/_form.rhtml:21
 #: app/views/stock_base/_display_stock_table.rhtml:5
@@ -1088,29 +1102,29 @@ msgstr "Categorias de Fornecedores"
 msgid "View Product Register"
 msgstr "Categorias de Produtos"
 
-#: app/models/profile.rb:195
+#: app/models/profile.rb:196
 msgid "Sales person"
 msgstr ""
 
-#: app/models/profile.rb:196
+#: app/models/profile.rb:197
 msgid "Sales Supervisor"
 msgstr ""
 
-#: app/models/profile.rb:197 app/helpers/support/menu.rb:12
+#: app/models/profile.rb:198 app/helpers/support/menu.rb:13
 #: lib/describe_menu.rb:8
 msgid "Financial"
 msgstr "Financeiro"
 
-#: app/models/profile.rb:198
+#: app/models/profile.rb:199
 #, fuzzy
 msgid "Organization Management"
 msgstr "Nome"
 
-#: app/models/profile.rb:199 app/views/layouts/default.rhtml:7
+#: app/models/profile.rb:200 app/views/layouts/default.rhtml:7
 msgid "Administration"
 msgstr ""
 
-#: app/models/profile.rb:200
+#: app/models/profile.rb:201
 msgid "Other"
 msgstr ""
 
@@ -1208,10 +1222,6 @@ msgid "Sale|Customer"
 msgstr "Cliente"
 
 #: app/models/sale.rb:-
-msgid "Sale|Date"
-msgstr "Data"
-
-#: app/models/sale.rb:-
 msgid "Sale|Status"
 msgstr "Situação"
 
@@ -1229,12 +1239,21 @@ msgstr "Categorias de Livro Caixa"
 msgid "Sale|Owner"
 msgstr "Usuário"
 
+#: app/models/sale.rb:-
+#, fuzzy
+msgid "Sale|Datetime"
+msgstr "Data"
+
 #: app/models/sale.rb:24
 msgid "You cannot have two pendings sale"
 msgstr ""
 
 #: app/models/sale.rb:86
 msgid "Only open sales can be cancelled"
+msgstr ""
+
+#: app/models/sale.rb:143
+msgid "None"
 msgstr ""
 
 #: app/models/document_section.rb:-
@@ -1277,7 +1296,7 @@ msgid "Security Code"
 msgstr ""
 
 #: app/models/credit_card_display.rb:22 app/models/system_actor_display.rb:14
-#: app/models/check_display.rb:24 app/helpers/point_of_sale_helper.rb:7
+#: app/models/check_display.rb:24 app/helpers/point_of_sale_helper.rb:8
 #: app/views/shared_payments/_payment_credit_card.rhtml:28
 #: app/views/shared_payments/_payment_check.rhtml:46
 #: app/views/system_actors/_natural_person.rhtml:2
@@ -1370,11 +1389,11 @@ msgstr "Preço unitário"
 msgid "SaleItem|Status"
 msgstr "Situação"
 
-#: app/models/sale_item.rb:36
+#: app/models/sale_item.rb:37
 msgid "The price must be greater than 0"
 msgstr ""
 
-#: app/models/sale_item.rb:40
+#: app/models/sale_item.rb:41
 msgid "You cannot add a item with the product with id: %s"
 msgstr ""
 
@@ -2416,6 +2435,11 @@ msgstr ""
 msgid "The value must be minor or equal to 0"
 msgstr ""
 
+#: app/models/sintegra.rb:-
+#, fuzzy
+msgid "sintegra"
+msgstr "Cadastro"
+
 #: app/models/bank_account_display.rb:10 app/models/check_display.rb:20
 #: app/models/debit_card_display.rb:17
 #: app/views/shared_payments/_payment_check.rhtml:3
@@ -3038,28 +3062,24 @@ msgstr "Número da conta do cheque"
 msgid "Ledger|Status"
 msgstr "Categorias de Livro Caixa"
 
-#: app/models/ledger.rb:170 app/models/ledger.rb:177
+#: app/models/ledger.rb:171 app/models/ledger.rb:178
 msgid "This function cannot be accessed directly"
 msgstr ""
 
-#: app/models/ledger.rb:187
+#: app/models/ledger.rb:188
 msgid "The value should be at least 0.01"
 msgstr ""
 
-#: app/models/ledger.rb:189
+#: app/models/ledger.rb:190
 msgid "Date cannot be set"
 msgstr ""
 
-#: app/models/ledger.rb:191
+#: app/models/ledger.rb:192
 msgid "You don't have a payment method associated to this ledger."
 msgstr ""
 
-#: app/models/ledger.rb:194
+#: app/models/ledger.rb:195
 msgid "You canno't have a payment method not include in payment category list."
-msgstr ""
-
-#: app/models/ledger.rb:199
-msgid "The value must be minor or equal to %s"
 msgstr ""
 
 #: app/models/periodicity_display.rb:10 app/views/periodicities/_form.rhtml:14
@@ -3192,14 +3212,16 @@ msgstr ""
 msgid "(-) %s"
 msgstr ""
 
-#: app/helpers/point_of_sale_helper.rb:8
+#: app/helpers/point_of_sale_helper.rb:9
 #: app/views/shared_payments/_payment_check.rhtml:40
 msgid "Rg"
 msgstr ""
 
-#: app/helpers/point_of_sale_helper.rb:11
+#: app/helpers/point_of_sale_helper.rb:12
 #: app/helpers/support/display_actions.rb:13
 #: app/helpers/application_helper.rb:62
+#: app/views/point_of_sale/popup_product.rhtml:5
+#: app/views/point_of_sale/popup_customer.rhtml:5
 msgid "Search"
 msgstr ""
 
@@ -3245,7 +3267,7 @@ msgstr "departamento"
 #: app/helpers/support/display_actions.rb:188
 #: app/helpers/support/display_actions.rb:216
 #: app/helpers/application_helper.rb:558 app/helpers/application_helper.rb:588
-#: app/views/organizations/show.rhtml:8 app/views/stock_base/show.rhtml:10
+#: app/views/organizations/show.rhtml:9 app/views/stock_base/show.rhtml:10
 #: app/views/products/images.rhtml:28 app/views/mass_mails/show.rhtml:17
 #: app/views/mass_mails/filter_categories.rhtml:8
 #: app/views/mass_mails/attach.rhtml:10 lib/document_information.rb:147
@@ -3286,9 +3308,8 @@ msgstr "Cadastro"
 
 #: app/helpers/support/display_actions.rb:217
 #: app/helpers/application_helper.rb:589 app/views/users/new.rhtml:5
-#: app/views/users/edit.rhtml:5 app/views/point_of_sale/open_till.rhtml:15
-#: app/views/point_of_sale/add_cash.rhtml:9
-#: app/views/point_of_sale/remove_cash.rhtml:7
+#: app/views/users/edit.rhtml:5 app/views/point_of_sale/_cash_form.rhtml:14
+#: app/views/point_of_sale/_form_open_till.rhtml:7
 #: app/views/document_items/_edit.rhtml:9
 #: app/views/customer_categories/edit.rhtml:6
 #: app/views/departments/_edit.rhtml:8
@@ -3323,9 +3344,9 @@ msgid "%{year}/%{month}/%{day}"
 msgstr ""
 
 #: app/helpers/application_helper.rb:112 app/views/layouts/login.rhtml:5
-#: app/views/layouts/organization.rhtml:5 app/views/layouts/default.rhtml:28
+#: app/views/layouts/organization.rhtml:5 app/views/layouts/default.rhtml:27
 #: app/views/layouts/point_of_sale.rhtml:5
-#: app/views/layouts/point_of_sale.rhtml:46
+#: app/views/layouts/point_of_sale.rhtml:45
 #: app/views/layouts/comatose_admin.rhtml:5
 msgid "Abelo"
 msgstr ""
@@ -3488,7 +3509,8 @@ msgstr ""
 #: app/views/cms/_form.rhtml:69 app/views/cms/delete.rhtml:16
 #: app/views/cms/versions.rhtml:25 app/views/users/new.rhtml:6
 #: app/views/users/signup.rhtml:15 app/views/users/edit.rhtml:7
-#: app/views/users/edit.rhtml:9 app/views/point_of_sale/open_till.rhtml:14
+#: app/views/users/edit.rhtml:9
+#: app/views/point_of_sale/_form_open_till.rhtml:6
 #: app/views/document_items/_edit.rhtml:8
 #: app/views/customer_categories/new.rhtml:7
 #: app/views/customer_categories/edit.rhtml:7
@@ -3642,6 +3664,17 @@ msgstr "produto"
 msgid "There is no such page: %s"
 msgstr ""
 
+#: app/views/sales/_sales_table.rhtml:3
+#, fuzzy
+msgid "Status"
+msgstr "Situação"
+
+#: app/views/sales/_sales_table.rhtml:6 app/views/ledgers/_budget.rhtml:37
+#: app/views/point_of_sale/_table.rhtml:27
+#: app/design_blocks/financial_forecasting/views/index.rhtml:36
+msgid "Total"
+msgstr ""
+
 #: app/views/stock/new.rhtml:1 app/views/stock_base/new.rhtml:2
 #: app/views/products/new.rhtml:12
 msgid "New stock entry for %s"
@@ -3707,7 +3740,7 @@ msgstr ""
 msgid "Organization Logo"
 msgstr "organização"
 
-#: app/views/layouts/organization.rhtml:32 app/views/layouts/default.rhtml:37
+#: app/views/layouts/organization.rhtml:32 app/views/layouts/default.rhtml:36
 #: app/views/layouts/comatose_admin.rhtml:32
 msgid "Go to"
 msgstr ""
@@ -3718,37 +3751,37 @@ msgstr ""
 msgid "My account"
 msgstr "Quantidade: "
 
-#: app/views/layouts/organization.rhtml:34 app/views/layouts/default.rhtml:40
-#: app/views/layouts/point_of_sale.rhtml:22
+#: app/views/layouts/organization.rhtml:34 app/views/layouts/default.rhtml:39
+#: app/views/layouts/point_of_sale.rhtml:21
 #: app/views/layouts/comatose_admin.rhtml:34
 msgid "Logout"
 msgstr ""
 
-#: app/views/layouts/organization.rhtml:34 app/views/layouts/default.rhtml:40
-#: app/views/layouts/point_of_sale.rhtml:22
+#: app/views/layouts/organization.rhtml:34 app/views/layouts/default.rhtml:39
+#: app/views/layouts/point_of_sale.rhtml:21
 #: app/views/layouts/comatose_admin.rhtml:34
 msgid "Exit from system?"
 msgstr ""
 
-#: app/views/layouts/default.rhtml:26
+#: app/views/layouts/default.rhtml:25
 msgid "Abelo Administration"
 msgstr ""
 
-#: app/views/layouts/default.rhtml:39
+#: app/views/layouts/default.rhtml:38
 #, fuzzy
 msgid "My Account"
 msgstr "Quantidade: "
 
-#: app/views/layouts/point_of_sale.rhtml:21
+#: app/views/layouts/point_of_sale.rhtml:20
 #, fuzzy
 msgid "Edit prederences"
 msgstr "departamento"
 
-#: app/views/layouts/point_of_sale.rhtml:27
+#: app/views/layouts/point_of_sale.rhtml:26
 msgid "Salesman: <i>%s</i>"
 msgstr ""
 
-#: app/views/layouts/point_of_sale.rhtml:50
+#: app/views/layouts/point_of_sale.rhtml:49
 msgid "Access Keys Help"
 msgstr ""
 
@@ -3767,12 +3800,7 @@ msgstr ""
 msgid "Real"
 msgstr ""
 
-#: app/views/ledgers/_budget.rhtml:37 app/views/point_of_sale/_table.rhtml:34
-#: app/design_blocks/financial_forecasting/views/index.rhtml:36
-msgid "Total"
-msgstr ""
-
-#: app/views/ledgers/_budget.rhtml:42 app/views/point_of_sale/_table.rhtml:38
+#: app/views/ledgers/_budget.rhtml:42 app/views/point_of_sale/_table.rhtml:31
 #: app/design_blocks/financial_forecasting/views/index.rhtml:41
 msgid "Balance"
 msgstr ""
@@ -3929,14 +3957,36 @@ msgstr ""
 msgid "Price"
 msgstr ""
 
-#: app/views/point_of_sale/_table.rhtml:22
-msgid "Total: %s"
-msgstr ""
-
-#: app/views/point_of_sale/_table.rhtml:26
+#: app/views/point_of_sale/_table.rhtml:19
 #, fuzzy
 msgid "Payments"
 msgstr "pagamento"
+
+#: app/views/point_of_sale/change.rhtml:2
+msgid "Change"
+msgstr ""
+
+#: app/views/point_of_sale/change.rhtml:6
+#: app/views/point_of_sale/change.rhtml:10
+#: app/views/point_of_sale/_table_items.rhtml:11
+msgid "Total: %s"
+msgstr ""
+
+#: app/views/point_of_sale/change.rhtml:7
+#: app/views/point_of_sale/change.rhtml:11
+#, fuzzy
+msgid "Total Payment: %s"
+msgstr "pagamento"
+
+#: app/views/point_of_sale/change.rhtml:8
+#: app/views/point_of_sale/change.rhtml:12
+msgid "Change: %s"
+msgstr ""
+
+#: app/views/point_of_sale/change.rhtml:13
+#, fuzzy
+msgid "End Sale"
+msgstr "Categoria"
 
 #: app/views/point_of_sale/add_payment.rhtml:2
 #: app/views/point_of_sale/payment.rhtml:2
@@ -3945,8 +3995,8 @@ msgid "Coupon Open"
 msgstr ""
 
 #: app/views/point_of_sale/add_payment.rhtml:5
+#: app/views/point_of_sale/_login_form.rhtml:12
 #: app/views/point_of_sale/payment.rhtml:5
-#: app/views/point_of_sale/cancel.rhtml:17
 msgid "Cancel Sale"
 msgstr ""
 
@@ -3955,18 +4005,37 @@ msgstr ""
 msgid "Cancel Payment"
 msgstr ""
 
+#: app/views/point_of_sale/_product_info.rhtml:7
+#, fuzzy
+msgid "Search Product"
+msgstr "Busca produto"
+
 #: app/views/point_of_sale/_product_info.rhtml:12
 #: app/views/document_items/_new.rhtml:9
 msgid "Add item"
 msgstr ""
 
-#: app/views/point_of_sale/_product_info.rhtml:15
+#: app/views/point_of_sale/_product_info.rhtml:14
 #, fuzzy
 msgid "Product code"
 msgstr "Tamanho"
 
-#: app/views/point_of_sale/_product_info.rhtml:25
+#: app/views/point_of_sale/_product_info.rhtml:27
 msgid "Unitary Value"
+msgstr ""
+
+#: app/views/point_of_sale/_payment_form.rhtml:4
+#, fuzzy
+msgid "Search Customer"
+msgstr "Cliente"
+
+#: app/views/point_of_sale/_payment_form.rhtml:39
+#, fuzzy
+msgid "Payment method details:"
+msgstr "Venda"
+
+#: app/views/point_of_sale/_payment_form.rhtml:47
+msgid "Pay"
 msgstr ""
 
 #: app/views/point_of_sale/till_open.rhtml:1
@@ -3987,12 +4056,14 @@ msgstr ""
 msgid "You have a pending sale!"
 msgstr ""
 
-#: app/views/point_of_sale/till_open.rhtml:16
+#: app/views/point_of_sale/till_open.rhtml:17
+#: app/views/point_of_sale/till_open.rhtml:19
 #, fuzzy
 msgid "New Sale"
 msgstr "Categoria"
 
-#: app/views/point_of_sale/till_open.rhtml:20
+#: app/views/point_of_sale/till_open.rhtml:26
+#: app/views/point_of_sale/till_open.rhtml:28
 #, fuzzy
 msgid "End Till"
 msgstr "Loja"
@@ -4000,15 +4071,6 @@ msgstr "Loja"
 #: app/views/point_of_sale/open_till.rhtml:1
 #: app/views/point_of_sale/index.rhtml:6
 msgid "Open Till"
-msgstr ""
-
-#: app/views/point_of_sale/_payment_details.rhtml:34
-#, fuzzy
-msgid "Payment method details:"
-msgstr "Venda"
-
-#: app/views/point_of_sale/_payment_details.rhtml:42
-msgid "Pay"
 msgstr ""
 
 #: app/views/point_of_sale/_login_form.rhtml:4
@@ -4156,223 +4218,223 @@ msgstr "Nome"
 msgid "Product Name Plural"
 msgstr "Tamanho"
 
-#: app/views/configuration/_form.rhtml:65
+#: app/views/configuration/_form.rhtml:73
 msgid "Has Worker Module"
 msgstr ""
 
-#: app/views/configuration/_form.rhtml:77
+#: app/views/configuration/_form.rhtml:86
 #: app/views/organization_configuration/edit.rhtml:11
 #, fuzzy
 msgid "Worker Display Configuration"
 msgstr "Configurações"
 
-#: app/views/configuration/_form.rhtml:84
+#: app/views/configuration/_form.rhtml:93
 #, fuzzy
 msgid "Has Worker Category Module"
 msgstr "Categorias de Trabalhadores"
 
-#: app/views/configuration/_form.rhtml:96
+#: app/views/configuration/_form.rhtml:105
 #: app/views/organization_configuration/edit.rhtml:18
 #, fuzzy
 msgid "Worker Category Display Configuration"
 msgstr "Configurações"
 
-#: app/views/configuration/_form.rhtml:103
+#: app/views/configuration/_form.rhtml:112
 #, fuzzy
 msgid "Has Customer Module"
 msgstr "Cliente"
 
-#: app/views/configuration/_form.rhtml:115
+#: app/views/configuration/_form.rhtml:124
 #: app/views/organization_configuration/edit.rhtml:25
 #, fuzzy
 msgid "Customer Display Configuration"
 msgstr "Configurações"
 
-#: app/views/configuration/_form.rhtml:122
+#: app/views/configuration/_form.rhtml:131
 #, fuzzy
 msgid "Has Customer Category Module"
 msgstr "Categorias de Consumidores"
 
-#: app/views/configuration/_form.rhtml:134
+#: app/views/configuration/_form.rhtml:143
 #: app/views/organization_configuration/edit.rhtml:32
 #, fuzzy
 msgid "Customer Category Display Configuration"
 msgstr "Configurações"
 
-#: app/views/configuration/_form.rhtml:141
+#: app/views/configuration/_form.rhtml:150
 msgid "Has Supplier Module"
 msgstr ""
 
-#: app/views/configuration/_form.rhtml:153
+#: app/views/configuration/_form.rhtml:162
 #: app/views/organization_configuration/edit.rhtml:39
 #, fuzzy
 msgid "Supplier Display Configuration"
 msgstr "Configurações"
 
-#: app/views/configuration/_form.rhtml:161
+#: app/views/configuration/_form.rhtml:170
 #, fuzzy
 msgid "Has Supplier Category Module"
 msgstr "Categorias de Fornecedores"
 
-#: app/views/configuration/_form.rhtml:173
+#: app/views/configuration/_form.rhtml:182
 #: app/views/organization_configuration/edit.rhtml:46
 #, fuzzy
 msgid "Supplier Category Display Configuration"
 msgstr "Configurações"
 
-#: app/views/configuration/_form.rhtml:180
+#: app/views/configuration/_form.rhtml:189
 #, fuzzy
 msgid "Has Product Module"
 msgstr "Tamanho"
 
-#: app/views/configuration/_form.rhtml:192
+#: app/views/configuration/_form.rhtml:201
 #: app/views/organization_configuration/edit.rhtml:53
 #, fuzzy
 msgid "Product Display Configuration"
 msgstr "Configurações"
 
-#: app/views/configuration/_form.rhtml:199
+#: app/views/configuration/_form.rhtml:208
 #, fuzzy
 msgid "Has Product Category Module"
 msgstr "Categorias de Produtos"
 
-#: app/views/configuration/_form.rhtml:211
+#: app/views/configuration/_form.rhtml:220
 #: app/views/organization_configuration/edit.rhtml:60
 #, fuzzy
 msgid "Product Category Display Configuration"
 msgstr "Configurações"
 
-#: app/views/configuration/_form.rhtml:218
+#: app/views/configuration/_form.rhtml:227
 #, fuzzy
 msgid "Has Department Module"
 msgstr "Nome"
 
-#: app/views/configuration/_form.rhtml:230
+#: app/views/configuration/_form.rhtml:239
 #: app/views/organization_configuration/edit.rhtml:67
 #, fuzzy
 msgid "Department Display Configuration"
 msgstr "Configurações"
 
-#: app/views/configuration/_form.rhtml:237
+#: app/views/configuration/_form.rhtml:246
 #, fuzzy
 msgid "Has Ledger Category Module"
 msgstr "Categorias de Livro Caixa"
 
-#: app/views/configuration/_form.rhtml:249
+#: app/views/configuration/_form.rhtml:258
 #: app/views/organization_configuration/edit.rhtml:74
 #, fuzzy
 msgid "Ledger Category Display Configuration"
 msgstr "Configurações"
 
-#: app/views/configuration/_form.rhtml:256
+#: app/views/configuration/_form.rhtml:265
 #, fuzzy
 msgid "Has BankAccount Module"
 msgstr "departamento"
 
-#: app/views/configuration/_form.rhtml:268
+#: app/views/configuration/_form.rhtml:277
 #, fuzzy
 msgid "BankAccount Display Configuration"
 msgstr "Configurações"
 
-#: app/views/configuration/_form.rhtml:276
+#: app/views/configuration/_form.rhtml:285
 msgid "Has Money Module"
 msgstr ""
 
-#: app/views/configuration/_form.rhtml:288
+#: app/views/configuration/_form.rhtml:297
 #: app/views/organization_configuration/edit.rhtml:88
 #, fuzzy
 msgid "Money Display Configuration"
 msgstr "Configurações"
 
-#: app/views/configuration/_form.rhtml:295
+#: app/views/configuration/_form.rhtml:304
 msgid "Has Check Module"
 msgstr ""
 
-#: app/views/configuration/_form.rhtml:307
+#: app/views/configuration/_form.rhtml:316
 #: app/views/organization_configuration/edit.rhtml:95
 #, fuzzy
 msgid "Check Display Configuration"
 msgstr "Configurações"
 
-#: app/views/configuration/_form.rhtml:314
+#: app/views/configuration/_form.rhtml:323
 #, fuzzy
 msgid "Has CreditCard Module"
 msgstr "Número do cartão de crédito"
 
-#: app/views/configuration/_form.rhtml:326
+#: app/views/configuration/_form.rhtml:335
 #: app/views/organization_configuration/edit.rhtml:102
 #, fuzzy
 msgid "Credit Card Display Configuration"
 msgstr "Configurações"
 
-#: app/views/configuration/_form.rhtml:334
+#: app/views/configuration/_form.rhtml:343
 msgid "Has DebitCard Module"
 msgstr ""
 
-#: app/views/configuration/_form.rhtml:346
+#: app/views/configuration/_form.rhtml:355
 #, fuzzy
 msgid "DebitCard Display Configuration"
 msgstr "Configurações"
 
-#: app/views/configuration/_form.rhtml:354
+#: app/views/configuration/_form.rhtml:363
 #, fuzzy
 msgid "Has Stock Virtual Module"
 msgstr "Trabalhadores"
 
-#: app/views/configuration/_form.rhtml:366
+#: app/views/configuration/_form.rhtml:375
 #: app/views/organization_configuration/edit.rhtml:116
 #, fuzzy
 msgid "Stock Virtual Display Configuration"
 msgstr "Configurações"
 
-#: app/views/configuration/_form.rhtml:374
+#: app/views/configuration/_form.rhtml:383
 msgid "Has Stock In Module"
 msgstr ""
 
-#: app/views/configuration/_form.rhtml:386
+#: app/views/configuration/_form.rhtml:395
 #: app/views/organization_configuration/edit.rhtml:123
 #, fuzzy
 msgid "Stock In Display Configuration"
 msgstr "Configurações"
 
-#: app/views/configuration/_form.rhtml:393
+#: app/views/configuration/_form.rhtml:402
 #, fuzzy
 msgid "Has Stock Out Module"
 msgstr "Produtos"
 
-#: app/views/configuration/_form.rhtml:405
+#: app/views/configuration/_form.rhtml:414
 #: app/views/organization_configuration/edit.rhtml:130
 #, fuzzy
 msgid "Stock Out Display Configuration"
 msgstr "Configurações"
 
-#: app/views/configuration/_form.rhtml:412
+#: app/views/configuration/_form.rhtml:421
 msgid "Has User Module"
 msgstr ""
 
-#: app/views/configuration/_form.rhtml:424
+#: app/views/configuration/_form.rhtml:433
 #: app/views/organization_configuration/edit.rhtml:137
 #, fuzzy
 msgid "User Display Configuration"
 msgstr "Configurações"
 
-#: app/views/configuration/_form.rhtml:431
+#: app/views/configuration/_form.rhtml:440
 #, fuzzy
 msgid "Has Periodicity Module"
 msgstr "Produtos"
 
-#: app/views/configuration/_form.rhtml:443
+#: app/views/configuration/_form.rhtml:452
 #: app/views/organization_configuration/edit.rhtml:144
 #, fuzzy
 msgid "Periodicity Display Configuration"
 msgstr "Configurações"
 
-#: app/views/configuration/_form.rhtml:451
+#: app/views/configuration/_form.rhtml:460
 #, fuzzy
 msgid "Has Document Module"
 msgstr "Listando Modelos de Documentos"
 
-#: app/views/configuration/_form.rhtml:463
+#: app/views/configuration/_form.rhtml:472
 #: app/views/organization_configuration/edit.rhtml:151
 #, fuzzy
 msgid "Document Display Configuration"
@@ -4577,9 +4639,10 @@ msgstr ""
 msgid "Payment status ok?"
 msgstr ""
 
-#: app/views/products/list.rhtml:2
-msgid "Listing products"
-msgstr ""
+#: app/views/products/list.rhtml:1
+#, fuzzy
+msgid "Listing Products"
+msgstr "produto"
 
 #: app/views/products/show.rhtml:2
 #, fuzzy
@@ -5065,9 +5128,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Search %s"
 #~ msgstr "produto"
-
-#~ msgid "Search product"
-#~ msgstr "Busca produto"
 
 #, fuzzy
 #~ msgid "Search department"

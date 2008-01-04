@@ -28,13 +28,7 @@ class PointOfSaleController < ApplicationController
     if !supervisor.allowed_to?(:controller => 'point_of_sale', :action => 'create_coupon_cancel')
       flash[:notice] = _("The user %s don't have permissions to cancel a coupon." % supervisor.login )
       flash.keep(:notice)
-      if @organization.has_fiscal_printer?
-        render :update do |page|
-          page.replace_html('abelo_login_form', :partial => 'login_form' )
-        end
-      else
-        redirect_to :action => 'cancel'
-      end
+      redirect_to :action => 'cancel'
     end
   end
 

@@ -36,9 +36,9 @@ class SaleItem < ActiveRecord::Base
     if self.unitary_price <= 0
       self.errors.add(:unitary_price, _('The price must be greater than 0'))
     end
-#FIXME I have to validates this?
-    if !self.sale.organization.product_ids.include?(self.product.id)
-      self.errors.add(:product_id, _("You cannot add a item with the product with id: %s") % self.product.id)
+
+    if !self.sale.organization.products.include?(self.product)
+      self.errors.add(:product_id, _("You cannot add a item with the product code %s") % self.product_code)
     end
   end
 

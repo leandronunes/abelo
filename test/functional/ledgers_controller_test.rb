@@ -7,6 +7,8 @@ class LedgersController; def rescue_action(e) raise e end; end
 class LedgersControllerTest < Test::Unit::TestCase
   fixtures :ledgers, :ledger_categories, :configurations, :bank_accounts, :environments
  
+  include Status
+
   under_organization :one
 
   def setup
@@ -26,7 +28,7 @@ class LedgersControllerTest < Test::Unit::TestCase
        :description => params[:description] || 'Some Description', 
        :bank_account => @default_bank_account, 
        :category => @ledger_category, 
-       :operational => false, :is_foreseen => false, 
+       :operational => false, :status => STATUS_PENDING, 
        :owner => @organization)
   end
 
@@ -325,14 +327,14 @@ class LedgersControllerTest < Test::Unit::TestCase
     assert_equal value, assigns(:ledger).parcel_number
   end
 
-  def test_update_is_foreseen
-    value = true
+  def test_update_status
+    value = 3
     l = Ledger.find(:first)
     assert l.valid?
-    assert_not_equal value, l.is_foreseen
-    post :update, :id => l.id, :ledger => { :is_foreseen => value}
+    assert_not_equal value, l.status
+    post :update, :id => l.id, :ledger => { :status => value}
 
-    assert_equal value, assigns(:ledger).is_foreseen
+    assert_equal value, assigns(:ledger).status
   end
 
   def test_update_number_of_parcels
@@ -444,7 +446,7 @@ class LedgersControllerTest < Test::Unit::TestCase
 
   def test_action_list_with_ledger_without_category
     Ledger.delete_all
-    @ledger = AddCash.new
+    @ledger = AddCash.new( Till.new(@organization, @user, nil))
     @ledger.payment_method = 'money'
     @ledger.date = Date.today
     @ledger.bank_account = @organization.default_bank_account

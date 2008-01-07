@@ -8,6 +8,7 @@ class ConfigurationDisplayTest < Test::Unit::TestCase
       department_name
       customer_name
       document_name
+      fiscal_printer
       worker_displays
       worker_category_displays
       customer_displays
@@ -30,6 +31,7 @@ class ConfigurationDisplayTest < Test::Unit::TestCase
       periodicity_displays
       document_displays
   ]
+
 
   def test_describe
     AVAILABLE_FIELDS_TEST.each do |field|

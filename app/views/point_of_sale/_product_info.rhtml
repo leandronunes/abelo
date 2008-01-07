@@ -1,5 +1,5 @@
 
-<div id="product_identification">
+<div id="abelo_product_identification">
   <%= @product.name unless @product.nil? %>
 </div>
 
@@ -7,7 +7,7 @@
   <%= link_to_popup content_tag('span', _('Search Product')), {:action => 'popup_product'}, {:accesskey => 'p', :class => 'button button_search'}, 'select_product', 'code_product'  %>
 </div>
     
-<% form_remote_tag :url => { :action => 'create_coupon_add_item', :id => @sale }, :failure => "$('abelo_action').innerHTML = request.responseText" do %>
+<% form_remote_tag :url => { :action => 'create_coupon_add_item'}, :failure => "$('abelo_action').innerHTML = request.responseText" do %>
         
   <%= submit_tag '', :title => _('Add item'), :id => 'button_add_product', :accesskey => 'x' %>
   <div id="code_product">
@@ -25,7 +25,7 @@
   <div id="insert_amount">
     <div id="result_amount">
       <h1><%= _('Unitary Value') %></h1>
-      <div id="value_product">&nbsp;
+      <div id="abelo_value_product">&nbsp;
         <%= @product.sell_price unless @product.nil? %>
       </div>
     </div>

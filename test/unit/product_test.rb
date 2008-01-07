@@ -17,6 +17,10 @@ class ProductTest < Test::Unit::TestCase
     @bank_account = BankAccount.find(:first)
   end
 
+  def create_product(params = {})
+    Product.create({:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization => @organization, :category => @category}.merge(params))
+  end
+
   def test_setup
     assert @organization.valid?
     assert @org.valid?
@@ -105,7 +109,9 @@ class ProductTest < Test::Unit::TestCase
   end
 
   def test_mandatory_field_unit
-    product = Product.create(:name => 'Image of product', :sell_price => 2.0, :organization_id => @org.id, :category_id => @cat_prod.id)
+    product =create_product()
+    product.unit = nil 
+    product.valid?
     assert product.errors.invalid?(:unit)
   end
 

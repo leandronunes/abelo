@@ -1,10 +1,13 @@
 
-<%= title _('Coupon Open') %>
+<%= title _('Coupon Open - Payment') %>
 
   <div id="cumpom_bar">
     <%= link_to_popup content_tag('span', _('Search Customer')), {:action => 'popup_customer'}, {:accesskey => 'p', :class => 'button bt_big search_customer with_text'}, 'select_customer', 'abelo_payment_customer'  %>
-    <%= link_to content_tag('span', _('Cancel Sale')), {:action => 'cancel', :id => @sale}, :accesskey => 'c', :class => 'button bt_big cancel_sale with_text' %>
-    <%= link_to content_tag('span', _('Cancel Payment')), {:action => 'coupon_open', :id => @sale}, :accesskey => 'p', :class => 'button bt_big currency_minus with_text' %>
+    <% if @sale.balance <= 0 %>
+      <%= link_to content_tag('span', _('Close Sale')), {:action => 'change'}, :accesskey => 'f', :class => 'button bt_big cancel_sale with_text' %>
+    <% end %>
+    <%= link_to content_tag('span', _('Cancel Sale')), {:action => 'cancel'}, :accesskey => 'c', :class => 'button bt_big cancel_sale with_text' %>
+    <%= link_to content_tag('span', _('Cancel Payment')), {:action => 'coupon_open'}, :accesskey => 'p', :class => 'button bt_big currency_minus with_text' %>
   </div>
 
 <div id="sale">

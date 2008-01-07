@@ -112,11 +112,11 @@ for_salesperson:
   - controller: 'point_of_sale'
     action: 'add_payment'
   - controller: 'point_of_sale'
-    action: 'save_customer'
+    action: 'select_customer'
   - controller: 'point_of_sale'
     action: 'payment_method'
   - controller: 'point_of_sale'
-    action: 'coupon_add_payment'
+    action: 'create_coupon_add_payment'
   - controller: 'point_of_sale'
     action: 'coupon_close'
   - controller: 'point_of_sale'
@@ -131,6 +131,10 @@ for_salesperson:
     action: 'remove_cash'
   - controller: 'point_of_sale'
     action: 'create_remove_cash'
+  - controller: 'point_of_sale'
+    action: 'search_customer'
+  - controller: 'point_of_sale'
+    action: 'popup_customer'
 for_sales_supervisor:
   id: 6
   user_id: 5

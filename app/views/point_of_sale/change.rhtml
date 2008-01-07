@@ -10,7 +10,7 @@
     <%= _("Total: %s") % @total %>
     <%= _("Total Payment: %s") % @total_payment %>
     <%= _("Change: %s") % (@total_payment - @total) %>
-    <%= link_to '<span>'+_('End Sale')+'</span>', :action => 'create_close_till' %>
+    <%= link_to '<span>'+_('End Sale')+'</span>', :action => 'create_close_sale', :sale_id => @sale %>
   <% end %>
 </div>
 

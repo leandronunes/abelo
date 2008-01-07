@@ -12,7 +12,7 @@ class Till < ActiveRecord::Base
   validates_inclusion_of :status, :in => ALL_STATUS
 
   before_validation do |till|
-    till.printer_command ||= PrinterCommand.new(till, [PrinterCommand::SUMMARIZE]) if till.organization.has_fiscal_printer?
+    till.printer_command ||= PrinterCommand.new(till, [PrinterCommand::SUMMARIZE]) if till.organization and till.organization.has_fiscal_printer?
   end
 
   def validate
@@ -28,7 +28,7 @@ class Till < ActiveRecord::Base
   end
 
   def has_fiscal_printer?
-    self.organization.has_fiscal_printer? 
+    self.organization.has_fiscal_printer? if self.organization
   end
 
   def initialize(organization, user, printer, *args)
@@ -39,7 +39,7 @@ class Till < ActiveRecord::Base
     self.printer_id = printer
   end
 
-  def self.load(organization, user, printer_id)
+  def self.load(organization, user, printer_id = nil)
     self.find(:first, :conditions => {:user_id => user, :organization_id => organization, :printer_id => printer_id, :status => STATUS_PENDING})
   end
 

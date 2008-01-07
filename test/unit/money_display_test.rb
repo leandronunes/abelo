@@ -15,7 +15,7 @@ class MoneyDisplayTest < Test::Unit::TestCase
       parcel_number
       operational
       bank_account_id
-      is_foreseen
+      status
       schedule_repeat
       schedule_periodicity_id
       schedule_interval

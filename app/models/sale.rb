@@ -14,14 +14,13 @@ class Sale < ActiveRecord::Base
   validates_inclusion_of :status, :in => ALL_STATUS
 
   after_create do |sale|
-    sale.printer_commands << PrinterCommand.new(sale.owner, [PrinterCommand::OPEN])
+    sale.printer_commands << PrinterCommand.new(sale.owner, [PrinterCommand::OPEN]) if sale.organization and sale.organization.has_fiscal_printer?
   end
 
   def validate
     pending = Sale.pending(self.owner)
-    pending ||= self
-    if pending != self
-      errors.add(:status, _('You cannot have two pendings sale'))
+    if !pending.nil? and pending != self
+      self.errors.add(:status, _('You cannot have two pendings sale'))
     end
   end
 
@@ -67,7 +66,7 @@ class Sale < ActiveRecord::Base
   # gives the pending (open) sales for a given organization and user.
   def self.pending(till)
     return nil if till.nil?
-    self.find(:first, :conditions => {:owner_id => till.id, :owner_type => till.class.class_name, :status => STATUS_PENDING} )
+    till.sales.find(:first, :conditions => {:status => STATUS_PENDING})
   end
 
   # is this sale open?
@@ -100,7 +99,7 @@ class Sale < ActiveRecord::Base
   # TODO: see if sale with no item need a payment
   def close!
     raise ArgumentError.new('Only open sales can be closed') if self.status != STATUS_PENDING
-    self.status = STATUS_DONE  if self.balance == 0
+    self.status = STATUS_DONE  if self.balance <= 0
     self.save
   end
   
@@ -126,6 +125,15 @@ class Sale < ActiveRecord::Base
     total_value - total_payment
   end
 
+  # Add a payment to the sale. Return the result of "this.ledgers<<ledger"
+  def add_payment(ledger)
+    ledger.date = Date.today
+    ledger.bank_account = self.organization.default_bank_account
+    payment_added = self.ledgers << ledger
+    self.close! if payment_added and self.balance <= 0
+    payment_added
+  end
+
   # Return the sum of payments of the sale
   def total_payment
     value = 0
@@ -135,19 +143,16 @@ class Sale < ActiveRecord::Base
     value #Making the return value more clear
   end
 
+  # Return the identifier of a customer. Now the identifier is the cpf
   def customer_identifier
     self.customer.cpf unless self.customer.nil?
   end
 
+  # Return the customer's name of the sale. If there is no customer on the sale 
+  # the string 'None' its returned
   def customer_description
     self.customer.nil? ? _('None') :  self.customer.name
   end
-
-
-#TODO remove this if it's don't needed
-#  def reload
-#    Sale.find(self.id)
-#  end
 
   def customers_products(list_products, org)
     customers = []

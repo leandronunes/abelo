@@ -4,6 +4,8 @@ class LedgerTest < Test::Unit::TestCase
 
   fixtures :bank_accounts, :categories, :ledgers, :periodicities, :ledger_categories, :sales, :sale_items
 
+  include Status
+
   def setup
     @organization = Organization.find(:first)
     @periodicity = Periodicity.create!(:organization => @organization, :name => 'Some', :number_of_days => 10)
@@ -192,9 +194,9 @@ class LedgerTest < Test::Unit::TestCase
 
   def test_precense_of_effective_date
     l = Ledger.new_ledger
+    l.status = STATUS_DONE
     l.valid?
     assert l.errors.invalid?(:effective_date)
-    assert_raise(RuntimeError){l.effective_date = 1}
     l.date = Date.today
     l.valid?
     assert !l.errors.invalid?(:effective_date)
@@ -202,11 +204,10 @@ class LedgerTest < Test::Unit::TestCase
   
   def test_precense_of_effective_date_when_is_foreseen
     l = Ledger.new_ledger
-    l.is_foreseen = true
+    l.status = STATUS_PENDING
     l.date =  Date.today
     l.valid?
     assert !l.errors.invalid?(:effective_date)
-    assert_raise(RuntimeError){l.effective_date = Date.today}
   end
 
 
@@ -222,9 +223,9 @@ class LedgerTest < Test::Unit::TestCase
 
   def test_precense_of_effective_value
     l = Ledger.new_ledger
+    l.status = STATUS_DONE
     l.valid?
     assert l.errors.invalid?(:effective_value)
-    assert_raise(RuntimeError){l.effective_value = 1}
     l.value = 1
     l.valid?
     assert !l.errors.invalid?(:effective_value)
@@ -232,11 +233,10 @@ class LedgerTest < Test::Unit::TestCase
 
   def test_precense_of_effective_value_when_is_foreseen
     l = Ledger.new_ledger
-    l.is_foreseen = true
+    l.status = STATUS_PENDING
     l.value = 1
     l.valid?
     assert !l.errors.invalid?(:effective_value)
-    assert_raise(RuntimeError){l.effective_value = 1}
   end
 
   def test_numericality_of_value
@@ -371,17 +371,6 @@ class LedgerTest < Test::Unit::TestCase
     ledger.value = sale_value
     ledger.valid?
     assert !ledger.errors.invalid?(:value)
-  end
-
-  def test_ledger_value_must_be_equal_or_minor_than_sale_value
-    sale_value = @sale.balance
-    ledger = Ledger.new_ledger    
-    ledger.valid?
-    assert ledger.errors.invalid?(:value)
-    ledger.owner = @sale
-    ledger.value = sale_value + 1
-    ledger.valid?
-    assert ledger.errors.invalid?(:value)
   end
 
 end

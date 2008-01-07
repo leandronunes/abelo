@@ -298,7 +298,7 @@ td.cell_number {
   margin: 50px 10px 0px 315px;
 }
 
-#product_identification {
+#abelo_product_identification {
   -moz-border-radius: 40px;
   display: block;
   height: 45px;
@@ -420,7 +420,7 @@ input#sale_item_amount {
   text-align: right;
 }
 
-#value_product {
+#abelo_value_product {
   font-size: 30px;
 }
 

@@ -14,7 +14,7 @@ second:
   description: 'Diapers'
   sell_price: 3.00
   unit: 'un'
-  organization_id: 2
+  organization_id: 1
   category_id: 6
   code: 2
 third:

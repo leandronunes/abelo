@@ -12,7 +12,7 @@ class PointOfSaleController < ApplicationController
 
   layout 'point_of_sale'
 
-  post_only [ :create_till_open]
+  post_only [:create_till_open, :create_coupon_add_item]
 
   skip_before_filter :check_access_control, :only => ['create_coupon_cancel']
 
@@ -38,7 +38,7 @@ class PointOfSaleController < ApplicationController
   end
 
   def index
-    till = Till.load(@organization, current_user, get_printer_id)
+    till = Till.load(@organization, current_user)
     unless till.nil?
       redirect_to :action => 'till_open'
     end
@@ -174,21 +174,18 @@ class PointOfSaleController < ApplicationController
     end
   end
 
+  def change
+    @sale = @organization.sales.find(params[:sale_id])
+    @total = @sale.total_value 
+    @total_payment = @sale.total_payment 
+  end
 
-  def printer_create_close_till
-    till = load_current_till
-
-    if till.close
-      flash[:notice] = _('Closing Till')
-      @printer_command = PrinterCommand.str_pending_command(till)
-      render :update do |page| 
-        page.replace_html('fiscal_printer_info', @printer_command)
-      end
-    else
-      render :update do |page| 
-        page.replace_html('abelo_action', :partial => 'till_open')
-      end
+  def create_close_sale
+    @sale = @organization.sales.find(params[:sale_id])
+    unless @sale.closed?
+      @sale.close!
     end
+    redirect_to :action => 'till_open'
   end
 
   def create_coupon_open
@@ -234,26 +231,17 @@ class PointOfSaleController < ApplicationController
     @payments = @sale.ledgers
   end
 
-  #FIXME make this tests
   def create_coupon_add_item
     till = load_current_till
     @sale = Sale.pending(till)
     @sale_item = SaleItem.new(@sale, params[:sale_item])
     if @sale_item.save
+      @total = @sale.total_value 
+      @total_payment = @sale.total_payment
+      @payments = @sale.ledgers
       render :update do |page|
-        if @organization.has_fiscal_printer?
-          @product = @sale_item.product
-          @printer_command = PrinterCommand.str_pending_command(till)
-          page.replace_html('abelo_add_item_panel', :partial => 'product_info')
-          page.replace_html('fiscal_printer_info', @printer_command)
-        else
-          @sale_item = SaleItem.new(@sale)
-          @total = @sale.total_value 
-          @total_payment = @sale.total_payment
-          @payments = @sale.ledgers
-          page.replace_html('abelo_table_items', :partial => 'table')
-          page.replace_html('abelo_add_item_panel', :partial => 'product_info')
-        end
+        page.replace_html('abelo_table_items', :partial => 'table')
+        page.replace_html('abelo_add_item_panel', :partial => 'product_info')
       end
     else
       @total = @sale.total_value 
@@ -267,10 +255,17 @@ class PointOfSaleController < ApplicationController
   end
 
   def refresh_product
-    @product = @organization.products.find_by_code(params[:product_code])
-    render :update do |page|
-      page.replace_html('product_identification', @product.name )
-      page.replace_html('value_product', @product.sell_price )
+    code = params[:product_code]
+    @product = @organization.products.find_by_code(code)
+    if @product.nil?
+      render :update do |page|
+        page.replace_html('abelo_product_identification', _('Invalid product code %s') % code)
+      end
+    else
+      render :update do |page|
+        page.replace_html('abelo_product_identification', @product.name )
+        page.replace_html('abelo_value_product', @product.sell_price )
+      end
     end
   end
 
@@ -300,29 +295,9 @@ class PointOfSaleController < ApplicationController
     end
   end
 
-  def printer_create_coupon_cancel
-    till = load_current_till
-    @sale = Sale.pending(till)
-
-    unless @sale.cancel!
-      @total = @sale.total_value 
-      @total_payment = @sale.total_payment 
-      @payments = @sale.ledgers
-    end
-
-    render :update do |page|
-      @printer_command = PrinterCommand.str_pending_command(till)
-      page.replace_html('fiscal_printer_info', @printer_command)
-    end
-  end
-
   def add_payment
     till = load_current_till
     @sale = Sale.pending(till)
-    unless params[:customer_id].nil?
-      @sale.customer = @organization.customers.find(params[:customer_id])
-      @sale.save
-    end
     @total = @sale.total_value 
     @total_payment = @sale.total_payment 
     @payments = @sale.ledgers
@@ -344,34 +319,22 @@ class PointOfSaleController < ApplicationController
     end
   end
 
-  def change
-    till = load_current_till
-    sale = Sale.pending(till)
-    @total = sale.total_value 
-    @total_payment = sale.total_payment 
-  end
-
   def create_coupon_add_payment
     till = load_current_till
     @sale = Sale.pending(till)
      
     @ledger = Ledger.new_ledger(params['ledger'])
-    @ledger.date = Date.today
-    @ledger.owner = @sale
-    @ledger.bank_account = @organization.default_bank_account
     @ledger_categories =  @organization.sale_ledger_categories_by_payment_method(@ledger.payment_method)
     @total = @sale.total_value 
     @total_payment = @sale.total_payment 
     @banks = Bank.find(:all) if @ledger.kind_of? Check
-    @printer_command = PrinterCommand.str_pending_command(till) if @organization.has_fiscal_printer?
     
-    if @ledger.save
-      @sale.reload
+    if @sale.add_payment(@ledger)
       if @sale.balance == 0
         redirect_to :action => 'till_open'
         return
       elsif @sale.balance < 0
-        redirect_to :action => 'change'
+        redirect_to :action => 'change', :sale_id => @sale
         return
       end
       @payments = @sale.ledgers
@@ -379,36 +342,10 @@ class PointOfSaleController < ApplicationController
       @ledger.value = @sale.balance
       render :action => 'add_payment' 
     else
+      @sale.ledgers.delete(@ledger)
+      @ledger.value = @sale.balance
       @payments = @sale.ledgers
       render :action => 'add_payment' 
-    end
-  end
-
-  def printer_create_coupon_add_payment
-    till = load_current_till
-    @sale = Sale.pending(till)
-     
-    @ledger = Ledger.new_ledger(params['ledger'])
-    @ledger.date = Date.today
-    @ledger.owner = @sale
-    @ledger.bank_account = @organization.default_bank_account
-    
-    if(@ledger.save and (@sale.reload.balance == 0))
-      @printer_command = PrinterCommand.str_pending_command(till)
-      render :update do |page| 
-        page.replace_html('fiscal_printer_info', @printer_command)
-      end
-    else
-      @ledger_categories =  @organization.sale_ledger_categories_by_payment_method(@ledger.payment_method)
-      @total = @sale.total_value 
-      @total_payment = @sale.total_payment 
-      @payments = @sale.ledgers
-      @banks = Bank.find(:all)
-      @printer_command = PrinterCommand.str_pending_command(till)
-      render :update do |page| 
-        page.replace_html('sale', :partial => 'payment')
-        page.replace_html('fiscal_printer_info', @printer_command)
-      end
     end
   end
 
@@ -437,7 +374,13 @@ class PointOfSaleController < ApplicationController
   end
 
   def select_customer
-    redirect_to :action => 'add_payment', :customer_id => params[:customer_id]
+    till = load_current_till
+    sale = Sale.pending(till)
+    unless params[:customer_id].nil?
+      sale.customer = @organization.customers.find(params[:customer_id])
+      sale.save!
+    end
+    redirect_to :action => 'add_payment'
   end
 
   def coupon_close
@@ -469,8 +412,8 @@ class PointOfSaleController < ApplicationController
   end
 
   def check_fiscal_printer
-    if @organization.has_fiscal_printer? and get_printer_id.nil?
-      flash[:notice] = _('you cannot access this functionality whitou a fiscal printer')
+    if @organization.has_fiscal_printer? 
+      flash[:notice] = _('you cannot access this functionality whitout a fiscal printer')
       redirect_to :action => 'index'
     end
   end

@@ -37,7 +37,7 @@ class SaleItem < ActiveRecord::Base
       self.errors.add(:unitary_price, _('The price must be greater than 0'))
     end
 
-    if !self.sale.organization.products.include?(self.product)
+    if !self.sale.nil? and !self.sale.organization.products.include?(self.product)
       self.errors.add(:product_id, _("You cannot add a item with the product code %s") % self.product_code)
     end
   end

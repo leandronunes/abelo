@@ -25,6 +25,7 @@ class Ledger < ActiveRecord::Base
   validates_presence_of :type_of
   validates_inclusion_of :type_of, :in => Payment::TYPE_OF
   validates_presence_of :owner_id
+  validates_presence_of :owner_type
 
   before_validation do |l|
     l.type_of = l.category.type_of unless l.category.nil?

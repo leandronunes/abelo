@@ -3,10 +3,20 @@ require File.dirname(__FILE__) + '/../test_helper'
 class LedgerCategoryTest < Test::Unit::TestCase
   fixtures :ledger_categories, :bank_accounts
 
+  include Status
+
   def setup
     @organization = Organization.find(:first)
     @ledger_category = LedgerCategory.find(:first)
     @bank_account = BankAccount.find(:first)
+  end
+
+  def create_money(params = {})
+    m = Money.new({:date => Date.today, :value => 10, :category => @ledger_category, 
+        :bank_account => @bank_account, :operational => false, :owner => @organization, 
+        :payment_method => 'money'}.merge(params))
+    m.save
+    m
   end
 
   def test_setup
@@ -107,8 +117,7 @@ class LedgerCategoryTest < Test::Unit::TestCase
     l.save!
 
     l = Money.new(:date => Date.today, :value => 20, :category => @ledger_category, 
-        :bank_account => @bank_account, :operational => false, :owner => @organization, :payment_method => 'money',
-         :is_foreseen => true)
+        :bank_account => @bank_account, :operational => false, :owner => @organization, :payment_method => 'money')
     l.save!
 
     assert_equal 270.43, @ledger_category.foreseen_value_by_date
@@ -118,20 +127,13 @@ class LedgerCategoryTest < Test::Unit::TestCase
 
   def test_effective_value_by_date
     Ledger.delete_all
-    l = Money.new(:date => Date.today, :value => 10, :category => @ledger_category, 
-        :bank_account => @bank_account, :operational => false, :owner => @organization, :payment_method => 'money')
-    l.save!
-    
-    l = Money.new(:date => Date.today, :value => 240.43, :category => @ledger_category, 
-        :bank_account => @bank_account, :operational => false, :owner => @organization, :payment_method => 'money')
-    l.save!
-
-    l = Money.new(:date => Date.today, :value => 20, :category => @ledger_category, 
-        :bank_account => @bank_account, :operational => false, :owner => @organization, :payment_method => 'money',
-         :is_foreseen => true)
-    l.save!
-
-    assert_equal 250.43, @ledger_category.effective_value_by_date
+    v1 = 10
+    l = create_money(:value => v1, :status => STATUS_DONE)
+    v2 = 240.43
+    l = create_money(:value => v2, :status => STATUS_DONE)
+    v3 = 34
+    l = create_money(:value => v3, :status => STATUS_DONE)
+    assert_equal v1+v2+v3, @ledger_category.effective_value_by_date
 
   end
 

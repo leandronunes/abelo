@@ -28,6 +28,19 @@ class OrganizationTest < Test::Unit::TestCase
     )
   end
 
+  def create_till
+    till = Till.new(@organization, @user, nil)
+    till.save
+    till
+  end
+
+  def create_sale(params = {})
+    till =  create_till
+    sale = Sale.new(till, params)
+    sale.save
+    sale
+  end
+
   def test_setup
     assert @organization.valid?
     assert @cat_prod.valid?
@@ -50,7 +63,7 @@ class OrganizationTest < Test::Unit::TestCase
   end
 
   def test_relation_with_sales
-    sale = Sale.create(:date => '05-11-2007', :user_id => 1, :organization_id => @organization.id)
+    sale = create_sale()
     @organization.sales.concat(sale)
     assert @organization.sales.include?(sale)
   end
@@ -197,7 +210,7 @@ class OrganizationTest < Test::Unit::TestCase
   end
 
   def test_find_ledger
-    ledger = AddCash.new
+    ledger = AddCash.new(create_till)
     ledger.payment_method = 'money'
     ledger.date = Date.today
     ledger.bank_account = @organization.default_bank_account

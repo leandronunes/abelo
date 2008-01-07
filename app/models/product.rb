@@ -16,7 +16,7 @@ class Product < ActiveRecord::Base
 
   validates_uniqueness_of :code, :scope => :organization_id
 
-  validates_presence_of :name, :sell_price
+  validates_presence_of :name, :sell_price, :unit
 
   validates_presence_of :organization_id, :message => _('Products must be associated to an organization')
 

@@ -1,7 +1,7 @@
 # This class is used on point of sale operations to realize add cash of till
 class AddCash < Money
-
-  has_one :printer_command, :as => :owner
+ 
+  has_one :printer_command, :as => :owner, :dependent => :destroy
 
   before_validation do |add_cash|
     add_cash.printer_command ||= PrinterCommand.new(add_cash.owner ,[PrinterCommand::TILL_ADD_CASH, add_cash.value]) if add_cash.owner.has_fiscal_printer?

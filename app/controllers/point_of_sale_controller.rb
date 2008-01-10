@@ -20,7 +20,8 @@ class PointOfSaleController < ApplicationController
   
   design :holder => :design_point_of_sale, :root => File.join('designs','point_of_sale')
 
-  before_filter :check_fiscal_printer, :except => 'index'
+#  before_filter :check_fiscal_printer, :except => 'index'
+  after_filter :check_pending_commands
 
   def check_coupon_cancel
     supervisor = User.authenticate(params[:user][:login], params[:user][:password])
@@ -32,22 +33,52 @@ class PointOfSaleController < ApplicationController
     end
   end
 
+  def check_pending_commands
+    till = load_current_till
+    puts "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa %s" % till.inspect
+    return unless @organization.has_fiscal_printer? and PrinterCommand.has_pending?(till)
+    cmd = PrinterCommand.run_pending(till)
+    puts "HHHHHHHHHEEEEEEEEEEEEEERRRRRRRRRRRRRRRREEEEEEEEEEEEEE %s" % cmd.inspect
+    if cmd.has_error?
+      flash[:notice] = _('You have pending commands that cannot be executed. Please %s') % cmd.error_message
+      render :action => 'index' && false
+    end
+  end
+
+  def check_fiscal_printer
+    return unless @organization.has_fiscal_printer? 
+     
+    flash[:notice] = _('you cannot access this functionality whitout a fiscal printer')
+    redirect_to :action => 'index'
+  end
+
   def design_point_of_sale
     point_of_sale = DesignPointOfSale.new(@organization)
     point_of_sale 
   end
 
   def index
-    till = Till.load(@organization, current_user)
-    unless till.nil?
-      redirect_to :action => 'till_open'
-    end
+render :action => 'index'
+redirect_to :action => 'till_open' && false
+#    till = Till.load(@organization, current_user)
+#    unless till.nil?
+#      redirect_to :action => 'till_open'
+#    end
+#    render :template => 'point_of_sale/index'
+  end
+
+  def till_open
+    till = load_current_till 
+#    @printer_command = PrinterCommand.str_pending_command(till)
+    @pending_sale = Sale.pending(till)
+#    render :template => 'point_of_sale/till_open'
   end
 
   def open_till
     till = Till.load(@organization, current_user, get_printer_id)
     if till.nil?
       @cash = Money.new
+      render :action => 'open_till'
     else
       redirect_to :action => 'till_open'
     end
@@ -63,10 +94,11 @@ class PointOfSaleController < ApplicationController
     end
 
     if @till.save
+#_and_print
       @till.add_cashs << @cash unless @cash.nil?
       redirect_to :action => 'till_open'
     else
-      render :action => 'open_till'
+      render :template => 'point_of_sale/open_till'
     end
   end
 
@@ -90,12 +122,6 @@ class PointOfSaleController < ApplicationController
         page.replace_html('abelo_open_till', :partial => 'form_open_till')
       end
     end
-  end
-
-  def till_open
-    till = load_current_till 
-    @printer_command = PrinterCommand.str_pending_command(till)
-    @pending_sale = Sale.pending(till)
   end
 
   def add_cash
@@ -188,36 +214,6 @@ class PointOfSaleController < ApplicationController
     redirect_to :action => 'till_open'
   end
 
-  def create_coupon_open
-    till = load_current_till
-    @sale =  Sale.new(till)
-    if @sale.save
-      redirect_to :action => 'coupon_open'
-    else
-      flash[:notice] = @sale.errors.full_messages
-      render :action => 'till_open'
-    end
-  end
-
-  def printer_create_coupon_open
-    till = load_current_till
-    @sale =  Sale.new(till)
-    if @sale.save
-      if @organization.has_fiscal_printer?
-        @printer_command = PrinterCommand.str_pending_command(till)
-        render :update do |page| 
-          page.replace_html('fiscal_printer_info', @printer_command)
-        end
-      else
-        render :update do |page| 
-          page.replace_html('abelo_action', :partial => 'coupon_open')
-        end
-      end
-    else
-      render :nothing => true
-    end
-  end
-  
   def coupon_open
     till = load_current_till
     @sale = Sale.pending(till)
@@ -229,6 +225,17 @@ class PointOfSaleController < ApplicationController
     @total = @sale.total_value 
     @total_payment = @sale.total_payment 
     @payments = @sale.ledgers
+  end
+
+  def create_coupon_open
+    till = load_current_till
+    @sale =  Sale.new(till)
+    if @sale.save
+      redirect_to :action => 'coupon_open'
+    else
+      flash[:notice] = @sale.errors.full_messages
+      render :action => 'till_open'
+    end
   end
 
   def create_coupon_add_item
@@ -409,13 +416,6 @@ class PointOfSaleController < ApplicationController
 
   def load_current_till
     Till.load(@organization, current_user, get_printer_id)
-  end
-
-  def check_fiscal_printer
-    if @organization.has_fiscal_printer? 
-      flash[:notice] = _('you cannot access this functionality whitout a fiscal printer')
-      redirect_to :action => 'index'
-    end
   end
 
 

@@ -14,7 +14,7 @@ class Sale < ActiveRecord::Base
   validates_inclusion_of :status, :in => ALL_STATUS
 
   after_create do |sale|
-    sale.printer_commands << PrinterCommand.new(sale.owner, [PrinterCommand::OPEN]) if sale.organization and sale.organization.has_fiscal_printer?
+    sale.printer_commands << PrinterCommand.new(sale.owner, [PrinterCommand::OPEN]) if sale.has_fiscal_printer?
   end
 
   def validate
@@ -79,17 +79,21 @@ class Sale < ActiveRecord::Base
     self.status == STATUS_CANCELLED
   end
 
+  # Return true if the organization works with fiscal printer 
+  def has_fiscal_printer?
+    self.organization.has_fiscal_printer? if self.organization
+  end
+
   # Cancels a sale
   def cancel!
     if self.status != STATUS_PENDING
       self.errors.add('status', _('Only open sales can be cancelled')) 
       return false
     end
+    self.status = STATUS_CANCELLED
+    self.save
     if self.owner.has_fiscal_printer?
       self.printer_commands << PrinterCommand.new(self.owner, [PrinterCommand::CANCEL])
-    else
-      self.status = STATUS_CANCELLED
-      self.save
     end
   end
 

@@ -1,0 +1,5 @@
+[PRINTER]
+brand=elgin
+model=ECFIF5001E
+port=/dev/ttyS0
+printer_id=1

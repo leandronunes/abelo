@@ -3,15 +3,9 @@
 <%= notice_box flash[:notice] %>
 
 <div id="abelo_open_till">
-<% if @organization.has_fiscal_printer? %>
-  <% form_remote_tag :url => {:action => 'printer_create_till_open'}, :failure => "$('abelo_action').innerHTML = request.responseText" do %>
-    <%= render :partial => 'form_open_till' %>
-  <% end %>
-<% else %>
   <% form_tag :action => 'create_till_open' do %>
-    <%= render :partial => 'form_open_till' %>
-  <% end %>
-<% end %>
+    <%= render :partial => 'point_of_sale/form_open_till' %>
+ <% end %>
 
 </div>
 

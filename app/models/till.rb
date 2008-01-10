@@ -4,7 +4,7 @@ class Till < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :organization
-  has_many :printer_commands, :dependent => :destroy
+  has_many :printer_commands, :as => :owner, :dependent => :destroy
   has_many :add_cashs, :as => :owner, :dependent => :destroy
   has_one :printer_command, :as => :owner
   has_many :sales, :as => :owner, :dependent => :destroy
@@ -12,7 +12,7 @@ class Till < ActiveRecord::Base
   validates_inclusion_of :status, :in => ALL_STATUS
 
   before_validation do |till|
-    till.printer_command ||= PrinterCommand.new(till, [PrinterCommand::SUMMARIZE]) if till.organization and till.organization.has_fiscal_printer?
+    till.printer_command ||= PrinterCommand.new(till, [PrinterCommand::SUMMARIZE]) if till.has_fiscal_printer?
   end
 
   def validate
@@ -27,10 +27,6 @@ class Till < ActiveRecord::Base
     end
   end
 
-  def has_fiscal_printer?
-    self.organization.has_fiscal_printer? if self.organization
-  end
-
   def initialize(organization, user, printer, *args)
     super(*args)
     self.datetime = DateTime.now
@@ -43,9 +39,19 @@ class Till < ActiveRecord::Base
     self.find(:first, :conditions => {:user_id => user, :organization_id => organization, :printer_id => printer_id, :status => STATUS_PENDING})
   end
 
+  def has_fiscal_printer?
+    self.organization.has_fiscal_printer? if self.organization
+  end
+
+  def save_and_print
+   was_save = self.save
+   return was_save unless self.has_fiscal_printer? or not was_save
+   self.printer_command.execute()
+  end
+
   def accept_printer_cmd!(command)
     self.status = STATUS_DONE
-    self.save!
+    self.save
   end
 
   def printer_cmd_accept?
@@ -53,13 +59,12 @@ class Till < ActiveRecord::Base
   end
 
   def close
+    self.status = STATUS_DONE
+    self.save
     if self.has_fiscal_printer?
       p = PrinterCommand.new(self, [PrinterCommand::CLOSE_TILL, false] )
-      p.owner = self
       self.printer_commands << p
-    else
-      self.status = STATUS_DONE
-      self.save
+      p.execute
     end
   end
 

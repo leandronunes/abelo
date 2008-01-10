@@ -13,20 +13,12 @@
   </div>
 <% else %>
   <div id="new_sale">
-    <% if @organization.has_fiscal_printer? %>
-      <%= link_to_remote '<span>'+_('New Sale')+'</span>', :url => { :action => 'printer_create_coupon_open' }, :failure => "$('abelo_action').innerHTML= request.responseText" %>
-    <% else %>
-      <%= link_to '<span>'+_('New Sale')+'</span>', :action => 'create_coupon_open' %>
-    <% end %>
+    <%= link_to '<span>'+_('New Sale')+'</span>', :action => 'create_coupon_open' %>
   </div>
 <% end %>
 
 <div id="close_till">
-  <% if @organization.has_fiscal_printer? %>
-    <%= link_to_remote '<span>'+_('End Till')+'</span>', :url => { :action => 'printer_create_close_till' }, :failure => "$('abelo_action').innerHTML= request.responseText" %>
-  <% else %>
-    <%= link_to '<span>'+_('End Till')+'</span>', :action => 'create_close_till' %>
-  <% end %>
+  <%= link_to '<span>'+_('End Till')+'</span>', :action => 'create_close_till' %>
 </div>
 
 

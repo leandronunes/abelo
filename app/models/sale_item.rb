@@ -9,7 +9,7 @@ class SaleItem < ActiveRecord::Base
 
   belongs_to :sale
   belongs_to :product
-  has_one :printer_command, :as => :owner
+  has_one :printer_command, :as => :owner, :dependent => :destroy
 
   validates_presence_of :sale_id, :product_id, :amount, :unitary_price
   validates_inclusion_of :status, :in => ALL_STATUS

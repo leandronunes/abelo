@@ -21,7 +21,8 @@ class PointOfSaleController < ApplicationController
   design :holder => :design_point_of_sale, :root => File.join('designs','point_of_sale')
 
 #  before_filter :check_fiscal_printer, :except => 'index'
-  after_filter :check_pending_commands
+  before_filter :check_command_error
+  after_filter :run_pending_commands
 
   def check_coupon_cancel
     supervisor = User.authenticate(params[:user][:login], params[:user][:password])
@@ -33,16 +34,22 @@ class PointOfSaleController < ApplicationController
     end
   end
 
-  def check_pending_commands
+  def check_command_error
+    till = load_current_till
+    cmd = PrinterCommand.pending_command(till)
+    puts "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBa %s" % cmd.inspect
+    return unless @organization.has_fiscal_printer? and !cmd.nil?
+    puts "EERRRRRRRRRRRRRRRROOOOOOOOOORRRRRRRRRRR %s" % cmd.inspect
+    flash.now[:notice] = _('You have pending commands that cannot be executed. Please %s') % cmd.error_message
+    render :action => 'index' 
+  end
+
+  def run_pending_commands
     till = load_current_till
     puts "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa %s" % till.inspect
-    return unless @organization.has_fiscal_printer? and PrinterCommand.has_pending?(till)
-    cmd = PrinterCommand.run_pending(till)
-    puts "HHHHHHHHHEEEEEEEEEEEEEERRRRRRRRRRRRRRRREEEEEEEEEEEEEE %s" % cmd.inspect
-    if cmd.has_error?
-      flash[:notice] = _('You have pending commands that cannot be executed. Please %s') % cmd.error_message
-      render :action => 'index' && false
-    end
+    return false unless @organization.has_fiscal_printer? and PrinterCommand.has_pending?(till)
+    cmd = PrinterCommand.run_pendings(till)
+    puts "EXECUTOUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU %s" % cmd.inspect
   end
 
   def check_fiscal_printer
@@ -58,20 +65,15 @@ class PointOfSaleController < ApplicationController
   end
 
   def index
-render :action => 'index'
-redirect_to :action => 'till_open' && false
-#    till = Till.load(@organization, current_user)
-#    unless till.nil?
-#      redirect_to :action => 'till_open'
-#    end
-#    render :template => 'point_of_sale/index'
+    till = Till.load(@organization, current_user)
+    unless till.nil?
+      redirect_to :action => 'till_open'
+    end
   end
 
   def till_open
     till = load_current_till 
-#    @printer_command = PrinterCommand.str_pending_command(till)
     @pending_sale = Sale.pending(till)
-#    render :template => 'point_of_sale/till_open'
   end
 
   def open_till
@@ -94,33 +96,10 @@ redirect_to :action => 'till_open' && false
     end
 
     if @till.save
-#_and_print
       @till.add_cashs << @cash unless @cash.nil?
       redirect_to :action => 'till_open'
     else
       render :template => 'point_of_sale/open_till'
-    end
-  end
-
-  def printer_create_till_open
-    printer_id = get_printer_id
-    @till = Till.load(@organization, current_user, printer_id)
-    @till ||= Till.new(@organization, current_user, printer_id)
-
-    unless params[:cash].nil?
-      @cash ||= AddCash.new(@till, params[:cash])
-    end
-
-    if @till.save
-      @till.add_cashs << @cash unless @cash.nil?
-      @printer_command = PrinterCommand.str_pending_command(@till)
-      render :update do |page| 
-        page.replace_html('fiscal_printer_info', @printer_command)
-      end
-    else
-      render :update do |page| 
-        page.replace_html('abelo_open_till', :partial => 'form_open_till')
-      end
     end
   end
 
@@ -133,27 +112,10 @@ redirect_to :action => 'till_open' && false
     @cash = AddCash.new(till, params[:cash])
 
     if @cash.save
-      flash[:notice] = _('The cash was added with success')
+      flash[:notice] = _('The cash was added successfully')
       redirect_to :action => 'till_open'
     else
       render :action => 'add_cash'
-    end
-  end
-
-  def printer_create_add_cash
-    till = load_current_till
-    @cash = AddCash.new(till, params[:cash])
-
-    if @cash.save
-      flash[:notice] = _('The cash was added with success')
-      @printer_command = PrinterCommand.str_pending_command(till)
-      render :update do |page| 
-        page.replace_html('fiscal_printer_info', @printer_command)
-      end
-    else
-      render :update do |page|
-        page.replace_html('abelo_cash_form', :partial => 'cash_form' )
-      end
     end
   end
 
@@ -166,27 +128,10 @@ redirect_to :action => 'till_open' && false
     @cash = RemoveCash.new(till, params[:cash])
 
     if @cash.save
-      flash[:notice] = _('The cash was added with success')
+      flash[:notice] = _('The cash was removed successfully')
       redirect_to :action => 'till_open'
     else
       render :action => 'remove_cash'
-    end
-  end
-
-  def printer_create_remove_cash
-    till = load_current_till
-    @cash = RemoveCash.new(till, params[:cash])
-
-    if @cash.save
-      flash[:notice] = _('The cash was removed with success')
-      @printer_command = PrinterCommand.str_pending_command(till)
-      render :update do |page| 
-        page.replace_html('fiscal_printer_info', @printer_command)
-      end
-    else
-      render :update do |page|
-        page.replace_html('abelo_cash_form', :partial => 'cash_form' )
-      end
     end
   end
 
@@ -305,6 +250,7 @@ redirect_to :action => 'till_open' && false
   def add_payment
     till = load_current_till
     @sale = Sale.pending(till)
+    @sale.totalize
     @total = @sale.total_value 
     @total_payment = @sale.total_payment 
     @payments = @sale.ledgers

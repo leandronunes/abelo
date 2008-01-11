@@ -49,15 +49,6 @@ class Till < ActiveRecord::Base
    self.printer_command.execute()
   end
 
-  def accept_printer_cmd!(command)
-    self.status = STATUS_DONE
-    self.save
-  end
-
-  def printer_cmd_accept?
-    self.status == STATUS_DONE
-  end
-
   def close
     self.status = STATUS_DONE
     self.save

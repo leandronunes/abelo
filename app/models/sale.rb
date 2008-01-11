@@ -17,6 +17,12 @@ class Sale < ActiveRecord::Base
     sale.printer_commands << PrinterCommand.new(sale.owner, [PrinterCommand::OPEN]) if sale.has_fiscal_printer?
   end
 
+  def totalize
+    if self.has_fiscal_printer? and not PrinterCommand.is_totalized?(self)
+      self.printer_commands << PrinterCommand.new(self.owner, [PrinterCommand::TOTALIZE]) 
+    end
+  end
+
   def validate
     pending = Sale.pending(self.owner)
     if !pending.nil? and pending != self
@@ -30,19 +36,6 @@ class Sale < ActiveRecord::Base
     self.salesman = till.user
     self.owner = till
     self.datetime = Time.now
-  end
-
-  def accept_printer_cmd!(command)
-    self.status = STATUS_DONE if command.cmd == PrinterCommand::CLOSE
-
-    if command.cmd == PrinterCommand::CANCEL
-      self.status = STATUS_CANCELLED
-      transaction do 
-        self.items.map{|i| i.cancel!}
-        self.ledgers.map{|l| l.cancel!}
-      end
-    end
-    self.save!
   end
 
   def self.sale_ledgers_by_customer(customer)

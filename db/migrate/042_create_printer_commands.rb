@@ -11,6 +11,7 @@ class CreatePrinterCommands < ActiveRecord::Migration
       t.column :sequence_number,         :integer, :null => false
       t.column :cmd_id,                  :integer, :null => false
       t.column :counter,                 :integer, :default => 0
+      t.column :error_code,              :integer
     end
   end
 

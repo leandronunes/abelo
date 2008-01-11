@@ -5,6 +5,8 @@ from stoqdrivers.devices.serialbase import *
 from stoqdrivers.exceptions import *
 from stoqdrivers.devices.printers.fiscal import *
 
+SEPARATOR = ';'
+
 class PrinterConfiguration:
   _brand = ''
   _model = ''
@@ -55,9 +57,6 @@ dict = {
   InvalidReply: 121,
   AlreadyTotalized: 122,
   InvalidValue: 123,
-  TypeError: 200,
-  ValueError: 201,
-  DriverError: 202,
 }
 
 class Printer:
@@ -108,24 +107,29 @@ class Printer:
   def add_item(self, code, description, price, taxcode, quantity, unit, discount, surcharge, unit_desc):
     quantity = Decimal(quantity)
     unit = UNIT_CUSTOM 
+    price = Decimal(price)
     discount = Decimal(discount)
     surcharge = Decimal(surcharge)
     self._device.add_item(code, description, price, taxcode,
                           quantity, unit, discount, surcharge, 
                           unit_desc)
 
-  def add_payment(self):
-    self._device.add_payment()
+  def add_payment(self, payment_method, description, value):
+    value = Decimal(value)
+    self._device.add_payment(CUSTOM_PM, value, description, '01')
 
 def main():
   command = sys.argv[1]
-  parameters = sys.argv[2:]
+  parameters = ''
+  if len(sys.argv) > 2:
+    parameters = sys.argv[2].split(SEPARATOR)
   printer = Printer(printer_conf)
 
   def printer_id():
     print 'printer01' 
 
   def summarize():
+    a = '1' #TODO remove this
     printer.summarize()
 
   def till_add_cash(): 
@@ -138,7 +142,7 @@ def main():
 
   def close_till():
     is_today = parameters[0]
-    printer.close_till(is_today)
+#    printer.close_till(is_today)
 
   def open():
     printer.open()
@@ -157,8 +161,12 @@ def main():
       unit_desc)
 
   def add_payment():
-    printer.add_payment()
+    printer.totalize()
+    (payment_method, description, value ) = parameters
+    printer.add_payment(payment_method, description, value)
 
+  def totalize():
+    printer.totalize()
  
   def errhandler ():
      print "Your command doesn't exist"
@@ -170,6 +178,7 @@ def main():
     "summarize": summarize,
     "till_add_cash": till_add_cash,
     "till_remove_cash": till_remove_cash,
+    "totalize": totalize,
     "close_till": close_till,
     "open": open,
     "cancel": cancel,
@@ -179,13 +188,12 @@ def main():
  
   takeaction.get(command,errhandler)()
 
-try:
-  if __name__ == "__main__":
-    main()
-    print COMMAND_OK
-except:
-#  sys.exit(dict[sys.exc_type])
-  print "SSSSSSSSSSSSSSSSAAAAAAAAAAAAAAAAAAIIIIIIIIIIIIIIIIDDDDDDDDDDDDDDDDAAAAAAAAAAAAAAAAAAAAAAA"
-  print dict[sys.exc_type]
+#try:
+if __name__ == "__main__":
+  main()
+#    print COMMAND_OK
+#except: 
+#  print dict[sys.exc_type]
+#  print sys.exc_info()[1]
 
 

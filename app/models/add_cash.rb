@@ -35,13 +35,4 @@ class AddCash < Money
     self.pending!
   end
 
-  def printer_cmd_accept?
-    self.pending? 
-  end
-
-  def accept_printer_cmd!(command)
-    self.done!
-    self.save!
-  end
-
 end

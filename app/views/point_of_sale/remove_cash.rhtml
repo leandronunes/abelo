@@ -1,12 +1,6 @@
 <%= title _("Remove Cash") %>
 
-<% if @organization.has_fiscal_printer? %>
-  <% form_remote_tag :url => {:action => 'printer_create_remove_cash'}, :failure => "$('abelo_action').innerHTML= request.responseText" do -%>
-    <%= render :partial => 'cash_form' %>
-  <% end -%>
-<% else %>
-  <% form_tag :action => 'create_remove_cash' do -%>
-    <%= render :partial => 'cash_form' %>
-  <% end -%>
-<% end %>
+<% form_tag :action => 'create_remove_cash' do -%>
+  <%= render :partial => 'cash_form' %>
+<% end -%>
 

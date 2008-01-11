@@ -1,3 +1,4 @@
+
 class Ledger < ActiveRecord::Base
 
   include Status
@@ -36,7 +37,7 @@ class Ledger < ActiveRecord::Base
   after_create do |l|
     if l.owner.kind_of?(Sale)
       sale = l.owner
-      l.printer_command = PrinterCommand.new(l.owner.owner, [PrinterCommand::ADD_PAYMENT, l.value])
+      l.printer_command = PrinterCommand.new(sale.owner, [PrinterCommand::ADD_PAYMENT, l.fiscal_payment_type, l.payment_type, l.value])
     end
 
     transaction do 
@@ -56,12 +57,8 @@ class Ledger < ActiveRecord::Base
     end
   end
 
-  def accept_printer_cmd!(command)
-    self.status = STATUS_DONE 
-    if self.owner.balance == 0
-      self.owner.close!
-    end
-    self.save!
+  def fiscal_payment_type
+    00
   end
 
   def payment_type
@@ -81,9 +78,6 @@ class Ledger < ActiveRecord::Base
   end
 
   @@original_new = self.method(:new)
-#  def self.new(*args)
-#    (self == Ledger) ? (raise "cannot create an instance of Ledger") : super(*args)
-#  end
 
   def self.create_ledger!(*args)
     object = self.new_ledger(*args)
@@ -100,7 +94,17 @@ class Ledger < ActiveRecord::Base
     object
   end
 
-
+  # Search for ledgers that contain any data that match with the 
+  # query passed as first arguments. 
+  # As the second argument some options can be passed, the options 
+  # are those permited by acts_as_ferret plugin
+  #
+  # EX: 
+  #   
+  #   Ledger.full_text_search('car', :limit => 2)
+  #
+  # The example above  will return 2 (two) ledgers which contains
+  # the word 'car' in his field
   def self.full_text_search(q, options = {})
     default_options = {:limit => :all, :offset => 0}
     options = default_options.merge options
@@ -184,6 +188,7 @@ class Ledger < ActiveRecord::Base
   end
 
   protected
+
   def validate
 
     self.errors.add(:value, _("The value should be at least 0.01" )) if value.nil? || value <= 0.00

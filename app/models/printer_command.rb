@@ -1,7 +1,7 @@
 class PrinterCommand < ActiveRecord::Base
 
   include Status
-  SEPARATOR = ' '
+  SEPARATOR = ';'
 
   ##############################
   # COMMAND SET
@@ -9,6 +9,7 @@ class PrinterCommand < ActiveRecord::Base
 
   TILL_ADD_CASH = 'till_add_cash'
   TILL_REMOVE_CASH = 'till_remove_cash'
+  TOTALIZE = 'totalize'
   SUMMARIZE = 'summarize'
   CLOSE_TILL = 'close_till'
   OPEN = 'open'
@@ -75,19 +76,28 @@ class PrinterCommand < ActiveRecord::Base
   end
 
   def str_command
-    self.cmd + (self.cmd_params.blank? ? '' : (SEPARATOR + self.cmd_params))
+    self.cmd + ' ' + "'#{(self.cmd_params.blank? ? '' : (self.cmd_params))}'"
   end
 
   def self.pending_command(till)
     self.find(:first, :conditions => {:till_id => till, :status => STATUS_PENDING}, :order => 'sequence_number')
   end
 
+  def self.pending_commands(till)
+    self.find(:all, :conditions => {:till_id => till, :status => STATUS_PENDING}, :order => 'sequence_number')
+  end
+
   def self.has_pending?(till)
     self.find(:first, :conditions => {:till_id => till, :status => STATUS_PENDING}) != nil
   end
 
-  def self.run_pending(till)
-    self.pending_command(till).execute
+  def self.run_pendings(till)
+    self.pending_commands(till).collect{|cmd| cmd.execute}
+  end
+
+  # Check if a sale was totalized
+  def self.is_totalized? sale
+    sale.printer_commands.find(:first, :conditions => {:cmd => TOTALIZE } ) != nil
   end
 
   def has_error?
@@ -99,92 +109,133 @@ class PrinterCommand < ActiveRecord::Base
     self.save
   end
 
+  def dec_counter
+    self.counter = self.counter - 1
+    self.save
+  end
+
   def execute
     if self.counter >= 3 
-      self.error_message = _("The system can't connect to the printer.")
       return self
     end
     exec =  IO.popen("python #{RAILS_ROOT}/lib/fiscal_printer/run.py #{self.str_command}")
     puts "RRRRRRRRRRRRRRRRRRRRUUUUUUUUUUUUUUUUUNNNNNNNNNNNNNNNNN %s" % self.str_command
     self.inc_counter
     response = exec.readlines
+    puts "RESSSSSSSPOOOOOOOOOOOOOOOOONNNNNNNNNNNNNNNNNNSSSSSSSSSSSSSEEEEEEEEEEEEEEE %s" % response.inspect
     self.parse_response(response)
   end
 
   def done!
     self.status = STATUS_DONE
-    self.error = nil 
+    self.error_code = nil 
     self.save
   end
 
-  def error_message= msg
-    self.error = true
+
+  def set_error(code, msg)
+    self.error_code = code
     self.error_msg = msg
-  end
+    self.save
+  end  
 
   def error_message
+    return self.error_msg unless self.error_msg.nil?
+    return nil if self.error_code.nil?
+    self.dec_counter
+    self.execute
     self.error_msg
+#    self.response_error?([self.error_code]) 
+#    self.error_msg
+  end
+
+  def response_error?(response)
+    code = response[0]
+    msg = response[1]
+    case(code.to_i)
+      when OutofPaperError:
+        msg ||= _("You don't have paper. Change the bobine")
+        self.set_error(code, msg)
+      when  PrinterOfflineError:
+        msg ||= 'ble 1'
+        self.set_error(code, msg)
+      when AlmostOutofPaper:
+        msg ||= 'ble 2'
+        self.set_error(code, msg)
+      when HardwareFailure:
+        msg ||= 'ble 3'
+        self.set_error(code, msg)
+      when PendingReduceZ:
+        msg ||= 'ble 4'
+        self.set_error(code, msg)
+      when PendingReadX:
+        msg ||= 'ble 5'
+        self.set_error(code, msg)
+      when CloseCouponError:
+        msg ||= 'ble 6'
+        self.set_error(code, msg)
+      when CouponNotOpenError:
+        msg ||= 'ble 7'
+        self.set_error(code, msg)
+      when CouponOpenError:
+        msg ||= 'ble 8'
+        self.set_error(code, msg)
+      when AuthenticationFailure:
+        msg ||= 'ble 9'
+        self.set_error(code, msg)
+      when CommandParametersError:
+        msg ||= 'ble  10'
+        self.set_error(code, msg)
+      when CommandError:
+        self.set_error(code, msg)
+      when  ClosedTillError:
+        msg ||= 'ble 12'
+        self.set_error(code, msg)
+      when ReduceZError:
+        msg ||= 'ble 13'
+        self.set_error(code, msg)
+      when ReadXError:
+        msg ||= 'ble 14'
+        self.set_error(code, msg)
+      when CouponTotalizeError:
+        msg ||= 'ble 15'
+        self.set_error(code, msg)
+      when PaymentAdditionError:
+        msg ||= 'ble 16'
+        self.set_error(code, msg)
+      when CancelItemError:
+        msg ||= 'ble 17'
+        self.set_error(code, msg)
+      when  InvalidState:
+        msg ||= 'ble 18'
+        self.set_error(code, msg)
+      when CapabilityError:
+        msg ||= 'ble 19'
+        self.set_error(code, msg)
+      when ItemAdditionError:
+        msg ||= 'ble 20'
+        self.set_error(code, msg)
+      when InvalidReply:
+        msg ||= 'ble 21'
+        self.set_error(code, msg)
+      when  AlreadyTotalized:
+        msg ||= 'ble 22'
+        self.set_error(code, msg)
+      when InvalidValue:
+        msg ||= 'ble 23'
+        self.set_error(code, msg)
+      else
+        return false
+    end
+
+    return true
   end
 
   def parse_response(response)
-    case(response)
-      when OutofPaperError:
-        self.error_message = _("You don't have paper. Change the bobine")
-      when  PrinterOfflineError:
-        self.error_message = 'ble'
-      when AlmostOutofPaper:
-        self.error_message = 'ble'
-      when HardwareFailure:
-        self.error_message = 'ble'
-      when PendingReduceZ:
-        self.error_message = 'ble'
-      when PendingReadX:
-        self.error_message = 'ble'
-      when CloseCouponError:
-        self.error_message = 'ble'
-      when CouponNotOpenError:
-        self.error_message = 'ble'
-      when CouponOpenError:
-        self.error_message = 'ble'
-      when AuthenticationFailure:
-        self.error_message = 'ble'
-      when CommandParametersError:
-        self.error_message = 'ble'
-      when CommandError:
-        self.error_message = 'ble'
-      when  ClosedTillError:
-        self.error_message = 'ble'
-      when ReduceZError:
-        self.error_message = 'ble'
-      when ReadXError:
-        self.error_message = 'ble'
-      when CouponTotalizeError:
-        self.error_message = 'ble'
-      when PaymentAdditionError:
-        self.error_message = 'ble'
-      when CancelItemError:
-        self.error_message = 'ble'
-      when  InvalidState:
-        self.error_message = 'ble'
-      when CapabilityError:
-        self.error_message = 'ble'
-      when ItemAdditionError:
-        self.error_message = 'ble'
-      when InvalidReply:
-        self.error_message = 'ble'
-      when  AlreadyTotalized:
-        self.error_message = 'ble'
-      when InvalidValue:
-        self.error_message = 'ble'
-      when CommandOK:
-        puts response.inspect 
-        self.done!
-        return self
-      else
-        puts "RESSSSPONNNNNNNNNNNNNSSSSSSSSSSSSSSSEEEEEEEEEEEEEE"
-        puts response.inspect     
+    if !self.response_error?(response)
+      self.done!
+      return self
     end
-
     pending_cmd = PrinterCommand.pending_command(self.till)
     if pending_cmd.nil?
       return self
@@ -222,7 +273,6 @@ class PrinterCommand < ActiveRecord::Base
 
   protected
 
-    attr_accessor :error
     attr_accessor :error_msg
 
 end

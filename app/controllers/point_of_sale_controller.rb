@@ -20,7 +20,7 @@ class PointOfSaleController < ApplicationController
   
   design :holder => :design_point_of_sale, :root => File.join('designs','point_of_sale')
 
-#  before_filter :check_fiscal_printer, :except => 'index'
+  before_filter :load_current_till
   before_filter :check_command_error
   after_filter :run_pending_commands
 
@@ -35,28 +35,16 @@ class PointOfSaleController < ApplicationController
   end
 
   def check_command_error
-    till = load_current_till
-    cmd = PrinterCommand.pending_command(till)
-    puts "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBa %s" % cmd.inspect
-    return unless @organization.has_fiscal_printer? and !cmd.nil?
-    puts "EERRRRRRRRRRRRRRRROOOOOOOOOORRRRRRRRRRR %s" % cmd.inspect
+    return unless @organization.has_fiscal_printer? 
+    cmd = PrinterCommand.pending_command(@till)
+    return if cmd.nil?
     flash.now[:notice] = _('You have pending commands that cannot be executed. Please %s') % cmd.error_message
     render :action => 'index' 
   end
 
   def run_pending_commands
-    till = load_current_till
-    puts "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa %s" % till.inspect
-    return false unless @organization.has_fiscal_printer? and PrinterCommand.has_pending?(till)
+    return  unless @organization.has_fiscal_printer? and PrinterCommand.has_pending?(@till)
     cmd = PrinterCommand.run_pendings(till)
-    puts "EXECUTOUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU %s" % cmd.inspect
-  end
-
-  def check_fiscal_printer
-    return unless @organization.has_fiscal_printer? 
-     
-    flash[:notice] = _('you cannot access this functionality whitout a fiscal printer')
-    redirect_to :action => 'index'
   end
 
   def design_point_of_sale
@@ -361,7 +349,7 @@ class PointOfSaleController < ApplicationController
   end
 
   def load_current_till
-    Till.load(@organization, current_user, get_printer_id)
+    @till = Till.load(@organization, current_user, get_printer_id)
   end
 
 

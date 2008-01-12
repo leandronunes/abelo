@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: abelo 0.4.1\n"
-"POT-Creation-Date: 2008-01-04 12:20-0300\n"
-"PO-Revision-Date: 2008-01-04 12:49-0300\n"
+"POT-Creation-Date: 2008-01-12 14:19-0300\n"
+"PO-Revision-Date: 2008-01-12 14:23-0300\n"
 "Last-Translator: Leandro Nunes dos Santos <leandronunes@colivre.coop.br>\n"
 "Language-Team: Krishnamurti Lelis Lima Vieira Nunes "
 "<krishna@colivre.coop.br>\n"
@@ -238,7 +238,8 @@ msgstr "Departamento criado com sucesso."
 msgid "Department was successfully updated."
 msgstr "Departamento atualizado com sucesso."
 
-#: app/controllers/sales_controller.rb:21 app/views/sales/list.rhtml:2
+#: app/controllers/sales_controller.rb:21 app/helpers/support/menu.rb:11
+#: app/views/sales/list.rhtml:2
 msgid "Sales"
 msgstr "Vendas"
 
@@ -316,31 +317,29 @@ msgstr "Usuário atualizado com sucesso."
 msgid "Document proposal item was successfuly updated."
 msgstr "Item proposta comercial atualizado com sucesso."
 
-#: app/controllers/point_of_sale_controller.rb:29
+#: app/controllers/point_of_sale_controller.rb:31
 msgid "The user %s don't have permissions to cancel a coupon."
 msgstr "O usuário %s não tem permissão para cancelar um cupom."
 
-#: app/controllers/point_of_sale_controller.rb:110
-#: app/controllers/point_of_sale_controller.rb:122
-#: app/controllers/point_of_sale_controller.rb:143
-msgid "The cash was added with success"
+#: app/controllers/point_of_sale_controller.rb:41
+msgid "You have pending commands that cannot be executed. Please %s"
+msgstr "Você tem comandos pendentes que não podem ser executados. Por favor %s"
+
+#: app/controllers/point_of_sale_controller.rb:103
+msgid "The cash was added successfully"
 msgstr "O dinheiro foi adicionado com sucesso"
 
-#: app/controllers/point_of_sale_controller.rb:155
-msgid "The cash was removed with success"
+#: app/controllers/point_of_sale_controller.rb:119
+msgid "The cash was removed successfully"
 msgstr "O dinheiro foi removido com sucesso"
 
-#: app/controllers/point_of_sale_controller.rb:182
-msgid "Closing Till"
-msgstr "Fechando Caixa"
+#: app/controllers/point_of_sale_controller.rb:202
+msgid "Invalid product code %s"
+msgstr "Código do produto inválido %s"
 
-#: app/controllers/point_of_sale_controller.rb:282
+#: app/controllers/point_of_sale_controller.rb:217
 msgid "Only sales supervisor can cancel a coupon"
 msgstr "Somente supervisores de vendas podem cancelar um cupom."
-
-#: app/controllers/point_of_sale_controller.rb:473
-msgid "you cannot access this functionality whitou a fiscal printer"
-msgstr "você não pode acessar esta funcionalidade se uma impressora fiscal"
 
 #: app/controllers/document_sections_controller.rb:32
 msgid "Document section was successfuly updated."
@@ -548,8 +547,8 @@ msgstr "Nome"
 
 #: app/models/organization_display.rb:10 app/models/credit_card_display.rb:21
 #: app/models/system_actor_display.rb:13 app/models/check_display.rb:25
-#: app/views/layouts/organization.rhtml:27
-#: app/views/layouts/comatose_admin.rhtml:27
+#: app/views/layouts/organization.rhtml:26
+#: app/views/layouts/comatose_admin.rhtml:26
 #: app/views/organizations/new.rhtml:22 app/views/organizations/_form.rhtml:19
 #: app/views/organizations/show.rhtml:5 app/views/organizations/edit.rhtml:16
 #: app/views/system_actors/_juristic_person.rhtml:2
@@ -596,13 +595,17 @@ msgstr "Venda"
 msgid "PrinterCommand|Sequence number"
 msgstr "Número de sequência"
 
-#: app/models/printer_command.rb:26
-msgid "You cannot have more than one %s command pending"
-msgstr "Você não pode ter mais de um %s comando pendente"
+#: app/models/printer_command.rb:-
+msgid "PrinterCommand|Counter"
+msgstr "Contador"
 
-#: app/models/printer_command.rb:103
-msgid "Some error happen and you have to solve it"
-msgstr "Algum erro aconteceu e você tem que resolvê-lo"
+#: app/models/printer_command.rb:-
+msgid "PrinterCommand|Error code"
+msgstr "Código de erro"
+
+#: app/models/printer_command.rb:157
+msgid "You don't have paper. Change the bobine"
+msgstr "Você não tem papel. Mude a bobina"
 
 #: app/models/stock_virtual_display.rb:9
 #: app/models/stock_devolution_display.rb:11 app/models/category.rb:36
@@ -1015,28 +1018,28 @@ msgstr "Visualizar Cadastro de Fornecedor"
 msgid "View Product Register"
 msgstr "Visualizar Cadastro de Produto"
 
-#: app/models/profile.rb:196
+#: app/models/profile.rb:197
 msgid "Sales person"
 msgstr "Vendedor"
 
-#: app/models/profile.rb:197
+#: app/models/profile.rb:198
 msgid "Sales Supervisor"
 msgstr "Supervisor de vendas"
 
-#: app/models/profile.rb:198 app/helpers/support/menu.rb:13
+#: app/models/profile.rb:199 app/helpers/support/menu.rb:13
 #: lib/describe_menu.rb:8
 msgid "Financial"
 msgstr "Financeiro"
 
-#: app/models/profile.rb:199
+#: app/models/profile.rb:200
 msgid "Organization Management"
 msgstr "Gerenciamento da Organização"
 
-#: app/models/profile.rb:200 app/views/layouts/default.rhtml:7
+#: app/models/profile.rb:201 app/views/layouts/default.rhtml:7
 msgid "Administration"
 msgstr "Administração"
 
-#: app/models/profile.rb:201
+#: app/models/profile.rb:202
 msgid "Other"
 msgstr "Outro"
 
@@ -1140,15 +1143,15 @@ msgstr "Dono"
 msgid "Sale|Datetime"
 msgstr "Data"
 
-#: app/models/sale.rb:24
+#: app/models/sale.rb:29
 msgid "You cannot have two pendings sale"
 msgstr "Você não pode ter duas vendas pendentes"
 
-#: app/models/sale.rb:86
+#: app/models/sale.rb:83
 msgid "Only open sales can be cancelled"
 msgstr "Somente vendas abertas podem ser canceladas"
 
-#: app/models/sale.rb:143
+#: app/models/sale.rb:151
 msgid "None"
 msgstr "Nenhum"
 
@@ -2868,23 +2871,23 @@ msgstr "Número da conta do débito automático"
 msgid "Ledger|Status"
 msgstr "Estado"
 
-#: app/models/ledger.rb:171 app/models/ledger.rb:178
+#: app/models/ledger.rb:176 app/models/ledger.rb:183
 msgid "This function cannot be accessed directly"
 msgstr "Essa função não pode ser acessada diretamente"
 
-#: app/models/ledger.rb:188
+#: app/models/ledger.rb:194
 msgid "The value should be at least 0.01"
 msgstr "O valor deveria ser pelo menos 0.01"
 
-#: app/models/ledger.rb:190
+#: app/models/ledger.rb:196
 msgid "Date cannot be set"
 msgstr "Data não pode ser ajustada"
 
-#: app/models/ledger.rb:192
+#: app/models/ledger.rb:198
 msgid "You don't have a payment method associated to this ledger."
 msgstr "Não há uma forma de pagamento associado a esse lançamento."
 
-#: app/models/ledger.rb:195
+#: app/models/ledger.rb:201
 msgid "You canno't have a payment method not include in payment category list."
 msgstr ""
 "Não pode haver uma forma de pagamento não inclusa na lista de categorias de "
@@ -3512,30 +3515,30 @@ msgstr "Acesso negado"
 msgid "You are not allowed to access this section."
 msgstr "Você não tem permissão para acessar esta seção."
 
-#: app/views/layouts/organization.rhtml:24
-#: app/views/layouts/comatose_admin.rhtml:24
+#: app/views/layouts/organization.rhtml:23
+#: app/views/layouts/comatose_admin.rhtml:23
 msgid "Organization Logo"
 msgstr "Loga da Organização"
 
-#: app/views/layouts/organization.rhtml:32 app/views/layouts/default.rhtml:36
-#: app/views/layouts/comatose_admin.rhtml:32
+#: app/views/layouts/organization.rhtml:31 app/views/layouts/default.rhtml:36
+#: app/views/layouts/comatose_admin.rhtml:31
 msgid "Go to"
 msgstr "Ir para"
 
-#: app/views/layouts/organization.rhtml:33
-#: app/views/layouts/comatose_admin.rhtml:33
+#: app/views/layouts/organization.rhtml:32
+#: app/views/layouts/comatose_admin.rhtml:32
 msgid "My account"
 msgstr "Minha conta"
 
-#: app/views/layouts/organization.rhtml:34 app/views/layouts/default.rhtml:39
+#: app/views/layouts/organization.rhtml:33 app/views/layouts/default.rhtml:39
 #: app/views/layouts/point_of_sale.rhtml:21
-#: app/views/layouts/comatose_admin.rhtml:34
+#: app/views/layouts/comatose_admin.rhtml:33
 msgid "Logout"
 msgstr "Sair"
 
-#: app/views/layouts/organization.rhtml:34 app/views/layouts/default.rhtml:39
+#: app/views/layouts/organization.rhtml:33 app/views/layouts/default.rhtml:39
 #: app/views/layouts/point_of_sale.rhtml:21
-#: app/views/layouts/comatose_admin.rhtml:34
+#: app/views/layouts/comatose_admin.rhtml:33
 msgid "Exit from system?"
 msgstr "Sair do sistema?"
 
@@ -3766,22 +3769,24 @@ msgid "End Sale"
 msgstr "Finalizar Venda"
 
 #: app/views/point_of_sale/add_payment.rhtml:2
-#: app/views/point_of_sale/payment.rhtml:2
-#: app/views/point_of_sale/coupon_open.rhtml:4
-msgid "Coupon Open"
-msgstr "Abrir Cupom"
+msgid "Coupon Open - Payment"
+msgstr "Abrir Cupom - Pagamento"
 
 #: app/views/point_of_sale/add_payment.rhtml:5
 msgid "Search Customer"
 msgstr "Procurar Consumidor"
 
-#: app/views/point_of_sale/add_payment.rhtml:6
+#: app/views/point_of_sale/add_payment.rhtml:7
+msgid "Close Sale"
+msgstr "Fechar Venda"
+
+#: app/views/point_of_sale/add_payment.rhtml:9
 #: app/views/point_of_sale/_login_form.rhtml:13
 #: app/views/point_of_sale/payment.rhtml:5
 msgid "Cancel Sale"
 msgstr "Cancelar venda"
 
-#: app/views/point_of_sale/add_payment.rhtml:7
+#: app/views/point_of_sale/add_payment.rhtml:10
 #: app/views/point_of_sale/payment.rhtml:6
 msgid "Cancel Payment"
 msgstr "Cancelar pagamento"
@@ -3826,13 +3831,11 @@ msgstr "Remover Dinheiro"
 msgid "You have a pending sale!"
 msgstr "Você tem uma venda pendente!"
 
-#: app/views/point_of_sale/till_open.rhtml:17
-#: app/views/point_of_sale/till_open.rhtml:19
+#: app/views/point_of_sale/till_open.rhtml:16
 msgid "New Sale"
 msgstr "Nova Venda"
 
-#: app/views/point_of_sale/till_open.rhtml:26
-#: app/views/point_of_sale/till_open.rhtml:28
+#: app/views/point_of_sale/till_open.rhtml:21
 msgid "End Till"
 msgstr "Fechar Caixa"
 
@@ -3848,6 +3851,11 @@ msgstr "Supervisor"
 #: app/views/point_of_sale/_login_form.rhtml:12
 msgid "Voltar"
 msgstr "Voltar"
+
+#: app/views/point_of_sale/payment.rhtml:2
+#: app/views/point_of_sale/coupon_open.rhtml:4
+msgid "Coupon Open"
+msgstr "Abrir Cupom"
 
 #: app/views/point_of_sale/coupon_open.rhtml:7
 msgid "Cancel sale"
@@ -4612,9 +4620,17 @@ msgstr "Loja"
 msgid "Administration of users"
 msgstr "Administração de usuários"
 
-#, fuzzy
-#~ msgid "You don't have a printer configured."
-#~ msgstr "Você não tem permissão para cancelar um cupom."
+#~ msgid "Closing Till"
+#~ msgstr "Fechando Caixa"
+
+#~ msgid "you cannot access this functionality whitou a fiscal printer"
+#~ msgstr "você não pode acessar esta funcionalidade se uma impressora fiscal"
+
+#~ msgid "You cannot have more than one %s command pending"
+#~ msgstr "Você não pode ter mais de um %s comando pendente"
+
+#~ msgid "Some error happen and you have to solve it"
+#~ msgstr "Algum erro aconteceu e você tem que resolvê-lo"
 
 #~ msgid "This is not a product code valid"
 #~ msgstr "Este não é um código de produto válido."

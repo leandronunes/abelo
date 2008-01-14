@@ -62,13 +62,6 @@
     )
   %>
   
-  <%= display_field_form(item, 'description',
-        :title => _('Description:'),
-        :content => text_area('ledger', 'description', :rows => 4),
-        :html_options => {:style => 'clear: left;'}
-      )
-  %>
-
   <%= display_field_form(item, 'tag_list',
         :title => _('Tags (separated by comma):'),
         :content => text_field('ledger', 'tag_list'),
@@ -81,5 +74,12 @@
         :content => text_field('ledger', 'value')
       )
   %>
+
+  <%= display_field_form(item, 'description',
+        :title => _('Description:'),
+        :content => rich_text_editor('ledger', 'description')
+      )
+  %>
+
 <% end %>
 

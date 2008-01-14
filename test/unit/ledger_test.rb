@@ -115,6 +115,35 @@ class LedgerTest < Test::Unit::TestCase
     assert_equal 0, Ledger.count
   end
 
+  def test_date_creation_of_ledgers_when_ledger_is_schedule
+    Ledger.delete_all
+
+    l = Ledger.new_ledger
+    l.owner = @organization
+    l.category = @ledger_category
+    l.value = 300
+    l.description = 'some description'
+    l.tag_list = 'tag_test'
+    l.date = Date.today
+    l.bank_account = BankAccount.find(:first)
+    l.schedule_repeat = true
+    periodicity = Periodicity.find(:first)
+    l.schedule_periodicity = periodicity
+    interval = 2
+    l.schedule_interval = interval
+    l.payment_method = 'money'
+    assert l.save!
+    assert_equal 3, Ledger.count
+    
+    ledgers = Ledger.find(:all)
+    for i in 0..interval do
+      first = ledgers.first
+      assert first.date.to_datetime === DateTime.now + periodicity.number_of_days * i
+      assert ledgers.delete(first)
+    end
+  end
+
+
   def test_presence_of_schedule_interval_when_schedule_repeat_and_schedule_periodicity_are_present
     l = Ledger.new_ledger
     l.schedule_repeat = true

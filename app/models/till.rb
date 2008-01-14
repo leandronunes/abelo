@@ -51,12 +51,12 @@ class Till < ActiveRecord::Base
 
   def close
     self.status = STATUS_DONE
-    self.save
     if self.has_fiscal_printer?
       p = PrinterCommand.new(self, [PrinterCommand::CLOSE_TILL, false] )
       self.printer_commands << p
       p.execute
     end
+    self.save
   end
 
 end

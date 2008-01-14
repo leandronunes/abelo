@@ -169,10 +169,15 @@ class LedgersController < ApplicationController
     end
     ledger.destroy
     get_financial_variables(@organization)
+    @ledger_categories = @organization.common_ledger_categories
     ledgers = @organization.ledgers_by_all(@chosen_accounts, @chosen_tags, @chosen_categories, @start_date, @end_date, @query)
 
     @ledger_pages, @ledgers = paginate_by_collection ledgers
 
+    @total_income = Ledger.total_income(@ledgers) 
+    @total_expense = Ledger.total_expense(@ledgers) 
+    @geral_total_income = Ledger.total_income(ledgers) 
+    @geral_total_expense = Ledger.total_expense(ledgers) 
     render :partial => 'shared_financial/display_financial_table'
   end
 

@@ -8,7 +8,7 @@ class ScheduleLedger < ActiveRecord::Base
   validates_numericality_of :interval, :only_interger => true
 
   def validate
-    if !self.start_date.nil? and self.start_date < Date.today
+    if !self.start_date.nil? and (self.start_date.kind_of?(Time) ? self.start_date.to_datetime : self.start_date) < (DateTime.now-1)
       errors.add('start_date', _('You cannot schedule a ledger starting in a time on the past')) 
     end
   end

@@ -6,6 +6,7 @@ one:
   interests_days: 0
   number_of_parcels: 1
   is_operational: true
+  is_sale: true
   organization_id: 1
   type_of: 'I'
   settings: {payment_methods:  ['money'] , is_sale: true}

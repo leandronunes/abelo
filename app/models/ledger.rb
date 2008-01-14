@@ -40,25 +40,29 @@ class Ledger < ActiveRecord::Base
       l.printer_command = PrinterCommand.new(sale.owner, [PrinterCommand::ADD_PAYMENT, l.fiscal_payment_type, l.payment_type, l.value])
     end
 
-    transaction do 
-      if l.schedule_repeat?
-        sl = ScheduleLedger.create(:periodicity => l.schedule_periodicity, :start_date => l.foreseen_date, :interval => l.schedule_interval)
-        (1..l.schedule_interval.to_i).each do |n|
-          ledger_schedule = l.clone
-          ledger_schedule.pending!
-          ledger_schedule.date = l.date + l.schedule_periodicity.number_of_days * n
-          ledger_schedule.schedule_ledger = sl
-          ledger_schedule.payment_method = l.payment_method
-          ledger_schedule.save
-        end
-        l.schedule_ledger = sl
-        l.save
-      end  
-    end
+    if l.schedule_repeat?
+      sl = ScheduleLedger.create(:periodicity => l.schedule_periodicity, :start_date => l.foreseen_date, :interval => l.schedule_interval)
+      for n in 1..l.schedule_interval.to_i do
+        ledger_schedule = l.dclone
+        ledger_schedule.pending!
+        ledger_schedule.date =  (l.date.kind_of?(Time) ? l.date.to_datetime : l.date) + l.schedule_periodicity.number_of_days * n
+        ledger_schedule.schedule_ledger = sl
+        ledger_schedule.payment_method = l.payment_method
+        ledger_schedule.save
+      end
+      l.schedule_ledger = sl
+      l.save
+    end  
   end
 
   before_destroy do |ledger|
     raise _('You cannot destroy sale ledgers') if ledger.owner.kind_of? Sale
+  end
+
+  def dclone
+    l = self.clone
+    l.tag_list = self.tag_list.names
+    l
   end
 
   def fiscal_payment_type

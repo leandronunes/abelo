@@ -3,7 +3,6 @@ require File.dirname(__FILE__) + '/../test_helper'
 class DebitCardDisplayTest < Test::Unit::TestCase
 
   AVAILABLE_FIELDS_TEST = %w[
-      type
       category_id   
       payment_method
       value

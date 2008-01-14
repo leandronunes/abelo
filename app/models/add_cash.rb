@@ -12,7 +12,7 @@ class AddCash < Money
   end
 
   before_destroy do
-    raise _("Cannot destroy this object")
+    raise _("Youe cannot destroy this object")
   end
 
   def validate

@@ -330,18 +330,6 @@ class PointOfSaleController < ApplicationController
     redirect_to :action => 'index'
   end
 
-  def accept_printer_cmd
-    till = Till.load(@organization, current_user, cookies[:printer_id].first)
-    command = PrinterCommand.find_pending_by_cmd_id(till, params[:command_id])
-    if command.response_command(params[:response])
-      redirect_to :action => command.action_success
-    else
-      flash[:notice] = command.action_error_notice
-      flash.keep(:notice)
-      redirect_to :action =>  command.action_error(params[:response])
-    end
-  end
-
   private
 
   def get_printer_id

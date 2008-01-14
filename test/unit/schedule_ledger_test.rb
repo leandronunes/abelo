@@ -16,28 +16,28 @@ class ScheduleLedgerTest < Test::Unit::TestCase
     sl = ScheduleLedger.new
     sl.valid?
     assert sl.errors.invalid?(:start_date)
-    sl.start_date =  Date.today
+    sl.start_date =  DateTime.now
     sl.valid?
     assert !sl.errors.invalid?(:start_date)    
   end
 
   def test_start_date_on_past_date
     sl = ScheduleLedger.new
-    sl.start_date =  Date.today - 1
+    sl.start_date =  DateTime.now - 1
     sl.valid?
     assert sl.errors.invalid?(:start_date)    
   end
 
   def test_start_date_in_current_date
     sl = ScheduleLedger.new
-    sl.start_date =  Date.today
+    sl.start_date =  DateTime.now
     sl.valid?
     assert !sl.errors.invalid?(:start_date)    
   end
 
   def test_start_date_on_future_date
     sl = ScheduleLedger.new
-    sl.start_date =  Date.today + 1
+    sl.start_date =  DateTime.now + 1
     sl.valid?
     assert !sl.errors.invalid?(:start_date)    
   end

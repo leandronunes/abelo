@@ -14,6 +14,17 @@ class LedgerTest < Test::Unit::TestCase
     @sale = Sale.find(:first)
   end
 
+  def create_ledger()
+    ledger = Money.new
+    ledger.value = 367
+    ledger.date = Date.today
+    ledger.owner = @organization
+    ledger.bank_account = @organization.default_bank_account  
+    ledger.category = @ledger_category
+    ledger.save!
+    ledger
+  end
+
   def test_setup
     assert @ledger.valid?
     assert @organization.valid?
@@ -372,5 +383,22 @@ class LedgerTest < Test::Unit::TestCase
     ledger.valid?
     assert !ledger.errors.invalid?(:value)
   end
+
+  def test_effective_date_when_done
+    ledger = create_ledger()
+    assert ledger.pending?
+    assert_nil ledger.effective_date
+    ledger.done!
+    assert_not_nil ledger.effective_date
+  end
+
+  def test_effective_value_when_done
+    ledger = create_ledger()
+    assert ledger.pending?
+    assert_nil ledger.effective_value
+    ledger.done!
+    assert_not_nil ledger.effective_value
+  end
+
 
 end

@@ -6,7 +6,9 @@
 .list_item_button .button,
 .display_info_options .button,
 .content_menu .button,
-.search_itens .button{
+.search_itens .button,
+.financial_table .button,
+.sales_table .button{
   display: block;
   float: left;
   border: none;
@@ -29,20 +31,6 @@
   background-position: 50% 50%;
 }
 
-/*
-.button_main{
-  float: none;
-  border: 2px solid black;
-  display: block;
-  opacity: 1;
-  width: 24px;
-  height: 24px;
-  background-color: red;
-  background-repeat: no-repeat;
-  background-position: 0%;
-}
-*/
-
 .bt_small {
   width: 16px;
   height: 16px;
@@ -57,20 +45,6 @@
 }
 
 .list_item_button .button { width: 16px; height: 16px }
-
-/*
-.with_text {
-  padding: 3px 0px;
-  padding-left: 24px;
-  background-position: 0px 50%;
-  width: inherit !important;
-  display: inline !important;
-}*/
-
-/*
-.button_main.with_text {
-  display: block !important;
-}*/
 
 .bt_small.with_text {
   padding-left: 18px;

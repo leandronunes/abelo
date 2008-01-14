@@ -7,6 +7,14 @@ class AddCash < Money
     add_cash.printer_command ||= PrinterCommand.new(add_cash.owner ,[PrinterCommand::TILL_ADD_CASH, add_cash.value]) if add_cash.owner.has_fiscal_printer?
   end
 
+  before_save do |cash|
+    cash.done! unless cash.owner.has_fiscal_printer?
+  end
+
+  before_destroy do
+    raise _("Cannot destroy this object")
+  end
+
   def validate
     if self.date != Date.today
       self.errors.add(:date, _('You cannot schedule an add cash')) 

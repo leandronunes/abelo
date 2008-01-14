@@ -562,8 +562,6 @@ module ApplicationHelper
     )
   end
 
-
-  #DEPRECATED. Use the method 'display_form_info'
   def display_form_info(object, html_options = {}, &block)
     content = capture(object, &block)
     concat(
@@ -578,6 +576,7 @@ module ApplicationHelper
     )
   end
 
+  #DEPRECATED. Use the method 'display_form_info'
   alias :display_edit_info :display_form_info
 
   def display_edit_info_options(object, params = {}, html_options = {})
@@ -745,6 +744,10 @@ module ApplicationHelper
     '<div id="beta_info" title="BETA">' +
     '<span>BETA</span>' +
     '</div>'
+  end
+
+  def parse_date(date)
+    date.strftime(_('%d/%m/%Y: %T'))
   end
 
 end

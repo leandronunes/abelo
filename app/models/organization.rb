@@ -277,8 +277,8 @@ class Organization < ActiveRecord::Base
   # Income ledger categories appear first ordened by name and
   # Expense ledger categories appear after ordened by name too.
   def ledger_categories_by_payment_method(payment_method = 'money')
-    category = LedgerCategory.find(:all, :conditions => ['organization_id = ?', self], :order => 'type_of, name ASC' )
-    category.select{|c| c.payment_methods.include?(payment_method)} 
+    category = LedgerCategory.find(:all, :conditions => { :organization_id => self}, :order => 'type_of, name ASC' )
+    category.select{|c| c.payment_methods.include?(payment_method) and !c.is_sale? and !c.is_stock?} 
   end
 
   # Return all ledger categories of a specific payment method
@@ -286,10 +286,25 @@ class Organization < ActiveRecord::Base
   # Income ledger categories appear first ordened by name and
   # Expense ledger categories appear after ordened by name too.
   def sale_ledger_categories_by_payment_method(payment_method = 'money')
-    category = LedgerCategory.find(:all, :conditions => ['organization_id = ?', self], :order => 'type_of, name ASC' )
-    category.select{|c| c.payment_methods.include?(payment_method) and c.is_sale?} 
+    categories = sale_ledger_categories 
+    categories.select{|c| c.payment_methods.include?(payment_method) and c.is_sale?} 
+  end
+
+  # Return all ledger categories thatt are not associated to stock and sale. Otherwise 
+  # all ledgers with 'is_sale' and 'is_stock' attributes false.
+  def common_ledger_categories
+    categories = LedgerCategory.find(:all, :conditions => { :organization_id => self, :is_sale => false, :is_stock => false}, :order => 'name ASC' )
   end
  
+  # Return all ledger categories associated to sale operations
+  def sale_ledger_categories
+    categories = LedgerCategory.find(:all, :conditions => { :organization_id => self, :is_sale => true}, :order => 'name ASC' )
+  end
+
+  # Return all ledger categories associated to stock operations
+  def stock_ledger_categories
+    categories = LedgerCategory.find(:all, :conditions => { :organization_id => self, :is_stock => true}, :order => 'name ASC' )
+  end
 
   # Create new stock objects fill virtual attributes 'product_in_list' and 'amount_in_list'
   # of Stock object to display this attributes on list action
@@ -313,6 +328,13 @@ class Organization < ActiveRecord::Base
     StockVirtual.create_virtual_downs(self.products)
   end 
 
+  def ledger_categories_of_sale
+    self.ledger_categories.map{ |l| l.is_sale? }
+  end
+
+  def ledger_categories_of_stock
+    self.ledger_categories.map{ |l| l.is_stock? }
+  end
 
   #TODO see if it's useful
   def customers_by_products(list_products)

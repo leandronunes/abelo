@@ -1,18 +1,24 @@
-  <table>
+<table>
+  <tr>
+    <th> <%= _('Date') %> </th>
+    <th> <%= _('Customer') %></th>
+    <th> <%= _('Total') %> </th>
+  </tr>
+  <% for item in @sales %>
     <tr>
-      <th> <%= _('Status') %></th>
-      <th> <%= _('Customer') %></th>
-      <th> <%= _('Date') %> </th>
-      <th> <%= _('Total') %> </th>
+      <td>
+        <% if item.status == Status::STATUS_DONE %>
+          <%= button_remote 'done_sale', _('Confimr Ledger'), :cancel, {:update => 'abelo_financial_table', :url => {:action => 'display_financial_table', :status => item.status} } %>
+        <% elsif item.status == Status::STATUS_PENDING %>
+          <%= button 'foreseen_sale', _('Foreseen Ledger'), :foreseen, {} %>
+        <% else item.status == Status::STATUS_CANCELLED %>
+          <%= button_remote 'cancelled_sale', _('Cancelled Ledger'), :cancel, {:update => 'abelo_financial_table', :url => {:action => 'display_financial_table', :status => item.status} } %>
+        <% end %>
+        <%= parse_date(item.datetime) %>
+      </td>
+      <td><%= item.customer_description %></td>
+      <td><%= item.total_payment %></td>
     </tr>
-
-    <% for item in @sales %>
-      <tr id="list_item_<%=item.id %>">
-        <td><%= item.status %></td>
-        <td><%= item.customer_description %></td>
-        <td><%= item.datetime %></td>
-        <td><%= item.total_payment %></td>
-      </tr>
-    <% end %>
-  </table>
+  <% end %>
+</table>
 

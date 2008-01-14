@@ -47,10 +47,9 @@ module FinancialInformation
     
 
     @bank_accounts = @organization.bank_accounts
-    @ledger_categories = @organization.ledger_categories
     @tags = @organization.tags_by_bank_account(@chosen_accounts)
 
-    @common_financial_parameters = {:query => @query, :accounts => @chosen_accounts.ids, :tags => @chosen_tags.join(','), :start_date_day => @start_date_day, :start_date_month => @start_date_month, :start_date_year => @start_date_year, :end_date_day => @end_date_day, :end_date_month => @end_date_month, :end_date_year => @end_date_year, :id => object.id,  :categories => @chosen_categories.ids}
+    @common_financial_parameters = params.merge({:query => @query, :accounts => @chosen_accounts.ids, :tags => @chosen_tags.join(','), :start_date_day => @start_date_day, :start_date_month => @start_date_month, :start_date_year => @start_date_year, :end_date_day => @end_date_day, :end_date_month => @end_date_month, :end_date_year => @end_date_year, :id => object.id,  :categories => @chosen_categories.ids})
 
    @common_observer_financial_parameters = @common_financial_parameters.collect{|k,v| "'&"+k.to_s+"='"+" +  escape('"+v.to_s+"')"}.join(" + ")
 

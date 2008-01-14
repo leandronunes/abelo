@@ -63,6 +63,10 @@ class LedgersControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:bank_accounts)
     assert_not_nil assigns(:ledger_categories)
     assert_not_nil assigns(:tags)
+    assert_not_nil assigns(:total_income)
+    assert_not_nil assigns(:total_expense)
+    assert_not_nil assigns(:geral_total_income)
+    assert_not_nil assigns(:geral_total_expense)
   end
 
   def test_list_with_default_bank_account
@@ -128,6 +132,10 @@ class LedgersControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:tags)
     assert_not_nil assigns(:ledger_pages)
     assert_not_nil assigns(:ledgers)
+    assert_not_nil assigns(:total_income)
+    assert_not_nil assigns(:total_expense)
+    assert_not_nil assigns(:geral_total_income)
+    assert_not_nil assigns(:geral_total_expense)
     assert_equal [assigns(:organization).default_bank_account], assigns(:chosen_accounts)
   end
 
@@ -145,6 +153,10 @@ class LedgersControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:tags)
     assert_not_nil assigns(:ledger_pages)
     assert_not_nil assigns(:ledgers)
+    assert_not_nil assigns(:total_income)
+    assert_not_nil assigns(:total_expense)
+    assert_not_nil assigns(:geral_total_income)
+    assert_not_nil assigns(:geral_total_expense)
     assert_equal [@another_bank_account], assigns(:chosen_accounts)
   end
 

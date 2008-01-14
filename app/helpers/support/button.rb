@@ -13,7 +13,7 @@
       design_display_button(button, title, url_options, html_options)
     end
   end
-  
+
   def button_remote(button, title, type, url_options = {}, html_options = {})
     local_html_options = html_options.merge({ :class => "button_#{type}" })
     design_display_button(button, title, url_options, local_html_options, true)

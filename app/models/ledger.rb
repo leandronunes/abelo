@@ -57,6 +57,10 @@ class Ledger < ActiveRecord::Base
     end
   end
 
+  before_destroy do |ledger|
+    raise _('You cannot destroy sale ledgers') if ledger.owner.kind_of? Sale
+  end
+
   def fiscal_payment_type
     00
   end
@@ -92,6 +96,31 @@ class Ledger < ActiveRecord::Base
     object = klass.new(*args)
     object.type_of =  l.category.type_of unless l.category.nil?
     object
+  end
+
+  # Return the sum of tha values of ledgers passed as parameter
+  def self.total_income(ledgers)
+    total = 0
+    ledgers.collect{ |l| total = total + (l.income? ? l.value : 0) }
+    total
+  end
+
+  # Return the sum of tha values of ledgers passed as parameter
+  def self.total_expense(ledgers)
+    total = 0
+    ledgers.collect{ |l| total = total + (l.expense? ? l.value : 0) }
+    total
+  end
+
+
+  # Check if the current ledger is a income
+  def income?
+    self.type_of == Payment::TYPE_OF_INCOME
+  end
+
+  # Check if the current ledger is a expense 
+  def expense?
+    self.type_of == Payment::TYPE_OF_EXPENSE
   end
 
   # Search for ledgers that contain any data that match with the 
@@ -145,14 +174,25 @@ class Ledger < ActiveRecord::Base
 
   def cancel!
     self.status = STATUS_CANCELLED
-    self.save
   end
 
   def cancel?
     self.status == STATUS_CANCELLED
   end
 
+  def confirm_cancel!
+    self.cancel!
+    self.save
+  end
+
+  def confirm_done!
+    self.done!
+    self.save
+  end
+
   def done!
+    self.effective_date ||= self.foreseen_date
+    self.effective_value ||= self.foreseen_value
     self.status = STATUS_DONE
   end
 

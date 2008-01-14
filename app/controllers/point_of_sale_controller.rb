@@ -96,8 +96,7 @@ class PointOfSaleController < ApplicationController
   end
 
   def create_add_cash
-    till = load_current_till
-    @cash = AddCash.new(till, params[:cash])
+    @cash = AddCash.new(@till, params[:cash])
 
     if @cash.save
       flash[:notice] = _('The cash was added successfully')
@@ -179,6 +178,7 @@ class PointOfSaleController < ApplicationController
       @total = @sale.total_value 
       @total_payment = @sale.total_payment
       @payments = @sale.ledgers
+      @sale_item = nil
       render :update do |page|
         page.replace_html('abelo_table_items', :partial => 'table')
         page.replace_html('abelo_add_item_panel', :partial => 'product_info')

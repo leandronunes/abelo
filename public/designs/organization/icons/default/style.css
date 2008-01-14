@@ -24,7 +24,13 @@
 .documents_small      { background-image: url(documents-16x16.png) }
 .new_document_small   { background-image: url(doc-new-16x16.png) }
 .print           { background-image: url(save.png) }
-.personal_data           { background-image: url(permissions.png) }
+.personal_data    { background-image: url(permissions.png) }
+.cancelled_ledger { background-image: url(canceled_ledger.png) }
+.pending_ledger { background-image: url(foreseen_ledger.png) }
+.done_ledger { background-image: url(apply.png) }
+.cancelled_sale { background-image: url(canceled_ledger.png) }
+.pending_sale { background-image: url(foreseen_ledger.png) }
+.done_sale { background-image: url(apply.png) }
 
 /* * * Content Menu Icons * * */
 

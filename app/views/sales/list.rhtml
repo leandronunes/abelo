@@ -3,5 +3,18 @@
 
 <%= display_list_options 'department', 'name' %>
 
-<%= render :partial => 'sales_table' %>
+<table>
+  <tr>
+    <th> <%= _('Period') %></th>
+    <th> <%= _('Visualization Mode') %></th>
+  </tr>
+  <tr>
+    <td> <%= 'some' %></td>
+    <td> <%= _('table') %></td>
+  </tr>
+</table>
+
+<div id="abelo_sales" class="sales_table">
+  <%= render :partial => 'sales_table' %>
+</div>
 

@@ -13,5 +13,8 @@ class MoneyTest < Test::Unit::TestCase
     assert !l.errors.invalid?(:category_id)
   end
 
+  def test_cannot_destroy_a_sale_ledger
+    
+  end
 
 end

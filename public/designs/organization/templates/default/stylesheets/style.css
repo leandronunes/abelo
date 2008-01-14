@@ -189,3 +189,7 @@ body {
 }
 
 
+.login_failed{
+  color: red;
+  text-align: center;
+}

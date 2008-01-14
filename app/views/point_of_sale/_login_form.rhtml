@@ -7,7 +7,13 @@
   <p><label for="password"><%= _("Password") %> </label><br />
     <span><%= password_field 'user', 'password' %></span>
   </p>
-</div>
 
-<%= button 'back', content_tag('span', _('Voltar')), :back, {:action => 'coupon_open', :id => @sale}, :accesskey => 'v', :class => 'button back with_text' %>
-<%= button 'password', _('Cancel Sale'), :save, {}, {:class => 'button button_login with_text'} %>
+  <div class="button_bar">
+   <div class="beault_button">
+     <%= button 'password', _('Cancel Sale'), :save, {}, {:class => 'button button_login with_text'} %>
+   </div>
+   <div class="beault_button">
+    <%= button 'back', content_tag('span', _('Voltar')), :back, {:action => 'coupon_open', :id => @sale}, :accesskey => 'v', :class => 'button back with_text' %>
+   </div>
+  </div>
+</div>

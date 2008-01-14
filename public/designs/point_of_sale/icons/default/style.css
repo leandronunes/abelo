@@ -1,8 +1,8 @@
 
 .none           { background-image: url('none.png') }
-.back           { background-image: url('back.png') }
+.back           { }
 .save           { background-image: url('save.png') }
-.password       { background-image: url('password.png') }
+.password       { }
 .pay,
 .currency_plus  { background-image: url('currency-plus.png') }
 .currency_minus { background-image: url('currency-minus.png') }

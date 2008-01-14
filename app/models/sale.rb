@@ -84,19 +84,18 @@ class Sale < ActiveRecord::Base
       return false
     end
     self.status = STATUS_CANCELLED
-    self.save
+    self.ledgers.collect{|l| l.confirm_cancel!}
     if self.owner.has_fiscal_printer?
       self.printer_commands << PrinterCommand.new(self.owner, [PrinterCommand::CANCEL])
     end
+    self.save
   end
 
   # closes a sale. No item can be added to it anymore
-  #
-  # TODO: actually check and stop adding items to a closed sale
-  # TODO: see if sale with no item need a payment
   def close!
     raise ArgumentError.new('Only open sales can be closed') if self.status != STATUS_PENDING
     self.status = STATUS_DONE  if self.balance <= 0
+    self.ledgers.collect{|l| l.confirm_done!}
     self.save
   end
   

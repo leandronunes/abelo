@@ -13,6 +13,13 @@ class AddCashTest < Test::Unit::TestCase
     till
   end
 
+  def create_add_cash()
+    ledger = AddCash.new(create_till)
+    ledger.value = 367
+    ledger.save!
+    ledger
+  end
+
   def test_date_is_today
     cash = AddCash.new(create_till)
     cash.date = Date.today - 1
@@ -33,5 +40,9 @@ class AddCashTest < Test::Unit::TestCase
     assert !cash.errors.invalid?(:type_of)
   end
 
+  def test_cannot_destroy
+    cash = create_add_cash()
+    assert_raise(RuntimeError){ cash.destroy}
+  end
 
 end

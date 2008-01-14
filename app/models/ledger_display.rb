@@ -2,7 +2,6 @@ class LedgerDisplay < DisplayConfiguration
 
   def self.available_fields
     %w[
-      type
       category_id
       payment_method
       value
@@ -24,7 +23,6 @@ class LedgerDisplay < DisplayConfiguration
 
   DESCRIBE_AVAILABLE_FIELDS = 
     {
-      'type' => _('Type'),
       'category_id' => _('Category'),
       'payment_method' => _('Payment Method'),
       'value' => _('Value'),

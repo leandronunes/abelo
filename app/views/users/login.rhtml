@@ -10,6 +10,10 @@
 <span><%= password_field_tag 'password' %></span>
 </p>
 
+<div class='login_failed'>
+  <%= flash[:failed] %>
+</div>
+
 <div class="button_bar">
  <div class="beault_button">
   <%= button 'password', '&nbsp;&nbsp;&nbsp;&nbsp;' + _('Log in'), :save, {}, {:class => 'with_text'} %>

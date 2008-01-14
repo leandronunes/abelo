@@ -55,6 +55,7 @@ class UsersController < ApplicationController
         redirect_to :controller => 'public'
       end
     end
+    flash[:failed] = _('Wrong password or login')
   end
 
   def signup

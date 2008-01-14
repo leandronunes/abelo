@@ -10,7 +10,7 @@ class CreateLedgers < ActiveRecord::Migration
       t.column :effective_value,        :float
       t.column :description,            :string, :default => ''
       # The attribute date must be always nil it was created to solve a problem with date passed by view
-      t.column :date,                   :date 
+      t.column :date,                   :datetime 
       t.column :foreseen_date,          :date
       t.column :effective_date,         :date
       t.column :interests,              :float, :default => 0
@@ -19,10 +19,9 @@ class CreateLedgers < ActiveRecord::Migration
       t.column :parcel_number,          :integer, :default => 1
       t.column :operational,            :boolean, :default => false, :null => false
       t.column :bank_account_id,        :integer,  :null => false
-      t.column :is_foreseen,            :boolean,  :null => false, :default => false
+      t.column :status,                 :integer,  :default => 0
       t.column :is_operational,         :boolean,  :default => false
       t.column :schedule_ledger_id,     :integer
-      t.column :payment_id,             :integer
     
       # payment with credit card
       t.column :credit_card_number,         :string

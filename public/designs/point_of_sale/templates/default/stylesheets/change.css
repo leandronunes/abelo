@@ -1,0 +1,23 @@
+.change_sale{
+  position: absolute;
+  width: 300px;
+  right: 50%;
+  margin-right: -150px;
+  background-color: none;
+  border: 8px solid black;
+  -moz-border-radius: 30px;
+  text-align: center;
+  font-weight: 800;
+  border-color: #F8F4B0;
+  font-size: 30px;
+}
+
+.change_sale a{
+  color: blue;
+
+}
+
+body {
+  background: none;
+} 
+~  

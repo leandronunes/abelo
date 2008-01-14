@@ -1,0 +1,58 @@
+
+#abelo_login_form {
+  position: absolute;
+  width: 190px;
+  left: 50%;
+  margin-left: -80px;
+  font-size: 14px;
+}
+
+
+.beault_button {
+  margin: 5px;
+  height: 33px;
+  padding-top: 5px;
+  background: url('../images/bgbutton.png') no-repeat 50% 50%;
+  display: block;
+  border: none;
+}
+.beault_button .button {
+  border: none;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: 0% 100%;
+  padding: 2px;
+  text-align: right;
+}
+.beault_button a {
+  position: relative;
+  top: 1px;
+  margin-left: 30px;
+}
+.beault_button a span {
+  position: relative;
+  top: -2px;
+}
+
+.beault_button .button span {
+  margin-left: 15px;
+  text-decoration: none;
+}
+.beault_button :hover {
+  color: #543 !important;
+}
+
+.beault_button .button_new {
+  padding-left: 28px;
+}
+
+.beault_button span, .beault_button input {
+  color: #654;
+  height: 30px;
+  line-height: 30px;
+  font-size: 13px;
+  font-weight: 800;
+  margin-left: 30px;
+}
+
+

@@ -13,7 +13,7 @@ class LedgerCategoryDisplay < DisplayConfiguration
 #      'is_operational' =>  _('Is Operational?'),
       'is_sale' =>  _('Is to Sale?'),
       'is_stock' =>  _('Is to Stock?'),
-      'type_of' =>  _('Type of'),
+      'type_of' =>  _('Type'),
       'payment_methods' =>  _('Payment Methods'),
     }[field] || field
   end

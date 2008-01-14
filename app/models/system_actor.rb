@@ -60,21 +60,19 @@ class SystemActor < ActiveRecord::Base
   #   - Start Date
   #   - End Date
   #   - Query
-  def sale_ledgers_by_all(accounts, tags, categories, start_date, end_date, query = nil)
-    return [] if accounts.blank? or !accounts.all?{|a| self.organization.bank_accounts.include?(a)}
+  def ledgers_by_all(accounts, tags, categories, start_date, end_date, query = nil)
+    return [] if accounts.blank? 
     ledger_banks = ledgers_by_bank_account(accounts)
     ledger_tags = ledgers_by_tag(tags, accounts)
     ledger_dates = ledgers_by_dates(start_date, end_date, accounts)
     ledger_categories = ledgers_by_categories(categories, accounts)
     ledger_search = ledgers_by_search(query, accounts)
-    ledger_sale = Sale.sale_ledgers_by_customer(self)  
 
     all_leders = ledger_banks 
-    all_leders = all_leders & ledger_tags unless ledger_tags.blank?
-    all_leders = all_leders & ledger_categories unless ledger_categories.blank?
+    all_leders = all_leders & ledger_tags unless tags.blank?
+    all_leders = all_leders & ledger_categories unless categories.blank?
     all_leders = all_leders & ledger_search unless ledger_search.blank?
     all_leders = all_leders & ledger_dates
-    all_leders = all_leders & ledger_sale
     all_leders
   end
 
@@ -82,49 +80,30 @@ class SystemActor < ActiveRecord::Base
   def ledgers_by_bank_account(accounts = [])
     accounts = [accounts] unless accounts.kind_of?(Array)
     return [] unless accounts.all?{|a| self.organization.bank_accounts.include?(a)}
-    if(accounts.class == Array)
-      ledgers = accounts.collect{|b| b.ledgers}.flatten
-    else
-      ledgers = self.organization.bank_accounts.find(accounts).ledgers
-    end
-    ledgers #Redundant make the return value more clear
-  end
-
-  # Return the organization ledgers by tags and bank accounts passed as arguments
-  def ledgers_by_tag(tags, accounts = [])
-    return [] unless accounts.all?{|a| self.organization.bank_accounts.include?(a)}
-    accounts.collect{ |b| b.ledgers.find_tagged_with(tags) }.flatten
+    self.ledgers({:bank_account_id => accounts})
   end
 
   # Return the organization ledgers between the start and end dates passed as arguments
   def ledgers_by_dates(start_date, end_date, accounts = [])
     return [] if start_date.nil? or end_date.nil? or !accounts.all?{|a| self.organization.bank_accounts.include?(a)}
 
-    accounts.collect{|b|
-      b.ledgers.find(:all, :conditions => [
-        '((effective_date >= ?) and (effective_date <= ?)) or (foreseen_date >= ? and foreseen_date <= ?)',
-         start_date, end_date, start_date, end_date
-      ])
-    }.flatten
+    l = self.ledgers(:effective_date => start_date..end_date, :foreseen_date => start_date..end_date, :bank_account_id => accounts)
   end
 
   # Return the organization ledgers by categories and bank accounts passed as arguments
   def ledgers_by_categories(categories, accounts = [])
     return [] if categories.blank? or !accounts.all?{|a| self.organization.bank_accounts.include?(a)}
 
-    merge_cond = ''
-    categories.each do |c|
-      merge_cond = merge_cond.blank? ? merge_cond + "category_id = #{c.id}" : merge_cond + " or category_id = #{c.id}"
-    end
+    self.ledgers(:category_id => categories, :bank_account_id => accounts)
+  end
 
-    accounts.collect{ |b| b.ledgers.find(:all, :conditions => [ merge_cond]) }.flatten
+  def ledgers_by_tag(tags, accounts = [])
+    Ledger.find_tagged_with(tags, :conditions => {:owner_type => self.ledger_owner, :owner_id => self.ledger_owner_ids, :bank_account_id => accounts})
   end
 
   def ledgers_by_search(search_query, accounts = [])
     return [] if search_query.blank? or !accounts.all?{|a| self.bank_accounts.include?(a)}
-    accounts.collect{ |b| b.ledgers.full_text_search(search_query) }.flatten
+    Ledger.full_text_search(search_query, :conditions => {:owner_type => self.ledger_owner, :owner_id => self.ledger_owner_ids, :bank_account_id => accounts})
   end
-
-
 
 end

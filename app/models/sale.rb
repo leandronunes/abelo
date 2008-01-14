@@ -40,7 +40,7 @@ class Sale < ActiveRecord::Base
 
   def self.sale_ledgers_by_customer(customer)
     sales = self.sale_by_customer(customer)
-    sales.collect{|s| s.ledgers}.flatten
+    l = Ledger.find(:all, :conditions => {:owner_type => 'Sale', :owner_id => sales})
   end
 
   def self.sale_by_customer(customer)

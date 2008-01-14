@@ -63,7 +63,7 @@ class SystemActorsController < ApplicationController
     get_financial_variables(@system_actor)
     @ledger_categories = @organization.sale_ledger_categories
 
-    ledgers = @system_actor.sale_ledgers_by_all(@chosen_accounts, @chosen_tags, @chosen_categories, @start_date, @end_date, @query)
+    ledgers = @system_actor.ledgers_by_all(@chosen_accounts, @chosen_tags, @chosen_categories, @start_date, @end_date, @query)
     @ledger_pages, @ledgers = paginate_by_collection ledgers
     @total_income = Ledger.total_income(@ledgers)
     @total_expense = Ledger.total_expense(@ledgers)
@@ -75,7 +75,7 @@ class SystemActorsController < ApplicationController
     system_actor = @organization.system_actors.find(params[:id])
     get_financial_variables(system_actor)
     @ledger_categories = @organization.sale_ledger_categories
-    ledgers = system_actor.sale_ledgers_by_all(@chosen_accounts, @chosen_tags, @chosen_categories, @start_date, @end_date, @query)
+    ledgers = system_actor.ledgers_by_all(@chosen_accounts, @chosen_tags, @chosen_categories, @start_date, @end_date, @query)
     @ledger_pages, @ledgers = paginate_by_collection ledgers
     @total_income = Ledger.total_income(@ledgers)
     @total_expense = Ledger.total_expense(@ledgers)

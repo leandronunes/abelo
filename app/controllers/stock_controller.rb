@@ -27,7 +27,7 @@ class StockController < StockBaseController
         @product = @stock.product
         @suppliers = @product.suppliers
         @ledger = Ledger.new_ledger(:value => @stock.price, :date => @stock.date)
-        @ledger_categories =  @organization.ledger_categories_by_payment_method(@ledger.payment_method)
+        @ledger_categories =  @organization.stock_ledger_categories_by_payment_method(@ledger.payment_method)
         render :update do |page|
           page.replace_html 'stock_in_entry', :partial => 'extended_form'
         end
@@ -50,18 +50,19 @@ class StockController < StockBaseController
     ledger = Ledger.new_ledger(params[:ledger])
     ledger.owner = @stock
     ledger.bank_account = @stock.default_bank_account
+    ledger.done!
 
     if ledger.save
       @ledgers = @stock.ledgers
       @product = @stock.product
       @suppliers = @product.suppliers
-      @ledger_categories =  @organization.ledger_categories_by_payment_method(ledger.payment_method)
+      @ledger_categories =  @organization.stock_ledger_categories_by_payment_method(ledger.payment_method)
       render :update do |page|
         page.replace_html 'stock_in_entry', :partial => 'extended_form'
       end
     else
       @ledger = ledger
-      @ledger_categories =  @organization.ledger_categories_by_payment_method(@ledger.payment_method)
+      @ledger_categories =  @organization.stock_ledger_categories_by_payment_method(@ledger.payment_method)
       render :update do |page|
         page.replace_html 'add_payment', :partial => 'payment'
       end
@@ -71,7 +72,7 @@ class StockController < StockBaseController
   def add_payment
     @stock = @organization.stocks.find(params[:id])
     @ledger = Ledger.new_ledger(:date => @stock.date, :value => @stock.price)
-    @ledger_categories =  @organization.ledger_categories_by_payment_method(@ledger.payment_method)
+    @ledger_categories =  @organization.stock_ledger_categories_by_payment_method(@ledger.payment_method)
     render :update do |page|
       page.replace_html 'add_payment', :partial => 'payment'
       page.replace_html 'stock_options', " "

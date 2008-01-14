@@ -12,4 +12,17 @@ class Supplier < SystemActor
     self.stock_ins.find(:all, :conditions => {:product_id => product}).sum(&:amount).to_f
   end
 
+  def ledgers(options = {})
+    l = Ledger.find(:all, :conditions => {:owner_type => 'Stock', :owner_id => self.ledger_owner_ids}.merge(options))
+  end
+
+  def ledger_owner
+    Stock
+  end
+
+  def ledger_owner_ids
+    self.stock_ins.to_a
+  end
+
+
 end

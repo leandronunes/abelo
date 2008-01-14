@@ -419,26 +419,27 @@ worker_vendedor = Worker.create!(:name => 'José Fernandes', :cpf => '6335842181
 worker_gerente = Worker.create!(:name => 'Carla Alves', :cpf => '53170430424', :address => 'Alameda das Pintagueiras, nº 37, Caminho das Árvores', :birthday => '1979-07-18', :category => manager_category, :organization => organization, :email => 'carla@toca.com')
 
 ############Till###################################
-Till.destroy_all
-till_one = Till.new(organization, gerente, '1' )
-till_one.save!
+# TODO put it to works
+#Till.destroy_all
+#till_one = Till.new(organization, gerente, '1' )
+#till_one.save!
 
 ############Sales###################################
-Sale.destroy_all
-sale_one = Sale.new(till_one)
-sale_one.save!
+#Sale.destroy_all
+#sale_one = Sale.new(till_one)
+#sale_one.save!
 
 ############Sale Items##############################
-SaleItem.destroy_all
-sale_item_one = SaleItem.new(sale_one, :product => camisa, :amount => 2.0)
-sale_item_one.save!
-sale_item_two = SaleItem.new(sale_one, :product => calca, :amount => 3.0)
-sale_item_two.save!
+#SaleItem.destroy_all
+#sale_item_one = SaleItem.new(sale_one, :product => camisa, :amount => 2.0)
+#sale_item_one.save!
+#sale_item_two = SaleItem.new(sale_one, :product => calca, :amount => 3.0)
+#sale_item_two.save!
 
 ############Mass Mail###############################
-MassMail.destroy_all
-mail_one = MassMail.create!(:subject => 'Festa de Inauguração da Toca!', :body => 'Olá, a Toca o convida para a sua festa de inauguração. Não perca!', :organization => organization)
-mail_one = MassMail.create!(:subject => 'Conheça o site da Toca', :body => 'Olá, o site da Toca está disponível em http://www.consumidorsustentavel.com.br/http://www.consumidorsustentavel.com.br/.', :organization => organization)
+#MassMail.destroy_all
+#mail_one = MassMail.create!(:subject => 'Festa de Inauguração da Toca!', :body => 'Olá, a Toca o convida para a sua festa de inauguração. Não perca!', :organization => organization)
+#mail_one = MassMail.create!(:subject => 'Conheça o site da Toca', :body => 'Olá, o site da Toca está disponível em http://www.consumidorsustentavel.com.br/http://www.consumidorsustentavel.com.br/.', :organization => organization)
 
 ############Departments###############################
 Department.destroy_all

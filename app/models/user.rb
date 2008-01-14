@@ -26,7 +26,12 @@ class User < Person
   has_many :profiles
   has_many :organizations, :through => :profiles
   has_many :ledgers
-  
+
+# used by access_control pluging 
+  def person
+    self
+  end
+ 
   before_destroy :destroy_profiles
 
   after_create do |user|

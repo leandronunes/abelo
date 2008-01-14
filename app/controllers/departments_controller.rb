@@ -2,8 +2,8 @@ class DepartmentsController < ApplicationController
 
   needs_organization
 
-#  protect [:index, :list, :show, :autocomplete_name, :department_tabs ], 'view_department', :organization
-#  protect [:new, :edit, :create, :update ], 'edit_department', :organization
+#  protect 'view_department', :organization, :only => [:index, :list, :show, :autocomplete_name, :department_tabs ]
+#  protect 'edit_department', :organization, :only => [:new, :edit, :create, :update ]
 
   before_filter :department_tabs
 
@@ -85,5 +85,6 @@ class DepartmentsController < ApplicationController
     end
     t.named @organization.camel_department_name_pl
   end
+
 
 end

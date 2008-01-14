@@ -220,9 +220,13 @@ class ApplicationController < ActionController::Base
   end
 
   # Access Control Plugin 
-  extend PermissionCheck
+  include PermissionCheck
   def organization
     @organization
+  end
+
+  def user
+    current_user.person if logged_in?
   end
 
 end

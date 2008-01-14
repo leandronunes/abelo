@@ -1,6 +1,8 @@
 class Sintegra < ActiveRecord::Base
 
- attr_accessor :organization  
+ attr_accessor :organization, :file_name
+
+    
 
   def initialize(org, *args)
 #   super(*args)
@@ -9,6 +11,7 @@ class Sintegra < ActiveRecord::Base
     @product = org.products.find(:first)
     @initial_date = Date.today
     @final_date = Date.today
+    @file_name = "teste_sintegra.txt"
   end
 
   def get_modelo_90()
@@ -373,7 +376,7 @@ class Sintegra < ActiveRecord::Base
                           "50",
                           "12",
                           "1")
-    f = File.new("teste_sintegra.txt","w")
+    f = File.new(@file_name,"w")
     f.write(sintegra)
     f.close 
   end

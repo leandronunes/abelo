@@ -1,15 +1,15 @@
-class SalesController < ApplicationController
-
-  needs_organization
-
-  before_filter :sales_tabs
+class SintegraController < ApplicationController
 
   def index
-    redirect_to :action => 'list'
+    redirect_to :action => 'configure_sintegra'
   end
 
-  def list
-    @sales = @organization.sales
+  def configure_sintegra
+    @sintegra = Sintegra.new(@organization)
+  end
+
+  def build_file
+    @sintegra.generate_sintegra
   end
 
   def sales_tabs
@@ -19,6 +19,7 @@ class SalesController < ApplicationController
       highlights_on :controller => 'sales'
     end
     t.named _('Sales')
+
     t = add_tab do
       links_to :controller => 'sintegra'
       in_set 'first'
@@ -26,6 +27,4 @@ class SalesController < ApplicationController
     end
     t.named _('Sintegra')
   end
-
-
 end

@@ -37,8 +37,19 @@
 
   <%= display_field_form(item, 'status',
         :title => _('Is it a foreseen?'),
-        :content => check_box('ledger', 'status', {}, Status::STATUS_PENDING, Status::STATUS_DONE ),
         :html_options => {:style => 'clear: left;'}
+      )
+  %>
+
+  <%= display_field_edit(item, 'status',
+        :title => _('Yes'),
+        :content => radio_button('ledger', 'status', Status::STATUS_PENDING)
+      )
+  %>
+
+  <%= display_field_edit(item, 'status',
+        :title => _('No'),
+        :content => radio_button('ledger', 'status', Status::STATUS_DONE)
       )
   %>
 

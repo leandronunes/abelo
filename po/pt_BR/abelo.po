@@ -298,7 +298,7 @@ msgstr "Categoria atualizada com sucesso."
 #: app/controllers/ledgers_controller.rb:120
 #: app/controllers/ledgers_controller.rb:150
 msgid "The ledger was successfully created"
-msgstr "Usuário criado com sucesso."
+msgstr "O lançamento foi criado com sucesso"
 
 #: app/controllers/ledgers_controller.rb:144
 msgid "Cannot edit ledger with id %s"

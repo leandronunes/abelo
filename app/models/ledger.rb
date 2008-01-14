@@ -172,7 +172,7 @@ class Ledger < ActiveRecord::Base
   end
 
   def date= date  
-    self[:foreseen_date] = date
+    self[:foreseen_date] ||= date
     self[:effective_date] = date unless self.pending?
   end
 

@@ -115,7 +115,7 @@ class LedgersController < ApplicationController
   def create
     @ledger = Ledger.new_ledger(params[:ledger])    
     @ledger.owner = @organization
-  
+ 
     if @ledger.save
       flash[:notice] = _('The ledger was successfully created')
       redirect_to :action => 'list'
@@ -147,7 +147,7 @@ class LedgersController < ApplicationController
     end
 
     if @ledger.update_attributes(params[:ledger])
-      flash[:notice] = _('The ledger was successfully created')
+      flash[:notice] = _('The ledger was successfully updated')
       redirect_to :action => 'list'
     else
       @ledger_categories =  @organization.ledger_categories_sorted_by_name

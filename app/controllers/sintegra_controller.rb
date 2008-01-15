@@ -1,5 +1,9 @@
 class SintegraController < ApplicationController
 
+  needs_organization
+
+  before_filter :create_sales_tabs
+
   def index
     redirect_to :action => 'configure_sintegra'
   end

@@ -14,18 +14,25 @@ module FinancialInformation
     rescue
       @chosen_accounts = [@organization.default_bank_account]
     end
-  
  
     begin
-      @start_date = Date.new(params[:start_date_year].to_i, params[:start_date_month].to_i, params[:start_date_day].to_i)
+      year = params[:start_date_year].to_i 
+      month = params[:start_date_month].to_i
+      day = params[:start_date_day].to_i
+      max_day = Time::days_in_month(month, year)
+      @start_date = DateTime.new(year, month, (day > max_day ? max_day : day))
     rescue
-      @start_date = Date.new(Date.today.year, Date.today.month, 1)
+      @start_date = DateTime.new(Date.today.year, Date.today.month, 1)
     end
 
     begin 
-      @end_date = Date.new(params[:end_date_year].to_i, params[:end_date_month].to_i, params[:end_date_day].to_i)
+      year = params[:end_date_year].to_i 
+      month = params[:end_date_month].to_i
+      day = params[:end_date_day].to_i
+      max_day = Time::days_in_month(month, year)
+      @end_date = DateTime.new(year, month, (day > max_day ? max_day : day))
     rescue
-      @end_date = Date.end_of_month(@start_date)
+      @end_date = DateTime.end_of_month(@start_date)
     end
      
     @start_date_day = @start_date.day
@@ -35,7 +42,7 @@ module FinancialInformation
     @end_date_day = @end_date.day
     @end_date_month = @end_date.month
     @end_date_year = @end_date.year
-    @query = params[:query]
+    @query = params[:query] unless params[:query].blank?
 
     begin
       @chosen_accounts = @organization.bank_accounts.find(@chosen_accounts)
@@ -45,7 +52,6 @@ module FinancialInformation
       @chosen_accounts = Array.new
     end
     
-
     @bank_accounts = @organization.bank_accounts
     @tags = @organization.tags_by_bank_account(@chosen_accounts)
 

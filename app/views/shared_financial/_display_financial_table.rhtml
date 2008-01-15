@@ -10,6 +10,9 @@
         <%= _('Page %s of %s') % [@ledger_pages.current.number, @ledger_pages.length] %> 
         <%= link_to_remote _('Show All'), :update => 'abelo_financial_table', :url => @common_financial_parameters.merge(:action => 'display_financial_table', :show => 'all'), :failure => "$('abelo_financial_table').innerHTML= request.responseText" %> 
         <% unless @query.nil? and @tag.nil? %>
+teste query <%= @query.inspect %>
+tag: 
+<%= @tag.inspect %>
           <%= _('[%s]') % link_to(_('Clean'), :url => {:action => 'list', :accounts => @chosen_accounts.ids}) %> 
         <% end %>
       </th>
@@ -90,7 +93,8 @@
         <%= observe_field('date_end_date_month',
           :update => 'abelo_financial_table',
           :url => {:action => 'display_financial_table' },
-          :with => "'end_date_month=' + escape(value) + %s" % @common_observer_financial_parameters
+          :with => "'end_date_month=' + escape(value) + %s" % @common_observer_financial_parameters,
+          :failure => "alert('bli')"
           )
         %>
 

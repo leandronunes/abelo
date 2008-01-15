@@ -1,5 +1,6 @@
 class ScheduleLedger < ActiveRecord::Base
   belongs_to :periodicity
+  has_many :ledgers
 
   validates_presence_of :periodicity_id
   validates_presence_of :start_date

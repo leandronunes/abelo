@@ -101,6 +101,7 @@ class ApplicationController < ActionController::Base
   require 'tabs/financial'
   require 'tabs/admin_organization'
   require 'tabs/web_site'
+  require 'tabs/sales'
 
   def self.uses_register_tabs
     before_filter :create_register_tabs

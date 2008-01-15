@@ -124,7 +124,7 @@ class LedgersController < ApplicationController
       @bank_accounts = @organization.bank_accounts
       @ledger_categories =  @organization.ledger_categories_by_payment_method(@ledger.payment_method)
       @periodicities = @organization.periodicities
-      render_action :new
+      render :action => 'new'
     end
   end
 

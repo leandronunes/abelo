@@ -1,4 +1,3 @@
-
 class Ledger < ActiveRecord::Base
 
   include Status
@@ -45,7 +44,7 @@ class Ledger < ActiveRecord::Base
       for n in 1..l.schedule_interval.to_i do
         ledger_schedule = l.dclone
         ledger_schedule.pending!
-        ledger_schedule.date =  (l.date.kind_of?(Time) ? l.date.to_datetime : l.date) + l.schedule_periodicity.number_of_days * n
+        ledger_schedule.date = (l.date.kind_of?(Time) ? l.date.to_datetime : l.date) + l.schedule_periodicity.number_of_days * n
         ledger_schedule.schedule_ledger = sl
         ledger_schedule.payment_method = l.payment_method
         ledger_schedule.save
@@ -172,7 +171,7 @@ class Ledger < ActiveRecord::Base
   end
 
   def date= date  
-    self[:foreseen_date] ||= date
+    self.pending? ? self[:foreseen_date] = date : self[:foreseen_date] ||= date
     self[:effective_date] = date unless self.pending?
   end
 

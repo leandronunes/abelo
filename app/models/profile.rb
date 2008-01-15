@@ -156,7 +156,7 @@ class Profile < ActiveRecord::Base
       { 'controller' => 'comatose_menu_web_site', 'action' => '*' },
       { 'controller' => 'product_store', 'action' => '*' },
       { 'controller' => 'organization_configuration', 'action' => '*' },
-      { 'controller' => 'point_of_sale_fiscal', 'action' => '*' },
+      { 'controller' => 'sintegra', 'action' => '*' },
     ],
     'other' => []
   }

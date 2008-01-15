@@ -53,25 +53,29 @@
       )
   %>
 
-  <%= display_field_form(item, 'schedule_repeat',
-        :title => _('Repeat this foreseen ledger?'),
-        :content => check_box('ledger', 'schedule_repeat', {}, 'true', 'false' ),
-        :html_options => {:style => 'clear: left;'}
-      )
-  %>
-  
-  <div id="repeat_informations">
-    <% if @ledger.schedule_repeat? %>
-      <%= render :partial => 'get_periodicity_informations' %> 
-    <% end %>
-  </div>
+  <% unless @ledger.scheduled? %>
+    <%= display_field_form(item, 'schedule_repeat',
+          :title => _('Repeat this ledger?'),
+          :content => check_box('ledger', 'schedule_repeat', {:onchange => "show_hide('repeat_informations')"}, 'true', 'false' ),
+          :html_options => {:style => 'clear: left;'}
+        )
+    %>
+    <div id="repeat_informations" style="<%= @ledger.schedule_repeat? ? 'display: block;' : 'display: none;'%>">
+      <%= display_field_edit(@ledger, 'schedule_periodicity_id',
+            :title => _('Periodicity?'),
+            :content => select_item('ledger', 'schedule_periodicity_id', @periodicities),
+            :html_options => {:style => 'clear: left;'}
+          )
+      %>
 
-  <%= observe_field('ledger_schedule_repeat',
-      :update => 'repeat_informations',
-      :url => {:action => 'get_periodicity_informations' },
-      :with => "'value=' +  escape(value)"
-    )
-  %>
+      <%= display_field_edit(@ledger, 'schedule_interval',
+            :title => _('Interval:'),
+            :content => (text_field 'ledger', 'schedule_interval'),
+            :html_options => {:class => 'line_item'}
+          )
+      %>
+    </div>
+  <% end %>
   
   <%= display_field_form(item, 'tag_list',
         :title => _('Tags (separated by comma):'),
@@ -91,6 +95,14 @@
         :content => rich_text_editor('ledger', 'description')
       )
   %>
+  <% if @ledger.scheduled? %>
+    <%= display_field_form(item, 'schedule_repeat',
+          :title => _('This ledger is scheduled for %s. Schedule associated with this:') % [parse_date(item.date, false)],
+          :content => content_tag(:div,  (render :partial => 'schedule_ledgers'), :id => 'abelo_schedule_ledger'),
+          :html_options => {:style => 'clear: left;'}
+        )
+    %>
+  <% end %>
 
 <% end %>
 

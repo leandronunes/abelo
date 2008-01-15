@@ -129,10 +129,10 @@ class Organization < ActiveRecord::Base
     @homepage ||= Article.find_by_path(self.identifier)
   end
 
-  #Find a ledger of organization
-  def find_ledger(id)
-   ledgers = self.bank_accounts.map{|b| b.ledgers}
-   ledgers.flatten.detect{|l| l.id.to_s == id.to_s}
+  # Returns all ledgers of organization. If 'id' is passed return 
+  # the ledger with parameter id equal 'id'
+  def ledgers(id = nil)
+    ledgers = Ledger.find((id.nil? ? :all : id), :conditions => {:bank_account_id => self.bank_accounts.to_a})
   end
 
   def top_level_product_categories

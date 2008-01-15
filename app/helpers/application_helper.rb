@@ -746,8 +746,9 @@ module ApplicationHelper
     '</div>'
   end
 
-  def parse_date(date)
-    date.strftime(_('%d/%m/%Y: %T'))
+  def parse_date(date, show_time = true)
+    show_time == true ? date.strftime(_('%d/%m/%Y: %T')) : date.strftime(_('%d/%m/%Y'))
+   
   end
 
 end

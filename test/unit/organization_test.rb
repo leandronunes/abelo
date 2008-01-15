@@ -41,6 +41,17 @@ class OrganizationTest < Test::Unit::TestCase
     sale
   end
 
+  def create_ledger
+    ledger = AddCash.new(create_till)
+    ledger.payment_method = 'money'
+    ledger.date = Date.today
+    ledger.bank_account = @organization.default_bank_account
+    ledger.type_of = Payment::TYPE_OF_INCOME
+    ledger.owner = @organization
+    ledger.value = 10
+    ledger.save!
+  end
+
   def test_setup
     assert @organization.valid?
     assert @cat_prod.valid?
@@ -134,12 +145,6 @@ class OrganizationTest < Test::Unit::TestCase
     assert org.errors.invalid?(:name) 
   end
 
-# FIXME:  remove this some day. This is not necessary anymore
-#  def test_mandatory_field_cnpj
-#    org = Organization.create(:name => 'Organization for testing', :identifier => 'org')
-#    assert org.errors.invalid?(:cnpj) 
-#  end
-  
   def test_mandatory_field_identifier
     org = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151')
     assert org.errors.invalid?(:identifier)
@@ -209,17 +214,20 @@ class OrganizationTest < Test::Unit::TestCase
     assert @organization.documents_not_model.include?(doc) 
   end
 
-  def test_find_ledger
-    ledger = AddCash.new(create_till)
-    ledger.payment_method = 'money'
-    ledger.date = Date.today
-    ledger.bank_account = @organization.default_bank_account
-    ledger.type_of = Payment::TYPE_OF_INCOME
-    ledger.owner = @organization
-    ledger.value = 10
-    ledger.save!
+  def test_ledgers
+    l = create_ledger
      
-    assert_not_nil @organization.find_ledger(ledger.id)
+    assert_not_nil @organization.ledgers(l.object_id)
   end
+
+  def test_get_all_ledgers
+    Ledger.destroy_all
+    create_ledger
+    create_ledger
+    create_ledger
+    n = Ledger.count 
+    assert_equal n, @organization.ledgers.length
+  end
+
 
 end

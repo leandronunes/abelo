@@ -6,9 +6,6 @@ class LedgersController < ApplicationController
 
   include FinancialInformation
 
-#  protect [:index, :list, :show, :autocomplete_description, :select_category, :get_periodicity_informations, :get_interval_informations], 'view_ledger', :organization
-#  protect [:new, :edit, :create, :update ], 'edit_ledger', :organization
-
   uses_financial_tabs
 
   def autocomplete_ledger_description
@@ -78,6 +75,7 @@ class LedgersController < ApplicationController
   def new
     @ledger = Ledger.new_ledger(:bank_account => @organization.default_bank_account)
     @bank_accounts = @organization.bank_accounts
+    @periodicities = @organization.periodicities
     @ledger_categories =  @organization.ledger_categories_by_payment_method(@ledger.payment_method)
   end
 
@@ -90,25 +88,6 @@ class LedgersController < ApplicationController
       render :partial => 'shared_payments/select_category'
     else
       render :nothing => true
-    end
-  end
-
-  def get_periodicity_informations
-    if params[:value] == "true"
-      @ledger = Ledger.new_ledger
-      @periodicities = @organization.periodicities
-      render :partial => 'get_periodicity_informations'
-    else
-      render :nothing => true
-    end
-  end
-
-  def get_interval_informations
-    if params[:value].blank?
-      render :nothing => true
-    else
-      @ledger = Ledger.new_ledger
-      render :partial => 'get_interval_informations'
     end
   end
 
@@ -129,22 +108,14 @@ class LedgersController < ApplicationController
   end
 
   def edit
-    #TODO change this if someone make the relationship organizatin has_many ledgers works
-    @ledger = @organization.find_ledger(params[:id])
+    @ledger = @organization.ledgers(params[:id])
     @bank_accounts = @organization.bank_accounts
+    @periodicities = @organization.periodicities
     @ledger_categories =  @organization.ledger_categories_sorted_by_name
   end
 
   def update
-    #TODO changue this if someone make the relationship organizatin has_many ledgers works
-    begin
-      @ledger = @organization.find_ledger(params[:id])
-      raise "Couldnt find a ledger with id %s" % params[:id] if @ledger.blank?
-    rescue
-      @message = _('Cannot edit ledger with id %s') % params[:id]
-      render :template => 'shared/not_found'
-      return
-    end
+    @ledger = @organization.ledgers(params[:id])
 
     if @ledger.update_attributes(params[:ledger])
       flash[:notice] = _('The ledger was successfully updated')
@@ -158,15 +129,27 @@ class LedgersController < ApplicationController
     end
   end
 
-  def destroy
-    begin
-      ledger = @organization.find_ledger(params[:id])
-      raise "Couldnt find a ledger with id %s" % params[:id] if ledger.blank?
-    rescue
-      @message = _("Cannot remove ledger with id %s it wasn't found") % params[:id]
-      render :template => 'shared/not_found'
-      return
+  def show_hide
+    render :update do |page|
+      page.replace_html('blo', 'testando')
     end
+  end
+
+  def unschedule_ledger
+    ledger = @organization.ledgers(params[:ledger_id])    
+    ledger.unschedule!
+    @ledger = @organization.ledgers(params[:id])
+    render :partial => 'schedule_ledgers'
+  end
+
+  def unschedule_all_ledger
+    ledger = @organization.ledgers(params[:id])
+    ledger.unschedule_all!
+    redirect_to :action => 'edit', :id => ledger
+  end
+
+  def destroy
+    ledger = @organization.ledgers(params[:id])
     ledger.destroy
     get_financial_variables(@organization)
     @ledger_categories = @organization.common_ledger_categories

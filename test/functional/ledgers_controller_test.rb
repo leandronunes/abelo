@@ -101,16 +101,21 @@ class LedgersControllerTest < Test::Unit::TestCase
     Ledger.destroy_all
     create_money(:value => 34, :description => 'Some Description')
     create_money(:value => 50, :description => 'Another Some Description')
-    
+    assert_equal 2, Ledger.count 
     get :list, :ledger => {:description => 'Another'}
 
     assert_response :success
     assert_template 'list'
-
     assert_equal 1, assigns(:ledgers).length
+  end
 
 
-    get :list, :ledger => {:description => 'Description'}
+  def test_list_when_query_param_not_nil_again
+    Ledger.destroy_all
+    create_money(:value => 34, :description => 'Some Description')
+    create_money(:value => 50, :description => 'Another Some Description')
+    assert_equal 2, Ledger.count 
+    get :list, :ledger => {:description => '*Description'}
 
     assert_response :success
     assert_template 'list'
@@ -170,44 +175,6 @@ class LedgersControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:ledger_categories)
     assert_not_nil assigns(:bank_accounts)
   end
-
-  def test_get_periodicity_informations_when_value_param_is_true
-    post :get_periodicity_informations, :value => 'true'
-   
-    assert_response :success
-    assert_template '_get_periodicity_informations'
-
-    assert_not_nil assigns(:ledger)
-    assert_not_nil assigns(:periodicities)
-  end
-
-  def test_get_periodicity_informations_when_value_param_is_different_of_true
-    post :get_periodicity_informations
-   
-    assert_response :success
-    assert_template nil
-
-  end
-
-
-  def test_get_interval_informations_when_value_param_is_true
-    post :get_interval_informations, :value => 'true'
-   
-    assert_response :success
-    assert_template '_get_interval_informations'
-
-    assert_not_nil assigns(:ledger)
-  end
-
-  def test_get_interval_informations_when_value_param_is_different_of_true
-    post :get_interval_informations
-   
-    assert_response :success
-    assert_template nil
-
-  end
-
-
 
   def test_create_successfully
     post :create, :ledger => {:description => 'Something', :category => @ledger_category, :value => '3', :date => Time.now, :bank_account => @another_bank_account}
@@ -382,9 +349,7 @@ class LedgersControllerTest < Test::Unit::TestCase
   def test_update_wihout_a_valid_ledger
     unexisting_ledger_id = 1000
     assert_raise(ActiveRecord::RecordNotFound){Ledger.find(unexisting_ledger_id)}
-    post :update, :id => unexisting_ledger_id
-    assert_response :success
-    assert_template 'shared/not_found'
+    assert_raise(ActiveRecord::RecordNotFound){ post :update, :id => unexisting_ledger_id}
   end
 
 

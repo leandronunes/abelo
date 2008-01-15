@@ -5,8 +5,7 @@ class Ledger < ActiveRecord::Base
 
   acts_as_ferret :fields => ['description', 'category', 'tags']
   
-  attr_accessor :schedule_repeat, :schedule_interval, :payment_method_choosen
-  @schedule_periodicity
+  attr_accessor :repeat, :interval, :periodicity_id, :payment_method_choosen
 
   belongs_to :category, :class_name => 'LedgerCategory',  :foreign_key => 'category_id'
   belongs_to :schedule_ledger
@@ -18,14 +17,27 @@ class Ledger < ActiveRecord::Base
   validates_presence_of :bank_account_id
   validates_presence_of :foreseen_date
   validates_presence_of :effective_date, :if => lambda{ |ledger| not ledger.pending? }
-  validates_presence_of :schedule_repeat, :if => lambda{ |l| !l.schedule_periodicity.blank? or  !l.schedule_interval.blank? }
+  validates_presence_of :schedule_repeat, :if => lambda{ |l| !l.schedule_periodicity_id.blank? or  !l.schedule_interval.blank? }
   validates_presence_of :schedule_periodicity, :if => lambda{ |l| l.schedule_repeat? or !l.schedule_interval.blank? }
-  validates_presence_of :schedule_interval, :if => lambda{ |l| l.schedule_repeat? or  !l.schedule_periodicity.blank? }
+  validates_presence_of :schedule_interval, :if => lambda{ |l| l.schedule_repeat? or  !l.schedule_periodicity_id.blank? }
   validates_inclusion_of :payment_method, :in => Payment::PAYMENT_METHODS
   validates_presence_of :type_of
   validates_inclusion_of :type_of, :in => Payment::TYPE_OF
   validates_presence_of :owner_id
   validates_presence_of :owner_type
+
+  def validate
+
+    self.errors.add(:value, _("The value should be at least 0.01" )) if value.nil? || value <= 0.00
+
+    self.errors.add(:date, _("Date cannot be set" )) unless self[:date].nil?
+
+    self.errors.add(:payment_method, _("You don't have a payment method associated to this ledger.")) if self.payment_method.blank?
+
+    if !self.category.nil? and !self.category.payment_methods.include?(self.payment_method)
+      self.errors.add(:payment_method, _("You canno't have a payment method not include in payment category list.")) 
+    end
+  end
 
   before_validation do |l|
     l.type_of = l.category.type_of unless l.category.nil?
@@ -39,7 +51,7 @@ class Ledger < ActiveRecord::Base
       l.printer_command = PrinterCommand.new(sale.owner, [PrinterCommand::ADD_PAYMENT, l.fiscal_payment_type, l.payment_type, l.value])
     end
 
-    if l.schedule_repeat?
+    if l.schedule_repeat? and !l.scheduled?
       sl = ScheduleLedger.create(:periodicity => l.schedule_periodicity, :start_date => l.foreseen_date, :interval => l.schedule_interval)
       for n in 1..l.schedule_interval.to_i do
         ledger_schedule = l.dclone
@@ -58,10 +70,58 @@ class Ledger < ActiveRecord::Base
     raise _('You cannot destroy sale ledgers') if ledger.owner.kind_of? Sale
   end
 
+  after_destroy do |ledger|
+    unless ledger.schedule_ledger.nil?
+      all_pending = ledger.schedule_ledger.pending_ledgers
+      all_pending.delete(ledger)
+      ledger.schedule_ledger.destroy if all_pending.blank?
+    end
+  end
+
   def dclone
     l = self.clone
     l.tag_list = self.tag_list.names
     l
+  end
+
+  def schedule_repeat
+    self.schedule_ledger.nil? ? self.repeat : true
+  end
+
+  def schedule_repeat= value
+    self.repeat = (value.to_s == 'true' ? true : false  )
+  end
+
+  def schedule_repeat?
+    self.schedule_repeat.to_s == 'true' ? true : false
+  end
+
+  def scheduled?
+    self.schedule_ledger.nil? ? false : true
+  end
+
+  def schedule_interval
+    self.schedule_ledger.nil? ? self.interval : self.schedule_ledger.interval
+  end
+
+  def schedule_interval= value
+    self.interval = value
+  end
+
+  def ledgers_scheduled
+    return nil if self.schedule_ledger.nil?
+    self.schedule_ledger.ledgers.select{|l| l != self}
+  end
+
+  def unschedule!
+    return nil if self.schedule_ledger.nil?
+    self.schedule_ledger.ledgers.delete(self)
+  end
+
+  def unschedule_all!
+    s = self.schedule_ledger
+    self.unschedule!
+    s.destroy
   end
 
   def fiscal_payment_type
@@ -143,17 +203,28 @@ class Ledger < ActiveRecord::Base
     self.find_by_contents(q, options)
   end
   
-  def schedule_periodicity= value
-    @schedule_periodicity = value
+  def schedule_periodicity_id= value
+    self.periodicity_id = value
   end
 
-  alias :schedule_periodicity_id= :schedule_periodicity=
   def schedule_periodicity_id
-    @schedule_periodicity
+    self.schedule_ledger.nil? ? self.periodicity_id : self.schedule_ledger.periodicity_id
+  end
+
+  def schedule_periodicity= value
+    self.schedule_periodicity_id=  value.kind_of?(Periodicity) ? value.id : value
   end
 
   def schedule_periodicity
-    Periodicity.find(@schedule_periodicity) unless @schedule_periodicity.blank?
+    if self.schedule_ledger.nil? 
+      self.organization.periodicities.find(self.schedule_periodicity_id) unless self.organization.nil? or self.schedule_periodicity_id.blank?
+    else
+      self.schedule_ledger.periodicity
+    end
+  end
+
+  def organization
+    self.owner if self.owner.kind_of?(Organization)
   end
 
   def value= value
@@ -211,7 +282,6 @@ class Ledger < ActiveRecord::Base
     self.status == STATUS_PENDING
   end
 
-
 #  #This method cannot be access directly. 
 #  #You have to access the date method and this method
 #  #set the correct value of foreseen_date attribute
@@ -224,25 +294,6 @@ class Ledger < ActiveRecord::Base
 #  #set the correct value of foreseen_value attribute
   def foreseen_value= value
     raise _('This function cannot be accessed directly')
-  end
-
-  def schedule_repeat?
-    self.schedule_repeat.to_s == 'true' ? true : false
-  end
-
-  protected
-
-  def validate
-
-    self.errors.add(:value, _("The value should be at least 0.01" )) if value.nil? || value <= 0.00
-
-    self.errors.add(:date, _("Date cannot be set" )) unless self[:date].nil?
-
-    self.errors.add(:payment_method, _("You don't have a payment method associated to this ledger.")) if self.payment_method.blank?
-
-    if !self.category.nil? and !self.category.payment_methods.include?(self.payment_method)
-      self.errors.add(:payment_method, _("You canno't have a payment method not include in payment category list.")) 
-    end
   end
 
   private

@@ -198,7 +198,7 @@ class LedgerTest < Test::Unit::TestCase
     l = Ledger.new_ledger
     l.valid?
     assert !l.errors.invalid?(:schedule_repeat)
-    l.schedule_periodicity = Periodicity.find(:first)
+    l.schedule_periodicity = @periodicity
     l.valid?
     assert l.errors.invalid?(:schedule_repeat)
   end

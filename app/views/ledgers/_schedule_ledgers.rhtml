@@ -1,0 +1,21 @@
+<table>
+  <tr>
+    <th colspan=3> 
+      <%= _('Scheduled Ledgers') %>
+      <%= link_to _('Unschedule All'), :action => :unschedule_all_ledger, :id => @ledger %> 
+    </th>
+  </tr>
+  <tr> 
+    <th> <%= _('Date') %>  </th>
+    <th> <%= _('Description') %>  </th>
+    <th> <%= _('Options') %>  </th>
+  </tr>
+  <% @ledger.ledgers_scheduled.each do |ledger| %>
+  <tr>
+    <td> <%= parse_date(ledger.date, false) %> </td>
+    <td> <%= ledger.description %> </td>
+    <td> <%= link_to_remote _('Unschedule'), :update => 'abelo_schedule_ledger', :url => {:action => 'unschedule_ledger', :ledger_id => ledger, :id => @ledger}, :failure => "$('abelo_schedule_ledger').inneHTML= request.responseText" %> </td>
+  </tr>
+  <% end %>
+  
+</table>

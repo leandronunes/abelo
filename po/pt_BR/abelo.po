@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: abelo 0.4.1\n"
-"POT-Creation-Date: 2008-01-14 08:04-0300\n"
+"POT-Creation-Date: 2008-01-15 14:16-0300\n"
 "PO-Revision-Date: 2008-01-12 14:23-0300\n"
 "Last-Translator: Leandro Nunes dos Santos <leandronunes@colivre.coop.br>\n"
 "Language-Team: Krishnamurti Lelis Lima Vieira Nunes <krishna@colivre.coop."
@@ -29,7 +29,7 @@ msgstr ""
 #: app/helpers/organizations_helper.rb:11 app/helpers/document_helper.rb:43
 #: app/helpers/application_helper.rb:559 app/helpers/application_helper.rb:684
 #: app/views/main/index.rhtml:1 app/views/users/list.rhtml:11
-#: app/views/shared_financial/_display_financial_table.rhtml:195
+#: app/views/shared_financial/_display_financial_table.rhtml:199
 #: app/views/document_items/_list.rhtml:5
 #: app/views/customer_categories/_list.rhtml:4
 #: app/views/organizations/show.rhtml:10 app/views/configuration/show.rhtml:10
@@ -110,6 +110,15 @@ msgstr "%s foi atualizado com sucesso."
 msgid "This actor it's not valid"
 msgstr "Este ator não é válido"
 
+#: app/controllers/tabs/sales.rb:8 app/controllers/sintegra_controller.rb:25
+#: app/helpers/support/menu.rb:11 app/views/sales/list.rhtml:2
+msgid "Sales"
+msgstr "Vendas"
+
+#: app/controllers/tabs/sales.rb:15 app/controllers/sintegra_controller.rb:32
+msgid "Sintegra"
+msgstr "Sintegra"
+
 #: app/controllers/tabs/configuration.rb:11
 #: app/views/mass_mails/filter_categories.rhtml:3
 #: app/views/categories/index.rhtml:1
@@ -146,7 +155,7 @@ msgid "Bank Accounts"
 msgstr "Contas bancárias"
 
 #: app/controllers/tabs/financial.rb:18
-#: app/views/shared_financial/_display_financial_table.rhtml:29
+#: app/views/shared_financial/_display_financial_table.rhtml:32
 msgid "Ledger Category"
 msgstr "Categoria contábil"
 
@@ -155,7 +164,7 @@ msgstr "Categoria contábil"
 #: app/helpers/support/display_actions.rb:312
 #: app/helpers/organizations_helper.rb:10 app/helpers/document_helper.rb:41
 #: app/helpers/application_helper.rb:683
-#: app/views/shared_financial/_display_financial_table.rhtml:193
+#: app/views/shared_financial/_display_financial_table.rhtml:197
 #: app/views/stock_base/_display_stock_table.rhtml:22
 #: lib/document_information.rb:136
 msgid "Show"
@@ -238,11 +247,6 @@ msgstr "Departamento criado com sucesso."
 msgid "Department was successfully updated."
 msgstr "Departamento atualizado com sucesso."
 
-#: app/controllers/sales_controller.rb:21 app/helpers/support/menu.rb:11
-#: app/views/sales/list.rhtml:2
-msgid "Sales"
-msgstr "Vendas"
-
 #: app/controllers/products_controller.rb:68
 msgid "The product was successfully created and added to stock."
 msgstr "O produto foi criado com sucesso e adicionado ao estoque."
@@ -295,18 +299,13 @@ msgstr "Categoria criada com sucesso."
 msgid "Category was successfully updated."
 msgstr "Categoria atualizada com sucesso."
 
-#: app/controllers/ledgers_controller.rb:120
-#: app/controllers/ledgers_controller.rb:150
+#: app/controllers/ledgers_controller.rb:99
 msgid "The ledger was successfully created"
 msgstr "O lançamento foi criado com sucesso"
 
-#: app/controllers/ledgers_controller.rb:144
-msgid "Cannot edit ledger with id %s"
-msgstr "Impossível editar lançamento com identificador %s"
-
-#: app/controllers/ledgers_controller.rb:166
-msgid "Cannot remove ledger with id %s it wasn't found"
-msgstr "Impossível remover lançamento com identificador %s: não encontrado"
+#: app/controllers/ledgers_controller.rb:121
+msgid "The ledger was successfully updated"
+msgstr "O lançamento foi atualizado com sucesso"
 
 #: app/controllers/public_controller.rb:24
 #: app/controllers/users_controller.rb:108
@@ -551,8 +550,8 @@ msgstr "Nome"
 
 #: app/models/organization_display.rb:10 app/models/credit_card_display.rb:21
 #: app/models/system_actor_display.rb:13 app/models/check_display.rb:25
-#: app/views/layouts/organization.rhtml:26
-#: app/views/layouts/comatose_admin.rhtml:26
+#: app/views/layouts/organization.rhtml:27
+#: app/views/layouts/comatose_admin.rhtml:27
 #: app/views/organizations/new.rhtml:22 app/views/organizations/_form.rhtml:19
 #: app/views/organizations/show.rhtml:5 app/views/organizations/edit.rhtml:16
 #: app/views/system_actors/_juristic_person.rhtml:2
@@ -647,7 +646,7 @@ msgstr "AgendarLançamento|Data de início"
 msgid "ScheduleLedger|Interval"
 msgstr "AgendarLançamento|Intervalo"
 
-#: app/models/schedule_ledger.rb:12
+#: app/models/schedule_ledger.rb:21
 msgid "You cannot schedule a ledger starting in a time on the past"
 msgstr "Você não pode agendar um lançamento começando em uma data no passado"
 
@@ -801,7 +800,7 @@ msgstr "O nome %{fn} para categoria de consumidor já foi utilizado."
 #: app/models/ledger_display.rb:26 app/models/product_display.rb:16
 #: app/models/system_actor_display.rb:12
 #: app/views/shared_payments/_table_ledgers.rhtml:6
-#: app/views/shared_financial/_display_financial_table.rhtml:161
+#: app/views/shared_financial/_display_financial_table.rhtml:165
 #: app/views/products/_form.rhtml:14 app/views/system_actors/_form.rhtml:63
 msgid "Category"
 msgstr "Categoria"
@@ -825,7 +824,8 @@ msgstr "Valor"
 #: app/models/ledger_display.rb:29 app/models/product_display.rb:13
 #: app/models/system_actor_display.rb:17
 #: app/views/shared_payments/_table_ledgers.rhtml:7
-#: app/views/shared_financial/_display_financial_table.rhtml:162
+#: app/views/ledgers/_schedule_ledgers.rhtml:10
+#: app/views/shared_financial/_display_financial_table.rhtml:166
 #: app/views/point_of_sale/_cash_form.rhtml:9
 #: app/views/configuration/new.rhtml:15 app/views/products/_form.rhtml:53
 #: app/views/products/images.rhtml:18 app/views/system_actors/_form.rhtml:69
@@ -841,7 +841,8 @@ msgstr "Lista de Tags"
 #: app/models/stock_down_display.rb:9
 #: app/views/shared_payments/_table_ledgers.rhtml:4
 #: app/views/sales/_sales_table.rhtml:3 app/views/stock/_payment_form.rhtml:4
-#: app/views/shared_financial/_display_financial_table.rhtml:160
+#: app/views/ledgers/_schedule_ledgers.rhtml:9
+#: app/views/shared_financial/_display_financial_table.rhtml:164
 #: app/views/stock_base/_form.rhtml:21
 #: app/views/stock_base/_display_stock_table.rhtml:5
 #: app/views/products/_new_stock_entry.rhtml:26
@@ -870,7 +871,7 @@ msgid "Is Operational?"
 msgstr "É operacional?"
 
 #: app/models/ledger_display.rb:37 app/views/ledgers/_form.rhtml:6
-#: app/views/shared_financial/_display_financial_table.rhtml:27
+#: app/views/shared_financial/_display_financial_table.rhtml:30
 #: app/views/bank_accounts/show.rhtml:2
 msgid "Bank Account"
 msgstr "Conta bancária"
@@ -897,7 +898,7 @@ msgstr "Crédito"
 
 #: app/models/ledger_display.rb:43 app/models/display_configuration.rb:48
 #: app/models/display_configuration.rb:60
-#: app/models/display_configuration.rb:72
+#: app/models/display_configuration.rb:72 app/views/ledgers/_form.rhtml:51
 msgid "No"
 msgstr "Não"
 
@@ -2116,9 +2117,9 @@ msgstr "Pessoa Jurídica"
 msgid "Worker"
 msgstr "Trabalhador(a)"
 
-#: app/models/add_cash.rb:15 app/models/remove_cash.rb:15
-msgid "Cannot destroy this object"
-msgstr "Não pode destruir este objecto"
+#: app/models/add_cash.rb:15
+msgid "Youe cannot destroy this object"
+msgstr "Vocêe não pode destruir este objecto"
 
 #: app/models/add_cash.rb:20 app/models/remove_cash.rb:20
 msgid "You cannot schedule an add cash"
@@ -2306,6 +2307,10 @@ msgstr "Data de nascimento"
 msgid "Natural Person or Juristic Person"
 msgstr "Pessoa física ou Pessoa jurídica"
 
+#: app/models/remove_cash.rb:15
+msgid "Cannot destroy this object"
+msgstr "Não pode destruir este objecto"
+
 #: app/models/remove_cash.rb:24
 msgid "The value must be minor or equal to 0"
 msgstr "O valor deve ser menor ou igual  a 0"
@@ -2347,12 +2352,12 @@ msgstr "Conta"
 msgid "Is it default?"
 msgstr "É padrão?"
 
-#: app/models/user.rb:55
+#: app/models/user.rb:60
 msgid "You cannot change the user properties on demonstration version"
 msgstr ""
 "Você não pode mudar as propriedades do usuário na versão de demonstração"
 
-#: app/models/user.rb:57
+#: app/models/user.rb:62
 msgid ""
 "You don't have permissions to create a user with template %s. This template "
 msgstr ""
@@ -2599,7 +2604,7 @@ msgstr "O campo %s não é um campo válido"
 
 #: app/models/display_configuration.rb:48
 #: app/models/display_configuration.rb:60
-#: app/models/display_configuration.rb:72
+#: app/models/display_configuration.rb:72 app/views/ledgers/_form.rhtml:45
 msgid "Yes"
 msgstr "Sim"
 
@@ -2871,31 +2876,31 @@ msgstr "Agência da conta de débito automático "
 msgid "Ledger|Automatic debit account number"
 msgstr "Número da conta do débito automático"
 
-#: app/models/ledger.rb:61
-msgid "You cannot destroy sale ledgers"
-msgstr "Você não pode destruir laçamentos da venda"
-
-#: app/models/ledger.rb:216 app/models/ledger.rb:223
-msgid "This function cannot be accessed directly"
-msgstr "Essa função não pode ser acessada diretamente"
-
-#: app/models/ledger.rb:234
+#: app/models/ledger.rb:31
 msgid "The value should be at least 0.01"
 msgstr "O valor deveria ser pelo menos 0.01"
 
-#: app/models/ledger.rb:236
+#: app/models/ledger.rb:33
 msgid "Date cannot be set"
 msgstr "Data não pode ser ajustada"
 
-#: app/models/ledger.rb:238
+#: app/models/ledger.rb:35
 msgid "You don't have a payment method associated to this ledger."
 msgstr "Não há uma forma de pagamento associado a esse lançamento."
 
-#: app/models/ledger.rb:241
+#: app/models/ledger.rb:38
 msgid "You canno't have a payment method not include in payment category list."
 msgstr ""
 "Não pode haver uma forma de pagamento não inclusa na lista de categorias de "
 "pagamentos."
+
+#: app/models/ledger.rb:70
+msgid "You cannot destroy sale ledgers"
+msgstr "Você não pode destruir laçamentos da venda"
+
+#: app/models/ledger.rb:289 app/models/ledger.rb:296
+msgid "This function cannot be accessed directly"
+msgstr "Essa função não pode ser acessada diretamente"
 
 #: app/models/periodicity_display.rb:10 app/views/periodicities/_form.rhtml:14
 msgid "Number of Days"
@@ -3193,6 +3198,10 @@ msgstr "Tags:"
 msgid "%d/%m/%Y: %T"
 msgstr "%d/%m/%Y: %T"
 
+#: app/helpers/application_helper.rb:750
+msgid "%d/%m/%Y"
+msgstr "%d/%m/%Y"
+
 #: app/views/cms/new.rhtml:2
 msgid "New Page"
 msgstr "Nova página"
@@ -3475,17 +3484,17 @@ msgid "Confimr Ledger"
 msgstr "Confimar Lançamento"
 
 #: app/views/sales/_sales_table.rhtml:13
-#: app/views/shared_financial/_display_financial_table.rhtml:174
+#: app/views/shared_financial/_display_financial_table.rhtml:178
 msgid "Foreseen Ledger"
 msgstr "Previsão de Lançamento"
 
 #: app/views/sales/_sales_table.rhtml:15
-#: app/views/shared_financial/_display_financial_table.rhtml:176
+#: app/views/shared_financial/_display_financial_table.rhtml:180
 msgid "Cancelled Ledger"
 msgstr "Lançamento Cancelado"
 
 #: app/views/sales/list.rhtml:8
-#: app/views/shared_financial/_display_financial_table.rhtml:28
+#: app/views/shared_financial/_display_financial_table.rhtml:31
 msgid "Period"
 msgstr "Período"
 
@@ -3554,30 +3563,30 @@ msgstr "Acesso negado"
 msgid "You are not allowed to access this section."
 msgstr "Você não tem permissão para acessar esta seção."
 
-#: app/views/layouts/organization.rhtml:23
-#: app/views/layouts/comatose_admin.rhtml:23
+#: app/views/layouts/organization.rhtml:24
+#: app/views/layouts/comatose_admin.rhtml:24
 msgid "Organization Logo"
 msgstr "Loga da Organização"
 
-#: app/views/layouts/organization.rhtml:31 app/views/layouts/default.rhtml:36
-#: app/views/layouts/comatose_admin.rhtml:31
+#: app/views/layouts/organization.rhtml:32 app/views/layouts/default.rhtml:36
+#: app/views/layouts/comatose_admin.rhtml:32
 msgid "Go to"
 msgstr "Ir para"
 
-#: app/views/layouts/organization.rhtml:32
-#: app/views/layouts/comatose_admin.rhtml:32
+#: app/views/layouts/organization.rhtml:33
+#: app/views/layouts/comatose_admin.rhtml:33
 msgid "My account"
 msgstr "Minha conta"
 
-#: app/views/layouts/organization.rhtml:33 app/views/layouts/default.rhtml:39
+#: app/views/layouts/organization.rhtml:34 app/views/layouts/default.rhtml:39
 #: app/views/layouts/point_of_sale.rhtml:21
-#: app/views/layouts/comatose_admin.rhtml:33
+#: app/views/layouts/comatose_admin.rhtml:34
 msgid "Logout"
 msgstr "Sair"
 
-#: app/views/layouts/organization.rhtml:33 app/views/layouts/default.rhtml:39
+#: app/views/layouts/organization.rhtml:34 app/views/layouts/default.rhtml:39
 #: app/views/layouts/point_of_sale.rhtml:21
-#: app/views/layouts/comatose_admin.rhtml:33
+#: app/views/layouts/comatose_admin.rhtml:34
 msgid "Exit from system?"
 msgstr "Sair do sistema?"
 
@@ -3600,10 +3609,6 @@ msgstr "Vendedor: <i>%s</i>"
 #: app/views/layouts/point_of_sale.rhtml:45
 msgid "Access Keys Help"
 msgstr "Ajuda para senhas"
-
-#: app/views/ledgers/_get_interval_informations.rhtml:2
-msgid "Interval:"
-msgstr "Intervalo:"
 
 #: app/views/ledgers/_budget.rhtml:16
 #: app/design_blocks/financial_forecasting/views/index.rhtml:15
@@ -3628,26 +3633,50 @@ msgstr "Data:"
 msgid "Is it a foreseen?"
 msgstr "É uma previsão?"
 
-#: app/views/ledgers/_form.rhtml:46
-msgid "Repeat this foreseen ledger?"
-msgstr "Repetir esse lançamento previsto?"
+#: app/views/ledgers/_form.rhtml:58
+msgid "Repeat this ledger?"
+msgstr "Repetir esse lançamento?"
 
-#: app/views/ledgers/_form.rhtml:66 app/views/system_actors/_show.rhtml:28
-msgid "Description:"
-msgstr "Descrição:"
+#: app/views/ledgers/_form.rhtml:65
+msgid "Periodicity?"
+msgstr "Periodicidade?"
 
-#: app/views/ledgers/_form.rhtml:73 app/views/documents/_form.rhtml:74
+#: app/views/ledgers/_form.rhtml:72
+msgid "Interval:"
+msgstr "Intervalo:"
+
+#: app/views/ledgers/_form.rhtml:81 app/views/documents/_form.rhtml:74
 #: app/views/shared_document/_document_form.rhtml:22
 msgid "Tags (separated by comma):"
 msgstr "Tags (separadas por vírgula):"
 
-#: app/views/ledgers/_form.rhtml:80
+#: app/views/ledgers/_form.rhtml:88
 msgid "Value:"
 msgstr "Valor:"
 
-#: app/views/ledgers/_get_periodicity_informations.rhtml:2
-msgid "Periodicity?"
-msgstr "Periodicidade?"
+#: app/views/ledgers/_form.rhtml:94 app/views/system_actors/_show.rhtml:28
+msgid "Description:"
+msgstr "Descrição:"
+
+#: app/views/ledgers/_form.rhtml:100
+msgid "This ledger is scheduled for %s. Schedule associated with this:"
+msgstr ""
+
+#: app/views/ledgers/_schedule_ledgers.rhtml:4
+msgid "Scheduled Ledgers"
+msgstr "Lançamentos Agendados"
+
+#: app/views/ledgers/_schedule_ledgers.rhtml:5
+msgid "Unschedule All"
+msgstr "Desagendar Todos"
+
+#: app/views/ledgers/_schedule_ledgers.rhtml:11
+msgid "Options"
+msgstr "Opções"
+
+#: app/views/ledgers/_schedule_ledgers.rhtml:17
+msgid "Unschedule"
+msgstr "Desagendar"
 
 #: app/views/ledgers/list.rhtml:2
 msgid "Ledges of Account(s) %s"
@@ -3658,7 +3687,7 @@ msgid "Ledger"
 msgstr "Lançamentos"
 
 #: app/views/ledgers/_tag.rhtml:3
-#: app/views/shared_financial/_display_financial_table.rhtml:133
+#: app/views/shared_financial/_display_financial_table.rhtml:137
 msgid "Tags"
 msgstr "Tags"
 
@@ -3698,6 +3727,10 @@ msgstr "Categoria contábil %s"
 msgid "Edit Ledger Category"
 msgstr "Editar Categoria de Lançamento"
 
+#: app/views/sintegra/configure_sintegra.rhtml:2
+msgid "SINTEGRA"
+msgstr "SINTEGRA"
+
 #: app/views/shared_financial/_display_financial_table.rhtml:6
 #: app/design_blocks/favorite_links/views/manage_links.rhtml:8
 #: app/design_blocks/favorite_links/views/index.rhtml:4
@@ -3712,70 +3745,70 @@ msgstr "Página %s de %s"
 msgid "Show All"
 msgstr "Mostrar Tudo"
 
-#: app/views/shared_financial/_display_financial_table.rhtml:13
+#: app/views/shared_financial/_display_financial_table.rhtml:16
 msgid "[%s]"
 msgstr "[%s]"
 
-#: app/views/shared_financial/_display_financial_table.rhtml:13
+#: app/views/shared_financial/_display_financial_table.rhtml:16
 msgid "Clean"
 msgstr "Limpar"
 
-#: app/views/shared_financial/_display_financial_table.rhtml:18
+#: app/views/shared_financial/_display_financial_table.rhtml:21
 #: app/design_blocks/favorite_links/views/manage_links.rhtml:11
 #: app/design_blocks/favorite_links/views/index.rhtml:7
 msgid "Next"
 msgstr "Próximo"
 
-#: app/views/shared_financial/_display_financial_table.rhtml:73
+#: app/views/shared_financial/_display_financial_table.rhtml:76
 msgid "to"
 msgstr "a"
 
-#: app/views/shared_financial/_display_financial_table.rhtml:163
+#: app/views/shared_financial/_display_financial_table.rhtml:167
 msgid "Income (R$)"
 msgstr "Receita (R$)"
 
-#: app/views/shared_financial/_display_financial_table.rhtml:164
+#: app/views/shared_financial/_display_financial_table.rhtml:168
 msgid "Expense (R$)"
 msgstr "Despesa (R$)"
 
-#: app/views/shared_financial/_display_financial_table.rhtml:165
+#: app/views/shared_financial/_display_financial_table.rhtml:169
 #: app/views/stock_base/_display_stock_table.rhtml:8
 msgid "Operation"
 msgstr "Operação"
 
-#: app/views/shared_financial/_display_financial_table.rhtml:172
+#: app/views/shared_financial/_display_financial_table.rhtml:176
 msgid "Confirm Ledger"
 msgstr "Confirmar Lançamento"
 
-#: app/views/shared_financial/_display_financial_table.rhtml:181
+#: app/views/shared_financial/_display_financial_table.rhtml:185
 msgid "Point of Sale: Sale %s"
 msgstr "Ponto de venda: Venda %s"
 
-#: app/views/shared_financial/_display_financial_table.rhtml:183
+#: app/views/shared_financial/_display_financial_table.rhtml:187
 msgid "Point of Sale: Money Added to Cash"
 msgstr "Ponto de venda: Dinheiro Adicionado ao Caixa"
 
-#: app/views/shared_financial/_display_financial_table.rhtml:185
+#: app/views/shared_financial/_display_financial_table.rhtml:189
 msgid "Point of Sale: Money Removed to Cash"
 msgstr "Ponto de venda: Dinheiro Removido do Caixa"
 
-#: app/views/shared_financial/_display_financial_table.rhtml:196
+#: app/views/shared_financial/_display_financial_table.rhtml:200
 #: app/views/document_items/_list.rhtml:6
 #: app/views/document_sections/_list.rhtml:10
 #: app/design_blocks/favorite_links/views/manage_links.rhtml:18
 msgid "Remove"
 msgstr "Remover"
 
-#: app/views/shared_financial/_display_financial_table.rhtml:202
+#: app/views/shared_financial/_display_financial_table.rhtml:206
 msgid "Partial Total"
 msgstr "Total Parcial"
 
-#: app/views/shared_financial/_display_financial_table.rhtml:205
-#: app/views/shared_financial/_display_financial_table.rhtml:211
+#: app/views/shared_financial/_display_financial_table.rhtml:209
+#: app/views/shared_financial/_display_financial_table.rhtml:215
 msgid "Balance: %s"
 msgstr "Saldo: %s"
 
-#: app/views/shared_financial/_display_financial_table.rhtml:208
+#: app/views/shared_financial/_display_financial_table.rhtml:212
 msgid "Geral Total"
 msgstr "Total Geral"
 
@@ -4680,6 +4713,12 @@ msgstr "Loja"
 msgid "Administration of users"
 msgstr "Administração de usuários"
 
+#~ msgid "Cannot edit ledger with id %s"
+#~ msgstr "Impossível editar lançamento com identificador %s"
+
+#~ msgid "Cannot remove ledger with id %s it wasn't found"
+#~ msgstr "Impossível remover lançamento com identificador %s: não encontrado"
+
 #~ msgid "Type of"
 #~ msgstr "Tipo de"
 
@@ -5306,9 +5345,6 @@ msgstr "Administração de usuários"
 
 #~ msgid "Full extract"
 #~ msgstr "Extrato completo"
-
-#~ msgid "Options: "
-#~ msgstr "Opções:"
 
 #~ msgid "Generate extract"
 #~ msgstr "Gerar extrato"

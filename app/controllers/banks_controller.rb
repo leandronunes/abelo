@@ -12,7 +12,6 @@ class BanksController < ApplicationController
   end
 
   def index
-@test = 'list'
     redirect_to :action => 'list'
   end
 

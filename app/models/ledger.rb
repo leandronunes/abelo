@@ -52,7 +52,7 @@ class Ledger < ActiveRecord::Base
     end
 
     if l.schedule_repeat? and !l.scheduled?
-      sl = ScheduleLedger.create(:periodicity => l.schedule_periodicity, :start_date => l.foreseen_date, :interval => l.schedule_interval)
+      sl = ScheduleLedger.create(:periodicity => l.schedule_periodicity, :start_date => l.date, :interval => l.schedule_interval)
       for n in 1..l.schedule_interval.to_i do
         ledger_schedule = l.dclone
         ledger_schedule.pending!
@@ -63,7 +63,23 @@ class Ledger < ActiveRecord::Base
       end
       l.schedule_ledger = sl
       l.save
-    end  
+    end
+   
+    if l.category.number_of_parcels > 1 and !l.scheduled?
+      sl = ScheduleLedger.create(:periodicity => l.category.periodicity, :start_date => l.date, :interval => l.category.number_of_parcels)
+      l.value = l.value / l.category.number_of_parcels
+      l.number_of_parcels = l.category.number_of_parcels
+      l.parcel_number = 1
+      l.save
+      for n in 1..(l.category.number_of_parcels-1) do
+        ledger_schedule = l.dclone
+        ledger_schedule.pending!
+        ledger_schedule.date = (l.date.kind_of?(Time) ? l.date.to_datetime : l.date) + 30 * n
+        ledger_schedule.schedule_ledger = sl
+        ledger_schedule.payment_method = l.payment_method
+        ledger_schedule.save
+      end
+    end
   end
 
   before_destroy do |ledger|

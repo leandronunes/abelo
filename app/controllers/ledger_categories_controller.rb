@@ -31,6 +31,7 @@ class LedgerCategoriesController < ApplicationController
 
   def new
     @category = LedgerCategory.new
+    @periodicities = @organization.periodicities
   end
 
   def create
@@ -41,12 +42,14 @@ class LedgerCategoriesController < ApplicationController
       flash[:notice] = _('Ledger category was successfully created.')
       redirect_to :action => 'list'
     else
+      @periodicities = @organization.periodicities
       render :action => 'new'
     end
   end
 
   def edit
     @category = @organization.ledger_categories.find(params[:id])
+    @periodicities = @organization.periodicities
   end
 
   def update
@@ -56,6 +59,7 @@ class LedgerCategoriesController < ApplicationController
       flash[:notice] = _('Ledger category was successfully updated.')
       redirect_to :action => 'list'
     else
+      @periodicities = @organization.periodicities
       render :action => 'edit'
     end
 

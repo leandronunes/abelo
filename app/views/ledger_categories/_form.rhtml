@@ -49,6 +49,12 @@
       )
   %>
 
+  <%= display_field_edit(item, 'periodicity',
+        :title => _('Periodicity'),
+        :content => select_item('category', 'periodicity_id', @periodicities)
+      )
+  %>
+
   <%= display_field_edit(item, 'number_of_parcels',
         :title => _('Number of parcels'),
         :content => text_field('category', 'number_of_parcels')

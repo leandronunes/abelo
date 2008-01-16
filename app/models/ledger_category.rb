@@ -5,6 +5,7 @@ class LedgerCategory < ActiveRecord::Base
 
   has_many :ledgers, :foreign_key => 'category_id', :dependent => :delete_all
   belongs_to :organization
+  belongs_to :periodicity
   
   validates_presence_of :name
   validates_presence_of :organization_id

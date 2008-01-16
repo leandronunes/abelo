@@ -2,7 +2,7 @@ class StockBaseController < ApplicationController
 
   needs_organization
 
-  before_filter :create_tabs
+  uses_stock_tabs
 
   def list_core(virtual_type)
     @query = params[:query]
@@ -115,30 +115,6 @@ class StockBaseController < ApplicationController
     else
       redirect_to :action => 'list'
     end
-  end
-
-  def create_tabs
-    t = add_tab do
-      links_to :controller => 'stock'
-      in_set 'first'
-      highlights_on :controller => 'stock'
-    end
-    t.named _('Stock control')
-
-    t = add_tab do
-      links_to :controller => 'stock_in'
-      in_set 'first'
-      highlights_on :controller => 'stock_in'
-    end
-    t.named _('Devolution Control')
-
-    t = add_tab do
-      links_to :controller => 'stock_out'
-      in_set 'first'
-      highlights_on :controller => 'stock_out'
-    end
-    t.named _('Stock Out Control')
-
   end
 
   def select_category

@@ -9,16 +9,19 @@ class SaleItem < ActiveRecord::Base
 
   belongs_to :sale
   belongs_to :product
+  belongs_to :stock_out, :class_name => 'StockOut', :foreign_key => :stock_id
   has_one :printer_command, :as => :owner, :dependent => :destroy
 
   validates_presence_of :sale_id, :product_id, :amount, :unitary_price
   validates_inclusion_of :status, :in => ALL_STATUS
 
-  # Important: I load the product here too because the user can't wait to the ajax association before
-  # the method 'product_code=' sets the product of the item
   before_validation do |sale_item|
     sale_item.unitary_price = sale_item.product.sell_price unless sale_item.product.nil?
     sale_item.product ||= sale_item.sale.organization.products.find_by_code(sale_item.product_code)
+    sale_item.stock_out ||= StockOut.new
+    sale_item.stock_out.date = Date.today
+    sale_item.stock_out.product = sale_item.product
+    sale_item.stock_out.amount = sale_item.amount
   end
 
   after_create do |item|
@@ -50,11 +53,6 @@ class SaleItem < ActiveRecord::Base
   def cancel!
     self.status = STATUS_CANCELLED
     self.save
-  end
-
-  def accept_printer_cmd!(command)
-    self.status = STATUS_DONE
-    self.save!
   end
 
   # This function load a valid product with the code passed

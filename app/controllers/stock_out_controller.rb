@@ -1,20 +1,11 @@
 class StockOutController < StockBaseController
 
   def list
-    list_core('virtual_down')
+    list_core('virtual_out')
   end
   
   def history
-    history_core('stock_down')
-  end
-
-  def new
-    new_core('stock_down')
-
-  end
-
-  def create
-    create_core('stock_down')
+    history_core('stock_out')
   end
 
 end

@@ -65,7 +65,7 @@ class Ledger < ActiveRecord::Base
       l.save
     end
    
-    if l.category.number_of_parcels > 1 and !l.scheduled?
+    if !l.category.nil? and l.category.number_of_parcels > 1 and !l.scheduled?
       sl = ScheduleLedger.create(:periodicity => l.category.periodicity, :start_date => l.date, :interval => l.category.number_of_parcels)
       l.value = l.value / l.category.number_of_parcels
       l.number_of_parcels = l.category.number_of_parcels

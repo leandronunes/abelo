@@ -5,6 +5,7 @@ class LedgerCategoryDisplayTest < Test::Unit::TestCase
       name 
       interests
       interests_days
+      periodicity
       number_of_parcels
       is_sale
       is_stock

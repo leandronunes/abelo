@@ -102,6 +102,7 @@ class ApplicationController < ActionController::Base
   require 'tabs/admin_organization'
   require 'tabs/web_site'
   require 'tabs/sales'
+  require 'tabs/stock'
 
   def self.uses_register_tabs
     before_filter :create_register_tabs
@@ -122,6 +123,11 @@ class ApplicationController < ActionController::Base
   def self.uses_admin_organization_tabs
     before_filter :create_admin_organization_tabs
   end
+
+  def self.uses_stock_tabs
+    before_filter :create_stock_tabs
+  end
+
   # END TABS DEFINITION
 
   before_filter :define_location_path  

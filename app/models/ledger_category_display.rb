@@ -11,7 +11,6 @@ class LedgerCategoryDisplay < DisplayConfiguration
       'interests_days' =>  _('Days of Interests'),
       'periodicity' =>  _('Periodicity'),
       'number_of_parcels' =>  _('Number of Parcels?'),
-#      'is_operational' =>  _('Is Operational?'),
       'is_sale' =>  _('Is to Sale?'),
       'is_stock' =>  _('Is to Stock?'),
       'type_of' =>  _('Type'),

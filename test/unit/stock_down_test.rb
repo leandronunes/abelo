@@ -1,6 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class StockOutTest < Test::Unit::TestCase
+class StockDownTest < Test::Unit::TestCase
+
   fixtures :system_actors, :categories
 
   def setup
@@ -13,6 +14,7 @@ class StockOutTest < Test::Unit::TestCase
     assert @category.valid?
     assert @supplier.valid?
   end
+
   def create_product(params = {})
     p = Product.create!({:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization => @organization, :category => @category}.merge(params))
     StockIn.create!(:product => p, :status => Status::STATUS_DONE, :price => 45, :amount => 10, :date => Date.today, :supplier => @supplier)
@@ -24,18 +26,17 @@ class StockOutTest < Test::Unit::TestCase
      p = create_product
      entry = StockIn.find(:first)
      amount = entry.amount
-     out = StockOut.new(:date => Date.today, :amount => amount + 1, :product => p)
+     out = StockDown.new(:date => Date.today, :amount => amount + 1, :product => p)
      out.valid?
-     assert out.errors.invalid?(:amount)
+     assert out.errors.invalid?(:amount) 
   end
 
   def test_amount_is_negative
     amount = 5.0
-    entry = StockOut.new(:amount => amount)
+    entry = StockDown.new(:amount => amount)
     entry.valid?
-    assert !entry.errors.invalid?(:amount)
+    assert !entry.errors.invalid?(:amount) 
     assert_equal -amount, entry.amount
   end
-
-
+ 
 end

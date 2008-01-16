@@ -34,7 +34,7 @@ class StockVirtual < Stock
   def self.create_virtual_outs(products)
     return Array.new if (products.nil?) 
     virtual_outs = products.map do |p|
-      StockVirtual.new(:product_in_list => p, :amount_in_list => p.amount_in_stock_out )
+      StockVirtual.new(:product_in_list => p, :amount_in_list => (p.amount_in_stock_out != 0 ? -p.amount_in_stock_out : 0.0) )
     end
     virtual_outs.compact
   end
@@ -42,7 +42,7 @@ class StockVirtual < Stock
   def self.create_virtual_downs(products)
     return Array.new if (products.nil?) 
     virtual_downs = products.map do |p|
-      StockVirtual.new(:product_in_list => p, :amount_in_list => p.amount_in_stock_down )
+      StockVirtual.new(:product_in_list => p, :amount_in_list => (p.amount_in_stock_out != 0 ? -p.amount_in_stock_out : 0.0) )
     end
     virtual_downs.compact
   end

@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: abelo 0.4.1\n"
-"POT-Creation-Date: 2008-01-15 14:16-0300\n"
+"POT-Creation-Date: 2008-01-16 12:29-0300\n"
 "PO-Revision-Date: 2008-01-12 14:23-0300\n"
 "Last-Translator: Leandro Nunes dos Santos <leandronunes@colivre.coop.br>\n"
 "Language-Team: Krishnamurti Lelis Lima Vieira Nunes <krishna@colivre.coop."
@@ -189,6 +189,27 @@ msgstr "Organizações"
 msgid "Organizations Profiles"
 msgstr "Perfis de Organizações"
 
+#: app/controllers/tabs/stock.rb:7 app/views/stock_base/list.rhtml:1
+#: app/views/stock_base/index.rhtml:1
+msgid "Stock control"
+msgstr "Controle de estoque"
+
+#: app/controllers/tabs/stock.rb:14
+msgid "Buy Control"
+msgstr "Controle de Compra"
+
+#: app/controllers/tabs/stock.rb:21
+msgid "Sell Control"
+msgstr "Controle de Venda"
+
+#: app/controllers/tabs/stock.rb:28
+msgid "Devolution Control"
+msgstr "Controle de Devolução"
+
+#: app/controllers/tabs/stock.rb:35
+msgid "Stock Out Control"
+msgstr "Controle de Saída Estoque"
+
 #: app/controllers/documents_controller.rb:38
 msgid "Listing Documents from Model %s"
 msgstr "Listando Documentos a partir do Modelo %s"
@@ -271,15 +292,15 @@ msgstr "Imagem adicionada com sucesso."
 msgid "Users and permissions"
 msgstr "Usuários e permissions"
 
-#: app/controllers/ledger_categories_controller.rb:41
+#: app/controllers/ledger_categories_controller.rb:42
 msgid "Ledger category was successfully created."
 msgstr "Categoria do lançamento criada com sucesso."
 
-#: app/controllers/ledger_categories_controller.rb:56
+#: app/controllers/ledger_categories_controller.rb:59
 msgid "Ledger category was successfully updated."
 msgstr "Categoria do lançamento atualizada com sucesso"
 
-#: app/controllers/ledger_categories_controller.rb:68
+#: app/controllers/ledger_categories_controller.rb:72
 msgid "The ledger category cannot be destroy with ledgers associated to its"
 msgstr ""
 "A categoria do lançamento não pode ser removida com lançamentos associados a "
@@ -380,19 +401,6 @@ msgstr "Foi criado com sucesso."
 msgid "It was successfully updated."
 msgstr "Foi atualizado com sucesso."
 
-#: app/controllers/stock_base_controller.rb:126
-#: app/views/stock_base/list.rhtml:1 app/views/stock_base/index.rhtml:1
-msgid "Stock control"
-msgstr "Controle de estoque"
-
-#: app/controllers/stock_base_controller.rb:133
-msgid "Devolution Control"
-msgstr "Controle de Devolução"
-
-#: app/controllers/stock_base_controller.rb:140
-msgid "Stock Out Control"
-msgstr "Controle de Saída Estoque"
-
 #: app/controllers/bank_accounts_controller.rb:41
 msgid "Cannot show bank account id %s. It wasn't found"
 msgstr "Impossível mostrar conta bancária %s: não encontrada."
@@ -454,7 +462,7 @@ msgstr "Usuário criado com sucesso."
 msgid "Welcome to Abelo System"
 msgstr "Bem-Vindo ao Sistema Abelo"
 
-#: app/controllers/application.rb:217
+#: app/controllers/application.rb:223
 msgid ""
 "This system didn't works correctly. Please contact the administrator and "
 "inform the message below."
@@ -793,6 +801,14 @@ msgstr "Tem impressora fiscal"
 msgid "Related Category"
 msgstr "Categoria Relacionada"
 
+#: app/models/stock_down.rb:13 app/models/stock_out.rb:19
+msgid ""
+"%{fn} must not be larger than the total amount of this product in stock "
+"(which is %d)."
+msgstr ""
+"%{fn} não pode ser maior que a quantidade total deste produto em estoque "
+"(o qual é %d)."
+
 #: app/models/customer_category.rb:4
 msgid "The name %{fn} for customer category was already taken."
 msgstr "O nome %{fn} para categoria de consumidor já foi utilizado."
@@ -1018,28 +1034,28 @@ msgstr "Visualizar Cadastro de Fornecedor"
 msgid "View Product Register"
 msgstr "Visualizar Cadastro de Produto"
 
-#: app/models/profile.rb:197
+#: app/models/profile.rb:199
 msgid "Sales person"
 msgstr "Vendedor"
 
-#: app/models/profile.rb:198
+#: app/models/profile.rb:200
 msgid "Sales Supervisor"
 msgstr "Supervisor de vendas"
 
-#: app/models/profile.rb:199 app/helpers/support/menu.rb:13
+#: app/models/profile.rb:201 app/helpers/support/menu.rb:13
 #: lib/describe_menu.rb:8
 msgid "Financial"
 msgstr "Financeiro"
 
-#: app/models/profile.rb:200
+#: app/models/profile.rb:202
 msgid "Organization Management"
 msgstr "Gerenciamento da Organização"
 
-#: app/models/profile.rb:201 app/views/layouts/default.rhtml:7
+#: app/models/profile.rb:203 app/views/layouts/default.rhtml:7
 msgid "Administration"
 msgstr "Administração"
 
-#: app/models/profile.rb:202
+#: app/models/profile.rb:204
 msgid "Other"
 msgstr "Outro"
 
@@ -1279,11 +1295,15 @@ msgstr "Preço unitário"
 msgid "SaleItem|Status"
 msgstr "Estado"
 
-#: app/models/sale_item.rb:37
+#: app/models/sale_item.rb:-
+msgid "SaleItem|Stock"
+msgstr "Estoque"
+
+#: app/models/sale_item.rb:40
 msgid "The price must be greater than 0"
 msgstr "O preço deve ser maior ou igual  a 0"
 
-#: app/models/sale_item.rb:41
+#: app/models/sale_item.rb:44
 msgid "You cannot add a item with the product code %s"
 msgstr "Você não pode adicionar um ítem com o código do produto %s"
 
@@ -1976,6 +1996,11 @@ msgid "Days of Interests"
 msgstr "Dias dos juros"
 
 #: app/models/ledger_category_display.rb:12
+#: app/views/ledger_categories/_form.rhtml:53
+msgid "Periodicity"
+msgstr "Periodicidade"
+
+#: app/models/ledger_category_display.rb:13
 msgid "Number of Parcels?"
 msgstr "Número de parcelas?"
 
@@ -2894,11 +2919,11 @@ msgstr ""
 "Não pode haver uma forma de pagamento não inclusa na lista de categorias de "
 "pagamentos."
 
-#: app/models/ledger.rb:70
+#: app/models/ledger.rb:86
 msgid "You cannot destroy sale ledgers"
 msgstr "Você não pode destruir laçamentos da venda"
 
-#: app/models/ledger.rb:289 app/models/ledger.rb:296
+#: app/models/ledger.rb:305 app/models/ledger.rb:312
 msgid "This function cannot be accessed directly"
 msgstr "Essa função não pode ser acessada diretamente"
 
@@ -3015,19 +3040,23 @@ msgstr "Tipo de"
 msgid "LedgerCategory|Settings"
 msgstr "Configurações"
 
-#: app/models/ledger_category.rb:21
+#: app/models/ledger_category.rb:-
+msgid "LedgerCategory|Periodicity"
+msgstr "Periodicidade"
+
+#: app/models/ledger_category.rb:22
 msgid "You have to choose at least one payment method"
 msgstr "Você tem que escolher pelo menos uma forma de pagamento"
 
-#: app/models/ledger_category.rb:25
+#: app/models/ledger_category.rb:26
 msgid "You have to choose a valid payment method"
 msgstr "Você tem que escolher uma forma de pagamento válida"
 
-#: app/models/ledger_category.rb:56
+#: app/models/ledger_category.rb:57
 msgid "(+) %s"
 msgstr "(+) %s"
 
-#: app/models/ledger_category.rb:56
+#: app/models/ledger_category.rb:57
 msgid "(-) %s"
 msgstr "(-) %s"
 
@@ -3660,7 +3689,7 @@ msgstr "Descrição:"
 
 #: app/views/ledgers/_form.rhtml:100
 msgid "This ledger is scheduled for %s. Schedule associated with this:"
-msgstr ""
+msgstr "Este lançamento está agendado para %s. Agendamentos associados com este:"
 
 #: app/views/ledgers/_schedule_ledgers.rhtml:4
 msgid "Scheduled Ledgers"
@@ -3699,19 +3728,19 @@ msgstr "Nova Categoria de Lançamento"
 msgid "Interests days"
 msgstr "Dias dos juros"
 
-#: app/views/ledger_categories/_form.rhtml:53
+#: app/views/ledger_categories/_form.rhtml:59
 msgid "Number of parcels"
 msgstr "Número de parcelas"
 
-#: app/views/ledger_categories/_form.rhtml:59
+#: app/views/ledger_categories/_form.rhtml:65
 msgid "Is operational?"
 msgstr "É operacional?"
 
-#: app/views/ledger_categories/_form.rhtml:66
+#: app/views/ledger_categories/_form.rhtml:72
 msgid "Is operation of sale?"
 msgstr "É uma operação da venda"
 
-#: app/views/ledger_categories/_form.rhtml:73
+#: app/views/ledger_categories/_form.rhtml:79
 msgid "Is operation of stock?"
 msgstr "É uma operação do estoque?"
 

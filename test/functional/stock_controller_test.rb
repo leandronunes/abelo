@@ -180,12 +180,13 @@ class StockControllerTest < Test::Unit::TestCase
 
   def test_update_attributes_date
     stock_id = @stock_in.id
-    @stock_in.date = Date.today
-    assert @stock_in.save
-    new_value = Date.today - 1
+    @stock_in.validity=nil
+    @stock_in.date = DateTime.now
+    assert @stock_in.save!
+    new_value = DateTime.now - 1
     post :update, :id => @stock_in, :stock => { :date =>new_value }
 
-    assert_equal new_value, StockIn.find(stock_id).date
+    assert_equal new_value.to_time, StockIn.find(stock_id).date
   end
 
 

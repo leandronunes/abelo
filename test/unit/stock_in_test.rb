@@ -16,7 +16,7 @@ class StockInTest < Test::Unit::TestCase
     @ledger_category.type_of = 'I'
     @ledger_category.is_stock = true
     @ledger_category.save!
-    @ledger = Ledger.create_ledger!(:category => @ledger_category, :value => 1.00, :date => Date.today, :bank_account => @bank_account, :owner => @organization)
+    @ledger = Ledger.create_ledger!(:category => @ledger_category, :value => 1.00, :date => DateTime.now, :bank_account => @bank_account, :owner => @organization)
   end
 
   def test_setup
@@ -86,7 +86,7 @@ class StockInTest < Test::Unit::TestCase
   def test_validate_cannot_be_less_than_date
     s = StockIn.new
     s.validity = Date.today - 1
-    s.date = Date.today
+    s.date = DateTime.now
     s.valid?
     assert s.errors.invalid?(:validity)
   end

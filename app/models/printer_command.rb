@@ -118,7 +118,7 @@ class PrinterCommand < ActiveRecord::Base
     if self.counter >= 3 
       return self
     end
-    exec =  IO.popen("python #{RAILS_ROOT}/lib/fiscal_printer/run.py #{self.str_command}")
+    exec =  IO.popen("python #{RAILS_ROOT}/lib/fiscal_printer/pyro_client.py #{self.str_command}")
     puts "RRRRRRRRRRRRRRRRRRRRUUUUUUUUUUUUUUUUUNNNNNNNNNNNNNNNNN %s" % self.str_command
     self.inc_counter
     response = exec.readlines

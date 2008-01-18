@@ -3,6 +3,7 @@ import sys
 from stoqdrivers.exceptions import *
 
 COMMAND_OK =  1
+SEPARATOR = ';'
 
 dict = {
   OutofPaperError: 100,
@@ -29,6 +30,7 @@ dict = {
   InvalidReply: 121,
   AlreadyTotalized: 122,
   InvalidValue: 123,
+  DriverError: 124,
 }
 
 
@@ -45,8 +47,7 @@ def main():
     print 'printer01'
 
   def summarize():
-    a = '1' #TODO remove this
-    printer.summarize()
+    return printer.summarize()
 
   def till_add_cash():
     value = parameters[0]
@@ -58,7 +59,7 @@ def main():
 
   def close_till():
     is_today = parameters[0]
-#    printer.close_till(is_today)
+    printer.close_till(is_today)
 
   def open():
     printer.open()
@@ -102,11 +103,12 @@ def main():
     "add_payment": add_payment,
   }
 
-  takeaction.get(command,errhandler)()
+  return takeaction.get(command,errhandler)()
 
 try:
   if __name__ == "__main__":
-    main()
+    a = main()
+    print [COMMAND_OK, a]
 #    print COMMAND_OK
 except: 
   print dict[sys.exc_type]

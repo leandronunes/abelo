@@ -15,8 +15,12 @@ class Till < ActiveRecord::Base
     till.printer_command ||= PrinterCommand.new(till, [PrinterCommand::SUMMARIZE]) if till.has_fiscal_printer?
   end
 
+  before_create do |till|
+    till.open! if till.has_fiscal_printer?
+  end
+
   def validate
-    pendings = self.class.find(:all, :conditions => {:status => STATUS_PENDING, :organization_id => self.organization, :user_id => self.user})
+    pendings = self.class.find(:all, :conditions => {:status => [STATUS_PENDING, STATUS_OPEN], :organization_id => self.organization, :user_id => self.user})
     pendings.delete(self)
     if(!pendings.blank?)
       self.errors.add(_('You already have a till open.'))
@@ -39,6 +43,10 @@ class Till < ActiveRecord::Base
     self.find(:first, :conditions => {:user_id => user, :organization_id => organization, :printer_id => printer_id, :status => STATUS_PENDING})
   end
 
+  def self.load_open(organization, user, printer_id = nil)
+    self.find(:first, :conditions => {:user_id => user, :organization_id => organization, :printer_id => printer_id, :status => STATUS_OPEN})
+  end
+
   def has_fiscal_printer?
     self.organization.has_fiscal_printer? if self.organization
   end
@@ -47,6 +55,14 @@ class Till < ActiveRecord::Base
    was_save = self.save
    return was_save unless self.has_fiscal_printer? or not was_save
    self.printer_command.execute()
+  end
+
+  def open!
+    self.status = STATUS_OPEN
+  end
+
+  def open?
+    self.status == STATUS_OPEN
   end
 
   def close

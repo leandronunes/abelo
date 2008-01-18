@@ -38,18 +38,20 @@ class PointOfSaleController < ApplicationController
     return unless @organization.has_fiscal_printer? 
     till = Till.load_open(@organization, current_user, get_printer_id)
     cmd = PrinterCommand.pending_command(till)
-    return if cmd.nil?
-#    flash.now[:notice] = _('You have pending commands that cannot be executed. Please %s') % cmd.error_message
-    flash[:notice] = _('You have pending commands that cannot be executed. Please %s') % PrinterCommand.error_message(till)
 
-    redirect_to :action => 'index' 
+    return if cmd.nil?
+
+    if cmd.has_error?
+      flash[:notice] = _('You have pending commands that cannot be executed. Please %s') % cmd.error_message
+      redirect_to :action => 'index'
+    else
+      PrinterCommand.run_pendings(till) 
+    end
   end
 
   def run_pending_commands
     return  unless @organization.has_fiscal_printer? and PrinterCommand.has_pending?(@till)
-    unless PrinterCommand.run_pendings(@till)
-      flash[:notice] = _('You have pending commands that cannot be executed. Please %s') % PrinterCommand.error_message(@till)
-    end
+    PrinterCommand.run_pendings(@till)
   end
 
   def design_point_of_sale
@@ -58,6 +60,7 @@ class PointOfSaleController < ApplicationController
   end
 
   def index
+    @till = Till.load(@organization, current_user, get_printer_id)
     unless @till.nil?
       redirect_to :action => 'till_open'
     end
@@ -156,8 +159,7 @@ class PointOfSaleController < ApplicationController
   end
 
   def create_coupon_open
-    till = load_current_till
-    @sale =  Sale.new(till)
+    @sale =  Sale.new(@till)
     if @sale.save
       redirect_to :action => 'coupon_open'
     else
@@ -328,7 +330,10 @@ class PointOfSaleController < ApplicationController
 
   def load_current_till
     @till = Till.load(@organization, current_user, get_printer_id)
-    redirect_to :action => 'index'
+    if @till.nil?
+      flash[:notice] = _("You don't have a till open")
+      redirect_to :action => 'index' and return false
+    end
   end
 
 end

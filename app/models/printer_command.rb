@@ -50,8 +50,6 @@ class PrinterCommand < ActiveRecord::Base
   InvalidValue = 123
   DriverError = 124
 
-
-
   belongs_to :till
   belongs_to :owner, :polymorphic => true
   validates_inclusion_of :status, :in => ALL_STATUS
@@ -122,7 +120,7 @@ class PrinterCommand < ActiveRecord::Base
   end
 
   def has_error?
-    self.error == true
+    self.error_code != nil
   end
 
   def inc_counter
@@ -151,24 +149,20 @@ class PrinterCommand < ActiveRecord::Base
   def done!
     self.status = STATUS_DONE
     unless self.owner.nil?
-      self.owner = STATUS_PENDING
+      self.owner.cmd_received!
       self.owner.save
     end
     self.error_code = nil 
+    self.error_message = nil
     self.save
   end
 
 
   def set_error(code, msg)
     self.error_code = code
-    self.error_msg = msg
+    self.error_message = msg
     self.save
   end  
-
-  def self.error_message(till)
-    pending_cmd = self.pending_command(till)
-    pending_cmd.error_code
-  end
 
   def response_error?(response)
     response.shift
@@ -267,28 +261,17 @@ puts "CARRRRRRRRRRRRRRRRRRRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALLLLLLLLLLLLLLLLLLLHHHH
   end
 
   def make_reduction_z
-#    pc = self.class.has_pending_cmd(self.till, PrinterCommand::CLOSE_TILL)
-    pc ||= PrinterCommand.new(self.till, [PrinterCommand::CLOSE_TILL, false]) #FIXME see if it's previous day or not
+    pc ||= PrinterCommand.new(self.till, [PrinterCommand::CLOSE_TILL, false])
 #    pc ||= PrinterCommand.new(self.till, [PrinterCommand::CLOSE_TILL, ((self.datetime < Date.today) ? false : true)]) #FIXME see if it's previous day or not
 #TODO refactoring this    
     pc.owner = self.till
     self.till.printer_commands<< pc
-#    pc.save
     pc.set_as_first
   end
-
-#  def self.has_pending_cmd(till, command)
-#    self.pending_commands(till).detect{ |c| c.cmd == command}
-#  end
 
   def set_as_first
     self.sequence_number = PrinterCommand.minimum(:sequence_number, :conditions => {:till_id => self.till}) - 1 || 0
     self.save!
   end
-
-
-  protected
-
-    attr_accessor :error_msg
 
 end

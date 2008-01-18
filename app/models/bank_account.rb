@@ -18,6 +18,10 @@ class BankAccount < ActiveRecord::Base
 
   acts_as_ferret
 
+  def organization
+    self.owner
+  end
+
   def name 
     _("AG: #{self.agency} / CC: #{self.account}")
   end

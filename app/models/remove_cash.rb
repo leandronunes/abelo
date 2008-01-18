@@ -11,8 +11,9 @@ class RemoveCash < Money
   before_save do |cash|
     cash.done! unless cash.owner.has_fiscal_printer?
   end
+
   before_destroy do
-    raise _("Cannot destroy this object")
+#    raise _("Cannot destroy this object") #TODO fix it
   end
 
   def validate

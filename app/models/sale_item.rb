@@ -14,16 +14,6 @@ class SaleItem < ActiveRecord::Base
 
   validates_presence_of :sale_id, :product_id, :amount, :unitary_price
   validates_inclusion_of :status, :in => ALL_STATUS
-7
-  def validate
-    if self.unitary_price <= 0
-      self.errors.add(:unitary_price, _('The price must be greater than 0'))
-    end
-
-    if !self.sale.nil? and !self.sale.organization.products.include?(self.product)
-      self.errors.add(:product_id, _("You cannot add a item with the product code %s") % self.product_code)
-    end
-  end
 
   before_validation do |sale_item|
     sale_item.unitary_price = sale_item.product.sell_price unless sale_item.product.nil?
@@ -32,10 +22,6 @@ class SaleItem < ActiveRecord::Base
     sale_item.stock_out.date = Date.today
     sale_item.stock_out.product = sale_item.product
     sale_item.stock_out.amount = sale_item.amount
-  end
-
-  before_create do |item|
-    item.cmd_sent! if item.has_fiscal_printer?
   end
 
   after_create do |item|
@@ -49,29 +35,21 @@ class SaleItem < ActiveRecord::Base
 
   end
 
+  def validate
+    if self.unitary_price <= 0
+      self.errors.add(:unitary_price, _('The price must be greater than 0'))
+    end
+
+    if !self.sale.nil? and !self.sale.organization.products.include?(self.product)
+      self.errors.add(:product_id, _("You cannot add a item with the product code %s") % self.product_code)
+    end
+  end
+
   def initialize(sale, *args)
     super(*args)
     self.sale = sale
   end
 
-  # Set the status of this item for OPEN. It means that the
-  # fiscal printer command was sent to the printer.
-  def cmd_sent!
-    self.status = STATUS_OPEN
-  end
-
-  # Set the current status of the item to pending. It means that 
-  # the fiscal printer received and print the fiscal printer add
-  # item command.
-  def cmd_received!
-    self.status = STATUS_PENDING
-  end
-
-  def has_fiscal_printer?
-    self.sale.has_fiscal_printer? unless sale.nil?
-  end
-
-  # Cancel the current item modifing his status for CANCELLED
   def cancel!
     self.status = STATUS_CANCELLED
     self.save

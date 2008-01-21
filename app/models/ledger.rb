@@ -3,7 +3,8 @@ class Ledger < ActiveRecord::Base
   include Status
   acts_as_taggable
 
-  acts_as_ferret :fields => ['description', 'category', 'tags']
+#  acts_as_ferret({:fields => ['description', 'category', 'tags'], :remote => true})
+  acts_as_ferret({:remote => true})
   
   attr_accessor :repeat, :interval, :periodicity_id, :payment_method_choosen
 
@@ -11,7 +12,7 @@ class Ledger < ActiveRecord::Base
   belongs_to :schedule_ledger
   belongs_to :bank_account
   belongs_to :owner, :polymorphic => true
-  has_one :printer_command, :as => :owner, :dependent => :destroy
+  has_one :printer_command, :as => :owner
   validates_presence_of :foreseen_value
   validates_presence_of :effective_value, :if => lambda{ |ledger| not ledger.pending? }
   validates_presence_of :bank_account_id
@@ -43,10 +44,6 @@ class Ledger < ActiveRecord::Base
     l.type_of = l.category.type_of unless l.category.nil?
     l.effective_value ||= l.foreseen_value unless l.pending?
     l.effective_date ||= l.foreseen_date unless l.pending?
-  end
-
-  before_create do |ledger|
-    ledger.cmd_sent! if ledger.has_fiscal_printer?
   end
 
   after_create do |l|
@@ -87,7 +84,7 @@ class Ledger < ActiveRecord::Base
   end
 
   before_destroy do |ledger|
-#    raise _('You cannot destroy sale ledgers') if ledger.owner.kind_of? Sale # TODO fix it
+    raise _('You cannot destroy sale ledgers') if ledger.owner.kind_of? Sale
   end
 
   after_destroy do |ledger|
@@ -102,22 +99,6 @@ class Ledger < ActiveRecord::Base
     l = self.clone
     l.tag_list = self.tag_list.names
     l
-  end
-
-  def has_fiscal_printer?
-    self.bank_account.organization.has_fiscal_printer? unless self.bank_account.nil?
-  end
-
-  # Set the status of this ledger for OPEN. It means that the
-  # fiscal printer command was sent to the printer.
-  def cmd_sent! 
-    self.status = STATUS_OPEN
-  end
-  
-  # Set the current status of the ledger to pending. It means that 
-  # the fiscal printer received and print the fiscal printer command.
-  def cmd_received!
-    self.status = STATUS_PENDING
   end
 
   def schedule_repeat

@@ -1,8 +1,6 @@
 # This class is used on point of sale operations to realize add cash of till
 class AddCash < Money
  
-  include Status
-
   has_one :printer_command, :as => :owner, :dependent => :destroy
 
   before_validation do |add_cash|
@@ -14,19 +12,7 @@ class AddCash < Money
   end
 
   before_destroy do
-#    raise _("You cannot destroy this object")
-  end
-
-  after_create do |cash|
-    cash.open! if cash.owner.has_fiscal_printer?
-  end
-
-  def open!
-    self.status = STATUS_OPEN
-  end
-
-  def open? 
-    self.status == STATUS_OPEN
+    raise _("Youe cannot destroy this object")
   end
 
   def validate

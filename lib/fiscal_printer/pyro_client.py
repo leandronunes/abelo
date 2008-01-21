@@ -3,7 +3,6 @@ import sys
 from stoqdrivers.exceptions import *
 
 COMMAND_OK =  1
-SEPARATOR = ';'
 
 dict = {
   OutofPaperError: 100,
@@ -30,7 +29,6 @@ dict = {
   InvalidReply: 121,
   AlreadyTotalized: 122,
   InvalidValue: 123,
-  DriverError: 124,
 }
 
 
@@ -44,48 +42,50 @@ def main():
   printer = Pyro.core.getProxyForURI("PYRONAME://abelo_printer")
 
   def printer_id():
-    return 'printer01'
+    print 'printer01'
 
   def summarize():
-    return printer.summarize()
+    a = '1' #TODO remove this
+    printer.summarize()
 
   def till_add_cash():
     value = parameters[0]
-    return printer.till_add_cash(value)
+    printer.till_add_cash(value)
 
   def till_remove_cash():
     value = parameters[0]
-    return printer.till_remove_cash(value)
+    printer.till_remove_cash(value)
 
   def close_till():
     is_today = parameters[0]
-    return printer.close_till(is_today)
+#    printer.close_till(is_today)
 
   def open():
-    return printer.open()
+    printer.open()
 
   def cancel():
-    return printer.cancel()
+    printer.cancel()
 
   def add_item():
     ( code, description, price, taxcode,
       quantity, unit, discount, surcharge,
       unit_desc ) = parameters
 
-    return printer.add_item(
+    printer.add_item(
       code, description, price, taxcode,
       quantity, unit, discount, surcharge,
       unit_desc)
 
   def add_payment():
+    printer.totalize()
     (payment_method, description, value ) = parameters
-    return printer.add_payment(payment_method, description, value)
+    printer.add_payment(payment_method, description, value)
 
   def totalize():
-    return printer.totalize()
+    printer.totalize()
 
   def errhandler ():
-    return "Your command doesn't exist"
+     print "Your command doesn't exist"
 
 # set up a dictionary of actions
 
@@ -102,13 +102,12 @@ def main():
     "add_payment": add_payment,
   }
 
-  return takeaction.get(command,errhandler)()
+  takeaction.get(command,errhandler)()
 
 try:
   if __name__ == "__main__":
-    a = main()
-    print COMMAND_OK
-    print a
+    main()
+#    print COMMAND_OK
 except: 
   print dict[sys.exc_type]
-  print sys.exc_info()[1]
+#  print sys.exc_info()[1]

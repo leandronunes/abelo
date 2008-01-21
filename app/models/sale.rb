@@ -13,19 +13,21 @@ class Sale < ActiveRecord::Base
   validates_presence_of :datetime, :organization_id, :user_id
   validates_inclusion_of :status, :in => ALL_STATUS
 
+  after_create do |sale|
+    sale.printer_commands << PrinterCommand.new(sale.owner, [PrinterCommand::OPEN]) if sale.has_fiscal_printer?
+  end
+
+  def totalize
+    if self.has_fiscal_printer? and not PrinterCommand.is_totalized?(self)
+      self.printer_commands << PrinterCommand.new(self.owner, [PrinterCommand::TOTALIZE]) 
+    end
+  end
+
   def validate
     pending = Sale.pending(self.owner)
     if !pending.nil? and pending != self
       self.errors.add(:status, _('You cannot have two pendings sale'))
     end
-  end
-
-  before_create do |sale|
-    sale.cmd_sent! if sale.has_fiscal_printer?
-  end
-
-  after_create do |sale|
-    sale.printer_commands << PrinterCommand.new(sale.owner, [PrinterCommand::OPEN]) if sale.has_fiscal_printer?
   end
 
   def initialize(till, *args)
@@ -34,12 +36,6 @@ class Sale < ActiveRecord::Base
     self.salesman = till.user
     self.owner = till
     self.datetime = Time.now
-  end
-
-  def totalize
-    if self.has_fiscal_printer? and not PrinterCommand.is_totalized?(self)
-      self.printer_commands << PrinterCommand.new(self.owner, [PrinterCommand::TOTALIZE]) 
-    end
   end
 
   def self.sale_ledgers_by_customer(customer)
@@ -64,19 +60,6 @@ class Sale < ActiveRecord::Base
   def self.pending(till)
     return nil if till.nil?
     till.sales.find(:first, :conditions => {:status => STATUS_PENDING})
-  end
-
-  # Set the status of this sale for OPEN. It means that the
-  # fiscal printer command was sent to the printer.
-  def cmd_sent!
-    self.status = STATUS_OPEN
-  end
-
-  # Set the current status of the sale to pending. It means that 
-  # the fiscal printer received and print the fiscal printer sale
-  # command.
-  def cmd_received!
-    self.status = STATUS_PENDING
   end
 
   # is this sale open?

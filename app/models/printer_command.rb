@@ -2,7 +2,6 @@ class PrinterCommand < ActiveRecord::Base
 
   include Status
   SEPARATOR = ';'
-  MAX_PRINTER_COUNTER = 3
 
   ##############################
   # COMMAND SET
@@ -48,13 +47,13 @@ class PrinterCommand < ActiveRecord::Base
   InvalidReply = 121
   AlreadyTotalized = 122
   InvalidValue = 123
-  DriverError = 124
+
+
 
   belongs_to :till
   belongs_to :owner, :polymorphic => true
   validates_inclusion_of :status, :in => ALL_STATUS
   validates_uniqueness_of :cmd_id, :scope => :till_id
-  validates_uniqueness_of :sequence_number, :scope => :till_id
 
   before_save do |printer_command|
     if printer_command.sequence_number.nil?
@@ -93,25 +92,7 @@ class PrinterCommand < ActiveRecord::Base
   end
 
   def self.run_pendings(till)
-    pending_cmd = self.pending_command(till)
-    pending_cmd.valid! if pending_cmd.invalid?
-    while !pending_cmd.nil? and !pending_cmd.invalid?
-      pending_cmd.execute
-      pending_cmd = self.pending_command(till)
-    end
-  end
-
-  # Erase the error counter to make the command 
-  # possible to print
-  def valid!
-    self.counter = 10
-  end
-
-  # Return true if the current command is invalid.
-  # One command is invalid when the system tried to print 
-  # it MAX_PRINTER_COUNTER times unsuccefully.
-  def invalid?
-    self.counter == MAX_PRINTER_COUNTER
+    self.pending_commands(till).collect{|cmd| cmd.execute}
   end
 
   # Check if a sale was totalized
@@ -120,7 +101,7 @@ class PrinterCommand < ActiveRecord::Base
   end
 
   def has_error?
-    self.error_code != nil
+    self.error == true
   end
 
   def inc_counter
@@ -134,44 +115,44 @@ class PrinterCommand < ActiveRecord::Base
   end
 
   def execute
-    if self.counter >= MAX_PRINTER_COUNTER
-#      self.owner.destroy unless self.owner.nil? #TODO remove it
-      return false
+    if self.counter >= 3 
+      return self
     end
     exec =  IO.popen("python #{RAILS_ROOT}/lib/fiscal_printer/pyro_client.py #{self.str_command}")
     puts "RRRRRRRRRRRRRRRRRRRRUUUUUUUUUUUUUUUUUNNNNNNNNNNNNNNNNN %s" % self.str_command
     self.inc_counter
     response = exec.readlines
     puts "RESSSSSSSPOOOOOOOOOOOOOOOOONNNNNNNNNNNNNNNNNNSSSSSSSSSSSSSEEEEEEEEEEEEEEE %s" % response.inspect
-    self.accept_command?(response) ? true : false
+    self.parse_response(response)
   end
 
   def done!
     self.status = STATUS_DONE
-    unless self.owner.nil?
-      self.owner.cmd_received!
-      self.owner.save
-    end
     self.error_code = nil 
-    self.error_message = nil
     self.save
   end
 
 
   def set_error(code, msg)
     self.error_code = code
-    self.error_message = msg
+    self.error_msg = msg
     self.save
   end  
 
+  def error_message
+    return self.error_msg unless self.error_msg.nil?
+    return nil if self.error_code.nil?
+    self.dec_counter
+    self.execute
+    self.error_msg
+#    self.response_error?([self.error_code]) 
+#    self.error_msg
+  end
+
   def response_error?(response)
-    response.shift
-    code = response[0].to_i
+    code = response[0]
     msg = response[1]
-
-puts "CARRRRRRRRRRRRRRRRRRRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALLLLLLLLLLLLLLLLLLLHHHHHHHHHHHHHOOOOOOOOOOOO %s %s" % [code, response.inspect]
-
-    case(code)
+    case(code.to_i)
       when OutofPaperError:
         msg ||= _("You don't have paper. Change the bobine")
         self.set_error(code, msg)
@@ -185,8 +166,7 @@ puts "CARRRRRRRRRRRRRRRRRRRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALLLLLLLLLLLLLLLLLLLHHHH
         msg ||= 'ble 3'
         self.set_error(code, msg)
       when PendingReduceZ:
-        msg ||= _('Pending Reduction Z')
-        make_reduction_z
+        msg ||= 'ble 4'
         self.set_error(code, msg)
       when PendingReadX:
         msg ||= 'ble 5'
@@ -244,34 +224,55 @@ puts "CARRRRRRRRRRRRRRRRRRRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALLLLLLLLLLLLLLLLLLLHHHH
       when InvalidValue:
         msg ||= 'ble 23'
         self.set_error(code, msg)
-      when DriverError:
-        msg ||= 'ble 24'
-        self.set_error(code, msg)
-      when CommandOK:
+      else
         return false
     end
 
     return true
   end
 
-  def accept_command?(response)
-    return false if self.response_error?(response) 
-    self.done!
-    return true
+  def parse_response(response)
+    if !self.response_error?(response)
+      self.done!
+      return self
+    end
+    pending_cmd = PrinterCommand.pending_command(self.till)
+    if pending_cmd.nil?
+      return self
+    else
+      return pending_cmd.execute()
+    end
   end
 
   def make_reduction_z
-    pc ||= PrinterCommand.new(self.till, [PrinterCommand::CLOSE_TILL, false])
+#    pc = self.class.has_pending_cmd(self.till, PrinterCommand::CLOSE_TILL)
+    pc ||= PrinterCommand.new(self.till, [PrinterCommand::CLOSE_TILL, false]) #FIXME see if it's previous day or not
 #    pc ||= PrinterCommand.new(self.till, [PrinterCommand::CLOSE_TILL, ((self.datetime < Date.today) ? false : true)]) #FIXME see if it's previous day or not
 #TODO refactoring this    
     pc.owner = self.till
-    self.till.printer_commands<< pc
-    pc.set_as_first
+    pc.save
+    self.class.set_as_first(pc)
   end
 
-  def set_as_first
-    self.sequence_number = PrinterCommand.minimum(:sequence_number, :conditions => {:till_id => self.till}) - 1 || 0
-    self.save!
+#  def self.has_pending_cmd(till, command)
+#    self.pending_commands(till).detect{ |c| c.cmd == command}
+#  end
+
+  def self.set_as_first(printer_command)
+    commands = self.pending_commands(printer_command.till)
+    transaction do 
+      commands.map do |c| 
+        c.sequence_number = c.sequence_number + 1 
+        c.save
+      end
+      printer_command.sequence_number = 1
+      printer_command.save
+    end
   end
+
+
+  protected
+
+    attr_accessor :error_msg
 
 end

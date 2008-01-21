@@ -20,8 +20,8 @@ class PointOfSaleController < ApplicationController
   
   design :holder => :design_point_of_sale, :root => File.join('designs','point_of_sale')
 
-  before_filter :load_current_till, :except => ['index', 'open_till', 'create_till_open']
-  before_filter :check_command_error, :except => ['index']
+  before_filter :load_current_till
+  before_filter :check_command_error
   after_filter :run_pending_commands
 
   def check_coupon_cancel
@@ -36,22 +36,15 @@ class PointOfSaleController < ApplicationController
 
   def check_command_error
     return unless @organization.has_fiscal_printer? 
-    till = Till.load_open(@organization, current_user, get_printer_id)
-    cmd = PrinterCommand.pending_command(till)
-
+    cmd = PrinterCommand.pending_command(@till)
     return if cmd.nil?
-
-    if cmd.has_error?
-      flash[:notice] = _('You have pending commands that cannot be executed. Please %s') % cmd.error_message
-      redirect_to :action => 'index'
-    else
-      PrinterCommand.run_pendings(till) 
-    end
+    flash.now[:notice] = _('You have pending commands that cannot be executed. Please %s') % cmd.error_message
+    render :action => 'index' 
   end
 
   def run_pending_commands
     return  unless @organization.has_fiscal_printer? and PrinterCommand.has_pending?(@till)
-    PrinterCommand.run_pendings(@till)
+    cmd = PrinterCommand.run_pendings(till)
   end
 
   def design_point_of_sale
@@ -60,18 +53,20 @@ class PointOfSaleController < ApplicationController
   end
 
   def index
-    @till = Till.load(@organization, current_user, get_printer_id)
-    unless @till.nil?
+    till = Till.load(@organization, current_user)
+    unless till.nil?
       redirect_to :action => 'till_open'
     end
   end
 
   def till_open
-    @pending_sale = Sale.pending(@till)
+    till = load_current_till 
+    @pending_sale = Sale.pending(till)
   end
 
   def open_till
-    if @till.nil?
+    till = Till.load(@organization, current_user, get_printer_id)
+    if till.nil?
       @cash = Money.new
       render :action => 'open_till'
     else
@@ -80,7 +75,9 @@ class PointOfSaleController < ApplicationController
   end
 
   def create_till_open
-    @till ||= Till.new(@organization, current_user, @printer_id)
+    printer_id = get_printer_id
+    @till = Till.load(@organization, current_user, printer_id)
+    @till ||= Till.new(@organization, current_user, printer_id)
 
     unless params[:cash].nil?
       @cash ||= AddCash.new(@till, params[:cash])
@@ -114,7 +111,8 @@ class PointOfSaleController < ApplicationController
   end
 
   def create_remove_cash
-    @cash = RemoveCash.new(@till, params[:cash])
+    till = load_current_till
+    @cash = RemoveCash.new(till, params[:cash])
 
     if @cash.save
       flash[:notice] = _('The cash was removed successfully')
@@ -125,7 +123,9 @@ class PointOfSaleController < ApplicationController
   end
 
   def create_close_till
-    if @till.close
+    till = load_current_till
+
+    if till.close
       redirect_to :action => 'index'
     else
       render :action => 'till_open'
@@ -147,7 +147,8 @@ class PointOfSaleController < ApplicationController
   end
 
   def coupon_open
-    @sale = Sale.pending(@till)
+    till = load_current_till
+    @sale = Sale.pending(till)
     @sale_item = SaleItem.new(@sale)
     unless params[:product_code].nil?
       @sale_item.product_code = params[:product_code] 
@@ -159,7 +160,8 @@ class PointOfSaleController < ApplicationController
   end
 
   def create_coupon_open
-    @sale =  Sale.new(@till)
+    till = load_current_till
+    @sale =  Sale.new(till)
     if @sale.save
       redirect_to :action => 'coupon_open'
     else
@@ -169,7 +171,8 @@ class PointOfSaleController < ApplicationController
   end
 
   def create_coupon_add_item
-    @sale = Sale.pending(@till)
+    till = load_current_till
+    @sale = Sale.pending(till)
     @sale_item = SaleItem.new(@sale, params[:sale_item])
     if @sale_item.save
       @total = @sale.total_value 
@@ -207,7 +210,8 @@ class PointOfSaleController < ApplicationController
   end
 
   def cancel
-    @sale = Sale.pending(@till)
+    till = load_current_till
+    @sale = Sale.pending(till)
 
     unless can(:controller => 'point_of_sale', :action => 'create_coupon_cancel')
       flash[:notice] = _('Only sales supervisor can cancel a coupon') if flash[:notice].nil?
@@ -218,7 +222,8 @@ class PointOfSaleController < ApplicationController
   end
 
   def create_coupon_cancel
-    @sale = Sale.pending(@till)
+    till = load_current_till
+    @sale = Sale.pending(till)
 
     if @sale.cancel!
       redirect_to :action => 'till_open'
@@ -231,7 +236,8 @@ class PointOfSaleController < ApplicationController
   end
 
   def add_payment
-    @sale = Sale.pending(@till)
+    till = load_current_till
+    @sale = Sale.pending(till)
     @sale.totalize
     @total = @sale.total_value 
     @total_payment = @sale.total_payment 
@@ -255,7 +261,8 @@ class PointOfSaleController < ApplicationController
   end
 
   def create_coupon_add_payment
-    @sale = Sale.pending(@till)
+    till = load_current_till
+    @sale = Sale.pending(till)
      
     @ledger = Ledger.new_ledger(params['ledger'])
     @ledger_categories =  @organization.sale_ledger_categories_by_payment_method(@ledger.payment_method)
@@ -308,7 +315,8 @@ class PointOfSaleController < ApplicationController
   end
 
   def select_customer
-    sale = Sale.pending(@till)
+    till = load_current_till
+    sale = Sale.pending(till)
     unless params[:customer_id].nil?
       sale.customer = @organization.customers.find(params[:customer_id])
       sale.save!
@@ -330,11 +338,8 @@ class PointOfSaleController < ApplicationController
 
   def load_current_till
     @till = Till.load(@organization, current_user, get_printer_id)
-    if @till.nil?
-      flash[:notice] = _("You don't have a till open")
-      redirect_to :action => 'index' and return false
-    end
   end
+
 
 end
 

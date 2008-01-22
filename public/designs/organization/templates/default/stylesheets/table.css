@@ -59,3 +59,7 @@ td b.income{
 td b.expense{
   color: red;
 }
+
+#abelo_invoice input{
+  width: 100px;
+}

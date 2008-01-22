@@ -1,0 +1,11 @@
+
+<%= title _('New Invoice') %>
+
+<% form_tag( :action => 'create' )  do %>
+
+  <%= render :partial => 'form'%>
+
+  <%= display_new_info_options @invoice %> 
+
+<% end %>
+

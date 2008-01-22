@@ -23,6 +23,7 @@ class Configuration < ActiveRecord::Base
   has_many :stock_devolution_displays, :dependent => :destroy
   has_many :stock_down_displays, :dependent => :destroy
   has_many :stock_out_displays, :dependent => :destroy
+  has_many :invoice_displays, :dependent => :destroy
   has_many :profile_displays, :dependent => :destroy
   has_many :user_displays, :dependent => :destroy
   has_many :periodicity_displays, :dependent => :destroy
@@ -159,6 +160,7 @@ class Configuration < ActiveRecord::Base
     UserDisplay
     PeriodicityDisplay
     DocumentDisplay
+    InvoiceDisplay
   ]
 
   DISPLAY_CONFIGURATION_CLASSES.each do |item|

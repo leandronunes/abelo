@@ -48,15 +48,11 @@ class StockBaseController < ApplicationController
   end
 
   def new_core(virtual_type)
-    begin
-      product = @organization.products.find(params[:product_id])
-      @stock = virtual_type.camelcase.constantize.new(:product => product, :date => Date.today, :amount => 1)
-      @suppliers = product.suppliers
-      render :template => 'stock_base/new'
-    rescue
-      flash[:notice] = _('The product with identification %s is not of your organization') % params[:product_id]
-      redirect_to :controller => 'products', :action => 'new'
-    end
+#TODO see if it's needed
+#    product = @organization.products.find(params[:product_id])
+    @stock = virtual_type.camelcase.constantize.new(:product => product, :date => Date.today, :amount => 1)
+    @suppliers = @organization.suppliers
+    render :template => 'stock_base/new'
   end
 
   def create_core(stock_type)

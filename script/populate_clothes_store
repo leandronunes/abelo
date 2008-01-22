@@ -151,6 +151,13 @@ StockInDisplay.available_fields.collect { |d|
 }
 configuration.set_stock_in_displays=(params)
 
+InvoiceDisplay.delete_all
+params = {}
+InvoiceDisplay.available_fields.collect { |d|
+  in_list = ['number', 'serie', 'supplier_id', 'issue_date', 'status'].include?(d) ? true : false
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
+}
+configuration.set_invoice_displays=(params)
 
 StockDevolutionDisplay.delete_all
 params = {}

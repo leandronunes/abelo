@@ -1,0 +1,17 @@
+<div id="abelo_invoice">
+  <table>
+    <tr> 
+      <th> <%= _('Product') %> </th>
+      <th> <%= _('Unit Price') %> </th>
+      <th> <%= _('Amount') %> </th>
+      <th width=200px > <%= _('Validity') %> </th>
+    </tr> 
+    <tr> 
+      <td> <%= select('stock', 'product', @products.map{|p| [p.name, p.id]}) %> </td>
+      <td> <%= text_field('stock', 'price') %> </td>
+      <td> <%= text_field('stock', 'amount') %> </td>
+      <td style='width: 300px'> <%= date_select_abelo('stock', 'validity') %> </td>
+      <td> <%= link_to _('Add'), {:action => 'create', :invoice_id => @invoice}  %> </td>
+    </tr> 
+  </table>
+</div>

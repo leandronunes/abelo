@@ -8,6 +8,9 @@
     <%= render :partial => 'stock_base/form'%>
   </div>
 
+<%= submit_tag "salvar moco", :name => 'bla' %>
+<input type='submit' value='salva ae' name='bli'>
+
   <%= subtitle _("Payments %s") % content_tag(:p, button_submit_to_remote( 'add', 'payment_button' , _('Add'), {:url => {:action => 'create', :product_id => @stock.product, :id => @stock}, :failure => "$('add_payment').innerHTML=request.responseText"}) ) %>
 
     <%= display_new_info_options @product %> 

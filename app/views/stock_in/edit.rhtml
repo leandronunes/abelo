@@ -1,7 +1,8 @@
 
 <%= title _('Edit Invoice') %>
 
-<% form_tag( :action => 'update' )  do %>
+<% form_tag( :action => 'update', :id => @invoice )  do %>
+
 
   <%= render :partial => 'form'%>
 
@@ -9,3 +10,9 @@
 
 <% end %>
 
+<% form_remote_tag( :url => {:action => 'add_item', :id => @invoice}, :update => 'abelo_invoice_items' )  do %>
+  <div id="abelo_invoice_items">
+    <%= error_messages_for 'stock' %>
+    <%= render :partial => 'invoice_items' %>
+  </div>
+<% end %>

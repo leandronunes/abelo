@@ -3,6 +3,10 @@ class StockInController < ApplicationController
   needs_organization
   uses_stock_tabs
 
+  def index
+    redirect_to :action => 'list'
+  end
+
   def list
     @query = params[:query]
     @query ||= params[:invoice][:number] if params[:invoice]
@@ -40,14 +44,31 @@ class StockInController < ApplicationController
   end
 
   def edit
-    @invoice = Invoice.new(:issue_date => Date.today)
+    @invoice = @organization.invoices.find(params[:id])
     @suppliers = @organization.suppliers
     @products = @organization.products
-    @stock = StockIn.new(:validity => Date.today)
+    @stocks = @invoice.stock_ins
+    @stock = StockIn.new
+  end
+
+  def update
+    @invoice = @organization.invoices.find(params[:id])
+    if @invoice.update_attributes(params[:invoice])
+        redirect_to :action => 'list'
+    else
+      @suppliers = @organization.suppliers
+      @products = @organization.products
+      @stock = StockIn.new(:validity => Date.today)
+      render :action => 'new'
+    end
   end
 
   def select_product
-    @stock = StockIn.new(:validity => Date.today)
+    @stock = StockIn.new
+    @invoice = @organization.invoices.find(params[:id])
+    @suppliers = @organization.suppliers
+    @products = @organization.products
+    @stocks = @invoice.stock_ins
     unless params[:product_id].blank?
       @stock.amount = 1
       product = @organization.products.find(params[:product_id])
@@ -65,11 +86,13 @@ class StockInController < ApplicationController
     end
     @suppliers = @organization.suppliers
     @products = @organization.products
-    render :action => 'edit'
+    @stocks = @invoice.stock_ins
+    render :partial => 'invoice_items'
   end
 
-  def history
-    history_core('stock_in')
+  def show
+    @invoice = @organization.invoices.find(params[:id])
+    @stocks = @invoice.stock_ins
   end
 
 end

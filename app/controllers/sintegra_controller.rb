@@ -13,8 +13,21 @@ class SintegraController < ApplicationController
   end
 
   def build_file
-    @sintegra.generate_sintegra
+    @sintegra = Sintegra.new(@organization,params[:sintegra])
+    #render :text => params.inspect
+    #return
+    if @sintegra.generate_sintegra
+      flash[:notice] = _('Sintegra File was successfully created.')
+      redirect_to :action => 'configure_sintegra'
+    else
+      render :action => 'configure_sintegra'
+    end
   end
+
+#  def write_file
+#    @sintegra = Sintegra.new(@organization)
+#    @sintegra.generate_sintegra
+#  end
 
   def sales_tabs
     t = add_tab do

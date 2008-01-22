@@ -1,12 +1,20 @@
 
 <%= title _('SINTEGRA') %>
 
-<% form_tag (:action => "build_file" ) do %>
+<% form_tag ( :action => 'build_file' ) do %>
   <p>
     <label for="sintegra_file_name">File Name:</label><br>
-    <%= text_field "sintegra", "file_name" %>
+    <%= text_field 'sintegra', "file_name" %>
+  </p>
+  <p>
+    <label for="sintegra_initial_date">Initial Date:</label><br>
+    <%= date_select_abelo('sintegra', "initial_date", :start_year => Date.today.year - 10) %>
+  </p>
+  <p>
+    <label for="sintegra_final_date">Final Date:</label><br>
+    <%= date_select_abelo('sintegra', 'final_date', :start_year => Date.today.year - 10)  %>
   </p>
 
-
+  <%= submit_tag _("Create") %>
 <% end %>
 

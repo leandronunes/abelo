@@ -1,0 +1,7 @@
+<%= title _('Invoice Control') %>
+
+<%= display_list_options 'invoice', 'number' %>
+
+<%= display_collection @invoices  %>
+
+<%= pagination_links(@invoice_pages, :params => {:query => @query}) %>

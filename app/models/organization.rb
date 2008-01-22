@@ -66,6 +66,7 @@ class Organization < ActiveRecord::Base
   has_one  :environment, :as => :owner
   has_many :periodicities
   has_many :mass_mails
+  has_many :invoices
   # One Environment can be reached by many domains
   has_many :domains, :as => :owner
 

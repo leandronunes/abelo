@@ -6,5 +6,7 @@ class Invoice < ActiveRecord::Base
   validates_presence_of :issue_date
 
   belongs_to :supplier
+  belongs_to :organization
+  has_many :stock_ins
 
 end

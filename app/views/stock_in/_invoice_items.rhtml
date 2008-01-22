@@ -1,17 +1,22 @@
-<div id="abelo_invoice">
-  <table>
-    <tr> 
-      <th> <%= _('Product') %> </th>
-      <th> <%= _('Unit Price') %> </th>
-      <th> <%= _('Amount') %> </th>
-      <th width=200px > <%= _('Validity') %> </th>
-    </tr> 
-    <tr> 
-      <td> <%= select('stock', 'product', @products.map{|p| [p.name, p.id]}) %> </td>
-      <td> <%= text_field('stock', 'price') %> </td>
-      <td> <%= text_field('stock', 'amount') %> </td>
-      <td style='width: 300px'> <%= date_select_abelo('stock', 'validity') %> </td>
-      <td> <%= link_to _('Add'), {:action => 'create', :invoice_id => @invoice}  %> </td>
-    </tr> 
-  </table>
-</div>
+<table>
+  <tr> 
+    <th> <%= _('Product') %> </th>
+    <th> <%= _('Unit Price') %> </th>
+    <th> <%= _('Amount') %> </th>
+    <th width=200px > <%= _('Validity') %> </th>
+  </tr> 
+  <tr> 
+    <td> <%= select('stock', 'product', @products.map{|p| [p.name, p.id]}, :include_blank => true) %> </td>
+    <td> <%= text_field('stock', 'price') %> </td>
+    <td> <%= text_field('stock', 'amount') %> </td>
+    <td style='width: 300px'> <%= date_select_abelo('stock', 'validity') %> </td>
+    <td> <%= button 'add', _('Add'), :save, {}, :name => 'add_item' %> </td>
+  </tr> 
+</table>
+
+<%= observe_field('stock_product',
+  :update => 'abelo_invoice_items',
+  :url => {:action => 'select_product' },
+  :with => "'product_id=' +  escape(value) + '&invoice=' + escape(#{@invoice.id})"
+  )
+%>

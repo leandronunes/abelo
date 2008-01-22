@@ -641,6 +641,10 @@ module ApplicationHelper
     _('False')
   end
 
+  def display_field_type_time(content=nil)
+    show_date(content)
+  end
+
   def display_field_type_true_class(content=nil)
     _('True')
   end

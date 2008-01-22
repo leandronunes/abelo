@@ -1,0 +1,11 @@
+
+<%= title _('Edit Invoice') %>
+
+<% form_tag( :action => 'update' )  do %>
+
+  <%= render :partial => 'form'%>
+
+  <%= display_new_info_options @invoice %> 
+
+<% end %>
+

@@ -31,6 +31,10 @@
       <%= render :partial => 'shared_payments/payment_details'%>
     </td>
   </tr>
+  <tr>
+    <th colspan=4> <%= _('Total:') %></th>
+    <td> <%= @invoice.total_payment %> </td>
+  </tr>
 </table>
 
 

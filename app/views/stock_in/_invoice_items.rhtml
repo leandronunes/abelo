@@ -3,6 +3,7 @@
     <th> <%= _('Product') %> </th>
     <th> <%= _('Unit Price') %> </th>
     <th> <%= _('Amount') %> </th>
+    <th> <%= _('Total') %> </th>
     <th> <%= _('Validity') %> </th>
   </tr>
   <% @stocks.each do |stock| %>
@@ -10,9 +11,14 @@
       <td> <%= stock.product.name %> </td>
       <td> <%= stock.price %> </td>
       <td> <%= stock.amount %> </td>
+      <td> <%= stock.total_cost %> </td>
       <td> <%= stock.validity || _('None') %> </td>
     </tr>
   <% end %>
-
+  <tr>
+    <th colspan=2> <%= _('Total:') %></th>
+    <td> <%= @invoice.total_amount %> </td>
+    <td> <%= @invoice.total_cost %> </td>
+  </tr>
 </table>
 

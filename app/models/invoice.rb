@@ -11,9 +11,15 @@ class Invoice < ActiveRecord::Base
   has_many :ledgers, :as => :owner, :dependent => :destroy
 
   def total_cost
+    self.stock_ins.sum(:price)
+  end
+
+  def total_amount
+    self.stock_ins.sum(:amount)
   end
 
   def total_payment
+    self.ledgers.sum(:foreseen_value)
   end
 
 end

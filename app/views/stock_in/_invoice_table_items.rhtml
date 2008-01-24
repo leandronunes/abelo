@@ -16,9 +16,3 @@
     <td> <%= button_remote 'edit', _('Edit'), :edit, :url => {:action => 'edit_item', :stock_id => stock, :id => @invoice } , :update => 'abelo_invoice_items'%> </td>
   </tr>
 <% end %>
-
-<tr>
-  <th> <%= _('Total:') %></th>
-  <td> <%= @invoice.total_cost %> </td>
-</tr>
-

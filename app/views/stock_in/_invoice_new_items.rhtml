@@ -7,8 +7,14 @@
       <td> <%= select('stock', 'product_id', @products.map{|p| [p.name, p.id]}, :include_blank => true) %> </td>
       <td> <%= text_field('stock', 'price') %> </td>
       <td> <%= text_field('stock', 'amount') %> </td>
+      <td> - </td>
       <td> <%= date_select_abelo('stock', 'validity') %> </td>
       <td> <%= button 'add', _('Add'), :save, {}, :name => 'add_item' %> </td>
+    </tr>
+    <tr>
+      <th colspan=2> <%= _('Total:') %></th>
+      <td> <%= @invoice.total_amount %> </td>
+      <td> <%= @invoice.total_cost %> </td>
     </tr>
   </table>
 <% end %>

@@ -4,7 +4,7 @@ class StockDevolutionController < ApplicationController
 
   uses_stock_tabs
 
-  helper StockBaseHelper
+  helper StockHelper
 
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
   post_only [ :create, :update ]
@@ -22,7 +22,6 @@ class StockDevolutionController < ApplicationController
     @products = @organization.products.select{|p| p.name.match re}
     render :template => 'stock_base/autocomplete_name', :layout=>false
   end
-
 
   def index
     redirect_to :action => 'list'

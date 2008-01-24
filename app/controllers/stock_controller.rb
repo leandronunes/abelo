@@ -1,7 +1,22 @@
-class StockController < StockBaseController 
+class StockController < ApplicationController
+
+  helper StockHelper
+
+  needs_organization
+    
+  uses_stock_tabs
+
+  def index
+    redirect_to :action => 'list'
+  end
 
   def list
-    list_core('virtual')
+    @query = params[:query]
+    @query ||= params[:product][:name] if params[:product]
+
+    @stocks = @organization.stock_virtuals(@query)
+    @stock_pages, @stocks = paginate_by_collection @stocks
+    render :template => 'stock_base/list'
   end
 
   def new
@@ -80,10 +95,10 @@ class StockController < StockBaseController
     end
   end
 
-
   def history
-    history_core('stock')
+    @product = @organization.products.find(params[:product_id])
+    @stocks = @product.stocks
+    render :template => 'stock_base/history'
   end
-
 
 end

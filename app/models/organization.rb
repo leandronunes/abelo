@@ -305,7 +305,8 @@ class Organization < ActiveRecord::Base
 
   # Create new stock objects fill virtual attributes 'product_in_list' and 'amount_in_list'
   # of Stock object to display this attributes on list action
-  def stock_virtuals
+  def stock_virtuals(query=nil)
+    query ||= '*'
     StockVirtual.create_virtuals(self.products)
   end 
 
@@ -314,15 +315,13 @@ class Organization < ActiveRecord::Base
     StockVirtual.create_virtuals(self.products.full_text_search(query))
   end
 
-  def stock_virtual_ins
+  def stock_virtual_ins(query = nil)
+    query ||= '*'
     StockVirtual.create_virtual_ins(self.products)
   end
 
-  def stock_virtual_outs
-    StockVirtual.create_virtual_outs(self.products)
-  end 
-
-  def stock_virtual_downs
+  def stock_virtual_downs(query = nil)
+    query ||= '*'
     StockVirtual.create_virtual_downs(self.products)
   end 
 

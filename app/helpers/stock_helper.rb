@@ -1,5 +1,4 @@
 module StockHelper
-
   def display_stock_collection(collection = Array.new, params = {}, html_options = {})
 
     content = Array.new

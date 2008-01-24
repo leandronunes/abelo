@@ -1,3 +1,16 @@
 <%= title _('Edit stock for %s') % @stock.product.name %>
 
-<%= render :partial => 'extended_form' %>
+<% form_tag( :action => 'update', :invoice_id => @invoice, :stock_id => @stock )  do %>
+
+<%= render :partial => 'form' %>
+
+<%= display_edit_info_options @product %>
+
+<% end %>
+
+<%= subtitle _("Invoice Payments: ") %>
+
+<div id="abelo_payment">
+  <%= render :partial => 'shared_payments/new_payment'%>
+</div>
+

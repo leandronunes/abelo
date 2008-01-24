@@ -307,7 +307,7 @@ class Organization < ActiveRecord::Base
   # of Stock object to display this attributes on list action
   def stock_virtuals(query=nil)
     query ||= '*'
-    StockVirtual.create_virtuals(self.products)
+    StockVirtual.create_virtuals(self.products.full_text_search(query))
   end 
 
   def stock_virtual_devolutions(query = nil)

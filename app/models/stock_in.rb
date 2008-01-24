@@ -8,7 +8,8 @@ class StockIn < Stock
 
   belongs_to :supplier
   belongs_to :invoice
-  has_many :ledgers, :as => :owner
+#TODO remove it
+#  has_many :ledgers, :as => :owner
 
   before_validation do |stock|
     unless stock.invoice.nil?

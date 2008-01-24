@@ -11,21 +11,21 @@ def create_stock_tabs
     in_set 'first'
     highlights_on :controller => 'stock_in'
   end
-  t.named _('Buy Control')
+  t.named _('Buy')
 
   t = add_tab do
     links_to :controller => 'stock_devolution'
     in_set 'first'
     highlights_on :controller => 'stock_devolution'
   end
-  t.named _('Devolution Control')
+  t.named _('Devolution')
 
   t = add_tab do
     links_to :controller => 'stock_down'
     in_set 'first'
     highlights_on :controller => 'stock_down'
   end
-  t.named _('Stock Out Control')
+  t.named _('Stock Out')
 
 end
 

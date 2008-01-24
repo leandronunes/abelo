@@ -3,20 +3,20 @@
 
 <% form_tag( :action => 'update', :id => @invoice )  do %>
 
-
   <%= render :partial => 'form'%>
 
   <%= display_new_info_options @invoice %>
 
 <% end %>
 
+<%= subtitle _('Invoice Items:') %>
+
 <div id="abelo_invoice_items">
-  <h2> <%= subtitle _('Invoice Items:') %> </h2>
   <%= render :partial => 'invoice_new_items' %>
 </div>
 
 <%= subtitle _("Invoice Payments: ") %>
 
 <div id="abelo_payment">
-  <%= render :partial => 'new_payment'%>
+  <%= render :partial => 'shared_payments/new_payment'%>
 </div>

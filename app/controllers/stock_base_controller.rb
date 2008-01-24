@@ -21,17 +21,6 @@ class StockBaseController < ApplicationController
     end
   end
 
-  def edit
-    @stock = Stock.find(params[:id])
-    @product = @stock.product
-    @suppliers = @product.suppliers
-    @ledgers = @stock.ledgers if @stock.respond_to?('ledgers')
-
-    if !@stock.kind_of?(StockIn)
-      render :template => 'stock_base/edit'
-    end
-  end
-
   def update
     @stock = Stock.find(params[:id])
     if @stock.update_attributes(params[:stock])

@@ -6,7 +6,7 @@ class StockController; def rescue_action(e) raise e end; end
 
 class StockControllerTest < Test::Unit::TestCase
 
-  fixtures :stocks, :system_actors, :products, :configurations, :system_actors, :ledger_categories, :bank_accounts
+  fixtures :stocks, :system_actors, :products, :configurations, :system_actors, :ledger_categories, :bank_accounts, :categories
 
   under_organization :one
 
@@ -18,14 +18,31 @@ class StockControllerTest < Test::Unit::TestCase
     @product = Product.find(:first)
     @supplier = Supplier.find(:first)
     @ledger_category = LedgerCategory.find(:first)
-    @stock_in = StockIn.find(:first)
+    @product_category = ProductCategory.find(:first)
+    @organization = Organization.find(:first)
+  end
+
+  def create_product(params = {})
+    Product.create!({:name => 'product one', :sell_price => 2.0, :unit => 'kg', :organization => @organization, :category => @product_category}.merge(params))
+  end
+
+  def test_autocomplete_product_name
+    Product.delete_all
+    create_product(:name => 'product one')
+    create_product(:name => 'product test two')
+    create_product(:name => 'product test twice')
+    get :autocomplete_product_name, :product => { :name => 'test'}
+    assert_not_nil assigns(:products)
+    assert_kind_of Array, assigns(:products)
+    assert_equal 2, assigns(:products).length
   end
 
   def test_setup
     assert @product.valid?
     assert @supplier.valid?
     assert @ledger_category.valid?
-    assert @stock_in.valid?
+    assert @organization.valid?
+    assert @product_category.valid?
   end
 
   def test_index
@@ -36,12 +53,10 @@ class StockControllerTest < Test::Unit::TestCase
 
   def test_list
     get :list
-
     assert_response :success
     assert_template 'list'
-
     assert_not_nil assigns(:stocks)
-    assert_kind_of Array, assigns(:stocks)
+    assert_not_nil assigns(:stock_pages)
   end
 
   def test_list_when_query_param_is_nil
@@ -56,10 +71,10 @@ class StockControllerTest < Test::Unit::TestCase
 
   def test_list_when_query_param_not_nil
     Product.delete_all
-    Product.create!(:name => 'Some Product', :sell_price => '20', :unit => 'U', :organization_id => 1, :category_id => 1, :code => 1)
-    Product.create!(:name => 'Another Product', :sell_price => '25', :unit => 'U', :organization_id => 1, :category_id => 1, :code => 2)
-    Product.create!(:name => 'Product Three', :sell_price => '30', :unit => 'U', :organization_id => 1, :category_id => 1, :code => 3)
-    get :list, :query => 'Another*'
+    create_product(:name => 'product one')
+    create_product(:name => 'product test two')
+    create_product(:name => 'product test twice')
+    get :list, :query => '*test*'
 
     assert_not_nil assigns(:query)
     assert_not_nil assigns(:stocks)
@@ -67,9 +82,15 @@ class StockControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:stock_pages)
     assert_kind_of ActionController::Pagination::Paginator, assigns(:stock_pages)
 
-    assert_equal 1, assigns(:stocks).size
+    assert_equal 2, assigns(:stocks).length
   end
-  
+ 
+  def test_new
+    get :new
+    assert_response :redirect
+    assert_redirected_to :controller => 'stock_in', :action => 'new'
+  end
+ 
   def test_history
     get :history, :product_id => @product.id
 
@@ -88,16 +109,6 @@ class StockControllerTest < Test::Unit::TestCase
     assert_redirected_to :action => 'index'
   end
 
-
-  def test_new_with_product_id_parameter
-    get :new, :product_id => @product.id
-
-    assert_not_nil assigns(:stock)
-    assert_not_nil assigns(:suppliers)
-  
-    assert_response :success
-    assert_template 'new'
-  end
 
   def test_new_without_product_id_parameter
     get :new

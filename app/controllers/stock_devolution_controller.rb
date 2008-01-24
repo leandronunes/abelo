@@ -20,7 +20,7 @@ class StockDevolutionController < ApplicationController
     escaped_string = Regexp.escape(params[:product][:name])
     re = Regexp.new(escaped_string, "i")
     @products = @organization.products.select{|p| p.name.match re}
-    render :template => 'stock_base/autocomplete_name', :layout=>false
+    render :template => 'stock_base/autocomplete_product_name', :layout=>false
   end
 
   def index

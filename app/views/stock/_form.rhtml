@@ -1,9 +1,10 @@
 
 <%= error_messages_for 'invoice' %>
+<%= error_messages_for 'stock' %>
 
 <!--[form:stock_stock]-->
 
-<% display_form_info @invoice do |item | %>
+<% display_form_info @invoice, @stock do |item | %>
 
   <%= display_field_form( item, 'number',
         :title => _('Number'),
@@ -28,6 +29,23 @@
     )
   %>
 
+  <%= display_field_form( item, 'supplier_id',
+        :title => _('Amount'),
+        :content => text_field( 'stock', 'amount' )
+    )
+  %>
+
+  <%= display_field_form( item, 'supplier_id',
+        :title => _('Validity'),
+        :content => date_select_abelo( 'stock', 'validity' )
+    )
+  %>
+
+  <%= display_field_form( item, 'supplier_id',
+        :title => _('Unit Price'),
+        :content => text_field( 'stock', 'price' )
+    )
+  %>
 <% end %>
 
 <!--[eoform:stock_stock]-->

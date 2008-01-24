@@ -1,6 +1,6 @@
 <%= error_messages_for 'stock' %>
 
-<% form_remote_tag( :url => {:action => 'add_item', :id => @invoice}, :update => 'abelo_invoice_items' )  do %>
+<% form_remote_tag(:url => {:action => 'add_item', :id => @invoice}, :update => 'abelo_invoice_items')  do %>
   <table>
     <%= render :partial => 'invoice_table_items' %>
     <tr>

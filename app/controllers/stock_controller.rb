@@ -2,9 +2,19 @@ class StockController < ApplicationController
 
   helper StockHelper
 
+  require 'payment/invoice_payment'
+  include InvoicePayment
+
   needs_organization
     
   uses_stock_tabs
+
+  def autocomplete_product_name
+    escaped_string = Regexp.escape(params[:product][:name])
+    re = Regexp.new(escaped_string, "i")
+    @products = @organization.products.select{|p| p.name.match re}
+    render :template => 'stock_base/autocomplete_product_name', :layout=>false
+  end
 
   def index
     redirect_to :action => 'list'
@@ -20,79 +30,52 @@ class StockController < ApplicationController
   end
 
   def new
-    begin
-      product = @organization.products.find(params[:product_id])
-      @stock = StockIn.new(:product => product, :date => Date.today, :amount => 1)
-      @invoice = Invoice.new
-      @suppliers = product.suppliers
-    rescue
-      redirect_to :controller => 'products', :action => 'new'
-    end
+    redirect_to :controller => 'stock_in', :action => 'new'
+  end
+
+  def add
+    product = @organization.products.find(params[:product_id])
+    @stock = StockIn.new(:product => product, :date => Date.today, :amount => 1)
+    @invoice = Invoice.new
+    @suppliers = product.suppliers
   end
 
   def create
     product = @organization.products.find(params[:product_id])
     @stock = StockIn.new(params[:stock])
     @stock.product = product
-    @stock.invoice = Invoice.find(:first)
-
-    if @stock.save
+    @invoice = params[:invoice_id].blank? ? Invoice.new(params[:invoice]) : @organization.invoices.find(params[:invoice_id])
+    @stock.invoice = @invoice
+    
+    if @invoice.save and @invoice.stock_ins << @stock
       flash.now[:notice] = _('It was successfully created.')
-      if !request.xml_http_request?
-        redirect_to :action => 'history', :product_id => product
-      else
-        @product = @stock.product
-        @suppliers = @product.suppliers
-        @ledger = Ledger.new_ledger(:value => @stock.price, :date => @stock.date)
-        @ledger_categories =  @organization.stock_ledger_categories_by_payment_method(@ledger.payment_method)
-        render :update do |page|
-          page.replace_html 'stock_in_entry', :partial => 'extended_form'
-        end
-      end
+      redirect_to :action => 'edit', :invoice_id => @invoice,  :stock_id => @stock
     else
       @suppliers = product.suppliers
-      if !request.xml_http_request?
-        render :action => 'new'
-      else
-        render :update do |page|
-          page.replace_html 'stock_form', :partial => 'stock_base/form'
-          end
-      end
+      render :action => 'add'
     end
   end
 
-
-  def create_payment
-    @stock = @organization.stocks.find(params[:id])
-    ledger = Ledger.new_ledger(params[:ledger])
-    ledger.owner = @stock
-    ledger.bank_account = @stock.default_bank_account
-    ledger.done!
-
-    if ledger.save
-      @ledgers = @stock.ledgers
-      @product = @stock.product
-      @suppliers = @product.suppliers
-      @ledger_categories =  @organization.stock_ledger_categories_by_payment_method(ledger.payment_method)
-      render :update do |page|
-        page.replace_html 'stock_in_entry', :partial => 'extended_form'
-      end
-    else
-      @ledger = ledger
-      @ledger_categories =  @organization.stock_ledger_categories_by_payment_method(@ledger.payment_method)
-      render :update do |page|
-        page.replace_html 'add_payment', :partial => 'payment'
-      end
-    end
-  end
-
-  def add_payment
-    @stock = @organization.stocks.find(params[:id])
-    @ledger = Ledger.new_ledger(:date => @stock.date, :value => @stock.price)
+  def edit
+    @invoice = @organization.invoices.find(params[:invoice_id])
+    @stock = @invoice.stock_ins.find(params[:stock_id])
+    @suppliers = @stock.product.suppliers
+    @ledgers = @invoice.ledgers 
+    @ledger = Ledger.new_ledger(:date => Date.today)
     @ledger_categories =  @organization.stock_ledger_categories_by_payment_method(@ledger.payment_method)
-    render :update do |page|
-      page.replace_html 'add_payment', :partial => 'payment'
-      page.replace_html 'stock_options', " "
+  end
+
+  def update
+    @invoice = @organization.invoices.find(params[:invoice_id])
+    @stock = @invoice.stock_ins.find(params[:stock_id])
+
+    if @invoice.update_attributes(params[:invoice]) and @stock.update_attributes(params[:stock])
+      flash[:notice] = _('It was successfully updated.')
+      redirect_to :action => 'history', :product_id => @stock.product
+    else
+      @suppliers = @stock.product.suppliers
+      @ledgers = @stock.ledgers
+      render :action => 'edit'
     end
   end
 

@@ -1,0 +1,8 @@
+<%= title _('New stock entry for %s') % content_tag(:b, @stock.product.name) %>
+
+<% form_tag( :action => 'create', :product_id => @stock.product, :invoice_id => @invoice )  do %>
+
+  <%= render :partial => 'form'%>
+  <%= display_new_info_options @product %> 
+
+<% end %>

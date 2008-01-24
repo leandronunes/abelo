@@ -6,7 +6,6 @@ class CreateInvoices < ActiveRecord::Migration
       t.column :issue_date,       :datetime 
       t.column :status,           :integer, :default => 0
       t.column :supplier_id,      :integer
-      t.column :organization_id,  :integer
     end
   end
 

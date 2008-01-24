@@ -513,13 +513,17 @@ Ledger.delete_all
 Money.create_ledger!(:category => money_expense, :value => 2.3, :bank_account => account, :date => Date.today, :owner => organization, :payment_method => 'money')
 Money.create_ledger!(:category => money_income, :value => 222.50, :bank_account => account, :date => Date.today, :owner => organization, :payment_method => 'money')
 
+############ Invoice #######################
+
+invoice = Invoice.create(:number => 23432, :serie => 3344, :issue_date => Date.today, :supplier => hering)
+
 ############Stock Entries#########################
 Stock.destroy_all
-camisa_entrada = StockIn.create!(:supplier => hering, :amount => 50, :price => 10, :date => (DateTime.now - 2), :product => camisa, :validity => Date.today)
+camisa_entrada = StockIn.create!(:supplier => hering, :amount => 50, :price => 10, :date => (DateTime.now - 2), :product => camisa, :validity => Date.today, :invoice => invoice)
 money_stock_in = Money.create_ledger!(:category => money_expense, :value => 12.3, :bank_account => account, :date => Date.today, :owner => organization, :payment_method => 'money')
-camisa_entrada = StockIn.create!(:supplier => hering, :amount => 40, :price => 10, :date => (DateTime.now - 2), :product => camisa, :validity => Date.today )
+camisa_entrada = StockIn.create!(:supplier => hering, :amount => 40, :price => 10, :date => (DateTime.now - 2), :product => camisa, :validity => Date.today, :invoice => invoice )
 money_stock_in = Money.create_ledger!(:category => money_expense, :value => 12.3, :bank_account => account, :date => Date.today, :owner => organization, :payment_method => 'money')
-calca_entrada = StockIn.create!(:supplier => hering, :amount => 50, :price => 10, :date => (DateTime.now - 2), :product => calca,  :validity => Date.today)
+calca_entrada = StockIn.create!(:supplier => hering, :amount => 50, :price => 10, :date => (DateTime.now - 2), :product => calca,  :validity => Date.today, :invoice => invoice)
 money_stock_in = Money.create_ledger!(:category => money_expense, :value => 12.3, :bank_account => account, :date => Date.today, :owner => organization, :payment_method => 'money')
 camisa_saida = StockOut.create!(:amount => -5, :price => 15, :date => (DateTime.now - 2), :product => camisa,  :validity => Date.today)
 

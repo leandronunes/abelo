@@ -63,6 +63,8 @@ class Organization < ActiveRecord::Base
   has_many :contacts, :through => :customers
   has_many :bank_accounts, :as => :owner
   has_many :stocks, :through => :products
+  has_many :stock_ins, :through => :products
+  has_many :stock_devolutions, :through => :products
   has_one  :environment, :as => :owner
   has_many :periodicities
   has_many :mass_mails
@@ -307,8 +309,9 @@ class Organization < ActiveRecord::Base
     StockVirtual.create_virtuals(self.products)
   end 
 
-  def stock_virtual_devolutions
-    StockVirtual.create_virtual_devolutions(self.products)
+  def stock_virtual_devolutions(query = nil)
+    query ||= '*'
+    StockVirtual.create_virtuals(self.products.full_text_search(query))
   end
 
   def stock_virtual_ins

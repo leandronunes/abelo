@@ -8,43 +8,11 @@ class StockVirtual < Stock
   end
 
 
-  def self.create_virtuals(products)
+  def self.create_virtuals(products, type= 'stock')
     return Array.new if (products.nil?) 
     products.map do |p|
-      StockVirtual.new(:product_in_list => p, :amount_in_list => p.amount_in_stock )
+      StockVirtual.new(:product_in_list => p, :amount_in_list => p.amount_in_stock(type) )
     end
-  end
-
-  def self.create_virtual_ins(products)
-    return Array.new if (products.nil?) 
-    virtual_ins = products.map do |p|
-      StockVirtual.new(:product_in_list => p, :amount_in_list => p.amount_in_stock_in )
-    end
-    virtual_ins.compact
-  end
-
-  def self.create_virtual_devolutions(products)
-    return Array.new if (products.nil?) 
-    virtual_ins = products.map do |p|
-      StockVirtual.new(:product_in_list => p, :amount_in_list => p.amount_in_stock_devolution )
-    end
-    virtual_ins.compact
-  end
-
-  def self.create_virtual_outs(products)
-    return Array.new if (products.nil?) 
-    virtual_outs = products.map do |p|
-      StockVirtual.new(:product_in_list => p, :amount_in_list => (p.amount_in_stock_out != 0 ? -p.amount_in_stock_out : 0.0) )
-    end
-    virtual_outs.compact
-  end
-
-  def self.create_virtual_downs(products)
-    return Array.new if (products.nil?) 
-    virtual_downs = products.map do |p|
-      StockVirtual.new(:product_in_list => p, :amount_in_list => (p.amount_in_stock_out != 0 ? -p.amount_in_stock_out : 0.0) )
-    end
-    virtual_downs.compact
   end
 
   def self.create_virtual_customer(customer)

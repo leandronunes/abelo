@@ -36,8 +36,8 @@ class Product < ActiveRecord::Base
     self.sale_items.map{|i| i.sale}.uniq.map{|i| i.customer}.uniq
   end
 
-  def amount_in_stock
-    self.stocks.sum('amount').to_f
+  def amount_in_stock(type = 'stock')
+    self.send(type.pluralize).sum('amount').to_f
   end
 
   def amount_in_stock_in

@@ -1,6 +1,29 @@
 <%= title _('Stock history for %s') % content_tag(:b, @product.name) %>
 
 <%= display_list_options 'supplier', 'name', :product_id => @product %>
+<!--
+<div id='stock'>
+
+<%= select_month_abelo @start_date_month, :field_name => 'start_date_month' %>
+
+<%= observe_field('date_start_date_month',
+  :update => 'abelo_financial_table',
+  :url => {:action => 'display_financial_table' },
+  :with => "'start_date_month=' + escape(value) + %s" % @common_observer_financial_parameters
+  )
+%>
+
+<%= select_year @start_date_year, :field_name => 'start_date_year' %> <br/> <%= _('to') %> <br/>
+
+<%= observe_field('date_start_date_year',
+  :update => 'abelo_financial_table',
+  :url => {:action => 'display_financial_table' },
+  :with => "'start_date_year=' + escape(value) + %s" % @common_observer_financial_parameters
+  )
+%>
+
+</div>
+-->
 
 <div id="stock_table">
   <%= render :partial => 'stock_base/display_stock_table' %>

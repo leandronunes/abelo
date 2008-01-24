@@ -14,13 +14,6 @@ def create_stock_tabs
   t.named _('Buy Control')
 
   t = add_tab do
-    links_to :controller => 'stock_out'
-    in_set 'first'
-    highlights_on :controller => 'stock_out'
-  end
-  t.named _('Sell Control')
-
-  t = add_tab do
     links_to :controller => 'stock_devolution'
     in_set 'first'
     highlights_on :controller => 'stock_devolution'

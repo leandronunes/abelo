@@ -1,58 +1,10 @@
 class StockBaseController < ApplicationController
 
-  needs_organization
-
-  uses_stock_tabs
-
-  def list_core(virtual_type)
-    @query = params[:query]
-    @query ||= params[:product][:name] if params[:product]
-
-    if @query.nil?
-      @stocks = @organization.send("stock_#{virtual_type.pluralize}")
-      @stock_pages, @stocks = paginate_by_collection @stocks
-    else
-      @stocks = StockVirtual.send("create_#{virtual_type.pluralize}", @organization.products.full_text_search(@query))
-      @stock_pages, @stocks = paginate_by_collection @stocks
-    end
-    render :template => 'stock_base/list'
-  end
-
-
-  def autocomplete_supplier_name
-    escaped_string = Regexp.escape(params[:supplier][:name])
-    re = Regexp.new(escaped_string, "i")
-    @suppliers = @organization.suppliers.select{|s| s.name.match re}
-    render :template => 'stock_base/autocomplete_supplier', :layout=>false
-  end
-
-  def autocomplete_product_name
-    escaped_string = Regexp.escape(params[:product][:name])
-    re = Regexp.new(escaped_string, "i")
-    @products = @organization.products.select{|p| p.name.match re}
-    render :template => 'stock_base/autocomplete_name', :layout=>false
-  end
-
-  # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
-  post_only [ :create, :update ]
-
-  def index
-    redirect_to :action => 'list'
-  end
-
   def show
     @stock = Stock.find(params[:id])
     @ledgers = @stock.ledgers if @stock.respond_to?('ledgers')
 
     render :template => 'stock_base/show'
-  end
-
-  def new_core(virtual_type)
-#TODO see if it's needed
-#    product = @organization.products.find(params[:product_id])
-    @stock = virtual_type.camelcase.constantize.new(:product => product, :date => Date.today, :amount => 1)
-    @suppliers = @organization.suppliers
-    render :template => 'stock_base/new'
   end
 
   def create_core(stock_type)

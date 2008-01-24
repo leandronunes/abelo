@@ -1,0 +1,30 @@
+<table>
+  <tr>
+    <th colspan='5' > <%= _('Check Informations') %> </th>
+  </tr>
+  <tr>
+    <th colspan=2> <%= _('Bank') %> </th>
+    <th> <%= _('Agency') %> </th>
+    <th> <%= _('Account') %> </th>
+    <th> <%= _('Check Number') %> </th>
+  </tr>
+  <tr>
+    <td colspan=2> <%= select_item('ledger', 'check_bank_id', @banks) %> </td>
+    <td> <%= text_field('ledger', 'check_account_agency') %> </td>
+    <td> <%= text_field('ledger', 'check_account_number') %> </td>
+    <td> <%= text_field('ledger', 'check_number') %> </td>
+  </tr>
+  <tr>
+    <th colspan=2 > <%= _('Name') %> </th>
+    <th> <%= _('RG') %> </th>
+    <th> <%= _('CPF') %> </th>
+    <th> <%= _('Contact Phone') %> </th>
+  </tr>
+  <tr>
+    <td colspan=2> <%= text_field('ledger', 'check_owner_name') %> </td>
+    <td> <%= text_field('ledger', 'check_rg') %> </td>
+    <td> <%= text_field('ledger', 'check_cpf') %> </td>
+    <td> <%= text_field('ledger', 'check_contact_telephone') %> </td>
+  </tr>
+
+</table>

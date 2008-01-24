@@ -8,7 +8,8 @@
 .content_menu .button,
 .search_itens .button,
 .financial_table .button,
-.sales_table .button{
+.sales_table .button,
+table .button{
   display: block;
   float: left;
   border: none;

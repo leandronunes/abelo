@@ -1,0 +1,7 @@
+
+<%= error_messages_for 'ledger' %>
+
+<% form_remote_tag :url => {:action => 'add_payment', :id => @invoice}, :update => 'abelo_payment', :failure =>"$('abelo_invoice_payment').innerHTML= request.responseText " do %>
+
+  <%= render :partial => 'shared_payments/ledgers_and_new_on_table'%>
+<% end %>

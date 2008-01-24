@@ -18,6 +18,7 @@ class StockController < StockBaseController
     product = @organization.products.find(params[:product_id])
     @stock = StockIn.new(params[:stock])
     @stock.product = product
+    @stock.invoice = Invoice.find(:first)
 
     if @stock.save
       flash.now[:notice] = _('It was successfully created.')

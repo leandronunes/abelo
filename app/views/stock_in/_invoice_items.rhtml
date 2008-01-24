@@ -1,32 +1,18 @@
 <table>
-  <tr> 
+  <tr>
     <th> <%= _('Product') %> </th>
     <th> <%= _('Unit Price') %> </th>
     <th> <%= _('Amount') %> </th>
-    <th width=200px > <%= _('Validity') %> </th>
-  </tr> 
+    <th> <%= _('Validity') %> </th>
+  </tr>
   <% @stocks.each do |stock| %>
-    <tr> 
+    <tr>
       <td> <%= stock.product.name %> </td>
       <td> <%= stock.price %> </td>
       <td> <%= stock.amount %> </td>
       <td> <%= stock.validity || _('None') %> </td>
-    </tr> 
+    </tr>
   <% end %>
-  <% if !@stock.nil? and @stock.new_record? %>
-    <tr> 
-      <td> <%= select('stock', 'product_id', @products.map{|p| [p.name, p.id]}, :include_blank => true) %> </td>
-      <td> <%= text_field('stock', 'price') %> </td>
-      <td> <%= text_field('stock', 'amount') %> </td>
-      <td style='width: 300px'> <%= date_select_abelo('stock', 'validity') %> </td>
-      <td> <%= button 'add', _('Add'), :save, {}, :name => 'add_item' %> </td>
-    </tr> 
-  <% end %>
+
 </table>
 
-<%= observe_field('stock_product_id',
-  :update => 'abelo_invoice_items',
-  :url => {:action => 'select_product' },
-  :with => "'product_id=' +  escape(value) + '&id=' + escape(#{@invoice.id})"
-  )
-%>

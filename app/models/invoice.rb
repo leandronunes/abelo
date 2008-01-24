@@ -7,6 +7,13 @@ class Invoice < ActiveRecord::Base
 
   belongs_to :supplier
   belongs_to :organization
-  has_many :stock_ins
+  has_many :stock_ins, :dependent => :destroy
+  has_many :ledgers, :as => :owner, :dependent => :destroy
+
+  def total_cost
+  end
+
+  def total_payment
+  end
 
 end

@@ -8,7 +8,7 @@ class Sale < ActiveRecord::Base
   belongs_to :owner, :polymorphic => true
   has_many :printer_commands, :as => :owner, :dependent => :destroy
   has_many :items, :class_name => 'SaleItem', :dependent => :destroy
-  has_many :ledgers, :as => :owner, :dependent => :delete_all
+  has_many :ledgers, :as => :owner, :dependent => :destroy
 
   validates_presence_of :datetime, :organization_id, :user_id
   validates_inclusion_of :status, :in => ALL_STATUS

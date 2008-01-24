@@ -1,0 +1,21 @@
+<table>
+  <tr>
+    <th colspan='5' > <%= _('Credit Card Informations') %> </th>
+  </tr>
+  <tr>
+    <th colspan=2> <%= _('Bank') %> </th>
+    <th> <%= _('Agency') %> </th>
+    <th> <%= _('Account') %> </th>
+  </tr>
+  <tr>
+    <td colspan=2> <%= select_item('ledger', 'automatic_debit_bank_id', @banks) %> </td>
+    <td> <%= text_field('ledger', 'automatic_debit_account_agency') %> </td>
+    <td> <%= text_field('ledger', 'automatic_debit_account_number') %> </td>
+  </tr>
+  <tr>
+    <th colspan=3> <%= _('Name') %> </th>
+  </tr>
+  <tr>
+    <td colspan=3> <%= text_field('ledger', 'automatic_debit_owner_name') %> </td>
+  </tr>
+</table>

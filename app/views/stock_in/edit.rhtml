@@ -6,13 +6,17 @@
 
   <%= render :partial => 'form'%>
 
-  <%= display_new_info_options @invoice %> 
+  <%= display_new_info_options @invoice %>
 
 <% end %>
 
-<% form_remote_tag( :url => {:action => 'add_item', :id => @invoice}, :update => 'abelo_invoice_items' )  do %>
-  <div id="abelo_invoice_items">
-    <%= error_messages_for 'stock' %>
-    <%= render :partial => 'invoice_items' %>
-  </div>
-<% end %>
+<div id="abelo_invoice_items">
+  <h2> <%= subtitle _('Invoice Items:') %> </h2>
+  <%= render :partial => 'invoice_new_items' %>
+</div>
+
+<%= subtitle _("Invoice Payments: ") %>
+
+<div id="abelo_payment">
+  <%= render :partial => 'new_payment'%>
+</div>

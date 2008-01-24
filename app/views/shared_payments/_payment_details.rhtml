@@ -1,0 +1,8 @@
+<% if @ledger.payment_method == 'money' %>
+<% elsif @ledger.payment_method == 'check' %>
+  <%= render :partial => 'shared_payments/payment_check_on_table'%>
+<% elsif @ledger.payment_method == 'credit_card' %>
+  <%= render :partial => 'shared_payments/payment_credit_card_on_table'%>
+<% else %>
+  <%= render :partial => 'shared_payments/payment_debit_card_on_table'%>
+<% end %>

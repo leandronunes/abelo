@@ -120,7 +120,7 @@ class StockBaseController < ApplicationController
       @banks = Bank.find(:all)
       @hide_sign = true
       @ledger_categories =  @organization.stock_ledger_categories_by_payment_method(@ledger.payment_method)
-      render :partial => 'shared_payments/select_category'
+      render :partial => 'payment_details'
     else
       render :nothing => true
     end

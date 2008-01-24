@@ -1,0 +1,14 @@
+<%= error_messages_for 'stock' %>
+
+<% form_remote_tag( :url => {:action => 'add_item', :id => @invoice}, :update => 'abelo_invoice_items' )  do %>
+  <table>
+    <%= render :partial => 'invoice_table_items' %>
+    <tr>
+      <td> <%= select('stock', 'product_id', @products.map{|p| [p.name, p.id]}, :include_blank => true) %> </td>
+      <td> <%= text_field('stock', 'price') %> </td>
+      <td> <%= text_field('stock', 'amount') %> </td>
+      <td> <%= date_select_abelo('stock', 'validity') %> </td>
+      <td> <%= button 'add', _('Add'), :save, {}, :name => 'add_item' %> </td>
+    </tr>
+  </table>
+<% end %>

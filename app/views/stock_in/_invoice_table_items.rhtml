@@ -1,0 +1,24 @@
+<tr>
+  <th> <%= _('Product') %> </th>
+  <th> <%= _('Unit Price') %> </th>
+  <th> <%= _('Amount') %> </th>
+  <th> <%= _('Total') %> </th>
+  <th> <%= _('Validity') %> </th>
+  <th> <%= _('Options') %> </th>
+</tr>
+<% @stocks.each do |stock| %>
+  <tr>
+    <td> <%= stock.product.name %> </td>
+    <td> <%= stock.price %> </td>
+    <td> <%= stock.amount %> </td>
+    <td> <%= stock.amount * stock.price %> </td>
+    <td> <%= stock.validity || _('None') %> </td>
+    <td> <%= button_remote 'edit', _('Edit'), :edit, :url => {:action => 'edit_item', :stock_id => stock, :id => @invoice } , :update => 'abelo_invoice_items'%> </td>
+  </tr>
+<% end %>
+
+<tr>
+  <th> <%= _('Total:') %></th>
+  <td> <%= @invoice.total_cost %> </td>
+</tr>
+

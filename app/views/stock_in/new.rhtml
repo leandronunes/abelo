@@ -1,13 +1,11 @@
 
 <%= title _('New Invoice') %>
 
-<% form_tag( :action => 'create' )  do %>
+<% form_tag( :action => 'create', :id => @invoice)  do %>
 
   <%= render :partial => 'form'%>
 
   <%= display_new_info_options @invoice %> 
-  <div id="abelo_invoice_items">
-    <%= render :partial => 'invoice_items' %>
-  </div>
+
 <% end %>
 

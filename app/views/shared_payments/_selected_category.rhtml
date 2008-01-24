@@ -1,0 +1,12 @@
+<%= select_item('ledger', 'category_id', @ledger_categories, @hide_sign == true ? 'name' : 'name_with_sign' ) %>
+
+<%= hidden_field 'ledger', 'payment_method' %>
+
+<% if @ledger.payment_method == 'money' %>
+<% elsif @ledger.payment_method == 'check' %>
+  <%= render :partial => 'shared_payments/payment_check'%>
+<% elsif @ledger.payment_method == 'credit_card' %>
+  <%= render :partial => 'shared_payments/payment_credit_card'%>
+<% else %>
+  <%= render :partial => 'shared_payments/payment_debit_card'%>
+<% end %>

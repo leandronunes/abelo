@@ -2,7 +2,27 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class InvoiceTest < Test::Unit::TestCase
 
-  fixtures :system_actors
+  fixtures :system_actors, :products
+
+  def setup
+    @organization = Organization.find(:first)
+    @supplier = Supplier.find(:first)
+    @product = Product.find(:first)
+  end
+
+  def test_setup
+    assert @organization.valid?
+    assert @supplier.valid?
+    assert @product.valid?
+    assert @organization.products.include?(@product)
+  end
+
+  def create_invoice
+    i =  Invoice.new(:number => 3434, :serie => 343, :organization => @organization, 
+         :supplier => @supplier, :issue_date => Date.today)
+    i.save
+    i
+  end
 
   def test_presence_of_number
     i = Invoice.new
@@ -51,5 +71,17 @@ class InvoiceTest < Test::Unit::TestCase
     assert_equal Status::STATUS_PENDING, i.status
   end
 
+  def test_destroy_stock_ins_when_invoice_is_destroyed
+    i = create_invoice
+    stock_in_count = StockIn.count
+    stock_in = StockIn.new(:price => 223, :amount => 3, :product_id => 1)
+    stock_in.invoice = i
+    assert stock_in.save
+    stock_in = StockIn.new(:price => 223, :amount => 3, :product_id => 2)
+    stock_in.invoice = i
+    assert stock_in.save
+    assert i.destroy
+    assert_equal stock_in_count, StockIn.count
+  end
 
 end

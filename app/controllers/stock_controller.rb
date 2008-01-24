@@ -23,6 +23,7 @@ class StockController < ApplicationController
     begin
       product = @organization.products.find(params[:product_id])
       @stock = StockIn.new(:product => product, :date => Date.today, :amount => 1)
+      @invoice = Invoice.new
       @suppliers = product.suppliers
     rescue
       redirect_to :controller => 'products', :action => 'new'

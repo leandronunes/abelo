@@ -68,7 +68,7 @@ class Organization < ActiveRecord::Base
   has_one  :environment, :as => :owner
   has_many :periodicities
   has_many :mass_mails
-  has_many :invoices
+  has_many :invoices, :through => :suppliers
   # One Environment can be reached by many domains
   has_many :domains, :as => :owner
 
@@ -312,17 +312,17 @@ class Organization < ActiveRecord::Base
 
   def stock_virtual_devolutions(query = nil)
     query ||= '*'
-    StockVirtual.create_virtuals(self.products.full_text_search(query))
+    StockVirtual.create_virtuals(self.products.full_text_search(query), 'stock_devolution')
   end
 
   def stock_virtual_ins(query = nil)
     query ||= '*'
-    StockVirtual.create_virtual_ins(self.products)
+    StockVirtual.create_virtual_ins(self.products, 'stock_in')
   end
 
   def stock_virtual_downs(query = nil)
     query ||= '*'
-    StockVirtual.create_virtual_downs(self.products)
+    StockVirtual.create_virtual_downs(self.products, 'stock_down')
   end 
 
   def ledger_categories_of_sale

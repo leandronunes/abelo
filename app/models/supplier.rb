@@ -2,6 +2,7 @@ class Supplier < SystemActor
 
   has_and_belongs_to_many :products
   has_many :stock_ins
+  has_many :invoices
   belongs_to :category, :class_name => 'SupplierCategory', :foreign_key => 'category_id' 
 
   def stock_virtuals

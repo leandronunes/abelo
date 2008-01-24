@@ -36,8 +36,6 @@ class StockDevolutionController < ApplicationController
     render :template => 'stock_base/list'
   end
 
-
-
   def new
     product = @organization.products.find(params[:product_id])
     @stock = StockDevolution.new(:product => product, :date => Date.today, :amount => 1)

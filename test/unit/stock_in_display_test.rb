@@ -12,7 +12,7 @@ class StockInDisplayTest < Test::Unit::TestCase
   ]
 
   def test_available_fields
-    assert_equal AVAILABLE_FIELDS_TEST, StockInDisplay.available_fields
+    assert_equal 0, (AVAILABLE_FIELDS_TEST - StockInDisplay.available_fields).length
   end
   
   def test_describe

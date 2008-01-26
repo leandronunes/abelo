@@ -9,12 +9,21 @@ class SaleItemTest < Test::Unit::TestCase
     @category = ProductCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
     @user = User.create!("salt"=>"7e3041ebc2fc05a40c60028e2c4901a81035d3cd", "updated_at"=>nil, "crypted_password"=>"00742970dc9e6319f8019fd54864d3ea740f04b1", "type"=>"User", "remember_token_expires_at"=>nil, "id"=>"1", "administrator"=>false, "remember_token"=>nil, "login"=>"new_user", "email"=>"new_user@example.com", "created_at"=>"2007-07-14 18:03:29")
     @supplier = Supplier.find(:first)
+    @invoice = create_invoice
   end
 
   def test_setup
     assert @organization.valid?
     assert @category.valid?
     assert @supplier.valid?
+    assert @invoice.valid?
+  end
+
+  def create_invoice
+    i =  Invoice.new(:number => 3434, :serie => 343, :organization => @organization,
+         :supplier => @supplier, :issue_date => Date.today)
+    i.save 
+    i
   end
 
   def create_till
@@ -43,7 +52,7 @@ class SaleItemTest < Test::Unit::TestCase
 
   def create_product(params = {})
     p = Product.create({:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization => @organization, :category => @category}.merge(params))
-    StockIn.create!(:product => p, :status => Status::STATUS_DONE, :price => 45, :amount => 10, :date => Date.today, :supplier => @supplier)
+    StockIn.create!(:product => p, :status => Status::STATUS_DONE, :price => 45, :amount => 10, :date => Date.today, :supplier => @supplier, :invoice => @invoice)
     p
   end
 

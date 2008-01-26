@@ -14,7 +14,8 @@ class ScheduleLedgerTest < Test::Unit::TestCase
   end
 
   def create_ledger()
-    ledger = Money.new
+    ledger = Ledger.new
+    ledger.payment_method = Payment::MONEY
     ledger.value = 367
     ledger.date = Date.today
     ledger.owner = @organization

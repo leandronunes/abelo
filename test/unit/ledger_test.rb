@@ -14,15 +14,17 @@ class LedgerTest < Test::Unit::TestCase
     @sale = Sale.find(:first)
   end
 
-  def create_ledger()
-    ledger = Money.new
-    ledger.value = 367
-    ledger.date = Date.today
-    ledger.owner = @organization
-    ledger.bank_account = @organization.default_bank_account  
-    ledger.category = @ledger_category
-    ledger.save!
-    ledger
+  def create_ledger(params = {})
+    Ledger.create({:payment_method => Payment::MONEY, :value => 367,
+                  :date => Date.today, :owner => @organization, 
+                  :bank_account => @organization.default_bank_account,
+                  :category => @ledger_category}.merge(params))
+  end
+
+  def create_category(params = {})
+    category = LedgerCategory.create({:name => 'Some', :is_operational => false, 
+           :organization => @organization, :type_of => Payment::TYPE_OF_INCOME, 
+           :payment_methods => ['money']}.merge(params))
   end
 
   def test_setup
@@ -33,23 +35,56 @@ class LedgerTest < Test::Unit::TestCase
     assert @sale.valid?
   end
 
-  def test_money_class_is_associated_to_a_valid_ledger_category
-    category = LedgerCategory.create!(:name => 'Some', :is_operational => false, :organization => Organization.find(:first), :type_of => 'I', :payment_methods => ['money'] )
+  def test_money_payment_is_associated_to_a_ledger_category_with_money
+    LedgerCategory.destroy_all
+    category = create_category(:payment_methods => [Payment::MONEY])
+    l = create_ledger(:payment_method => Payment::MONEY, :category => category)
+    l.valid?
+    assert !l.errors.invalid?(:payment_method)
 
-    l = Ledger.new_ledger(:owner => @organization, :value => 10, :date => Date.today, :category => category, :bank_account_id => BankAccount.find(:first), :payment_method => 'money')
-
-    assert l.save
-    ledger_id = l.id
-    assert Payment.income?(category.type_of)
-    ledger = Ledger.find(ledger_id) 
-    assert_equal Money, ledger.class
+    category = create_category(:payment_methods => [Payment::CHECK], :name => 'Another')
+    l = create_ledger(:payment_method => Payment::MONEY, :category => category)
+    l.valid?
+    assert l.errors.invalid?(:payment_method)
   end
 
-  def test_money_class_cannot_be_associated_to_a_invalid_ledger_category
-    category = LedgerCategory.create!(:name => 'Some', :is_operational => false, :organization => Organization.find(:first), :type_of => 'I', :payment_methods => ['money'] )
+  def test_check_payment_is_associated_to_a_ledger_category_with_check
+    LedgerCategory.destroy_all
+    category = create_category(:payment_methods => [Payment::CHECK])
+    l = create_ledger(:payment_method => Payment::CHECK, :category => category)
+    l.valid?
+    assert !l.errors.invalid?(:payment_method)
 
-    l = Ledger.new_ledger(:owner => @organization, :value => 10, :date => Date.today, :category => category, :bank_account_id => BankAccount.find(:first), :payment_method => 'check')
+    category = create_category(:payment_methods => [Payment::MONEY], :name => 'Another')
+    l = create_ledger(:payment_method => Payment::CHECK, :category => category)
+    l.valid?
+    assert l.errors.invalid?(:payment_method)
+  end
 
+
+  def test_credit_card_payment_is_associated_to_a_ledger_category_with_credit_card
+    LedgerCategory.destroy_all
+    category = create_category(:payment_methods => [Payment::CREDIT_CARD])
+    l = create_ledger(:payment_method => Payment::CREDIT_CARD, :category => category)
+    l.valid?
+    assert !l.errors.invalid?(:payment_method)
+
+    category = create_category(:payment_methods => [Payment::CHECK], :name => 'Another')
+    l = create_ledger(:payment_method => Payment::CREDIT_CARD, :category => category)
+    l.valid?
+    assert l.errors.invalid?(:payment_method)
+  end
+
+
+  def test_debit_card_money_payment_is_associated_to_a_ledger_category_with_debit_card
+    LedgerCategory.destroy_all
+    category = create_category(:payment_methods => [Payment::DEBIT_CARD])
+    l = create_ledger(:payment_method => Payment::DEBIT_CARD, :category => category)
+    l.valid?
+    assert !l.errors.invalid?(:payment_method)
+
+    category = create_category(:payment_methods => [Payment::CHECK], :name => 'Another')
+    l = create_ledger(:payment_method => Payment::DEBIT_CARD, :category => category)
     l.valid?
     assert l.errors.invalid?(:payment_method)
   end
@@ -57,7 +92,7 @@ class LedgerTest < Test::Unit::TestCase
 
 
   def test_validates_presence_of_bank_account
-    l = Ledger.new_ledger
+    l = Ledger.new
     l.valid?
     assert l.errors.invalid?(:bank_account_id)
     l.bank_account = BankAccount.find(:first)
@@ -66,7 +101,7 @@ class LedgerTest < Test::Unit::TestCase
   end
 
   def test_validates_presence_of_owner
-    l = Ledger.new_ledger
+    l = Ledger.new
     l.valid?
     assert l.errors.invalid?(:owner_id)
     assert l.errors.invalid?(:owner_type)
@@ -80,7 +115,7 @@ class LedgerTest < Test::Unit::TestCase
   def test_creation_of_ledgers_when_a_schedule_ledgers_is_needed
     Ledger.delete_all
 
-    l = Ledger.new_ledger
+    l = Ledger.new
     l.owner = @organization
     l.category = @ledger_category
     l.value = 300
@@ -100,7 +135,7 @@ class LedgerTest < Test::Unit::TestCase
   def test_creation_of_ledgers_when_a_schedule_ledgers_is_needed_but_the_ledger_was_not_created
     Ledger.delete_all
 
-    l = Ledger.new_ledger
+    l = Ledger.new
     l.category = LedgerCategory.find(:first)
     l.value = nil #value is missing 
     l.description = 'some description'
@@ -118,7 +153,7 @@ class LedgerTest < Test::Unit::TestCase
   def test_date_creation_of_ledgers_when_ledger_is_schedule
     Ledger.delete_all
 
-    l = Ledger.new_ledger
+    l = Ledger.new
     l.owner = @organization
     l.category = @ledger_category
     l.value = 300
@@ -145,7 +180,7 @@ class LedgerTest < Test::Unit::TestCase
 
 
   def test_presence_of_schedule_interval_when_schedule_repeat_and_schedule_periodicity_are_present
-    l = Ledger.new_ledger
+    l = Ledger.new
     l.schedule_repeat = true
     l.schedule_periodicity= Periodicity.find(:first)
     l.valid?
@@ -153,21 +188,21 @@ class LedgerTest < Test::Unit::TestCase
   end
 
   def test_presence_of_schedule_interval_when_schedule_repeat_is_present
-    l = Ledger.new_ledger
+    l = Ledger.new
     l.schedule_repeat = true
     l.valid?
     assert l.errors.invalid?(:schedule_interval)
   end
 
   def test_presence_of_schedule_interval_when_schedule_periodicity_is_present
-    l = Ledger.new_ledger
+    l = Ledger.new
     l.schedule_periodicity= Periodicity.find(:first)
     l.valid?
     assert l.errors.invalid?(:schedule_interval)
   end
 
   def test_presence_of_schedule_periodicity_when_schedule_repeat_and_schedule_interval_are_present
-    l = Ledger.new_ledger
+    l = Ledger.new
     l.schedule_repeat = true
     l.schedule_interval= 1
     l.valid?
@@ -175,27 +210,27 @@ class LedgerTest < Test::Unit::TestCase
   end
 
   def test_presence_of_schedule_periodicity_when_schedule_repeat_is_present
-    l = Ledger.new_ledger
+    l = Ledger.new
     l.schedule_repeat = true
     l.valid?
     assert l.errors.invalid?(:schedule_periodicity)
   end
 
   def test_presence_of_schedule_periodicity_when_schedule_interval_is_present
-    l = Ledger.new_ledger
+    l = Ledger.new
     l.schedule_interval= 1
     l.valid?
     assert l.errors.invalid?(:schedule_periodicity)
   end
 
   def test_presence_of_schedule_repeat_when_schedule_periodicity_and_schedule_interval_are_not_present
-    l = Ledger.new_ledger
+    l = Ledger.new
     l.valid?
     assert !l.errors.invalid?(:schedule_repeat)
   end
 
   def test_presence_of_schedule_repeat_when_schedule_periodicity_is_present
-    l = Ledger.new_ledger
+    l = Ledger.new
     l.valid?
     assert !l.errors.invalid?(:schedule_repeat)
     l.schedule_periodicity = @periodicity
@@ -204,7 +239,7 @@ class LedgerTest < Test::Unit::TestCase
   end
 
   def test_presence_of_schedule_repeat_when_schedule_interval_is_present
-    l = Ledger.new_ledger
+    l = Ledger.new
     l.valid?
     assert !l.errors.invalid?(:schedule_repeat)
     l.schedule_interval = 1
@@ -213,7 +248,7 @@ class LedgerTest < Test::Unit::TestCase
   end
 
   def test_presence_of_schedule_repeat_when_schedule_interval_and_schedule_periodicity_are_present
-    l = Ledger.new_ledger
+    l = Ledger.new
     l.valid?
     assert !l.errors.invalid?(:schedule_repeat)
     l.schedule_interval = 1
@@ -223,7 +258,7 @@ class LedgerTest < Test::Unit::TestCase
   end
 
   def test_precense_of_foreseen_date
-    l = Ledger.new_ledger
+    l = Ledger.new
     l.valid?
     assert l.errors.invalid?(:foreseen_date)
     assert_raise(RuntimeError){l.foreseen_date = 1}
@@ -233,7 +268,7 @@ class LedgerTest < Test::Unit::TestCase
   end
 
   def test_precense_of_effective_date
-    l = Ledger.new_ledger
+    l = Ledger.new
     l.status = STATUS_DONE
     l.valid?
     assert l.errors.invalid?(:effective_date)
@@ -243,7 +278,7 @@ class LedgerTest < Test::Unit::TestCase
   end
   
   def test_precense_of_effective_date_when_is_foreseen
-    l = Ledger.new_ledger
+    l = Ledger.new
     l.status = STATUS_PENDING
     l.date =  Date.today
     l.valid?
@@ -252,7 +287,7 @@ class LedgerTest < Test::Unit::TestCase
 
 
   def test_precense_of_foressen_value
-    l = Ledger.new_ledger
+    l = Ledger.new
     l.valid?
     assert l.errors.invalid?(:foreseen_value)
     assert_raise(RuntimeError){l.foreseen_value = 1}
@@ -262,7 +297,7 @@ class LedgerTest < Test::Unit::TestCase
   end
 
   def test_precense_of_effective_value
-    l = Ledger.new_ledger
+    l = Ledger.new
     l.status = STATUS_DONE
     l.valid?
     assert l.errors.invalid?(:effective_value)
@@ -272,7 +307,7 @@ class LedgerTest < Test::Unit::TestCase
   end
 
   def test_precense_of_effective_value_when_is_foreseen
-    l = Ledger.new_ledger
+    l = Ledger.new
     l.status = STATUS_PENDING
     l.value = 1
     l.valid?
@@ -280,7 +315,7 @@ class LedgerTest < Test::Unit::TestCase
   end
 
   def test_numericality_of_value
-    l = Ledger.new_ledger
+    l = Ledger.new
     l.value = 'a'
     l.valid?
     assert l.errors.invalid?(:value)
@@ -293,7 +328,7 @@ class LedgerTest < Test::Unit::TestCase
   end
 
   def test_value_must_be_greater_then_zero
-    l = Ledger.new_ledger
+    l = Ledger.new
     l.value = 0.0
     l.valid?
     assert l.errors.invalid?(:value)
@@ -377,7 +412,7 @@ class LedgerTest < Test::Unit::TestCase
   end
 
   def test_value_is_not_negative
-    p = Ledger.new_ledger
+    p = Ledger.new
     p.valid?
     assert p.errors.invalid?(:value)
     p.value = -1.0
@@ -386,14 +421,14 @@ class LedgerTest < Test::Unit::TestCase
   end
 
   def test_value_did_not_return_nil
-    p = Ledger.new_ledger
+    p = Ledger.new
     p.value = nil
     assert_not_nil p.value
   end
 
   def test_ledger_value_should_be_minor_than_sale_value
     sale_value = @sale.balance
-    ledger = Ledger.new_ledger    
+    ledger = Ledger.new    
     ledger.valid?
     assert ledger.errors.invalid?(:value)
     ledger.owner = @sale
@@ -404,7 +439,7 @@ class LedgerTest < Test::Unit::TestCase
 
   def test_ledger_value_should_be_equal_than_sale_value
     sale_value = @sale.balance
-    ledger = Ledger.new_ledger    
+    ledger = Ledger.new    
     ledger.valid?
     assert ledger.errors.invalid?(:value)
     ledger.owner = @sale

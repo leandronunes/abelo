@@ -1,14 +1,18 @@
 require File.dirname(__FILE__) + '/../test_helper'
+require 'payment_strategy/payment_strategy'
+include PaymentStrategy
+
 
 class PaymentTest < Test::Unit::TestCase
 
-  PAYMENT_METHODS_TEST = %w[
-    check
-    credit_card
-    debit_card
-    money
-  ]
- 
+  MONEY = 'money'
+  CHECK = 'check'
+  CREDIT_CARD = 'credit_card'
+  DEBIT_CARD = 'debit_card'
+  ADD_CASH = 'add_cash'
+  REMOVE_CASH = 'remove_cash'
+
+  PAYMENT_METHODS_TEST = {MONEY => Money, CHECK => Check, ADD_CASH => AddCash, REMOVE_CASH => RemoveCash, CREDIT_CARD => CreditCard, DEBIT_CARD => DebitCard}
   TYPE_OF_TEST = ['I', 'E']
 
   def test_payment_methods
@@ -42,7 +46,7 @@ class PaymentTest < Test::Unit::TestCase
   end
 
   def test_describe_payment
-    PAYMENT_METHODS_TEST.each do |p|
+    PAYMENT_METHODS_TEST.keys.each do |p|
       assert_not_equal p, Payment.describe_payment(p)
     end
   end

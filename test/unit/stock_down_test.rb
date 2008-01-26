@@ -8,16 +8,26 @@ class StockDownTest < Test::Unit::TestCase
     @organization = Organization.find(:first)
     @category = ProductCategory.find(:first)
     @supplier = Supplier.find(:first)
+    @invoice  = create_invoice
   end
+
   def test_setup
     assert @organization.valid?
     assert @category.valid?
     assert @supplier.valid?
+    assert @invoice.valid?
   end
+
+  def create_invoice
+    i =  Invoice.new(:number => 3434, :serie => 343, :organization => @organization,
+         :supplier => @supplier, :issue_date => Date.today)
+    i.save
+    i
+  end 
 
   def create_product(params = {})
     p = Product.create!({:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization => @organization, :category => @category}.merge(params))
-    StockIn.create!(:product => p, :status => Status::STATUS_DONE, :price => 45, :amount => 10, :date => Date.today, :supplier => @supplier)
+    StockIn.create!(:product => p, :status => Status::STATUS_DONE, :price => 45, :amount => 10, :date => Date.today, :supplier => @supplier, :invoice => @invoice)
     p
   end
 

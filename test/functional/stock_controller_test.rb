@@ -26,6 +26,20 @@ class StockControllerTest < Test::Unit::TestCase
     Product.create!({:name => 'product one', :sell_price => 2.0, :unit => 'kg', :organization => @organization, :category => @product_category}.merge(params))
   end
 
+  def create_invoice
+    Invoice.create!(:number => 3344, :serie => 33443, :issue_date => Date.today, :supplier => @supplier)
+  end
+
+  def create_stock(invoice)
+    StockIn.create!(:supplier => @supplier, :amount => 1, :price => 1.99, :invoice => invoice, :product => @product)
+  end
+
+  def create_ledger(params = {})
+    Money.create!({:bank_account => @organization.default_bank_account,:owner => @organization, 
+           :category => @ledger_category, :date => Date.today, :value => 23434,
+           :payment_method => 'money'}.merge(params) )
+  end
+
   def test_autocomplete_product_name
     Product.delete_all
     create_product(:name => 'product one')
@@ -43,6 +57,7 @@ class StockControllerTest < Test::Unit::TestCase
     assert @ledger_category.valid?
     assert @organization.valid?
     assert @product_category.valid?
+    assert @organization.products.include?(@product)
   end
 
   def test_index
@@ -90,7 +105,58 @@ class StockControllerTest < Test::Unit::TestCase
     assert_response :redirect
     assert_redirected_to :controller => 'stock_in', :action => 'new'
   end
- 
+
+  def test_add
+    get :add, :product_id => @product.id
+
+    assert_not_nil assigns(:stock)
+    assert_not_nil assigns(:suppliers)
+    assert_not_nil assigns(:invoice)
+  
+    assert_response :success
+    assert_template 'add'
+  end
+
+  def test_create_with_correct_parameters
+    count_stock = StockIn.count
+    count_invoice = Invoice.count
+
+    post :create, :product_id => @product.id, :stock => { :supplier => @supplier, :amount => 1, :price => 1.99},  :invoice => {:number => 2323, :serie => 2323, :supplier_id => @supplier.id, :issue_date => Date.today } 
+
+    assert_response :redirect
+    assert_redirected_to :action => 'edit'
+    assert_equal count_stock + 1, StockIn.count
+    assert_equal count_invoice + 1, Invoice.count
+  end
+
+  def test_create_with_wrong_parameters
+    count = StockIn.count
+
+    post :create, :product_id => @product.id
+
+    assert_response :success
+    assert_template 'add'
+    assert_equal count, StockIn.count
+    assert assigns(:stock)
+    assert assigns(:invoice)
+    assert assigns(:suppliers)
+  end
+
+  def test_edit
+    invoice = create_invoice
+    stock = create_stock(invoice)
+    get :edit, :invoice_id => invoice.id, :stock_id => stock.id
+
+    assert_response :success
+    assert_template 'edit'
+
+    assert assigns(:invoice)
+    assert assigns(:stock)
+    assert assigns(:suppliers)
+    assert assigns(:ledgers)
+    assert assigns(:ledger)
+  end
+
   def test_history
     get :history, :product_id => @product.id
 
@@ -103,210 +169,132 @@ class StockControllerTest < Test::Unit::TestCase
   end
 
   def test_history_with_wrong_product_id
-    get :history, :product_id => nil
-
-    assert_response :redirect
-    assert_redirected_to :action => 'index'
-  end
-
-
-  def test_new_without_product_id_parameter
-    get :new
-
-    assert_response :redirect
-    assert_redirected_to :controller => 'products', :action => 'new'
-  end
-
-
-
-  def test_create_with_correct_parameters
-    count = StockIn.count
-
-    post :create, :product_id => @product.id, :stock => { :supplier => @supplier, :amount => 1, :price => 1.99, :validity => Date.today, :date => Date.today},  :ledger => {:category => @ledger_category, :payment_method => 'money' } 
-
-    assert_response :redirect
-    assert_redirected_to :action => 'history'
-    assert_equal count + 1, StockIn.count
-  end
-
-  def test_create_with_wrong_parameters
-    count = StockIn.count
-
-    post :create, :product_id => @product.id
-
-    assert_response :success
-    assert_template 'new'
-    assert_equal count, StockIn.count
-    assert assigns(:stock)
-    assert assigns(:suppliers)
-  end
-
-  def test_add_payment
-    get :add_payment, :id => @stock_in.id
-    
-    assert_response :success
-    assert_template '_payment'
-
-    assert assigns(:stock)
-    assert assigns(:ledger)
-    assert assigns(:ledger_categories)
-  end
-
-  def test_edit
-    get :edit, :id => @stock_in.id
-
-    assert_response :success
-    assert_template 'edit'
-
-    assert assigns(:stock)
-    assert assigns(:product)
-    assert assigns(:suppliers)
-    assert assigns(:ledgers)
-
-  end
-
-  def test_update
-    stock_id = @stock_in.id
-    @stock_in.amount = 3
-    assert @stock_in.save
-    new_amount = 2
-    post :update, :id => @stock_in, :stock => { :amount =>new_amount }
-
-    assert_response :redirect
-    assert_redirected_to :action => 'history'
-
-    assert_equal new_amount, StockIn.find(stock_id).amount
-  end
-
-  def test_update_attributes_validity
-    stock_id = @stock_in.id
-    @stock_in.validity = Date.today
-    assert @stock_in.save
-    new_date = Date.today + 2
-    post :update, :id => @stock_in, :stock => { :validity =>new_date }
-
-    assert_equal new_date, StockIn.find(stock_id).validity
-  end
-
-
-  def test_update_attributes_date
-    stock_id = @stock_in.id
-    @stock_in.validity=nil
-    @stock_in.date = DateTime.now
-    assert @stock_in.save!
-    new_value = DateTime.now - 1
-    post :update, :id => @stock_in, :stock => { :date =>new_value }
-
-    assert_equal new_value.to_time, StockIn.find(stock_id).date
-  end
-
-
-  def test_update_attributes_price
-    stock_id = @stock_in.id
-    @stock_in.price = 20
-    assert @stock_in.save
-    new_value = 50
-    post :update, :id => @stock_in, :stock => { :price =>new_value }
-
-    assert_equal new_value, StockIn.find(stock_id).price
-  end
-
-  def test_update_attributes_amount
-    stock_id = @stock_in.id
-    @stock_in.amount = 3
-    assert @stock_in.save
-    new_amount = 2
-    post :update, :id => @stock_in, :stock => { :amount =>new_amount }
-
-    assert_equal new_amount, StockIn.find(stock_id).amount
-  end
-
-  def test_update_fails
-    post :update, :id => @stock_in.id, :stock => { :amount => nil }
-
-    assert_response :success
-    assert_template 'edit'
-
-    assert assigns(:suppliers)
-    assert assigns(:ledgers)
-  end
-
-  def test_destroy
-    stock_id = @stock_in.id
-    assert @stock_in.product.stocks.length > 1
-    get :destroy, :id => @stock_in.id
-    assert_raise(ActiveRecord::RecordNotFound) {
-      assert StockIn.find(stock_id)
+    assert_raise( ActiveRecord::RecordNotFound){
+      get :history, :product_id => nil
     }
-    
-    assert_response :redirect
-    assert_redirected_to :action => 'history'
   end
 
-  def test_destroy_last_object
-    @stock_in.product.stocks.each do |s|
-      if s != @stock_in
-        s.destroy 
-      end
-    end
-    stock_id = @stock_in.id
-    @stock_in = StockIn.find(stock_id)
-    assert_equal 1,  @stock_in.product.stocks.length
-    get :destroy, :id => @stock_in.id
-    assert_response :redirect
-    assert_redirected_to :action => 'list'
-  end
+  ########################################################
+  #  Test Invoice Payment Module On Stock Controller
+  ########################################################
 
-  def test_select_category
-    get :select_category, :payment_method => 'money'
+  def test_payment_details
+     invoice = create_invoice
+    get :payment_details, :payment_method => 'money', :id => invoice
 
+    assert_not_nil assigns(:invoice)
     assert_not_nil assigns(:ledger)
+    assert_not_nil assigns(:ledgers)
     assert_not_nil assigns(:banks)
     assert_not_nil assigns(:ledger_categories)
     assert assigns(:hide_sign)
     assert_response :success
-    assert_template 'shared_payments/_select_category'
+    assert_template 'shared_payments/_payment_details'
   end
 
-  def test_select_category_without_payment_method
-    get :select_category, :payment_method => nil
+  def test_payment_details_without_payment_method
+    invoice = create_invoice
+    get :payment_details, :payment_method => nil, :id => invoice
 
     assert_response :success
     assert_template nil
   end
 
-  def test_select_category_of_money_payment_method
-    get :select_category, :payment_method => 'money'
+  def test_payment_details_of_money_payment_method
+    invoice = create_invoice
+    get :payment_details, :payment_method => 'money', :id => invoice
 
     assert_kind_of Money, assigns(:ledger)
     assert_response :success
-    assert_template 'shared_payments/_select_category'
+    assert_template 'shared_payments/_payment_details'
   end
 
-  def test_select_category_of_check_payment_method
-    get :select_category, :payment_method => 'check'
+  def test_payment_details_of_check_payment_method
+    invoice = create_invoice
+    get :payment_details, :payment_method => 'check', :id => invoice
 
     assert_kind_of Check, assigns(:ledger)
     assert_response :success
-    assert_template 'shared_payments/_select_category'
+    assert_template 'shared_payments/_payment_details'
   end
 
-  def test_select_category_of_debit_card_payment_method
-    get :select_category, :payment_method => 'debit_card'
+  def test_payment_details_of_debit_card_payment_method
+    invoice = create_invoice
+    get :payment_details, :payment_method => 'debit_card', :id => invoice
 
     assert_kind_of DebitCard, assigns(:ledger)
     assert_response :success
-    assert_template 'shared_payments/_select_category'
+    assert_template 'shared_payments/_payment_details'
   end
 
-  def test_select_category_of_credit_card_payment_method
-    get :select_category, :payment_method => 'credit_card'
+  def test_payment_details_of_credit_card_payment_method
+    invoice = create_invoice
+    get :payment_details, :payment_method => 'credit_card', :id => invoice
 
     assert_kind_of CreditCard, assigns(:ledger)
     assert_response :success
-    assert_template 'shared_payments/_select_category'
+    assert_template 'shared_payments/_payment_details'
   end
 
+  def test_edit_payment
+    invoice = create_invoice
+    ledger = create_ledger(:owner => invoice)  
+    get :edit_payment, :id => invoice.id, :ledger_id => ledger.id
+    
+    assert_response :success
+    assert_template 'shared_payments/_edit_payment'
 
+    assert assigns(:invoice)
+    assert assigns(:ledger)
+    assert assigns(:ledgers)
+    assert assigns(:banks)
+    assert assigns(:ledger_categories)
+  end
+
+  def test_update_payment_with_correct_params
+    invoice = create_invoice
+    ledger = create_ledger(:owner => invoice)  
+    get :update_payment, :id => invoice.id, :ledger_id => ledger.id, :ledger => {:value => 323}
+    
+    assert_response :success
+    assert_template 'shared_payments/_new_payment'
+
+    assert assigns(:invoice)
+    assert assigns(:ledger)
+    assert assigns(:ledgers)
+    assert assigns(:banks)
+    assert assigns(:ledger_categories)
+  end
+
+  def test_add_payment_with_correct_params
+    invoice = create_invoice
+    get :add_payment, :id => invoice.id, :ledger => {:payment_method => 'money', :category => @ledger_category, :value => 343, :date => Date.today}
+    
+    assert_response :success
+    assert_template 'shared_payments/_new_payment'
+
+    assert assigns(:invoice)
+    assert assigns(:ledger)
+    assert_equal 0, assigns(:ledger).errors.length
+    assert assigns(:ledgers)
+    assert assigns(:banks)
+    assert assigns(:ledger_categories)
+  end
+
+  def test_add_payment_with_wrong_params
+    invoice = create_invoice
+    # The date must be valid will hapen 1 (one) error
+    get :add_payment, :id => invoice.id, :ledger => {:payment_method => 'money', :category => @ledger_category, :value => 343, :date => nil}
+    
+    assert_response :success
+    assert_template 'shared_payments/_new_payment'
+
+    assert assigns(:invoice)
+    assert assigns(:ledger)
+    assert_equal 1, assigns(:ledger).errors.length
+    assert assigns(:ledgers)
+    assert assigns(:banks)
+    assert assigns(:ledger_categories)
+  end
 
 end

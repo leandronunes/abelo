@@ -133,8 +133,7 @@ module ApplicationHelper
   end
 
   def select_payments(object, method)
-
-    collection =  Payment::PAYMENT_METHODS
+    collection =  Payment::PAYMENT_METHODS.keys.reject{|p| p == Payment::ADD_CASH or p == Payment::REMOVE_CASH}
     selected_options = controller.instance_variable_get("@#{object}").send(method)
     content_tag(:ul, 
       [
@@ -161,7 +160,7 @@ module ApplicationHelper
   end
   
   def select_payment(object, method)
-    collection =  Payment::PAYMENT_METHODS
+    collection =  Payment::PAYMENT_METHODS.keys.reject{|p| p == Payment::ADD_CASH or p == Payment::REMOVE_CASH}
     select('ledger', 'payment_method',  collection.map{|p|[ Payment.describe_payment(p), p]}, :include_blank => true)
   end
   
@@ -487,8 +486,8 @@ module ApplicationHelper
   def display_info(object, html_options = {}, type = false)
     
     inlist = (type == true) ? 'inlist_' : ''
-    fields = "#{object.class.to_s}Display".constantize.send(inlist + "available_fields") if current_user.administrator
-    fields ||= @organization.configuration.send(inlist + "#{object.class.to_s}Display".tableize)
+    fields = object.display_class.send(inlist + "available_fields") if current_user.administrator
+    fields ||= @organization.configuration.send(inlist + "#{object.display_class}".tableize)
 
     html_options[:class] ||= 'field_item'
     local_html_options = html_options.clone
@@ -498,7 +497,7 @@ module ApplicationHelper
       begin
         break_line = true if f.break_line?
       rescue
-        break_line = true if "#{object.class.to_s}Display".constantize.break_lines.include?(f)
+        break_line = true if object.display_class.break_lines.include?(f)
       end
 
       local_html_options[:class] = (break_line == true) ?
@@ -521,14 +520,14 @@ module ApplicationHelper
       begin 
         type = field.display_title?
       rescue
-        type = "#{object.class.to_s}Display".constantize.titles.include?(field)
+        type = object.display_class.titles.include?(field)
       end
     end
 
     if type == true
       title = content_tag(:strong, 
         field.class == String ? 
-        "#{object.class.to_s}Display".constantize.describe(field) :
+        object.display_class.describe(field) :
          field.describe_field + ": "
       )
     end
@@ -597,7 +596,7 @@ module ApplicationHelper
   # Deprecated use display_field_form function
   def display_field_form(object, field, info = {})
     return '' if @organization.nil? and !current_user.administrator?
-    return '' if !current_user.administrator? and @organization.send("#{object.class.to_s}Display".tableize).detect{|d| d.field == field}.nil?
+    return '' if !current_user.administrator? and @organization.send("#{object.display_class}".tableize).detect{|d| d.field == field}.nil?
 
     info[:html_options] ||= Hash.new
     info[:html_options][:class] = 'info_field ' + info[:html_options][:class].to_s

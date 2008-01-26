@@ -82,7 +82,6 @@ class PointOfSaleController < ApplicationController
     unless params[:cash].nil?
       @cash ||= AddCash.new(@till, params[:cash])
     end
-
     if @till.save
       @till.add_cashs << @cash unless @cash.nil?
       redirect_to :action => 'till_open'

@@ -183,9 +183,9 @@ tag:
         </td>
         <% if ledger.owner.kind_of?(Sale) %>
           <td> <%= _('Point of Sale: Sale %s') % ledger.category.name %></td>
-        <% elsif ledger.kind_of?(AddCash) %>
+        <% elsif ledger.payment_method == Payment::ADD_CASH %>
           <td> <%= _('Point of Sale: Money Added to Cash') %></td>
-        <% elsif ledger.kind_of?(RemoveCash) %>
+        <% elsif ledger.payment_method == Payment::REMOVE_CASH %>
            <td> <%= _('Point of Sale: Money Removed to Cash') %></td>
         <% else %>
           <td> <%= ledger.category.name %></td>

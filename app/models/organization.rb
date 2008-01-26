@@ -136,7 +136,7 @@ class Organization < ActiveRecord::Base
   # Returns all ledgers of organization. If 'id' is passed return 
   # the ledger with parameter id equal 'id'
   def ledgers(id = nil)
-    ledgers = Ledger.find((id.nil? ? :all : id), :conditions => {:bank_account_id => self.bank_accounts.to_a})
+    Ledger.find((id.nil? ? :all : id), :conditions => {:bank_account_id => self.bank_accounts.to_a})
   end
 
   def top_level_product_categories
@@ -359,7 +359,7 @@ class Organization < ActiveRecord::Base
   ################################
 
   def has_fiscal_printer?
-    self.configuration.has_fiscal_printer?
+    self.configuration.nil? ? nil : self.configuration.has_fiscal_printer?
   end
 
   Configuration::CONFIGURATION_NAMES.each do |item|

@@ -15,6 +15,7 @@
       <td><%= l.category.name %> </td>
       <td><%= l.description %> </td>
       <td><%= l.value %> </td>
+      <td> <%= button_remote 'edit', _('Edit'), :edit, :url => {:action => 'edit_payment', :ledger_id => l, :id => @invoice } , :update => 'abelo_payment'%> </td>
     </tr>
   <% end %>
   <tr>
@@ -34,6 +35,7 @@
 <%= observe_field('ledger_payment_method',
     :update => 'abelo_payment_details',
     :url => {:action => 'payment_details' },
+    :failure => "$('abelo_payment_details').innerHTML = request.responseText",
     :with => "'payment_method=' +  escape(value) + '&id=' + escape(#{@invoice.id}) + '&ledger_id=' + escape(#{@ledger.id})"
     )
 %>

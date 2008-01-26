@@ -496,6 +496,10 @@ LedgerCategory.create!(:name => 'A vista', :organization => organization, :type_
 
 check_income = LedgerCategory.create!(:name => 'Cheque 3 X', :organization => organization, :type_of => Payment::TYPE_OF_INCOME, :payment_methods => ['check'], :is_sale => true)
 LedgerCategory.create!(:name => '1x sem juros', :organization => organization, :type_of => Payment::TYPE_OF_INCOME, :payment_methods => ['credit_card'], :is_sale => true)
+
+stock_category = LedgerCategory.create!(:name => 'Compra de Produto', :organization => organization, :type_of => Payment::TYPE_OF_EXPENSE, :payment_methods => ['money', 'check'], :is_stock => true )
+
+sale_category = LedgerCategory.create!(:name => 'A Vista', :organization => organization, :type_of => Payment::TYPE_OF_INCOME, :payment_methods => ['money', 'check'], :is_sale => true )
 #############################
 # Period
 # ###########################
@@ -510,8 +514,8 @@ Periodicity.create!(:name => 'Quinzenal', :number_of_days => 15, :organization =
 # ###########################
 
 Ledger.delete_all
-Money.create_ledger!(:category => money_expense, :value => 2.3, :bank_account => account, :date => Date.today, :owner => organization, :payment_method => 'money')
-Money.create_ledger!(:category => money_income, :value => 222.50, :bank_account => account, :date => Date.today, :owner => organization, :payment_method => 'money')
+Ledger.create!(:category => money_expense, :value => 2.3, :bank_account => account, :date => Date.today, :owner => organization, :payment_method => 'money')
+Ledger.create!(:category => money_income, :value => 222.50, :bank_account => account, :date => Date.today, :owner => organization, :payment_method => 'money')
 
 ############ Invoice #######################
 
@@ -520,11 +524,11 @@ invoice = Invoice.create(:number => 23432, :serie => 3344, :issue_date => Date.t
 ############Stock Entries#########################
 Stock.destroy_all
 camisa_entrada = StockIn.create!(:supplier => hering, :amount => 50, :price => 10, :date => (DateTime.now - 2), :product => camisa, :validity => Date.today, :invoice => invoice)
-money_stock_in = Money.create_ledger!(:category => money_expense, :value => 12.3, :bank_account => account, :date => Date.today, :owner => organization, :payment_method => 'money')
+money_stock_in = Ledger.create!(:category => money_expense, :value => 12.3, :bank_account => account, :date => Date.today, :owner => organization, :payment_method => 'money')
 camisa_entrada = StockIn.create!(:supplier => hering, :amount => 40, :price => 10, :date => (DateTime.now - 2), :product => camisa, :validity => Date.today, :invoice => invoice )
-money_stock_in = Money.create_ledger!(:category => money_expense, :value => 12.3, :bank_account => account, :date => Date.today, :owner => organization, :payment_method => 'money')
+money_stock_in = Ledger.create!(:category => money_expense, :value => 12.3, :bank_account => account, :date => Date.today, :owner => organization, :payment_method => 'money')
 calca_entrada = StockIn.create!(:supplier => hering, :amount => 50, :price => 10, :date => (DateTime.now - 2), :product => calca,  :validity => Date.today, :invoice => invoice)
-money_stock_in = Money.create_ledger!(:category => money_expense, :value => 12.3, :bank_account => account, :date => Date.today, :owner => organization, :payment_method => 'money')
+money_stock_in = Ledger.create!(:category => money_expense, :value => 12.3, :bank_account => account, :date => Date.today, :owner => organization, :payment_method => 'money')
 camisa_saida = StockOut.create!(:amount => -5, :price => 15, :date => (DateTime.now - 2), :product => camisa,  :validity => Date.today)
 
 

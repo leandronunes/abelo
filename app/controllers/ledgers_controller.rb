@@ -73,7 +73,7 @@ class LedgersController < ApplicationController
   end
 
   def new
-    @ledger = Ledger.new_ledger(:bank_account => @organization.default_bank_account)
+    @ledger = Ledger.new(:bank_account => @organization.default_bank_account)
     @bank_accounts = @organization.bank_accounts
     @periodicities = @organization.periodicities
     @ledger_categories =  @organization.ledger_categories_by_payment_method(@ledger.payment_method)
@@ -82,7 +82,7 @@ class LedgersController < ApplicationController
   def select_category
     payment_method = params[:payment_method]
     if !payment_method.blank?
-      @ledger = Ledger.new_ledger(:payment_method => payment_method)
+      @ledger = Ledger.new(:payment_method => payment_method)
       @banks = Bank.find(:all)
       @ledger_categories =  @organization.ledger_categories_by_payment_method(@ledger.payment_method)
       render :partial => 'shared_payments/select_category'
@@ -92,7 +92,7 @@ class LedgersController < ApplicationController
   end
 
   def create
-    @ledger = Ledger.new_ledger(params[:ledger])    
+    @ledger = Ledger.new(params[:ledger])    
     @ledger.owner = @organization
  
     if @ledger.save

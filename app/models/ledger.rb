@@ -1,18 +1,25 @@
 class Ledger < ActiveRecord::Base
 
   include Status
-  acts_as_taggable
+  require 'payment_strategy/payment_strategy'
+  include PaymentStrategy
 
+  acts_as_taggable
+# FIXME See why the fields make the ferret dind't works
 #  acts_as_ferret({:fields => ['description', 'category', 'tags'], :remote => true})
   acts_as_ferret({:remote => true})
   
-  attr_accessor :repeat, :interval, :periodicity_id, :payment_method_choosen
+  attr_accessor :repeat, :interval, :periodicity_id
+#, :payment_method_choosen
 
+  ############################################
+  # Common Relationships and Methods
+  ############################################
   belongs_to :category, :class_name => 'LedgerCategory',  :foreign_key => 'category_id'
   belongs_to :schedule_ledger
   belongs_to :bank_account
   belongs_to :owner, :polymorphic => true
-  has_one :printer_command, :as => :owner
+  has_one :printer_command, :as => :owner, :dependent => :destroy
   validates_presence_of :foreseen_value
   validates_presence_of :effective_value, :if => lambda{ |ledger| not ledger.pending? }
   validates_presence_of :bank_account_id
@@ -21,19 +28,84 @@ class Ledger < ActiveRecord::Base
   validates_presence_of :schedule_repeat, :if => lambda{ |l| !l.schedule_periodicity_id.blank? or  !l.schedule_interval.blank? }
   validates_presence_of :schedule_periodicity, :if => lambda{ |l| l.schedule_repeat? or !l.schedule_interval.blank? }
   validates_presence_of :schedule_interval, :if => lambda{ |l| l.schedule_repeat? or  !l.schedule_periodicity_id.blank? }
-  validates_inclusion_of :payment_method, :in => Payment::PAYMENT_METHODS
+  validates_presence_of :payment_method
+  validates_inclusion_of :payment_method, :in => Payment::PAYMENT_METHODS.keys
   validates_presence_of :type_of
   validates_inclusion_of :type_of, :in => Payment::TYPE_OF
   validates_presence_of :owner_id
   validates_presence_of :owner_type
+  validates_presence_of :category_id, :if => :require_category?
+
+  ############################################
+  # Check Specific Relationships and Methods
+  ############################################
+  belongs_to :bank, :foreign_key => :check_bank_id
+  validates_presence_of :check_owner_name, :if => :is_check?
+  validates_presence_of :check_bank_id, :if => :is_check?
+  validates_presence_of :check_account_agency, :if => :is_check?
+  validates_presence_of :check_account_number, :if => :is_check?
+  validates_presence_of :check_number, :if => :is_check?
+  validates_presence_of :check_cpf, :if => :is_check?
+# :if => lambda{|check| check.person_type != PersonType::JURISTIC } Fix it
+  validates_presence_of :check_cnpj, :if => :is_check?
+#, :if => lambda{|check| check.person_type == PersonType::JURISTIC } TODO fix it
+
+  ################################################
+  # Debit Card Specific Relationships and Methods
+  ################################################
+  belongs_to :bank, :foreign_key => :automatic_debit_bank_id
+  validates_presence_of :category_id, :if => :is_debit_card?
+  validates_presence_of :automatic_debit_owner_name, :if => :is_debit_card?
+  validates_presence_of :automatic_debit_bank_id, :if => :is_debit_card?
+  validates_presence_of :automatic_debit_account_agency, :if => :is_debit_card?
+  validates_presence_of :automatic_debit_account_number, :if => :is_debit_card?
+
+  ################################################
+  # Credit Card Specific Relationships and Methods
+  ################################################
+  validates_presence_of :credit_card_number, :if => :is_credit_card?
+  validates_presence_of :credit_card_validity, :if => :is_credit_card?
+  validates_presence_of :credit_card_secutiry_code, :if => :is_credit_card?
+  validates_presence_of :credit_card_owner_name, :if => :is_credit_card?
+  validates_presence_of :credit_card_cnpj, :if => :is_credit_card?
+# :if => lambda{|check| check.person_type == PersonType::JURISTIC } TODO see a way to do that
+  validates_presence_of :credit_card_cpf, :if => :is_credit_card?
+#:if => lambda{|check| check.person_type != PersonType::JURISTIC } #TODO see a wasy to do that
+
+
+  # Methods that are defined on payment strategy 
+  # Part of the strategy pattern
+  delegate :require_category?, :is_check?, :is_money?, :is_credit_card?, :is_debit_card?, :is_add_cash?, :is_remove_cash?, :to => :payment_strategy
+  delegate :set_as_done_on_save?, :payment_initialize, :display_class, :create_printer_cmd!, :to => :payment_strategy
+
+  def payment_strategy
+    PaymentStrategy::Factory.new(self.payment_method)
+  end
 
   def validate
+    if (self.date != Date.today) and (self.is_add_cash? or self.is_remove_cash?)
+      self.errors.add(:date, _('You cannot schedule an add cash'))
+    end
+
+    if (self.value >= 0) and self.is_remove_cash?
+      self.errors.add(:value, _('The value must be minor or equal to 0'))                                
+    end
+
+    if self.is_remove_cash?  and (self.type_of != Payment::TYPE_OF_EXPENSE)
+      self.errors.add(:type_of, _('You cannot have an add cash with type different of %s') % Payment::TYPE_OF_EXPENSE)
+    end
+
+    if self.is_add_cash? and ( self.type_of != Payment::TYPE_OF_INCOME)
+      self.errors.add(:type_of, _('You cannot have an add cash with type different of %s') % Payment::TYPE_OF_INCOME) 
+    end
+
+    if (self.is_add_cash? or self.is_remove_cash?)  and self.printer_command.nil? and self.has_fiscal_printer?
+      self.errors.add(_('You cannot add or remove money on till without create the printer command'))
+    end
 
     self.errors.add(:value, _("The value should be at least 0.01" )) if value.nil? || value <= 0.00
 
     self.errors.add(:date, _("Date cannot be set" )) unless self[:date].nil?
-
-    self.errors.add(:payment_method, _("You don't have a payment method associated to this ledger.")) if self.payment_method.blank?
 
     if !self.category.nil? and !self.category.payment_methods.include?(self.payment_method)
       self.errors.add(:payment_method, _("You canno't have a payment method not include in payment category list.")) 
@@ -44,14 +116,14 @@ class Ledger < ActiveRecord::Base
     l.type_of = l.category.type_of unless l.category.nil?
     l.effective_value ||= l.foreseen_value unless l.pending?
     l.effective_date ||= l.foreseen_date unless l.pending?
+    l.create_printer_cmd!(l)
+  end
+
+  before_save do |ledger|
+    ledger.done! if ledger.set_as_done_on_save? and not ledger.has_fiscal_printer?
   end
 
   after_create do |l|
-    if l.owner.kind_of?(Sale)
-      sale = l.owner
-      l.printer_command = PrinterCommand.new(sale.owner, [PrinterCommand::ADD_PAYMENT, l.fiscal_payment_type, l.payment_type, l.value])
-    end
-
     if l.schedule_repeat? and !l.scheduled?
       sl = ScheduleLedger.create(:periodicity => l.schedule_periodicity, :start_date => l.date, :interval => l.schedule_interval)
       for n in 1..l.schedule_interval.to_i do
@@ -93,6 +165,11 @@ class Ledger < ActiveRecord::Base
       all_pending.delete(ledger)
       ledger.schedule_ledger.destroy if all_pending.blank?
     end
+  end
+
+  def initialize(*args)
+    super(*args)
+    self.payment_initialize(self)
   end
 
   def dclone
@@ -149,43 +226,34 @@ class Ledger < ActiveRecord::Base
     self.class.to_s.tableize.singularize
   end
 
-  def payment_method= value
-    self.payment_method_choosen= value
-  end
-
-  def payment_method
-    self.payment_method_choosen
-  end
-
   def reload
     Ledger.find(self.id)
   end
 
-  @@original_new = self.method(:new)
+#  @@original_new = self.method(:new)
 
-  def self.create_ledger!(*args)
-    object = self.new_ledger(*args)
-    object.save!
-    object
-  end
+#  def self.create_ledger!(*args)
+#    object = self.new_ledger(*args)
+#    object.save!
+#    object
+#  end
 
-  def self.new_ledger(*args)
-    l = Ledger.instanciate_ledger(*args)
-    klass = l.payment_method.nil? ? 'money' : l.payment_method
-    klass = klass.camelize.constantize
-    object = klass.new(*args)
-    object.type_of =  l.category.type_of unless l.category.nil?
-    object
-  end
+#  def self.new_ledger(*args)
+#    l = Ledger.instanciate_ledger(*args)
+#    klass = Payment::PAYMENT_METHODS[l.payment_method] || Money
+#    object = klass.new(*args)
+#    object.type_of =  l.category.type_of unless l.category.nil?
+#    object
+#  end
 
-  # Return the sum of tha values of ledgers passed as parameter
+  # Return the value sum of income ledgers passed as parameter
   def self.total_income(ledgers)
     total = 0
     ledgers.collect{ |l| total = total + (l.income? ? l.value : 0) }
     total
   end
 
-  # Return the sum of tha values of ledgers passed as parameter
+  # Return the value sum of expense ledgers passed as parameter
   def self.total_expense(ledgers)
     total = 0
     ledgers.collect{ |l| total = total + (l.expense? ? l.value : 0) }
@@ -244,6 +312,11 @@ class Ledger < ActiveRecord::Base
     self.owner if self.owner.kind_of?(Organization)
   end
 
+  def has_fiscal_printer?
+    printer = self.organization.nil? ? nil : self.organization.has_fiscal_printer?
+    printer ||= self.owner.nil? ? nil : self.owner.organization.has_fiscal_printer?
+  end
+
   def value= value
     self[:foreseen_value] = self.pending? ? (value.kind_of?(String) ? value.gsub(',', '.') : value) : (self[:foreseen_value] || (value.kind_of?(String) ? value.gsub(',', '.') : value))
     self[:effective_value] = value unless self.pending? 
@@ -252,6 +325,7 @@ class Ledger < ActiveRecord::Base
   def value
     value = self.pending? ? self[:foreseen_value] :  self[:effective_value]
     value ||= 0
+    self.is_remove_cash? ? (value * -1) : value
   end
 
   def date

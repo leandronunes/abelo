@@ -22,7 +22,7 @@ class LedgerCategory < ActiveRecord::Base
       self.errors.add('payment_methods', _('You have to choose at least one payment method'))
     end
             
-    if (self.payment_methods - Payment::PAYMENT_METHODS).length != 0 
+    if (self.payment_methods - Payment::PAYMENT_METHODS.keys).length != 0 
       self.errors.add('payment_methods', _('You have to choose a valid payment method'))
     end
   end

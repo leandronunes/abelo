@@ -5,11 +5,12 @@ class StockInDisplay < StockDisplay
   end
   
   def self.describe(field)
-    super.merge({
+     field = super(field)
+    {
      'supplier' => _('Supplier'),
      'validity' => _('Validity'),
      'price' => _('Buy Price')
-    })[field] || field
+    }[field] || field
   end
 
 end

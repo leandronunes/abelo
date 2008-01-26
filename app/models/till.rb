@@ -15,6 +15,8 @@ class Till < ActiveRecord::Base
     till.printer_command ||= PrinterCommand.new(till, [PrinterCommand::SUMMARIZE]) if till.has_fiscal_printer?
   end
 
+  delegate :default_bank_account, :to => :organization
+
   def validate
     pendings = self.class.find(:all, :conditions => {:status => STATUS_PENDING, :organization_id => self.organization, :user_id => self.user})
     pendings.delete(self)

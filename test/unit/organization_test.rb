@@ -42,11 +42,8 @@ class OrganizationTest < Test::Unit::TestCase
   end
 
   def create_ledger
-    ledger = AddCash.new(create_till)
-    ledger.payment_method = 'money'
-    ledger.date = Date.today
+    ledger = Ledger.new(:payment_method => Payment::ADD_CASH)
     ledger.bank_account = @organization.default_bank_account
-    ledger.type_of = Payment::TYPE_OF_INCOME
     ledger.owner = @organization
     ledger.value = 10
     ledger.save!

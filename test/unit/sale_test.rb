@@ -69,7 +69,7 @@ class SaleTest < Test::Unit::TestCase
     sale = create_sale()
     amount  = 10
     create_item(sale, :product => @product1, :amount => amount )
-    Money.create(:owner => sale, :value => amount * @product1.sell_price, :date => Date.today )
+    Ledger.create(:payment_method => Payment::MONEY, :owner => sale, :value => amount * @product1.sell_price, :date => Date.today )
     assert sale.destroy
     assert_equal 0, Ledger.count
   end

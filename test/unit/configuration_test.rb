@@ -57,7 +57,7 @@ class ConfigurationTest < Test::Unit::TestCase
   ]
 
   def test_configuration_itens_array
-    assert_equal DISPLAY_CONFIGURATION_CLASSES_TEST, Configuration::DISPLAY_CONFIGURATION_CLASSES
+    assert_equal 0, (DISPLAY_CONFIGURATION_CLASSES_TEST - Configuration::DISPLAY_CONFIGURATION_CLASSES).length
   end
 
   def test_presence_of_name_when_is_model

@@ -99,8 +99,8 @@ class Ledger < ActiveRecord::Base
       self.errors.add(:type_of, _('You cannot have an add cash with type different of %s') % Payment::TYPE_OF_INCOME) 
     end
 
-    if (self.is_add_cash? or self.is_remove_cash?)  and self.printer_command.nil? and self.has_fiscal_printer?
-      self.errors.add(_('You cannot add or remove money on till without create the printer command'))
+    if self.printer_command.nil? and self.has_fiscal_printer?
+      self.errors.add(_('You cannot realize money operations whithout create the printer command'))
     end
 
     self.errors.add(:value, _("The value should be at least 0.01" )) if value.nil? || value <= 0.00
@@ -313,8 +313,14 @@ class Ledger < ActiveRecord::Base
   end
 
   def has_fiscal_printer?
-    printer = self.organization.nil? ? nil : self.organization.has_fiscal_printer?
-    printer ||= self.owner.nil? ? nil : self.owner.organization.has_fiscal_printer?
+    case self.owner.class.name
+      when('Organization'): 
+        self.owner.has_fiscal_printer?
+      when('Till'): 
+        self.owner.organization.has_fiscal_printer?
+      else
+        nil
+    end
   end
 
   def value= value
@@ -325,7 +331,7 @@ class Ledger < ActiveRecord::Base
   def value
     value = self.pending? ? self[:foreseen_value] :  self[:effective_value]
     value ||= 0
-    self.is_remove_cash? ? (value * -1) : value
+    (self.is_remove_cash? and (value > 0)) ? (value * -1) : value
   end
 
   def date

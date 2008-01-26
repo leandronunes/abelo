@@ -15,10 +15,24 @@ class ProductTest < Test::Unit::TestCase
     @ledger_category.is_stock = true
     @ledger_category.save
     @bank_account = BankAccount.find(:first)
+    @invoice  = create_invoice
+    @product = create_product
   end
+
+  def create_invoice
+    i =  Invoice.new(:number => 3434, :serie => 343, :organization => @organization,
+         :supplier => @supplier, :issue_date => Date.today) 
+    i.save
+    i
+  end 
 
   def create_product(params = {})
     Product.create({:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization => @organization, :category => @category}.merge(params))
+  end
+
+  def create_stock_in(params = {})
+    StockIn.create!({:supplier_id => @supplier.id, :amount => 50, :date => '2007-07-01', 
+                    :product => @product, :validity => Date.today, :price => 10, :invoice => @invoice}.merge(params))
   end
 
   def test_setup
@@ -87,13 +101,13 @@ class ProductTest < Test::Unit::TestCase
 
   def test_relation_with_stock_in
     product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
-    entry = StockIn.create!(:supplier_id => @supplier.id, :amount => 50, :date => '2007-07-01', :product_id => product.id, :validity => Date.today, :price => 10)
+    entry = create_stock_in(:product => product)
     assert product.stocks.include?(entry)
   end
 
   def test_relation_with_stock_out
     product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
-    entry = StockIn.create!(:supplier_id => @supplier.id, :amount => 100, :date => '2007-07-01', :product_id => product.id, :price => 10, :validity => Date.today)
+    entry = create_stock_in(:product => product)
     entry = StockOut.create!(:supplier_id => @supplier.id, :amount => -50, :date => '2007-07-02', :product_id => product.id, :price => 10)
     assert product.stocks.include?(entry)
   end
@@ -142,7 +156,7 @@ class ProductTest < Test::Unit::TestCase
     total_cost = 0.0
 
     (1..10).each { |n|
-      entry = StockIn.create!(:supplier_id => @supplier.id, :amount => 5, :date => Date.today, :product_id => product.id, :validity => Date.today, :price => 10)
+      entry = create_stock_in(:product => product)
       total_amount += entry.amount
       total_cost += entry.price * entry.amount
     }

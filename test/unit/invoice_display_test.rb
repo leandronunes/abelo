@@ -21,9 +21,9 @@ class InvoiceDisplayTest < Test::Unit::TestCase
   end
 
   def test_fields_are_valid_methods
-    s = StockIn.new
+    i = Invoice.new
     AVAILABLE_FIELDS_TEST.each do |field|
-      assert_nothing_raised { s.send("#{field}") }
+      assert_nothing_raised { i.send("#{field}") }
     end
   end
 

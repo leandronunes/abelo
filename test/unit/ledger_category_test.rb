@@ -12,9 +12,9 @@ class LedgerCategoryTest < Test::Unit::TestCase
   end
 
   def create_money(params = {})
-    m = Money.new({:date => Date.today, :value => 10, :category => @ledger_category, 
+    m = Ledger.new({:date => Date.today, :value => 10, :category => @ledger_category, 
         :bank_account => @bank_account, :operational => false, :owner => @organization, 
-        :payment_method => 'money'}.merge(params))
+        :payment_method => Payment::MONEY}.merge(params))
     m.save
     m
   end
@@ -108,20 +108,10 @@ class LedgerCategoryTest < Test::Unit::TestCase
 
   def test_foreseen_value_by_date
     Ledger.delete_all
-    l = Money.new(:date => Date.today, :value => 10, :category => @ledger_category, 
-        :bank_account => @bank_account, :operational => false, :owner => @organization, :payment_method => 'money')
-    l.save!
-    
-    l = Money.new(:date => Date.today, :value => 240.43, :category => @ledger_category, 
-        :bank_account => @bank_account, :operational => false, :owner => @organization, :payment_method => 'money')
-    l.save!
-
-    l = Money.new(:date => Date.today, :value => 20, :category => @ledger_category, 
-        :bank_account => @bank_account, :operational => false, :owner => @organization, :payment_method => 'money')
-    l.save!
-
+    create_money(:date => Date.today, :value => 10)
+    create_money(:date => Date.today, :value => 240.43)
+     create_money(:date => Date.today, :value => 20)
     assert_equal 270.43, @ledger_category.foreseen_value_by_date
-
   end
 
 
@@ -149,13 +139,8 @@ class LedgerCategoryTest < Test::Unit::TestCase
 
   def test_count_ledgers
     Ledger.delete_all
-    l = Money.new(:date => Date.today, :value => 10, :category => @ledger_category, 
-        :bank_account => @bank_account, :operational => false, :owner => @organization, :payment_method => 'money')
-    l.save!
-    
-    l = Money.new(:date => Date.today, :value => 240.43, :category => @ledger_category, 
-        :bank_account => @bank_account, :operational => false, :owner => @organization, :payment_method => 'money')
-    l.save!
+    create_money
+    create_money
 
     assert_equal 2, @ledger_category.count_ledgers
 

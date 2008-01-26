@@ -35,9 +35,9 @@ class StockControllerTest < Test::Unit::TestCase
   end
 
   def create_ledger(params = {})
-    Money.create!({:bank_account => @organization.default_bank_account,:owner => @organization, 
+    Ledger.create!({:bank_account => @organization.default_bank_account,:owner => @organization, 
            :category => @ledger_category, :date => Date.today, :value => 23434,
-           :payment_method => 'money'}.merge(params) )
+           :payment_method => Payment::MONEY}.merge(params) )
   end
 
   def test_autocomplete_product_name
@@ -202,36 +202,36 @@ class StockControllerTest < Test::Unit::TestCase
 
   def test_payment_details_of_money_payment_method
     invoice = create_invoice
-    get :payment_details, :payment_method => 'money', :id => invoice
+    get :payment_details, :payment_method => Payment::MONEY, :id => invoice
 
-    assert_kind_of Money, assigns(:ledger)
+    assert_equal Payment::MONEY, assigns(:ledger).payment_method
     assert_response :success
     assert_template 'shared_payments/_payment_details'
   end
 
   def test_payment_details_of_check_payment_method
     invoice = create_invoice
-    get :payment_details, :payment_method => 'check', :id => invoice
+    get :payment_details, :payment_method => Payment::CHECK, :id => invoice
 
-    assert_kind_of Check, assigns(:ledger)
+    assert_equal Payment::CHECK, assigns(:ledger).payment_method
     assert_response :success
     assert_template 'shared_payments/_payment_details'
   end
 
   def test_payment_details_of_debit_card_payment_method
     invoice = create_invoice
-    get :payment_details, :payment_method => 'debit_card', :id => invoice
+    get :payment_details, :payment_method => Payment::DEBIT_CARD, :id => invoice
 
-    assert_kind_of DebitCard, assigns(:ledger)
+    assert_equal Payment::DEBIT_CARD, assigns(:ledger).payment_method
     assert_response :success
     assert_template 'shared_payments/_payment_details'
   end
 
   def test_payment_details_of_credit_card_payment_method
     invoice = create_invoice
-    get :payment_details, :payment_method => 'credit_card', :id => invoice
+    get :payment_details, :payment_method => Payment::CREDIT_CARD, :id => invoice
 
-    assert_kind_of CreditCard, assigns(:ledger)
+    assert_equal Payment::CREDIT_CARD, assigns(:ledger).payment_method
     assert_response :success
     assert_template 'shared_payments/_payment_details'
   end

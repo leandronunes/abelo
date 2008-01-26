@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'stock_controller'
+require 'stock_in_controller'
 
 # Re-raise errors caught by the controller.
 class StockInController; def rescue_action(e) raise e end; end
@@ -11,7 +11,7 @@ class StockInControllerTest < Test::Unit::TestCase
   under_organization :one
 
   def setup
-    @controller = StockController.new
+    @controller = StockInController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     login_as("quentin")
@@ -20,29 +20,20 @@ class StockInControllerTest < Test::Unit::TestCase
     @ledger_category = LedgerCategory.find(:first)
     @product_category = ProductCategory.find(:first)
     @organization = Organization.find(:first)
+    @invoice = create_invoice
+    @stock_in = create_stock(@invoice)
   end
 
   def create_product(params = {})
     Product.create!({:name => 'product one', :sell_price => 2.0, :unit => 'kg', :organization => @organization, :category => @product_category}.merge(params))
   end
 
-  def create_invoice
-    Invoice.create!(:number => 3344, :serie => 33443, :issue_date => Date.today, :supplier => @supplier)
+  def create_invoice(params = {})
+    Invoice.create!({:number => 3344, :serie => 33443, :issue_date => Date.today, :supplier => @supplier}.merge(params))
   end
 
   def create_stock(invoice)
     StockIn.create!(:supplier => @supplier, :amount => 1, :price => 1.99, :invoice => invoice, :product => @product)
-  end
-
-  def test_autocomplete_product_name
-    Product.delete_all
-    create_product(:name => 'product one')
-    create_product(:name => 'product test two')
-    create_product(:name => 'product test twice')
-    get :autocomplete_product_name, :product => { :name => 'test'}
-    assert_not_nil assigns(:products)
-    assert_kind_of Array, assigns(:products)
-    assert_equal 2, assigns(:products).length
   end
 
   def test_setup
@@ -52,6 +43,20 @@ class StockInControllerTest < Test::Unit::TestCase
     assert @organization.valid?
     assert @product_category.valid?
     assert @organization.products.include?(@product)
+    assert @organization.suppliers.include?(@supplier)
+    assert @invoice.valid?
+    assert @stock_in.valid?
+  end
+
+  def test_autocomplete_invoice_number
+    Invoice.delete_all
+    create_invoice(:number => 11111111)
+    create_invoice(:number => 1112222)
+    create_invoice(:number => 33333333)
+    get :autocomplete_invoice_number, :invoice => { :number => '11'}
+    assert_not_nil assigns(:invoices)
+    assert_kind_of Array, assigns(:invoices)
+    assert_equal 2, assigns(:invoices).length
   end
 
   def test_index
@@ -64,263 +69,243 @@ class StockInControllerTest < Test::Unit::TestCase
     get :list
     assert_response :success
     assert_template 'list'
-    assert_not_nil assigns(:stocks)
-    assert_not_nil assigns(:stock_pages)
+    assert_not_nil assigns(:invoices)
+    assert_not_nil assigns(:invoice_pages)
   end
 
   def test_list_when_query_param_is_nil
     get :list
 
     assert_nil assigns(:query)
-    assert_not_nil assigns(:stocks)
-    assert_kind_of Array, assigns(:stocks)
-    assert_not_nil assigns(:stock_pages)
-    assert_kind_of ActionController::Pagination::Paginator, assigns(:stock_pages)
+    assert_not_nil assigns(:invoices)
+    assert_kind_of Array, assigns(:invoices)
+    assert_not_nil assigns(:invoice_pages)
+    assert_kind_of ActionController::Pagination::Paginator, assigns(:invoice_pages)
   end
 
   def test_list_when_query_param_not_nil
-    Product.delete_all
-    create_product(:name => 'product one')
-    create_product(:name => 'product test two')
-    create_product(:name => 'product test twice')
-    get :list, :query => '*test*'
+    Invoice.delete_all
+    create_invoice(:number => 11111111)
+    create_invoice(:number => 11111222)
+    create_invoice(:number => 33333333)
+    get :list, :query => '1*'
 
     assert_not_nil assigns(:query)
-    assert_not_nil assigns(:stocks)
-    assert_kind_of Array, assigns(:stocks)
-    assert_not_nil assigns(:stock_pages)
-    assert_kind_of ActionController::Pagination::Paginator, assigns(:stock_pages)
+    assert_not_nil assigns(:invoices)
+    assert_kind_of Array, assigns(:invoices)
+    assert_not_nil assigns(:invoice_pages)
+    assert_kind_of ActionController::Pagination::Paginator, assigns(:invoice_pages)
 
-    assert_equal 2, assigns(:stocks).length
+    assert_equal 2, assigns(:invoices).length
   end
  
   def test_new
     get :new
-    assert_response :redirect
-    assert_redirected_to :controller => 'stock_in', :action => 'new'
-  end
-
-  def test_add
-    get :add, :product_id => @product.id
-
-    assert_not_nil assigns(:stock)
+    assert_response :success
+    assert_template 'new'
     assert_not_nil assigns(:suppliers)
     assert_not_nil assigns(:invoice)
-  
-    assert_response :success
-    assert_template 'add'
   end
 
   def test_create_with_correct_parameters
-    count_stock = StockIn.count
     count_invoice = Invoice.count
 
-    post :create, :product_id => @product.id, :stock => { :supplier => @supplier, :amount => 1, :price => 1.99},  :invoice => {:number => 2323, :serie => 2323, :supplier_id => @supplier.id, :issue_date => Date.today } 
+    post :create, :invoice => { :supplier => @supplier, :number => 2321321, :serie => 21321332, :issue_date => Date.today}
 
     assert_response :redirect
     assert_redirected_to :action => 'edit'
-    assert_equal count_stock + 1, StockIn.count
     assert_equal count_invoice + 1, Invoice.count
   end
 
   def test_create_with_wrong_parameters
-    count = StockIn.count
+    count = Invoice.count
 
-    post :create, :product_id => @product.id
+    # The number cannot be nil
+    post :create, :invoice => { :supplier => @supplier, :number => nil, :serie => 21321332, :issue_date => Date.today}
 
     assert_response :success
-    assert_template 'add'
-    assert_equal count, StockIn.count
-    assert assigns(:stock)
+    assert_template 'new'
+    assert_equal count, Invoice.count
     assert assigns(:invoice)
     assert assigns(:suppliers)
   end
 
   def test_edit
     invoice = create_invoice
-    stock = create_stock(invoice)
-    get :edit, :invoice_id => invoice.id, :stock_id => stock.id
+    get :edit, :id => invoice.id
 
     assert_response :success
     assert_template 'edit'
 
     assert assigns(:invoice)
-    assert assigns(:stock)
     assert assigns(:suppliers)
-    assert assigns(:ledgers)
-    assert assigns(:ledger)
-  end
-
-  def test_history
-    get :history, :product_id => @product.id
-
-    assert_not_nil assigns(:product)
-    assert_not_nil assigns(:stocks)
-    assert_kind_of Array, assigns(:stocks)
-
-    assert_response :success
-    assert_template 'history'
-  end
-
-  def test_history_with_wrong_product_id
-    assert_raise( ActiveRecord::RecordNotFound){
-      get :history, :product_id => nil
-    }
-  end
-
-  def test_add_payment
-    get :add_payment, :id => @stock_in.id
-    
-    assert_response :success
-    assert_template '_payment'
-
+    assert assigns(:products)
+    assert assigns(:stocks)
     assert assigns(:stock)
+    assert assigns(:ledgers)
     assert assigns(:ledger)
     assert assigns(:ledger_categories)
   end
 
   def test_update
-    stock_id = @stock_in.id
-    @stock_in.amount = 3
-    assert @stock_in.save
-    new_amount = 2
-    post :update, :id => @stock_in, :stock => { :amount =>new_amount }
+    post :update, :id => @invoice.id, :invoice => { :number => 232132 }
 
-    assert_response :redirect
-    assert_redirected_to :action => 'history'
-
-    assert_equal new_amount, StockIn.find(stock_id).amount
-  end
-
-  def test_update_attributes_validity
-    stock_id = @stock_in.id
-    @stock_in.validity = Date.today
-    assert @stock_in.save
-    new_date = Date.today + 2
-    post :update, :id => @stock_in, :stock => { :validity =>new_date }
-
-    assert_equal new_date, StockIn.find(stock_id).validity
-  end
-
-
-  def test_update_attributes_date
-    stock_id = @stock_in.id
-    @stock_in.validity=nil
-    @stock_in.date = DateTime.now
-    assert @stock_in.save!
-    new_value = DateTime.now - 1
-    post :update, :id => @stock_in, :stock => { :date =>new_value }
-
-    assert_equal new_value.to_time, StockIn.find(stock_id).date
-  end
-
-
-  def test_update_attributes_price
-    stock_id = @stock_in.id
-    @stock_in.price = 20
-    assert @stock_in.save
-    new_value = 50
-    post :update, :id => @stock_in, :stock => { :price =>new_value }
-
-    assert_equal new_value, StockIn.find(stock_id).price
-  end
-
-  def test_update_attributes_amount
-    stock_id = @stock_in.id
-    @stock_in.amount = 3
-    assert @stock_in.save
-    new_amount = 2
-    post :update, :id => @stock_in, :stock => { :amount =>new_amount }
-
-    assert_equal new_amount, StockIn.find(stock_id).amount
-  end
-
-  def test_update_fails
-    post :update, :id => @stock_in.id, :stock => { :amount => nil }
-
-    assert_response :success
-    assert_template 'edit'
-
-    assert assigns(:suppliers)
-    assert assigns(:ledgers)
-  end
-
-  def test_destroy
-    stock_id = @stock_in.id
-    assert @stock_in.product.stocks.length > 1
-    get :destroy, :id => @stock_in.id
-    assert_raise(ActiveRecord::RecordNotFound) {
-      assert StockIn.find(stock_id)
-    }
-    
-    assert_response :redirect
-    assert_redirected_to :action => 'history'
-  end
-
-  def test_destroy_last_object
-    @stock_in.product.stocks.each do |s|
-      if s != @stock_in
-        s.destroy 
-      end
-    end
-    stock_id = @stock_in.id
-    @stock_in = StockIn.find(stock_id)
-    assert_equal 1,  @stock_in.product.stocks.length
-    get :destroy, :id => @stock_in.id
     assert_response :redirect
     assert_redirected_to :action => 'list'
   end
 
-  def test_select_category
-    get :select_category, :payment_method => 'money'
-
-    assert_not_nil assigns(:ledger)
-    assert_not_nil assigns(:banks)
-    assert_not_nil assigns(:ledger_categories)
-    assert assigns(:hide_sign)
-    assert_response :success
-    assert_template 'shared_payments/_select_category'
-  end
-
-  def test_select_category_without_payment_method
-    get :select_category, :payment_method => nil
+  def test_update_with_wrong_params
+    # Ths invoice number connat be nil
+    post :update, :id => @invoice.id, :invoice => { :number => nil }
 
     assert_response :success
-    assert_template nil
-  end
-
-  def test_select_category_of_money_payment_method
-    get :select_category, :payment_method => 'money'
-
-    assert_kind_of Money, assigns(:ledger)
-    assert_response :success
-    assert_template 'shared_payments/_select_category'
-  end
-
-  def test_select_category_of_check_payment_method
-    get :select_category, :payment_method => 'check'
-
-    assert_kind_of Check, assigns(:ledger)
-    assert_response :success
-    assert_template 'shared_payments/_select_category'
-  end
-
-  def test_select_category_of_debit_card_payment_method
-    get :select_category, :payment_method => 'debit_card'
-
-    assert_kind_of DebitCard, assigns(:ledger)
-    assert_response :success
-    assert_template 'shared_payments/_select_category'
-  end
-
-  def test_select_category_of_credit_card_payment_method
-    get :select_category, :payment_method => 'credit_card'
-
-    assert_kind_of CreditCard, assigns(:ledger)
-    assert_response :success
-    assert_template 'shared_payments/_select_category'
+    assert_template 'edit'
+    assert assigns(:invoice)
+    assert assigns(:suppliers)
+    assert assigns(:products)
+    assert assigns(:stocks)
+    assert assigns(:stock)
+    assert assigns(:ledgers)
+    assert assigns(:ledger)
+    assert assigns(:ledger_categories)
   end
 
 
 
+  def test_update_number
+    @invoice.number = 32432
+    assert @invoice.save
+    new_number = 322344
+    invoice_id = @invoice.id
+    post :update, :id => @invoice.id, :invoice => { :number => new_number }
+
+    assert_equal new_number.to_s, Invoice.find(invoice_id).number
+  end
+
+  def test_update_serie
+    @invoice.serie = 32432
+    assert @invoice.save
+    new_serie = 322344
+    invoice_id = @invoice.id
+    post :update, :id => @invoice.id, :invoice => { :serie => new_serie }
+
+    assert_equal new_serie.to_s, Invoice.find(invoice_id).serie
+  end
+
+  def test_update_issue_date
+    @invoice.issue_date = DateTime.now
+    assert @invoice.save
+    new_issue_date = DateTime.now + 1
+    invoice_id = @invoice.id
+    post :update, :id => @invoice.id, :invoice => { :issue_date => new_issue_date }
+
+    assert_equal new_issue_date.to_s, Invoice.find(invoice_id).issue_date.to_datetime.to_s
+  end
+
+  def test_update_status
+    @invoice.status = Status::STATUS_PENDING
+    assert @invoice.save
+    new_status = Status::STATUS_DONE
+    invoice_id = @invoice.id
+    post :update, :id => @invoice.id, :invoice => { :status => new_status }
+
+    assert_equal new_status, Invoice.find(invoice_id).status
+  end
+
+  def test_update_supplier_id
+    @invoice.supplier_id = 1
+    assert @invoice.save
+    new_supplier_id = 2
+    invoice_id = @invoice.id
+    post :update, :id => @invoice.id, :invoice => { :supplier_id => new_supplier_id }
+
+    assert_equal new_supplier_id, Invoice.find(invoice_id).supplier_id
+  end
+
+  def test_show
+    get :show, :id => @invoice.id
+    assert_response :success
+    assert_template 'show'
+    assert_not_nil assigns(:invoice)
+    assert_not_nil assigns(:stocks)
+  end
+
+  def test_destroy
+    invoice_id = @invoice.id
+    get :destroy, :id => @invoice.id
+    assert_raise(ActiveRecord::RecordNotFound) {
+      assert Invoice.find(invoice_id)
+    }
+    
+    assert_response :redirect
+    assert_redirected_to :action => 'list'
+  end
+
+  ########################################################
+  #  Test Invoice Items
+  ########################################################
+
+  def test_add_item
+    count = StockIn.count
+    get :add_item, :id => @invoice.id, :stock => {:amount => 344, :product => @product, :price => 23}
+    assert_response :success
+    assert_template '_invoice_new_items'
+    assert_equal count + 1, StockIn.count
+    assert assigns(:invoice)
+    assert assigns(:stocks)
+    assert assigns(:stock)
+    assert assigns(:products)
+  end
+
+  def test_add_item_with_wrong_parameters
+    count = StockIn.count
+    # The price must be different of zero
+    get :add_item, :id => @invoice.id, :stock => {:amount => 344, :product => @product, :price => nil}
+    assert_response :success
+    assert_template '_invoice_new_items'
+    assert_equal count, StockIn.count
+    assert assigns(:invoice)
+    assert assigns(:stocks)
+    assert assigns(:stock)
+    assert assigns(:products)
+  end
+
+  def test_edit_item
+    stock = create_stock(@invoice)
+    get :edit_item, :id => @invoice.id, :stock_id => stock.id
+    assert_response :success
+    assert_template '_invoice_edit_items'
+    assert assigns(:invoice)
+    assert assigns(:stocks)
+    assert assigns(:stock)
+    assert assigns(:products)
+  end
+
+  def test_update_item
+    stock = create_stock(@invoice)
+    get :update_item, :id => @invoice.id, :stock_id => stock.id, :stock => {:price => 3423}
+    assert_response :success
+    assert_template '_invoice_new_items'
+    assert assigns(:invoice)
+    assert assigns(:stocks)
+    assert assigns(:stock)
+    assert assigns(:stock).new_record?
+    assert assigns(:products)
+  end
+
+  def test_update_item_with_wrong_params
+    stock = create_stock(@invoice)
+    # The price cannot be nil
+    get :update_item, :id => @invoice.id, :stock_id => stock.id, :stock => {:price => nil}
+    assert_response :success
+    assert_template '_invoice_edit_items'
+    assert assigns(:invoice)
+    assert assigns(:stocks)
+    assert assigns(:stock)
+    assert assigns(:products)
+  end
+
+  ########################################################
+  #  Test Invoice Payment Module On StockIn Controller
+  ########################################################
 end

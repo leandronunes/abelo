@@ -38,6 +38,12 @@ organization_admin:
     action: '*'
   - controller: 'periodicities'
     action: '*'
+  - controller: 'stock_in'
+    action: '*'
+  - controller: 'stock_devolution'
+    action: '*'
+  - controller: 'stock_down'
+    action: '*'
 another:
   id: 2
   user_id: 2

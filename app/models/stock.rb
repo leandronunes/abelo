@@ -12,4 +12,13 @@ class Stock < ActiveRecord::Base
     self.product.nil? ? nil : self.product.organization.default_bank_account
   end
 
+  def self.describe(class_name)
+    {
+      'StockIn' => _('Buy'),
+      'StockOut' => _('Sell'),
+      'StockDown' => _('Stock Down'),
+      'StockDevolution' => _('Devolution'),
+    }[class_name] || class_name
+  end
+
 end

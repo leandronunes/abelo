@@ -2,8 +2,6 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class StockTest < Test::Unit::TestCase
 
-  fixtures :organizations
-  
   def setup
     @org = Organization.find_by_identifier('six') 
     @cat_prod = ProductCategory.create(:name => 'Category for testing', :organization_id => @org.id)
@@ -42,6 +40,13 @@ class StockTest < Test::Unit::TestCase
   def test_invalid_field_amount
     entry = StockIn.create(:supplier_id => @supplier.id,  :date => '2007-07-01', :product_id => @product.id, :amount => 'not_numerical')
     assert entry.errors.invalid?(:amount)
+  end
+
+  def test_describe
+    
+    ['StockIn', 'StockOut', 'StockDevolutoin', 'StockDown'].each do |class_name|
+      assert_not_equal class_name, Stock.describe(class_name)
+    end
   end
 
 end

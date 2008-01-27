@@ -106,6 +106,12 @@ class StockControllerTest < Test::Unit::TestCase
     assert_redirected_to :controller => 'stock_in', :action => 'new'
   end
 
+  def test_new_with_produt_id_params
+    get :new, :product_id => @product.id
+    assert_response :redirect
+    assert_redirected_to :action => 'add'
+  end
+
   def test_add
     get :add, :product_id => @product.id
 

@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
 
   require 'extended_array'
   require 'extended_date'
+  require 'extended_active_record'
   include LoadOrganization
   include LoadEnvironment
 

@@ -1,0 +1,11 @@
+
+<%= title @title %>
+
+<% form_tag( :action => 'create', :product_id => @stock.product  )  do %>
+
+  <%= render :partial => 'stock_base/form'%>
+
+  <%= display_new_info_options @stock %> 
+
+<% end %>
+

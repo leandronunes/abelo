@@ -25,7 +25,7 @@ def create_stock_tabs
     in_set 'first'
     highlights_on :controller => 'stock_down'
   end
-  t.named _('Stock Out')
+  t.named _('Stock Down')
 
 end
 

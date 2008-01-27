@@ -17,9 +17,9 @@ class InvoiceTest < Test::Unit::TestCase
     assert @organization.products.include?(@product)
   end
 
-  def create_invoice
-    i =  Invoice.new(:number => 3434, :serie => 343, :organization => @organization, 
-         :supplier => @supplier, :issue_date => Date.today)
+  def create_invoice(params = {})
+    i =  Invoice.new({:number => 3434, :serie => 343, :organization => @organization, 
+         :supplier => @supplier, :issue_date => Date.today}.merge(params))
     i.save
     i
   end
@@ -82,6 +82,16 @@ class InvoiceTest < Test::Unit::TestCase
     assert stock_in.save
     assert i.destroy
     assert_equal stock_in_count, StockIn.count
+  end
+
+  def test_full_text_search
+    Invoice.delete_all 
+    invoice1 = create_invoice(:number => 111111)
+    invoice2 = create_invoice(:number => 222222)
+    invoice3 = create_invoice(:number => 333333)
+    invoices = Invoice.full_text_search('1*')
+    assert_equal 1, invoices.length
+    assert invoices.include?(invoice1)
   end
 
 end

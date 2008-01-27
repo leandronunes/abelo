@@ -1,0 +1,24 @@
+
+<%= error_messages_for 'stock' %>
+
+<!--[form:stock_stock]-->
+
+<% display_form_info @stock do |item | %>
+
+  <%= display_field_form( item, 'amount',
+        :title => _('Amount'),
+        :content => text_field( 'stock', 'amount' )
+    )
+  %>
+
+  <%= display_field_form( item, 'date',
+        :title => _('Date'),
+        :content => date_select_abelo( 'stock', 'date' )
+    )
+  %>
+
+<% end %>
+
+<%= hidden_field 'stock', 'product_id' %>
+
+<!--[eoform:stock_stock]-->

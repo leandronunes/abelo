@@ -65,6 +65,7 @@ class Organization < ActiveRecord::Base
   has_many :stocks, :through => :products
   has_many :stock_ins, :through => :products
   has_many :stock_devolutions, :through => :products
+  has_many :stock_downs, :through => :products
   has_one  :environment, :as => :owner
   has_many :periodicities
   has_many :mass_mails
@@ -315,14 +316,9 @@ class Organization < ActiveRecord::Base
     StockVirtual.create_virtuals(self.products.full_text_search(query), 'stock_devolution')
   end
 
-  def stock_virtual_ins(query = nil)
-    query ||= '*'
-    StockVirtual.create_virtual_ins(self.products, 'stock_in')
-  end
-
   def stock_virtual_downs(query = nil)
     query ||= '*'
-    StockVirtual.create_virtual_downs(self.products, 'stock_down')
+    StockVirtual.create_virtuals(self.products.full_text_search(query), 'stock_down')
   end 
 
   def ledger_categories_of_sale

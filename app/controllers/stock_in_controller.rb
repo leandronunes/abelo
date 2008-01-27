@@ -10,6 +10,13 @@ class StockInController < ApplicationController
   require 'payment/invoice_payment'
   include InvoicePayment
 
+  def autocomplete_invoice_number
+    escaped_string = Regexp.escape(params[:invoice][:number])
+    re = Regexp.new(escaped_string, "i")
+    @invoices = @organization.invoices.select{|i| i.number.match re}
+    render :layout=>false
+  end 
+
   def index
     redirect_to :action => 'list'
   end
@@ -39,9 +46,6 @@ class StockInController < ApplicationController
       redirect_to :action => 'edit', :id => @invoice
     else
       @suppliers = @organization.suppliers
-      @products = @organization.products
-      @stock = StockIn.new
-      @stocks = []
       render :action => 'new'
     end
   end
@@ -53,7 +57,7 @@ class StockInController < ApplicationController
     @stocks = @invoice.stock_ins
     @stock = StockIn.new(:price => 0, :amount => 1)
     @ledgers = @invoice.ledgers
-    @ledger = Ledger.new_ledger(:date => Date.today)
+    @ledger = Ledger.new(:date => Date.today)
     @ledger_categories =  @organization.stock_ledger_categories_by_payment_method(@ledger.payment_method)
   end
 
@@ -64,8 +68,12 @@ class StockInController < ApplicationController
     else
       @suppliers = @organization.suppliers
       @products = @organization.products
+      @stocks = @invoice.stock_ins
       @stock = StockIn.new(:validity => Date.today)
-      render :action => 'new'
+      @ledgers = @invoice.ledgers
+      @ledger = Ledger.new(:date => Date.today)
+      @ledger_categories =  @organization.stock_ledger_categories_by_payment_method(@ledger.payment_method)
+      render :action => 'edit'
     end
   end
 
@@ -92,7 +100,6 @@ class StockInController < ApplicationController
     if @stock.save
       @stock = StockIn.new(:price => 0, :amount => 1)
     end
-    @suppliers = @organization.suppliers
     @products = @organization.products
     @stocks = @invoice.stock_ins
     render :partial => 'invoice_new_items'

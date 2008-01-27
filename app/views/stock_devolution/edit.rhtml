@@ -1,7 +1,0 @@
-<%= title _('Edit stock for %s') % @stock.product.name %>
-
-<% form_tag( :action => 'update', :id => @stock, :product_id => @stock.product )  do %>
-  <%= render :partial => 'stock_base/form' %>
-  <%= display_new_info_options @product %>
-<% end %>
-

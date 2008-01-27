@@ -1,9 +1,9 @@
 
-<%= title _('Devolution of Product %s') % @stock.product.name %>
+<%= title @title %>
 
 <% form_tag( :action => 'create' )  do %>
 
-  <%= render :partial => 'form'%>
+  <%= render :partial => 'stock_base/extended_form'%>
 
   <%= display_new_info_options @stock %> 
 

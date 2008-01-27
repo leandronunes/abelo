@@ -30,7 +30,11 @@ class StockController < ApplicationController
   end
 
   def new
-    redirect_to :controller => 'stock_in', :action => 'new'
+    if params[:product_id].blank?
+      redirect_to :controller => 'stock_in', :action => 'new'
+    else
+      redirect_to :action => 'add', :product_id => params[:product_id]
+    end
   end
 
   def add
@@ -61,7 +65,8 @@ class StockController < ApplicationController
     @stock = @invoice.stock_ins.find(params[:stock_id])
     @suppliers = @stock.product.suppliers
     @ledgers = @invoice.ledgers 
-    @ledger = Ledger.new_ledger(:date => Date.today)
+    @ledger = Ledger.new(:date => Date.today)
+    @banks = Bank.find(:all)
     @ledger_categories =  @organization.stock_ledger_categories_by_payment_method(@ledger.payment_method)
   end
 

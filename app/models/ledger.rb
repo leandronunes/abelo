@@ -103,7 +103,9 @@ class Ledger < ActiveRecord::Base
       self.errors.add(_('You cannot realize money operations whithout create the printer command'))
     end
 
-    self.errors.add(:value, _("The value should be at least 0.01" )) if value.nil? || value <= 0.00
+    self.errors.add(:value, _("The value should be at least 0.01" )) if value.nil? || value == 0.00
+
+    self.errors.add(:value, _("The value should be at least 0.01 fudeu" )) if !self.is_remove_cash? and (value.nil? || value < 0.00)
 
     self.errors.add(:date, _("Date cannot be set" )) unless self[:date].nil?
 

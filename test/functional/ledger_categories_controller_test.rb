@@ -168,7 +168,7 @@ class LedgerCategoriesControllerTest < Test::Unit::TestCase
 
   def test_destroy_unsuccessfully
     Ledger.delete_all
-    Ledger.create_ledger!(:owner => @organization, :value => 10, :date => Date.today, :category => @ledger_category, :bank_account_id => BankAccount.find(:first), :payment_method => 'money')
+    Ledger.create!(:owner => @organization, :value => 10, :date => Date.today, :category => @ledger_category, :bank_account_id => BankAccount.find(:first), :payment_method => Payment::MONEY)
 
     get :destroy, :id => @ledger_category.id
 

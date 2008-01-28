@@ -67,7 +67,7 @@ class PointOfSaleController < ApplicationController
   def open_till
     till = Till.load(@organization, current_user, get_printer_id)
     if till.nil?
-      @cash = Money.new
+      @cash = Ledger.new
       render :action => 'open_till'
     else
       redirect_to :action => 'till_open'
@@ -80,10 +80,10 @@ class PointOfSaleController < ApplicationController
     @till ||= Till.new(@organization, current_user, printer_id)
 
     unless params[:cash].nil?
-      @cash ||= AddCash.new(@till, params[:cash])
+      @cash ||= Ledger.new(params[:cash].merge(:owner => @till, :payment_method => Payment::ADD_CASH))
     end
     if @till.save
-      @till.add_cashs << @cash unless @cash.nil?
+      @till.ledgers << @cash unless @cash.nil?
       redirect_to :action => 'till_open'
     else
       render :template => 'point_of_sale/open_till'
@@ -91,11 +91,11 @@ class PointOfSaleController < ApplicationController
   end
 
   def add_cash
-    @cash = Money.new
+    @cash = Ledger.new
   end
 
   def create_add_cash
-    @cash = AddCash.new(@till, params[:cash])
+    @cash = Ledger.new(params[:cash].merge({:owner => @till, :payment_method => Payment::ADD_CASH}))
 
     if @cash.save
       flash[:notice] = _('The cash was added successfully')
@@ -106,13 +106,11 @@ class PointOfSaleController < ApplicationController
   end
 
   def remove_cash
-    @cash = Money.new
+    @cash = Ledger.new
   end
 
   def create_remove_cash
-    till = load_current_till
-    @cash = RemoveCash.new(till, params[:cash])
-
+    @cash = Ledger.new(params[:cash].merge(:owner => @till, :payment_method => Payment::REMOVE_CASH))
     if @cash.save
       flash[:notice] = _('The cash was removed successfully')
       redirect_to :action => 'till_open'
@@ -241,7 +239,7 @@ class PointOfSaleController < ApplicationController
     @total = @sale.total_value 
     @total_payment = @sale.total_payment 
     @payments = @sale.ledgers
-    @ledger = Ledger.new_ledger
+    @ledger = Ledger.new
     @ledger.value = @sale.balance
     @ledger_categories =  @organization.sale_ledger_categories_by_payment_method(@ledger.payment_method)
   end
@@ -249,7 +247,7 @@ class PointOfSaleController < ApplicationController
   def select_category
     payment_method = params[:payment_method]
     if !payment_method.blank?
-      @ledger = Ledger.new_ledger(:payment_method => payment_method)
+      @ledger = Ledger.new(:payment_method => payment_method)
       @banks = Bank.find(:all)
       @ledger_categories =  @organization.sale_ledger_categories_by_payment_method(@ledger.payment_method)
       @hide_sign = true
@@ -263,11 +261,11 @@ class PointOfSaleController < ApplicationController
     till = load_current_till
     @sale = Sale.pending(till)
      
-    @ledger = Ledger.new_ledger(params['ledger'])
+    @ledger = Ledger.new(params['ledger'])
     @ledger_categories =  @organization.sale_ledger_categories_by_payment_method(@ledger.payment_method)
     @total = @sale.total_value 
     @total_payment = @sale.total_payment 
-    @banks = Bank.find(:all) if @ledger.kind_of? Check
+    @banks = Bank.find(:all)
     
     if @sale.add_payment(@ledger)
       if @sale.balance == 0
@@ -278,7 +276,7 @@ class PointOfSaleController < ApplicationController
         return
       end
       @payments = @sale.ledgers
-      @ledger = Ledger.new_ledger
+      @ledger = Ledger.new
       @ledger.value = @sale.balance
       render :action => 'add_payment' 
     else

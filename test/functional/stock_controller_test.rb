@@ -6,7 +6,7 @@ class StockController; def rescue_action(e) raise e end; end
 
 class StockControllerTest < Test::Unit::TestCase
 
-  fixtures :stocks, :system_actors, :products, :configurations, :system_actors, :ledger_categories, :bank_accounts, :categories
+  fixtures :stocks, :system_actors, :products, :configurations, :ledger_categories, :bank_accounts, :categories, :invoices
 
   under_organization :one
 

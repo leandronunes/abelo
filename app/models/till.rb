@@ -5,7 +5,7 @@ class Till < ActiveRecord::Base
   belongs_to :user
   belongs_to :organization
   has_many :printer_commands, :as => :owner, :dependent => :destroy
-  has_many :add_cashs, :as => :owner, :dependent => :destroy
+  has_many :ledgers, :as => :owner, :dependent => :destroy
   has_one :printer_command, :as => :owner
   has_many :sales, :as => :owner, :dependent => :destroy
 

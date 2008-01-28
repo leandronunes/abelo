@@ -165,8 +165,6 @@ class PermissionsAdminControllerTest < Test::Unit::TestCase
 
   def test_update_template
     new_template = 'financial'
-#puts 'teste'
-#puts @user.profiles.inspect
     profile = @user.profile_by_organization(@organization)
     assert_not_equal new_template, profile.template
     profile_id = profile.id

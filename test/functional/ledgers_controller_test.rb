@@ -23,12 +23,13 @@ class LedgersControllerTest < Test::Unit::TestCase
   end
 
   def create_money(params = {})
-    Money.create!(:date => params[:date] || Date.today, 
+    Ledger.create!(:date => params[:date] || Date.today, 
        :value => params[:value] || 10, 
        :description => params[:description] || 'Some Description', 
        :bank_account => @default_bank_account, 
        :category => @ledger_category, 
        :operational => false, :status => STATUS_PENDING, 
+       :payment_method => Payment::MONEY,
        :owner => @organization)
   end
 
@@ -177,7 +178,7 @@ class LedgersControllerTest < Test::Unit::TestCase
   end
 
   def test_create_successfully
-    post :create, :ledger => {:description => 'Something', :category => @ledger_category, :value => '3', :date => Time.now, :bank_account => @another_bank_account}
+    post :create, :ledger => {:description => 'Something', :category => @ledger_category, :value => '3', :date => Time.now, :bank_account => @another_bank_account, :payment_method => Payment::MONEY}
 
     assert_not_nil assigns(:ledger)
     assert_response :redirect
@@ -392,7 +393,7 @@ class LedgersControllerTest < Test::Unit::TestCase
   def test_select_category_of_money_payment_method
     get :select_category, :payment_method => 'money'
 
-    assert_kind_of Money, assigns(:ledger)
+    assert_equal Payment::MONEY, assigns(:ledger).payment_method
     assert_response :success
     assert_template 'shared_payments/_select_category'
   end
@@ -400,7 +401,7 @@ class LedgersControllerTest < Test::Unit::TestCase
   def test_select_category_of_check_payment_method
     get :select_category, :payment_method => 'check'
 
-    assert_kind_of Check, assigns(:ledger)
+    assert_equal Payment::CHECK, assigns(:ledger).payment_method
     assert_response :success
     assert_template 'shared_payments/_select_category'
   end
@@ -408,7 +409,7 @@ class LedgersControllerTest < Test::Unit::TestCase
   def test_select_category_of_debit_card_payment_method
     get :select_category, :payment_method => 'debit_card'
 
-    assert_kind_of DebitCard, assigns(:ledger)
+    assert_equal Payment::DEBIT_CARD, assigns(:ledger).payment_method
     assert_response :success
     assert_template 'shared_payments/_select_category'
   end
@@ -416,15 +417,14 @@ class LedgersControllerTest < Test::Unit::TestCase
   def test_select_category_of_credit_card_payment_method
     get :select_category, :payment_method => 'credit_card'
 
-    assert_kind_of CreditCard, assigns(:ledger)
+    assert_equal Payment::CREDIT_CARD, assigns(:ledger).payment_method
     assert_response :success
     assert_template 'shared_payments/_select_category'
   end
 
   def test_action_list_with_ledger_without_category
     Ledger.delete_all
-    @ledger = AddCash.new( Till.new(@organization, @user, nil))
-    @ledger.payment_method = 'money'
+    @ledger = Ledger.new( :payment_method => Payment::ADD_CASH, :owner =>  Till.new(@organization, @user, nil))
     @ledger.date = Date.today
     @ledger.bank_account = @organization.default_bank_account
     @ledger.type_of = Payment::TYPE_OF_INCOME
@@ -432,6 +432,8 @@ class LedgersControllerTest < Test::Unit::TestCase
     @ledger.value = 10
     @ledger.save!
     get :list
+    assert_response :success
+    assert_template 'list'
   end
 
 end

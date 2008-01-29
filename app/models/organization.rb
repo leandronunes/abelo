@@ -72,7 +72,7 @@ class Organization < ActiveRecord::Base
   has_many :invoices, :through => :suppliers
   # One Environment can be reached by many domains
   has_many :domains, :as => :owner
-
+  has_one :address, :as => :owner
 
   validates_presence_of :name
   validates_uniqueness_of :name

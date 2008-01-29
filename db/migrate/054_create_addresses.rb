@@ -7,6 +7,7 @@ class CreateAddresses < ActiveRecord::Migration
       t.column :federation_unit,      :string, :null => false
       t.column :street,               :string
       t.column :number,               :string
+      t.column :complement,           :string
       t.column :district,             :string
       t.column :zip_code,             :string
     end

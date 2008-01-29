@@ -1,6 +1,6 @@
 class Sintegra < ActiveRecord::Base
 
-  attr_accessor :file_name, :organization
+  attr_accessor :organization, :file_name, :initial_date, :final_date
 
 
   def initialize(organization, file_name = "sintegra.txt", *args)
@@ -286,32 +286,43 @@ class Sintegra < ActiveRecord::Base
 
   def generate_sintegra_ecf
 
-    # Structure according to "Convenio ICMS 57/95" in the version of "Convenio ICMS 76/03"
+    # 1 Structure according to "Convenio ICMS 57/95" in the version of "Convenio ICMS 31/99"
+    # 2 Structure according to "Convenio ICMS 57/95" in the version of "Convenio ICMS 69/02 e 142/02"
+    # 3 Structure according to "Convenio ICMS 57/95" in the version of "Convenio ICMS 76/03"
     @structure_identification_code = 3
+
     # 1 Interstates only operations under Tax Replacement
     # 2 Interstates - operations with or without Tax Replacement
     # 3 Totality of the operations of the informant
     @nature_identification_code = 1
+
     # 1 Normal 
     # 2 Rectification total file: total replacement of information provided by the taxpayer for this period
     # 3 Rectification additive of file: addition of information not included in files already submitted
     # 5 Undoment file of information relating to transactions / services not effective. In this case, the file should contain, in addition to the record type 10 and type 90, only the records relating to operations / benefits not effective.
     @purpose_code = 1
 
-
-
-    sintegra = generate_register_10( self.organization.cnpj, 
-                          "444444444",
-                          self.organization.name, 
-                          "Salvador", 
-                          "BA",
-                          "33312299",
-                          @initial_date,
-                          @final_date, 
-                          "1", 
-                          "1",
-                          '1')
-
+    sintegra = generate_register_10(
+      self.organization.cnpj, 
+      self.organization.state_registration,
+      self.organization.name, 
+      self.organization.city,
+      self.organization.federation_unit,
+      "33312299",
+      @initial_date,
+      @final_date, 
+      @structure_identification_code,
+      @nature_identification_code, 
+      @purpose_code )
+    sintegra << generate_register_11( 
+      self.organization.street,
+      self.organization.number,
+      self.organization.complement,
+      self.organization.district,
+      self.organization.zip_code,
+      self.organization.responsible_person,
+      "07133312299" )
+    
   end
 
   def generate_sintegra

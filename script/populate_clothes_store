@@ -539,3 +539,15 @@ organization_management = Role.create!(:name => 'Management', :permissions => ['
 
 RoleAssignment.create!(:accessor => gerente, :role => organization_management, :resource => organization)
 
+
+############ Address ##############################
+Address.destroy_all
+address = Address.new
+address.city = 'Salvador'
+address.number = '33'
+address.district = 'Rio Vermelho'
+address.zip_code = '40333222'
+address.federation_unit = 'BA'
+address.street = 'Rua Floriano Peixoto'
+address.owner = organization
+address.save!

@@ -1,6 +1,6 @@
 class AddColumnOrganizations < ActiveRecord::Migration
   def self.up
-    add_column :organizations, :trade_name, :string, :null => false
+    add_column :organizations, :trade_name, :string, :null => false, :default => ''
     add_column :organizations, :state_registration, :string
     add_column :organizations, :responsible_person, :string
   end

@@ -35,6 +35,7 @@ class PointOfSaleController < ApplicationController
   end
 
   def check_command_error
+puts "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
     return unless @organization.has_fiscal_printer? 
     cmd = PrinterCommand.pending_command(@till)
     return if cmd.nil?
@@ -44,7 +45,8 @@ class PointOfSaleController < ApplicationController
 
   def run_pending_commands
     return  unless @organization.has_fiscal_printer? and PrinterCommand.has_pending?(@till)
-    cmd = PrinterCommand.run_pendings(till)
+puts "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP"
+    cmd = PrinterCommand.run_pendings(@till)
   end
 
   def design_point_of_sale
@@ -53,20 +55,17 @@ class PointOfSaleController < ApplicationController
   end
 
   def index
-    till = Till.load(@organization, current_user)
-    unless till.nil?
+    unless @till.nil?
       redirect_to :action => 'till_open'
     end
   end
 
   def till_open
-    till = load_current_till 
-    @pending_sale = Sale.pending(till)
+    @pending_sale = Sale.pending(@till)
   end
 
   def open_till
-    till = Till.load(@organization, current_user, get_printer_id)
-    if till.nil?
+    if @till.nil?
       @cash = Ledger.new
       render :action => 'open_till'
     else
@@ -76,7 +75,7 @@ class PointOfSaleController < ApplicationController
 
   def create_till_open
     printer_id = get_printer_id
-    @till = Till.load(@organization, current_user, printer_id)
+#    @till = Till.load(@organization, current_user, printer_id)
     @till ||= Till.new(@organization, current_user, printer_id)
 
     unless params[:cash].nil?
@@ -131,6 +130,7 @@ class PointOfSaleController < ApplicationController
 
   def change
     @sale = @organization.sales.find(params[:sale_id])
+    @sale.change!
     @total = @sale.total_value 
     @total_payment = @sale.total_payment 
   end
@@ -144,8 +144,7 @@ class PointOfSaleController < ApplicationController
   end
 
   def coupon_open
-    till = load_current_till
-    @sale = Sale.pending(till)
+    @sale = Sale.pending(@till)
     @sale_item = SaleItem.new(@sale)
     unless params[:product_code].nil?
       @sale_item.product_code = params[:product_code] 
@@ -219,8 +218,8 @@ class PointOfSaleController < ApplicationController
   end
 
   def create_coupon_cancel
-    till = load_current_till
-    @sale = Sale.pending(till)
+    load_current_till
+    @sale = Sale.pending(@till)
 
     if @sale.cancel!
       redirect_to :action => 'till_open'
@@ -233,8 +232,7 @@ class PointOfSaleController < ApplicationController
   end
 
   def add_payment
-    till = load_current_till
-    @sale = Sale.pending(till)
+    @sale = Sale.pending(@till)
     @sale.totalize
     @total = @sale.total_value 
     @total_payment = @sale.total_payment 
@@ -258,31 +256,34 @@ class PointOfSaleController < ApplicationController
   end
 
   def create_coupon_add_payment
-    till = load_current_till
-    @sale = Sale.pending(till)
-     
-    @ledger = Ledger.new(params['ledger'])
+    @sale = Sale.pending(@till)
+    ledger_params = params['ledger'] || {}
+    @ledger = Ledger.new(ledger_params.merge(:owner => @sale))
     @ledger_categories =  @organization.sale_ledger_categories_by_payment_method(@ledger.payment_method)
-    @total = @sale.total_value 
-    @total_payment = @sale.total_payment 
-    @banks = Bank.find(:all)
     
-    if @sale.add_payment(@ledger)
+    if @ledger.save
       if @sale.balance == 0
+        @sale.close!      
         redirect_to :action => 'till_open'
         return
       elsif @sale.balance < 0
+        @sale.change!
         redirect_to :action => 'change', :sale_id => @sale
         return
       end
       @payments = @sale.ledgers
       @ledger = Ledger.new
       @ledger.value = @sale.balance
+      @total = @sale.total_value 
+      @total_payment = @sale.total_payment 
       render :action => 'add_payment' 
     else
-      @sale.ledgers.delete(@ledger)
+#      @sale.ledgers.delete(@ledger)
       @ledger.value = @sale.balance
       @payments = @sale.ledgers
+      @total = @sale.total_value 
+      @total_payment = @sale.total_payment 
+      @banks = Bank.find(:all)
       render :action => 'add_payment' 
     end
   end
@@ -324,7 +325,7 @@ class PointOfSaleController < ApplicationController
   def coupon_close
     @sale = @organization.sales.find(params[:id])
     @sale.close!      
-    redirect_to :action => 'index'
+    redirect_to :action => 'till_open'
   end
 
   private

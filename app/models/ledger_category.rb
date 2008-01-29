@@ -12,6 +12,7 @@ class LedgerCategory < ActiveRecord::Base
   validates_uniqueness_of :name
 
   serialize :settings
+  delegate :default_bank_account, :to => :organization
 
   def destroy
     self.ledgers.count != 0 ? false : super

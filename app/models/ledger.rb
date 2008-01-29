@@ -75,7 +75,7 @@ class Ledger < ActiveRecord::Base
 
   # Methods that are defined on payment strategy 
   # Part of the strategy pattern
-  delegate :require_category?, :is_check?, :is_money?, :is_credit_card?, :is_debit_card?, :is_add_cash?, :is_remove_cash?, :to => :payment_strategy
+  delegate :require_category?, :is_check?, :is_money?, :is_credit_card?, :is_debit_card?, :is_add_cash?, :is_remove_cash?, :is_change?, :to => :payment_strategy
   delegate :set_as_done_on_save?, :payment_initialize, :display_class, :create_printer_cmd!, :to => :payment_strategy
 
   def payment_strategy
@@ -105,7 +105,7 @@ class Ledger < ActiveRecord::Base
 
     self.errors.add(:value, _("The value should be at least 0.01" )) if value.nil? || value == 0.00
 
-    self.errors.add(:value, _("The value should be at least 0.01 fudeu" )) if !self.is_remove_cash? and (value.nil? || value < 0.00)
+    self.errors.add(:value, _("The value should be at least 0.01" )) if (!self.is_remove_cash? and !self.is_change?) and (value.nil? || value < 0.00)
 
     self.errors.add(:date, _("Date cannot be set" )) unless self[:date].nil?
 
@@ -118,7 +118,7 @@ class Ledger < ActiveRecord::Base
     l.type_of = l.category.type_of unless l.category.nil?
     l.effective_value ||= l.foreseen_value unless l.pending?
     l.effective_date ||= l.foreseen_date unless l.pending?
-    l.create_printer_cmd!(l)
+    l.create_printer_cmd!(l) if l.has_fiscal_printer?
   end
 
   before_save do |ledger|
@@ -158,7 +158,7 @@ class Ledger < ActiveRecord::Base
   end
 
   before_destroy do |ledger|
-    raise _('You cannot destroy sale ledgers') if ledger.owner.kind_of? Sale
+#    raise _('You cannot destroy sale ledgers') if ledger.owner.kind_of? Sale
   end
 
   after_destroy do |ledger|
@@ -172,6 +172,18 @@ class Ledger < ActiveRecord::Base
   def initialize(*args)
     super(*args)
     self.payment_initialize(self)
+  end
+
+  # Set the status of this ledger for OPEN. It means that the
+  # fiscal printer command was sent to the printer.
+  def cmd_sent!
+    self.status = STATUS_OPEN
+  end
+
+  # Set the current status of the ledger to pending. It means that 
+  # the fiscal printer received and print the fiscal printer command.
+  def cmd_received!(cmd = nil)
+    self.status = STATUS_PENDING
   end
 
   def dclone
@@ -231,22 +243,6 @@ class Ledger < ActiveRecord::Base
   def reload
     Ledger.find(self.id)
   end
-
-#  @@original_new = self.method(:new)
-
-#  def self.create_ledger!(*args)
-#    object = self.new_ledger(*args)
-#    object.save!
-#    object
-#  end
-
-#  def self.new_ledger(*args)
-#    l = Ledger.instanciate_ledger(*args)
-#    klass = Payment::PAYMENT_METHODS[l.payment_method] || Money
-#    object = klass.new(*args)
-#    object.type_of =  l.category.type_of unless l.category.nil?
-#    object
-#  end
 
   # Return the value sum of income ledgers passed as parameter
   def self.total_income(ledgers)
@@ -319,21 +315,23 @@ class Ledger < ActiveRecord::Base
       when('Organization'): 
         self.owner.has_fiscal_printer?
       when('Till'): 
-        self.owner.organization.has_fiscal_printer?
+        self.owner.has_fiscal_printer?
+      when('Sale'): 
+        self.owner.has_fiscal_printer?
       else
         nil
     end
   end
 
   def value= value
-    self[:foreseen_value] = self.pending? ? (value.kind_of?(String) ? value.gsub(',', '.') : value) : (self[:foreseen_value] || (value.kind_of?(String) ? value.gsub(',', '.') : value))
-    self[:effective_value] = value unless self.pending? 
+    self.foreseen_value = self.pending? ? (value.kind_of?(String) ? value.gsub(',', '.') : value) : (self.foreseen_value || (value.kind_of?(String) ? value.gsub(',', '.') : value))
+    self.effective_value = value unless self.pending? 
   end
 
   def value
-    value = self.pending? ? self[:foreseen_value] :  self[:effective_value]
+    value = self.pending? ? self.foreseen_value :  self.effective_value
     value ||= 0
-    (self.is_remove_cash? and (value > 0)) ? (value * -1) : value
+    ((self.is_remove_cash? or self.is_change? ) and (value > 0)) ? (value * -1) : value
   end
 
   def date
@@ -378,27 +376,22 @@ class Ledger < ActiveRecord::Base
   end
 
   def pending?
-    self.status == STATUS_PENDING
+    self.status == STATUS_PENDING or self.status == STATUS_OPEN
   end
 
-#  #This method cannot be access directly. 
-#  #You have to access the date method and this method
-#  #set the correct value of foreseen_date attribute
-  def foreseen_date= date
-    raise _('This function cannot be accessed directly')
-  end
-
-#  #This method cannot be access directly. 
-#  #You have to access the value method and this method
-#  #set the correct value of foreseen_value attribute
-  def foreseen_value= value
-    raise _('This function cannot be accessed directly')
-  end
-
-  private
-
-  def self.instanciate_ledger(*args)
-    @@original_new.call(*args)
-  end
+#TODO remove this
+##  #This method cannot be access directly. 
+##  #You have to access the date method and this method
+##  #set the correct value of foreseen_date attribute
+#  def foreseen_date= date
+#    raise _('This function cannot be accessed directly')
+#  end
+#
+##  #This method cannot be access directly. 
+##  #You have to access the value method and this method
+##  #set the correct value of foreseen_value attribute
+#  def foreseen_value= value
+#    raise _('This function cannot be accessed directly')
+#  end
 
 end

@@ -8,25 +8,34 @@ class Sale < ActiveRecord::Base
   belongs_to :owner, :polymorphic => true
   has_many :printer_commands, :as => :owner, :dependent => :destroy
   has_many :items, :class_name => 'SaleItem', :dependent => :destroy
+  has_many :sale_items
   has_many :ledgers, :as => :owner, :dependent => :destroy
+  #FIXME This association only works with sale_item. 
+  #The correct way is works with items class
+  has_many :stock_outs, :through => :sale_items
 
   validates_presence_of :datetime, :organization_id, :user_id
   validates_inclusion_of :status, :in => ALL_STATUS
+
+  before_create do |sale|
+    sale.cmd_sent! if sale.has_fiscal_printer?
+  end
 
   after_create do |sale|
     sale.printer_commands << PrinterCommand.new(sale.owner, [PrinterCommand::OPEN]) if sale.has_fiscal_printer?
   end
 
-  def totalize
-    if self.has_fiscal_printer? and not PrinterCommand.is_totalized?(self)
-      self.printer_commands << PrinterCommand.new(self.owner, [PrinterCommand::TOTALIZE]) 
-    end
-  end
+  delegate :has_fiscal_printer?, :default_bank_account, :to => :organization
 
   def validate
     pending = Sale.pending(self.owner)
     if !pending.nil? and pending != self
       self.errors.add(:status, _('You cannot have two pendings sale'))
+    end
+
+    opened = Sale.opened(self.owner)
+    if !opened.nil? and opened != self
+      self.errors.add(:status, _('You cannot open a sale with a sale opened'))
     end
   end
 
@@ -36,6 +45,31 @@ class Sale < ActiveRecord::Base
     self.salesman = till.user
     self.owner = till
     self.datetime = Time.now
+  end
+
+  # Set the status of this sale for OPEN. It means that the
+  # fiscal printer command was sent to the printer.
+  def cmd_sent!
+    self.status = STATUS_OPEN
+  end
+
+  # Set the current status of the sale to pending. It means that 
+  # the fiscal printer received and print the fiscal printer sale
+  # command.
+  def cmd_received!(cmd = nil)
+    if !cmd.nil? and cmd.cmd == PrinterCommand::CANCEL
+      self.status = STATUS_CANCELLED
+    elsif !cmd.nil? and cmd.cmd == PrinterCommand::CLOSE
+      self.status = STATUS_DONE
+    else
+      self.status = STATUS_PENDING
+    end
+  end
+
+  def totalize
+    if self.has_fiscal_printer? and not PrinterCommand.is_totalized?(self)
+      self.printer_commands << PrinterCommand.new(self.owner, [PrinterCommand::TOTALIZE]) 
+    end
   end
 
   def self.sale_ledgers_by_customer(customer)
@@ -62,6 +96,12 @@ class Sale < ActiveRecord::Base
     till.sales.find(:first, :conditions => {:status => STATUS_PENDING})
   end
 
+  # gives the opened (open) sales for a given organization and user.
+  def self.opened(till)
+    return nil if till.nil?
+    till.sales.find(:first, :conditions => {:status => STATUS_OPEN})
+  end
+
   # is this sale open?
   def open?
     self.status == STATUS_PENDING
@@ -72,11 +112,6 @@ class Sale < ActiveRecord::Base
     self.status == STATUS_CANCELLED
   end
 
-  # Return true if the organization works with fiscal printer 
-  def has_fiscal_printer?
-    self.organization.has_fiscal_printer? if self.organization
-  end
-
   # Cancels a sale
   def cancel!
     if self.status != STATUS_PENDING
@@ -85,7 +120,9 @@ class Sale < ActiveRecord::Base
     end
     self.status = STATUS_CANCELLED
     self.ledgers.collect{|l| l.confirm_cancel!}
-    if self.owner.has_fiscal_printer?
+    self.items.collect{|l| l.cancel!}
+    if self.has_fiscal_printer?
+      self.status = STATUS_OPEN
       self.printer_commands << PrinterCommand.new(self.owner, [PrinterCommand::CANCEL])
     end
     self.save
@@ -93,9 +130,24 @@ class Sale < ActiveRecord::Base
 
   # closes a sale. No item can be added to it anymore
   def close!
-    raise ArgumentError.new('Only open sales can be closed') if self.status != STATUS_PENDING
-    self.status = STATUS_DONE  if self.balance <= 0
+    if self.status != STATUS_PENDING
+      self.errors.add('status', _('Only open sales can be closed')) 
+      return false
+    end
+
+    if self.balance != 0
+      self.errors.add('value', _('Only sales with balance equal to zero can be closed')) 
+      return false
+    end
+
+    self.status = STATUS_DONE 
     self.ledgers.collect{|l| l.confirm_done!}
+    self.items.collect{|i| i.done!}
+
+    if self.has_fiscal_printer?
+      self.status = STATUS_OPEN
+      self.printer_commands << PrinterCommand.new(self.owner, [PrinterCommand::CLOSE])
+    end
     self.save
   end
   
@@ -121,15 +173,6 @@ class Sale < ActiveRecord::Base
     total_value - total_payment
   end
 
-  # Add a payment to the sale. Return the result of "this.ledgers<<ledger"
-  def add_payment(ledger)
-    ledger.date = Date.today
-    ledger.bank_account = self.organization.default_bank_account
-    payment_added = self.ledgers << ledger
-    self.close! if payment_added and self.balance <= 0
-    payment_added
-  end
-
   # Return the sum of payments of the sale
   def total_payment
     value = 0
@@ -137,6 +180,12 @@ class Sale < ActiveRecord::Base
       value = value + l.value
     }  
     value #Making the return value more clear
+  end
+
+  def change!
+    return unless self.balance < 0
+    l = Ledger.new(:owner => self, :payment_method => Payment::CHANGE, :value => self.balance.abs)
+    l.save!
   end
 
   # Return the identifier of a customer. Now the identifier is the cpf

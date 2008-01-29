@@ -10,6 +10,7 @@ class StockOut < Stock
 
   def done!
     self.status = Status::STATUS_DONE
+    self.save
   end
 
   def validate
@@ -19,6 +20,11 @@ class StockOut < Stock
         self.errors.add('amount', _('%{fn} must not be larger than the total amount of this product in stock (which is %d).') % total)
       end
     end
+  end
+
+  def cancel!
+    self.status = Status::STATUS_CANCELLED
+    self.save
   end
 
 end

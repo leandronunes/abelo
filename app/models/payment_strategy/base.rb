@@ -24,6 +24,10 @@ class PaymentBase
     false
   end
 
+  def is_change?
+    false
+  end
+
   def require_category?
     true
   end
@@ -33,15 +37,20 @@ class PaymentBase
   end
 
   def payment_initialize(ledger)
-    ledger
+    ledger.status ||= Status::STATUS_PENDING
+    ledger.date ||= Date.today
+    ledger.bank_account ||= ledger.category.default_bank_account unless ledger.category.nil?
   end
 
   def create_printer_cmd!(ledger)
-    ledger.printer_command = PrinterCommand.new(ledger.owner, 
+    return unless ledger.printer_command.nil?
+    till = ledger.owner.kind_of?(Sale) ? ledger.owner.owner : ledger.owner
+    ledger.printer_command = PrinterCommand.new(till, 
             [
               PrinterCommand::ADD_PAYMENT, ledger.fiscal_payment_type, 
               ledger.payment_type, ledger.value
-            ]) if ledger.has_fiscal_printer?
+            ])
+    ledger.cmd_sent!
   end
 
   def display_class

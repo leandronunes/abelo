@@ -15,10 +15,14 @@ class Till < ActiveRecord::Base
     till.printer_command ||= PrinterCommand.new(till, [PrinterCommand::SUMMARIZE]) if till.has_fiscal_printer?
   end
 
+  before_create do |till|
+    till.cmd_sent! if till.has_fiscal_printer?
+  end
+
   delegate :default_bank_account, :to => :organization
 
   def validate
-    pendings = self.class.find(:all, :conditions => {:status => STATUS_PENDING, :organization_id => self.organization, :user_id => self.user})
+    pendings = self.class.find(:all, :conditions => {:status => [STATUS_PENDING, STATUS_OPEN], :organization_id => self.organization, :user_id => self.user})
     pendings.delete(self)
     if(!pendings.blank?)
       self.errors.add(_('You already have a till open.'))
@@ -41,6 +45,10 @@ class Till < ActiveRecord::Base
     self.find(:first, :conditions => {:user_id => user, :organization_id => organization, :printer_id => printer_id, :status => STATUS_PENDING})
   end
 
+  def self.load_open(organization, user, printer_id = nil)
+    self.find(:first, :conditions => {:user_id => user, :organization_id => organization, :printer_id => printer_id, :status => STATUS_OPEN})
+  end
+
   def has_fiscal_printer?
     self.organization.has_fiscal_printer? if self.organization
   end
@@ -51,6 +59,21 @@ class Till < ActiveRecord::Base
    self.printer_command.execute()
   end
 
+  # Set the status of this till for OPEN. It means that the
+  # fiscal printer command was sent to the printer.
+  def cmd_sent!
+    self.status = STATUS_OPEN
+  end
+
+  # Set the current status of the till to pending. It means that 
+  # the fiscal printer received and print the fiscal printer open
+  # till command.
+  def cmd_received!(cmd = nil)
+    self.status = STATUS_PENDING
+  end
+
+  # Close the till modifying the status of the till object
+  # to status DONE, create the CLOSE_TILL command and run it
   def close
     self.status = STATUS_DONE
     if self.has_fiscal_printer?

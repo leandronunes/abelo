@@ -3,6 +3,7 @@ import sys
 from stoqdrivers.exceptions import *
 
 COMMAND_OK =  1
+SEPARATOR = ';'
 
 dict = {
   OutofPaperError: 100,
@@ -29,6 +30,7 @@ dict = {
   InvalidReply: 121,
   AlreadyTotalized: 122,
   InvalidValue: 123,
+  DriverError: 124,
 }
 
 
@@ -42,50 +44,51 @@ def main():
   printer = Pyro.core.getProxyForURI("PYRONAME://abelo_printer")
 
   def printer_id():
-    print 'printer01'
+    return 'printer01'
 
   def summarize():
-    a = '1' #TODO remove this
-    printer.summarize()
+    return printer.summarize()
 
   def till_add_cash():
     value = parameters[0]
-    printer.till_add_cash(value)
+    return printer.till_add_cash(value)
 
   def till_remove_cash():
     value = parameters[0]
-    printer.till_remove_cash(value)
+    return printer.till_remove_cash(value)
 
   def close_till():
     is_today = parameters[0]
-#    printer.close_till(is_today)
+    return printer.close_till(is_today)
 
   def open():
-    printer.open()
+    return printer.open()
 
   def cancel():
-    printer.cancel()
+    return printer.cancel()
 
   def add_item():
     ( code, description, price, taxcode,
       quantity, unit, discount, surcharge,
       unit_desc ) = parameters
 
-    printer.add_item(
+    return printer.add_item(
       code, description, price, taxcode,
       quantity, unit, discount, surcharge,
       unit_desc)
 
   def add_payment():
-    printer.totalize()
     (payment_method, description, value ) = parameters
-    printer.add_payment(payment_method, description, value)
+    return printer.add_payment(payment_method, value, description)
+
+  def close():
+    return printer.close()
 
   def totalize():
-    printer.totalize()
+    return printer.totalize()
 
   def errhandler ():
-     print "Your command doesn't exist"
+    return "Your command doesn't exist"
 
 # set up a dictionary of actions
 
@@ -100,14 +103,16 @@ def main():
     "cancel": cancel,
     "add_item": add_item,
     "add_payment": add_payment,
+    "close": close,
   }
 
-  takeaction.get(command,errhandler)()
+  return takeaction.get(command,errhandler)()
 
 try:
   if __name__ == "__main__":
-    main()
-#    print COMMAND_OK
+    a = main()
+    print COMMAND_OK
+    print a
 except: 
   print dict[sys.exc_type]
-#  print sys.exc_info()[1]
+  print sys.exc_info()[1]

@@ -9,7 +9,7 @@ class SaleItem < ActiveRecord::Base
 
   belongs_to :sale
   belongs_to :product
-  belongs_to :stock_out, :class_name => 'StockOut', :foreign_key => :stock_id
+  belongs_to :stock_out, :class_name => 'StockOut', :foreign_key => :stock_id, :dependent => :destroy
   has_one :printer_command, :as => :owner, :dependent => :destroy
 
   validates_presence_of :sale_id, :product_id, :amount, :unitary_price
@@ -24,6 +24,10 @@ class SaleItem < ActiveRecord::Base
     sale_item.stock_out.amount = sale_item.amount
   end
 
+  before_create do |item|
+    item.cmd_sent! if item.has_fiscal_printer?
+  end
+
   after_create do |item|
     item.printer_command = PrinterCommand.new(item.sale.owner, 
         [
@@ -34,6 +38,8 @@ class SaleItem < ActiveRecord::Base
         ])
 
   end
+
+  delegate :has_fiscal_printer?, :to => :sale
 
   def validate
     if self.unitary_price <= 0
@@ -50,8 +56,28 @@ class SaleItem < ActiveRecord::Base
     self.sale = sale
   end
 
+  # Set the status of this item for OPEN. It means that the
+  # fiscal printer command was sent to the printer.
+  def cmd_sent!
+    self.status = STATUS_OPEN
+  end
+
+  # Set the current status of the item to pending. It means that 
+  # the fiscal printer received and print the fiscal printer add
+  # item command.
+  def cmd_received!(cmd = nil)
+    self.status = STATUS_PENDING
+  end
+
   def cancel!
     self.status = STATUS_CANCELLED
+    self.stock_out.cancel!
+    self.save
+  end
+
+  def done!
+    self.status = STATUS_DONE
+    self.stock_out.done!
     self.save
   end
 

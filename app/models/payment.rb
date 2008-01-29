@@ -18,8 +18,11 @@ class Payment  < ActiveRecord::Base
   DEBIT_CARD = 'debit_card'
   ADD_CASH = 'add_cash'
   REMOVE_CASH = 'remove_cash'
+  CHANGE = 'change'
 
-  PAYMENT_METHODS = {MONEY => Money, CHECK => Check, ADD_CASH => AddCash, REMOVE_CASH => RemoveCash, CREDIT_CARD => CreditCard, DEBIT_CARD => DebitCard}
+  PAYMENT_METHODS = {MONEY => Money, CHECK => Check, ADD_CASH => AddCash, 
+                     REMOVE_CASH => RemoveCash, CREDIT_CARD => CreditCard, 
+                     DEBIT_CARD => DebitCard, CHANGE => Change}
 
   # Check if the current ledger is a income
   def self.income?(type_of)

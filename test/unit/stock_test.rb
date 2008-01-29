@@ -44,7 +44,7 @@ class StockTest < Test::Unit::TestCase
 
   def test_describe
     
-    ['StockIn', 'StockOut', 'StockDevolutoin', 'StockDown'].each do |class_name|
+    ['StockIn', 'StockOut', 'StockDevolution', 'StockDown'].each do |class_name|
       assert_not_equal class_name, Stock.describe(class_name)
     end
   end

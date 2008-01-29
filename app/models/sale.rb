@@ -120,7 +120,7 @@ class Sale < ActiveRecord::Base
     end
     self.status = STATUS_CANCELLED
     self.ledgers.collect{|l| l.confirm_cancel!}
-    self.items.collect{|l| l.cancel!}
+    self.items.collect{|i| i.cancel!}
     if self.has_fiscal_printer?
       self.status = STATUS_OPEN
       self.printer_commands << PrinterCommand.new(self.owner, [PrinterCommand::CANCEL])

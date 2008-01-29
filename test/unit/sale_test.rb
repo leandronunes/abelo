@@ -168,7 +168,7 @@ class SaleTest < Test::Unit::TestCase
   end
 
   def test_cancelled?
-    Sale.delete_all
+    Sale.destroy_all
     sale = new_sale(:datetime => '2007-08-04', :organization_id => @organization.id, :user_id => @user.id) 
     assert sale.save
     assert sale.cancel!
@@ -186,12 +186,6 @@ class SaleTest < Test::Unit::TestCase
     assert sale.save
     sale.close!
     assert sale.closed?
-  end
-
-  def test_close_with_status_already_close
-    sale = create_sale(:status => STATUS_DONE)
-    assert sale.save
-    assert_raise(ArgumentError){sale.close!}
   end
 
   def test_close!_with_status_canceled

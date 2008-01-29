@@ -35,7 +35,6 @@ class PointOfSaleController < ApplicationController
   end
 
   def check_command_error
-puts "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
     return unless @organization.has_fiscal_printer? 
     cmd = PrinterCommand.pending_command(@till)
     return if cmd.nil?
@@ -45,7 +44,6 @@ puts "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 
   def run_pending_commands
     return  unless @organization.has_fiscal_printer? and PrinterCommand.has_pending?(@till)
-puts "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP"
     cmd = PrinterCommand.run_pendings(@till)
   end
 
@@ -75,7 +73,6 @@ puts "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP"
 
   def create_till_open
     printer_id = get_printer_id
-#    @till = Till.load(@organization, current_user, printer_id)
     @till ||= Till.new(@organization, current_user, printer_id)
 
     unless params[:cash].nil?

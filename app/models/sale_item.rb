@@ -12,7 +12,7 @@ class SaleItem < ActiveRecord::Base
   belongs_to :stock_out, :class_name => 'StockOut', :foreign_key => :stock_id, :dependent => :destroy
   has_one :printer_command, :as => :owner, :dependent => :destroy
 
-  validates_presence_of :sale_id, :product_id, :amount, :unitary_price
+  validates_presence_of :sale_id, :product_id, :amount, :unitary_price, :stock_out
   validates_inclusion_of :status, :in => ALL_STATUS
 
   before_validation do |sale_item|

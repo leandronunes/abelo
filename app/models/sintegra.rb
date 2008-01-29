@@ -1,17 +1,12 @@
 class Sintegra < ActiveRecord::Base
 
-  attr_accessor :organization, :file_name, :initial_date, :final_date
+  attr_accessor :file_name, :organization
 
 
-  def initialize(org, informations = {:file_name => "sintegra.txt", :initial_date => Date.today, :final_date => Date.today} )
-#   super(*args)
-    self.organization = org
-    # TODO
-    @product = org.products.find(:first)
-
-    @initial_date = informations[:initial_date]
-    @final_date = informations[:final_date]
-    @file_name = informations[:file_name]
+  def initialize(organization, file_name = "sintegra.txt", *args)
+    super(*args)
+    organization = organization
+    self.file_name = file_name
   end
 
   def get_modelo_90()

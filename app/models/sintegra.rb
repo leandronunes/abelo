@@ -20,7 +20,6 @@ class Sintegra < ActiveRecord::Base
     puts sin_file
   end
 
-  
   # Register 10 - Organization Informations 
   def generate_register_10( cnpj, state_registration, name, city, 
                             federation_unit, fax, initial_date, final_date, 
@@ -31,13 +30,13 @@ class Sintegra < ActiveRecord::Base
     string_register_10 = "10"
     # 2. CNPJ/MF 14 N;
     string_register_10 << cnpj.to_s[0..13].rjust(14,'0')
-    # 3. State registration 14 A; nao tem!!!
+    # 3. State registration 14 A; 
     string_register_10 << state_registration.to_s[0..13].ljust(14)
-    # 4. Organization name 35 A; Razao social???
+    # 4. Organization name 35 A;
     string_register_10 << name.to_s[0..34].ljust(35)
-    # 5. city 30 A; nao tem!!!
+    # 5. city 30 A; 
     string_register_10 << city.to_s[0..29].ljust(30)
-    # 6. Federation Unite 2 A; 
+    # 6. Federation Unit 2 A; 
     string_register_10 << federation_unit.to_s[0..1].ljust(2)
     # 7. Fax 10 N;
     string_register_10 << fax.to_s[0..9].rjust(10,'0')
@@ -45,7 +44,7 @@ class Sintegra < ActiveRecord::Base
     string_register_10 << initial_date.to_s.delete('-')
     # 9. Final Date 8 N;
     string_register_10 << final_date.to_s.delete('-')
-    # 10. Structure Identification Code 1 A;
+    # 10. Identification Code of File Structure 1 A;
     string_register_10 << structure_identification_code.to_s[0]
     # 11. Nature Identification Code 1 A;
     string_register_10 << nature_identification_code.to_s[0] 
@@ -288,6 +287,36 @@ class Sintegra < ActiveRecord::Base
     # 6. Number of Type 90 Registers 1 N; 
     string << number.to_s << "\n"
     return string
+  end
+
+  def generate_sintegra_ecf
+
+    # Structure according to "Convenio ICMS 57/95" in the version of "Convenio ICMS 76/03"
+    @structure_identification_code = 3
+    # 1 Interstates only operations under Tax Replacement
+    # 2 Interstates - operations with or without Tax Replacement
+    # 3 Totality of the operations of the informant
+    @nature_identification_code = 1
+    # 1 Normal 
+    # 2 Rectification total file: total replacement of information provided by the taxpayer for this period
+    # 3 Rectification additive of file: addition of information not included in files already submitted
+    # 5 Undoment file of information relating to transactions / services not effective. In this case, the file should contain, in addition to the record type 10 and type 90, only the records relating to operations / benefits not effective.
+    @purpose_code = 1
+
+
+
+    sintegra = generate_register_10( self.organization.cnpj, 
+                          "444444444",
+                          self.organization.name, 
+                          "Salvador", 
+                          "BA",
+                          "33312299",
+                          @initial_date,
+                          @final_date, 
+                          "1", 
+                          "1",
+                          '1')
+
   end
 
   def generate_sintegra

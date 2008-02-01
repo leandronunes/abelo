@@ -3,16 +3,12 @@
 
 <% form_tag ( :action => 'build_file' ) do %>
   <p>
-    <label for="sintegra_file_name">File Name:</label><br>
-    <%= text_field 'sintegra', "file_name" %>
+    <label for="sintegra_month">Month:</label><br>
+    <%= select_month(Date.today, :use_month_numbers => true) %>
   </p>
   <p>
-    <label for="sintegra_initial_date">Initial Date:</label><br>
-    <%= date_select_abelo('sintegra', "initial_date", :start_year => Date.today.year - 10) %>
-  </p>
-  <p>
-    <label for="sintegra_final_date">Final Date:</label><br>
-    <%= date_select_abelo('sintegra', 'final_date', :start_year => Date.today.year - 10)  %>
+    <label for="sintegra_year">Year:</label><br>
+      <%= select_year(Date.today) %>
   </p>
 
   <%= submit_tag _("Create") %>

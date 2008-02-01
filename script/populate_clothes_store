@@ -551,3 +551,10 @@ address.federation_unit = 'BA'
 address.street = 'Rua Floriano Peixoto'
 address.owner = organization
 address.save!
+
+########## Organization Update ########################
+
+organization.state_registration = 12345
+organization.trade_name = 'Loja Toca LTDA'
+organization.responsible_person = 'Jose Silva'
+organization.save!

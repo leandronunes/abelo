@@ -13,7 +13,7 @@ class SintegraController < ApplicationController
   end
 
   def build_file
-    @sintegra = Sintegra.new(@organization,params[:sintegra])
+    @sintegra = Sintegra.new(@organization, params[:date][:month], params[:date][:year])
     #render :text => params.inspect
     #return
     if @sintegra.generate_sintegra

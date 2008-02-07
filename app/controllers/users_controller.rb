@@ -40,8 +40,8 @@ class UsersController < ApplicationController
       end
       flash[:notice] = _("Logged in successfully")
       if self.current_user.organizations.count == 1
-         if can(:controller => 'main')
-           redirect_to :controller => 'main', :organization_nickname => self.current_user.organization.identifier
+         if can(:controller => 'organization')
+           redirect_to :controller => 'organization', :organization_nickname => self.current_user.organization.identifier
          elsif(can(:controller => 'ledgers'))
            redirect_to :controller => 'ledgers', :organization_nickname => self.current_user.organization.identifier
          elsif(can(:controller => 'point_of_sale', :action => 'index'))

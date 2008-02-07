@@ -1,6 +1,13 @@
 #!/usr/bin/env ruby
 require File.dirname(__FILE__) + '/../config/environment'
 
+
+############Country, State, City########################
+country = BSC::Country.create(:name => 'Brazil')
+state = BSC::State.create(:name => 'Bahia', :country => country)
+city = BSC::City.create(:name => 'Salvador', :state => state)
+
+
 ############Virtual Community########################
 Environment.delete_all
 Environment.create!(:name => 'Default Environment', :is_default => true)
@@ -222,6 +229,16 @@ DocumentDisplay.available_fields.collect { |d|
   params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
 }
 configuration.set_document_displays=(params)
+
+AddressDisplay.delete_all
+params = {}
+AddressDisplay.available_fields.collect { |d|
+  in_list = ['country', 'state', 'city'].include?(d) ? true :false
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
+}
+configuration.set_address_displays=(params)
+
+
 
 configuration.save!
 
@@ -538,19 +555,6 @@ Role.destroy_all
 organization_management = Role.create!(:name => 'Management', :permissions => ['manage_department', 'view_department', 'view_ledger', 'edit_ledger'])
 
 RoleAssignment.create!(:accessor => gerente, :role => organization_management, :resource => organization)
-
-
-############ Address ##############################
-Address.destroy_all
-address = Address.new
-address.city = 'Salvador'
-address.number = '33'
-address.district = 'Rio Vermelho'
-address.zip_code = '40333222'
-address.federation_unit = 'BA'
-address.street = 'Rua Floriano Peixoto'
-address.owner = organization
-address.save!
 
 ########## Organization Update ########################
 

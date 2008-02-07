@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class ProductTest < Test::Unit::TestCase
 
-  fixtures :ledger_categories, :bank_accounts, :organizations
+  fixtures :ledger_categories, :bank_accounts
  
   def setup
     @organization = Organization.find(:first)

@@ -2,8 +2,8 @@
 
 <%= error_messages_for 'organization' %>
 
-<% form_tag :controller => 'main', :action => 'update' do %>
-  <%= rich_text_editor_default('organization', 'presentation' ) %>
+<% form_tag :action => 'update' do %>
+  <%= rich_text_editor_default('organization', 'presentation') %>
   <%= display_edit_info_options @organization %>
 <% end %>
 

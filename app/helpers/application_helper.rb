@@ -124,7 +124,7 @@ module ApplicationHelper
 
   def link_to_organization(org, html_options = {})
     location = [
-      {:organization_nickname => org.identifier, :controller => 'main'},
+      {:organization_nickname => org.identifier, :controller => 'organization'},
       {:organization_nickname => org.identifier, :controller => 'ledgers'},
       {:organization_nickname => org.identifier, :controller => 'point_of_sale'}
     ]
@@ -133,7 +133,7 @@ module ApplicationHelper
   end
 
   def select_payments(object, method)
-    collection =  Payment::PAYMENT_METHODS.keys.reject{|p| p == Payment::ADD_CASH or p == Payment::REMOVE_CASH}
+    collection =  Payment::PAYMENT_METHODS.keys
     selected_options = controller.instance_variable_get("@#{object}").send(method)
     content_tag(:ul, 
       [
@@ -160,7 +160,7 @@ module ApplicationHelper
   end
   
   def select_payment(object, method)
-    collection =  Payment::PAYMENT_METHODS.keys.reject{|p| p == Payment::ADD_CASH or p == Payment::REMOVE_CASH}
+    collection =  Payment::PAYMENT_METHODS.keys
     select('ledger', 'payment_method',  collection.map{|p|[ Payment.describe_payment(p), p]}, :include_blank => true)
   end
   
@@ -484,10 +484,10 @@ module ApplicationHelper
   end
 
   def display_info(object, html_options = {}, type = false)
-    
     inlist = (type == true) ? 'inlist_' : ''
     fields = object.display_class.send(inlist + "available_fields") if current_user.administrator
-    fields ||= @organization.configuration.send(inlist + "#{object.display_class}".tableize)
+    fields ||= @organization.configuration.send(inlist + "#{object.display_class}".tableize) unless object.nil?
+    fields ||= []
 
     html_options[:class] ||= 'field_item'
     local_html_options = html_options.clone
@@ -550,15 +550,36 @@ module ApplicationHelper
   end
 
   def display_show_info_options(object, params = {},  html_options = {})
-    html_options[:class] = html_options[:class].nil? ? 'display_info_options' : 'display_show ' + html_options[:class]
+    return '' if object.nil?
 
     content_tag(:div,
       [
-        button('back', _('Back'), :back, {:action => 'list'}.merge(params)),
-        button('edit', _('Edit'), :edit, {:action => 'edit', :id => object.id}.merge(params))
+        display_back_button({:action => 'list'}.merge(params)),
+        display_edit_button({:action => 'edit', :id => object.id}.merge(params))
       ].join("\n"),
-      html_options
+      display_html_options(html_options)
     )
+  end
+
+  def display_html_options(html_options = {})
+    html_options[:class] = html_options[:class].nil? ? 'display_info_options' : 'display_info_options ' + html_options[:class]
+    html_options 
+  end
+
+  def display_edit_button(location)
+    button('edit', _('Edit'), :edit, location)
+  end
+
+  def display_back_button(location)
+    button('back', _('Back'), :back, location)
+  end
+
+  def display_save_button
+    button('save', _('Save'), :save)
+  end
+
+  def display_reset_button
+    button('reset', _('Reset'), :reset, {}, {:type => 'reset'} )
   end
 
   def display_form_info(object, html_options = {}, &block)
@@ -579,15 +600,13 @@ module ApplicationHelper
   alias :display_edit_info :display_form_info
 
   def display_edit_info_options(object, params = {}, html_options = {})
-    local_html_options = {}
-    local_html_options[:class] = 'display_info_options ' + (html_options[:class].nil? ? '' : html_options[:class])
     content_tag(:div,
       [
-        button('back', _('Back'), :back, {:action => 'list'}.merge(params)),
-        button('save', _('Save'), :save),
-        button('reset', _('Reset'), :reset, {}, {:type => 'reset'} ),
+        display_back_button({:action => 'list'}.merge(params)),
+        display_save_button,
+        display_reset_button,
       ].join("\n"),
-      local_html_options
+      display_html_options(html_options)
     )
   end
 

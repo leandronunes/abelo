@@ -1,0 +1,61 @@
+<%= error_messages_for 'address' %>
+
+<!--[form:address]-->
+<% display_form_info @address do |item| %>
+
+  <%= display_field_form(item, 'country',
+        :title => _('Country'),
+        :content => select_item('address', 'country_id', @countries)
+      )
+  %>
+
+ <% 
+   #TODO Fix this. The user can choose a state of diferrents countries
+ %> 
+
+  <%= display_field_form(item, 'state',
+        :title => _('State'),
+        :content => select_item('address', 'state_id', @states)
+      )
+  %>
+
+  <%= display_field_form(item, 'city',
+        :title => _('City'),
+        :content => select_item('address', 'city_id', @cities)
+      )
+  %>
+
+  <%= display_field_form(item, 'street',
+        :title => _('Street'),
+        :content => text_field('address', 'street')
+      )
+  %>
+
+  <%= display_field_form(item, 'number',
+        :title => _('Number'),
+        :content => text_field('address', 'number')
+      )
+  %>
+  
+  <%= display_field_form(item, 'district',
+        :title => _('District'),
+        :content => text_field('address', 'district')
+      )
+  %>
+
+  <%= display_field_form(item, 'zip_code',
+        :title => _('Zip Code'),
+        :content => text_field('address', 'zip_code')
+      )
+  %>
+  
+  <%= display_field_edit(item, 'complement',
+        :title => _('Complement'),
+        :content => rich_text_editor('address', 'complement')
+      )
+  %>
+
+<% end %>
+
+<!--[eoform:address]-->
+

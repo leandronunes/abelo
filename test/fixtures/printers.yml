@@ -1,0 +1,6 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+one:
+  id: 1
+  serial: '534534534521'
+  organization_id: 1
+  computer_id: '00:12:DF:45:RR:45'

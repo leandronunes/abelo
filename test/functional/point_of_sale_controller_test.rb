@@ -65,6 +65,8 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
 
 
   def test_index_with_existing_till_open
+    Till.destroy_all
+    create_till
     get :index
     assert_response :redirect
     assert_redirected_to :action => 'till_open'
@@ -75,14 +77,6 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
     get :index
     assert_response :success
     assert_template 'index'
-  end
-
-  def test_index_with_existing_till
-    Till.destroy_all
-    create_till
-    get :index
-    assert_response :redirect
-    assert_redirected_to :action => 'till_open'
   end
 
   def test_open_till_whithout_till
@@ -452,7 +446,7 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
     get :coupon_close, :id => @sale.id
 
     assert_response :redirect
-    assert_redirected_to :action => 'index'
+    assert_redirected_to :action => 'till_open'
   end
 
 

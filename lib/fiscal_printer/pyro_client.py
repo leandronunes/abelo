@@ -71,6 +71,8 @@ def main():
     ( code, description, price, taxcode,
       quantity, unit, discount, surcharge,
       unit_desc ) = parameters
+#    print "IIIIIITEEEEEEEEEEEEEEEEEMMMMMMMMMMMMMMMMMMMMMMMMMMMM"
+#    print taxcode
 
     return printer.add_item(
       code, description, price, taxcode,

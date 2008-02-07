@@ -38,8 +38,9 @@ class PointOfSaleController < ApplicationController
     return unless @organization.has_fiscal_printer? 
     cmd = PrinterCommand.pending_command(@till)
     return if cmd.nil?
-    flash.now[:notice] = _('You have pending commands that cannot be executed. Please %s') % cmd.error_message
-    render :action => 'index' 
+    flash.now[:command_error] = _('You have pending commands that cannot be executed. Please %s') % cmd.error_message
+#    redirect_to :action => 'coupon_open'
+#    render :action => 'index' 
   end
 
   def run_pending_commands
@@ -54,7 +55,9 @@ class PointOfSaleController < ApplicationController
 
   def index
     unless @till.nil?
-      redirect_to :action => 'till_open'
+#TODO fix it
+#      redirect_to :action => 'till_open'
+      redirect_to :action => 'coupon_open'
     end
   end
 
@@ -153,8 +156,7 @@ class PointOfSaleController < ApplicationController
   end
 
   def create_coupon_open
-    till = load_current_till
-    @sale =  Sale.new(till)
+    @sale =  Sale.new(@till)
     if @sale.save
       redirect_to :action => 'coupon_open'
     else
@@ -164,8 +166,7 @@ class PointOfSaleController < ApplicationController
   end
 
   def create_coupon_add_item
-    till = load_current_till
-    @sale = Sale.pending(till)
+    @sale = Sale.pending(@till)
     @sale_item = SaleItem.new(@sale, params[:sale_item])
     if @sale_item.save
       @total = @sale.total_value 
@@ -275,7 +276,6 @@ class PointOfSaleController < ApplicationController
       @total_payment = @sale.total_payment 
       render :action => 'add_payment' 
     else
-#      @sale.ledgers.delete(@ledger)
       @ledger.value = @sale.balance
       @payments = @sale.ledgers
       @total = @sale.total_value 

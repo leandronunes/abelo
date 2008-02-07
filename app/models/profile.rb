@@ -144,7 +144,7 @@ class Profile < ActiveRecord::Base
       { 'controller' => 'documents', 'action' => '*' },
       { 'controller' => 'document_models', 'action' => '*' },
       { 'controller' => 'departments', 'action' => '*' },
-      { 'controller' => 'main', 'action' => '*' },
+      { 'controller' => 'organization', 'action' => '*' },
       { 'controller' => 'products', 'action' => '*' },
       { 'controller' => 'bank_accounts', 'action' => '*' },
       { 'controller' => 'interface', 'action' => '*' },

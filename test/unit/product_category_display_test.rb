@@ -2,8 +2,6 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class ProductCategoryDisplayTest < Test::Unit::TestCase
 
-  fixtures :organizations
-
   def setup
     @org = Organization.find_by_identifier('six') 
   end

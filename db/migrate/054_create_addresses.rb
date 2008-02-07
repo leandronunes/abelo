@@ -3,8 +3,9 @@ class CreateAddresses < ActiveRecord::Migration
     create_table :addresses do |t|
       t.column :owner_type,           :string, :null => false
       t.column :owner_id,             :integer, :null => false
-      t.column :city,                 :string, :null => false
-      t.column :federation_unit,      :string, :null => false
+      t.column :city_id,              :integer, :null => false
+      t.column :state_id,             :integer, :null => false
+      t.column :country_id,           :integer, :null => false
       t.column :street,               :string
       t.column :number,               :string
       t.column :complement,           :string

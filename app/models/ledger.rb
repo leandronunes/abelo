@@ -29,7 +29,7 @@ class Ledger < ActiveRecord::Base
   validates_presence_of :schedule_periodicity, :if => lambda{ |l| l.schedule_repeat? or !l.schedule_interval.blank? }
   validates_presence_of :schedule_interval, :if => lambda{ |l| l.schedule_repeat? or  !l.schedule_periodicity_id.blank? }
   validates_presence_of :payment_method
-  validates_inclusion_of :payment_method, :in => Payment::PAYMENT_METHODS.keys
+  validates_inclusion_of :payment_method, :in => Payment::PAYMENT_TYPES.keys
   validates_presence_of :type_of
   validates_inclusion_of :type_of, :in => Payment::TYPE_OF
   validates_presence_of :owner_id
@@ -116,8 +116,8 @@ class Ledger < ActiveRecord::Base
 
   before_validation do |l|
     l.type_of = l.category.type_of unless l.category.nil?
-    l.effective_value ||= l.foreseen_value unless l.pending?
-    l.effective_date ||= l.foreseen_date unless l.pending?
+    l[:effective_value] ||= l.foreseen_value unless l.pending?
+    l[:effective_date] ||= l.foreseen_date unless l.pending?
     l.create_printer_cmd!(l) if l.has_fiscal_printer?
   end
 
@@ -324,12 +324,12 @@ class Ledger < ActiveRecord::Base
   end
 
   def value= value
-    self.foreseen_value = self.pending? ? (value.kind_of?(String) ? value.gsub(',', '.') : value) : (self.foreseen_value || (value.kind_of?(String) ? value.gsub(',', '.') : value))
-    self.effective_value = value unless self.pending? 
+    self[:foreseen_value] = self.pending? ? (value.kind_of?(String) ? value.gsub(',', '.') : value) : (self[:foreseen_value] || (value.kind_of?(String) ? value.gsub(',', '.') : value))
+    self[:effective_value] = value unless self.pending? 
   end
 
   def value
-    value = self.pending? ? self.foreseen_value :  self.effective_value
+    value = self.pending? ? self[:foreseen_value] :  self[:effective_value]
     value ||= 0
     ((self.is_remove_cash? or self.is_change? ) and (value > 0)) ? (value * -1) : value
   end
@@ -362,8 +362,8 @@ class Ledger < ActiveRecord::Base
   end
 
   def done!
-    self.effective_date ||= self.foreseen_date
-    self.effective_value ||= self.foreseen_value
+    self[:effective_date] ||= self.foreseen_date
+    self[:effective_value] ||= self.foreseen_value
     self.status = STATUS_DONE
   end
 
@@ -379,19 +379,34 @@ class Ledger < ActiveRecord::Base
     self.status == STATUS_PENDING or self.status == STATUS_OPEN
   end
 
-#TODO remove this
-##  #This method cannot be access directly. 
-##  #You have to access the date method and this method
-##  #set the correct value of foreseen_date attribute
-#  def foreseen_date= date
-#    raise _('This function cannot be accessed directly')
-#  end
-#
-##  #This method cannot be access directly. 
-##  #You have to access the value method and this method
-##  #set the correct value of foreseen_value attribute
-#  def foreseen_value= value
-#    raise _('This function cannot be accessed directly')
-#  end
+#  #This method cannot be access directly. 
+#  #You have to access the date method and this method
+#  #set the correct value of foreseen_date attribute
+  def foreseen_date= date
+    raise _('This function cannot be accessed directly')
+  end
+
+#  #This method cannot be access directly. 
+#  #You have to access the value method and this method
+#  #set the correct value of foreseen_value attribute
+  def foreseen_value= value
+    raise _('This function cannot be accessed directly')
+  end
+
+#  #This method cannot be access directly. 
+#  #You have to access the date method and this method
+#  #set the correct value of effective_date attribute
+  def effective_date= date
+    raise _('This function cannot be accessed directly')
+  end
+
+#  #This method cannot be access directly. 
+#  #You have to access the value method and this method
+#  #set the correct value of effective_value attribute
+  def effective_value= value
+    raise _('This function cannot be accessed directly')
+  end
+
+
 
 end

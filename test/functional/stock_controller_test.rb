@@ -289,15 +289,15 @@ class StockControllerTest < Test::Unit::TestCase
 
   def test_add_payment_with_wrong_params
     invoice = create_invoice
-    # The date must be valid will hapen 1 (one) error
-    get :add_payment, :id => invoice.id, :ledger => {:payment_method => 'money', :category => @ledger_category, :value => 343, :date => nil}
+    # The value coudld not be nil.
+    get :add_payment, :id => invoice.id, :ledger => {:payment_method => 'money', :category => @ledger_category, :value => nil}
     
     assert_response :success
     assert_template 'shared_payments/_new_payment'
 
     assert assigns(:invoice)
     assert assigns(:ledger)
-    assert_equal 1, assigns(:ledger).errors.length
+    assert_not_nil assigns(:ledger).errors
     assert assigns(:ledgers)
     assert assigns(:banks)
     assert assigns(:ledger_categories)

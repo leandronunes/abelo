@@ -144,9 +144,13 @@ class PrinterCommand < ActiveRecord::Base
 #      self.owner.destroy unless self.owner.nil? #TODO remove it
       return false
     end
+    puts "RUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUNNNNNNNNNNNNNNN" #TODO remove it
+    puts self.str_command
     exec =  IO.popen("python #{RAILS_ROOT}/lib/fiscal_printer/pyro_client.py #{self.str_command}")
     self.inc_counter
     response = exec.readlines
+     puts "RESSSSSSSSSSSSSSSSPPPPPPPPPPPPPPPOOOOOOOOOOOOOOOOONNNNNNNNNNNSSSSSSSSSEEEEEEE"
+     puts response
     self.accept_command?(response) ? true : false
   end
 

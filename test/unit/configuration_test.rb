@@ -54,6 +54,8 @@ class ConfigurationTest < Test::Unit::TestCase
     UserDisplay
     PeriodicityDisplay
     DocumentDisplay
+    InvoiceDisplay
+    AddressDisplay
   ]
 
   def test_configuration_itens_array

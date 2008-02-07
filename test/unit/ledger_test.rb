@@ -259,6 +259,7 @@ class LedgerTest < Test::Unit::TestCase
 
   def test_precense_of_foreseen_date
     l = Ledger.new
+    l[:foreseen_date] = nil
     l.valid?
     assert l.errors.invalid?(:foreseen_date)
     assert_raise(RuntimeError){l.foreseen_date = 1}
@@ -270,13 +271,17 @@ class LedgerTest < Test::Unit::TestCase
   def test_precense_of_effective_date
     l = Ledger.new
     l.status = STATUS_DONE
+    # Set the foreseen_date and effective_date date to nil to test the presence of effective_date
+    l[:foreseen_date] = nil
+    l[:effective_date] = nil
     l.valid?
     assert l.errors.invalid?(:effective_date)
+    assert_raise(RuntimeError){l.effective_date = 1}
     l.date = Date.today
     l.valid?
     assert !l.errors.invalid?(:effective_date)
   end
-  
+
   def test_precense_of_effective_date_when_is_foreseen
     l = Ledger.new
     l.status = STATUS_PENDING
@@ -301,6 +306,7 @@ class LedgerTest < Test::Unit::TestCase
     l.status = STATUS_DONE
     l.valid?
     assert l.errors.invalid?(:effective_value)
+    assert_raise(RuntimeError){l.effective_value = 1}
     l.value = 1
     l.valid?
     assert !l.errors.invalid?(:effective_value)

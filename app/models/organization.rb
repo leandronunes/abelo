@@ -40,6 +40,7 @@ class Organization < ActiveRecord::Base
   has_many :mass_mail_displays, :through => :configuration
   has_many :document_displays, :through => :configuration
   has_many :invoice_displays, :through => :configuration
+  has_many :address_displays, :through => :configuration
   has_many :display_configurations, :through => :configuration
   # End displays has_many methods
   
@@ -112,6 +113,14 @@ class Organization < ActiveRecord::Base
       environment.owner = organization
       environment.name = organization.identifier
       environment.save!
+      
+      #TODO fix this address information
+      address = Address.new
+      address.owner = organization
+      address.country = BSC::Country.find(:first)
+      address.state = BSC::State.find(:first)
+      address.city = BSC::City.find(:first)
+      address.save!
     end
   end
 

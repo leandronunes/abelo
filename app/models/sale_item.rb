@@ -22,21 +22,18 @@ class SaleItem < ActiveRecord::Base
     sale_item.stock_out.date = Date.today
     sale_item.stock_out.product = sale_item.product
     sale_item.stock_out.amount = sale_item.amount
+    sale_item.printer_command = PrinterCommand.new(sale_item.sale.owner, 
+        [
+          PrinterCommand::ADD_ITEM, sale_item.code,  
+          sale_item.description, sale_item.unitary_price, sale_item.taxcode,
+          sale_item.amount, sale_item.unit, sale_item.discount,
+          sale_item.surcharge, sale_item.unit_desc
+        ])
+
   end
 
   before_create do |item|
     item.cmd_sent! if item.has_fiscal_printer?
-  end
-
-  after_create do |item|
-    item.printer_command = PrinterCommand.new(item.sale.owner, 
-        [
-          PrinterCommand::ADD_ITEM, item.code,  
-          item.description, item.unitary_price, item.taxcode,
-          item.amount, item.unit, item.discount,
-          item.surcharge, item.unit_desc
-        ])
-
   end
 
   delegate :has_fiscal_printer?, :to => :sale
@@ -48,6 +45,10 @@ class SaleItem < ActiveRecord::Base
 
     if !self.sale.nil? and !self.sale.organization.products.include?(self.product)
       self.errors.add(:product_id, _("You cannot add a item with the product code %s") % self.product_code)
+    end
+
+    if self.has_fiscal_printer? and (self.printer_command.nil? or !PrinterCommand.pending_command(self.sale.owner).nil?)
+      self.errors.add(:printer_command, _('You have pending add item commands.'))
     end
   end
 
@@ -110,7 +111,7 @@ class SaleItem < ActiveRecord::Base
   end
 
   def taxcode
-    'T01'
+    'T08'
   end
 
   def code

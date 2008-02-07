@@ -1,0 +1,16 @@
+<%= title _('Editing Organization Address') %>
+
+<% form_tag :action => 'update_address' do %>
+
+    <%= render :partial => 'form_address' %>
+
+    <%= content_tag(:div,
+          [
+            display_back_button({:action => 'address'}),
+            display_save_button,
+            display_reset_button,
+          ].join("\n"),
+          display_html_options
+        )
+   %>
+<% end %>

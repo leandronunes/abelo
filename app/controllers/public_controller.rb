@@ -28,5 +28,4 @@ class PublicController < ApplicationController
     end
   end
 
-
 end

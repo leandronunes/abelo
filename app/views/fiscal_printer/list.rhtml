@@ -1,0 +1,7 @@
+<%= title _('Listing Printers') %>
+
+<%= display_list_options 'printer', 'serial' %>
+
+<%= display_collection @printers %>
+
+<%= pagination_links(@printer_pages, :params => {:query => @query}) %>

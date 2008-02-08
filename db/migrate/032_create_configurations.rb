@@ -6,11 +6,6 @@ class CreateConfigurations < ActiveRecord::Migration
       t.column :name,               :string
       t.column :description,        :text
       t.column :settings,           :text
-#TODO remove this
-#      t.column :department_name,    :string
-#      t.column :product_name,       :string
-#      t.column :customer_name,      :string
-#      t.column :organization_name,  :string
     end
   end
 

@@ -24,6 +24,10 @@ class DisplayConfiguration < ActiveRecord::Base
     raise "You have to define a title class method to class "
   end
 
+  def self.all_available?
+    true
+  end
+
   def switch(field)
     field = field.class.find(field.id) #FIXME see a better way to the object don't came as read only
     temp_position = self.position

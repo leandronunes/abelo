@@ -159,6 +159,7 @@ class Profile < ActiveRecord::Base
       { 'controller' => 'product_store', 'action' => '*' },
       { 'controller' => 'organization_configuration', 'action' => '*' },
       { 'controller' => 'sintegra', 'action' => '*' },
+      { 'controller' => 'fiscal_printer', 'action' => '*' },
     ],
     'other' => []
   }

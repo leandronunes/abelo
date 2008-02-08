@@ -1,0 +1,10 @@
+<%= title(_('New printer')) %>
+
+<% form_tag :action => 'create' do %>
+
+  <%= render :partial => 'form' %>
+
+  <%= display_new_info_options @printer %> 
+
+<% end %>
+

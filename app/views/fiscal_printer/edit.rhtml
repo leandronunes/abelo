@@ -1,0 +1,10 @@
+
+<%= title(_('Editing Printer')) %>
+
+<% form_tag :action => 'update', :id => @printer do %>
+
+    <%= render :partial => 'form' %>   
+
+    <%= display_edit_info_options(@printer) %>
+
+<% end %>

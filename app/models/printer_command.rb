@@ -18,6 +18,7 @@ class PrinterCommand < ActiveRecord::Base
   CANCEL = 'cancel'
   ADD_ITEM = 'add_item'
   ADD_PAYMENT = 'add_payment'
+  GET_SERIAL = 'get_serial'
 
   #############################
   # Errors Set
@@ -49,6 +50,8 @@ class PrinterCommand < ActiveRecord::Base
   AlreadyTotalized = 122
   InvalidValue = 123
   DriverError = 124
+
+  serialize :response
 
   belongs_to :till
   belongs_to :owner, :polymorphic => true
@@ -139,6 +142,22 @@ class PrinterCommand < ActiveRecord::Base
     self.save
   end
 
+  def self.get_computer_id
+    exec =  IO.popen("/sbin/ifconfig | grep HW")
+    response = exec.readlines
+    computer_id = response.first.gsub(/(.*)([\w]{2}(:[\w]{2}){5})/, '\2')
+    computer_id # Make the return valu more clear
+  end
+
+  def self.get_serial
+    printer_command = PrinterCommand.new(nil, [PrinterCommand::GET_SERIAL])
+    printer_command.save
+    if printer_command.execute
+      return printer_command.response[1]
+    end
+    nil
+  end
+
   def execute
     if self.counter >= MAX_PRINTER_COUNTER
 #      self.owner.destroy unless self.owner.nil? #TODO remove it
@@ -146,11 +165,21 @@ class PrinterCommand < ActiveRecord::Base
     end
     puts "RUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUNNNNNNNNNNNNNNN" #TODO remove it
     puts self.str_command
+    #FIXME put a timeout here when the command didn't run
     exec =  IO.popen("python #{RAILS_ROOT}/lib/fiscal_printer/pyro_client.py #{self.str_command}")
     self.inc_counter
     response = exec.readlines
      puts "RESSSSSSSSSSSSSSSSPPPPPPPPPPPPPPPOOOOOOOOOOOOOOOOONNNNNNNNNNNSSSSSSSSSEEEEEEE"
      puts response
+    # Removing bad informations
+    response.shift
+    response[1] = response[1].gsub(/.*"(.*)",.*/, '\1')
+    
+    # Keep command response
+    self.response = response
+    self.save
+
+    # Evaluate response
     self.accept_command?(response) ? true : false
   end
 
@@ -160,8 +189,9 @@ class PrinterCommand < ActiveRecord::Base
       self.owner.cmd_received!(self)
       self.owner.save
     end
-    self.error_code = nil 
-    self.error_message = nil
+#FIXME remove this. The response is keeped now
+#    self.error_code = nil 
+#    self.error_message = nil
     self.save
   end
 
@@ -173,7 +203,7 @@ class PrinterCommand < ActiveRecord::Base
   end  
 
   def response_error?(response)
-    response.shift
+#    response.shift
     code = response[0].to_i
     msg = response[1]
 

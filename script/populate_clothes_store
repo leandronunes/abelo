@@ -236,9 +236,14 @@ AddressDisplay.available_fields.collect { |d|
   in_list = ['country', 'state', 'city'].include?(d) ? true :false
   params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
 }
-configuration.set_address_displays=(params)
 
-
+PrinterDisplay.delete_all
+params = {}
+PrinterDisplay.available_fields.collect { |d|
+  in_list = ['name', 'serial', 'computer_id'].include?(d) ? true :false
+  params[d] = {:field => d, :display_in_list => in_list, :display_title => true }  
+}
+configuration.set_printer_displays=(params)
 
 configuration.save!
 

@@ -30,6 +30,7 @@ class Configuration < ActiveRecord::Base
   has_many :document_displays, :dependent => :destroy
   has_many :invoice_displays, :dependent => :destroy
   has_many :address_displays, :dependent => :destroy
+  has_many :printer_displays, :dependent => :destroy
   has_many :display_configurations, :dependent => :destroy
 
   serialize :settings 
@@ -164,6 +165,7 @@ class Configuration < ActiveRecord::Base
     DocumentDisplay
     InvoiceDisplay
     AddressDisplay
+    PrinterDisplay
   ]
 
   DISPLAY_CONFIGURATION_CLASSES.each do |item|

@@ -41,6 +41,7 @@ class Organization < ActiveRecord::Base
   has_many :document_displays, :through => :configuration
   has_many :invoice_displays, :through => :configuration
   has_many :address_displays, :through => :configuration
+  has_many :printer_displays, :through => :configuration
   has_many :display_configurations, :through => :configuration
   # End displays has_many methods
   
@@ -74,6 +75,7 @@ class Organization < ActiveRecord::Base
   # One Environment can be reached by many domains
   has_many :domains, :as => :owner
   has_one :address, :as => :owner
+  has_many :printers
 
   validates_presence_of :name
   validates_uniqueness_of :name

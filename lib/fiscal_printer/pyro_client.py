@@ -31,6 +31,7 @@ dict = {
   AlreadyTotalized: 122,
   InvalidValue: 123,
   DriverError: 124,
+  TypeError: 200,
 }
 
 
@@ -89,6 +90,9 @@ def main():
   def totalize():
     return printer.totalize()
 
+  def get_serial():
+    return printer.get_serial()
+
   def errhandler ():
     return "Your command doesn't exist"
 
@@ -106,6 +110,7 @@ def main():
     "add_item": add_item,
     "add_payment": add_payment,
     "close": close,
+    "get_serial": get_serial,
   }
 
   return takeaction.get(command,errhandler)()

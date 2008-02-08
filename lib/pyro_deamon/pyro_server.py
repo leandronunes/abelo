@@ -55,6 +55,9 @@ class Printer(Pyro.core.ObjBase):
   def close(self):
     self._device.close()
 
+  def get_serial(self):
+    return self._device.get_serial()
+
   def totalize(self):
     self._device.totalize()
 

@@ -612,10 +612,9 @@ module ApplicationHelper
 
   alias :display_new_info_options :display_edit_info_options 
 
-  # Deprecated use display_field_form function
   def display_field_form(object, field, info = {})
-    return '' if @organization.nil? and !current_user.administrator?
-    return '' if !current_user.administrator? and @organization.send("#{object.display_class}".tableize).detect{|d| d.field == field}.nil?
+    return '' if @organization.nil? and !object.display_class.all_available?
+    return '' if !object.display_class.all_available? and @organization.send("#{object.display_class}".tableize).detect{|d| d.field == field}.nil?
 
     info[:html_options] ||= Hash.new
     info[:html_options][:class] = 'info_field ' + info[:html_options][:class].to_s
@@ -629,6 +628,7 @@ module ApplicationHelper
     )
   end
 
+  # Deprecated use display_field_form function
   alias :display_field_edit :display_field_form
  
   #######################################

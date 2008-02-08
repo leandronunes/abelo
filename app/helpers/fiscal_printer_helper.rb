@@ -1,0 +1,2 @@
+module FiscalPrinterHelper
+end

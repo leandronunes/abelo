@@ -1,0 +1,28 @@
+<%= error_messages_for 'printer' %>
+
+<!--[form:printer]-->
+
+<% display_form_info @printer do |item| %>
+
+  <%= display_field_form(item, 'name',
+        :title => _('Name'),
+        :content => text_field('printer', 'name')
+      )
+  %>
+
+  <%= display_field_form(item, 'serial',
+        :title => _('Serial'),
+        :content => [text_field('printer', 'serial', :disabled => true), hidden_field('printer', 'serial')]
+      )
+  %>
+  
+  <%= display_field_form(item, 'computer_id',
+        :title => _('Computer'),
+        :content => [text_field('printer', 'computer_id', :disabled => true), hidden_field('printer', 'computer_id')]
+      )
+  %>
+
+<% end %>
+
+<!--[eoform:printer]-->
+

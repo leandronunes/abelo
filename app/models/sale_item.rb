@@ -12,8 +12,9 @@ class SaleItem < ActiveRecord::Base
   belongs_to :stock_out, :class_name => 'StockOut', :foreign_key => :stock_id, :dependent => :destroy
   has_one :printer_command, :as => :owner, :dependent => :destroy
 
-  validates_presence_of :sale_id, :product_id, :amount, :unitary_price, :stock_out
+  validates_presence_of :sale_id, :product_id, :amount, :unitary_price
   validates_inclusion_of :status, :in => ALL_STATUS
+  validates_associated :stock_out, :printer_command
 
   before_validation do |sale_item|
     sale_item.unitary_price = sale_item.product.sell_price unless sale_item.product.nil?
@@ -22,7 +23,7 @@ class SaleItem < ActiveRecord::Base
     sale_item.stock_out.date = Date.today
     sale_item.stock_out.product = sale_item.product
     sale_item.stock_out.amount = sale_item.amount
-    sale_item.printer_command = PrinterCommand.new(sale_item.sale.owner, 
+    sale_item.printer_command ||= PrinterCommand.new(sale_item.sale.owner, 
         [
           PrinterCommand::ADD_ITEM, sale_item.code,  
           sale_item.description, sale_item.unitary_price, sale_item.taxcode,
@@ -47,7 +48,7 @@ class SaleItem < ActiveRecord::Base
       self.errors.add(:product_id, _("You cannot add a item with the product code %s") % self.product_code)
     end
 
-    if self.has_fiscal_printer? and (self.printer_command.nil? or !PrinterCommand.pending_command(self.sale.owner).nil?)
+    if !self.sale.nil? and self.has_fiscal_printer? and (self.printer_command.nil? or !PrinterCommand.pending_command(self.sale.owner).nil?)
       self.errors.add(:printer_command, _('You have pending add item commands.'))
     end
   end
@@ -111,7 +112,7 @@ class SaleItem < ActiveRecord::Base
   end
 
   def taxcode
-    'T08'
+    'T01'
   end
 
   def code

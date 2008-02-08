@@ -53,6 +53,7 @@ class SaleTest < Test::Unit::TestCase
   end
 
   def test_dependence_of_sale_item
+    Product.any_instance.stubs(:amount_in_stock).returns(342)
     Sale.delete_all
     SaleItem.delete_all
     sale = create_sale()
@@ -63,6 +64,7 @@ class SaleTest < Test::Unit::TestCase
   end
 
   def test_dependence_of_ledger
+    Product.any_instance.stubs(:amount_in_stock).returns(342)
     Sale.delete_all
     SaleItem.delete_all
     Ledger.delete_all
@@ -86,6 +88,7 @@ class SaleTest < Test::Unit::TestCase
   end
 
   def test_total_value
+    Product.any_instance.stubs(:amount_in_stock).returns(342)
     SaleItem.delete_all
     Sale.delete_all
     sale = create_sale(:datetime => '2007-08-04', :salesman => @user)
@@ -127,6 +130,7 @@ class SaleTest < Test::Unit::TestCase
 #  end
 
   def test_relation_with_items
+    Product.any_instance.stubs(:amount_in_stock).returns(342)
     sale = create_sale(:datetime => '2007-08-04')
     cat_prod = ProductCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
     product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @organization.id, :category_id => cat_prod.id)
@@ -217,6 +221,7 @@ class SaleTest < Test::Unit::TestCase
   end
 
   def test_customers_products
+    Product.any_instance.stubs(:amount_in_stock).returns(342)
     cat = CustomerCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
     customer = Customer.create(:name => 'João da Silva', :birthday => '1984-08-15', :address => 'Rua Pará, nº 221, Pituba', :cpf => '85288242682', :organization_id => @organization.id, :email => 'customer', :category_id => cat.id)
     sale = create_sale()
@@ -225,7 +230,7 @@ class SaleTest < Test::Unit::TestCase
     item = create_item(sale, :product => product, :amount => 2)
     sale.customer = customer
     assert cat_prod.save
-    assert item.save
+    assert item.save!
     assert product.save
     assert sale.customers_products(["#{product.id}"], @organization).include?(customer)
   end

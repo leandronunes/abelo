@@ -20,7 +20,7 @@ class PointOfSaleController < ApplicationController
   
   design :holder => :design_point_of_sale, :root => File.join('designs','point_of_sale')
 
-  before_filter :load_current_till
+  before_filter :load_current_till, :except => 'index'
   before_filter :check_command_error
   after_filter :run_pending_commands
 
@@ -38,7 +38,7 @@ class PointOfSaleController < ApplicationController
     return unless @organization.has_fiscal_printer? 
     cmd = PrinterCommand.pending_command(@till)
     return if cmd.nil?
-    flash.now[:command_error] = _('You have pending commands that cannot be executed. Please %s') % cmd.error_message
+    flash.now[:command_error] = _('%s') % cmd.error_message
 #    redirect_to :action => 'coupon_open'
 #    render :action => 'index' 
   end
@@ -54,10 +54,15 @@ class PointOfSaleController < ApplicationController
   end
 
   def index
+    printer = load_printer 
+    if @organization.has_fiscal_printer? and printer.nil?
+      flash[:notice] = _("You don't have a printer configured")
+    else
+      @till = Till.load(@organization, current_user, printer)
+    end
+
     unless @till.nil?
-#TODO fix it
-#      redirect_to :action => 'till_open'
-      redirect_to :action => 'coupon_open'
+      redirect_to :action => 'till_open'
     end
   end
 
@@ -75,8 +80,8 @@ class PointOfSaleController < ApplicationController
   end
 
   def create_till_open
-    printer_id = get_printer_id
-    @till ||= Till.new(@organization, current_user, printer_id)
+    printer = load_printer
+    @till ||= Till.new(@organization, current_user, printer)
 
     unless params[:cash].nil?
       @cash ||= Ledger.new(params[:cash].merge(:owner => @till, :payment_method => Payment::ADD_CASH))
@@ -327,12 +332,19 @@ class PointOfSaleController < ApplicationController
 
   private
 
-  def get_printer_id
-    cookies[:printer_id].nil? ? nil :  cookies[:printer_id].first
+  def load_printer
+    printer =  @organization.printers.find_by_computer_id(PrinterCommand.get_computer_id.strip)
+    printer # Make the return value more clear
   end
 
   def load_current_till
-    @till = Till.load(@organization, current_user, get_printer_id)
+    printer = load_printer 
+    if @organization.has_fiscal_printer? and printer.nil?
+      flash[:notice] = _("You don't have a printer configured")
+      redirect_to :action => 'index'
+    else
+      @till = Till.load(@organization, current_user, printer)
+    end
   end
 
 

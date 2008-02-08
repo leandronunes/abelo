@@ -78,8 +78,6 @@ module ApplicationHelper
     ].join("\n")
   end
 
-
-
   def notice_box( msg )
     return if msg.nil?
     content_tag(
@@ -485,7 +483,7 @@ module ApplicationHelper
 
   def display_info(object, html_options = {}, type = false)
     inlist = (type == true) ? 'inlist_' : ''
-    fields = object.display_class.send(inlist + "available_fields") if current_user.administrator
+    fields = object.display_class.send(inlist + "available_fields") if object.display_class.all_available?
     fields ||= @organization.configuration.send(inlist + "#{object.display_class}".tableize) unless object.nil?
     fields ||= []
 

@@ -6,7 +6,7 @@ class OrganizationsController; def rescue_action(e) raise e end; end
 
 class OrganizationsControllerTest < Test::Unit::TestCase
 
-  fixtures :organizations, :comatose_pages
+  fixtures :comatose_pages
 
   under_organization :admin #TODO see the better way to do that. This are admin controllers
  
@@ -16,8 +16,10 @@ class OrganizationsControllerTest < Test::Unit::TestCase
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     login_as('admin')
+    @country = BSC::Country.create(:name => 'Some Country')
+    @state = BSC::State.create(:name => 'Some State', :country => @country, :code => 'SS')
+    @city = BSC::City.create(:state => @state, :name => 'Some City', :zip_code => '40000')
     @organization = Organization.create!( :name => 'Organization for testing', :identifier => 'organization_test', :cnpj => '99249952000100' )
-
   end
 
   def test_only_admin_has_access

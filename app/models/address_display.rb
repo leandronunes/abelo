@@ -17,4 +17,8 @@ class AddressDisplay < DisplayConfiguration
     }[field] || field
   end
 
+  def self.break_lines
+    []
+  end
+
 end

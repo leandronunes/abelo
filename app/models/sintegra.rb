@@ -8,8 +8,9 @@ class Sintegra < ActiveRecord::Base
     self.organization = organization
     @file_name = "sintegra" + month.to_s.rjust(2,'0') + year.to_s + ".txt"
     #@date = date
-    @initial_date = "2008-01-02".to_date
-    @final_date = "2008-01-30".to_date
+#    raise "testando %s %s" % [month.inspect, year.inspect]
+    @initial_date = Date.new(year.to_i, month.to_i, 1)
+    @final_date = Date.end_of_month(@initial_date)
   end
 
   # Register 10 - Organization Informations 
@@ -117,7 +118,8 @@ class Sintegra < ActiveRecord::Base
     # 4. Equipment Serial Number of Manufacturing 20 A;
     string << equipment_serie.to_s.gsub(/\W/,'')[0..19].ljust(20)
     # 5. Identifier of Tax Situation 4 A;
-    string << tax_identifier.to_s[0..3].ljust(4)
+    tax_identifier = (tax_identifier.to_s.gsub(',','.').to_f * 100).to_i.to_s
+    string << tax_identifier.to_s[0..3].rjust(4,'0')
     # 6. Accumulated Value in the end of Day in the Totalizer of Tax Situation 12 N, with two decimals;
     value = (value.to_f * 100).floor
     string << value.to_s[0..11].rjust(12,'0')
@@ -135,7 +137,7 @@ class Sintegra < ActiveRecord::Base
     # 2. Subtype 1 A;
     string << "R"
     # 3. Issue Date of Fiscal Documents 6 N;
-    string << issue_date.year.to_s << issue_date.month.to_s.rjust(2,'0')
+    string << issue_date.month.to_s.rjust(2,'0') << issue_date.year.to_s
     # 4. Product/Service Code of Organization 14 A;
     string << product.to_s.gsub(/\W/,'')[0..13].ljust(14)
     # 5. Product Amount in the month (with three decimals) 13 N;
@@ -282,7 +284,7 @@ class Sintegra < ActiveRecord::Base
   end
 
   # Register 90 - File Totalization 
-  def generate_register_90( cgc, registration, type, total, number )  
+  def generate_register_90( cgc, registration, number=1, type_a="", total_a="", type_b="", total_b="", type_c="", total_c="", type_d="", total_d="" )
     # Field name, field length and format numeric or alphanumeric:
     # 1. Type 2 N; 
     string = "90"
@@ -290,13 +292,31 @@ class Sintegra < ActiveRecord::Base
     string << cgc.to_s.gsub(/\W/,'')[0..13].rjust(14,'0')
     # 3. State Registration 14 A;
     string << registration.to_s.gsub(/\W/,'')[0..13].ljust(14)
-    # 4. Type for totalize 2 N;
-    string << type.to_s[0..1].rjust(2,'0')
-    # 5. Total of Registers 8 N;
-    string << total.to_s[0..7].rjust(8,'0')
+    # 4a. Type for totalize 2 N;
+    string << type_a.to_s[0..1].rjust(2,'0')
+    # 5a. Total of Registers 8 N;
+    string << total_a.to_s[0..7].rjust(8,'0')
+    if type_b != "" 
+      # 4b. Type for totalize 2 N;
+      string << type_b.to_s[0..1].rjust(2,'0')
+      # 5b. Total of Registers 8 N;
+      string << total_b.to_s[0..7].rjust(8,'0')
+    end
+    if type_c != ""
+      # 4c. Type for totalize 2 N;
+      string << type_c.to_s[0..1].rjust(2,'0')
+      # 5c. Total of Registers 8 N;
+      string << total_c.to_s[0..7].rjust(8,'0')
+    end
+    if type_d != ""
+      # 4d. Type for totalize 2 N;
+      string << type_d.to_s[0..1].rjust(2,'0')
+      # 5d. Total of Registers 8 N;
+      string << total_d.to_s[0..7].rjust(8,'0')
+    end
     # 6. Number of Type 90 Registers 1 N; 
     complatation_length = 126 - string.length
-    string << number.to_s.rjust(complatation_length,' ') << "\n "
+    string << number.to_s.rjust(complatation_length,' ')
     return string
   end
 
@@ -313,7 +333,100 @@ class Sintegra < ActiveRecord::Base
     # 1 Interstates only operations under Tax Replacement
     # 2 Interstates - operations with or without Tax Replacement
     # 3 Totality of the operations of the informant
-    @nature_identification_code = 1
+    @nature_identification_code = 3
+
+    # 1 Normal 
+    # 2 Rectification total file: total replacement of information provided by the taxpayer for this period
+    # 3 Rectification additive of file: addition of information not included in files already submitted
+    # 5 Undoment file of information relating to transactions / services not effective. In this case, the file should contain, in addition to the record type 10 and type 90, only the records relating to operations / benefits not effective.
+    @purpose_code = 1
+
+    # Organization Information
+    sintegra = generate_register_10(
+      self.organization.cnpj, 
+      self.organization.state_registration,
+      self.organization.trade_name, 
+      self.organization.address.city.name,
+      self.organization.address.state.code,
+      "33312299",
+      @initial_date,
+      @final_date, 
+      @structure_identification_code,
+      @nature_identification_code, 
+      @purpose_code )
+    # Complementary information of organization
+    sintegra << generate_register_11( 
+      self.organization.address.street,
+      self.organization.address.number,
+      self.organization.address.complement,
+      self.organization.address.district,
+      self.organization.address.zip_code,
+      self.organization.responsible_person,
+      "071-33312299" )
+    # Must be generate for each equipment:
+    # - One Register 60 Master for each day, informing total registred in each equipment.
+    sintegra << generate_register_60M(
+      issue_date, # issue date
+      "12334567", # ecf serial number 
+      "1", # Number assigned by the establishment to equipment
+      "2D", # fiscal doc model - 2D for fiscal coupon
+      "1", # COO for beginning of the day 
+      "2", # COO for ending of the day
+      "33", # CRZ number
+      "444", # CRO 
+      44400, # Gross sale
+      44450) # General totalizer 
+    sintegra << generate_register_60A(
+      issue_date, # issue date
+      "12334567", # ecf serial number 
+      17, # ICMS Rate
+      444.9) # Value accumulated at the end of the day on totalizer part of the tax situation / ICMS Rate
+    # Must be generate for each equipment one record for each type of product or service processed in equipment Issuer of fiscal Coupon
+    product = Product.find(:first)
+    sintegra << generate_register_60R(
+      issue_date, # issue date
+      product.code, # product code
+      3, # product amount
+      3.4, # product value
+      3.4, # ICMS calculation base
+      17) # ICMS rate
+    sintegra << generate_register_75( 
+      @initial_date,
+      @final_date,
+      product.code,
+      "", # Code or Product Name in Mercosul
+      product.name, # Description
+      product.unit, # Unit of Measure
+      0, # IPI Aliquot
+      0, # Reduction of Calc Base of ICMS
+      0, # Calc Base of ICMS of Tax Substitution
+      0) # ICMS Calc Base of Tax Substituition
+    sintegra << generate_register_90(
+      self.organization.cnpj,
+      self.organization.state_registration,
+      1, # Amount of registers 90
+      60, # Registers type 60
+      3, # Amount of registers 60
+      75, # Registers type 75
+      1, # Amount of registers 75
+      99, # All registers
+      7) # Total 
+    return sintegra
+  end
+
+  def generate_sintegra_fiscal_doc
+    # Issue data of fical cupon
+    issue_date = "2008-01-03".to_date
+
+    # 1 Structure according to "Convenio ICMS 57/95" in the version of "Convenio ICMS 31/99"
+    # 2 Structure according to "Convenio ICMS 57/95" in the version of "Convenio ICMS 69/02 e 142/02"
+    # 3 Structure according to "Convenio ICMS 57/95" in the version of "Convenio ICMS 76/03"
+    @structure_identification_code = 3
+
+    # 1 Interstates only operations under Tax Replacement
+    # 2 Interstates - operations with or without Tax Replacement
+    # 3 Totality of the operations of the informant
+    @nature_identification_code = 3
 
     # 1 Normal 
     # 2 Rectification total file: total replacement of information provided by the taxpayer for this period
@@ -343,135 +456,97 @@ class Sintegra < ActiveRecord::Base
       self.organization.address.zip_code,
       self.organization.responsible_person,
       "071-33312299" )
-    # Must be generate for each equipment:
-    # - One Register 60 Master for each day, informing total registred in each equipment.
-    sintegra << generate_register_60M(
-      issue_date, # issue date
-      "12334567", # ecf serial number 
-      "1", # Number assigned by the establishment to equipment
-      "2D", # fiscal doc model - 2D for fiscal coupon
-      "1", # COO for beginning of the day 
-      "2", # COO for ending of the day
-      "33", # CRZ number
-      "444", # CRO 
-      "44400", # Gross sale
-      "444500") # General totalizer 
-    sintegra << generate_register_60A(
-      issue_date, # issue date
-      "12334567", # ecf serial number 
-      17, # ICMS Rate
-      444.9) # Value accumulated at the end of the day on totalizer part of the tax situation / ICMS Rate
-    # Must be generate for each equipment one record for each type of product or service processed in equipment Issuer of fiscal Coupon
-    sintegra << generate_register_60R(
-      issue_date, # issue date
-      "123", # product code
-      3, # product amount
-      3.4, # product value
-      3.4, # ICMS calculation base
-      17) # ICMS rate
+
+
+    # Situation
+    # Normal Fiscal Document (N)
+    # Canceled Fiscal Document (S)
+    # Extemporaneo Ledge of Normal Fiscal Document (E)
+    # Extemporaneo Ledge of Canceled Fiscal Document (X)
+    situation = 'N'
+    # Fiscal Document Model
+    model = 1
+    # Fiscal Document Serie
+    serie = ''
+    # Fiscal Document Number
+    number = 123
+    # Operation Fical Code
+    cfop = 5929
+    # ICMS Aliquot
+    icms = 17
+    # Customer that buy one with fical document
+    customer = Customer.find(:first)
+    # Product buy for the customer
+    product = Product.find(:first)
+    sintegra << generate_register_50( 
+      customer.cpf, # client CPF
+      "ISENTO", # state register
+      "2008-01-13".to_date, # Date of receipt  
+      "BA", # federation unit
+      model,
+      serie,
+      number,
+      cfop, # CFOP
+      "P", # emitter (T-terceiros/P-proprietario)
+      13, # total value
+      13, # ICMS calc base
+      2, # tax value
+      1, # not taxed
+      "", # others
+      icms, 
+      situation)
+    # Must be have one register for each product in the fical document 
+    # Product Code
+    sintegra << generate_register_54(
+      customer.cpf,
+      model,
+      serie,
+      number,
+      cfop,
+      "120", # CST - Tax Situation Code 
+      1, # Item Number 
+      product.code, # Product Code
+      1, # Product Amount
+      product.sell_price, # Product Value
+      0, # Descount Value
+      12, # ICMS calc base
+      0, # ICMS calc base for tax substituition 
+      0, # IPI Value
+      icms)
+    sintegra << generate_register_75( 
+      @initial_date,
+      @final_date,
+      product.code,
+      "", # Code or Product Name in Mercosul
+      product.name, # Description
+      product.unit, # Unit of Measure
+      0, # IPI Aliquot
+      0, # Reduction of Calc Base of ICMS
+      0, # Calc Base of ICMS of Tax Substitution
+      0) # ICMS Calc Base of Tax Substituition
     sintegra << generate_register_90(
       self.organization.cnpj,
       self.organization.state_registration,
-      60, # registers type
-      3, # amount of registers
-      1) # amount of registers 90
-    return sintegra
-  end
-
-  def generate_all_registers 
-    sintegra = generate_register_10( self.organization.cnpj, 
-                          "444444444",
-                          self.organization.name, 
-                          "Salvador", 
-                          "BA",
-                          "33312299",
-                          @initial_date,
-                          @final_date, 
-                          "1", 
-                          "1",
-                          '1')
-    sintegra << generate_register_11( "Rua Caetano Moura",
-                          "22",
-                          "Ed. Norma Camozatto, Sala 301",
-                          "Canela",
-                          "40230200",
-                          "Orivaldo Santana Jr",
-                          "07133312299" )
-    sintegra << generate_register_50( "05.359.933-0001/93",
-                          "444444444",
-                          @initial_date, 
-                          "BA",
-                          "55",
-                          "A",
-                          "222222",
-                          "1234",
-                          "P",
-                          "131313",
-                          "13131313",
-                          "131313",
-                          "13131313",
-                          "131313",
-                          "444",
-                          "N")
-    sintegra << generate_register_54( self.organization.cnpj,
-                          "55",
-                          "A",
-                          "222222",
-                          "1234",
-                          "111",
-                          "22",
-                          123,
-                          "1",
-                          "2",
-                          "4010",
-                          "1220",
-                          "5010",
-                          "3010",
-                          "222")
-    sintegra << generate_register_60A(@initial_date, 
-                          "222222",
-                          "123",
-                          "444")
-    sintegra << generate_register_60M(@initial_date,
-                          "12334567",
-                          "123",
-                          "55",
-                          "1111",
-                          "9999",
-                          "33",
-                          "444",
-                          "444",
-                          "4445")
-    sintegra << generate_register_60R(@initial_date,
-                          "123",
-                          "5",
-                          "6110",
-                          "444",
-                          "7445")
-    sintegra << generate_register_75( @initial_date,
-                          @final_date,
-                          123,
-                          "Produto",
-                          "Produto vendido pela organizacao",
-                          "kg",
-                          "1230",
-                          "1230",
-                          "4220",
-                          "1231231")
-    sintegra << generate_register_90( self.organization.cnpj,
-                          "898989",
-                          "50",
-                          "12",
-                          "1")
+      1, # Amount of register 90
+      50, # Register 50
+      1, # Amount of register 50
+      54, # Register 54
+      1, # Amount of register 54
+      75, # Register 90
+      1, # Amount of register 90
+      99, # All registers 
+      6) # Total
     return sintegra
   end
 
   def generate_sintegra
-    puts " -- test --"
     f = File.new(@file_name,"w")
+    # Here we call the fuction for generate sintegra file
+#    f.write(generate_sintegra_fiscal_doc)
     f.write(generate_sintegra_ecf)
+    f.write("\n")
     f.close 
-    return true
+    return f
   end
 
 end

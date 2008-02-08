@@ -10,13 +10,18 @@ class AddCashTest < Test::Unit::TestCase
     @user = User.find(:first)
   end
 
+  def create_printer(params= {})
+    p = Printer.create({:serial => 'test printer', :organization => @organization, :computer_id => 'FF:EE:44:22:GG'}.merge(params))
+    p
+  end
+
   def test_setup
     assert @organization.valid?
     assert @user.valid?
   end   
 
-  def create_till(organization = @organization, user = @user)
-    till = Till.new(organization, user, nil)
+  def create_till(organization = @organization, user = @user, printer = nil)
+    till = Till.new(organization, user, printer)
     till.save!
     till
   end
@@ -76,7 +81,7 @@ class AddCashTest < Test::Unit::TestCase
   def test_create_printer_cmd_whith_fiscal_printer
     @organization.configuration.fiscal_printer= true
     assert @organization.has_fiscal_printer?
-    @till = create_till(@organization)
+    @till = create_till(@organization, @user, create_printer)
     assert @till.valid?
     l = Ledger.new(:payment_method => Payment::ADD_CASH, :owner => @till)
     assert l.has_fiscal_printer?

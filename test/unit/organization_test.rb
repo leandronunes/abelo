@@ -2,9 +2,12 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class OrganizationTest < Test::Unit::TestCase
 
-  fixtures :bank_accounts, :organizations, :banks, :system_actors, :departments
+  fixtures :bank_accounts, :banks, :system_actors, :departments
 
   def setup
+    @country = BSC::Country.create(:name => 'Some Country')
+    @state = BSC::State.create(:name => 'Some State', :country => @country, :code => 'SS')
+    @city = BSC::City.create(:state => @state, :name => 'Some City', :zip_code => '40000')
     @organization = Organization.find_by_identifier('one')
     @customer = Customer.find(:first)
     @department = Department.find(:first)

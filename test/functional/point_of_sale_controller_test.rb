@@ -17,6 +17,7 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
     @user = User.find_by_login('seu_ze')
     @organization = Organization.find_by_identifier('one')
     @product = Product.find(:first)
+    @supplier = Supplier.find(:first)
     @customer = @organization.customers.find(:first)
     @supervisor = User.create!("administrator"=>false, "login"=>"some", "email"=>"some@example.com", :password => 'test', :password_confirmation => 'test')
     Profile.create!(:name => 'Supervisor', :organization => @organization, :user => @supervisor, :template => 'sales_supervisor')
@@ -25,6 +26,33 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
     @till = create_till
     @sale = Sale.new(@till) 
     @sale.save
+    create_stock
+  end
+
+  def create_till
+    till = Till.new(@organization, @user, nil)
+    till.save!
+    till
+  end
+
+  def create_stock
+    StockIn.create!(:supplier => @supplier, :amount => 15, :price => 1.99, :invoice => create_invoice, :product => @product)
+  end
+
+  def create_invoice(params = {})
+    Invoice.create!({:number => 3344, :serie => 33443, :issue_date => Date.today, :supplier => @supplier}.merge(params))
+  end
+
+  def create_sale
+    till = create_till
+    sale = Sale.new(till)
+    sale.save
+    sale
+  end
+
+  def create_sale_item(sale, params)
+    s = SaleItem.new(sale, params)
+    s.save!
   end
 
   def test_setup
@@ -38,24 +66,6 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
     assert @customer.valid?
     assert @organization.customers.include?(@customer)
     assert @category.valid?
-  end
-
-  def create_till
-    till = Till.new(@organization, @user, nil)
-    till.save
-    till
-  end
-
-  def create_sale
-    till = create_till
-    sale = Sale.new(till)
-    sale.save
-    sale
-  end
-
-  def create_sale_item(sale, params)
-    s = SaleItem.new(sale, params)
-    s.save!
   end
 
   def test_design_point_of_sale

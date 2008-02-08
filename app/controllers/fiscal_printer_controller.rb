@@ -34,8 +34,8 @@ class FiscalPrinterController < ApplicationController
 
   def new
     @printer = Printer.new
-    @printer.computer_id = PrinterCommand.get_computer_id
-    @printer.serial = PrinterCommand.get_serial
+    @printer.computer_id = PrinterCommand.get_computer_id.strip
+    @printer.serial = PrinterCommand.get_serial.strip
   end
 
   def create
@@ -44,16 +44,16 @@ class FiscalPrinterController < ApplicationController
     if @printer.save
       redirect_to :action => 'list'
     else
-      @printer.computer_id = PrinterCommand.get_computer_id
-      @printer.serial = PrinterCommand.get_serial
+      @printer.computer_id = PrinterCommand.get_computer_id.strip
+      @printer.serial = PrinterCommand.get_serial.strip
       render :action => 'new'
     end
   end
 
   def edit
     @printer = @organization.printers.find(params[:id])
-    @printer.computer_id = PrinterCommand.get_computer_id
-    @printer.serial = PrinterCommand.get_serial
+    @printer.computer_id = PrinterCommand.get_computer_id.strip
+    @printer.serial = PrinterCommand.get_serial.strip
   end
 
   def update
@@ -61,8 +61,8 @@ class FiscalPrinterController < ApplicationController
     if @printer.update_attributes(params[:printer])
       redirect_to :action => 'list'
     else
-      @printer.computer_id = PrinterCommand.get_computer_id
-      @printer.serial = PrinterCommand.get_serial
+      @printer.computer_id = PrinterCommand.get_computer_id.strip
+      @printer.serial = PrinterCommand.get_serial.strip
       render :action => 'edit'
     end
   end

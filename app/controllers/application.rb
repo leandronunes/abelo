@@ -129,6 +129,10 @@ class ApplicationController < ActionController::Base
     before_filter :create_stock_tabs
   end
 
+  def self.uses_sales_tabs
+    before_filter :create_sales_tabs
+  end
+
   # END TABS DEFINITION
 
   before_filter :define_location_path  

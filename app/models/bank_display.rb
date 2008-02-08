@@ -1,4 +1,4 @@
-class BankDisplay < ActiveRecord::Base
+class BankDisplay < DisplayConfiguration
 
   def self.available_fields
     %w[

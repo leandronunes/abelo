@@ -28,6 +28,18 @@ class DisplayConfiguration < ActiveRecord::Base
     true
   end
 
+  def self.inlist_available_fields
+    self.available_fields
+  end
+
+  def self.break_lines
+    []
+  end
+
+  def self.titles
+    self.available_fields
+  end
+
   def switch(field)
     field = field.class.find(field.id) #FIXME see a better way to the object don't came as read only
     temp_position = self.position

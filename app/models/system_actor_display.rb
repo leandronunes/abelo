@@ -4,6 +4,10 @@ class SystemActorDisplay < DisplayConfiguration
     ['name', 'address', 'description', 'email', 'category', 'cnpj', 'cpf', 'rg', 'birthday', 'actor_type','info']
   end
 
+  def self.all_available?
+    false
+  end
+
   def self.describe(field)
     {
       'name' =>  _('Name'),

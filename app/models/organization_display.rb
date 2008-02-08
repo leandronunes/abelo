@@ -1,4 +1,6 @@
-class OrganizationDisplay < ActiveRecord::Base
+class OrganizationDisplay < DisplayConfiguration
+
+#FIXME see the display on helper. I changed the ActiveRecord to DisplayConfiguration 
 
   def self.available_fields
     ['name', 'cnpj', 'presentation']

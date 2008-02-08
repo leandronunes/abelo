@@ -4,6 +4,10 @@ class ProductDisplay < DisplayConfiguration
     ['image', 'name', 'size', 'color', 'description', 'sell_price', 'unit', 'category', 'suppliers', 'amount_in_stock', 'minimum_amount', 'info']
   end
 
+  def self.all_available?
+    false
+  end
+
   def self.describe(field)
     {
       'image' => _('Image'),

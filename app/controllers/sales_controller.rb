@@ -2,7 +2,7 @@ class SalesController < ApplicationController
 
   needs_organization
 
-  before_filter :create_sales_tabs
+  uses_sales_tabs
 
   def index
     redirect_to :action => 'list'

@@ -4,12 +4,14 @@ class Till < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :organization
+  belongs_to :printer
   has_many :printer_commands, :as => :owner, :dependent => :destroy
   has_many :ledgers, :as => :owner, :dependent => :destroy
   has_one :printer_command, :as => :owner
   has_many :sales, :as => :owner, :dependent => :destroy
 
   validates_inclusion_of :status, :in => ALL_STATUS
+  validates_presence_of :printer_id, :if => lambda { |till| till.has_fiscal_printer?}
 
   before_validation do |till|
     till.printer_command ||= PrinterCommand.new(till, [PrinterCommand::SUMMARIZE]) if till.has_fiscal_printer?
@@ -38,7 +40,7 @@ class Till < ActiveRecord::Base
     self.datetime = DateTime.now
     self.organization = organization
     self.user = user
-    self.printer_id = printer
+    self.printer = printer
   end
 
   def self.load(organization, user, printer_id = nil)

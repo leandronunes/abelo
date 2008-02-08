@@ -1,5 +1,6 @@
-class ConfigurationDisplay < ActiveRecord::Base
+class ConfigurationDisplay < DisplayConfiguration
 
+#FIXME see the display on helper. I changed the ActiveRecord to DisplayConfiguration 
   def self.available_fields
     %w[
       name

@@ -5,6 +5,7 @@ class PrinterDisplayTest < Test::Unit::TestCase
   AVAILABLE_FIELDS_TEST = %w[
       serial
       computer_id
+      name
   ]
   def test_available_fields
     assert_equal AVAILABLE_FIELDS_TEST, PrinterDisplay.available_fields

@@ -125,7 +125,7 @@ class PrinterCommand < ActiveRecord::Base
 
   # Check if a sale was totalized
   def self.is_totalized? sale
-    sale.printer_commands.find(:first, :conditions => {:cmd => TOTALIZE } ) != nil
+    sale.printer_commands.detect{|p| p.cmd == TOTALIZE} != nil
   end
 
   def has_error?
@@ -173,7 +173,7 @@ class PrinterCommand < ActiveRecord::Base
      puts response
     # Removing bad informations
     response.shift
-    response[1] = response[1].gsub(/.*"(.*)",.*/, '\1')
+    response[1] = response[1].gsub(/.*'(.*)',.*/, '\1').strip
     
     # Keep command response
     self.response = response
@@ -196,9 +196,8 @@ class PrinterCommand < ActiveRecord::Base
   end
 
 
-  def set_error(code, msg)
+  def set_error(code)
     self.error_code = code
-    self.error_message = msg
     self.save
   end  
 
@@ -210,83 +209,83 @@ class PrinterCommand < ActiveRecord::Base
     case(code)
       when OutofPaperError:
         msg ||= _("You don't have paper. Change the bobine")
-        self.set_error(code, msg)
+#        self.set_error(code, msg)
       when  PrinterOfflineError:
         msg ||= 'ble 1'
-        self.set_error(code, msg)
+#        self.set_error(code, msg)
       when AlmostOutofPaper:
         msg ||= 'ble 2'
-        self.set_error(code, msg)
+#        self.set_error(code, msg)
       when HardwareFailure:
         msg ||= 'ble 3'
-        self.set_error(code, msg)
+#        self.set_error(code, msg)
       when PendingReduceZ:
         msg ||= _('Pending Reduction Z')
         make_reduction_z
-        self.set_error(code, msg)
+#        self.set_error(code, msg)
       when PendingReadX:
         msg ||= 'ble 5'
-        self.set_error(code, msg)
+#        self.set_error(code, msg)
       when CloseCouponError:
         msg ||= 'ble 6'
-        self.set_error(code, msg)
+#        self.set_error(code, msg)
       when CouponNotOpenError:
         msg ||= 'ble 7'
-        self.set_error(code, msg)
+#        self.set_error(code, msg)
       when CouponOpenError:
         msg ||= 'ble 8'
-        self.set_error(code, msg)
+#        self.set_error(code, msg)
       when AuthenticationFailure:
         msg ||= 'ble 9'
-        self.set_error(code, msg)
+#        self.set_error(code, msg)
       when CommandParametersError:
         msg ||= 'ble  10'
-        self.set_error(code, msg)
+#        self.set_error(code, msg)
       when CommandError:
-        self.set_error(code, msg)
+#        self.set_error(code, msg)
       when  ClosedTillError:
         msg ||= 'ble 12'
-        self.set_error(code, msg)
+#        self.set_error(code, msg)
       when ReduceZError:
         msg ||= 'ble 13'
-        self.set_error(code, msg)
+#        self.set_error(code, msg)
       when ReadXError:
         msg ||= 'ble 14'
-        self.set_error(code, msg)
+#        self.set_error(code, msg)
       when CouponTotalizeError:
         msg ||= 'ble 15'
-        self.set_error(code, msg)
+#        self.set_error(code, msg)
       when PaymentAdditionError:
         msg ||= 'ble 16'
-        self.set_error(code, msg)
+#        self.set_error(code, msg)
       when CancelItemError:
         msg ||= 'ble 17'
-        self.set_error(code, msg)
+#        self.set_error(code, msg)
       when  InvalidState:
         msg ||= 'ble 18'
-        self.set_error(code, msg)
+#        self.set_error(code, msg)
       when CapabilityError:
         msg ||= 'ble 19'
-        self.set_error(code, msg)
+#        self.set_error(code, msg)
       when ItemAdditionError:
         msg ||= 'ble 20'
-        self.set_error(code, msg)
+#        self.set_error(code, msg)
       when InvalidReply:
         msg ||= 'ble 21'
-        self.set_error(code, msg)
+#        self.set_error(code, msg)
       when  AlreadyTotalized:
         msg ||= 'ble 22'
-        self.set_error(code, msg)
+#        self.set_error(code, msg)
       when InvalidValue:
         msg ||= 'ble 23'
-        self.set_error(code, msg)
+#        self.set_error(code, msg)
       when DriverError:
         msg ||= 'ble 24'
-        self.set_error(code, msg)
       when CommandOK:
         return false
     end
 
+    self.set_error(code)
     return true
   end
 
@@ -294,6 +293,10 @@ class PrinterCommand < ActiveRecord::Base
     return false if self.response_error?(response) 
     self.done!
     return true
+  end
+
+  def error_message
+    self.response[1] unless self.response.nil?
   end
 
   def make_reduction_z

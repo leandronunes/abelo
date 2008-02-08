@@ -18,8 +18,13 @@ class MoneyTest < Test::Unit::TestCase
     assert @user.valid?
   end   
 
+  def create_printer(params= {})
+    p = Printer.create!({:serial => 'test printer', :organization => @organization, :computer_id => 'FF:EE:44:22:GG'}.merge(params))
+    p
+  end
+
   def create_till
-    till = Till.new(@organization, @user, nil)
+    till = Till.new(@organization, @user, create_printer)
     till.save
     till
   end

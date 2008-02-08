@@ -1,5 +1,5 @@
 class Profile < ActiveRecord::Base
-
+  #FIXME make the tests for profile
   
   PERMISSIONS[:department] = {
     'manage_department' => N_('Manage Department'),

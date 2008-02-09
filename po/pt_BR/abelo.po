@@ -2367,15 +2367,15 @@ msgstr "Trabalhador(a)"
 
 #: app/models/invoice.rb:-
 msgid "invoice"
-msgstr "Fatura"
+msgstr "Nota Fiscal"
 
 #: app/models/invoice.rb:-
 msgid "Invoice|Number"
-msgstr "Fatura|Número"
+msgstr "Nota Fiscal|Número"
 
 #: app/models/invoice.rb:-
 msgid "Invoice|Serie"
-msgstr "Fatura|Série"
+msgstr "Nota Fiscal|Série"
 
 #: app/models/invoice.rb:-
 msgid "Invoice|Issue date"
@@ -2387,11 +2387,11 @@ msgstr "Status"
 
 #: app/models/invoice.rb:-
 msgid "Invoice|Supplier"
-msgstr "Fatura|Fornecedor"
+msgstr "Nota Fiscal|Fornecedor"
 
 #: app/models/invoice_display.rb:9
 msgid "Invoice number"
-msgstr "Número da Fatura"
+msgstr "Número da Nota Fiscal"
 
 #: app/models/invoice_display.rb:10 app/views/stock/_form.rhtml:16
 #: app/views/stock_in/_form.rhtml:15
@@ -2400,7 +2400,7 @@ msgstr "Série"
 
 #: app/models/invoice_display.rb:12
 msgid "Invoice Issue Date"
-msgstr "Data de emissão da fatura"
+msgstr "Data de emissão da nota fiscal"
 
 #: app/models/invoice_display.rb:13
 msgid "Situação"
@@ -2851,7 +2851,7 @@ msgstr "Venda"
 
 #: app/models/stock.rb:-
 msgid "Stock|Invoice"
-msgstr "Estoque|Fatura"
+msgstr "Estoque|Nota Fiscal"
 
 #: app/models/stock.rb:18
 msgid "Sell"
@@ -3885,7 +3885,7 @@ msgstr "Editar estoque para %s"
 
 #: app/views/stock/edit.rhtml:11 app/views/stock_in/edit.rhtml:18
 msgid "Invoice Payments: "
-msgstr "Pagamentos da Fatura"
+msgstr "Pagamentos da Nota Fiscal"
 
 #: app/views/users/login.rhtml:19
 msgid "Log in"
@@ -4619,7 +4619,7 @@ msgstr "Endereço da Organização"
 
 #: app/views/organization/edit_address.rhtml:1
 msgid "Editing Organization Address"
-msgstr "Editando Endereço da Organização %s"
+msgstr "Editando Endereço da Organização"
 
 #: app/views/organization/edit.rhtml:1
 msgid "Editing Presetation"
@@ -4645,7 +4645,7 @@ msgstr "%s de %s em %s"
 #: app/views/stock_base/_display_stock_table.rhtml:5
 #: app/views/stock_in/show.rhtml:2
 msgid "Invoice"
-msgstr "Fatura"
+msgstr "Nota Fiscal"
 
 #: app/views/stock_base/_display_stock_table.rhtml:8
 msgid "Price (R$) "
@@ -4897,11 +4897,11 @@ msgstr "Usuários %s"
 
 #: app/views/stock_in/new.rhtml:2
 msgid "New Invoice"
-msgstr "Nova Fatura"
+msgstr "Nova Nota Fiscal"
 
 #: app/views/stock_in/list.rhtml:1
 msgid "Invoice Control"
-msgstr "Controle das Faturas"
+msgstr "Controle das Notas Fiscais"
 
 #: app/views/stock_in/show.rhtml:6
 msgid "Items"
@@ -4909,11 +4909,11 @@ msgstr "Itens"
 
 #: app/views/stock_in/edit.rhtml:2
 msgid "Edit Invoice"
-msgstr "Editar Fatura"
+msgstr "Editar Nota Fiscal"
 
 #: app/views/stock_in/edit.rhtml:12
 msgid "Invoice Items:"
-msgstr "Itens da Fatura:"
+msgstr "Itens da Nota Fiscal:"
 
 #: app/views/system_actors/_menu.rhtml:2
 msgid "Personal Data"

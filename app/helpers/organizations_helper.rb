@@ -1,7 +1,7 @@
 module OrganizationsHelper
 
   def link_to_organization(text, org, options = {}, html_options = {})
-    link_to text, { :controller => 'main', :organization_nickname => org.nickname }.merge(options), html_options
+    link_to text, { :controller => 'organization', :organization_nickname => org.nickname }.merge(options), html_options
   end
 
   def display_collection_options(item, params = {}, html_options = {})

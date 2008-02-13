@@ -108,11 +108,11 @@ module ApplicationHelper
         ),
         (@organization.nil? or current_user.administrator) ? 
               link_to(_('Abelo'), :controller => 'organizations') : 
-              (can(:controller => 'main') ? 
-                 link_to(@organization.name, :controller => 'main') : 
+              (can(:controller => 'organization') ? 
+                 link_to(@organization.name, :controller => 'organization') : 
                  link_to(@organization.name, :controller => 'public') 
               ),
-        if controller.controller_name != 'main'
+        if controller.controller_name != 'organization'
         "&rarr " + link_to(controller.describe(@location), :controller => @location)
         end
       ],

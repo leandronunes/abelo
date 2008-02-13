@@ -32,8 +32,8 @@ class ApplicationController < ActionController::Base
   # MENU DETAILS 
   ###########################################
   MENU_ITEMS = {
-    'main' => [
-      'main'
+    'organization' => [
+      'organization'
     ],
     'configurations' => [
       'categories'

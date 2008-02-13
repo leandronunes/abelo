@@ -7,7 +7,8 @@ class CheckTest < Test::Unit::TestCase
   fixtures :banks, :ledgers, :ledger_categories
 
   def setup
-    @organization = Organization.find(:first)
+    create_place
+    @organization = create_organization
     @user = User.find(:first)
     @till = create_till
   end
@@ -17,12 +18,6 @@ class CheckTest < Test::Unit::TestCase
     assert @organization.valid?
     assert @user.valid?
   end   
-
-  def create_till
-    till = Till.new(@organization, @user, nil)
-    till.save
-    till
-  end
 
   def test_is_money?
     m = Check.new

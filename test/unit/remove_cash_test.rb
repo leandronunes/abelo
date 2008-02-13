@@ -6,7 +6,7 @@ include PaymentStrategy
 class RemoveCashTest < Test::Unit::TestCase
 
   def setup
-    @organization = Organization.find(:first)
+    @organization = create_organization
     @user = User.find(:first)
     @till = create_till
   end

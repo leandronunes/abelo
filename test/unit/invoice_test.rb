@@ -5,9 +5,9 @@ class InvoiceTest < Test::Unit::TestCase
   fixtures :system_actors, :products
 
   def setup
-    @organization = Organization.find(:first)
+    @organization = create_organization
     @supplier = Supplier.find(:first)
-    @product = Product.find(:first)
+    @product = create_product
   end
 
   def test_setup

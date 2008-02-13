@@ -6,17 +6,14 @@ class CategoriesController; def rescue_action(e) raise e end; end
 
 class ProductCategoriesControllerTest < Test::Unit::TestCase
 
-  include TestingUnderOrganization
-
-  fixtures :categories, :organizations, :configurations
+  under_organization :some
 
   def setup
     @controller = CategoriesController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-    @organization_nickname = 'one'
-    @organization = Organization.find_by_identifier 'one'
-    @organization.configuration = Configuration.find(1)
+    @organization = create_organization(:identifier => 'some')
+    @product_category = create_product_category(:organization => @organization)
     login_as("quentin")
   end
 
@@ -111,7 +108,7 @@ class ProductCategoriesControllerTest < Test::Unit::TestCase
   end
 
   def test_edit
-    get :edit, :id => 1, :category_type => 'product'
+    get :edit, :id => @product_category, :category_type => 'product'
 
     assert_response :success
     assert_template 'edit'
@@ -122,7 +119,7 @@ class ProductCategoriesControllerTest < Test::Unit::TestCase
   end
 
   def test_update
-    post :update, :id => 1
+    post :update, :id => @product_category
     assert_response :redirect
     assert_redirected_to :action => 'list'
   end

@@ -6,18 +6,15 @@ class CategoriesController; def rescue_action(e) raise e end; end
 
 class CustomerCategoriesControllerTest < Test::Unit::TestCase
 
-  include TestingUnderOrganization
-
-  fixtures :categories, :organizations, :configurations
+  under_organization :some
 
   def setup
     @controller = CategoriesController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-    @organization_nickname = 'one'
-    @organization = Organization.find_by_identifier 'one'
-    @organization.configuration = Configuration.find(1)
-    @cust_cat = CustomerCategory.find(:first)
+
+    @organization = create_organization(:identifier => 'some')
+    @customer_category ||= create_customer_category
     login_as("quentin")
   end
 
@@ -29,7 +26,7 @@ class CustomerCategoriesControllerTest < Test::Unit::TestCase
 
   def test_autocomplete_category_name
     CustomerCategory.delete_all
-    cust_cat = CustomerCategory.create(:name => 'Category for testing', :organization => @organization)
+    customer_category = CustomerCategory.create(:name => 'Category for testing', :organization => @organization)
     get :autocomplete_category_name, :category => { :name => 'test'}, :category_type => 'customer'
     assert_not_nil assigns(:categories)
     assert_kind_of Array, assigns(:categories)
@@ -69,7 +66,7 @@ class CustomerCategoriesControllerTest < Test::Unit::TestCase
   end
 
   def test_show
-    get :show, :id => @cust_cat.id, :category_type => 'customer'
+    get :show, :id => @customer_category.id, :category_type => 'customer'
     assert_response :success
     assert_template 'show'
     assert_not_nil assigns(:category)
@@ -114,7 +111,7 @@ class CustomerCategoriesControllerTest < Test::Unit::TestCase
   end
 
   def test_edit
-    get :edit, :id => @cust_cat.id, :category_type => 'customer'
+    get :edit, :id => @customer_category.id, :category_type => 'customer'
 
     assert_response :success
     assert_template 'edit'
@@ -125,17 +122,17 @@ class CustomerCategoriesControllerTest < Test::Unit::TestCase
   end
 
   def test_update
-    post :update, :id => @cust_cat.id
+    post :update, :id => @customer_category.id
     assert_response :redirect
     assert_redirected_to :action => 'list'
   end
 
   def test_update_fails
-    cust_cat = CustomerCategory.new
-    cust_cat.name = 'Category for testing'
-    cust_cat.organization = @organization
-    assert cust_cat.save
-    post :update, :id => cust_cat.id, :category => {:name => ''}, :category_type => 'customer'
+    customer_category = CustomerCategory.new
+    customer_category.name = 'Category for testing'
+    customer_category.organization = @organization
+    assert customer_category.save
+    post :update, :id => customer_category.id, :category => {:name => ''}, :category_type => 'customer'
     assert_response :success
     assert_template 'edit'
   end

@@ -6,16 +6,15 @@ class PermissionsController; def rescue_action(e) raise e end; end
 
 class PermissionsControllerTest < Test::Unit::TestCase
 
-  fixtures :organizations, :profiles, :configurations, :people
-
-  under_organization :one
+  under_organization :some
 
   def setup
     @controller = PermissionsController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-    @organization = Organization.find_by_identifier('one')
-    @user = User.find(:first)
+
+    @organization = create_organization(:identifier => 'some')
+    @user = create_user
     login_as('quentin')
   end
 
@@ -51,11 +50,10 @@ class PermissionsControllerTest < Test::Unit::TestCase
   end
 
   def test_list_when_query_param_not_nil
-    User.delete_all
-    User.create!("administrator"=>false, "login"=>"quentin", "email"=>"quentin@example.com", :password => 'test', :password_confirmation => 'test')
-    User.create!("administrator"=>false, "login"=>"jose", "email"=>"j@example.com", :password => 'test', :password_confirmation => 'test')
-    User.create!("administrator"=>false, "login"=>"tadeu", "email"=>"t@example.com", :password => 'test', :password_confirmation => 'test')
-    get :list, :query => 'que*'
+    create_user(:login => "zzzzzzzzzzzzz")
+    create_user(:login => "jose")
+    create_user(:login => "tadeu")
+    get :list, :query => '*zzz*'
 
     assert_not_nil assigns(:query)
     assert_not_nil assigns(:users)
@@ -161,8 +159,6 @@ class PermissionsControllerTest < Test::Unit::TestCase
 
   def test_update_template
     new_template = 'financial'
-#puts 'teste'
-#puts @user.profiles.inspect
     profile = @user.profile_by_organization(@organization)
     assert_not_equal new_template, profile.template
     profile_id = profile.id

@@ -6,38 +6,19 @@ class StockController; def rescue_action(e) raise e end; end
 
 class StockControllerTest < Test::Unit::TestCase
 
-  fixtures :stocks, :system_actors, :products, :configurations, :ledger_categories, :bank_accounts, :categories, :invoices
-
-  under_organization :one
+  under_organization :some
 
   def setup
     @controller = StockController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     login_as("quentin")
-    @product = Product.find(:first)
-    @supplier = Supplier.find(:first)
-    @ledger_category = LedgerCategory.find(:first)
-    @product_category = ProductCategory.find(:first)
-    @organization = Organization.find(:first)
-  end
-
-  def create_product(params = {})
-    Product.create!({:name => 'product one', :sell_price => 2.0, :unit => 'kg', :organization => @organization, :category => @product_category}.merge(params))
-  end
-
-  def create_invoice
-    Invoice.create!(:number => 3344, :serie => 33443, :issue_date => Date.today, :supplier => @supplier)
-  end
-
-  def create_stock(invoice)
-    StockIn.create!(:supplier => @supplier, :amount => 1, :price => 1.99, :invoice => invoice, :product => @product)
-  end
-
-  def create_ledger(params = {})
-    Ledger.create!({:bank_account => @organization.default_bank_account,:owner => @organization, 
-           :category => @ledger_category, :date => Date.today, :value => 23434,
-           :payment_method => Payment::MONEY}.merge(params) )
+    @organization = create_organization(:identifier => 'some')
+    @bank_account = create_bank_account(:owner => @organization)
+    @product = create_product()
+    @supplier = create_supplier
+    @ledger_category = create_ledger_category(:organization => @organization)
+    @product_category ||= create_product_category(:organization => @organization)
   end
 
   def test_autocomplete_product_name
@@ -150,7 +131,7 @@ class StockControllerTest < Test::Unit::TestCase
 
   def test_edit
     invoice = create_invoice
-    stock = create_stock(invoice)
+    stock = create_stock_in(:invoice => invoice)
     get :edit, :invoice_id => invoice.id, :stock_id => stock.id
 
     assert_response :success

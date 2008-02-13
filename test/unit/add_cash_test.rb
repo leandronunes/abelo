@@ -6,13 +6,8 @@ include PaymentStrategy
 class AddCashTest < Test::Unit::TestCase
 
   def setup
-    @organization = Organization.find(:first)
+    @organization = create_organization
     @user = User.find(:first)
-  end
-
-  def create_printer(params= {})
-    p = Printer.create({:serial => 'test printer', :organization => @organization, :computer_id => 'FF:EE:44:22:GG'}.merge(params))
-    p
   end
 
   def test_setup

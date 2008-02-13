@@ -6,16 +6,15 @@ class PermissionsAdminController; def rescue_action(e) raise e end; end
 
 class PermissionsAdminControllerTest < Test::Unit::TestCase
 
-  fixtures :organizations, :profiles, :configurations, :people
-
-  under_organization :admin
+  under_organization :some 
 
   def setup
     @controller = PermissionsAdminController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-    @user = User.find(:first)
-    @organization = Organization.find_by_identifier('one')
+
+    @organization = create_organization(:identifier => 'some')
+    @user = create_user
     login_as('admin')
   end
 

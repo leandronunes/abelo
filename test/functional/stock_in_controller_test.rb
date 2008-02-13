@@ -6,40 +6,21 @@ class StockInController; def rescue_action(e) raise e end; end
 
 class StockInControllerTest < Test::Unit::TestCase
 
-  fixtures :stocks, :system_actors, :products, :configurations, :system_actors, :ledger_categories, :bank_accounts, :categories
-
-  under_organization :one
+  under_organization :some
 
   def setup
     @controller = StockInController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     login_as("quentin")
-    @product = Product.find(:first)
-    @supplier = Supplier.find(:first)
-    @ledger_category = LedgerCategory.find(:first)
-    @product_category = ProductCategory.find(:first)
-    @organization = Organization.find(:first)
+    @organization = create_organization(:identifier => 'some')
+    @bank_account = create_bank_account(:owner => @organization)
+    @product = create_product()
+    @supplier = create_supplier
+    @ledger_category = create_ledger_category(:organization => @organization)
+    @product_category ||= create_product_category(:organization => @organization)
     @invoice = create_invoice
-    @stock_in = create_stock(@invoice)
-  end
-
-  def create_product(params = {})
-    Product.create!({:name => 'product one', :sell_price => 2.0, :unit => 'kg', :organization => @organization, :category => @product_category}.merge(params))
-  end
-
-  def create_invoice(params = {})
-    Invoice.create!({:number => 3344, :serie => 33443, :issue_date => Date.today, :supplier => @supplier}.merge(params))
-  end
-
-  def create_stock(invoice)
-    StockIn.create!(:supplier => @supplier, :amount => 1, :price => 1.99, :invoice => invoice, :product => @product)
-  end
-
-  def create_ledger(params = {})
-    Ledger.create!({:bank_account => @organization.default_bank_account,:owner => @organization,
-           :category => @ledger_category, :date => Date.today, :value => 23434,
-           :payment_method => Payment::MONEY}.merge(params) )
+    @stock_in = create_stock_in
   end
 
   def test_setup
@@ -90,7 +71,7 @@ class StockInControllerTest < Test::Unit::TestCase
   end
 
   def test_list_when_query_param_not_nil
-    Invoice.delete_all
+    Invoice.destroy_all
     create_invoice(:number => 11111111)
     create_invoice(:number => 11111222)
     create_invoice(:number => 33333333)
@@ -277,7 +258,7 @@ class StockInControllerTest < Test::Unit::TestCase
   end
 
   def test_edit_item
-    stock = create_stock(@invoice)
+    stock = create_stock_in
     get :edit_item, :id => @invoice.id, :stock_id => stock.id
     assert_response :success
     assert_template '_invoice_edit_items'
@@ -288,7 +269,7 @@ class StockInControllerTest < Test::Unit::TestCase
   end
 
   def test_update_item
-    stock = create_stock(@invoice)
+    stock = create_stock_in
     get :update_item, :id => @invoice.id, :stock_id => stock.id, :stock => {:price => 3423}
     assert_response :success
     assert_template '_invoice_new_items'
@@ -300,7 +281,7 @@ class StockInControllerTest < Test::Unit::TestCase
   end
 
   def test_update_item_with_wrong_params
-    stock = create_stock(@invoice)
+    stock = create_stock_in
     # The price cannot be nil
     get :update_item, :id => @invoice.id, :stock_id => stock.id, :stock => {:price => nil}
     assert_response :success

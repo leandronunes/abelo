@@ -5,43 +5,28 @@ require 'documents_controller'
 class DocumentsController; def rescue_action(e) raise e end; end
 
 class DocumentsControllerTest < Test::Unit::TestCase
-  fixtures :documents, :departments, :document_sections, :organizations, :departments_documents, :document_items, :configurations, :system_actors
-  under_organization :one
+
+  under_organization :some
 
   def setup
     @controller = DocumentsController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-    @organization = Organization.find_by_identifier('one')
-    @department = Department.find(:first)
-    @customer = Customer.find(:first)
-    login_as("quentin")
-  end
 
-  def create_document(params ={})
-    Document.create!(params_create_document(params))
-  end
-  def params_create_document(params = {})
-    {
-      :name => params[:name] || 'Some Name', 
-      :is_model => params[:is_model] || false, 
-      :organization => @organization, 
-      :departments => [@department],
-      :owner => params[:owner] || (params[:is_model] ? nil : @customer),
-      :document_model => params[:document_model]
-    }
+    @organization = create_organization(:identifier => 'some')
+    @department = create_department
+    @customer = create_customer
+    @document = create_document(:is_model => false)
+    @document_model = create_document(:is_model => true, :name => 'another')
+    login_as("quentin")
   end
 
   def test_setup
     assert @organization.valid?
     assert @department.valid?
     assert @customer.valid?
-  end
-
-  def test_used_fixtures_on_this_test
-    assert Organization.find(1).valid?
-    assert Document.find(1).valid?
-    assert Department.find(1).valid?
+    assert @document.valid?
+    assert @document_model.valid?
   end
 
   def test_autocomplete_document_name_for_document_without_model
@@ -66,8 +51,7 @@ class DocumentsControllerTest < Test::Unit::TestCase
     document = create_document(:is_model => false, :document_model => model)
     get :autocomplete_document_name, :document => {:name => 'document'}, :document_model_id => model.id, :models_list => true
     assert_not_nil assigns(:documents)
-    assert Organization.find(1).documents_by_model(model).include?(document)
-#    assert assigns(:documents).include?(document)
+    assert @organization.documents_by_model(model).include?(document)
   end
 
   def test_index
@@ -81,7 +65,7 @@ class DocumentsControllerTest < Test::Unit::TestCase
     model = create_document(:is_model => true)
     document_with_model = create_document(:name => 'Another name', :is_model => false, :document_model => model)
 
-    get :list, :document_model_id => 1, :models_list => true 
+    get :list, :document_model_id => model.id, :models_list => true 
 
     assert_response :success
     assert_template 'list', :document_model_id => model.id
@@ -117,7 +101,7 @@ class DocumentsControllerTest < Test::Unit::TestCase
 
   def test_show_document_with_model
     
-    get :show, :id => 1
+    get :show, :id => @document.id
 
     assert_response :success
     assert_template 'show'
@@ -126,7 +110,7 @@ class DocumentsControllerTest < Test::Unit::TestCase
   end
 
   def test_new_document_from_model
-    model = Document.create(:name => 'Model', :is_model => true, :organization_id => 1, :department_ids => [1])
+    model = Document.create(:name => 'Model', :is_model => true, :organization => @organization, :department_ids => [@department.id])
 
     get :new, :document_model_id => model.id
 
@@ -182,43 +166,43 @@ class DocumentsControllerTest < Test::Unit::TestCase
   end
 
   def test_create_document_with_model
-    model = create_document(:is_model => true)
-
     num_documents = Document.count
 
-    post :create, :document_model_id => model.id, :document => params_create_document(:name => 'Some name', :is_model => false), :models_list => true
+    post :create, :document_model_id => @document_model.id, :document => {:name => 'Another Some Name', :is_model => false, :organization => @organization,:departments => [@department], :owner => @customer}, :models_list => true
+
     assert_valid assigns(:document)
     assert_not_nil assigns(:document)
     assert_response :redirect
-    assert_redirected_to :action => 'list', :document_model_id => model.id, :models_list => true
+    assert_redirected_to :action => 'list', :document_model_id => @document_model.id, :models_list => true
 
-    assert Organization.find(1).documents_by_model(model).include?(assigns(:document))
+    assert @organization.documents_by_model(@document_model).include?(assigns(:document))
     assert_equal num_documents + 1, Document.count
   end
 
   def test_create_document_model
     num_documents = Document.count
 
-    post :create, :document => {:name => 'document', :organization_id => 1, :department_ids => [1]}, :models_list => true
+    post :create, :document => {:name => 'document', :organization => @organization , :department_ids => [@department.id]}, :models_list => true
     assert_valid assigns(:document)
     assert_not_nil assigns(:document)
     assert_response :redirect
     assert_redirected_to :action => 'list', :models_list => true
 
-    assert Organization.find(1).documents_model.include?(assigns(:document))
+    assert @organization.documents_model.include?(assigns(:document))
     assert_equal num_documents + 1, Document.count
   end
 
   def test_create_document_without_model
     num_documents = Document.count
 
-    post :create, :document => params_create_document
+    post :create, :document => {:name => 'Another Some Name', :is_model => false, :organization => @organization,:departments => [@department], :owner => @customer }
+
     assert_valid assigns(:document)
     assert_not_nil assigns(:document)
     assert_response :redirect
     assert_redirected_to :action => 'list' 
 
-    assert Organization.find(1).documents_without_model.include?(assigns(:document))
+    assert @organization.documents_without_model.include?(assigns(:document))
     assert_equal num_documents + 1, Document.count
   end
 
@@ -242,7 +226,7 @@ class DocumentsControllerTest < Test::Unit::TestCase
 
 
   def test_edit_document_with_model
-    document = create_document(:is_model => false, :document_model => Document.models(:first))
+    document = create_document(:is_model => false, :document_model => @document_model, :name => 'test')
 
     get :edit, :id => document.id, :document_model_id => 1, :models_list => true
 
@@ -259,9 +243,8 @@ class DocumentsControllerTest < Test::Unit::TestCase
   end
 
   def test_edit_document_without_model
-    model = create_document(:is_model => false)
     
-    get :edit, :id => model.id
+    get :edit, :id => @document.id
 
     assert_response :success
     assert_template 'edit'
@@ -277,10 +260,9 @@ class DocumentsControllerTest < Test::Unit::TestCase
 
 
   def test_edit_document_without_model_with_owner_type
-    document = create_document()
-    customer =  Customer.find(:first)
-    assert customer.valid?
-    customer.documents << document
+    document = create_document(:name => 'some')
+    assert @customer.valid?
+    @customer.documents << document
     
     get :edit, :id => document.id
 
@@ -290,9 +272,7 @@ class DocumentsControllerTest < Test::Unit::TestCase
 
 
   def test_edit_document_model
-    model = Document.create(:name => 'Model', :is_model => true, :organization_id => 1, :department_ids => [1])
-    
-    get :edit, :id => model.id, :models_list => true
+    get :edit, :id => @document_model, :models_list => true
 
     assert_response :success
     assert_template 'edit'

@@ -4,30 +4,23 @@ include PaymentStrategy
 
 class MoneyTest < Test::Unit::TestCase
 
+  fixtures :configurations
+
   def setup
-    @organization = Organization.find(:first)
+    create_place
+    @organization = create_organization
     @organization.configuration.fiscal_printer= true
     @user = User.find(:first)
     @till = create_till
   end
 
   def test_setup
+    assert_not_nil @organization.configuration
     assert @till.valid?
     assert @organization.valid?
     assert @organization.has_fiscal_printer?
     assert @user.valid?
   end   
-
-  def create_printer(params= {})
-    p = Printer.create!({:serial => 'test printer', :organization => @organization, :computer_id => 'FF:EE:44:22:GG'}.merge(params))
-    p
-  end
-
-  def create_till
-    till = Till.new(@organization, @user, create_printer)
-    till.save
-    till
-  end
 
   def test_is_money?
     m = Money.new

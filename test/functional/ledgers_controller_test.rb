@@ -22,17 +22,6 @@ class LedgersControllerTest < Test::Unit::TestCase
     @default_bank_account = BankAccount.find(1)
   end
 
-  def create_money(params = {})
-    Ledger.create!(:date => params[:date] || Date.today, 
-       :value => params[:value] || 10, 
-       :description => params[:description] || 'Some Description', 
-       :bank_account => @default_bank_account, 
-       :category => @ledger_category, 
-       :operational => false, :status => STATUS_PENDING, 
-       :payment_method => Payment::MONEY,
-       :owner => @organization)
-  end
-
   def test_setup
     assert @another_bank_account.valid?
     assert @default_bank_account.valid?
@@ -164,6 +153,16 @@ class LedgersControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:geral_total_income)
     assert_not_nil assigns(:geral_total_expense)
     assert_equal [@another_bank_account], assigns(:chosen_accounts)
+  end
+
+  def test_show
+    @ledger = create_ledger
+    get :show, :id => @ledger.id
+    assert_response :success
+    assert_template 'show'
+    assert_not_nil assigns(:ledger)
+    assert_not_nil assigns(:bank_accounts)
+    assert_not_nil assigns(:ledger_categories)
   end
 
   def test_new

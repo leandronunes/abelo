@@ -87,6 +87,11 @@ class Test::Unit::TestCase
                   :category => @ledger_category}.merge(params))
   end
 
+  def create_money(params = {})
+    params[:payment_method] = Payment::MONEY
+    create_ledger(params)
+  end
+
   def create_ledger_category(params = {})
     category = LedgerCategory.create({:name => 'Some', :is_operational => false,
            :organization => @organization, :type_of => Payment::TYPE_OF_INCOME,

@@ -67,7 +67,7 @@ class LedgersController < ApplicationController
   end
 
   def show
-    @ledger = @organization.find_ledger(params[:id])
+    @ledger = @organization.ledgers(params[:id])
     @bank_accounts = @organization.bank_accounts
     @ledger_categories =  @organization.ledger_categories_sorted_by_name
   end

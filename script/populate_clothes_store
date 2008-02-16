@@ -19,6 +19,9 @@ organization = Organization.new
 organization.name = 'Toca'
 organization.cnpj = '05359933000193'
 organization.identifier = 'toca'
+organization.state_registration = 12345
+organization.trade_name = 'Loja Toca LTDA'
+organization.responsible_person = 'Jose Silva'
 organization.save!
 
 ############Configuration#########################
@@ -561,9 +564,3 @@ organization_management = Role.create!(:name => 'Management', :permissions => ['
 
 RoleAssignment.create!(:accessor => gerente, :role => organization_management, :resource => organization)
 
-########## Organization Update ########################
-
-organization.state_registration = 12345
-organization.trade_name = 'Loja Toca LTDA'
-organization.responsible_person = 'Jose Silva'
-organization.save!

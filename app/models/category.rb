@@ -5,7 +5,8 @@ class Category < ActiveRecord::Base
   belongs_to :parent, :class_name => 'Category', :foreign_key => 'parent_id'
 
   acts_as_tree :order => 'name'
-  acts_as_ferret
+
+  acts_as_ferret :remote => true
 
   def self.full_text_search(q, options = {})
     default_options = {:limit => :all, :offset => 0}

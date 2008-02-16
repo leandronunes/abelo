@@ -16,7 +16,7 @@ class BankAccount < ActiveRecord::Base
     end
   end
 
-  acts_as_ferret
+  acts_as_ferret :remote => true
 
   def name 
     _("AG: #{self.agency} / CC: #{self.account}")

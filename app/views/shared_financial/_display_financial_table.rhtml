@@ -182,13 +182,13 @@ tag:
           <%= ledger.date.strftime('%d/%m/%Y') %>
         </td>
         <% if ledger.owner.kind_of?(Sale) %>
-          <td> <%= _('Point of Sale: Sale %s') % ledger.category.name %></td>
+          <td> <%= _('Point of Sale: Sale %s') % (ledger.category.name unless ledger.category.nil?) %></td>
         <% elsif ledger.payment_method == Payment::ADD_CASH %>
           <td> <%= _('Point of Sale: Money Added to Cash') %></td>
         <% elsif ledger.payment_method == Payment::REMOVE_CASH %>
            <td> <%= _('Point of Sale: Money Removed to Cash') %></td>
         <% else %>
-          <td> <%= ledger.category.name %></td>
+          <td> <%= (ledger.category.name unless ledger.category.nil?) %></td>
         <% end %>
         <td> <%= ledger.description %></td>
     	  <td><%= ledger.value if ledger.income? %></td>

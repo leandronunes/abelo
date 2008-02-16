@@ -8,7 +8,7 @@ class SystemActor < ActiveRecord::Base
 
   attr_accessor :type_person
 
-  acts_as_ferret :fields => ['name', 'description']
+  acts_as_ferret :fields => ['name', 'description'], :remote => true
 
   ###########################
   # Validations

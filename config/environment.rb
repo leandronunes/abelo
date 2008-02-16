@@ -4,7 +4,7 @@
 # you don't control web/app server and can't set it the proper way
 #ENV['RAILS_ENV'] ||= 'production'
 
-ABELO_DEMO = false
+ACTIVATE_DEMOSTRATION = false
 
 # Specifies gem version of Rails to use when vendor/rails is not present
 RAILS_GEM_VERSION = '1.1.6'

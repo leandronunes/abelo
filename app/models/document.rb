@@ -8,7 +8,7 @@ class Document < ActiveRecord::Base
 
   acts_as_taggable
 
-  acts_as_ferret
+  acts_as_ferret :remote => true
 
   has_many :document_sections
   has_and_belongs_to_many :departments

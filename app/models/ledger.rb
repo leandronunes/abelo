@@ -7,7 +7,7 @@ class Ledger < ActiveRecord::Base
   acts_as_taggable
 # FIXME See why the fields make the ferret dind't works
 #  acts_as_ferret({:fields => ['description', 'category', 'tags'], :remote => true})
-  acts_as_ferret({:remote => true})
+  acts_as_ferret :remote => true 
   
   attr_accessor :repeat, :interval, :periodicity_id
 #, :payment_method_choosen

@@ -57,7 +57,8 @@ class User < Person
   end
 
   def validate
-    self.errors.add(:model, _('You cannot change the user properties on demonstration version')) if ABELO_DEMO == true and !self.id.nil?
+    self.errors.add(_('You cannot change the user properties on demonstration version')) if ACTIVATE_DEMOSTRATION == true and !self.new_record?
+
     if !self.template_valid? and self.validates_profile?
       self.errors.add(_("You don't have permissions to create a user with template %s. This template ") % self.template)
     end

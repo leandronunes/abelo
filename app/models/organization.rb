@@ -130,6 +130,9 @@ class Organization < ActiveRecord::Base
     Article.find_by_path(organization.identifier).destroy
   end
 
+  def validate
+    self.errors.add(_('You cannot change the organization properties on demonstration version')) if ACTIVATE_DEMOSTRATION == true and !self.new_record?
+  end
 
   # Sets the identifier for this profile. Raises an exception when called on a
   # existing profile (since profiles cannot be renamed)

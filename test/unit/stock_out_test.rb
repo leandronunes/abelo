@@ -4,7 +4,7 @@ class StockOutTest < Test::Unit::TestCase
   fixtures :system_actors, :categories
 
   def setup
-    @organization = Organization.find(:first)
+    @organization = create_organization
     @category = ProductCategory.find(:first)
     @supplier = Supplier.find(:first)
     @invoice  = create_invoice

@@ -1,5 +1,7 @@
 class Organization < ActiveRecord::Base
 
+  attr_accessor :country, :state, :city
+
   # Valid identifiers must match this format.
   IDENTIFIER_FORMAT = /^[a-z][a-z0-9_]*[a-z0-9]$/
 
@@ -85,6 +87,17 @@ class Organization < ActiveRecord::Base
   validates_uniqueness_of :identifier
   validates_format_of :identifier, :with => IDENTIFIER_FORMAT
   validates_exclusion_of :identifier, :in => RESERVED_IDENTIFIERS
+  validates_associated :address
+
+  before_validation do |organization|
+    if organization.address.nil?
+      address = Address.new
+      address.country = organization.country_obj
+      address.state = organization.state_obj
+      address.city = organization.city_obj
+      organization.address = address
+    end
+  end
 
   #FIXME see a way to guarantee that configuration cannot be created whithout a organization
   after_create do |organization|
@@ -115,24 +128,31 @@ class Organization < ActiveRecord::Base
       environment.owner = organization
       environment.name = organization.identifier
       environment.save!
-      
-      #TODO fix this address information
-      address = Address.new
-      address.owner = organization
-      address.country = BSC::Country.find(:first)
-      address.state = BSC::State.find(:first)
-      address.city = BSC::City.find(:first)
-      address.save!
+     
     end
   end
 
   after_destroy do |organization|
-    Article.find_by_path(organization.identifier).destroy
+    article = Article.find_by_path(organization.identifier)
+    article.destroy unless article.nil?
   end
 
   def validate
     self.errors.add(_('You cannot change the organization properties on demonstration version')) if ACTIVATE_DEMOSTRATION == true and !self.new_record?
   end
+
+  def country_obj
+    BSC::Country.find(self.country) unless self.country.nil?
+  end
+
+  def state_obj
+    BSC::State.find(self.state) unless self.state.nil?
+  end
+
+  def city_obj
+    BSC::City.find(self.city) unless self.city.nil?
+  end
+
 
   # Sets the identifier for this profile. Raises an exception when called on a
   # existing profile (since profiles cannot be renamed)

@@ -35,7 +35,7 @@ class OrganizationsController < ApplicationController
 
   def create
     @organization = Organization.new(params[:organization])
-    if @organization.save
+    if @organization.save!
       flash[:notice] = _('Organization was successfully created.')
       redirect_to :controller => 'configuration', :action => 'edit', :id => @organization
     else
@@ -61,5 +61,17 @@ class OrganizationsController < ApplicationController
     Organization.find(params[:organization_id]).destroy
     redirect_to :action => 'list'
   end
+
+  def select_state
+    @country = BSC::Country.find(params[:country_id])
+    @organization  = Organization.new
+    render :partial => 'state'
+  end
+
+  def select_city
+    @state = BSC::State.find(params[:state_id])
+    render :inline => "<%= select_city(@state, 'organization', 'city' ) %>"
+  end
+
 
 end

@@ -6,11 +6,11 @@ class SaleTest < Test::Unit::TestCase
   include Status
 
   def setup
-    @organization = Organization.find_by_identifier('one') 
+    @organization = create_organization
     BankAccount.create!(:owner => @organization, :account => 234, :bank_id => 1, :agency => 3434, :is_default => true )
     @user = User.create!("salt"=>"7e3041ebc2fc05a40c60028e2c4901a81035d3cd", "updated_at"=>nil, "crypted_password"=>"00742970dc9e6319f8019fd54864d3ea740f04b1", "type"=>"User", "remember_token_expires_at"=>nil, "id"=>"1", "administrator"=>false, "remember_token"=>nil, "login"=>"new_user", "email"=>"new_user@example.com", "created_at"=>"2007-07-14 18:03:29")
-    @product1 = Product.find(1)
-    @product2 = Product.find(2)
+    @product1 = create_product(:organization => @organization)
+    @product2 = create_product(:organization => @organization, :name => 'another name')
   end
 
   def test_setup
@@ -28,37 +28,14 @@ class SaleTest < Test::Unit::TestCase
     assert_equal STATUS_CANCELLED, 2
   end
 
-  def create_till
-    till = Till.new(@organization, @user, nil)
-    till.save
-    till
-  end
-
-  def new_sale(params={})
-    till = create_till
-    sale = Sale.new(till, params)
-    sale
-  end
-
-  def create_sale(params= {})
-    sale = new_sale(params)
-    sale.save
-    sale
-  end
-
-  def create_item(sale, params = {})
-    item = SaleItem.new(sale,params)
-    item.save!
-    item
-  end
 
   def test_dependence_of_sale_item
     Product.any_instance.stubs(:amount_in_stock).returns(342)
     Sale.delete_all
     SaleItem.delete_all
     sale = create_sale()
-    create_item(sale, :product => @product1, :sale => sale, :amount => 10 )
-    create_item(sale, :product => @product2, :sale => sale, :amount => 1)
+    create_item(:product => @product1, :sale => sale, :amount => 10, :sale => sale )
+    create_item(:product => @product2, :sale => sale, :amount => 1, :sale => sale)
     assert sale.destroy
     assert_equal 0, SaleItem.count
   end
@@ -70,7 +47,7 @@ class SaleTest < Test::Unit::TestCase
     Ledger.delete_all
     sale = create_sale()
     amount  = 10
-    create_item(sale, :product => @product1, :amount => amount )
+    create_item(:sale => sale, :product => @product1, :amount => amount )
     Ledger.create(:payment_method => Payment::MONEY, :owner => sale, :value => amount * @product1.sell_price, :date => Date.today )
     assert sale.destroy
     assert_equal 0, Ledger.count
@@ -80,7 +57,7 @@ class SaleTest < Test::Unit::TestCase
     Sale.delete_all
     sale1 = new_sale(:datetime => '2007-08-04', :salesman => @user)
     assert sale1.save
-    sale2 = new_sale(:datetime => '2007-08-04', :salesman => @user)
+    sale2 = new_sale(:datetime => '2007-08-04', :salesman => @user, :owner => sale1.owner)
     sale2.owner = sale1.owner
     assert !sale2.save
     assert sale2.errors.invalid?(:status)
@@ -92,8 +69,8 @@ class SaleTest < Test::Unit::TestCase
     SaleItem.delete_all
     Sale.delete_all
     sale = create_sale(:datetime => '2007-08-04', :salesman => @user)
-    item1 = create_item(sale, :product => @product1, :amount => 10 )
-    item2 = create_item(sale, :product => @product2, :amount => 1)
+    item1 = create_item(:product => @product1, :amount => 10, :sale => sale )
+    item2 = create_item(:product => @product2, :amount => 1, :sale => sale)
     assert_equal 10 * @product1.sell_price + 1 * @product2.sell_price, sale.total_value
   end
 
@@ -134,7 +111,7 @@ class SaleTest < Test::Unit::TestCase
     sale = create_sale(:datetime => '2007-08-04')
     cat_prod = ProductCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
     product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @organization.id, :category_id => cat_prod.id)
-    item = create_item(sale, :product => product, :amount => 2)
+    item = create_item(:product => product, :amount => 2, :sale => sale)
     assert sale.items.include?(item)
   end
  
@@ -227,7 +204,7 @@ class SaleTest < Test::Unit::TestCase
     sale = create_sale()
     cat_prod = ProductCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
     product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @organization.id, :category_id => cat_prod.id)
-    item = create_item(sale, :product => product, :amount => 2)
+    item = create_item(:sale => sale, :product => product, :amount => 2)
     sale.customer = customer
     assert cat_prod.save
     assert item.save!

@@ -5,7 +5,7 @@ class CustomerTest < Test::Unit::TestCase
   fixtures :organizations
 
   def setup
-    @organization = Organization.find_by_identifier('six') 
+    @organization = create_organization
     @category = CustomerCategory.create(:name => 'Category for testing', :organization => @organization)
   end
 

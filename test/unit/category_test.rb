@@ -5,7 +5,7 @@ class CategoryTest < Test::Unit::TestCase
   fixtures :organizations
 
   def setup
-    @org = Organization.find_by_identifier('six')
+    @org = create_organization
   end
 
   def test_mandatory_field_name

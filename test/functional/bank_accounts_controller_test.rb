@@ -7,16 +7,16 @@ class BankAccountsController; def rescue_action(e) raise e end; end
 class BankAccountsControllerTest < Test::Unit::TestCase
   fixtures :bank_accounts, :banks, :configurations, :organizations
 
-  under_organization :one
+  under_organization :some
 
   def setup
     @controller = BankAccountsController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     login_as("quentin")
-    @organization = Organization.find_by_identifier('one')
-    @bank_account = BankAccount.find(:first)
-    @bank = Bank.find(:first)
+    @organization = create_organization(:identifier => 'some')
+    @bank = create_bank
+    @bank_account = create_bank_account(:owner => @organization)
   end
 
   def test_setup
@@ -106,7 +106,7 @@ class BankAccountsControllerTest < Test::Unit::TestCase
   end
 
   def test_show_with_an_existing_bank_account
-    bank_account = BankAccount.find(:first)
+    bank_account = @bank_account
     get :show, :id => bank_account.id
 
     assert_response :success

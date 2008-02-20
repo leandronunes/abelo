@@ -1,0 +1,21 @@
+  <%= display_field_form(@organization, 'state',
+        :title => _('State'),
+        :content => select_state(@country,'organization', 'state')
+
+      )
+  %>
+
+  <%= observe_field('organization_state',
+     :url => 'select_city',
+     :update => 'city_option',
+     :with => "'state_id=' + escape(value)"
+   )%>
+
+
+  <%= display_field_form(@organization, 'city',
+        :title => _('City'),
+        :content => content_tag(:div, select_city(@state,'organization', 'city'), :id => 'city_option'),
+        :html_options => {:class => 'break_line'}
+      )
+  %>
+

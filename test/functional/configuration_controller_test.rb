@@ -13,7 +13,7 @@ class ConfigurationControllerTest < Test::Unit::TestCase
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     login_as('admin')
-    @organization = Organization.find(:first)
+    @organization = create_organization
     @configuration = create_configuration(:is_model => true, :name => 'A different name')
     @configuration_organization = create_configuration( :organization => @organization)
   end

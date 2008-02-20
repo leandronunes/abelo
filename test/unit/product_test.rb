@@ -5,8 +5,8 @@ class ProductTest < Test::Unit::TestCase
   fixtures :ledger_categories, :bank_accounts
  
   def setup
-    @organization = Organization.find(:first)
-    @org = Organization.find_by_identifier('six') 
+    @organization = create_organization
+    @org = create_organization(:identifier => 'some_id', :cnpj => '62.667.776/0001-17', :name => 'some id')
     @cat_prod = ProductCategory.create(:name => 'Category for testing', :organization_id => @org.id)
     @cat_supp = SupplierCategory.create(:name => 'Category for testing', :organization_id => @org.id)
     @supplier = Supplier.create!(:name => 'Hering', :cnpj => '58178734000145', :organization_id => @org.id, :email => 'contato@hering.com', :category_id => @cat_supp.id)
@@ -60,7 +60,7 @@ class ProductTest < Test::Unit::TestCase
     Product.delete_all
     Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization => @org, :category_id => @cat_prod.id, :code => 2)
     product = Product.new(:code => 2, :organization => @organization)
-    product.valid?
+    product.save
     assert !product.errors.invalid?(:code)
   end
 

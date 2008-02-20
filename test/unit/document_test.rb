@@ -4,7 +4,7 @@ class DocumentTest < Test::Unit::TestCase
   fixtures :documents, :departments_documents, :document_sections, :organizations, :departments, :system_actors
 
   def setup
-    @organization = Organization.find(:first)
+    @organization = create_organization
     @department = Department.find(:first)
   end
 

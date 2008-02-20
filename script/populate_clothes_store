@@ -3,9 +3,10 @@ require File.dirname(__FILE__) + '/../config/environment'
 
 
 ############Country, State, City########################
-country = BSC::Country.create(:name => 'Brazil')
-state = BSC::State.create(:name => 'Bahia', :country => country)
-city = BSC::City.create(:name => 'Salvador', :state => state)
+BSC::Country.destroy_all
+country = BSC::Country.create!(:name => 'Brazil')
+state = BSC::State.create!(:name => 'Bahia', :country => country)
+city = BSC::City.create!(:name => 'Salvador', :state => state)
 
 
 ############Virtual Community########################
@@ -22,6 +23,9 @@ organization.identifier = 'toca'
 organization.state_registration = 12345
 organization.trade_name = 'Loja Toca LTDA'
 organization.responsible_person = 'Jose Silva'
+organization.country = country.id
+organization.state = state.id
+organization.city = city.id
 organization.save!
 
 ############Configuration#########################

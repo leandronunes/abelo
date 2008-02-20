@@ -5,7 +5,7 @@ class DesignPointOfSaleTest < Test::Unit::TestCase
   fixtures :organizations
 
   def setup
-    @organization = Organization.find_by_identifier('one')
+    @organization = create_organization
   end
 
   def test_setup

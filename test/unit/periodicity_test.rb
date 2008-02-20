@@ -5,8 +5,8 @@ class PeriodicityTest < Test::Unit::TestCase
   fixtures :periodicities, :organizations
 
   def setup
-    @organization = Organization.find_by_identifier('six') 
-    @another_organization = Organization.find_by_identifier('five') 
+    @organization = create_organization
+    @another_organization = create_organization(:identifier => 'another_id', :cnpj => '11.743.627/0001-59', :name => 'Another name')
   end
 
   def test_setup

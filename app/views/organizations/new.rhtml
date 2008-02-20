@@ -24,6 +24,23 @@
         )
     %>
 
+  <%= display_field_form(item, 'country',
+        :title => _('Country'),
+        :content => select_country('organization', 'country'),
+        :html_options => {:class => 'break_line'}
+      )
+  %>
+
+  <%= observe_field('organization_country',
+     :url => 'select_state',
+     :update => 'state_option',
+     :with => "'country_id=' + escape(value)"
+   )%>
+
+  <div id="state_option">
+    <%= render :partial => 'state' %>
+  </div>
+
   <% end %>
 
 

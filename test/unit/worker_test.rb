@@ -2,10 +2,8 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class WorkerTest < Test::Unit::TestCase
  
-  fixtures :organizations
-
   def setup
-    @organization = Organization.find_by_identifier('six') 
+    @organization = create_organization
     @category = WorkerCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
   end
 

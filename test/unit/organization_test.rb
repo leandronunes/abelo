@@ -6,7 +6,7 @@ class OrganizationTest < Test::Unit::TestCase
 
   def setup
     create_place
-    @organization = Organization.find_by_identifier('one')
+    @organization = create_organization
     @customer = Customer.find(:first)
     @department = Department.find(:first)
     @cat_prod = ProductCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
@@ -26,27 +26,6 @@ class OrganizationTest < Test::Unit::TestCase
         :departments => [@department]
       }.merge(params)
     )
-  end
-
-  def create_till
-    till = Till.new(@organization, @user, nil)
-    till.save
-    till
-  end
-
-  def create_sale(params = {})
-    till =  create_till
-    sale = Sale.new(till, params)
-    sale.save
-    sale
-  end
-
-  def create_ledger
-    ledger = Ledger.new(:payment_method => Payment::ADD_CASH)
-    ledger.bank_account = @organization.default_bank_account
-    ledger.owner = @organization
-    ledger.value = 10
-    ledger.save!
   end
 
   def test_setup
@@ -148,20 +127,24 @@ class OrganizationTest < Test::Unit::TestCase
   end
 
   def test_uniqueness_name
-    org_1 = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :identifier => 'org_1')
-    org_2 = Organization.create(:name => 'Organization for testing', :cnpj => '67444545000168', :identifier => 'org_2')
+    org_1 = create_organization(:name => 'Organization for testing', :cnpj => '63182452000151', :identifier => 'org_1')
+    org_2 = new_organization(:name => 'Organization for testing', :cnpj => '67444545000168', :identifier => 'org_2')
+    org_2.valid?
     assert org_2.errors.invalid?(:name) 
   end
 
   def test_uniqueness_cnpj
-    org_1 = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :identifier => 'org_1')
-    org_2 = Organization.create(:name => 'Organization for testing 2', :cnpj => '63182452000151', :identifier => 'org_2')
+    Organization.destroy_all
+    org_1 = create_organization(:cnpj => '63182452000151')
+    org_2 = new_organization(:cnpj => '63182452000151')
+    org_2.valid?
     assert org_2.errors.invalid?(:cnpj) 
   end
 
   def test_uniqueness_identifier
-    org_1 = Organization.create(:name => 'Organization for testing', :cnpj => '63182452000151', :identifier => 'org')
-    org_2 = Organization.new(:name => 'Organization for testing 2', :cnpj => '67444545000168', :identifier => 'org')
+    Organization.destroy_all
+    org_1 = create_organization(:cnpj => '63182452000151', :identifier => 'org')
+    org_2 = new_organization(:name => 'Organization for testing 2', :cnpj => '67444545000168', :identifier => 'org')
     org_2.valid?
     assert org_2.errors.invalid?(:identifier) 
   end
@@ -169,19 +152,24 @@ class OrganizationTest < Test::Unit::TestCase
   def test_cnpj_format
     org = Organization.new(:name => 'Organization for testing', :identifier => 'org')
     org.cnpj = 'bli'
-    assert(!org.save)
+    org.valid?
+    assert org.errors.invalid?(:cnpj)
     org.cnpj = '12121212121212'
-    assert(!org.save)
+    org.valid?
+    assert org.errors.invalid?(:cnpj)
     org.cnpj = '66145476000129'
-    assert(org.save)
+    org.valid?
+    assert !org.errors.invalid?(:cnpj)
   end
 
   def test_identifier_format
     org = Organization.new(:name => 'Organization for testing', :cnpj => '63182452000151')
     org.identifier = 'invalid identifier'
-    assert(!org.save)
+    org.valid?
+    assert org.errors.invalid?(:identifier)
     org.identifier = 'valid_identifier'
-    assert(org.save)
+    org.valid?
+    assert !org.errors.invalid?(:identifier)
   end
 
   def test_top_level_product_categories
@@ -211,12 +199,6 @@ class OrganizationTest < Test::Unit::TestCase
     assert @organization.documents_not_model.include?(doc) 
   end
 
-  def test_ledgers
-    l = create_ledger
-     
-    assert_not_nil @organization.ledgers(l.object_id)
-  end
-
   def test_get_all_ledgers
     Ledger.destroy_all
     create_ledger
@@ -224,6 +206,50 @@ class OrganizationTest < Test::Unit::TestCase
     create_ledger
     n = Ledger.count 
     assert_equal n, @organization.ledgers.length
+  end
+
+  def test_presence_of_address
+    Organization.destroy_all
+    o = new_organization(:country => nil)
+    o.valid?
+    assert o.errors.invalid?(:address), "Country cannot be nil"
+
+    o = new_organization(:state => nil)
+    o.valid?
+    assert o.errors.invalid?(:address), "State cannot be nil"
+
+    o = new_organization(:city => nil)
+    o.valid?
+    assert o.errors.invalid?(:address), "City cannot be nil"
+
+    country = BSC::Country.find(:first)
+    state = country.states.find(:first)
+    city = state.cities.find(:first)
+    o = new_organization(:country => country, :state => state, :city => city)
+    count = Address.count
+    assert o.save
+    assert_equal count + 1, Address.count
+  end
+
+  def test_country_object
+    country = BSC::Country.find(:first)
+    o = new_organization
+    o.country = country.id
+    assert_equal country, o.country_obj
+  end
+
+  def test_state_object
+    state = BSC::State.find(:first)
+    o = new_organization
+    o.state = state.id
+    assert_equal state, o.state_obj
+  end
+
+  def test_city_object
+    city = BSC::City.find(:first)
+    o = new_organization
+    o.city = city.id
+    assert_equal city, o.city_obj
   end
 
 

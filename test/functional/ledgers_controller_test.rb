@@ -9,17 +9,17 @@ class LedgersControllerTest < Test::Unit::TestCase
  
   include Status
 
-  under_organization :one
+  under_organization :some
 
   def setup
     @controller = LedgersController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     login_as("quentin")
-    @organization = Organization.find_by_identifier('one')
-    @ledger_category = LedgerCategory.create!(:name => 'Some Category', :type_of => 'I', :organization_id => 1 , :payment_methods => ['money'])
-    @another_bank_account = BankAccount.find(2)
-    @default_bank_account = BankAccount.find(1)
+    @organization = create_organization(:identifier => 'some', :name => 'some')
+    @ledger_category = create_ledger_category(:name => 'Some Category', :type_of => 'I', :organization => @organization , :payment_methods => ['money'])
+    @another_bank_account = create_bank_account(:owner => @organization)
+    @default_bank_account = create_bank_account(:owner => @organization, :is_default => true, :bank => @another_bank_account.bank)
   end
 
   def test_setup
@@ -29,7 +29,7 @@ class LedgersControllerTest < Test::Unit::TestCase
     assert @organization.valid?
     assert @organization.bank_accounts.include?(@default_bank_account)
     assert @organization.bank_accounts.include?(@another_bank_account)
-    assert_equal 'one', @organization.identifier
+    assert_equal 'some', @organization.identifier
   end
 
   def test_index
@@ -198,7 +198,7 @@ class LedgersControllerTest < Test::Unit::TestCase
 
 
   def test_edit_with_an_existing_ledger
-    l = Ledger.find(:first)
+    l = create_ledger
     assert l.valid?
     get :edit, :id => l.id
 
@@ -222,7 +222,7 @@ class LedgersControllerTest < Test::Unit::TestCase
 
 
   def test_update_successfully
-    l = Ledger.find(:first)
+    l = create_ledger
     assert l.valid?
     post :update, :id => l.id, :ledger => {:description => 'Something', :category_id => @ledger_category.id, :value => '3', :date => Time.now}
 
@@ -233,7 +233,7 @@ class LedgersControllerTest < Test::Unit::TestCase
 
   def test_update_unsuccessfully
     # Pass not category
-    l = Ledger.find(:first)
+    l = create_ledger
     assert l.valid?
     post :update, :id => l.id, :ledger => {:description => 'Something', :category_id => nil}
 
@@ -247,7 +247,7 @@ class LedgersControllerTest < Test::Unit::TestCase
 
   def test_update_description
     value = "another description"
-    l = Ledger.find(:first)
+    l = create_ledger
     assert l.valid?
     assert_not_equal value, l.description
     post :update, :id => l.id, :ledger => {:description => value}
@@ -256,18 +256,18 @@ class LedgersControllerTest < Test::Unit::TestCase
   end
 
   def test_update_category
-    value = @ledger_category
-    l = Ledger.find(:first)
+    value = create_ledger_category
+    l = create_ledger
     assert l.valid?
-    assert_not_equal value, l.category
+    assert_not_equal value.id, l.category.id
     post :update, :id => l.id, :ledger => {:category_id => value.id}
 
-    assert_equal value, assigns(:ledger).category
+    assert_equal value.id, assigns(:ledger).category.id
   end
 
   def test_update_value
     value = '10.2'
-    l = Ledger.find(:first)
+    l = create_ledger
     assert l.valid?
     assert_not_equal value, l.value
     post :update, :id => l.id, :ledger => {:value => value}
@@ -277,7 +277,7 @@ class LedgersControllerTest < Test::Unit::TestCase
 
   def test_update_date
     value = Date.today - 4
-    l = Ledger.find(:first)
+    l = create_ledger
     assert l.valid?
     assert_not_equal value, l.date
     post :update, :id => l.id, :ledger => { :date => value}
@@ -288,7 +288,7 @@ class LedgersControllerTest < Test::Unit::TestCase
 
   def test_update_interests_days
     value = 30
-    l = Ledger.find(:first)
+    l = create_ledger
     assert l.valid?
     assert_not_equal value, l.interests_days
     post :update, :id => l.id, :ledger => { :interests_days => value}
@@ -298,7 +298,7 @@ class LedgersControllerTest < Test::Unit::TestCase
 
   def test_update_parcel_number
     value = 4
-    l = Ledger.find(:first)
+    l = create_ledger
     assert l.valid?
     assert_not_equal value, l.parcel_number
     post :update, :id => l.id, :ledger => { :parcel_number => value}
@@ -308,7 +308,7 @@ class LedgersControllerTest < Test::Unit::TestCase
 
   def test_update_status
     value = 3
-    l = Ledger.find(:first)
+    l = create_ledger
     assert l.valid?
     assert_not_equal value, l.status
     post :update, :id => l.id, :ledger => { :status => value}
@@ -318,7 +318,7 @@ class LedgersControllerTest < Test::Unit::TestCase
 
   def test_update_number_of_parcels
     value =  5
-    l = Ledger.find(:first)
+    l = create_ledger
     assert l.valid?
     assert_not_equal value, l.number_of_parcels
     post :update, :id => l.id, :ledger => { :number_of_parcels => value}
@@ -328,7 +328,7 @@ class LedgersControllerTest < Test::Unit::TestCase
 
   def test_update_operational
     value = true
-    l = Ledger.find(:first)
+    l = create_ledger
     assert l.valid?
     assert_not_equal value, l.operational
     post :update, :id => l.id, :ledger => { :operational => value}
@@ -338,7 +338,7 @@ class LedgersControllerTest < Test::Unit::TestCase
 
   def test_update_interests
     value = 2.3
-    l = Ledger.find(:first)
+    l = create_ledger
     assert l.valid?
     assert_not_equal value, l.interests
     post :update, :id => l.id, :ledger => { :interests => value}
@@ -354,7 +354,7 @@ class LedgersControllerTest < Test::Unit::TestCase
 
 
   def test_destroy_of_an_existing_ledger
-    l = Ledger.find(:first)
+    l = create_ledger
     assert l.valid?
    
     post :destroy, :id => l.id

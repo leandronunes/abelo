@@ -6,7 +6,7 @@ class LedgerCategoriesController; def rescue_action(e) raise e end; end
 
 class LedgerCategoriesControllerTest < Test::Unit::TestCase
 
-  under_organization :one
+  under_organization :some
   
   fixtures :ledger_categories , :organizations, :configurations
 
@@ -14,8 +14,8 @@ class LedgerCategoriesControllerTest < Test::Unit::TestCase
     @controller = LedgerCategoriesController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-    @organization = Organization.find_by_identifier('one')
-    @ledger_category = LedgerCategory.find(:first)
+    @organization = create_organization(:name => 'some', :identifier => 'some')
+    @ledger_category = create_ledger_category
     login_as('quentin')
   end
 

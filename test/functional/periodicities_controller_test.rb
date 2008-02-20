@@ -7,14 +7,14 @@ class PeriodicitiesController; def rescue_action(e) raise e end; end
 class PeriodicitiesControllerTest < Test::Unit::TestCase
   fixtures :periodicities, :configurations, :organizations
 
-  under_organization :one
+  under_organization :some
 
   def setup
     @controller = PeriodicitiesController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-    @organization = Organization.find_by_identifier('one')
-    @another_organization = Organization.find_by_identifier('two')
+    @organization = create_organization(:identifier => 'some', :name => 'some')
+    @another_organization = create_organization(:identifier => 'another_org')
     @periodicity = create_periodicity
     login_as("quentin")
   end

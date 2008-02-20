@@ -16,10 +16,24 @@ class OrganizationsControllerTest < Test::Unit::TestCase
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     login_as('admin')
-    @country = BSC::Country.create(:name => 'Some Country')
-    @state = BSC::State.create(:name => 'Some State', :country => @country, :code => 'SS')
-    @city = BSC::City.create(:state => @state, :name => 'Some City', :zip_code => '40000')
-    @organization = Organization.create!( :name => 'Organization for testing', :identifier => 'organization_test', :cnpj => '99249952000100' )
+    @country = BSC::Country.create!(:name => 'A Country')
+    @state = BSC::State.create!(:name => 'Some State', :country => @country, :code => 'SS')
+    @city = BSC::City.create!(:state => @state, :name => 'Some City', :zip_code => '40000')
+    @organization = create_organization
+  end
+
+  def test_setup
+
+    assert @country.valid?
+    assert @state.valid?
+    assert @city.valid?
+    assert @organization.valid?
+  end
+
+  def organization_params
+    {
+     :name => 'Some Organization', :identifier => 'testing_org', :cnpj => '78048802000169', 
+     :country => @country.id, :state => @state.id, :city => @city.id}
   end
 
   def test_only_admin_has_access
@@ -33,9 +47,9 @@ class OrganizationsControllerTest < Test::Unit::TestCase
   end
 
   def test_autocomplete_organization_name
-    Organization.delete_all
-    product = Organization.create!(:name => 'test product', :identifier => 'some', :cnpj => '84.021.301/0001-91')
-    product = Organization.create!(:name => ' product', :identifier => 'anothersome', :cnpj => '73.417.283/0001-45')
+    Organization.destroy_all
+    create_organization(:name => 'test organization', :identifier => 'some', :cnpj => '84.021.301/0001-91')
+    create_organization(:name => 'organization', :identifier => 'anothersome', :cnpj => '73.417.283/0001-45')
     get :autocomplete_organization_name, :organization => { :name => 'test'}
     assert_not_nil assigns(:organizations)
     assert_kind_of Array, assigns(:organizations)
@@ -60,8 +74,8 @@ class OrganizationsControllerTest < Test::Unit::TestCase
   end
 
   def test_show
-    Organization.delete_all
-    o = Organization.create!(:name => 'Some Organization', :identifier => 'testing_org', :cnpj => '78048802000169')
+    Organization.destroy_all
+    o = create_organization(:name => 'Some Organization', :identifier => 'testing_org', :cnpj => '78048802000169')
     get :show, :organization_id => o.id
 
     assert_response :success
@@ -84,7 +98,7 @@ class OrganizationsControllerTest < Test::Unit::TestCase
   def test_successfully_create
     num_organizations = Organization.count
 
-    post :create, :organization => {:name => 'Some Organization', :identifier => 'testing_org', :cnpj => '78048802000169'}
+    post :create, :organization => organization_params
 
     assert_response :redirect
     assert_redirected_to :controller => 'configuration', :action => 'edit'
@@ -93,8 +107,8 @@ class OrganizationsControllerTest < Test::Unit::TestCase
   end
 
   def test_save_name_on_create
-    Organization.delete_all
-    post :create, :organization => {:name => 'Some Organization', :identifier => 'testing_org', :cnpj => '78048802000169'}
+    Organization.destroy_all
+    post :create, :organization => organization_params
     
     o = Organization.find(:first)
     assert_not_nil o
@@ -103,8 +117,8 @@ class OrganizationsControllerTest < Test::Unit::TestCase
   end
 
   def test_save_identifier_on_create
-    Organization.delete_all
-    post :create, :organization => {:name => 'Some Organization', :identifier => 'testing_org', :cnpj => '78048802000169'}
+    Organization.destroy_all
+    post :create, :organization => organization_params
     
     o = Organization.find(:first)
     assert_not_nil o
@@ -113,8 +127,8 @@ class OrganizationsControllerTest < Test::Unit::TestCase
   end
 
   def test_save_cnpj_on_create
-    Organization.delete_all
-    post :create, :organization => {:name => 'Some Organization', :identifier => 'testing_org', :cnpj => '78048802000169'}
+    Organization.destroy_all
+    post :create, :organization => organization_params
     
     o = Organization.find(:first)
     assert_not_nil o
@@ -136,8 +150,8 @@ class OrganizationsControllerTest < Test::Unit::TestCase
   end
 
   def test_edit
-    Organization.delete_all
-    o = Organization.create!(:name => 'Some Organization', :identifier => 'testing_org', :cnpj => '78048802000169')
+    Organization.destroy_all
+    o = create_organization(:name => 'Some Organization', :identifier => 'testing_org', :cnpj => '78048802000169')
     get :edit, :organization_id => o.id
 
     assert_response :success
@@ -149,8 +163,8 @@ class OrganizationsControllerTest < Test::Unit::TestCase
 
 
   def test_successfully_update
-    Organization.delete_all
-    o = Organization.create!(:name => 'Some Organization', :identifier => 'testing_org', :cnpj => '78048802000169')
+    Organization.destroy_all
+    o = create_organization(:name => 'Some Organization', :identifier => 'testing_org', :cnpj => '78048802000169')
     num_organizations = Organization.count
     post :update, :id => o.id, :organization => {:name => 'Another Organization'}
 
@@ -161,8 +175,8 @@ class OrganizationsControllerTest < Test::Unit::TestCase
   end
 
   def test_save_name_on_update
-    Organization.delete_all
-    o = Organization.create!(:name => 'Some Organization', :identifier => 'testing_org', :cnpj => '78048802000169')
+    Organization.destroy_all
+    o = create_organization(:name => 'Some Organization', :identifier => 'testing_org', :cnpj => '78048802000169')
     post :update, :id => o.id, :organization => {:name => 'Another Organization'}
 
     o = Organization.find(:first)
@@ -173,8 +187,8 @@ class OrganizationsControllerTest < Test::Unit::TestCase
 
 
   def test_save_cnpj_on_update
-    Organization.delete_all
-    o = Organization.create!(:name => 'Some Organization', :identifier => 'testing_org', :cnpj => '78048802000169')
+    Organization.destroy_all
+    o = create_organization(:name => 'Some Organization', :identifier => 'testing_org', :cnpj => '78048802000169')
     post :update, :id => o.id, :organization => {:cnpj => '62.370.998/0001-73'}
 
     o = Organization.find(:first)
@@ -184,9 +198,9 @@ class OrganizationsControllerTest < Test::Unit::TestCase
   end
 
   def test_unsuccessfully_update
-    Organization.delete_all
-    Organization.create!(:name => 'Another Some Organization', :identifier => 'another_testing_org', :cnpj => '62.370.998/0001-73')
-    o = Organization.create!(:name => 'Some Organization', :identifier => 'testing_org', :cnpj => '78048802000169')
+    Organization.destroy_all
+    create_organization(:name => 'Another Some Organization', :identifier => 'another_testing_org', :cnpj => '62.370.998/0001-73')
+    o = create_organization(:name => 'Some Organization', :identifier => 'testing_org', :cnpj => '78048802000169')
     num_organizations = Organization.count
     post :update, :id => o.id, :organization => {:cnpj => '62.370.998/0001-73'}
 

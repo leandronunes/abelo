@@ -55,7 +55,7 @@ class Test::Unit::TestCase
     p
   end
 
-  def create_till
+  def create_till(params = {})
     till = Till.new(@organization, @user, create_printer)
     till.save
     till
@@ -63,19 +63,27 @@ class Test::Unit::TestCase
 
   def create_organization(params = {})
     create_place
-    @organization = Organization.new({:name => 'some organization', :identifier => 'some'}.merge(params))
-    @organization.save!
-    @organization
+    organization = new_organization(params)
+    organization.save!
+    organization
+  end
+
+  def new_organization(params = {})
+     Organization.new({:name => 'some organization', :identifier => 'some', 
+                     :country => BSC::Country.find(:first).id,
+                     :state => BSC::State.find(:first).id, 
+                     :city => BSC::City.find(:first).id, 
+     }.merge(params))
   end
 
   def create_bank
-    @bank ||= Bank.create!(:name => 'some', :code => 3234, :site => 'http://www.some.com')
-    @bank
+    bank ||= Bank.create!(:name => 'some', :code => 3234, :site => 'http://www.some.com')
+    bank
   end
 
   def create_bank_account(params = {})
-    create_bank
-    @bank_account = BankAccount.create!({:bank => @bank, :owner => @organization, 
+    bank = @bank || params[:bank] || create_bank
+    @bank_account = BankAccount.create!({:bank => bank, :owner => @organization, 
                   :agency => 23434, :account => 33434, :is_default => true}.merge(params))
     @bank_account
   end
@@ -170,6 +178,24 @@ class Test::Unit::TestCase
       :owner => (params[:is_model] == true ? nil : @customer),
       :document_model => params[:document_model]
     }.merge(params))
+  end
+
+  def create_sale(params = {})
+    sale = new_sale(params)
+    sale.save
+    sale
+  end
+
+  def new_sale(params = {})
+    till = params[:owner] || create_till
+    Sale.new(till, params)    
+  end
+ 
+  def create_item(params = {})
+    sale = params[:sale] || create_sale
+    item = SaleItem.new(sale,params)
+    item.save!
+    item
   end
 
 end

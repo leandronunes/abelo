@@ -4,7 +4,7 @@ class DisplayConfigurationTest < Test::Unit::TestCase
   fixtures :configurations
 
   def setup
-    @organization = Organization.find(:first)
+    @organization = create_organization
     @configuration = Configuration.find(:first)
     @other_configuration = Configuration.create!(:organization_name => 'Some Name',  :product_name => 'Some name', 
                          :department_name => 'Some Name', :customer_name => 'Some name', :document_name => 'Some Name', 

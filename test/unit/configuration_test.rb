@@ -5,7 +5,7 @@ class ConfigurationTest < Test::Unit::TestCase
   fixtures :organizations
  
   def setup
-    @organization = Organization.find_by_identifier('six') 
+    @organization = create_organization
     @configuration = Configuration.create(:is_model => true, :organization_name => 'Some Name', 
                        :product_name => 'Some name', :department_name => 'Some Name', 
                         :customer_name => 'Some name', :document_name => 'Some Name', :name => 'A name',

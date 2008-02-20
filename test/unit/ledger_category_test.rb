@@ -6,7 +6,7 @@ class LedgerCategoryTest < Test::Unit::TestCase
   include Status
 
   def setup
-    @organization = Organization.find(:first)
+    @organization = create_organization
     @ledger_category = LedgerCategory.find(:first)
     @bank_account = BankAccount.find(:first)
   end

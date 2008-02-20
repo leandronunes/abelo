@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 class PrinterTest < Test::Unit::TestCase
 
   def setup
-    @organization = Organization.find(:first)
+    @organization = create_organization
   end
 
   def create_printer(params= {})

@@ -6,13 +6,13 @@ class FiscalPrinterController; def rescue_action(e) raise e end; end
 
 class FiscalPrinterControllerTest < Test::Unit::TestCase
 
-  under_organization :one
+  under_organization :some
 
   def setup
     @controller = FiscalPrinterController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-    @organization = Organization.find_by_identifier('one')
+    @organization = create_organization(:identifier => 'some')
     login_as("quentin")
   end
 
@@ -159,7 +159,7 @@ class FiscalPrinterControllerTest < Test::Unit::TestCase
     assert_redirected_to :action => 'list'
     
     assert_raise(ActiveRecord::RecordNotFound) {
-      Product.find(printer.id)
+      Printer.find(printer.id)
     }
 
   end

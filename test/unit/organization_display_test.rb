@@ -6,6 +6,7 @@ class OrganizationDisplayTest < Test::Unit::TestCase
       name
       cnpj
       presentation
+      country
   ]
 
   def test_describe

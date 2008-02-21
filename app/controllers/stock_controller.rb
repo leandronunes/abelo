@@ -63,12 +63,29 @@ class StockController < ApplicationController
   def edit
     @invoice = @organization.invoices.find(params[:invoice_id])
     @stock = @invoice.stock_ins.find(params[:stock_id])
-    @suppliers = @stock.product.suppliers
+    @suppliers = @organization.suppliers
     @ledgers = @invoice.ledgers 
     @ledger = Ledger.new(:date => Date.today)
     @banks = Bank.find(:all)
     @ledger_categories =  @organization.stock_ledger_categories_by_payment_method(@ledger.payment_method)
   end
+
+  def update
+    @invoice = @organization.invoices.find(params[:invoice_id])
+    @stock = @invoice.stock_ins.find(params[:stock_id])
+
+    if @invoice.update_attributes(params[:invoice]) and @stock.update_attributes(params[:stock])
+      redirect_to :action => 'history', :product_id => @stock.product
+    else
+      @suppliers = @organization.suppliers
+      @ledgers = @invoice.ledgers 
+      @ledger = Ledger.new(:date => Date.today)
+      @banks = Bank.find(:all)
+      @ledger_categories =  @organization.stock_ledger_categories_by_payment_method(@ledger.payment_method)
+      render :action => 'edit'
+    end
+  end
+
 
   def history
     @product = @organization.products.find(params[:product_id])

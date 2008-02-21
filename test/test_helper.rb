@@ -155,8 +155,9 @@ class Test::Unit::TestCase
   end
 
   def create_stock_in(params ={})
-    invoice = @invoice || params[:invoice] || create_invoice
-    StockIn.create!({:supplier => @supplier, :amount => 30, :price => 1.99, :invoice => invoice, :product => @product}.merge(params))
+    invoice = params[:invoice] || @invoice || create_invoice
+    product = params[:product] || @product || create_product
+    StockIn.create!({:supplier => @supplier, :amount => 30, :price => 1.99, :invoice => invoice, :product => product}.merge(params))
   end
 
   def create_user(params = {})

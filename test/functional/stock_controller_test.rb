@@ -151,6 +151,33 @@ class StockControllerTest < Test::Unit::TestCase
     assert assigns(:ledger)
   end
 
+  def test_update_successfully
+    invoice = create_invoice(:organization => @organization)
+    stock = create_stock_in(:invoice => invoice)
+    get :update, :invoice_id => invoice.id, :stock_id => stock.id, :invoice => {:number => '32'}, :stock => {:amount => 12}
+
+    assert_response :redirect
+    assert_redirected_to :action => 'history'
+    assert assigns(:invoice)
+    assert assigns(:stock)
+  end
+
+  def test_update_unsuccessfully
+    invoice = create_invoice
+    stock = create_stock_in(:invoice => invoice)
+    get :update, :invoice_id => invoice.id, :stock_id => stock.id, :invoice => {:number => '32'}, :stock => {:amount => nil}
+
+    assert_response :success
+    assert_template 'edit'
+    assert assigns(:invoice)
+    assert assigns(:stock)
+    assert assigns(:ledger)
+    assert assigns(:ledgers)
+    assert assigns(:ledger_categories)
+    assert assigns(:banks)
+    assert assigns(:suppliers)
+  end
+
   def test_history
     get :history, :product_id => @product.id
 

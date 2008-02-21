@@ -558,7 +558,6 @@ camisa_entrada = StockIn.create!(:supplier => hering, :amount => 40, :price => 1
 money_stock_in = Ledger.create!(:category => money_expense, :value => 12.3, :bank_account => account, :date => Date.today, :owner => organization, :payment_method => 'money')
 calca_entrada = StockIn.create!(:supplier => hering, :amount => 50, :price => 10, :date => (DateTime.now - 2), :product => calca,  :validity => Date.today, :invoice => invoice)
 money_stock_in = Ledger.create!(:category => money_expense, :value => 12.3, :bank_account => account, :date => Date.today, :owner => organization, :payment_method => 'money')
-camisa_saida = StockOut.create!(:amount => -5, :price => 15, :date => (DateTime.now - 2), :product => camisa,  :validity => Date.today)
 
 
 ########### Creating Profiles (Role/RoleAssigment) ###############

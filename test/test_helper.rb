@@ -89,18 +89,20 @@ class Test::Unit::TestCase
   end
 
   def create_ledger(params = {})
-    ledger_category = @ledger_category || params[:category] || create_ledger_category
-    bank_account = @bank_account || params[:bank_account] || create_bank_account
-    l = new_ledger(params.merge(:category => ledger_category, :bank_account => bank_account))
+# FIXME remove comments
+#    ledger_category = params[:category] || @ledger_category || create_ledger_category
+#    bank_account = params[:bank_account] || @bank_account || create_bank_account
+    l = new_ledger(params)
     l.save!
     l
   end
 
   def new_ledger(params = {})
-    ledger_category = @ledger_category || params[:category] || create_ledger_category
-    bank_account = @bank_account || params[:bank_account] || create_bank_account
+    ledger_category = params[:category] || @ledger_category || create_ledger_category
+    bank_account = params[:bank_account] || @bank_account || create_bank_account
+    owner = params[:owner] || @organization
     Ledger.new({:payment_method => Payment::MONEY, :value => 367,
-                  :date => Date.today, :owner => @organization,
+                  :date => Date.today, :owner => owner,
                   :bank_account => bank_account,
                   :category => ledger_category}.merge(params))
   end
@@ -111,8 +113,9 @@ class Test::Unit::TestCase
   end
 
   def create_ledger_category(params = {})
+    organization = params[:organization] || @organization
     category = LedgerCategory.create!({:name => 'Some', :is_operational => false,
-           :organization => @organization, :type_of => Payment::TYPE_OF_INCOME,
+           :organization => organization, :type_of => Payment::TYPE_OF_INCOME,
            :payment_methods => ['money']}.merge(params))
   end
 

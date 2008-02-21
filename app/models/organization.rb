@@ -219,7 +219,11 @@ class Organization < ActiveRecord::Base
   # Return the organization ledgers between the start and end dates passed as arguments
   def ledgers_by_dates(start_date, end_date, accounts = [])
     return [] if start_date.nil? or end_date.nil? or !accounts.all?{|a| self.bank_accounts.include?(a)}
-    Ledger.find(:all, :conditions => ['(effective_date IS ? AND foreseen_date >= ? AND foreseen_date <= ? AND bank_account_id IN (?)) OR (effective_date >= ? AND effective_date <= ? AND bank_account_id IN (?) )', nil, start_date, end_date, accounts, start_date, end_date, accounts ])
+    Ledger.find(:all, :conditions => ['(effective_date IS ? AND foreseen_date BETWEEN ? AND ? AND bank_account_id IN (?)) OR (effective_date  BETWEEN ? AND ? AND bank_account_id IN (?) )', nil, start_date, end_date, accounts, start_date, end_date, accounts ])
+
+# FIXME see if rails support OR sql clause and use somethig like that:
+#    foressen_ledgers = Ledger.find(:all, :conditions => [{:effective_date => nil, :foreseen_date => (start_date..end_date), :bank_account_id => accounts}, {:effective_date => (start_date..end_date), :bank_account_id => accounts}])
+#    effect =  Ledger.find(:all, :conditions => {:effective_date => (start_date..end_date), :bank_account_id => accounts})
   end
 
   # Return the organization ledgers by categories and bank accounts passed as arguments
@@ -236,18 +240,26 @@ class Organization < ActiveRecord::Base
 
   def ledgers_by_all(accounts, tags, categories, start_date, end_date, query = nil)
     return [] if accounts.blank? or !accounts.all?{|a| self.bank_accounts.include?(a)}
+# FIXME see a sql way to do this search
+#    conditions_clause = {}
+#    conditions_clause[:bank_account_id] = accounts
+#    conditions_clause[:category_id] = categories unless categories.blank?
+#    all_ledgers = Ledger.find_tagged_with(tags, :conditions => conditions_clause , :order => :date)
+#    all_ledgers = Ledger.find(:all, :conditions => conditions_clause , :order => :date)
+
     ledger_banks = ledgers_by_bank_account(accounts)
     ledger_tags = ledgers_by_tag(tags, accounts)
     ledger_dates = ledgers_by_dates(start_date, end_date, accounts)
     ledger_categories = ledgers_by_categories(categories, accounts)
     ledger_search = ledgers_by_search(query, accounts)
 
-    all_leders = ledger_banks 
-    all_leders = all_leders & ledger_tags unless tags.blank?
-    all_leders = all_leders & ledger_categories unless categories.blank?
-    all_leders = all_leders & ledger_search unless query.blank?
-    all_leders = all_leders & ledger_dates 
-    all_leders
+    all_ledgers = ledger_banks 
+    all_ledgers = all_ledgers & ledger_tags unless tags.blank?
+    all_ledgers = all_ledgers & ledger_categories unless categories.blank?
+    all_ledgers = all_ledgers & ledger_search unless query.blank?
+    all_ledgers = all_ledgers & ledger_dates 
+    all_ledgers
+    all_ledgers.sort{|x,y| x.date <=> y.date}
   end
 
   def sum_foreseen_value_by_date(bank_account, date = Date.today)

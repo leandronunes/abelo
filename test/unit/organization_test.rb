@@ -252,5 +252,84 @@ class OrganizationTest < Test::Unit::TestCase
     assert_equal city, o.city_obj
   end
 
+  def test_ledgers_by_tag
+    o = create_organization(:identifier => 'some_id', :name =>'some name')
+    account = create_bank_account(:owner => o)
+
+    create_ledger(:owner => o, :tag_list =>['some'])
+    create_ledger(:owner => o, :tag_list =>['another'])
+    create_ledger(:owner => o, :tag_list =>['some'])
+    create_ledger(:owner => o, :tag_list =>['some'])
+    assert_equal 3, o.ledgers_by_tag(['some'],[account]).length
+  end
+
+  def test_ledgers_by_categories
+    o = create_organization(:identifier => 'some_id', :name =>'some name')
+    account = create_bank_account(:owner => o)
+    c1 = create_ledger_category(:organization => o, :name => 'some name')
+    c2 = create_ledger_category(:organization => o, :name => 'another name')
+    c3 = create_ledger_category(:organization => o, :name => 'another again')
+    create_ledger(:owner => o, :category => c1)
+    create_ledger(:owner => o, :category => c1)
+    create_ledger(:owner => o, :category => c2)
+    create_ledger(:owner => o, :category => c3)
+    assert_equal 3, o.ledgers_by_categories([c1,c2], [account]).length
+  end
+
+  def test_ledgers_by_dates
+    o = create_organization(:identifier => 'some_id', :name =>'some name')
+    account = create_bank_account(:owner => o)
+
+    create_ledger(:owner => o, :date => Date.today)
+    create_ledger(:owner => o, :date => Date.today + 1)
+    create_ledger(:owner => o, :date => Date.today + 2)
+    create_ledger(:owner => o, :date => Date.today - 1)
+    create_ledger(:owner => o, :date => Date.today - 2)
+    assert_equal 4, o.ledgers_by_dates(Date.today-1, Date.today + 2, [account]).length
+  end
+
+  def test_ledgers_by_search
+    o = create_organization(:identifier => 'some_id', :name =>'some name')
+    account = create_bank_account(:owner => o)
+
+    create_ledger(:owner => o, :description =>'test description')
+    create_ledger(:owner => o, :description =>'test again')
+    create_ledger(:owner => o, :description =>'description')
+    create_ledger(:owner => o, :description =>'none')
+    assert_equal 2, o.ledgers_by_search('test', [account]).length
+  end
+
+  def test_ledgers_by_all
+    o = create_organization(:identifier => 'some_id', :name =>'some name')
+    account = create_bank_account(:owner => o)
+
+    c1 = create_ledger_category(:organization => o, :name => 'some name')
+    c2 = create_ledger_category(:organization => o, :name => 'another name')
+    create_ledger(:owner => o, :description =>'test description', :tag_list => ['some'], :date => Date.today, :category => c1)
+    create_ledger(:owner => o, :description =>'test again', :tag_list => ['some'], :date => Date.today - 20, :category => c2)
+    create_ledger(:owner => o, :description =>'description', :tag_list => ['again'], :category => c1)
+    create_ledger(:owner => o, :description =>'none', :category => c1, :tag_list => ['again'])
+    assert_equal 2, o.ledgers_by_all([account], ['some'], [c1,c2], Date.today - 20, Date.today).length
+    assert_equal 1, o.ledgers_by_all([account], ['some'], [c1], Date.today - 20, Date.today).length
+    assert_equal 3, o.ledgers_by_all([account], ['some', 'again'], [c1,c2], Date.today, Date.today).length
+  end
+
+  def test_ledgers_by_all_is_sorted_by_date
+    o = create_organization(:identifier => 'some_id', :name =>'some name')
+    account = create_bank_account(:owner => o)
+    create_ledger(:owner => o, :date => Date.today)
+    create_ledger(:owner => o, :date => Date.today + 1)
+    create_ledger(:owner => o, :date => Date.today - 1)
+    create_ledger(:owner => o, :date => Date.today + 2)
+    create_ledger(:owner => o, :date => Date.today - 2)
+    date = nil
+    ledgers = o.ledgers_by_all([account], [], [], Date.today - 3, Date.today+3)
+    assert_equal 5, ledgers.length
+    ledgers.each do |l|
+      date ||= l.date
+      assert date <= l.date
+      date = l.date
+    end
+  end
 
 end

@@ -356,6 +356,7 @@ class Ledger < ActiveRecord::Base
     self.save
   end
 
+  #FIXME see if it's usefull
   def confirm_done!
     self.done!
     self.save

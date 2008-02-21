@@ -60,7 +60,6 @@ class PointOfSaleController < ApplicationController
     else
       @till = Till.load(@organization, current_user, printer)
     end
-
     unless @till.nil?
       redirect_to :action => 'till_open'
     end
@@ -80,8 +79,10 @@ class PointOfSaleController < ApplicationController
   end
 
   def create_till_open
-    printer = load_printer
-    @till ||= Till.new(@organization, current_user, printer)
+    if @till.nil?
+      printer = load_printer
+      @till = Till.new(@organization, current_user, printer)
+    end
 
     unless params[:cash].nil?
       @cash ||= Ledger.new(params[:cash].merge(:owner => @till, :payment_method => Payment::ADD_CASH))
@@ -124,9 +125,7 @@ class PointOfSaleController < ApplicationController
   end
 
   def create_close_till
-    till = load_current_till
-
-    if till.close
+    if @till.close
       redirect_to :action => 'index'
     else
       render :action => 'till_open'
@@ -134,14 +133,14 @@ class PointOfSaleController < ApplicationController
   end
 
   def change
-    @sale = @organization.sales.find(params[:sale_id])
+    @sale = Sale.pending(@till)
     @sale.change!
     @total = @sale.total_value 
     @total_payment = @sale.total_payment 
   end
 
   def create_close_sale
-    @sale = @organization.sales.find(params[:sale_id])
+    @sale = Sale.pending(@till)
     unless @sale.closed?
       @sale.close!
     end
@@ -150,7 +149,7 @@ class PointOfSaleController < ApplicationController
 
   def coupon_open
     @sale = Sale.pending(@till)
-    @sale_item = SaleItem.new(@sale)
+    @sale_item = SaleItem.new(:sale => @sale)
     unless params[:product_code].nil?
       @sale_item.product_code = params[:product_code] 
       @product = @sale_item.product
@@ -172,7 +171,7 @@ class PointOfSaleController < ApplicationController
 
   def create_coupon_add_item
     @sale = Sale.pending(@till)
-    @sale_item = SaleItem.new(@sale, params[:sale_item])
+    @sale_item = SaleItem.new(params[:sale_item].merge(:sale => @sale))
     if @sale_item.save
       @total = @sale.total_value 
       @total_payment = @sale.total_payment
@@ -221,7 +220,6 @@ class PointOfSaleController < ApplicationController
   end
 
   def create_coupon_cancel
-    load_current_till
     @sale = Sale.pending(@till)
 
     if @sale.cancel!

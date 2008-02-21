@@ -28,6 +28,12 @@
     )
   %>
 
+  <%= display_field_form( item, 'status',
+        :title => _('Status'),
+        :content => select_status( 'invoice', 'status')
+    )
+  %>
+
 <% end %>
 
 <!--[eoform:stock_stock]-->

@@ -13,7 +13,7 @@ class LedgerDisplay < DisplayConfiguration
       number_of_parcels
       parcel_number
       operational
-      bank_account_id
+      bank_account
       status
       schedule_repeat
       schedule_periodicity_id
@@ -34,7 +34,7 @@ class LedgerDisplay < DisplayConfiguration
       'number_of_parcels' => _('Number of Parcels'),
       'parcel_number' => _('Parcel Number'),
       'operational' => _('Is Operational?'),
-      'bank_account_id' => _('Bank Account'),
+      'bank_account' => _('Bank Account'),
       'status' => _('Is foreseen'),
       'schedule_repeat' => _('Repeat Schedule?'),
       'schedule_periodicity_id' => _('Periodicity of Schedule'),

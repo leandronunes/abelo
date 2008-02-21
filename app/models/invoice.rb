@@ -4,6 +4,7 @@ class Invoice < ActiveRecord::Base
   validates_presence_of :serie
   validates_presence_of :supplier_id
   validates_presence_of :issue_date
+  validates_presence_of :status
 
   belongs_to :supplier
   belongs_to :organization
@@ -11,6 +12,10 @@ class Invoice < ActiveRecord::Base
   has_many :ledgers, :as => :owner, :dependent => :destroy
 
   acts_as_ferret :remote => true
+
+  before_save do |invoice|
+    invoice.stock_ins.update_all("status = #{invoice.status}") unless invoice.stock_ins.blank?
+  end
 
   def self.full_text_search(q, options = {})
     default_options = {:limit => :all, :offset => 0}
@@ -26,8 +31,26 @@ class Invoice < ActiveRecord::Base
     self.stock_ins.sum(:amount)
   end
 
+  # All payments made to pay the invoice
   def total_payment
     self.ledgers.sum(:foreseen_value)
   end
+
+  # Return the description of some fields of the object.
+  # If is no't the status field nil is returned
+  def describe_field(field, value)
+    case field
+      when 'status':
+        description = {
+          '0' => _('Pending'),
+          '1' => _('Done'),
+          '2' => _('Cancelled'),
+        }[value.to_s]
+      else
+        description = nil
+    end
+    description 
+  end
+
 
 end

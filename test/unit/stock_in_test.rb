@@ -21,14 +21,14 @@ class StockInTest < Test::Unit::TestCase
 
   def test_setup
     assert @organization.valid?
-#    assert @bank_account.valid?
-#    assert @cat_prod.valid?
-#    assert @product.valid?
-#    assert @supplier.valid?
-#    assert @ledger_category.valid?
-#    assert Payment.income?(@ledger_category.type_of)
-#    assert @ledger_category.is_stock?
-#    assert @ledger.valid?
+    assert @bank_account.valid?
+    assert @cat_prod.valid?
+    assert @product.valid?
+    assert @supplier.valid?
+    assert @ledger_category.valid?
+    assert Payment.income?(@ledger_category.type_of)
+    assert @ledger_category.is_stock?
+    assert @ledger.valid?
   end
 
   def test_relation_with_supplier

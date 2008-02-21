@@ -37,7 +37,7 @@ class Till < ActiveRecord::Base
 
   def initialize(organization, user, printer, *args)
     super(*args)
-    self.datetime = DateTime.now
+    self.datetime = Time.now
     self.organization = organization
     self.user = user
     self.printer = printer

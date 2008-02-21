@@ -7,11 +7,8 @@ class Sale < ActiveRecord::Base
   belongs_to :salesman, :class_name => 'User', :foreign_key => :user_id
   belongs_to :owner, :polymorphic => true
   has_many :printer_commands, :as => :owner, :dependent => :destroy
-  has_many :items, :class_name => 'SaleItem', :dependent => :destroy
-  has_many :sale_items
+  has_many :sale_items, :dependent => :destroy
   has_many :ledgers, :as => :owner, :dependent => :destroy
-  #FIXME This association only works with sale_item. 
-  #The correct way is works with items class
   has_many :stock_outs, :through => :sale_items
 
   validates_presence_of :datetime, :organization_id, :user_id
@@ -19,6 +16,16 @@ class Sale < ActiveRecord::Base
 
   before_create do |sale|
     sale.cmd_sent! if sale.has_fiscal_printer?
+  end
+
+  before_save do |sale|
+    sale.ledgers.update_all("status = #{sale.status}")
+    sale.sale_items.update_all("status = #{sale.status}")
+#FIXME This update are not so good. Improve this updates
+    sale.stock_outs.collect{ |s|
+      s.status = sale.status
+      s.save
+    }
   end
 
   after_create do |sale|
@@ -44,7 +51,7 @@ class Sale < ActiveRecord::Base
     self.organization = till.organization
     self.salesman = till.user
     self.owner = till
-    self.datetime = Time.now
+    self.datetime = DateTime.now
   end
 
   # Set the status of this sale for OPEN. It means that the
@@ -87,7 +94,7 @@ class Sale < ActiveRecord::Base
   end 
 
   def amount_consumed_by_product(product)
-    self.items.find(:all, :conditions => {:product_id => product}).sum(&:amount).to_f
+    self.sale_items.find(:all, :conditions => {:product_id => product}).sum(&:amount).to_f
   end 
 
   # gives the pending (open) sales for a given organization and user.
@@ -120,7 +127,7 @@ class Sale < ActiveRecord::Base
     end
     self.status = STATUS_CANCELLED
     self.ledgers.collect{|l| l.confirm_cancel!}
-    self.items.collect{|i| i.cancel!}
+    self.sale_items.collect{|i| i.cancel!}
     if self.has_fiscal_printer?
       self.status = STATUS_OPEN
       self.printer_commands << PrinterCommand.new(self.owner, [PrinterCommand::CANCEL])
@@ -140,14 +147,17 @@ class Sale < ActiveRecord::Base
       return false
     end
 
-    self.status = STATUS_DONE 
-    self.ledgers.collect{|l| l.confirm_done!}
-    self.items.collect{|i| i.done!}
-
     if self.has_fiscal_printer?
       self.status = STATUS_OPEN
       self.printer_commands << PrinterCommand.new(self.owner, [PrinterCommand::CLOSE])
+      self.save
+    else
+      self.done!
     end
+  end
+
+  def done!
+    self.status = STATUS_DONE 
     self.save
   end
   
@@ -160,14 +170,14 @@ class Sale < ActiveRecord::Base
   # the sum of each item of the sale
   def total_value
     value = 0.0
-    self.items.each{ |i|
+    self.sale_items.each{ |i|
       value = value + i.price
     }
 
     value
   end
 
-  # Return the balance between the total value of items and 
+  # Return the balance between the total value of sale_items and 
   # the total of payments realized
   def balance
     total_value - total_payment
@@ -201,7 +211,7 @@ class Sale < ActiveRecord::Base
 
   def customers_products(list_products, org)
     customers = []
-    self.items.each { |i|
+    self.sale_items.each { |i|
       if list_products.include?(i.product_id.to_s)
         customers.push(org.customers.find(self.customer_id))
       end

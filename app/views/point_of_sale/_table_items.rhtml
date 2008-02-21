@@ -1,4 +1,4 @@
-<% @sale.items.each do |item| %>
+<% @sale.sale_items.each do |item| %>
   <tr>
     <td class="cell_desc"> <%= item.product_code %> </td>
     <td class="cell_desc"> <%= item.product.nil? ? '' : item.product.name %> </td>

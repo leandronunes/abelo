@@ -26,10 +26,6 @@ class ProductTest < Test::Unit::TestCase
     i
   end 
 
-  def create_product(params = {})
-    Product.create({:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization => @organization, :category => @category}.merge(params))
-  end
-
   def create_stock_in(params = {})
     StockIn.create!({:supplier_id => @supplier.id, :amount => 50, :date => '2007-07-01', 
                     :product => @product, :validity => Date.today, :price => 10, :invoice => @invoice}.merge(params))
@@ -106,6 +102,7 @@ class ProductTest < Test::Unit::TestCase
   end
 
   def test_relation_with_stock_out
+    Product.any_instance.stubs(:amount_in_stock).returns(342)
     product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id)
     entry = create_stock_in(:product => product)
     entry = StockOut.create!(:supplier_id => @supplier.id, :amount => -50, :date => '2007-07-02', :product_id => product.id, :price => 10)
@@ -156,13 +153,21 @@ class ProductTest < Test::Unit::TestCase
     total_cost = 0.0
 
     (1..10).each { |n|
-      entry = create_stock_in(:product => product)
+      entry = create_stock_in(:product => product, :status => Status::STATUS_DONE)
       total_amount += entry.amount
       total_cost += entry.price * entry.amount
     }
 
     assert_equal total_amount, product.amount_in_stock
     assert_in_delta total_cost, product.total_cost, 0.01
+  end
+
+  def test_sum_only_done_stocks
+    p = create_product(:name => 'Some Name')
+    amount = 90
+    create_stock_in(:product => p, :status => Status::STATUS_DONE, :amount => amount)
+    create_stock_in(:product => p, :status => Status::STATUS_PENDING, :amount => 34)
+    assert_equal amount, p.amount_in_stock
   end
 
   def test_image
@@ -181,6 +186,23 @@ class ProductTest < Test::Unit::TestCase
     img.save
     
     assert_equal img,  product.image
+  end
+
+  def test_presence_of_code
+    Product.destroy_all
+    p = create_product
+    p.code=nil
+    p.valid?
+    assert_equal 2, p.code
+  end
+
+  def test_suggest_code
+    Product.destroy_all
+    p = Product.new
+    assert_equal 1, p.suggest_code
+    create_product(:organization => @organization)
+    p = Product.new(:organization => @organization)
+    assert_equal 2, p.suggest_code
   end
   
 end

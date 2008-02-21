@@ -7,8 +7,8 @@ class LedgerCategoryTest < Test::Unit::TestCase
 
   def setup
     @organization = create_organization
-    @ledger_category = LedgerCategory.find(:first)
-    @bank_account = BankAccount.find(:first)
+    @ledger_category = create_ledger_category(:organization => @organization)
+    @bank_account = create_bank_account(:owner => @organization)
   end
 
   def create_money(params = {})
@@ -52,13 +52,20 @@ class LedgerCategoryTest < Test::Unit::TestCase
     assert l.errors.invalid?(:payment_methods)
   end
 
-
-  def test_presence_uniqueness_of_name
-    l = LedgerCategory.new
+  def test__uniqueness_of_name
+    l = LedgerCategory.new(:organization => @organization)
     l.name = @ledger_category.name
     l.valid?
     assert l.errors.invalid?(:name)
     l.name = 'Another name'
+    l.valid?
+    assert !l.errors.invalid?(:name)
+  end
+
+  def test__uniqueness_of_name_and_organization_scope
+    organization = create_organization(:identifier => 'some_org', :cnpj => '67.186.636/0001-40', :name => 'Some Org')
+    l = LedgerCategory.new(:organization => organization )
+    l.name = @ledger_category.name
     l.valid?
     assert !l.errors.invalid?(:name)
   end

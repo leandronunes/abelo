@@ -41,6 +41,7 @@ class ProductsController < ApplicationController
   def new
     @product = Product.new
     @product.organization = @organization
+    @product.code = @product.suggest_code
     @sizes = Size.find(:all)
     @colors = Color.find(:all)
     @units = Unit.find(:all)
@@ -60,21 +61,11 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(params[:product])
     @product.organization = @organization
-    @entry = StockIn.new(params[:entry])
     if @product.save
-      if @entry  
-        @entry.product = @product
-        if @entry.save
-          flash[:notice] = _('The product was successfully created and added to stock.')
-          redirect_to :action => 'list'
-          return
-        end
-      end
-
       flash[:notice] = _('The product was successfully created.')
       redirect_to :action => 'list'
-
     else
+      @product.code = @product.suggest_code
       @suppliers = @organization.suppliers
       @sizes = Size.find(:all)
       @colors = Color.find(:all)

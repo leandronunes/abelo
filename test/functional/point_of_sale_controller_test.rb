@@ -8,52 +8,29 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
 
   fixtures :system_actors, :people, :products, :ledger_categories, :bank_accounts, :configurations
 
-  under_organization :one
+  under_organization :some
 
   def setup
     @controller = PointOfSaleController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-    @user = User.find_by_login('seu_ze')
-    @organization = Organization.find_by_identifier('one')
-    @product = Product.find(:first)
-    @supplier = Supplier.find(:first)
-    @customer = @organization.customers.find(:first)
-    @supervisor = User.create!("administrator"=>false, "login"=>"some", "email"=>"some@example.com", :password => 'test', :password_confirmation => 'test')
-    Profile.create!(:name => 'Supervisor', :organization => @organization, :user => @supervisor, :template => 'sales_supervisor')
-    @category = LedgerCategory.find(:all).detect{|c| c.is_sale?}
-    login_as('seu_ze')
-    @till = create_till
+    Printer.destroy_all
+    @user = User.find_by_login('quentin')
+    @organization = create_organization(:identifier => 'some')
+    @bank_account = create_bank_account(:owner => @organization)
+    @product = create_product
+#    @supplier = create_supplier
+#    @customer = create_customer
+#    @supervisor = User.create!("administrator"=>false, "login"=>"some", "email"=>"some@example.com", :password => 'test', :password_confirmation => 'test')
+#    Profile.create!(:name => 'Supervisor', :organization => @organization, :user => @supervisor, :template => 'sales_supervisor')
+    @ledger_category = create_ledger_category(:is_sale => true)
+    login_as('quentin')
+    @printer = create_printer
+    @till = create_till(:printer => @printer)
     @sale = Sale.new(@till) 
-    @sale.save
-    create_stock
+    @sale.save!
   end
 
-  def create_till
-    till = Till.new(@organization, @user, nil)
-    till.save!
-    till
-  end
-
-  def create_stock
-    StockIn.create!(:supplier => @supplier, :amount => 15, :price => 1.99, :invoice => create_invoice, :product => @product)
-  end
-
-  def create_invoice(params = {})
-    Invoice.create!({:number => 3344, :serie => 33443, :issue_date => Date.today, :supplier => @supplier}.merge(params))
-  end
-
-  def create_sale
-    till = create_till
-    sale = Sale.new(till)
-    sale.save
-    sale
-  end
-
-  def create_sale_item(sale, params)
-    s = SaleItem.new(sale, params)
-    s.save!
-  end
 
   def test_setup
     assert @organization.valid?
@@ -61,11 +38,11 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
     assert @sale.valid?
     assert @till.valid?
     assert @organization.sales.include?(@sale)
-    assert @product.valid?
-    assert @organization.products.include?(@product)
-    assert @customer.valid?
-    assert @organization.customers.include?(@customer)
-    assert @category.valid?
+#    assert @product.valid?
+#    assert @organization.products.include?(@product)
+#    assert @customer.valid?
+#    assert @organization.customers.include?(@customer)
+#    assert @category.valid?
   end
 
   def test_design_point_of_sale
@@ -75,8 +52,9 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
 
 
   def test_index_with_existing_till_open
-    Till.destroy_all
-    create_till
+    till = mock
+    till.stubs(:nil?).returns(false)
+    Till.expects(:load).returns(till)
     get :index
     assert_response :redirect
     assert_redirected_to :action => 'till_open'
@@ -98,8 +76,9 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   end
 
   def test_open_till_with_existing_till
-    Till.destroy_all
-    create_till
+    till = mock()
+    till.stubs(:nil?).returns(false)
+    Till.expects(:load).returns(till)
     get :open_till
     assert_response :redirect
     assert_redirected_to :action => 'till_open'
@@ -115,24 +94,22 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   end
   
   def test_create_till_open
-    PrinterCommand.destroy_all
+    Till.expects(:load).returns(@till)
     post :create_till_open
     assert_response :redirect
     assert_redirected_to :action => 'till_open'
-    assert_equal 0, PrinterCommand.count, 'You cannot add printer command without a printer configured'
   end
 
   def test_create_till_open_with_cash
-    PrinterCommand.destroy_all
+    Till.expects(:load).returns(@till)
     post :create_till_open, :cash => {:value => 12}
     assert_response :redirect
     assert_redirected_to :action => 'till_open'
-    assert_equal 0, PrinterCommand.count, 'You cannot add printer command without a printer configured'
   end
 
   def test_till_open
-    Till.destroy_all
-    create_till
+    sale = mock() 
+    Sale.expects(:pending).returns(sale)
     post :till_open
     assert_response :success
     assert_template 'till_open'
@@ -146,8 +123,7 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   end
 
   def test_create_add_cash_successfully
-    Till.destroy_all
-    create_till
+    Till.expects(:load).returns(@till)
     PrinterCommand.destroy_all
     get :create_add_cash, :cash => {:value => 12}
     assert_response :redirect
@@ -158,8 +134,7 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   end
 
   def test_create_add_cash_unsuccessfully
-    Till.destroy_all
-    create_till
+    Till.expects(:load).returns(@till)
     # The method expect a value different of nil
     get :create_add_cash, :cash => {:value => nil}
     assert_response :success
@@ -174,8 +149,7 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   end
 
   def test_create_remove_cash_successfully
-    Till.destroy_all
-    create_till
+    Till.expects(:load).returns(@till)
     PrinterCommand.destroy_all
     get :create_remove_cash, :cash => {:value => 12}
     assert_response :redirect
@@ -186,8 +160,7 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   end
 
   def test_create_remove_cash_unsuccessfully
-    Till.destroy_all
-    create_till
+    Till.expects(:load).returns(@till)
     # The method expect a value different of nil
     get :create_remove_cash, :cash => {:value => nil}
     assert_response :success
@@ -195,8 +168,7 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   end
 
   def test_create_close_till
-    Till.destroy_all
-    create_till
+    Till.expects(:load).returns(@till)
     PrinterCommand.destroy_all
     get :create_close_till
     assert_response :redirect
@@ -205,9 +177,8 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   end
 
   def test_create_coupon_open_sucessfully
-    Sale.delete_all
-    Till.destroy_all
-    create_till 
+    Till.expects(:load).returns(@till)
+    Sale.destroy_all
     get :create_coupon_open
     assert_response :redirect
     assert_redirected_to :action => 'coupon_open'
@@ -215,9 +186,7 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   end
 
   def test_create_coupon_open_unsucessfully
-    Sale.delete_all
-    Till.destroy_all
-    create_sale 
+    PrinterCommand.expects(:get_computer_id).returns(@printer.computer_id)
     get :create_coupon_open
     assert_response :success
     assert_template 'till_open'
@@ -225,10 +194,7 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   end
 
   def test_coupon_open
-    Sale.delete_all
-    Till.destroy_all
-    create_sale 
-
+    Till.expects(:load).returns(@till)
     get :coupon_open
     assert_response :success
     assert_template 'coupon_open'
@@ -240,12 +206,16 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   end
 
   def test_refresh_product_with_a_valid_product_code
-    post :refresh_product, :product_code => @product.code
+    product = mock()
+    product.stubs(:name).returns('some name')
+    product.stubs(:sell_price).returns(23)
+    Product.expects(:find_by_code).with('2312').returns(product)
+    post :refresh_product, :product_code => '2312'
     assert_response :success
     assert_template nil
     javascript = @response.body.split("\n")
-    assert_equal "Element.update(\"abelo_product_identification\", \"#{@product.name}\");", javascript[0]
-    assert_equal "Element.update(\"abelo_value_product\", \"#{@product.sell_price}\");", javascript[1]
+    assert_equal "Element.update(\"abelo_product_identification\", \"#{product.name}\");", javascript[0]
+    assert_equal "Element.update(\"abelo_value_product\", \"#{product.sell_price}\");", javascript[1]
     assert assigns(:product)
   end
 
@@ -260,7 +230,9 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   end
 
   def test_add_item_with_a_valid_product_code
-    num_items = @sale.items.length
+    Sale.expects(:pending).returns(@sale)
+    Product.any_instance.stubs(:amount_in_stock).returns(34)
+    num_items = @sale.sale_items.length
     post :create_coupon_add_item, :id => @sale.id, :sale_item =>{ :product_code => @product.code, :amount => 2}
     assert_response :success
     assert_template '_table'
@@ -269,11 +241,12 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:total_payment)
     assert assigns(:payments)
     @sale = Sale.find(@sale.id)
-    assert_equal num_items + 1, @sale.items.length
+    assert_equal num_items + 1, @sale.sale_items.length
   end
 
   def test_add_item_with_a_invalid_product_code
-    num_items = @sale.items.length
+    num_items = @sale.sale_items.length
+    Sale.expects(:pending).returns(@sale)
     invalid_product_code = 100
     post :create_coupon_add_item, :id => @sale.id, :sale_item =>{ :product_code => invalid_product_code, :amount => 2}
     assert_response :success
@@ -283,15 +256,13 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:total_payment)
     assert_not_nil assigns(:payments)
     @sale = Sale.find(@sale.id)
-    assert_equal num_items, @sale.items.length
+    assert_equal num_items, @sale.sale_items.length
   end
 
   def test_coupon_cancel_without_permissions
-    Sale.delete_all
-    Till.destroy_all
-    sale = create_sale 
+    Till.expects(:load).returns(@till)
     User.create!("administrator"=>false, "login"=>"any_login", "email"=>"any_login@example.com", :password => 'test', :password_confirmation => 'test')
-    post :create_coupon_cancel, :id => sale.id, :user => {:login => 'any_login', :password => 'test'}
+    post :create_coupon_cancel, :id => @sale.id, :user => {:login => 'any_login', :password => 'test'}
 
     assert_response :redirect
     assert_redirected_to :action => 'cancel'
@@ -299,16 +270,16 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   end
 
   def test_cancel_open_coupon_with_supervisor_permissions
-    Sale.delete_all
-    Till.destroy_all
-    sale = create_sale 
-    post :create_coupon_cancel, :id => sale.id, :user => {:login => @supervisor.login, :password => @supervisor.password}
+    Till.expects(:load).returns(@till)
+    User.any_instance.stubs(:allowed_to?).returns(true)
+    post :create_coupon_cancel, :id => @sale.id, :user => {:login => 'some', :password => 'some'}
 
     assert_response :redirect
     assert_redirected_to :action => 'till_open'
   end
 
   def test_add_payment
+    Sale.expects(:pending).returns(@sale)
     get :add_payment
     assert_response :success
     assert_template 'add_payment'
@@ -406,8 +377,9 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
 
   def test_coupon_add_payment_without_complete_the_sale_value
     num_payments = @sale.ledgers.length
-    create_sale_item(@sale, :product_code => @product.code, :amount => 1)
-    post :create_coupon_add_payment, :id => @sale.id, :ledger => {:payment_method => 'money', :category_id => @category, :value => (@sale.balance - 1) }
+    Sale.any_instance.stubs(:balance).returns(10)
+    Till.expects(:load).returns(@till)
+    post :create_coupon_add_payment, :id => @sale.id, :ledger => {:payment_method => 'money', :category_id => @ledger_category, :value => (@sale.balance - 1) }
     assert_response :success
     assert_template 'add_payment'
     assert assigns(:ledger)
@@ -418,14 +390,16 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   end
 
   def test_coupon_add_payment_kind_of_check
-    post :create_coupon_add_payment, :id => @sale.id, :ledger => {:payment_method => 'check', :category_id => @category, :value => (@sale.balance - 1) }
+    Till.expects(:load).returns(@till)
+    post :create_coupon_add_payment, :id => @sale.id, :ledger => {:payment_method => 'check', :category_id => @ledger_category, :value => (@sale.balance - 1) }
     assert_not_nil assigns(:banks)
   end
 
   def test_coupon_add_payment_where_balance_equal_to_zero
     num_payments = @sale.ledgers.length
-    create_sale_item(@sale, :product_code => @product.code, :amount => 1)
-    post :create_coupon_add_payment, :id => @sale.id, :ledger => {:payment_method => 'money', :category_id => @category, :value => @sale.balance }
+    Sale.any_instance.stubs(:balance).returns(0)
+    Till.expects(:load).returns(@till)
+    post :create_coupon_add_payment, :id => @sale.id, :ledger => {:payment_method => 'money', :category_id => @ledger_category, :value => 10 }
     assert_response :redirect
     assert_redirected_to :action => 'till_open'
     assert_equal num_payments + 1, assigns(:sale).ledgers.length
@@ -433,15 +407,16 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
 
   def test_coupon_add_payment_greater_than_balance_value
     num_payments = @sale.ledgers.length
-    create_sale_item(@sale, :product_code => @product.code, :amount => 1)
-    post :create_coupon_add_payment, :id => @sale.id, :ledger => {:payment_method => 'money', :category_id => @category, :value => (@sale.balance + 1) }
+    Till.expects(:load).returns(@till)
+    post :create_coupon_add_payment, :id => @sale.id, :ledger => {:payment_method => 'money', :category_id => @ledger_category, :value => (@sale.balance + 1) }
     assert_response :redirect
     assert_redirected_to :action => 'change'
     assert_equal num_payments + 1, assigns(:sale).ledgers.length
   end
   def test_coupon_add_payment_with_wrong_parameters
     num_payments = @sale.ledgers.length
-    create_sale_item(@sale, :product_code => @product.code, :amount => 1)
+    Sale.any_instance.stubs(:balance).returns(10)
+    Till.expects(:load).returns(@till)
     post :create_coupon_add_payment, :id => @sale.id, :ledger => {:payment_method => 'money', :category_id => @category, :value => nil }
     assert_response :success
     assert_template 'add_payment'

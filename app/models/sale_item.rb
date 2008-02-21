@@ -14,11 +14,12 @@ class SaleItem < ActiveRecord::Base
 
   validates_presence_of :sale_id, :product_id, :amount, :unitary_price
   validates_inclusion_of :status, :in => ALL_STATUS
-  validates_associated :stock_out, :printer_command
+  validates_associated :stock_out, :message => _("You don't have sufficient product in stock")
+  validates_associated :printer_command
 
   before_validation do |sale_item|
-    sale_item.unitary_price = sale_item.product.sell_price unless sale_item.product.nil?
     sale_item.product ||= sale_item.sale.organization.products.find_by_code(sale_item.product_code)
+    sale_item.unitary_price = sale_item.product.sell_price unless sale_item.product.nil?
     sale_item.stock_out ||= StockOut.new
     sale_item.stock_out.date = Date.today
     sale_item.stock_out.product = sale_item.product
@@ -53,11 +54,6 @@ class SaleItem < ActiveRecord::Base
     end
   end
 
-  def initialize(sale, *args)
-    super(*args)
-    self.sale = sale
-  end
-
   # Set the status of this item for OPEN. It means that the
   # fiscal printer command was sent to the printer.
   def cmd_sent!
@@ -85,7 +81,7 @@ class SaleItem < ActiveRecord::Base
 
   # This function load a valid product with the code passed
   def product_code= code
-    self.product = Product.find_by_code(code) 
+    self.product = self.sale.organization.products.find_by_code(code) unless self.sale.nil?
     self.item_product_code = code
   end
 

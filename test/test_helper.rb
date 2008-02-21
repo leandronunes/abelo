@@ -56,7 +56,7 @@ class Test::Unit::TestCase
   end
 
   def create_till(params = {})
-    till = Till.new(@organization, @user, create_printer)
+    till = Till.new(@organization, @user, params[:printer] || create_printer)
     till.save
     till
   end
@@ -142,8 +142,8 @@ class Test::Unit::TestCase
   end
 
   def create_stock_in(params ={})
-    @invoice ||= create_invoice
-    StockIn.create!({:supplier => @supplier, :amount => 1, :price => 1.99, :invoice => @invoice, :product => @product}.merge(params))
+    invoice = @invoice || params[:invoice] || create_invoice
+    StockIn.create!({:supplier => @supplier, :amount => 30, :price => 1.99, :invoice => invoice, :product => @product}.merge(params))
   end
 
   def create_user(params = {})
@@ -167,6 +167,14 @@ class Test::Unit::TestCase
                      :cpf => '642.229.464-60', :category => @customer_category,
                      :email => 'customer@colivre.coop.br')
   end
+
+  def create_supplier(params = {})
+    @supplier_category ||= create_supplier_category
+    Supplier.create!(:name => 'some supplier', :organization => @organization, 
+                     :cpf => '642.229.464-60', :category => @supplier_category,
+                     :email => 'supplier@colivre.coop.br')
+  end
+
 
   def create_document(params = {})
     @organization ||= create_organization
@@ -193,7 +201,7 @@ class Test::Unit::TestCase
  
   def create_item(params = {})
     sale = params[:sale] || create_sale
-    item = SaleItem.new(sale,params)
+    item = SaleItem.new(params.merge(:sale => sale))
     item.save!
     item
   end

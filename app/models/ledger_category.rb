@@ -9,7 +9,7 @@ class LedgerCategory < ActiveRecord::Base
   
   validates_presence_of :name
   validates_presence_of :organization_id
-  validates_uniqueness_of :name
+  validates_uniqueness_of :name, :scope => :organization_id
 
   serialize :settings
   delegate :default_bank_account, :to => :organization

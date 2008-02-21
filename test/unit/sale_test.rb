@@ -34,8 +34,9 @@ class SaleTest < Test::Unit::TestCase
     Sale.delete_all
     SaleItem.delete_all
     sale = create_sale()
-    create_item(:product => @product1, :sale => sale, :amount => 10, :sale => sale )
-    create_item(:product => @product2, :sale => sale, :amount => 1, :sale => sale)
+    create_item(:product => @product1, :sale => sale, :amount => 10 )
+    create_item(:product => @product2, :sale => sale, :amount => 1)
+    sale.reload
     assert sale.destroy
     assert_equal 0, SaleItem.count
   end
@@ -71,11 +72,12 @@ class SaleTest < Test::Unit::TestCase
     sale = create_sale(:datetime => '2007-08-04', :salesman => @user)
     item1 = create_item(:product => @product1, :amount => 10, :sale => sale )
     item2 = create_item(:product => @product2, :amount => 1, :sale => sale)
+    sale.reload
     assert_equal 10 * @product1.sell_price + 1 * @product2.sell_price, sale.total_value
   end
 
   def test_relation_with_organization
-    sale = create_sale(:datetime => '2007-08-04', :organization => @organization)
+    sale = create_sale(:organization => @organization)
     assert_equal @organization, sale.organization
   end
 
@@ -87,12 +89,12 @@ class SaleTest < Test::Unit::TestCase
   end
 
   def test_relation_with_user
-    sale = create_sale(:datetime => '2007-08-04', :salesman => @user)
+    sale = create_sale(:salesman => @user)
     assert_equal @user, sale.salesman
   end
 
   def test_inclusion_of_status_on_pre_defined_status
-    sale = create_sale(:datetime => '2007-08-04')
+    sale = create_sale
     sale.status = 4
     sale.valid?
     assert sale.errors.invalid?(:status)
@@ -108,11 +110,12 @@ class SaleTest < Test::Unit::TestCase
 
   def test_relation_with_items
     Product.any_instance.stubs(:amount_in_stock).returns(342)
-    sale = create_sale(:datetime => '2007-08-04')
+    sale = create_sale
     cat_prod = ProductCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
     product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @organization.id, :category_id => cat_prod.id)
     item = create_item(:product => product, :amount => 2, :sale => sale)
-    assert sale.items.include?(item)
+    sale.reload
+    assert sale.sale_items.include?(item)
   end
  
   def test_mandatory_field_date
@@ -205,6 +208,7 @@ class SaleTest < Test::Unit::TestCase
     cat_prod = ProductCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
     product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @organization.id, :category_id => cat_prod.id)
     item = create_item(:sale => sale, :product => product, :amount => 2)
+    sale.reload
     sale.customer = customer
     assert cat_prod.save
     assert item.save!

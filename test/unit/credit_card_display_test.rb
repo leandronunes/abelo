@@ -14,7 +14,7 @@ class CreditCardDisplayTest < Test::Unit::TestCase
       number_of_parcels
       parcel_number
       operational
-      bank_account_id
+      bank_account
       status
       schedule_repeat
       schedule_periodicity_id

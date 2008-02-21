@@ -19,59 +19,25 @@ class SaleItemTest < Test::Unit::TestCase
     assert @invoice.valid?
   end
 
-  def create_invoice
-    i =  Invoice.new(:number => 3434, :serie => 343, :organization => @organization,
-         :supplier => @supplier, :issue_date => Date.today)
-    i.save 
-    i
-  end
-
-  def create_till
-    till = Till.new(@organization, @user, nil)
-    till.save
-    till
-  end
-  
-  def new_sale(params={})
-    till = create_till
-    sale = Sale.new(till, params)
-    sale
-  end
-
-  def create_sale(params= {})
-    sale = new_sale(params)
-    sale.save
-    sale
-  end
-
-  def create_item(sale, params = {})
-    item =   SaleItem.new(sale,params)
-    item.save!
-    item
-  end
-
-  def create_product(params = {})
-    p = Product.create({:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization => @organization, :category => @category}.merge(params))
-    StockIn.create!(:product => p, :status => Status::STATUS_DONE, :price => 45, :amount => 10, :date => Date.today, :supplier => @supplier, :invoice => @invoice)
-    p
-  end
-
   def test_relation_with_sale
+    Product.any_instance.stubs(:amount_in_stock).returns(342)
     sale = create_sale()
-    item = create_item(sale, :product => create_product(), :amount => 2)
+    item = create_item(:sale => sale, :product => create_product(), :amount => 2)
     assert_equal sale, item.sale
   end
 
   def test_relation_with_product
+    Product.any_instance.stubs(:amount_in_stock).returns(342)
     product = create_product()
     sale = create_sale()
-    item = create_item(sale, :product => product, :amount => 2)
+    item = create_item(:sale => sale, :product => product, :amount => 2)
     assert_equal product, item.product
   end
 
   def test_sale_id
+    Product.any_instance.stubs(:amount_in_stock).returns(342)
     sale = create_sale
-    item = create_item(sale, :product => create_product(), :amount => 2)
+    item = create_item(:sale => sale, :product => create_product(), :amount => 2)
     item.sale = nil
     item.valid?
     assert item.errors.invalid?(:sale_id)
@@ -79,40 +45,45 @@ class SaleItemTest < Test::Unit::TestCase
 
 
   def test_presence_of_unitary_price
+    Product.any_instance.stubs(:amount_in_stock).returns(342)
     sale = create_sale
-    item = create_item(sale, :product => create_product(), :amount => 2)
+    item = create_item(:sale => sale, :product => create_product(), :amount => 2)
     item.product =  create_product(:sell_price => 0)
     item.valid?
     assert item.errors.invalid?(:unitary_price)
   end
 
   def test_presence_of_product_id
+    Product.any_instance.stubs(:amount_in_stock).returns(342)
     sale = create_sale
-    item = create_item(sale, :product => create_product(), :amount => 2)
+    item = create_item(:sale => sale, :product => create_product(), :amount => 2)
     item.product = nil
     item.valid?
     assert item.errors.invalid?(:product_id)
   end
 
   def test_unitary_price_with_product
+    Product.any_instance.stubs(:amount_in_stock).returns(342)
     product = create_product()
     sale = create_sale
-    item = create_item(sale, :product => product, :amount => 2)
+    item = create_item(:sale => sale, :product => product, :amount => 2)
     assert_equal(product.sell_price, item.unitary_price)
   end
 
   def test_item_name
+    Product.any_instance.stubs(:amount_in_stock).returns(342)
     product = create_product()
     sale = create_sale
-    item = create_item(sale, :product => product, :amount => 2)
+    item = create_item(:sale => sale, :product => product, :amount => 2)
     assert_equal product.name, item.name
   end
 
   def test_sale_item_price
+    Product.any_instance.stubs(:amount_in_stock).returns(342)
     product = create_product()
     sale = create_sale
     amount = 2
-    item = create_item(sale, :product => product, :amount => amount)
+    item = create_item(:sale => sale, :product => product, :amount => amount)
     assert_equal product.sell_price * amount, item.price
   end
 
@@ -121,23 +92,28 @@ class SaleItemTest < Test::Unit::TestCase
     count = StockOut.count
     sale = create_sale()
     p = create_product()
+    create_stock_in(:product => p, :status => Status::STATUS_DONE)
     amount = 2
+    p = Product.find(p.id)
     stock = p.amount_in_stock
     assert_not_equal 0,  stock
-    item = create_item(sale, :product => p, :amount => amount)
+    item = create_item(:sale => sale, :product => p, :amount => amount)
+    sale.reload
+    sale.done!
     assert_equal stock - amount, p.amount_in_stock
     assert_equal count + 1, StockOut.count
   end
 
 
   def test_destroy_sale_items_when_sale_is_destroyed
+    Product.any_instance.stubs(:amount_in_stock).returns(342)
     Sale.destroy_all
     SaleItem.destroy_all
     sale = create_sale()
     p = create_product()
-    create_item(sale, :product => p, :amount => 1)
-    create_item(sale, :product => p, :amount => 2)
-    create_item(sale, :product => p, :amount => 3)
+    create_item(:sale => sale, :product => p, :amount => 1)
+    create_item(:sale => sale, :product => p, :amount => 2)
+    create_item(:sale => sale, :product => p, :amount => 3)
     assert 3, SaleItem.count
     assert sale.destroy
     assert 0, SaleItem.count

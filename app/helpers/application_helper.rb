@@ -3,13 +3,6 @@ module ApplicationHelper
 
   #TODO Make the test to these helpers. See in noosfero how it's implemented like unitary test
    
-  #TODO see if it's useful
-  ACTIONS = %w[
-    'new' => _('New')
-    'edit' => _('Edit') 
-    'remove' => _('Remove') 
-  ]
-
   require 'support/button'
 
   require 'support/menu'
@@ -396,6 +389,15 @@ module ApplicationHelper
     select(object, method, collection.map{|c| [c.send(text_method), c.send(value_method)]}, :include_blank => true) 
   end
 
+  def select_status(object, method, options = {}, html_options = {})
+    collection = [
+      [_('Pending'), Status::STATUS_PENDING],
+      [_('Cancelled'), Status::STATUS_CANCELLED],
+      [_('Done'), Status::STATUS_DONE],
+    ]
+    select(object, method,collection, options, html_options)   
+  end
+
   def select_color(object, method, collection=[], text_method=:name, value_method=:id)
     text_method = text_method.to_s
     value_method = value_method.to_s
@@ -534,7 +536,8 @@ module ApplicationHelper
       [
        title,
        begin
-         self.send("display_field_type_#{content.class.to_s.tableize.singularize}", content)
+         display_content = object.describe_field(field, content) if object.respond_to?(:describe_field)
+         display_content || self.send("display_field_type_#{content.class.to_s.tableize.singularize}", content)
        rescue
          content_tag(:span, content.name)
        end

@@ -17,13 +17,6 @@ class InvoiceTest < Test::Unit::TestCase
     assert @organization.products.include?(@product)
   end
 
-  def create_invoice(params = {})
-    i =  Invoice.new({:number => 3434, :serie => 343, :organization => @organization, 
-         :supplier => @supplier, :issue_date => Date.today}.merge(params))
-    i.save
-    i
-  end
-
   def test_presence_of_number
     i = Invoice.new
     i.valid?
@@ -71,18 +64,49 @@ class InvoiceTest < Test::Unit::TestCase
     assert_equal Status::STATUS_PENDING, i.status
   end
 
+  def test_presence_of_status
+    i = Invoice.new
+    i.status = nil
+    i.valid?
+    assert i.errors.invalid?(:status)
+
+    i.status = Status::STATUS_DONE
+    i.valid?
+    assert !i.errors.invalid?(:status)
+  end
+
   def test_destroy_stock_ins_when_invoice_is_destroyed
     i = create_invoice
     stock_in_count = StockIn.count
-    stock_in = StockIn.new(:price => 223, :amount => 3, :product_id => 1)
-    stock_in.invoice = i
+    stock_in = create_stock_in(:product => @product, :invoice => i)
     assert stock_in.save
-    stock_in = StockIn.new(:price => 223, :amount => 3, :product_id => 2)
-    stock_in.invoice = i
+    p = create_product(:name => 'some')
+    stock_in = create_stock_in(:product => p, :invoice => i )
     assert stock_in.save
+    i.reload
     assert i.destroy
     assert_equal stock_in_count, StockIn.count
   end
+
+
+  def test_change_stock_status_when_change_the_invoice_status
+    StockIn.destroy_all
+    i = create_invoice(:status => Status::STATUS_PENDING)
+    create_stock_in(:product => @product, :status => Status::STATUS_PENDING, :invoice => i)
+    p = create_product(:name => 'some')
+    create_stock_in(:product => p, :status => Status::STATUS_PENDING, :invoice => i)
+    i.reload
+    i.stock_ins.each do |s|
+      assert_equal Status::STATUS_PENDING, s.status
+    end
+    i.status = Status::STATUS_DONE
+    i.save
+    i.reload
+    i.stock_ins.each do |s|
+      assert_equal Status::STATUS_DONE, s.status
+    end
+  end
+
 
   def test_full_text_search
     Invoice.delete_all 

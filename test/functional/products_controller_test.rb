@@ -94,20 +94,6 @@ class ProductsControllerTest < Test::Unit::TestCase
     assert_redirected_to :action => 'list'
   end
   
-  def test_create_with_entry
-    count = Product.count
-    supplier = Supplier.find(:first)
-    count = StockIn.count
-    assert supplier.valid?
-
-    post :create, :id => 1, :product => {:name => 'Some Product', :sell_price => '20', :unit => 'U', :organization_id => 1, :category_id => 1, :supplier_ids => [supplier.id.to_s] }, :entry => { :supplier_id => 3, :amount => 1, :price => 1.99, :purpose => 'sell', :date => '2007-01-01' }
-
-    assert_not_nil assigns(:entry)
-    assert_response :redirect
-    assert_redirected_to :action => 'list'
-    assert count+1, StockIn.count
-  end
-
   def test_create_wrong_params
     num_products = Product.count
     post :create, :product => {}

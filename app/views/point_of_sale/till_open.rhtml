@@ -9,7 +9,7 @@
 
 <% if !@pending_sale.nil? %>
   <div id="pending_sale">
-    <%= link_to '<span>'+_('You have a pending sale!')+'</span>', {:action => 'coupon_open', :id => @pending_sale.id} %>
+    <%= link_to '<span>'+_('You have a pending sale!')+'</span>', {:action => 'coupon_open', :id => @pending_sale} %>
   </div>
 <% else %>
   <div id="new_sale">

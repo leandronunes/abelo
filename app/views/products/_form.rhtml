@@ -61,6 +61,12 @@
       )
   %>
 
+  <%= display_field_form(item, 'code',
+        :title => _('Code'),
+        :content => text_field('product', 'code')
+      )
+  %>
+
   <%= display_field_edit(item, 'info',
         :title => _('Additional Information'),
         :content => rich_text_editor('product', 'info')

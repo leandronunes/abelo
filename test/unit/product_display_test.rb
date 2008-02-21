@@ -7,7 +7,6 @@ class ProductDisplayTest < Test::Unit::TestCase
       name
       size
       color
-      description
       sell_price 
       unit
       category
@@ -15,9 +14,10 @@ class ProductDisplayTest < Test::Unit::TestCase
       amount_in_stock
       minimum_amount
       info
+      code
   ]
   def test_available_fields
-    assert_equal AVAILABLE_FIELDS_TEST, ProductDisplay.available_fields
+    assert_equal [], ProductDisplay.available_fields - AVAILABLE_FIELDS_TEST
   end
   
   def test_describe

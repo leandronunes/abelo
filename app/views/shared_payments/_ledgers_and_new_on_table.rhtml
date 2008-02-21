@@ -27,7 +27,7 @@
     <td rowspan=13> <%= button 'add', _('Add'), :save, {}, :name => 'add_item' %> </td>
   </tr>
   <tr>
-    <td colspan=5 id="abelo_payment_details">
+    <td colspan=5>
       <%= render :partial => 'shared_payments/payment_details'%>
     </td>
   </tr>
@@ -42,7 +42,7 @@
     :update => 'abelo_payment_details',
     :url => {:action => 'payment_details' },
     :failute => "$('abelo_payment_details').innerHTML= request.responseText",
-    :with => "'payment_method=' +  escape(value) + '&id=' + escape(#{@invoice.id})"
+    :with => "'payment_method=' +  escape(value) + '&id=' + escape(#{@invoice.id}) + '&is_new=true'"
     )
 %>
 

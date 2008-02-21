@@ -18,14 +18,21 @@
     )
   %>
 
-  <%= display_field_form( item, 'supplier_id',
-        :title => _('Supplier'),
-        :content => select( 'invoice', 'supplier_id', @suppliers.map { |s| [ s.name, s.id] } ) 
+  <%= display_field_form( item, 'status',
+        :title => _('Status'),
+        :content => select_status( 'invoice', 'status') 
     )
   %>
+
   <%= display_field_form( item, 'issue_date',
         :title => _('Date'),
         :content => date_select_abelo( 'invoice', 'issue_date' )
+    )
+  %>
+
+  <%= display_field_form( item, 'supplier_id',
+        :title => _('Supplier'),
+        :content => select( 'invoice', 'supplier_id', @suppliers.map { |s| [ s.name, s.id] } ) 
     )
   %>
 

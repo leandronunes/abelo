@@ -107,7 +107,6 @@ class InvoiceTest < Test::Unit::TestCase
     end
   end
 
-
   def test_full_text_search
     Invoice.delete_all 
     invoice1 = create_invoice(:number => 111111)
@@ -117,5 +116,68 @@ class InvoiceTest < Test::Unit::TestCase
     assert_equal 1, invoices.length
     assert invoices.include?(invoice1)
   end
+
+  def test_total_cost
+    stock_in1 = mock()
+    stock_in1.stubs(:total_cost).returns(23)
+    stock_in2 = mock()
+    stock_in2.stubs(:total_cost).returns(15)
+    Invoice.any_instance.stubs(:stock_ins).returns([stock_in1, stock_in2])
+    i = Invoice.new
+    assert_equal 38, i.total_cost
+  end
+
+  def test_total_cost_whithout_stock_ins_on_invoice
+    Invoice.any_instance.stubs(:stock_ins).returns([])
+    i = Invoice.new
+    assert_equal 0, i.total_cost
+  end
+
+  def test_total_amount
+# FIXME how to make this test with mock?
+#    stock_in1 = mock()
+#    stock_in1.stubs(:amount).returns(4)
+#    stock_in2 = mock()
+#    stock_in2.stubs(:amount).returns(7)
+#    Invoice.any_instance.stubs(:stock_ins).returns([stock_in1, stock_in2])
+    i = create_invoice
+    create_stock_in(:amount => 11, :invoice => i)
+    create_stock_in(:amount => 7, :invoice => i)
+    i.reload
+    assert_equal 18, i.total_amount
+  end
+
+  def test_total_amount_whithout_stock_ins_on_invoice
+    i = create_invoice
+    assert_equal 0, i.total_amount
+  end
+
+  def test_total_payment
+    i = create_invoice
+    create_ledger(:value => 23, :owner => i, :category => create_ledger_category(:name => 'another name'))
+    create_ledger(:value => 7, :owner => i)
+    i.reload
+    assert_equal 30, i.total_payment
+  end
+
+  def test_total_payment_whithout_stock_ins_on_invoice
+    i = create_invoice
+    assert_equal 0, i.total_payment
+  end
+
+  def test_balance
+    i = Invoice.new
+    Invoice.any_instance.stubs(:total_cost).returns(34)
+    Invoice.any_instance.stubs(:total_payment).returns(20)
+    assert_equal 14, i.balance
+  end
+
+  def test_describe_field
+    i = Invoice.new
+    assert_not_equal 0, i.describe_field('status', 0)
+    assert_not_equal 1, i.describe_field('status', 1)
+    assert_not_equal 2, i.describe_field('status', 2)
+  end
+
 
 end

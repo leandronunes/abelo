@@ -342,7 +342,6 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
     assert_template nil
   end
 
-
   def test_select_category_of_money_payment_method
     get :select_category, :payment_method => 'money'
 

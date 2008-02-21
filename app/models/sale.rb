@@ -9,6 +9,8 @@ class Sale < ActiveRecord::Base
   has_many :printer_commands, :as => :owner, :dependent => :destroy
   has_many :sale_items, :dependent => :destroy
   has_many :ledgers, :as => :owner, :dependent => :destroy
+  #FIXME This association only works with sale_item. 
+  #The correct way is works with sale_items class
   has_many :stock_outs, :through => :sale_items
 
   validates_presence_of :datetime, :organization_id, :user_id
@@ -51,7 +53,7 @@ class Sale < ActiveRecord::Base
     self.organization = till.organization
     self.salesman = till.user
     self.owner = till
-    self.datetime = DateTime.now
+    self.datetime = Time.now
   end
 
   # Set the status of this sale for OPEN. It means that the

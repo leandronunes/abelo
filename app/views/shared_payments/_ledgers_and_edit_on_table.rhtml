@@ -26,7 +26,7 @@
     <td><%=  text_field('ledger', 'value') %> </td>
     <td rowspan=13> <%= button 'save', _('Edit'), :save, {}, :name => 'save_item' %> </td>
   </tr>
-   <td colspan=5 id="abelo_payment_details">
+   <td colspan=5>
       <%= render :partial => 'shared_payments/payment_details'%>
     </td>
   </tr>

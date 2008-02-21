@@ -3,16 +3,16 @@ module InvoicePayment
   def payment_details
     @invoice = @organization.invoices.find(params[:id])
     payment_method = params[:payment_method]
-    if !payment_method.blank?
-      @ledger = params[:ledger_id].blank? ? Ledger.new(:payment_method => payment_method) : @organization.ledgers(params[:ledger_id])
-      @ledger.payment_method = payment_method
-      @banks = Bank.find(:all)
-      @hide_sign = true
-      @ledger_categories =  @organization.stock_ledger_categories_by_payment_method(@ledger.payment_method)
-      @ledgers = @invoice.ledgers
-      render :partial => 'shared_payments/payment_details'
+    @ledger = params[:ledger_id].blank? ? Ledger.new(:payment_method => payment_method, :value => @invoice.balance ) : @organization.ledgers(params[:ledger_id])
+    @ledger.payment_method = payment_method
+    @banks = Bank.find(:all)
+    @ledger_categories =  @organization.stock_ledger_categories_by_payment_method(@ledger.payment_method)
+    @ledgers = @invoice.ledgers
+
+    if params[:is_new] == 'true'
+      render :partial => 'shared_payments/ledgers_and_new_on_table'
     else
-      render :nothing => true
+      render :partial => 'shared_payments/ledgers_and_edit_on_table'
     end
   end
 

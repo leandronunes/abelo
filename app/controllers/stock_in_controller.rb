@@ -57,7 +57,7 @@ class StockInController < ApplicationController
     @stocks = @invoice.stock_ins
     @stock = StockIn.new(:price => 0, :amount => 1)
     @ledgers = @invoice.ledgers
-    @ledger = Ledger.new(:date => Date.today)
+    @ledger = Ledger.new(:date => Date.today, :value => @invoice.balance)
     @ledger_categories =  @organization.stock_ledger_categories_by_payment_method(@ledger.payment_method)
   end
 

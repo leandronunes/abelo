@@ -26,12 +26,12 @@ class LedgerTest < Test::Unit::TestCase
   def test_money_payment_is_associated_to_a_ledger_category_with_money
     LedgerCategory.destroy_all
     category = create_ledger_category(:payment_methods => [Payment::MONEY])
-    l = create_ledger(:payment_method => Payment::MONEY, :category => category)
+    l = new_ledger(:payment_method => Payment::MONEY, :category => category)
     l.valid?
     assert !l.errors.invalid?(:payment_method)
 
     category = create_ledger_category(:payment_methods => [Payment::CHECK], :name => 'Another')
-    l = create_ledger(:payment_method => Payment::MONEY, :category => category)
+    l = new_ledger(:payment_method => Payment::MONEY, :category => category)
     l.valid?
     assert l.errors.invalid?(:payment_method)
   end
@@ -39,12 +39,12 @@ class LedgerTest < Test::Unit::TestCase
   def test_check_payment_is_associated_to_a_ledger_category_with_check
     LedgerCategory.destroy_all
     category = create_ledger_category(:payment_methods => [Payment::CHECK])
-    l = create_ledger(:payment_method => Payment::CHECK, :category => category)
+    l = new_ledger(:payment_method => Payment::CHECK, :category => category)
     l.valid?
     assert !l.errors.invalid?(:payment_method)
 
     category = create_ledger_category(:payment_methods => [Payment::MONEY], :name => 'Another')
-    l = create_ledger(:payment_method => Payment::CHECK, :category => category)
+    l = new_ledger(:payment_method => Payment::CHECK, :category => category)
     l.valid?
     assert l.errors.invalid?(:payment_method)
   end
@@ -53,12 +53,12 @@ class LedgerTest < Test::Unit::TestCase
   def test_credit_card_payment_is_associated_to_a_ledger_category_with_credit_card
     LedgerCategory.destroy_all
     category = create_ledger_category(:payment_methods => [Payment::CREDIT_CARD])
-    l = create_ledger(:payment_method => Payment::CREDIT_CARD, :category => category)
+    l = new_ledger(:payment_method => Payment::CREDIT_CARD, :category => category)
     l.valid?
     assert !l.errors.invalid?(:payment_method)
 
     category = create_ledger_category(:payment_methods => [Payment::CHECK], :name => 'Another')
-    l = create_ledger(:payment_method => Payment::CREDIT_CARD, :category => category)
+    l = new_ledger(:payment_method => Payment::CREDIT_CARD, :category => category)
     l.valid?
     assert l.errors.invalid?(:payment_method)
   end
@@ -67,17 +67,15 @@ class LedgerTest < Test::Unit::TestCase
   def test_debit_card_money_payment_is_associated_to_a_ledger_category_with_debit_card
     LedgerCategory.destroy_all
     category = create_ledger_category(:payment_methods => [Payment::DEBIT_CARD])
-    l = create_ledger(:payment_method => Payment::DEBIT_CARD, :category => category)
+    l = new_ledger(:payment_method => Payment::DEBIT_CARD, :category => category)
     l.valid?
     assert !l.errors.invalid?(:payment_method)
 
     category = create_ledger_category(:payment_methods => [Payment::CHECK], :name => 'Another')
-    l = create_ledger(:payment_method => Payment::DEBIT_CARD, :category => category)
+    l = new_ledger(:payment_method => Payment::DEBIT_CARD, :category => category)
     l.valid?
     assert l.errors.invalid?(:payment_method)
   end
-
-
 
   def test_validates_presence_of_bank_account
     l = Ledger.new

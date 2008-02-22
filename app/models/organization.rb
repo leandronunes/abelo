@@ -49,6 +49,7 @@ class Organization < ActiveRecord::Base
   
   has_many :departments
   has_many :products
+  has_many :ledgers
   has_many :sales
   has_many :mass_mails
   has_many :documents
@@ -168,11 +169,12 @@ class Organization < ActiveRecord::Base
     @homepage ||= Article.find_by_path(self.identifier)
   end
 
+# FIXME Remove this
   # Returns all ledgers of organization. If 'id' is passed return 
   # the ledger with parameter id equal 'id'
-  def ledgers(id = nil)
-    Ledger.find((id.nil? ? :all : id), :conditions => {:bank_account_id => self.bank_accounts.to_a})
-  end
+#  def ledgers(id = nil)
+#    Ledger.find((id.nil? ? :all : id), :conditions => {:bank_account_id => self.bank_accounts.to_a})
+#  end
 
   def top_level_product_categories
     ProductCategory.top_level_for(self)
@@ -262,19 +264,20 @@ class Organization < ActiveRecord::Base
     all_ledgers.sort{|x,y| x.date <=> y.date}
   end
 
-  def sum_foreseen_value_by_date(bank_account, date = Date.today)
-    ledgers = self.ledgers_by_bank_account(bank_account).select{|l| l.date.month == date.month}
-    value = 0
-    ledgers.collect{|l| value = value + l.foreseen_value }
-    value
-  end
-
-  def sum_effective_value_by_date(bank_account, date = Date.today)
-    ledgers = self.ledgers_by_bank_account(bank_account).select{|l| !l.pending? and l.date.month == date.month}
-    value = 0
-    ledgers.collect{|l| value = value + l.foreseen_value }
-    value
-  end
+# #FIXME uncomment this methods when we used it
+#  def sum_foreseen_value_by_date(bank_account, date = Date.today)
+#    ledgers = self.ledgers_by_bank_account(bank_account).select{|l| l.date.month == date.month}
+#    value = 0
+#    ledgers.collect{|l| value = value + l.foreseen_value }
+#    value
+#  end
+#
+#  def sum_effective_value_by_date(bank_account, date = Date.today)
+#    ledgers = self.ledgers_by_bank_account(bank_account).select{|l| !l.pending? and l.date.month == date.month}
+#    value = 0
+#    ledgers.collect{|l| value = value + l.foreseen_value }
+#    value
+#  end
   #####################################
   # Documents Methods Related
   #####################################
@@ -311,6 +314,7 @@ class Organization < ActiveRecord::Base
   # ordened by type and name.
   # Income ledger categories appear first ordened by name and
   # Expense ledger categories appear after ordened by name too.
+  # FIXME upgrade this function
   def ledger_categories_by_payment_method(payment_method = 'money')
     category = LedgerCategory.find(:all, :conditions => { :organization_id => self}, :order => 'type_of, name ASC' )
     category.select{|c| c.payment_methods.include?(payment_method) and !c.is_sale? and !c.is_stock?} 

@@ -30,6 +30,11 @@ class CreditCardTest < Test::Unit::TestCase
     assert_equal CreditCardDisplay, m.display_class
   end
 
+  def test_is_balance?
+    a = CreditCard.new
+    assert !a.is_balance?
+  end
+
   def test_is_check?
     m = CreditCard.new
     assert !m.is_check?

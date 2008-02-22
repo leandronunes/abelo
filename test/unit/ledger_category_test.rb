@@ -11,14 +11,6 @@ class LedgerCategoryTest < Test::Unit::TestCase
     @bank_account = create_bank_account(:owner => @organization)
   end
 
-  def create_money(params = {})
-    m = Ledger.new({:date => Date.today, :value => 10, :category => @ledger_category, 
-        :bank_account => @bank_account, :operational => false, :owner => @organization, 
-        :payment_method => Payment::MONEY}.merge(params))
-    m.save
-    m
-  end
-
   def test_setup
     assert @organization.valid?
     assert @ledger_category.valid?

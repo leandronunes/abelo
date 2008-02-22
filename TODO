@@ -1,7 +1,4 @@
 - In the action list of products controller the buttons across the element list
-- The autocomplete field it's not in the same standard of the layout
-- Test the layout on IE
-- The point of sale function didn't works. Fix the css it a mass
-- When we login in the system the message looks stranger
-- See a way were when can define how many objects, are going to stay in the same line
 - Define the default image when no image exist in a product
+- Create an script to update all customers ledgers his organization
+_ When removes a ledger object whe have to refresh the balance model

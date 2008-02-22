@@ -9,6 +9,7 @@ module PaymentStrategy
     require 'payment_strategy/credit_card'
     require 'payment_strategy/debit_card'
     require 'payment_strategy/change'
+    require 'payment_strategy/balance'
     def self.new(method)
       (Payment::PAYMENT_TYPES[method] || Money).new
     end

@@ -28,6 +28,10 @@ class PaymentBase
     false
   end
 
+  def is_balance?
+    false
+  end
+
   def require_category?
     true
   end

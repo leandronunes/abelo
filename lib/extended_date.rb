@@ -23,10 +23,21 @@ class Date
 
   end
 
-  def self.civil_by_string(string)
-    d = string.split('-')
-    return '' if d.length != 3
-    Date.civil(d[0].to_i, d[1].to_i, d[2].to_i)
+  def to_datetime
+    DateTime.new(self.year, self.month,self.day)
   end
+
+  # Returns the date of the first day of the month 
+  # of a given date pass as parameter
+  def self.beginning_of_month(date)
+    Date.new(date.year, date.month, 1)
+  end
+
+# FIXME uncomment and make the test when we use it
+#  def self.civil_by_string(string)
+#    d = string.split('-')
+#    return '' if d.length != 3
+#    Date.civil(d[0].to_i, d[1].to_i, d[2].to_i)
+#  end
 
 end

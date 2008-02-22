@@ -14,18 +14,6 @@ class ScheduleLedgerTest < Test::Unit::TestCase
     ScheduleLedger.create!(:periodicity => @periodicity, :start_date => DateTime.now, :interval => 3)
   end
 
-  def create_ledger()
-    ledger = Ledger.new
-    ledger.payment_method = Payment::MONEY
-    ledger.value = 367
-    ledger.date = Date.today
-    ledger.owner = @organization
-    ledger.bank_account = @organization.default_bank_account
-    ledger.category = @ledger_category
-    ledger.save!
-    ledger
-  end
-
   def test_presence_of_periodicity_id
     sl = ScheduleLedger.new
     sl.valid?

@@ -208,6 +208,12 @@ class OrganizationTest < Test::Unit::TestCase
     assert_equal n, @organization.ledgers.length
   end
 
+  def test_get_specific_ledger
+    Ledger.destroy_all
+    l = create_ledger
+    assert_equal l, @organization.ledgers.find(l.id)
+  end
+
   def test_presence_of_address
     Organization.destroy_all
     o = new_organization(:country => nil)

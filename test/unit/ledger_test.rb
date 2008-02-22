@@ -86,6 +86,15 @@ class LedgerTest < Test::Unit::TestCase
     assert !l.errors.invalid?(:bank_account_id)
   end
 
+  def test_validates_presence_of_organization
+    l = Ledger.new
+    l.valid?
+    assert l.errors.invalid?(:organization_id)
+    l.organization = @organization
+    l.valid?
+    assert !l.errors.invalid?(:organization_id)
+  end
+
   def test_validates_presence_of_owner
     l = Ledger.new
     l.valid?
@@ -103,6 +112,7 @@ class LedgerTest < Test::Unit::TestCase
 
     l = Ledger.new
     l.owner = @organization
+    l.organization = @organization
     l.category = @ledger_category
     l.value = 300
     l.description = 'some description'
@@ -137,10 +147,11 @@ class LedgerTest < Test::Unit::TestCase
   end
 
   def test_date_creation_of_ledgers_when_ledger_is_schedule
-    Ledger.delete_all
+    Ledger.destroy_all
 
     l = Ledger.new
     l.owner = @organization
+    l.organization = @organization
     l.category = @ledger_category
     l.value = 300
     l.description = 'some description'
@@ -435,5 +446,92 @@ class LedgerTest < Test::Unit::TestCase
     assert_not_nil ledger.effective_value
   end
 
+  def test_find_balance_of_month_with_existing_balance
+    Ledger.destroy_all
+    l = create_ledger(:organization => @organization, :date => Date.today)
+    assert_not_nil l.find_balance_of_month
+    assert_equal 1, Ledger.find(:all, :conditions => {:payment_method => Payment::BALANCE}).length
+  end
+
+  def test_find_balance_of_month_whitout_an_existing_balance
+    Ledger.destroy_all
+    l = create_ledger(:organization => @organization, :date => Date.today)
+    Ledger.find(:all, :conditions => {:payment_method => Payment::BALANCE}).map{|l|l.destroy}
+    assert_nil l.find_balance_of_month
+  end
+
+  def test_create_balance_of_month
+    Ledger.destroy_all
+    l = create_ledger(:organization => @organization, :date => Date.today)
+    assert_not_nil l.find_balance_of_month
+    assert_equal 1, Ledger.find(:all, :conditions => {:payment_method => Payment::BALANCE}).length
+  end
+
+  def test_create_balance_when_save_the_first_ledger_of_month
+    Ledger.destroy_all
+    l = create_ledger(:organization => @organization, :date => Date.today)
+    assert_not_nil l.find_balance_of_month
+    assert_equal 1, Ledger.find(:all, :conditions => {:payment_method => Payment::BALANCE}).length
+
+    l = create_ledger(:organization => @organization, :date => (Date.today - 40))
+    assert_not_nil l.find_balance_of_month
+    assert_equal 2, Ledger.find(:all, :conditions => {:payment_method => Payment::BALANCE}).length
+  end
+
+  def test_dont_create_balance_when_save_the_ledgers_of_a_month
+    Ledger.destroy_all
+    l = create_ledger(:organization => @organization, :date => Date.today)
+    assert_not_nil l.find_balance_of_month
+    assert_equal 1, Ledger.find(:all, :conditions => {:payment_method => Payment::BALANCE}).length
+
+    l = create_ledger(:organization => @organization, :date => Date.today)
+    assert_not_nil l.find_balance_of_month
+    assert_equal 1, Ledger.find(:all, :conditions => {:payment_method => Payment::BALANCE}).length
+  end
+
+  def test_sum_balance_value_after_ledger_creation
+    Ledger.destroy_all
+    l = create_ledger(:organization => @organization, :date => Date.today)
+    b = l.find_balance_of_month
+    assert_not_nil b
+    value = b.value
+
+    l = create_ledger(:organization => @organization, :date => Date.today, :value => 23)
+    b = l.find_balance_of_month
+    assert_equal value + 23, b.value
+
+    value = b.value
+    l = create_remove_cash(:organization => @organization, :date => Date.today, :value => 54)
+    assert_equal value - 54, l.find_balance_of_month.value
+  end
+
+  def test_update_balance_value_after_ledgers_destruction
+    Ledger.destroy_all
+    l = create_ledger(:organization => @organization, :date => Date.today)
+    b = l.find_balance_of_month
+    assert_not_nil b
+    value = b.value
+
+    l = create_ledger(:organization => @organization, :date => Date.today, :value => 23)
+    b = l.find_balance_of_month
+    assert_equal value + 23, b.value
+
+    l.destroy
+    assert_equal value, l.find_balance_of_month.value
+  end
+
+  def test_ledger_cannot_be_effective_on_date_after_the_current_date
+    l = create_ledger(:date => Date.today + 2)
+    assert l.pending?
+    assert Date.today < l.date
+    l.done!
+    assert l.errors.invalid?(:status)
+    l = Ledger.find(l.id)
+    assert l.pending?
+    l.date = Date.today
+    l.done!
+    l = Ledger.find(l.id)
+    assert !l.pending?
+  end
 
 end

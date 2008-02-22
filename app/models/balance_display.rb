@@ -1,0 +1,3 @@
+class BalanceDisplay < LedgerDisplay
+
+end

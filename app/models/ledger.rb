@@ -18,6 +18,7 @@ class Ledger < ActiveRecord::Base
   belongs_to :category, :class_name => 'LedgerCategory',  :foreign_key => 'category_id'
   belongs_to :schedule_ledger
   belongs_to :bank_account
+  belongs_to :organization
   belongs_to :owner, :polymorphic => true
   has_one :printer_command, :as => :owner, :dependent => :destroy
   validates_presence_of :foreseen_value
@@ -34,6 +35,7 @@ class Ledger < ActiveRecord::Base
   validates_inclusion_of :type_of, :in => Payment::TYPE_OF
   validates_presence_of :owner_id
   validates_presence_of :owner_type
+  validates_presence_of :organization_id
   validates_presence_of :category_id, :if => :require_category?
 
   ############################################
@@ -54,6 +56,7 @@ class Ledger < ActiveRecord::Base
   # Debit Card Specific Relationships and Methods
   ################################################
   belongs_to :bank, :foreign_key => :automatic_debit_bank_id
+#FIXME check the presence of category id for debit, credit, money and check payment types
   validates_presence_of :category_id, :if => :is_debit_card?
   validates_presence_of :automatic_debit_owner_name, :if => :is_debit_card?
   validates_presence_of :automatic_debit_bank_id, :if => :is_debit_card?
@@ -75,12 +78,8 @@ class Ledger < ActiveRecord::Base
 
   # Methods that are defined on payment strategy 
   # Part of the strategy pattern
-  delegate :require_category?, :is_check?, :is_money?, :is_credit_card?, :is_debit_card?, :is_add_cash?, :is_remove_cash?, :is_change?, :to => :payment_strategy
-  delegate :set_as_done_on_save?, :payment_initialize, :display_class, :create_printer_cmd!, :to => :payment_strategy
-
-  def payment_strategy
-    PaymentStrategy::Factory.new(self.payment_method)
-  end
+  delegate :is_check?, :is_money?, :is_credit_card?, :is_debit_card?, :is_add_cash?, :is_remove_cash?, :is_change?, :is_balance?, :to => :payment_strategy
+  delegate :require_category?, :set_as_done_on_save?, :payment_initialize, :display_class, :create_printer_cmd!, :to => :payment_strategy
 
   def validate
     if (self.date != Date.today) and (self.is_add_cash? or self.is_remove_cash?)
@@ -110,7 +109,11 @@ class Ledger < ActiveRecord::Base
     self.errors.add(:date, _("Date cannot be set" )) unless self[:date].nil?
 
     if !self.category.nil? and !self.category.payment_methods.include?(self.payment_method)
-      self.errors.add(:payment_method, _("You canno't have a payment method not include in payment category list.")) 
+      self.errors.add(:payment_method, _("You can't have a payment method not include in payment category list.")) 
+    end
+
+    if((self.date.to_datetime > DateTime.now) and self.done? )
+      self.errors.add(:status, _("You can't set this ledger as a effective ledger because the date of the ledger is in the future.")) 
     end
   end
 
@@ -121,8 +124,15 @@ class Ledger < ActiveRecord::Base
     l.create_printer_cmd!(l) if l.has_fiscal_printer?
   end
 
+  before_destroy do |ledger|
+    ledger.subtract_balance
+#FIXME see a way to stop this
+#    raise _('You cannot destroy sale ledgers') if ledger.owner.kind_of? Sale
+  end
+
   before_save do |ledger|
-    ledger.done! if ledger.set_as_done_on_save? and not ledger.has_fiscal_printer?
+    ledger.done! if ledger.set_as_done_on_save? and not ledger.has_fiscal_printer? and !ledger.done?
+    ledger.sum_balance
   end
 
   after_create do |l|
@@ -157,10 +167,6 @@ class Ledger < ActiveRecord::Base
     end
   end
 
-  before_destroy do |ledger|
-#    raise _('You cannot destroy sale ledgers') if ledger.owner.kind_of? Sale
-  end
-
   after_destroy do |ledger|
     unless ledger.schedule_ledger.nil?
       all_pending = ledger.schedule_ledger.pending_ledgers
@@ -172,6 +178,39 @@ class Ledger < ActiveRecord::Base
   def initialize(*args)
     super(*args)
     self.payment_initialize(self)
+  end
+
+  def payment_strategy
+    PaymentStrategy::Factory.new(self.payment_method)
+  end
+
+  # Upgrade the value attribute of the balance object adding
+  # the value of the current ledger
+  # OBS: This method create the a balance instance if it doesn't exist
+  def sum_balance
+    update_balance('+')
+  end
+
+  # Upgrade the value attribute of the balance object subtracting
+  # the value of the current ledger
+  # OBS: This method create the a balance instance if it doesn't exist
+  def subtract_balance
+    update_balance('-')
+  end
+
+  def create_balance_of_month
+    l = Ledger.new(:payment_method => Payment::BALANCE, :date => self.date,
+              :organization => self.organization, :bank_account => self.bank_account,
+              :value => self.value, :owner => self.organization)
+    l.save!
+    l
+  end
+
+  # Return the balance object of the current month
+  def find_balance_of_month
+    start_date = Date.beginning_of_month(self.date)
+    end_date = Date.end_of_month(self.date)
+    self.bank_account.ledgers.find(:first, :conditions => ['(effective_date IS ? AND foreseen_date BETWEEN ? AND ? AND payment_method = ?) OR (effective_date  BETWEEN ? AND ? AND payment_method = ?)', nil, start_date, end_date, Payment::BALANCE, start_date, end_date, Payment::BALANCE])
   end
 
   # Set the status of this ledger for OPEN. It means that the
@@ -357,15 +396,16 @@ class Ledger < ActiveRecord::Base
   end
 
   #FIXME see if it's usefull
-  def confirm_done!
-    self.done!
-    self.save
-  end
+#  def confirm_done!
+#    self.done!
+#    self.save
+#  end
 
   def done!
     self[:effective_date] ||= self.foreseen_date
     self[:effective_value] ||= self.foreseen_value
     self.status = STATUS_DONE
+    self.save
   end
 
   def done?
@@ -408,6 +448,17 @@ class Ledger < ActiveRecord::Base
     raise _('This function cannot be accessed directly')
   end
 
+  private
 
+  def update_balance(op)
+    return if self.is_balance?
+    balance = self.find_balance_of_month
+    if balance.nil? 
+      balance = self.create_balance_of_month if op != '-'
+    else
+      balance.value = balance.value.send(op, self.value)
+      balance.save
+    end
+  end
 
 end

@@ -16,7 +16,7 @@ class StockInTest < Test::Unit::TestCase
     @ledger_category.type_of = 'I'
     @ledger_category.is_stock = true
     @ledger_category.save!
-    @ledger = Ledger.create!(:category => @ledger_category, :value => 1.00, :date => DateTime.now, :bank_account => @bank_account, :owner => @organization, :payment_method => Payment::MONEY)
+    @ledger = create_ledger
   end
 
   def test_setup

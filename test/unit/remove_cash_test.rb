@@ -23,6 +23,11 @@ class RemoveCashTest < Test::Unit::TestCase
     till
   end
 
+  def test_is_balance?
+    a = RemoveCash.new
+    assert !a.is_balance?
+  end
+
   def test_is_money?
     m = RemoveCash.new
     assert !m.is_money?

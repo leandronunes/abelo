@@ -37,6 +37,11 @@ class MoneyTest < Test::Unit::TestCase
     assert !m.is_check?
   end
 
+  def test_is_balance?
+    a = Money.new
+    assert !a.is_balance?
+  end
+
   def test_is_debit_card?
     m = Money.new
     assert !m.is_debit_card?

@@ -24,6 +24,11 @@ class CheckTest < Test::Unit::TestCase
     assert !m.is_money?
   end
 
+  def test_is_balance?
+    c = Check.new
+    assert !c.is_balance?
+  end
+
   def test_display_class
     m = Check.new
     assert_equal CheckDisplay, m.display_class

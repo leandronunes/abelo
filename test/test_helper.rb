@@ -89,9 +89,6 @@ class Test::Unit::TestCase
   end
 
   def create_ledger(params = {})
-# FIXME remove comments
-#    ledger_category = params[:category] || @ledger_category || create_ledger_category
-#    bank_account = params[:bank_account] || @bank_account || create_bank_account
     l = new_ledger(params)
     l.save!
     l
@@ -101,10 +98,25 @@ class Test::Unit::TestCase
     ledger_category = params[:category] || @ledger_category || create_ledger_category
     bank_account = params[:bank_account] || @bank_account || create_bank_account
     owner = params[:owner] || @organization
+    organization = params[:organization] || @organization
     Ledger.new({:payment_method => Payment::MONEY, :value => 367,
                   :date => Date.today, :owner => owner,
                   :bank_account => bank_account,
-                  :category => ledger_category}.merge(params))
+                  :category => ledger_category, :organization => organization}.merge(params))
+  end
+
+  def create_balance(params = {})
+    l = new_ledger(params.merge(:payment_method => Payment::BALANCE))
+    l.category = nil
+    l.save!
+    l
+  end
+
+  def create_remove_cash(params = {})
+    l = new_ledger(params.merge(:payment_method => Payment::REMOVE_CASH))
+    l.category = nil
+    l.save!
+    l
   end
 
   def create_money(params = {})

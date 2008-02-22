@@ -20,6 +20,11 @@ class DebitCardTest < Test::Unit::TestCase
     assert @user.valid?
   end   
 
+  def test_is_balance?
+    a = DebitCard.new
+    assert !a.is_balance?
+  end
+
   def test_is_money?
     m = DebitCard.new
     assert !m.is_money?

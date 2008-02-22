@@ -26,6 +26,11 @@ class AddCashTest < Test::Unit::TestCase
     assert !m.is_money?
   end
 
+  def test_is_balance?
+    a = AddCash.new
+    assert !a.is_balance?
+  end
+
   def test_display_class
     m = AddCash.new
     assert_equal MoneyDisplay, m.display_class

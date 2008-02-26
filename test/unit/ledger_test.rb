@@ -77,6 +77,44 @@ class LedgerTest < Test::Unit::TestCase
     assert l.errors.invalid?(:payment_method)
   end
 
+  def test_validates_presence_of_payment_method
+    l = Ledger.new
+    l.valid?
+    assert l.errors.invalid?(:payment_method)
+    l.payment_method =  Payment::MONEY
+    l.valid?
+    assert !l.errors.invalid?(:payment_method)
+  end
+
+  def test_validates_inclusion_of_payment_method_in_list
+    l = Ledger.new
+    l.payment_method =  'some'
+    l.valid?
+    assert l.errors.invalid?(:payment_method)
+    l.payment_method =  Payment::MONEY
+    l.valid?
+    assert !l.errors.invalid?(:payment_method)
+  end
+
+  def test_validates_presence_of_type_of
+    l = Ledger.new
+    l.valid?
+    assert l.errors.invalid?(:type_of)
+    l.type_of =  Payment::TYPE_OF_INCOME
+    l.valid?
+    assert !l.errors.invalid?(:type_of)
+  end
+
+  def test_validates_inclusion_of_type_of_in_list
+    l = Ledger.new
+    l.type_of =  'some'
+    l.valid?
+    assert l.errors.invalid?(:type_of)
+    l.type_of =  Payment::TYPE_OF_INCOME
+    l.valid?
+    assert !l.errors.invalid?(:type_of)
+  end
+
   def test_validates_presence_of_bank_account
     l = Ledger.new
     l.valid?
@@ -448,71 +486,75 @@ class LedgerTest < Test::Unit::TestCase
 
   def test_find_balance_of_month_with_existing_balance
     Ledger.destroy_all
-    l = create_ledger(:organization => @organization, :date => Date.today)
+    Balance.destroy_all
+    l = create_ledger(:organization => @organization, :date => Date.today, :status => STATUS_DONE)
     assert_not_nil l.find_balance_of_month
-    assert_equal 1, Ledger.find(:all, :conditions => {:payment_method => Payment::BALANCE}).length
+    assert_equal 1, Ledger.count
+    assert_equal 1, Balance.count
+    assert_equal Balance.find(:first), l.find_balance_of_month
   end
 
   def test_find_balance_of_month_whitout_an_existing_balance
     Ledger.destroy_all
     l = create_ledger(:organization => @organization, :date => Date.today)
-    Ledger.find(:all, :conditions => {:payment_method => Payment::BALANCE}).map{|l|l.destroy}
+    Balance.destroy_all
     assert_nil l.find_balance_of_month
   end
 
   def test_create_balance_of_month
     Ledger.destroy_all
-    l = create_ledger(:organization => @organization, :date => Date.today)
+    Balance.destroy_all
+    l = create_ledger(:organization => @organization, :date => Date.today, :status => STATUS_DONE)
     assert_not_nil l.find_balance_of_month
-    assert_equal 1, Ledger.find(:all, :conditions => {:payment_method => Payment::BALANCE}).length
+    assert_equal 1, Balance.count
   end
 
   def test_create_balance_when_save_the_first_ledger_of_month
     Ledger.destroy_all
-    l = create_ledger(:organization => @organization, :date => Date.today)
+    l = create_ledger(:organization => @organization, :date => Date.today, :status => STATUS_DONE)
     assert_not_nil l.find_balance_of_month
-    assert_equal 1, Ledger.find(:all, :conditions => {:payment_method => Payment::BALANCE}).length
+    assert_equal 1, Balance.find(:all).length
 
-    l = create_ledger(:organization => @organization, :date => (Date.today - 40))
+    l = create_ledger(:organization => @organization, :date => (Date.today - 40), :status => STATUS_DONE)
     assert_not_nil l.find_balance_of_month
-    assert_equal 2, Ledger.find(:all, :conditions => {:payment_method => Payment::BALANCE}).length
+    assert_equal 2, Balance.find(:all).length
   end
 
   def test_dont_create_balance_when_save_the_ledgers_of_a_month
     Ledger.destroy_all
-    l = create_ledger(:organization => @organization, :date => Date.today)
+    l = create_ledger(:organization => @organization, :date => Date.today, :status => STATUS_DONE)
     assert_not_nil l.find_balance_of_month
-    assert_equal 1, Ledger.find(:all, :conditions => {:payment_method => Payment::BALANCE}).length
+    assert_equal 1, Balance.find(:all).length
 
-    l = create_ledger(:organization => @organization, :date => Date.today)
+    l = create_ledger(:organization => @organization, :date => Date.today, :status => STATUS_DONE)
     assert_not_nil l.find_balance_of_month
-    assert_equal 1, Ledger.find(:all, :conditions => {:payment_method => Payment::BALANCE}).length
+    assert_equal 1, Balance.find(:all).length
   end
 
   def test_sum_balance_value_after_ledger_creation
     Ledger.destroy_all
-    l = create_ledger(:organization => @organization, :date => Date.today)
+    l = create_ledger(:organization => @organization, :date => Date.today, :status => STATUS_DONE)
     b = l.find_balance_of_month
     assert_not_nil b
     value = b.value
-
-    l = create_ledger(:organization => @organization, :date => Date.today, :value => 23)
+    l = create_ledger(:organization => @organization, :date => Date.today, :value => 23, :status => STATUS_DONE)
     b = l.find_balance_of_month
     assert_equal value + 23, b.value
 
     value = b.value
-    l = create_remove_cash(:organization => @organization, :date => Date.today, :value => 54)
+    l = create_remove_cash(:organization => @organization, :date => Date.today, :value => 54, :status => STATUS_DONE)
+    assert_equal 3, Ledger.count
     assert_equal value - 54, l.find_balance_of_month.value
   end
 
   def test_update_balance_value_after_ledgers_destruction
     Ledger.destroy_all
-    l = create_ledger(:organization => @organization, :date => Date.today)
+    l = create_ledger(:organization => @organization, :date => Date.today, :status => STATUS_DONE)
     b = l.find_balance_of_month
     assert_not_nil b
     value = b.value
 
-    l = create_ledger(:organization => @organization, :date => Date.today, :value => 23)
+    l = create_ledger(:organization => @organization, :date => Date.today, :value => 23, :status => STATUS_DONE)
     b = l.find_balance_of_month
     assert_equal value + 23, b.value
 
@@ -532,6 +574,42 @@ class LedgerTest < Test::Unit::TestCase
     l.done!
     l = Ledger.find(l.id)
     assert !l.pending?
+  end
+
+  def test_initialize_organization
+    l = Ledger.new()
+    assert_nil l.organization
+    
+    l = Ledger.new(:owner => @organization)
+    assert_equal @organization, l.organization
+
+    l = Ledger.new(:owner => @sale)
+    assert_not_equal @sale, l.organization, "Only organization owner can be the organization of a ledger"
+    assert_nil l.organization, "Only organization owner can be the organization of a ledger"
+
+    o = create_organization(:identifier => 'another_some', :name => 'another name')
+    l = Ledger.new(:organization => o)
+    assert_equal o, l.organization
+  end
+
+  def test_initialize_owner
+    l = Ledger.new()
+    assert_nil l.owner
+    
+    l = Ledger.new(:organization => @organization)
+    assert_equal @organization, l.owner
+
+    o = create_organization(:identifier => 'another_some', :name => 'another name')
+    l = Ledger.new(:owner => o)
+    assert_equal o, l.owner
+  end
+
+  def test_initialize_bank_account
+    l = Ledger.new()
+    assert_nil l.bank_account
+    
+    l = Ledger.new(:organization => @organization)
+    assert_equal @organization.default_bank_account, l.bank_account
   end
 
 end

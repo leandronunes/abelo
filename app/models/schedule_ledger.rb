@@ -17,7 +17,7 @@ class ScheduleLedger < ActiveRecord::Base
   end
 
   def validate
-    if !self.start_date.nil? and (self.start_date.kind_of?(Time) ? self.start_date.to_datetime : self.start_date) < (DateTime.now-1)
+    if !self.start_date.nil? and (self.start_date.kind_of?(Time) ? self.start_date.to_datetime : self.start_date) <= (DateTime.now-1)
       errors.add('start_date', _('You cannot schedule a ledger starting in a time on the past')) 
     end
   end

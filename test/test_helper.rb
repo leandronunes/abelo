@@ -82,8 +82,9 @@ class Test::Unit::TestCase
   end
 
   def create_bank_account(params = {})
-    bank = @bank || params[:bank] || create_bank
-    @bank_account = BankAccount.create!({:bank => bank, :owner => @organization, 
+    bank = params[:bank] || @bank || create_bank
+    owner = params[:owner] || @organization || create_organization
+    @bank_account = BankAccount.create!({:bank => bank, :owner => owner, 
                   :agency => 23434, :account => 33434, :is_default => true}.merge(params))
     @bank_account
   end
@@ -106,10 +107,8 @@ class Test::Unit::TestCase
   end
 
   def create_balance(params = {})
-    l = new_ledger(params.merge(:payment_method => Payment::BALANCE))
-    l.category = nil
-    l.save!
-    l
+    bank_account = params[:bank_account] || @bank_account || create_bank_account
+    Balance.create!({:value => 45, :date => Date.today,  :bank_account => bank_account}.merge(params))
   end
 
   def create_remove_cash(params = {})

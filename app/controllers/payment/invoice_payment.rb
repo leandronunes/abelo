@@ -18,9 +18,7 @@ module InvoicePayment
 
   def add_payment
     @invoice = @organization.invoices.find(params[:id])
-    @ledger = Ledger.new(params[:ledger])
-    @ledger.owner = @invoice
-    @ledger.bank_account = @organization.default_bank_account
+    @ledger = Ledger.new(params[:ledger].merge(:owner => @invoice, :organization => @organization))
     @banks = Bank.find(:all)
     if @ledger.save
       @ledger = Ledger.new(:date => Date.today)
@@ -32,7 +30,7 @@ module InvoicePayment
 
   def edit_payment
     @invoice = @organization.invoices.find(params[:id])
-    @ledger = @organization.ledgers(params[:ledger_id])
+    @ledger = @organization.ledgers.find(params[:ledger_id])
     @banks = Bank.find(:all)
     @ledgers = @invoice.ledgers.reject{|l| l == @ledger}
     @ledger_categories =  @organization.stock_ledger_categories_by_payment_method(@ledger.payment_method)
@@ -41,7 +39,7 @@ module InvoicePayment
 
   def update_payment
     @invoice = @organization.invoices.find(params[:id])
-    @ledger = @organization.ledgers(params[:ledger_id])
+    @ledger = @organization.ledgers.find(params[:ledger_id])
     @ledgers = @invoice.ledgers
     @banks = Bank.find(:all)
     if @ledger.update_attributes(params[:ledger])

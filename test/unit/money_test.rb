@@ -37,11 +37,6 @@ class MoneyTest < Test::Unit::TestCase
     assert !m.is_check?
   end
 
-  def test_is_balance?
-    a = Money.new
-    assert !a.is_balance?
-  end
-
   def test_is_debit_card?
     m = Money.new
     assert !m.is_debit_card?
@@ -73,18 +68,31 @@ class MoneyTest < Test::Unit::TestCase
   end
 
   def test_create_printer_cmd_whithout_fiscal_printer
-    l = Ledger.new(:payment_method => Payment::MONEY)
+    @organization.configuration.fiscal_printer= false
+    l = Ledger.new(:payment_method => Payment::MONEY, :organization => @organization)
     m  = Money.new
     m.create_printer_cmd!(l)
     assert_nil l.printer_command
   end
 
   def test_create_printer_cmd_whith_fiscal_printer
-    l = Ledger.new(:payment_method => Payment::MONEY, :owner => @till)
+    l = Ledger.new(:payment_method => Payment::MONEY, :owner => @till, :organization => @organization)
     m  = Money.new
     m.create_printer_cmd!(l)
     assert_not_nil l.printer_command
     assert_equal PrinterCommand::ADD_PAYMENT, l.printer_command.cmd
   end
+
+  def test_precense_of_category
+    c = LedgerCategory.new(:name => 'Some category', :organization_id => 1, :type_of => 'I', :payment_methods => ['money'])
+    c.save!
+    l = Ledger.new(:payment_method => Payment::CHECK)
+    l.valid?
+    assert l.errors.invalid?(:category_id)
+    l.category = c
+    l.valid?
+    assert !l.errors.invalid?(:category_id)
+  end
+
 
 end

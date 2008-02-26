@@ -24,11 +24,6 @@ class CheckTest < Test::Unit::TestCase
     assert !m.is_money?
   end
 
-  def test_is_balance?
-    c = Check.new
-    assert !c.is_balance?
-  end
-
   def test_display_class
     m = Check.new
     assert_equal CheckDisplay, m.display_class
@@ -70,7 +65,7 @@ class CheckTest < Test::Unit::TestCase
   end
 
   def test_create_printer_cmd_whithout_fiscal_printer
-    l = Ledger.new(:payment_method => Payment::CHECK)
+    l = Ledger.new(:payment_method => Payment::CHECK, :organization => @organization)
     m  = Check.new
     m.create_printer_cmd!(l)
     assert_nil l.printer_command
@@ -79,7 +74,7 @@ class CheckTest < Test::Unit::TestCase
   def test_create_printer_cmd_whith_fiscal_printer
     @organization.configuration.fiscal_printer= true
     assert @organization.has_fiscal_printer?
-    l = Ledger.new(:payment_method => Payment::CHECK, :owner => @till)
+    l = Ledger.new(:payment_method => Payment::CHECK, :owner => @till, :organization => @organization)
     m  = Check.new
     m.create_printer_cmd!(l)
     assert_not_nil l.printer_command

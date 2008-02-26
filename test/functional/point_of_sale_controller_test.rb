@@ -11,6 +11,8 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   under_organization :some
 
   def setup
+    Till.destroy_all
+    Sale.destroy_all
     @controller = PointOfSaleController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new

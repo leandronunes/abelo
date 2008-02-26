@@ -17,17 +17,6 @@ class RemoveCashTest < Test::Unit::TestCase
     assert @user.valid?
   end   
 
-  def create_till
-    till = Till.new(@organization, @user, nil)
-    till.save!
-    till
-  end
-
-  def test_is_balance?
-    a = RemoveCash.new
-    assert !a.is_balance?
-  end
-
   def test_is_money?
     m = RemoveCash.new
     assert !m.is_money?
@@ -74,6 +63,10 @@ class RemoveCashTest < Test::Unit::TestCase
   end
 
   def test_create_printer_cmd_whithout_fiscal_printer
+    @organization.configuration.fiscal_printer= false
+    @organization.configuration.save
+ 
+    assert !@organization.has_fiscal_printer?
     l = Ledger.new(:payment_method => Payment::REMOVE_CASH)
     m  = RemoveCash.new
     m.create_printer_cmd!(l)
@@ -82,8 +75,9 @@ class RemoveCashTest < Test::Unit::TestCase
 
   def test_create_printer_cmd_whith_fiscal_printer
     @organization.configuration.fiscal_printer= true
+    @organization.configuration.save
     assert @organization.has_fiscal_printer?
-    l = Ledger.new(:payment_method => Payment::REMOVE_CASH, :owner => @till)
+    l = Ledger.new(:payment_method => Payment::REMOVE_CASH, :owner => @till, :organization => @organization)
     m  = RemoveCash.new
     m.create_printer_cmd!(l)
     assert_not_nil l.printer_command

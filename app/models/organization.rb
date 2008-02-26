@@ -405,7 +405,7 @@ class Organization < ActiveRecord::Base
   ################################
 
   def has_fiscal_printer?
-    self.configuration.nil? ? nil : self.configuration.has_fiscal_printer?
+    self.configuration.nil? ? false : self.configuration.has_fiscal_printer?
   end
 
   Configuration::CONFIGURATION_NAMES.each do |item|

@@ -266,13 +266,13 @@ class LedgersControllerTest < Test::Unit::TestCase
   end
 
   def test_update_value
-    value = '10.2'
+    value = '10,2'
     l = create_ledger
     assert l.valid?
     assert_not_equal value, l.value
     post :update, :id => l.id, :ledger => {:value => value}
 
-    assert_equal value.to_s, assigns(:ledger).value.to_s
+    assert_equal '10.2', assigns(:ledger).value.to_s
   end
 
   def test_update_date
@@ -423,7 +423,7 @@ class LedgersControllerTest < Test::Unit::TestCase
 
   def test_action_list_with_ledger_without_category
     Ledger.delete_all
-    @ledger = Ledger.new( :payment_method => Payment::ADD_CASH, :owner =>  Till.new(@organization, @user, nil))
+    @ledger = Ledger.new( :organization => @organization, :payment_method => Payment::ADD_CASH, :owner =>  Till.new(@organization, @user, nil))
     @ledger.date = Date.today
     @ledger.bank_account = @organization.default_bank_account
     @ledger.type_of = Payment::TYPE_OF_INCOME

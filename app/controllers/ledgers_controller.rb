@@ -67,7 +67,7 @@ class LedgersController < ApplicationController
   end
 
   def show
-    @ledger = @organization.ledgers(params[:id])
+    @ledger = @organization.ledgers.find(params[:id])
     @bank_accounts = @organization.bank_accounts
     @ledger_categories =  @organization.ledger_categories_sorted_by_name
   end
@@ -92,8 +92,7 @@ class LedgersController < ApplicationController
   end
 
   def create
-    @ledger = Ledger.new(params[:ledger])    
-    @ledger.owner = @organization
+    @ledger = Ledger.new(params[:ledger].merge(:organization => @organization))
  
     if @ledger.save
       flash[:notice] = _('The ledger was successfully created')
@@ -108,14 +107,14 @@ class LedgersController < ApplicationController
   end
 
   def edit
-    @ledger = @organization.ledgers(params[:id])
+    @ledger = @organization.ledgers.find(params[:id])
     @bank_accounts = @organization.bank_accounts
     @periodicities = @organization.periodicities
     @ledger_categories =  @organization.ledger_categories_sorted_by_name
   end
 
   def update
-    @ledger = @organization.ledgers(params[:id])
+    @ledger = @organization.ledgers.find(params[:id])
 
     if @ledger.update_attributes(params[:ledger])
       flash[:notice] = _('The ledger was successfully updated')
@@ -136,20 +135,20 @@ class LedgersController < ApplicationController
   end
 
   def unschedule_ledger
-    ledger = @organization.ledgers(params[:ledger_id])    
+    ledger = @organization.ledgers.find(params[:ledger_id])    
     ledger.unschedule!
-    @ledger = @organization.ledgers(params[:id])
+    @ledger = @organization.ledgers.find(params[:id])
     render :partial => 'schedule_ledgers'
   end
 
   def unschedule_all_ledger
-    ledger = @organization.ledgers(params[:id])
+    ledger = @organization.ledgers.find(params[:id])
     ledger.unschedule_all!
     redirect_to :action => 'edit', :id => ledger
   end
 
   def destroy
-    ledger = @organization.ledgers(params[:id])
+    ledger = @organization.ledgers.find(params[:id])
     ledger.destroy
     get_financial_variables(@organization)
     @ledger_categories = @organization.common_ledger_categories

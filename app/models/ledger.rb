@@ -10,7 +10,6 @@ class Ledger < ActiveRecord::Base
   acts_as_ferret :remote => true 
   
   attr_accessor :repeat, :interval, :periodicity_id
-#, :payment_method_choosen
 
   ############################################
   # Common Relationships and Methods
@@ -21,6 +20,7 @@ class Ledger < ActiveRecord::Base
   belongs_to :organization
   belongs_to :owner, :polymorphic => true
   has_one :printer_command, :as => :owner, :dependent => :destroy
+
   validates_presence_of :foreseen_value
   validates_presence_of :effective_value, :if => lambda{ |ledger| not ledger.pending? }
   validates_presence_of :bank_account_id
@@ -48,9 +48,9 @@ class Ledger < ActiveRecord::Base
   validates_presence_of :check_account_number, :if => :is_check?
   validates_presence_of :check_number, :if => :is_check?
   validates_presence_of :check_cpf, :if => :is_check?
-# :if => lambda{|check| check.person_type != PersonType::JURISTIC } Fix it
+# :if => lambda{|check| check.person_type != PersonType::JURISTIC } FIXME
   validates_presence_of :check_cnpj, :if => :is_check?
-#, :if => lambda{|check| check.person_type == PersonType::JURISTIC } TODO fix it
+#, :if => lambda{|check| check.person_type == PersonType::JURISTIC } FIXME
 
   ################################################
   # Debit Card Specific Relationships and Methods
@@ -75,7 +75,6 @@ class Ledger < ActiveRecord::Base
   validates_presence_of :credit_card_cpf, :if => :is_credit_card?
 #:if => lambda{|check| check.person_type != PersonType::JURISTIC } #TODO see a wasy to do that
 
-
   # Methods that are defined on payment strategy 
   # Part of the strategy pattern
   delegate :is_check?, :is_money?, :is_credit_card?, :is_debit_card?, :is_add_cash?, :is_remove_cash?, :is_change?, :is_balance?, :to => :payment_strategy
@@ -86,12 +85,12 @@ class Ledger < ActiveRecord::Base
       self.errors.add(:date, _('You cannot schedule an add cash'))
     end
 
-    if (self.value >= 0) and self.is_remove_cash?
+    if (self.value >= 0) and (self.is_remove_cash? or self.is_change?)
       self.errors.add(:value, _('The value must be minor or equal to 0'))                                
     end
 
-    if self.is_remove_cash?  and (self.type_of != Payment::TYPE_OF_EXPENSE)
-      self.errors.add(:type_of, _('You cannot have an add cash with type different of %s') % Payment::TYPE_OF_EXPENSE)
+    if (self.is_remove_cash? or self.is_change?) and (self.type_of != Payment::TYPE_OF_EXPENSE)
+      self.errors.add(:type_of, _('You cannot have an remove cash with type different of %s') % Payment::TYPE_OF_EXPENSE)
     end
 
     if self.is_add_cash? and ( self.type_of != Payment::TYPE_OF_INCOME)
@@ -112,12 +111,13 @@ class Ledger < ActiveRecord::Base
       self.errors.add(:payment_method, _("You can't have a payment method not include in payment category list.")) 
     end
 
-    if((self.date.to_datetime > DateTime.now) and self.done? )
+    if(!self.date.nil? and (self.date.to_datetime > DateTime.now) and self.done? )
       self.errors.add(:status, _("You can't set this ledger as a effective ledger because the date of the ledger is in the future.")) 
     end
   end
 
   before_validation do |l|
+    l.value = ((l.value > 0) ? (l.value * -1) : l.value) if l.is_remove_cash? or l.is_change?
     l.type_of = l.category.type_of unless l.category.nil?
     l[:effective_value] ||= l.foreseen_value unless l.pending?
     l[:effective_date] ||= l.foreseen_date unless l.pending?
@@ -125,14 +125,34 @@ class Ledger < ActiveRecord::Base
   end
 
   before_destroy do |ledger|
-    ledger.subtract_balance
 #FIXME see a way to stop this
 #    raise _('You cannot destroy sale ledgers') if ledger.owner.kind_of? Sale
   end
 
   before_save do |ledger|
-    ledger.done! if ledger.set_as_done_on_save? and not ledger.has_fiscal_printer? and !ledger.done?
-    ledger.sum_balance
+    balance = ledger.find_balance_of_month
+    ledger.create_balance_of_month if balance.nil? and ledger.done?
+    ledger.done if ledger.set_as_done_on_save? and not ledger.has_fiscal_printer?
+  end
+
+  after_save do |ledger|
+    ledger.update_balance
+  end
+
+  after_destroy do |ledger|
+    ledger.update_balance
+  end
+
+  def create_balance_of_month
+    Balance.create!(:date => self.date, :bank_account => self.bank_account)
+  end
+
+  # Update the value attribute of the balance object with
+  # the sum of the ledgers of a month
+  # OBS: This method create the a balance instance if it doesn't exist
+  def update_balance
+    balance = self.find_balance_of_month
+    balance.refresh unless balance.nil?
   end
 
   after_create do |l|
@@ -177,6 +197,9 @@ class Ledger < ActiveRecord::Base
 
   def initialize(*args)
     super(*args)
+    self.organization ||= self.owner if self.owner.kind_of?(Organization)
+    self.owner ||= self.organization 
+    self.bank_account ||= self.organization.default_bank_account unless self.organization.nil?
     self.payment_initialize(self)
   end
 
@@ -184,33 +207,11 @@ class Ledger < ActiveRecord::Base
     PaymentStrategy::Factory.new(self.payment_method)
   end
 
-  # Upgrade the value attribute of the balance object adding
-  # the value of the current ledger
-  # OBS: This method create the a balance instance if it doesn't exist
-  def sum_balance
-    update_balance('+')
-  end
-
-  # Upgrade the value attribute of the balance object subtracting
-  # the value of the current ledger
-  # OBS: This method create the a balance instance if it doesn't exist
-  def subtract_balance
-    update_balance('-')
-  end
-
-  def create_balance_of_month
-    l = Ledger.new(:payment_method => Payment::BALANCE, :date => self.date,
-              :organization => self.organization, :bank_account => self.bank_account,
-              :value => self.value, :owner => self.organization)
-    l.save!
-    l
-  end
-
   # Return the balance object of the current month
   def find_balance_of_month
     start_date = Date.beginning_of_month(self.date)
     end_date = Date.end_of_month(self.date)
-    self.bank_account.ledgers.find(:first, :conditions => ['(effective_date IS ? AND foreseen_date BETWEEN ? AND ? AND payment_method = ?) OR (effective_date  BETWEEN ? AND ? AND payment_method = ?)', nil, start_date, end_date, Payment::BALANCE, start_date, end_date, Payment::BALANCE])
+    self.bank_account.balances.find(:first, :conditions => {:date => (start_date..end_date)})
   end
 
   # Set the status of this ledger for OPEN. It means that the
@@ -345,32 +346,21 @@ class Ledger < ActiveRecord::Base
     end
   end
 
-  def organization
-    self.owner if self.owner.kind_of?(Organization)
-  end
-
   def has_fiscal_printer?
-    case self.owner.class.name
-      when('Organization'): 
-        self.owner.has_fiscal_printer?
-      when('Till'): 
-        self.owner.has_fiscal_printer?
-      when('Sale'): 
-        self.owner.has_fiscal_printer?
-      else
-        nil
-    end
+    self.organization.nil? ? false : self.organization.has_fiscal_printer?
   end
 
   def value= value
-    self[:foreseen_value] = self.pending? ? (value.kind_of?(String) ? value.gsub(',', '.') : value) : (self[:foreseen_value] || (value.kind_of?(String) ? value.gsub(',', '.') : value))
-    self[:effective_value] = value unless self.pending? 
+    value ||= 0
+    value = value.kind_of?(String) ? (value.gsub!('.', ''); value.gsub(',','.')) : value
+    value = ((value > 0) ? (value * -1) : value) if self.is_remove_cash? or self.is_change?
+    self[:foreseen_value] = value if self.pending? 
+    self[:effective_value] = value if self.done?
   end
 
   def value
     value = self.pending? ? self[:foreseen_value] :  self[:effective_value]
     value ||= 0
-    ((self.is_remove_cash? or self.is_change? ) and (value > 0)) ? (value * -1) : value
   end
 
   def date
@@ -395,16 +385,18 @@ class Ledger < ActiveRecord::Base
     self.save
   end
 
-  #FIXME see if it's usefull
-#  def confirm_done!
-#    self.done!
-#    self.save
-#  end
-
-  def done!
+  # Set a ledger as done and update the effective_date and effective_value attributtes
+  # with the foreseen_date and foreseen_value attributes respectively when the attributes 
+  # are not set.
+  def done
     self[:effective_date] ||= self.foreseen_date
     self[:effective_value] ||= self.foreseen_value
     self.status = STATUS_DONE
+  end
+
+  # The same as done function but saves the value after done actions
+  def done!
+    self.done
     self.save
   end
 
@@ -446,19 +438,6 @@ class Ledger < ActiveRecord::Base
 #  #set the correct value of effective_value attribute
   def effective_value= value
     raise _('This function cannot be accessed directly')
-  end
-
-  private
-
-  def update_balance(op)
-    return if self.is_balance?
-    balance = self.find_balance_of_month
-    if balance.nil? 
-      balance = self.create_balance_of_month if op != '-'
-    else
-      balance.value = balance.value.send(op, self.value)
-      balance.save
-    end
   end
 
 end

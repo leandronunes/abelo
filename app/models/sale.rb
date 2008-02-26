@@ -196,7 +196,7 @@ class Sale < ActiveRecord::Base
 
   def change!
     return unless self.balance < 0
-    l = Ledger.new(:owner => self, :payment_method => Payment::CHANGE, :value => self.balance.abs)
+    l = Ledger.new(:owner => self, :payment_method => Payment::CHANGE, :value => self.balance.abs, :organization => self.organization)
     l.save!
   end
 

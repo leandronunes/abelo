@@ -3,6 +3,7 @@ class Date
   # Returns the date of the last day to a given month of 
   # a date pass as parameter.
   def self.end_of_month(date)
+    date ||= Date.today
     end_of_month = nil
 
     if date.month == 2
@@ -30,6 +31,7 @@ class Date
   # Returns the date of the first day of the month 
   # of a given date pass as parameter
   def self.beginning_of_month(date)
+    date ||= Date.today
     Date.new(date.year, date.month, 1)
   end
 

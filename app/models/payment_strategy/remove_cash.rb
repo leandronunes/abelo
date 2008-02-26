@@ -14,7 +14,7 @@ class RemoveCash < PaymentBase
   end
 
   def create_printer_cmd!(ledger)
-    return unless ledger.has_fiscal_printer? and ledger.printer_command.nil?
+    return '' unless ledger.has_fiscal_printer? and ledger.printer_command.nil?
     ledger.printer_command ||= PrinterCommand.new(ledger.owner ,[PrinterCommand::TILL_REMOVE_CASH, ledger.value])
     ledger.cmd_sent!
   end
@@ -23,7 +23,7 @@ class RemoveCash < PaymentBase
     cash.payment_method = Payment::REMOVE_CASH
     cash.type_of = Payment::TYPE_OF_EXPENSE
     cash.date = Date.today
-    cash.bank_account = cash.owner.default_bank_account unless cash.owner.nil?
+    cash.bank_account = cash.organization.default_bank_account unless cash.organization.nil?
     cash.pending!
   end
 

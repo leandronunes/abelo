@@ -100,7 +100,7 @@ class PointOfSaleController < ApplicationController
   end
 
   def create_add_cash
-    @cash = Ledger.new(params[:cash].merge({:owner => @till, :payment_method => Payment::ADD_CASH}))
+    @cash = Ledger.new(params[:cash].merge(:organization => @organization, :owner => @till, :payment_method => Payment::ADD_CASH))
 
     if @cash.save
       flash[:notice] = _('The cash was added successfully')
@@ -115,7 +115,7 @@ class PointOfSaleController < ApplicationController
   end
 
   def create_remove_cash
-    @cash = Ledger.new(params[:cash].merge(:owner => @till, :payment_method => Payment::REMOVE_CASH))
+    @cash = Ledger.new(params[:cash].merge(:owner => @till, :payment_method => Payment::REMOVE_CASH, :organization => @organization))
     if @cash.save
       flash[:notice] = _('The cash was removed successfully')
       redirect_to :action => 'till_open'
@@ -259,7 +259,7 @@ class PointOfSaleController < ApplicationController
   def create_coupon_add_payment
     @sale = Sale.pending(@till)
     ledger_params = params['ledger'] || {}
-    @ledger = Ledger.new(ledger_params.merge(:owner => @sale))
+    @ledger = Ledger.new(ledger_params.merge(:owner => @sale, :organization => @organization))
     @ledger_categories =  @organization.sale_ledger_categories_by_payment_method(@ledger.payment_method)
     
     if @ledger.save

@@ -2,6 +2,7 @@ class BankAccount < ActiveRecord::Base
   belongs_to :bank
   belongs_to :owner, :polymorphic => true
   has_many :ledgers, :foreign_key => :bank_account_id
+  has_many :balances, :foreign_key => :bank_account_id
 
   validates_presence_of :bank_id, :message => _('Bank Accounts must be associated to an Bank')
   validates_presence_of :owner
@@ -27,6 +28,5 @@ class BankAccount < ActiveRecord::Base
     options = default_options.merge options
     self.find_by_contents(q, options)
   end
-
 
 end

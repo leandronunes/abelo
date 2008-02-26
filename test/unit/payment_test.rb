@@ -12,10 +12,9 @@ class PaymentTest < Test::Unit::TestCase
   ADD_CASH = 'add_cash'
   REMOVE_CASH = 'remove_cash'
   CHANGE = 'change'
-  BALANCE = 'balance'
 
   PAYMENT_METHODS_TEST = {MONEY => Money, CHECK => Check, CREDIT_CARD => CreditCard, DEBIT_CARD => DebitCard}
-  PAYMENT_TYPES_TEST = PAYMENT_METHODS_TEST.merge({ ADD_CASH => AddCash, REMOVE_CASH => RemoveCash,CHANGE => Change, BALANCE => Balance})
+  PAYMENT_TYPES_TEST = PAYMENT_METHODS_TEST.merge({ ADD_CASH => AddCash, REMOVE_CASH => RemoveCash,CHANGE => Change})
   TYPE_OF_TEST = ['I', 'E']
 
   def test_payment_types

@@ -1,6 +1,6 @@
 class DebitCardDisplay < LedgerDisplay
 
-  CHECK_AVAILABLE_FIELDS = %w[
+  DEBIT_CARD_AVAILABLE_FIELDS = %w[
     automatic_debit_owner_name
     automatic_debit_bank_id
     automatic_debit_account_agency
@@ -8,7 +8,7 @@ class DebitCardDisplay < LedgerDisplay
   ]
 
   def self.available_fields
-    self.superclass.available_fields + CHECK_AVAILABLE_FIELDS
+    self.superclass.available_fields + DEBIT_CARD_AVAILABLE_FIELDS
   end
 
   def self.describe(field)

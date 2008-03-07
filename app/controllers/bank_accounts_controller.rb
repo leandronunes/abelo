@@ -51,7 +51,7 @@ class BankAccountsController < ApplicationController
 
   def create
     @bank_account = BankAccount.new(params[:bank_account])
-    @bank_account.owner = @organization
+    @bank_account.organization = @organization
     if @bank_account.save
       flash[:notice] = 'BankAccount was successfully created.'
       redirect_to :action => 'list'

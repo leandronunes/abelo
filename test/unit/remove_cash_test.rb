@@ -129,4 +129,10 @@ class RemoveCashTest < Test::Unit::TestCase
     assert !cash.errors.invalid?(:type_of)
   end
 
+  def test_value_is_negative_on_remove_cash
+    l = Ledger.new(:payment_method => Payment::REMOVE_CASH)
+    l.value = 10
+    assert_equal -10, l.value
+  end
+
 end

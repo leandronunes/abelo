@@ -66,7 +66,8 @@ class Organization < ActiveRecord::Base
   has_many :profiles
   has_many :users, :through => :profiles  
   has_many :contacts, :through => :customers
-  has_many :bank_accounts, :as => :owner
+  has_many :bank_accounts
+  has_many :balances, :through => :bank_accounts
   has_many :stocks, :through => :products
   has_many :stock_ins, :through => :products
   has_many :stock_devolutions, :through => :products

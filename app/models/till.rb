@@ -26,6 +26,7 @@ class Till < ActiveRecord::Base
   def validate
     pendings = self.class.find(:all, :conditions => {:status => [STATUS_PENDING, STATUS_OPEN], :organization_id => self.organization, :user_id => self.user})
     pendings.delete(self)
+
     if(!pendings.blank?)
       self.errors.add(_('You already have a till open.'))
     end

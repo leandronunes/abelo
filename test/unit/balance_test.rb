@@ -94,4 +94,23 @@ class BalanceTest < Test::Unit::TestCase
     assert_equal BalanceDisplay, b.display_class
   end
 
+  def test_create_balance
+    Balance.destroy_all
+    account = create_bank_account
+    Balance.create_balance(:bank_account => account)
+    assert_equal 1, Balance.count
+  end
+
+  def test_last_balance_before_date
+    Balance.destroy_all
+    account = create_bank_account
+    assert_equal nil, Balance.last_balance_before_date(@organization, account, Date.today), "Return nil if there is no Balance create for organization"
+
+    b1 = Balance.create_balance(:bank_account => account, :date => Date.today<<2)
+    b2 = Balance.create_balance(:bank_account => account, :date => Date.today<<1)
+
+    assert_equal 2, Balance.count
+    assert b2 == Balance.last_balance_before_date(@organization, account, Date.today), "Return b2 because it's the last balance before today"
+  end
+
 end

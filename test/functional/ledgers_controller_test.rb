@@ -18,8 +18,8 @@ class LedgersControllerTest < Test::Unit::TestCase
     login_as("quentin")
     @organization = create_organization(:identifier => 'some', :name => 'some')
     @ledger_category = create_ledger_category(:name => 'Some Category', :type_of => 'I', :organization => @organization , :payment_methods => ['money'])
-    @another_bank_account = create_bank_account(:owner => @organization)
-    @default_bank_account = create_bank_account(:owner => @organization, :is_default => true, :bank => @another_bank_account.bank)
+    @another_bank_account = create_bank_account
+    @default_bank_account = create_bank_account(:is_default => true, :bank => @another_bank_account.bank)
   end
 
   def test_setup

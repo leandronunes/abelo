@@ -6,36 +6,16 @@ class StockDownController; def rescue_action(e) raise e end; end
 
 class StockDownControllerTest < Test::Unit::TestCase
 
-  under_organization :one
+  under_organization :some
 
   def setup
     @controller = StockDownController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
+    @organization = create_organization(:identifier => 'some')
+    @product = create_product
+    @product_category = create_product_category(:name => 'another name')
     login_as("quentin")
-    @product = Product.find(:first)
-    @product_category = ProductCategory.find(:first)
-    @organization = Organization.find(:first)
-  end
-
-  def create_product(params = {})
-    Product.create!({:name => 'product one', :sell_price => 2.0, :unit => 'kg', :organization => @organization, :category => @product_category}.merge(params))
-  end
-
-  def create_stock
-    StockDown.create!(:amount => 1, :product => @product, :date => Date.today)
-  end
-
-  def create_supplier(params = {})
-    Supplier.create!(
-      {
-        :name => "Some Name",
-        :cpf => '182.465.232-10',
-        :category_id => '20',
-        :email => 'test@test.com',
-        :organization => @organization
-      }.merge(params)
-    )
   end
 
   def test_setup
@@ -47,7 +27,7 @@ class StockDownControllerTest < Test::Unit::TestCase
   def test_autocomplete_supplier_name
     Supplier.destroy_all
     create_supplier(:name => 'test one', :cpf => '112.767.281-90')
-    create_supplier(:name => 'test two', :cpf => '546.261.286-96')
+    create_supplier(:name => 'test two', :cpf => '586.718.423-47')
     create_supplier(:name => 'another one', :cpf => '687.618.228-25')
     get :autocomplete_supplier_name, :supplier => {:name => 'test'}
     assert_response :success
@@ -136,6 +116,7 @@ class StockDownControllerTest < Test::Unit::TestCase
   end
 
   def test_create
+    Product.any_instance.stubs(:amount_in_stock).returns(3334)
     count_stock = StockDown.count
 
     post :create, :stock => { :product_id => @product.id, :amount => 1, :date => Date.today}
@@ -178,7 +159,8 @@ class StockDownControllerTest < Test::Unit::TestCase
   end
 
   def test_destroy
-    stock = create_stock
+    Product.any_instance.stubs(:amount_in_stock).returns(3334)
+    stock = create_stock_down
     stock_id = stock.id
     get :destroy, :id => stock.id
     assert_raise(ActiveRecord::RecordNotFound) {
@@ -190,7 +172,8 @@ class StockDownControllerTest < Test::Unit::TestCase
   end
 
   def test_show
-    stock = create_stock
+    Product.any_instance.stubs(:amount_in_stock).returns(3334)
+    stock = create_stock_down
     get :show, :id => stock.id
     assert_response :success
     assert_template 'stock_base/show'
@@ -198,7 +181,8 @@ class StockDownControllerTest < Test::Unit::TestCase
   end
 
   def test_edit
-    stock = create_stock
+    Product.any_instance.stubs(:amount_in_stock).returns(3334)
+    stock = create_stock_down
     get :edit, :id => stock.id
 
     assert_response :success
@@ -210,7 +194,8 @@ class StockDownControllerTest < Test::Unit::TestCase
   end
 
   def test_update
-    stock = create_stock
+    Product.any_instance.stubs(:amount_in_stock).returns(3334)
+    stock = create_stock_down
     post :update, :id => stock.id, :stock => { :date => Date.today }
 
     assert_response :redirect
@@ -218,7 +203,8 @@ class StockDownControllerTest < Test::Unit::TestCase
   end
 
   def test_update_with_wrong_params
-    stock = create_stock
+    Product.any_instance.stubs(:amount_in_stock).returns(3334)
+    stock = create_stock_down
     # The date could not be nil
     post :update, :id => stock.id, :stock => { :date => nil }
 
@@ -230,7 +216,8 @@ class StockDownControllerTest < Test::Unit::TestCase
   end
 
   def test_update_date
-    stock = create_stock
+    Product.any_instance.stubs(:amount_in_stock).returns(3334)
+    stock = create_stock_down
     stock.date = DateTime.now
     new_date = DateTime.now + 1
     
@@ -240,7 +227,8 @@ class StockDownControllerTest < Test::Unit::TestCase
   end
 
   def test_update_product
-    stock = create_stock
+    Product.any_instance.stubs(:amount_in_stock).returns(3334)
+    stock = create_stock_down
     stock.product_id = 1
     new_product_id = 2
     
@@ -250,7 +238,8 @@ class StockDownControllerTest < Test::Unit::TestCase
   end
 
   def test_update_amount
-    stock = create_stock
+    Product.any_instance.stubs(:amount_in_stock).returns(3334)
+    stock = create_stock_down
     stock.amount = 1
     stock.save
     # Be carefull. We have to put a possible amount.

@@ -1,15 +1,15 @@
 class BankAccount < ActiveRecord::Base
   belongs_to :bank
-  belongs_to :owner, :polymorphic => true
+  belongs_to :organization
   has_many :ledgers, :foreign_key => :bank_account_id
-  has_many :balances, :foreign_key => :bank_account_id
+  has_many :balances
 
   validates_presence_of :bank_id, :message => _('Bank Accounts must be associated to an Bank')
-  validates_presence_of :owner
+  validates_presence_of :organization_id
 
   after_save do |account|
     if account.is_default?
-      default_account = account.owner.default_bank_account
+      default_account = account.organization.default_bank_account
       if default_account != account
         default_account.is_default = false
         default_account.save

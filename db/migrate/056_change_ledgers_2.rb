@@ -1,4 +1,4 @@
-class AddColumnLedgers < ActiveRecord::Migration
+class ChangeLedgers2 < ActiveRecord::Migration
   def self.up
     add_column :ledgers, :organization_id, :integer
   end

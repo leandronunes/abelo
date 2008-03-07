@@ -8,7 +8,7 @@ class LedgerCategoryTest < Test::Unit::TestCase
   def setup
     @organization = create_organization
     @ledger_category = create_ledger_category(:organization => @organization)
-    @bank_account = create_bank_account(:owner => @organization)
+    @bank_account = create_bank_account(:organization => @organization)
   end
 
   def test_setup

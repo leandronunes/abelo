@@ -48,7 +48,7 @@ tag:
           <%= link_to_remote(b.name, 
                   {
                   :update => 'abelo_financial_table', 
-                  :url => @common_financial_parameters.merge({:action => 'display_financial_table', :accounts => "#{b.id},#{@chosen_accounts.ids}"})
+                  :url => @common_financial_parameters.merge({:action => 'display_financial_table', :accounts => "#{b.id}"})
                   }
               ) %> 
           <% end %>
@@ -94,7 +94,7 @@ tag:
           :update => 'abelo_financial_table',
           :url => {:action => 'display_financial_table' },
           :with => "'end_date_month=' + escape(value) + %s" % @common_observer_financial_parameters,
-          :failure => "alert('bli')"
+          :failure => "$('abelo_financial_table').innerHTML=request.responseText"
           )
         %>
 
@@ -168,7 +168,19 @@ tag:
       <th><%= _('Expense (R$)') %></th>
       <th> <%= _('Operation') %></th>
     </tr>
-    
+
+    <!-- Line of table that display the last balance of the curretn account -->
+    <tr>
+      <td>
+        <%= show_date(Date.end_of_month(@start_date<<1)) %>
+      </td>
+      <td> <%= _('Last Balance') %></td>
+      <td> <%= _('Month %s') % (@start_date<<1).month %></td>
+      <td><%= (!@last_balance.nil? and @last_balance.income?) ? @last_balance.value : '-' %></td>
+      <td><%= (!@last_balance.nil? and @last_balance.expense?) ? @last_balance.value : '-' %></td>
+      <td> - </td>
+    </tr>
+ 
     <% for ledger in @ledgers %>
       <tr id="list_ledger_<%=ledger.id %>">
         <td>
@@ -206,13 +218,14 @@ tag:
       <th colspan=3> <b><%= _('Partial Total') %> </b></th>
       <td> <b class="income" ><%= @total_income %> </b></td>
       <td> <b class="expense" ><%= @total_expense %> </b></td>
-      <td> <b><%= _('Balance: %s') % (@total_income - @total_expense) %> </b></td>
+      <td> <b><%= _('Balance: %s') % (@total_income + @total_expense) %> </b></td>
     </tr>
     <tr>
       <th colspan=3> <b><%= _('Geral Total') %> </b></th>
       <td> <b class="income" ><%= @geral_total_income %> </b></td>
       <td> <b class= "expense" ><%= @geral_total_expense %> </b></td>
-      <td> <b><%= _('Balance: %s') % (@geral_total_income - @geral_total_expense) %> </b></td>
+      <td> <b><%= _('Balance: %s') % (@geral_total_income + @geral_total_expense) %> </b></td>
     </tr>
   </table>
 </div> 
+

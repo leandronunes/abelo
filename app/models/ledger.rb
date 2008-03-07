@@ -3,6 +3,7 @@ class Ledger < ActiveRecord::Base
   include Status
   require 'payment_strategy/payment_strategy'
   include PaymentStrategy
+  require 'extended_date'
 
   acts_as_taggable
 # FIXME See why the fields make the ferret dind't works
@@ -77,11 +78,11 @@ class Ledger < ActiveRecord::Base
 
   # Methods that are defined on payment strategy 
   # Part of the strategy pattern
-  delegate :is_check?, :is_money?, :is_credit_card?, :is_debit_card?, :is_add_cash?, :is_remove_cash?, :is_change?, :is_balance?, :to => :payment_strategy
+  delegate :is_check?, :is_money?, :is_credit_card?, :is_debit_card?, :is_add_cash?, :is_remove_cash?, :is_change?, :to => :payment_strategy
   delegate :require_category?, :set_as_done_on_save?, :payment_initialize, :display_class, :create_printer_cmd!, :to => :payment_strategy
 
   def validate
-    if (self.date != Date.today) and (self.is_add_cash? or self.is_remove_cash?)
+    if self.new_record? and (self.date != Date.today) and (self.is_add_cash? or self.is_remove_cash?)
       self.errors.add(:date, _('You cannot schedule an add cash'))
     end
 
@@ -101,9 +102,7 @@ class Ledger < ActiveRecord::Base
       self.errors.add(_('You cannot realize money operations whithout create the printer command'))
     end
 
-    self.errors.add(:value, _("The value should be at least 0.01" )) if value.nil? || value == 0.00
-
-    self.errors.add(:value, _("The value should be at least 0.01" )) if (!self.is_remove_cash? and !self.is_change?) and (value.nil? || value < 0.00)
+    self.errors.add(:value, _("The value should be at least 0.01" )) if !self.expense? and (value.nil? || value < 0.00)
 
     self.errors.add(:date, _("Date cannot be set" )) unless self[:date].nil?
 
@@ -144,7 +143,7 @@ class Ledger < ActiveRecord::Base
   end
 
   def create_balance_of_month
-    Balance.create!(:date => self.date, :bank_account => self.bank_account)
+    Balance.create_balance(:date => self.date, :bank_account => self.bank_account)
   end
 
   # Update the value attribute of the balance object with
@@ -210,7 +209,7 @@ class Ledger < ActiveRecord::Base
   # Return the balance object of the current month
   def find_balance_of_month
     start_date = Date.beginning_of_month(self.date)
-    end_date = Date.end_of_month(self.date)
+    end_date = Date.end_of_month(self.date) + 1
     self.bank_account.balances.find(:first, :conditions => {:date => (start_date..end_date)})
   end
 
@@ -285,17 +284,17 @@ class Ledger < ActiveRecord::Base
   end
 
   # Return the value sum of income ledgers passed as parameter
-  def self.total_income(ledgers)
+  def self.total_income(ledgers, balance=0)
     total = 0
     ledgers.collect{ |l| total = total + (l.income? ? l.value : 0) }
-    total
+    total + (balance || 0)
   end
 
   # Return the value sum of expense ledgers passed as parameter
-  def self.total_expense(ledgers)
+  def self.total_expense(ledgers, balance=0)
     total = 0
     ledgers.collect{ |l| total = total + (l.expense? ? l.value : 0) }
-    total
+    total + (balance || 0)
   end
 
 
@@ -306,7 +305,7 @@ class Ledger < ActiveRecord::Base
 
   # Check if the current ledger is a expense 
   def expense?
-    self.type_of == Payment::TYPE_OF_EXPENSE
+    self.type_of == Payment::TYPE_OF_EXPENSE or self.is_remove_cash? or self.is_change?
   end
 
   # Search for ledgers that contain any data that match with the 
@@ -353,8 +352,8 @@ class Ledger < ActiveRecord::Base
   def value= value
     value ||= 0
     value = value.kind_of?(String) ? (value.gsub!('.', ''); value.gsub(',','.')) : value
-    value = ((value > 0) ? (value * -1) : value) if self.is_remove_cash? or self.is_change?
-    self[:foreseen_value] = value if self.pending? 
+    value = ((value > 0) ? (value * -1) : value) if self.expense?
+    self[:foreseen_value] = value if self.pending? or self.foreseen_value.nil?
     self[:effective_value] = value if self.done?
   end
 

@@ -1,0 +1,55 @@
+#!/usr/bin/env ruby
+require File.dirname(__FILE__) + '/../config/environment'
+
+pattern = File.join(File.dirname(__FILE__), '..', 'app', 'models', '*')
+
+model_names = []
+
+Dir.glob(pattern).map do |m|
+  if File.file?(m)
+    model_names.push(m.gsub(/.*models\/(.*).rb/,'\1' ).camelcase)
+  end 
+end
+
+REMOVE_CLASSES = %W[
+  SizeObject
+  Size
+  DirectMail
+  MassMail
+  MassMailDisplay
+  Payment
+  Color
+  Notifier
+  Unit
+  UnitObject
+  Sintegra
+  UserProfile
+]
+
+REMOVE_CLASSES.each do |klass|
+  model_names.delete(klass)
+end
+
+errors = 0
+
+model_names.map do |model|
+  has_error = false
+  next if model.constantize.superclass == Object
+  puts "Evaluating model %s" % model
+  model.constantize.find(:all).each do |object|
+    unless object.valid?
+      errors = errors + 1
+      has_error = true
+      puts "Object Id: %d" % object.id
+      puts 'Errors:'
+      puts "\t %s" % object.errors.full_messages_without_gettext
+    end
+  end
+  if has_error == true
+    puts "No errors found on %s objects" % model 
+  else
+    puts "OK"
+  end
+end
+
+puts "%s errors found." % errors

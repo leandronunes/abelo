@@ -21,7 +21,7 @@ class StockControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
     login_as("quentin")
     @organization = create_organization(:identifier => 'some')
-    @bank_account = create_bank_account(:owner => @organization)
+    @bank_account = create_bank_account
     @product = create_product()
     @supplier = create_supplier
     @ledger_category = create_ledger_category(:organization => @organization)

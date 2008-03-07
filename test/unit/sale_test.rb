@@ -7,7 +7,7 @@ class SaleTest < Test::Unit::TestCase
 
   def setup
     @organization = create_organization
-    BankAccount.create!(:owner => @organization, :account => 234, :bank_id => 1, :agency => 3434, :is_default => true )
+    BankAccount.create!(:organization => @organization, :account => 234, :bank_id => 1, :agency => 3434, :is_default => true )
     @user = User.create!("salt"=>"7e3041ebc2fc05a40c60028e2c4901a81035d3cd", "updated_at"=>nil, "crypted_password"=>"00742970dc9e6319f8019fd54864d3ea740f04b1", "type"=>"User", "remember_token_expires_at"=>nil, "id"=>"1", "administrator"=>false, "remember_token"=>nil, "login"=>"new_user", "email"=>"new_user@example.com", "created_at"=>"2007-07-14 18:03:29")
     @product1 = create_product(:organization => @organization)
     @product2 = create_product(:organization => @organization, :name => 'another name')

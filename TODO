@@ -1,4 +1,4 @@
 - In the action list of products controller the buttons across the element list
 - Define the default image when no image exist in a product
 - Create an script to update all customers ledgers his organization
-_ When removes a ledger object whe have to refresh the balance model
+- Remove the UserProfile Model

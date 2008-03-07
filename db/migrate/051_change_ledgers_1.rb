@@ -1,4 +1,4 @@
-class AddColumnLedgers < ActiveRecord::Migration
+class ChangeLedgers1 < ActiveRecord::Migration
   def self.up
     add_column :ledgers, :payment_method, :string
     execute('UPDATE ledgers SET payment_method = type;')

@@ -260,7 +260,7 @@ class OrganizationTest < Test::Unit::TestCase
 
   def test_ledgers_by_tag
     o = create_organization(:identifier => 'some_id', :name =>'some name')
-    account = create_bank_account(:owner => o)
+    account = create_bank_account(:organization => o)
 
     create_ledger(:owner => o, :tag_list =>['some'])
     create_ledger(:owner => o, :tag_list =>['another'])
@@ -271,7 +271,7 @@ class OrganizationTest < Test::Unit::TestCase
 
   def test_ledgers_by_categories
     o = create_organization(:identifier => 'some_id', :name =>'some name')
-    account = create_bank_account(:owner => o)
+    account = create_bank_account(:organization => o)
     c1 = create_ledger_category(:organization => o, :name => 'some name')
     c2 = create_ledger_category(:organization => o, :name => 'another name')
     c3 = create_ledger_category(:organization => o, :name => 'another again')
@@ -284,7 +284,7 @@ class OrganizationTest < Test::Unit::TestCase
 
   def test_ledgers_by_dates
     o = create_organization(:identifier => 'some_id', :name =>'some name')
-    account = create_bank_account(:owner => o)
+    account = create_bank_account(:organization => o)
 
     create_ledger(:owner => o, :date => Date.today)
     create_ledger(:owner => o, :date => Date.today + 1)
@@ -296,7 +296,7 @@ class OrganizationTest < Test::Unit::TestCase
 
   def test_ledgers_by_search
     o = create_organization(:identifier => 'some_id', :name =>'some name')
-    account = create_bank_account(:owner => o)
+    account = create_bank_account(:organization => o)
 
     create_ledger(:owner => o, :description =>'test description')
     create_ledger(:owner => o, :description =>'test again')
@@ -307,7 +307,7 @@ class OrganizationTest < Test::Unit::TestCase
 
   def test_ledgers_by_all
     o = create_organization(:identifier => 'some_id', :name =>'some name')
-    account = create_bank_account(:owner => o)
+    account = create_bank_account(:organization => o)
 
     c1 = create_ledger_category(:organization => o, :name => 'some name')
     c2 = create_ledger_category(:organization => o, :name => 'another name')
@@ -322,7 +322,7 @@ class OrganizationTest < Test::Unit::TestCase
 
   def test_ledgers_by_all_is_sorted_by_date
     o = create_organization(:identifier => 'some_id', :name =>'some name')
-    account = create_bank_account(:owner => o)
+    account = create_bank_account(:organization => o)
     create_ledger(:owner => o, :date => Date.today)
     create_ledger(:owner => o, :date => Date.today + 1)
     create_ledger(:owner => o, :date => Date.today - 1)

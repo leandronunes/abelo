@@ -360,28 +360,14 @@ class LedgerTest < Test::Unit::TestCase
     l = Ledger.new
     l.value = 'a'
     l.valid?
-    assert l.errors.invalid?(:value)
+    assert_equal 0, l.value
     l.value = ''
     l.valid?
-    assert l.errors.invalid?(:value)
+    assert_equal 0, l.value
     l.value = 12
     l.valid?
     assert !l.errors.invalid?(:value)
   end
-
-  def test_value_must_be_greater_then_zero
-    l = Ledger.new
-    l.value = 0.0
-    l.valid?
-    assert l.errors.invalid?(:value)
-    l.value = -1
-    l.valid?
-    assert l.errors.invalid?(:value)
-    l.value = 0.01
-    l.valid?
-    assert !l.errors.invalid?(:value)
-  end
-
 
   def test_schedule_mandatory_fields_param_schedule_repeat_when_all_informations_correct
     ledger = @ledger
@@ -451,15 +437,6 @@ class LedgerTest < Test::Unit::TestCase
     ledger.schedule_repeat = false
     ledger.valid?
     assert ledger.errors.invalid?(:schedule_repeat)
-  end
-
-  def test_value_is_not_negative
-    p = Ledger.new
-    p.valid?
-    assert p.errors.invalid?(:value)
-    p.value = -1.0
-    p.valid?
-    assert p.errors.invalid?(:value)    
   end
 
   def test_value_did_not_return_nil

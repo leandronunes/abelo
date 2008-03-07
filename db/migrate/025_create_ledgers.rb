@@ -3,8 +3,7 @@ class CreateLedgers < ActiveRecord::Migration
     create_table :ledgers do |t|
       t.column :owner_type,             :string, :null => false
       t.column :owner_id,               :integer, :null => false
-#FIXME remove it
-#      t.column :type,                   :string, :null => false
+      t.column :type,                   :string, :null => false
       t.column :type_of,                :string, :limit => 1, :null => false
       t.column :category_id,            :integer
       t.column :foreseen_value,         :float

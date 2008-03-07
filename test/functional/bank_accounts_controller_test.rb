@@ -16,25 +16,13 @@ class BankAccountsControllerTest < Test::Unit::TestCase
     login_as("quentin")
     @organization = create_organization(:identifier => 'some')
     @bank = create_bank
-    @bank_account = create_bank_account(:owner => @organization)
+    @bank_account = create_bank_account
   end
 
   def test_setup
     assert @organization.valid?
     assert @bank_account.valid?
     assert @bank.valid?
-  end
-
-  def create_bank_account(params = {})
-    BankAccount.create!(
-      {
-        :owner => @organization,
-        :is_default => false,
-        :account => 1111,
-        :agency => 4444,
-        :bank => @bank,
-      }
-    )
   end
 
   def test_autocomplete_bank_account_account
@@ -84,10 +72,8 @@ class BankAccountsControllerTest < Test::Unit::TestCase
 
   def test_list_when_query_param_not_nil
     BankAccount.delete_all
-    b = BankAccount.new(:bank => Bank.find(:first), :owner => @organization, :account => '233222', :agency => '111')
-    b.save!
-    b = BankAccount.new(:bank => Bank.find(:first), :owner => @organization, :account => '43344', :agency => '333')
-    b.save!
+    create_bank_account(:account => '233222', :agency => '111')
+    create_bank_account(:account => '43344', :agency => '333')
 
     get :list, :query => '*22*'
 

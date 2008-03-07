@@ -19,7 +19,7 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
     Printer.destroy_all
     @user = User.find_by_login('quentin')
     @organization = create_organization(:identifier => 'some')
-    @bank_account = create_bank_account(:owner => @organization)
+    @bank_account = create_bank_account
     @product = create_product
 #    @supplier = create_supplier
 #    @customer = create_customer

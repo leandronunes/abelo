@@ -9,8 +9,7 @@ module FinancialInformation
 
     begin
       @chosen_accounts = params[:accounts].split(',')
-      @chosen_accounts.delete(params[:chosen_account])
-      @chosen_accounts = @organization.bank_accounts.find(@chosen_accounts)
+      @chosen_accounts = organization.bank_accounts.find(@chosen_accounts)
     rescue
       @chosen_accounts = [@organization.default_bank_account]
     end
@@ -31,6 +30,7 @@ module FinancialInformation
       day = params[:end_date_day].to_i
       max_day = Time::days_in_month(month, year)
       @end_date = DateTime.new(year, month, (day > max_day ? max_day : day))
+      @end_date = DateTime.end_of_month(@start_date) if @end_date < @start_date
     rescue
       @end_date = DateTime.end_of_month(@start_date)
     end
@@ -43,6 +43,8 @@ module FinancialInformation
     @end_date_month = @end_date.month
     @end_date_year = @end_date.year
     @query = params[:query] unless params[:query].blank?
+
+    @last_balance = Balance.last_balance_before_date(object, @chosen_accounts.first, @start_date)
 
     begin
       @chosen_accounts = @organization.bank_accounts.find(@chosen_accounts)

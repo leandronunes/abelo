@@ -37,11 +37,12 @@ class LedgersController < ApplicationController
     ledgers = @organization.ledgers_by_all(@chosen_accounts, @chosen_tags, @chosen_categories, @start_date, @end_date, @query)
 
     @ledger_pages, @ledgers = paginate_by_collection ledgers
-    @total_income = Ledger.total_income(@ledgers) 
-    @total_expense = Ledger.total_expense(@ledgers) 
-    @geral_total_income = Ledger.total_income(ledgers) 
-    @geral_total_expense = Ledger.total_expense(ledgers) 
 
+    balance_value = @last_balance.nil? ? 0 : @last_balance.value
+    @total_income = Ledger.total_income(@ledgers, (balance_value if balance_value >= 0)) 
+    @total_expense = Ledger.total_expense(@ledgers, (balance_value if balance_value < 0 ))
+    @geral_total_income = Ledger.total_income(ledgers, (balance_value if balance_value >= 0)) 
+    @geral_total_expense = Ledger.total_expense(ledgers, (balance_value if balance_value < 0)) 
   end
 
   # This method render a table with all ledgers of the bank account of
@@ -59,10 +60,12 @@ class LedgersController < ApplicationController
     else
       @ledger_pages, @ledgers = paginate_by_collection ledgers
     end
-    @total_income = Ledger.total_income(@ledgers) 
-    @total_expense = Ledger.total_expense(@ledgers) 
-    @geral_total_income = Ledger.total_income(ledgers) 
-    @geral_total_expense = Ledger.total_expense(ledgers) 
+
+    balance_value = @last_balance.nil? ? 0 : @last_balance.value
+    @total_income = Ledger.total_income(@ledgers, (balance_value if balance_value >= 0)) 
+    @total_expense = Ledger.total_expense(@ledgers, (balance_value if balance_value < 0 ))
+    @geral_total_income = Ledger.total_income(ledgers, (balance_value if balance_value >= 0)) 
+    @geral_total_expense = Ledger.total_expense(ledgers, (balance_value if balance_value < 0)) 
     render :partial => 'shared_financial/display_financial_table'
   end
 

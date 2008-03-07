@@ -83,8 +83,8 @@ class Test::Unit::TestCase
 
   def create_bank_account(params = {})
     bank = params[:bank] || @bank || create_bank
-    owner = params[:owner] || @organization || create_organization
-    @bank_account = BankAccount.create!({:bank => bank, :owner => owner, 
+    organization = params[:organization] || @organization || create_organization
+    @bank_account = BankAccount.create!({:bank => bank, :organization => organization, 
                   :agency => 23434, :account => 33434, :is_default => true}.merge(params))
     @bank_account
   end
@@ -95,13 +95,20 @@ class Test::Unit::TestCase
     l
   end
 
+  def create_add_cash(params = {})
+    l = new_ledger(params.merge(:payment_method => Payment::ADD_CASH, :category => nil))
+    l.save!
+    l
+  end
+
   def new_ledger(params = {})
     ledger_category = params[:category] || @ledger_category || create_ledger_category
     bank_account = params[:bank_account] || @bank_account || create_bank_account
     owner = params[:owner] || @organization
     organization = params[:organization] || @organization
+    date = params[:date] || Date.today
     Ledger.new({:payment_method => Payment::MONEY, :value => 367,
-                  :date => Date.today, :owner => owner,
+                  :date => date, :owner => owner,
                   :bank_account => bank_account,
                   :category => ledger_category, :organization => organization}.merge(params))
   end
@@ -171,6 +178,11 @@ class Test::Unit::TestCase
     StockIn.create!({:supplier => @supplier, :amount => 30, :price => 1.99, :invoice => invoice, :product => product}.merge(params))
   end
 
+  def create_stock_down(params = {})
+    StockDown.create!(:amount => 1, :product => @product, :date => Date.today)
+  end
+
+
   def create_user(params = {})
     u = User.create!({ :login => 'quire', :email => (params[:login].nil? ? 'quire@example.com' : params[:login]+'colivre.coop.br'),
                     :password => 'quire', :password_confirmation => 'quire' }.merge(params))
@@ -195,9 +207,9 @@ class Test::Unit::TestCase
 
   def create_supplier(params = {})
     @supplier_category ||= create_supplier_category
-    Supplier.create!(:name => 'some supplier', :organization => @organization, 
+    Supplier.create!({:name => 'some supplier', :organization => @organization, 
                      :cpf => '642.229.464-60', :category => @supplier_category,
-                     :email => 'supplier@colivre.coop.br')
+                     :email => 'supplier@colivre.coop.br'}.merge(params))
   end
 
 

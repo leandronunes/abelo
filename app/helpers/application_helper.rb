@@ -677,7 +677,7 @@ module ApplicationHelper
   end
 
   def display_field_type_string(content)
-    content_tag(:span, Dictionary.parser(content))
+    content_tag(:span, content)
   end
 
   def display_field_type_date(content)

@@ -445,6 +445,11 @@ class LedgerTest < Test::Unit::TestCase
     assert_not_nil p.value
   end
 
+  def test_value_attribution_argument_is_nil
+    p = Ledger.new
+    p.value = nil
+  end
+
   def test_effective_date_when_done
     ledger = create_ledger()
     assert ledger.pending?

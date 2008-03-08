@@ -55,7 +55,7 @@ class StockBuysController < ApplicationController
   end
 
   def edit
-    @invoice = @organization.invoices.find(params[:id])
+    @invoice = @organization.invoices.find(params[:invoice_id] || params[:id])
     @payment_object = @invoice
     @suppliers = @organization.suppliers
     @products = @organization.products

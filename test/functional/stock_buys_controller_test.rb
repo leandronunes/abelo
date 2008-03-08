@@ -19,7 +19,7 @@ class StockBuysControllerTest < Test::Unit::TestCase
     @ledger_category = create_ledger_category(:organization => @organization)
     @product_category ||= create_product_category(:organization => @organization)
     @invoice = create_invoice
-    @stock_in = create_stock_buy
+    @stock_buy = create_stock_buy
   end
 
   def test_setup
@@ -31,7 +31,7 @@ class StockBuysControllerTest < Test::Unit::TestCase
     assert @organization.products.include?(@product)
     assert @organization.suppliers.include?(@supplier)
     assert @invoice.valid?
-    assert @stock_in.valid?
+    assert @stock_buy.valid?
   end
 
   def test_autocomplete_invoice_number
@@ -133,6 +133,22 @@ class StockBuysControllerTest < Test::Unit::TestCase
     assert assigns(:payment_object)
     assert assigns(:ledger_categories)
   end
+
+  def test_edit_passing_invoice_id_parameter
+    get :edit, :invoice_id => @invoice.id
+    assert_response :success
+    assert_template 'edit'
+    assert assigns(:invoice)
+    assert assigns(:suppliers)
+    assert assigns(:products)
+    assert assigns(:stocks)
+    assert assigns(:stock)
+    assert assigns(:ledgers)
+    assert assigns(:ledger)
+    assert assigns(:payment_object)
+    assert assigns(:ledger_categories)
+  end
+
 
   def test_update
     post :update, :id => @invoice.id, :invoice => { :number => 232132 }

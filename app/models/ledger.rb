@@ -351,6 +351,7 @@ class Ledger < ActiveRecord::Base
   end
 
   def value= value
+    return if value.nil?
     value = value.kind_of?(String) ? (value.gsub!('.', ''); value.gsub(',','.')).to_f : value
     value = ((value > 0) ? (value * -1) : value) if self.expense?
     self[:foreseen_value] = value if self.pending? or self.foreseen_value.nil?

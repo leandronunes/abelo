@@ -1,0 +1,11 @@
+
+<%= title _("Invoice") %>
+
+<%= display_show_info @invoice %>
+
+<strong><%= _('Items') %>:</strong>
+
+<%= render :partial => 'invoice_items' %>
+
+<%= display_show_info_options(@invoice) %> 
+

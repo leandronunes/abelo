@@ -1,6 +1,6 @@
 <tr>
   <th> <%= _('Product') %> </th>
-  <th> <%= _('Unit Price') %> </th>
+  <th> <%= _('Buy Unit Price') %> </th>
   <th> <%= _('Amount') %> </th>
   <th> <%= _('Total') %> </th>
   <th> <%= _('Validity') %> </th>
@@ -9,7 +9,7 @@
 <% @stocks.each do |stock| %>
   <tr>
     <td> <%= stock.product.name %> </td>
-    <td> <%= stock.price %> </td>
+    <td> <%= num_to_currency(stock.price) %> </td>
     <td> <%= stock.amount %> </td>
     <td> <%= stock.total_cost %> </td>
     <td> <%= stock.validity || _('None') %> </td>

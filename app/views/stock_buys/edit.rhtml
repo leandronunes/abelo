@@ -1,0 +1,22 @@
+
+<%= title _('Edit Invoice') %>
+
+<% form_tag( :action => 'update', :id => @invoice )  do %>
+
+  <%= render :partial => 'form'%>
+
+  <%= display_new_info_options @invoice %>
+
+<% end %>
+
+<%= subtitle _('Invoice Items:') %>
+
+<div id="abelo_invoice_items">
+  <%= render :partial => 'invoice_new_items' %>
+</div>
+
+<%= subtitle _("Invoice Payments: ") %>
+
+<div id="abelo_payment">
+  <%= render :partial => 'shared_payments/new_payment'%>
+</div>

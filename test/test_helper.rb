@@ -174,6 +174,8 @@ class Test::Unit::TestCase
 
   def create_stock_buy(params ={})
     invoice = params[:invoice] || @invoice || create_invoice
+    invoice.status = params[:status]
+    invoice.save
     product = params[:product] || @product || create_product
     StockBuy.create!({:supplier => @supplier, :amount => 30, :price => 1.99, :invoice => invoice, :product => product}.merge(params))
   end

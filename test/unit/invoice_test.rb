@@ -168,7 +168,7 @@ class InvoiceTest < Test::Unit::TestCase
   def test_balance
     i = Invoice.new
     Invoice.any_instance.stubs(:total_cost).returns(34)
-    Invoice.any_instance.stubs(:total_payment).returns(20)
+    Invoice.any_instance.stubs(:total_payment).returns(-20)
     assert_equal 14, i.balance
   end
 

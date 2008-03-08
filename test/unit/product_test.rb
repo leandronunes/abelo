@@ -151,10 +151,11 @@ class ProductTest < Test::Unit::TestCase
   end
 
   def test_sum_only_done_stocks
+    Stock.destroy_all
     p = create_product(:name => 'Some Name')
     amount = 90
-    create_stock_in(:product => p, :status => Status::STATUS_DONE, :amount => amount)
-    create_stock_in(:product => p, :status => Status::STATUS_PENDING, :amount => 34)
+    create_stock_buy(:product => p, :status => Status::STATUS_DONE, :amount => amount)
+    create_stock_buy(:product => p, :status => Status::STATUS_PENDING, :amount => 34)
     assert_equal amount, p.amount_in_stock
   end
 

@@ -6,13 +6,13 @@
 <% display_form_info @invoice do |item | %>
 
   <%= display_field_form( item, 'number',
-        :title => _('Number'),
+        :title => _('Invoice Number'),
         :content => text_field( 'invoice', 'number' )
     )
   %>
 
   <%= display_field_form( item, 'serie',
-        :title => _('Serie'),
+        :title => _('Invoice Serie'),
         :content => text_field( 'invoice', 'serie' )
     )
   %>

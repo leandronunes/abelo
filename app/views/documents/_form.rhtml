@@ -19,20 +19,20 @@
 
 <% unless (params[:models_list] and not params[:document_model_id]) %>
 
-  <%= display_field_form(item, 'owner_type', 
+  <%= display_field_form(item, 'owner', 
         :title => _('Customer'),
         :content => radio_button('document', 'document_owner_type', 'customer'),
         :html_options => {:class => 'break_line'}
       )
   %>
 
-  <%= display_field_form(item, 'owner_type', 
+  <%= display_field_form(item, 'owner', 
         :title => _('Supplier'),
         :content => radio_button('document', 'document_owner_type', 'supplier')
       )
   %>
 
-  <%= display_field_form(item, 'owner_type', 
+  <%= display_field_form(item, 'owner', 
         :title => _('Worker'),
         :content => radio_button('document', 'document_owner_type', 'worker')
       )

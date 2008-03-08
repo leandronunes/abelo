@@ -5,6 +5,7 @@ module DocumentsHelper
   #
   # The class of the document can define its icon by providing an +icon+
   # method (i.e. +doc.class.icon+ will be called)
+  #FIXME see if it's correct
   def icon_for_document(doc)
     icon =
       case doc
@@ -20,6 +21,7 @@ module DocumentsHelper
     design_display_icon(icon)
   end
   
+  #FIXME see if it's correct
   def display_document_model_collection(collection = Array.new, params = {}, html_options = {})
 
     content = Array.new
@@ -36,6 +38,7 @@ module DocumentsHelper
 
   end
 
+  #FIXME see if it's correct
   def display_document_model_collection_options(item, params ={})
     content_tag(:div,
       [
@@ -65,6 +68,7 @@ module DocumentsHelper
     )
   end
 
+  #FIXME see if it's correct
   def display_show_info_documents_options(object, params = {},  html_options = {})
     html_options[:class] = html_options[:class].nil? ? 'display_info_options' : 'display_show ' + html_options[:class]
     content_tag(:div,

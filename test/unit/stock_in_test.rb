@@ -91,4 +91,35 @@ class StockInTest < Test::Unit::TestCase
     assert s.errors.invalid?(:validity)
   end
 
+  def test_decimal_value_for_price
+    p = create_stock_in()
+    assert p.valid?
+    p.price = 23
+    assert p.save
+    assert_equal 23, p.price
+    p.price = "23.56"
+    assert p.save
+    assert_equal 2356, p.price
+    p.price = "23,56"
+    assert p.save
+    assert_equal 23.56, p.price
+  end
+
+  def test_price= 
+    p = StockIn.new
+    p.price= '2' 
+    assert_equal 2, p.price
+    p.price= '2.45'
+    assert_equal 245, p.price
+    p.price= '2,45'
+    assert_equal 2.45, p.price
+  end
+
+  def test_status_is_done
+    s = StockDevolution.new()
+    s.valid?
+    assert_equal s.status, Status::STATUS_DONE
+  end
+
+
 end

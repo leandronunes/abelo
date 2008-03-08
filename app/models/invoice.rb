@@ -8,13 +8,13 @@ class Invoice < ActiveRecord::Base
 
   belongs_to :supplier
   belongs_to :organization
-  has_many :stock_ins, :dependent => :destroy
+  has_many :stock_buys, :dependent => :destroy
   has_many :ledgers, :as => :owner, :dependent => :destroy
 
   acts_as_ferret :remote => true, :fields => ['number', 'serie']
 
   before_save do |invoice|
-    invoice.stock_ins.update_all("status = #{invoice.status}") unless invoice.stock_ins.blank?
+    invoice.stock_buys.update_all("status = #{invoice.status}") unless invoice.stock_buys.blank?
   end
 
   def self.full_text_search(q, options = {})
@@ -25,12 +25,12 @@ class Invoice < ActiveRecord::Base
 
   # Return the total cost of a invoice
   def total_cost
-    self.stock_ins.collect(&:total_cost).sum
+    self.stock_buys.collect(&:total_cost).sum
   end
 
   # Return the total amount of a invoice
   def total_amount
-    self.stock_ins.sum(:amount) || 0
+    self.stock_buys.sum(:amount) || 0
   end
 
   # Return all payments made to pay the invoice
@@ -41,7 +41,7 @@ class Invoice < ActiveRecord::Base
   # Return the balance of a invoice. The balance is the total cost
   # minus the all payments made.
   def balance
-    self.total_cost - self.total_payment
+    self.total_cost + self.total_payment
   end 
 
   # Return the description of some fields of the object.

@@ -60,4 +60,10 @@ class TestController < ApplicationController
     end
   end
 
+  def num_to_currency
+    value = params[:value]
+    signal = params[:signal] || true
+    render :inline => "<%= num_to_currency #{value}, #{signal}%>"
+  end
+
 end

@@ -50,7 +50,7 @@
 
   <%= display_field_form( item, 'supplier_id',
         :title => _('Unit Price'),
-        :content => text_field( 'stock', 'price' )
+        :content => text_field( 'stock', 'price', :value => num_to_currency(@stock.price) )
     )
   %>
 <% end %>

@@ -1,15 +1,15 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'stock_down_controller'
+require 'stock_downs_controller'
 
 # Re-raise errors caught by the controller.
-class StockDownController; def rescue_action(e) raise e end; end
+class StockDownsController; def rescue_action(e) raise e end; end
 
-class StockDownControllerTest < Test::Unit::TestCase
+class StockDownsControllerTest < Test::Unit::TestCase
 
   under_organization :some
 
   def setup
-    @controller = StockDownController.new
+    @controller = StockDownsController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     @organization = create_organization(:identifier => 'some')

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: abelo 0.4.2\n"
-"POT-Creation-Date: 2008-02-19 22:19-0300\n"
+"POT-Creation-Date: 2008-03-08 08:14-0300\n"
 "PO-Revision-Date: 2007-01-06 10:39-0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,23 +24,22 @@ msgstr ""
 #: app/helpers/support/display_actions.rb:189
 #: app/helpers/support/display_actions.rb:313
 #: app/helpers/organizations_helper.rb:11 app/helpers/document_helper.rb:43
-#: app/helpers/application_helper.rb:568 app/helpers/application_helper.rb:704
+#: app/helpers/application_helper.rb:572 app/helpers/application_helper.rb:708
 #: app/views/shared_payments/_ledgers_and_edit_on_table.rhtml:18
 #: app/views/shared_payments/_ledgers_and_edit_on_table.rhtml:27
 #: app/views/shared_payments/_ledgers_and_new_on_table.rhtml:18
 #: app/views/users/list.rhtml:11
-#: app/views/shared_financial/_display_financial_table.rhtml:199
+#: app/views/shared_financial/_display_financial_table.rhtml:211
 #: app/views/document_items/_list.rhtml:5
 #: app/views/customer_categories/_list.rhtml:4
 #: app/views/organizations/show.rhtml:10 app/views/configuration/show.rhtml:10
 #: app/views/organization/index.rhtml:1
-#: app/views/stock_base/_display_stock_table.rhtml:24
+#: app/views/stock_base/_display_stock_table.rhtml:23
+#: app/views/stock_buys/_invoice_table_items.rhtml:16
+#: app/views/stock_buys/_invoice_edit_items.rhtml:11
 #: app/views/contact_positions/list.rhtml:15
 #: app/views/product_categories/_list.rhtml:4
-#: app/views/mass_mails/show.rhtml:16
-#: app/views/stock_in/_invoice_table_items.rhtml:16
-#: app/views/stock_in/_invoice_edit_items.rhtml:11
-#: app/views/categories/_list.rhtml:4
+#: app/views/mass_mails/show.rhtml:16 app/views/categories/_list.rhtml:4
 #: app/views/organization_configuration/show.rhtml:263
 #: lib/document_information.rb:137 lib/document_information.rb:148
 msgid "Edit"
@@ -81,7 +80,7 @@ msgstr ""
 #: app/controllers/system_actors_controller.rb:19
 #: app/models/system_actor.rb:49 app/models/document.rb:74
 #: app/models/document_display.rb:14 app/models/category.rb:43
-#: app/models/organization.rb:111 app/views/sales/_sales_table.rhtml:4
+#: app/models/organization.rb:113 app/views/sales/_sales_table.rhtml:4
 #: app/views/point_of_sale/_payment_form.rhtml:4
 #: app/views/documents/_form.rhtml:23 app/views/categories/_menu.rhtml:3
 #: app/views/categories/index.rhtml:5
@@ -95,12 +94,15 @@ msgstr "Trabalhadores"
 
 #: app/controllers/system_actors_controller.rb:21
 #: app/models/system_actor.rb:51 app/models/invoice_display.rb:11
-#: app/models/document.rb:75 app/models/document_display.rb:15
-#: app/models/category.rb:39 app/models/stock_in_display.rb:10
-#: app/views/stock/_form.rhtml:22 app/views/documents/_form.rhtml:30
+#: app/models/stock_buy_display.rb:10 app/models/document.rb:75
+#: app/models/document_display.rb:15 app/models/category.rb:39
+#: app/models/stock_in_display.rb:10 app/views/stock/_form.rhtml:34
+#: app/views/documents/_form.rhtml:30
 #: app/views/stock_base/_display_stock_table.rhtml:4
+#: app/views/stock_buys/_form.rhtml:21 app/views/stock_ins/_form.rhtml:20
+#: app/views/stock_ins/_extended_form.rhtml:26
 #: app/views/products/_new_stock_entry.rhtml:8
-#: app/views/stock_in/_form.rhtml:21 app/views/categories/_menu.rhtml:15
+#: app/views/categories/_menu.rhtml:15
 msgid "Supplier"
 msgstr "Fornecedor"
 
@@ -138,18 +140,18 @@ msgid "Periodicties"
 msgstr "Produtos"
 
 #: app/controllers/tabs/register.rb:14 app/models/category.rb:44
-#: app/models/organization.rb:116 app/views/products/show.rhtml:6
+#: app/models/organization.rb:118 app/views/products/show.rhtml:6
 #: app/views/mass_mails/filter_customers.rhtml:2
 msgid "Customers"
 msgstr "Consumidores"
 
-#: app/controllers/tabs/register.rb:21 app/models/product_display.rb:21
+#: app/controllers/tabs/register.rb:21 app/models/product_display.rb:22
 #: app/models/category.rb:40 app/views/products/_form.rhtml:20
 msgid "Suppliers"
 msgstr "Fornecedores"
 
 #: app/controllers/tabs/register.rb:28 app/models/category.rb:38
-#: app/models/organization.rb:114 app/views/system_actors/_menu.rhtml:6
+#: app/models/organization.rb:116 app/views/system_actors/_menu.rhtml:6
 msgid "Products"
 msgstr "Produtos"
 
@@ -172,9 +174,9 @@ msgstr "Categorias de Livro Caixa"
 #: app/helpers/documents_helper.rb:42
 #: app/helpers/support/display_actions.rb:312
 #: app/helpers/organizations_helper.rb:10 app/helpers/document_helper.rb:41
-#: app/helpers/application_helper.rb:703
-#: app/views/shared_financial/_display_financial_table.rhtml:197
-#: app/views/stock_base/_display_stock_table.rhtml:23
+#: app/helpers/application_helper.rb:707
+#: app/views/shared_financial/_display_financial_table.rhtml:209
+#: app/views/stock_base/_display_stock_table.rhtml:22
 #: lib/document_information.rb:136
 msgid "Show"
 msgstr ""
@@ -190,7 +192,7 @@ msgid "Users and Permissions"
 msgstr "departamento"
 
 #: app/controllers/tabs/admin_organization.rb:37
-#: app/models/organization.rb:113 app/helpers/support/menu.rb:16
+#: app/models/organization.rb:115 app/helpers/support/menu.rb:16
 #: app/views/users/_admin.rhtml:6 app/views/public/index.rhtml:8
 #: lib/describe_menu.rb:20
 msgid "Organizations"
@@ -210,13 +212,17 @@ msgid "Buy"
 msgstr ""
 
 #: app/controllers/tabs/stock.rb:21
-#: app/controllers/stock_devolution_controller.rb:42 app/models/stock.rb:20
+msgid "Stock Replenishment"
+msgstr ""
+
+#: app/controllers/tabs/stock.rb:28
+#: app/controllers/stock_devolutions_controller.rb:42 app/models/stock.rb:21
 #, fuzzy
 msgid "Devolution"
 msgstr "Controle de Estoque"
 
-#: app/controllers/tabs/stock.rb:28
-#: app/controllers/stock_down_controller.rb:42 app/models/stock.rb:19
+#: app/controllers/tabs/stock.rb:35
+#: app/controllers/stock_downs_controller.rb:42 app/models/stock.rb:20
 #, fuzzy
 msgid "Stock Down"
 msgstr "Controle de Estoque"
@@ -288,25 +294,20 @@ msgstr "Departamento criado com sucesso."
 msgid "Department was successfully updated."
 msgstr "Departamento atualizado com sucesso."
 
-#: app/controllers/products_controller.rb:68
-#, fuzzy
-msgid "The product was successfully created and added to stock."
-msgstr "Documento criado com sucesso."
-
-#: app/controllers/products_controller.rb:74
+#: app/controllers/products_controller.rb:65
 #, fuzzy
 msgid "The product was successfully created."
 msgstr "Documento criado com sucesso."
 
-#: app/controllers/products_controller.rb:90
+#: app/controllers/products_controller.rb:81
 msgid "The product was not found"
 msgstr ""
 
-#: app/controllers/products_controller.rb:104
+#: app/controllers/products_controller.rb:95
 msgid "Product was successfully updated."
 msgstr "Produto atualizado com sucesso."
 
-#: app/controllers/products_controller.rb:131
+#: app/controllers/products_controller.rb:122
 msgid "Image was successfully added."
 msgstr "Imagem adicionada com sucesso."
 
@@ -356,47 +357,11 @@ msgstr "Nome"
 msgid "Address"
 msgstr ""
 
-#: app/controllers/stock_down_controller.rb:36
-#, fuzzy
-msgid "Stock Down Control"
-msgstr "Controle de Estoque"
-
-#: app/controllers/stock_down_controller.rb:53
-#: app/controllers/stock_down_controller.rb:73
-#, fuzzy
-msgid "Stock Down of Product"
-msgstr "Produto"
-
-#: app/controllers/stock_down_controller.rb:60
-#: app/controllers/stock_down_controller.rb:76
-#, fuzzy
-msgid "Stock Down of Product %s"
-msgstr "Produto"
-
-#: app/controllers/stock_down_controller.rb:68
-#: app/controllers/stock_devolution_controller.rb:68
-#: app/controllers/stock_base_controller.rb:16
-#: app/controllers/stock_controller.rb:55
-#, fuzzy
-msgid "It was successfully created."
-msgstr "Item criado com sucesso."
-
-#: app/controllers/stock_down_controller.rb:85
-#, fuzzy
-msgid "Stock Down History of %s"
-msgstr "Nova entrada de estoque para %s"
-
-#: app/controllers/stock_down_controller.rb:97
-#: app/controllers/stock_down_controller.rb:108
-#, fuzzy
-msgid "Edit Stock Down of Product"
-msgstr "Produto"
-
-#: app/controllers/ledgers_controller.rb:99
+#: app/controllers/ledgers_controller.rb:101
 msgid "The ledger was successfully created"
 msgstr "Livro caixa criado com sucesso"
 
-#: app/controllers/ledgers_controller.rb:121
+#: app/controllers/ledgers_controller.rb:123
 #, fuzzy
 msgid "The ledger was successfully updated"
 msgstr "Livro caixa criado com sucesso"
@@ -405,34 +370,6 @@ msgstr "Livro caixa criado com sucesso"
 #: app/controllers/users_controller.rb:108
 msgid "User was successfully updated."
 msgstr "Usuário atualizado com sucesso"
-
-#: app/controllers/stock_devolution_controller.rb:36
-#, fuzzy
-msgid "Stock Devolution Control"
-msgstr "Controle de Estoque"
-
-#: app/controllers/stock_devolution_controller.rb:53
-#: app/controllers/stock_devolution_controller.rb:73
-#, fuzzy
-msgid "Devolution of Product"
-msgstr "Controle de Estoque"
-
-#: app/controllers/stock_devolution_controller.rb:60
-#: app/controllers/stock_devolution_controller.rb:76
-#, fuzzy
-msgid "Devolution of Product %s"
-msgstr "Controle de Estoque"
-
-#: app/controllers/stock_devolution_controller.rb:85
-#, fuzzy
-msgid "Devolution History of %s"
-msgstr "Controle de Estoque"
-
-#: app/controllers/stock_devolution_controller.rb:97
-#: app/controllers/stock_devolution_controller.rb:108
-#, fuzzy
-msgid "Edit Devolution of Product"
-msgstr "Controle de Estoque"
 
 #: app/controllers/document_items_controller.rb:35
 msgid "Document proposal item was successfuly updated."
@@ -448,26 +385,26 @@ msgid "%s"
 msgstr ""
 
 #: app/controllers/point_of_sale_controller.rb:59
-#: app/controllers/point_of_sale_controller.rb:343
+#: app/controllers/point_of_sale_controller.rb:341
 msgid "You don't have a printer configured"
 msgstr ""
 
-#: app/controllers/point_of_sale_controller.rb:105
+#: app/controllers/point_of_sale_controller.rb:106
 #, fuzzy
 msgid "The cash was added successfully"
 msgstr "Documento criado com sucesso."
 
-#: app/controllers/point_of_sale_controller.rb:119
+#: app/controllers/point_of_sale_controller.rb:120
 #, fuzzy
 msgid "The cash was removed successfully"
 msgstr "Documento criado com sucesso."
 
-#: app/controllers/point_of_sale_controller.rb:201
+#: app/controllers/point_of_sale_controller.rb:200
 #, fuzzy
 msgid "Invalid product code %s"
 msgstr "Tamanho"
 
-#: app/controllers/point_of_sale_controller.rb:216
+#: app/controllers/point_of_sale_controller.rb:215
 msgid "Only sales supervisor can cancel a coupon"
 msgstr ""
 
@@ -500,11 +437,6 @@ msgstr "Usuário atualizado com sucesso"
 msgid "This configuration cannot be removed"
 msgstr ""
 
-#: app/controllers/stock_base_controller.rb:27
-#, fuzzy
-msgid "It was successfully updated."
-msgstr "Item atualizado com sucesso."
-
 #: app/controllers/bank_accounts_controller.rb:41
 msgid "Cannot show bank account id %s. It wasn't found"
 msgstr ""
@@ -517,6 +449,33 @@ msgstr ""
 #: app/controllers/bank_accounts_controller.rb:98
 msgid "Cannot upload this bank account. It wasn't found"
 msgstr ""
+
+#: app/controllers/stock_ins_controller.rb:42
+#, fuzzy
+msgid "Stock In Control"
+msgstr "Controle de Estoque"
+
+#: app/controllers/stock_ins_controller.rb:48
+#, fuzzy
+msgid "Stock In"
+msgstr "Controle de Estoque"
+
+#: app/controllers/stock_ins_controller.rb:61
+#, fuzzy
+msgid "Stock In of Product"
+msgstr "Produto"
+
+#: app/controllers/stock_ins_controller.rb:115
+#, fuzzy
+msgid "Stock In History of %s"
+msgstr "Nova entrada de estoque para %s"
+
+#: app/controllers/stock_controller.rb:55
+#: app/controllers/stock_devolutions_controller.rb:68
+#: app/controllers/stock_downs_controller.rb:68
+#, fuzzy
+msgid "It was successfully created."
+msgstr "Item criado com sucesso."
 
 #: app/controllers/organizations_controller.rb:39
 #, fuzzy
@@ -568,11 +527,67 @@ msgstr "Você foi desconectado."
 msgid "User was successfully created."
 msgstr "Usuáro criado com sucesso"
 
+#: app/controllers/stock_devolutions_controller.rb:36
+#, fuzzy
+msgid "Stock Devolution Control"
+msgstr "Controle de Estoque"
+
+#: app/controllers/stock_devolutions_controller.rb:53
+#: app/controllers/stock_devolutions_controller.rb:73
+#, fuzzy
+msgid "Devolution of Product"
+msgstr "Controle de Estoque"
+
+#: app/controllers/stock_devolutions_controller.rb:60
+#: app/controllers/stock_devolutions_controller.rb:76
+#, fuzzy
+msgid "Devolution of Product %s"
+msgstr "Controle de Estoque"
+
+#: app/controllers/stock_devolutions_controller.rb:85
+#, fuzzy
+msgid "Devolution History of %s"
+msgstr "Controle de Estoque"
+
+#: app/controllers/stock_devolutions_controller.rb:97
+#: app/controllers/stock_devolutions_controller.rb:108
+#, fuzzy
+msgid "Edit Devolution of Product"
+msgstr "Controle de Estoque"
+
 #: app/controllers/application.rb:229
 msgid ""
 "This system didn't works correctly. Please contact the administrator and "
 "inform the message below."
 msgstr ""
+
+#: app/controllers/stock_downs_controller.rb:36
+#, fuzzy
+msgid "Stock Down Control"
+msgstr "Controle de Estoque"
+
+#: app/controllers/stock_downs_controller.rb:53
+#: app/controllers/stock_downs_controller.rb:73
+#, fuzzy
+msgid "Stock Down of Product"
+msgstr "Produto"
+
+#: app/controllers/stock_downs_controller.rb:60
+#: app/controllers/stock_downs_controller.rb:76
+#, fuzzy
+msgid "Stock Down of Product %s"
+msgstr "Produto"
+
+#: app/controllers/stock_downs_controller.rb:85
+#, fuzzy
+msgid "Stock Down History of %s"
+msgstr "Nova entrada de estoque para %s"
+
+#: app/controllers/stock_downs_controller.rb:97
+#: app/controllers/stock_downs_controller.rb:108
+#, fuzzy
+msgid "Edit Stock Down of Product"
+msgstr "Produto"
 
 #: app/models/product.rb:- app/views/document_items/_form.rhtml:1
 msgid "product"
@@ -581,11 +596,6 @@ msgstr "produto"
 #: app/models/product.rb:-
 #, fuzzy
 msgid "Product|Name"
-msgstr "Tamanho"
-
-#: app/models/product.rb:-
-#, fuzzy
-msgid "Product|Code"
 msgstr "Tamanho"
 
 #: app/models/product.rb:-
@@ -626,11 +636,16 @@ msgstr "Unidade"
 msgid "Product|Info"
 msgstr "Unidade"
 
-#: app/models/product.rb:21
+#: app/models/product.rb:-
+#, fuzzy
+msgid "Product|Code"
+msgstr "Tamanho"
+
+#: app/models/product.rb:23
 msgid "Products must be associated to an organization"
 msgstr ""
 
-#: app/models/product.rb:23
+#: app/models/product.rb:25
 msgid "Every product must belong to a category"
 msgstr ""
 
@@ -638,7 +653,7 @@ msgstr ""
 #: app/models/costumer_category_display.rb:8 app/models/printer_display.rb:9
 #: app/models/profile_display.rb:8 app/models/credit_card_display.rb:20
 #: app/models/category_display.rb:9 app/models/ledger_category_display.rb:9
-#: app/models/product_display.rb:14 app/models/system_actor_display.rb:13
+#: app/models/product_display.rb:16 app/models/system_actor_display.rb:13
 #: app/models/bank_display.rb:13 app/models/document_display.rb:9
 #: app/models/check_display.rb:19 app/models/periodicity_display.rb:9
 #: app/models/department_display.rb:9 app/models/debit_card_display.rb:16
@@ -748,27 +763,30 @@ msgid "Pending Reduction Z"
 msgstr ""
 
 #: app/models/stock_virtual_display.rb:9 app/models/stock_display.rb:11
-#: app/models/category.rb:37 app/models/organization.rb:109
+#: app/models/category.rb:37 app/models/organization.rb:111
 #: app/views/point_of_sale/_table.rhtml:8
 #: app/views/stock_base/_extended_form.rhtml:9
 #: app/views/stock_base/_display_stock_table.rhtml:6
-#: app/views/stock_in/_invoice_table_items.rhtml:2
-#: app/views/stock_in/_invoice_items.rhtml:3
+#: app/views/stock_buys/_invoice_table_items.rhtml:2
+#: app/views/stock_buys/_invoice_items.rhtml:3
+#: app/views/stock_ins/_extended_form.rhtml:9
 #: app/views/system_actors/list_product.rhtml:7
 #: app/views/categories/_menu.rhtml:7 app/views/categories/index.rhtml:4
 msgid "Product"
 msgstr ""
 
 #: app/models/stock_virtual_display.rb:10 app/models/stock_display.rb:10
-#: app/models/stock_out_display.rb:10 app/views/stock/_form.rhtml:33
+#: app/models/stock_out_display.rb:10 app/views/stock/_form.rhtml:40
 #: app/views/point_of_sale/_table.rhtml:10
 #: app/views/point_of_sale/_product_info.rhtml:32
 #: app/views/stock_base/_form.rhtml:9
 #: app/views/stock_base/_extended_form.rhtml:15
 #: app/views/stock_base/_display_stock_table.rhtml:7
+#: app/views/stock_buys/_invoice_table_items.rhtml:4
+#: app/views/stock_buys/_invoice_items.rhtml:5
+#: app/views/stock_ins/_form.rhtml:9
+#: app/views/stock_ins/_extended_form.rhtml:15
 #: app/views/products/_new_stock_entry.rhtml:14
-#: app/views/stock_in/_invoice_table_items.rhtml:4
-#: app/views/stock_in/_invoice_items.rhtml:5
 msgid "Amount"
 msgstr ""
 
@@ -958,7 +976,7 @@ msgstr ""
 msgid "Related Category"
 msgstr "Categorias de Livro Caixa"
 
-#: app/models/stock_down.rb:13 app/models/stock_out.rb:20
+#: app/models/stock_down.rb:14 app/models/stock_out.rb:20
 msgid ""
 "%{fn} must not be larger than the total amount of this product in stock "
 "(which is %d)."
@@ -968,7 +986,7 @@ msgstr ""
 msgid "The name %{fn} for customer category was already taken."
 msgstr ""
 
-#: app/models/ledger_display.rb:26 app/models/product_display.rb:20
+#: app/models/ledger_display.rb:26 app/models/product_display.rb:21
 #: app/models/system_actor_display.rb:16
 #: app/views/shared_payments/_ledgers_and_edit_on_table.rhtml:6
 #: app/views/shared_payments/_table_ledgers.rhtml:6
@@ -989,7 +1007,7 @@ msgstr "Categoria"
 msgid "Payment Method"
 msgstr "Venda"
 
-#: app/models/ledger_display.rb:28
+#: app/models/ledger_display.rb:28 app/models/balance_display.rb:13
 #: app/views/shared_payments/_ledgers_and_edit_on_table.rhtml:8
 #: app/views/shared_payments/_table_ledgers.rhtml:8
 #: app/views/shared_payments/_ledgers_and_new_on_table.rhtml:8
@@ -1001,8 +1019,7 @@ msgstr "Venda"
 msgid "Value"
 msgstr "venda"
 
-#: app/models/ledger_display.rb:29 app/models/product_display.rb:17
-#: app/models/system_actor_display.rb:21
+#: app/models/ledger_display.rb:29 app/models/system_actor_display.rb:21
 #: app/views/shared_payments/_ledgers_and_edit_on_table.rhtml:7
 #: app/views/shared_payments/_table_ledgers.rhtml:7
 #: app/views/shared_payments/_ledgers_and_new_on_table.rhtml:7
@@ -1018,19 +1035,20 @@ msgstr ""
 msgid "Tag List"
 msgstr ""
 
-#: app/models/ledger_display.rb:31 app/models/stock_display.rb:9
-#: app/models/stock_out_display.rb:9
+#: app/models/ledger_display.rb:31 app/models/balance_display.rb:14
+#: app/models/stock_display.rb:9 app/models/stock_out_display.rb:9
 #: app/views/shared_payments/_ledgers_and_edit_on_table.rhtml:4
 #: app/views/shared_payments/_table_ledgers.rhtml:4
 #: app/views/shared_payments/_ledgers_and_new_on_table.rhtml:4
 #: app/views/sales/_sales_table.rhtml:3 app/views/stock/_payment_form.rhtml:4
-#: app/views/stock/_form.rhtml:27 app/views/ledgers/_schedule_ledgers.rhtml:9
+#: app/views/stock/_form.rhtml:28 app/views/ledgers/_schedule_ledgers.rhtml:9
 #: app/views/shared_financial/_display_financial_table.rhtml:164
 #: app/views/stock_base/_form.rhtml:15
 #: app/views/stock_base/_extended_form.rhtml:21
 #: app/views/stock_base/_display_stock_table.rhtml:9
+#: app/views/stock_buys/_form.rhtml:26 app/views/stock_ins/_form.rhtml:14
+#: app/views/stock_ins/_extended_form.rhtml:20
 #: app/views/products/_new_stock_entry.rhtml:26
-#: app/views/stock_in/_form.rhtml:26
 msgid "Date"
 msgstr ""
 
@@ -1057,7 +1075,8 @@ msgstr "Número do cheque"
 msgid "Is Operational?"
 msgstr ""
 
-#: app/models/ledger_display.rb:37 app/views/ledgers/_form.rhtml:6
+#: app/models/ledger_display.rb:37 app/models/balance_display.rb:15
+#: app/views/ledgers/_form.rhtml:6
 #: app/views/shared_financial/_display_financial_table.rhtml:30
 #: app/views/bank_accounts/show.rhtml:2
 msgid "Bank Account"
@@ -1225,29 +1244,29 @@ msgstr "Categorias de Fornecedores"
 msgid "View Product Register"
 msgstr "Categorias de Produtos"
 
-#: app/models/profile.rb:200
+#: app/models/profile.rb:203
 msgid "Sales person"
 msgstr ""
 
-#: app/models/profile.rb:201
+#: app/models/profile.rb:204
 msgid "Sales Supervisor"
 msgstr ""
 
-#: app/models/profile.rb:202 app/helpers/support/menu.rb:13
+#: app/models/profile.rb:205 app/helpers/support/menu.rb:13
 #: lib/describe_menu.rb:8
 msgid "Financial"
 msgstr "Financeiro"
 
-#: app/models/profile.rb:203
+#: app/models/profile.rb:206
 #, fuzzy
 msgid "Organization Management"
 msgstr "Nome"
 
-#: app/models/profile.rb:204 app/views/layouts/default.rhtml:7
+#: app/models/profile.rb:207 app/views/layouts/default.rhtml:7
 msgid "Administration"
 msgstr ""
 
-#: app/models/profile.rb:205
+#: app/models/profile.rb:208
 msgid "Other"
 msgstr ""
 
@@ -1376,28 +1395,28 @@ msgstr "Categorias de Livro Caixa"
 msgid "Sale|Owner"
 msgstr "Usuário"
 
-#: app/models/sale.rb:33
+#: app/models/sale.rb:42
 msgid "You cannot have two pendings sale"
 msgstr ""
 
-#: app/models/sale.rb:38
+#: app/models/sale.rb:47
 msgid "You cannot open a sale with a sale opened"
 msgstr ""
 
-#: app/models/sale.rb:118
+#: app/models/sale.rb:127
 msgid "Only open sales can be cancelled"
 msgstr ""
 
-#: app/models/sale.rb:134
+#: app/models/sale.rb:143
 msgid "Only open sales can be closed"
 msgstr ""
 
-#: app/models/sale.rb:139
+#: app/models/sale.rb:148
 msgid "Only sales with balance equal to zero can be closed"
 msgstr ""
 
-#: app/models/sale.rb:199 app/views/stock_in/_invoice_table_items.rhtml:15
-#: app/views/stock_in/_invoice_items.rhtml:15
+#: app/models/sale.rb:211 app/views/stock_buys/_invoice_table_items.rhtml:15
+#: app/views/stock_buys/_invoice_items.rhtml:15
 msgid "None"
 msgstr ""
 
@@ -1430,11 +1449,13 @@ msgstr ""
 msgid "Credit Card Number"
 msgstr "Número do cartão de crédito"
 
-#: app/models/credit_card_display.rb:18 app/models/stock_in_display.rb:11
+#: app/models/credit_card_display.rb:18 app/models/stock_buy_display.rb:11
+#: app/models/stock_in_display.rb:11
 #: app/views/shared_payments/_payment_credit_card_on_table.rhtml:8
-#: app/views/stock/_form.rhtml:39 app/views/products/_new_stock_entry.rhtml:32
-#: app/views/stock_in/_invoice_table_items.rhtml:6
-#: app/views/stock_in/_invoice_items.rhtml:7
+#: app/views/stock/_form.rhtml:46
+#: app/views/stock_buys/_invoice_table_items.rhtml:6
+#: app/views/stock_buys/_invoice_items.rhtml:7
+#: app/views/products/_new_stock_entry.rhtml:32
 msgid "Validity"
 msgstr ""
 
@@ -1514,6 +1535,29 @@ msgstr "Categoria"
 msgid "Contact|Info"
 msgstr "Telefone"
 
+#: app/models/balance.rb:-
+msgid "balance"
+msgstr ""
+
+#: app/models/balance.rb:-
+#, fuzzy
+msgid "Balance|Value"
+msgstr "Valor"
+
+#: app/models/balance.rb:-
+#, fuzzy
+msgid "Balance|Date"
+msgstr "Data"
+
+#: app/models/balance.rb:-
+#, fuzzy
+msgid "Balance|Bank account"
+msgstr "produto"
+
+#: app/models/balance.rb:12
+msgid "You can't have two balances created for a month"
+msgstr ""
+
 #: app/models/sale_item.rb:-
 msgid "sale item"
 msgstr "item de venda"
@@ -1545,15 +1589,19 @@ msgstr "Situação"
 msgid "SaleItem|Stock"
 msgstr "Situação"
 
-#: app/models/sale_item.rb:44
+#: app/models/sale_item.rb:17
+msgid "You don't have sufficient product in stock"
+msgstr ""
+
+#: app/models/sale_item.rb:45
 msgid "The price must be greater than 0"
 msgstr ""
 
-#: app/models/sale_item.rb:48
+#: app/models/sale_item.rb:49
 msgid "You cannot add a item with the product code %s"
 msgstr ""
 
-#: app/models/sale_item.rb:52
+#: app/models/sale_item.rb:53
 msgid "You have pending add item commands."
 msgstr ""
 
@@ -1676,7 +1724,7 @@ msgstr "Loja"
 
 #: app/models/address_display.rb:13 app/views/stock/_form.rhtml:10
 #: app/views/organization/_form_address.rhtml:35
-#: app/views/stock_in/_form.rhtml:9
+#: app/views/stock_buys/_form.rhtml:9
 #, fuzzy
 msgid "Number"
 msgstr "Número do cheque"
@@ -1725,12 +1773,21 @@ msgstr "Usuário"
 msgid "Till|Organization"
 msgstr "organização"
 
-#: app/models/till.rb:30
+#: app/models/till.rb:31
 msgid "You already have a till open."
 msgstr ""
 
-#: app/models/till.rb:34
+#: app/models/till.rb:35
 msgid "You cannot open a till whithout the printer command"
+msgstr ""
+
+#: app/models/stock_buy.rb:7 app/models/stock_devolution.rb:3
+#: app/models/stock_in.rb:6
+msgid "The amount must be a positive number"
+msgstr ""
+
+#: app/models/stock_buy.rb:31 app/models/stock_in.rb:33
+msgid "The price should be at least 0.01"
 msgstr ""
 
 #: app/models/mass_mail.rb:-
@@ -2534,12 +2591,25 @@ msgstr "Estoque"
 msgid "Invoice|Supplier"
 msgstr "Fornecedor"
 
+#: app/models/invoice.rb:53 app/helpers/application_helper.rb:395
+msgid "Pending"
+msgstr ""
+
+#: app/models/invoice.rb:54 app/helpers/application_helper.rb:397
+msgid "Done"
+msgstr ""
+
+#: app/models/invoice.rb:55 app/helpers/application_helper.rb:396
+#, fuzzy
+msgid "Cancelled"
+msgstr "Livro Caixa"
+
 #: app/models/invoice_display.rb:9
 msgid "Invoice number"
 msgstr ""
 
 #: app/models/invoice_display.rb:10 app/views/stock/_form.rhtml:16
-#: app/views/stock_in/_form.rhtml:15
+#: app/views/stock_buys/_form.rhtml:15
 #, fuzzy
 msgid "Serie"
 msgstr "Preço de venda"
@@ -2552,46 +2622,53 @@ msgstr ""
 msgid "Situação"
 msgstr ""
 
-#: app/models/stock_devolution.rb:3 app/models/stock_in.rb:7
-msgid "The amount must be a positive number"
+#: app/models/stock_devolution.rb:11
+msgid "You canno't make a devolution with status different of done"
 msgstr ""
 
-#: app/models/product_display.rb:13
+#: app/models/product_display.rb:15
 msgid "Image"
 msgstr ""
 
-#: app/models/product_display.rb:15 app/views/products/_form.rhtml:28
+#: app/models/product_display.rb:17 app/views/products/_form.rhtml:28
 msgid "Size"
 msgstr ""
 
-#: app/models/product_display.rb:16 app/views/products/_form.rhtml:40
+#: app/models/product_display.rb:18 app/views/products/_form.rhtml:40
 msgid "Color"
 msgstr ""
 
-#: app/models/product_display.rb:18 app/models/stock_out_display.rb:11
+#: app/models/product_display.rb:19 app/models/stock_out_display.rb:11
 #: app/views/products/_form.rhtml:47
 #, fuzzy
 msgid "Sell Price"
 msgstr "Preço de venda"
 
-#: app/models/product_display.rb:19 app/models/unit.rb:5
+#: app/models/product_display.rb:20 app/models/unit.rb:5
 #: app/views/products/_form.rhtml:34
 msgid "Unit"
 msgstr ""
 
-#: app/models/product_display.rb:22
+#: app/models/product_display.rb:23
 msgid "Amount in Stock"
 msgstr ""
 
-#: app/models/product_display.rb:23 app/views/products/_form.rhtml:59
+#: app/models/product_display.rb:24 app/views/products/_form.rhtml:59
 msgid "Minimum Amount"
 msgstr ""
 
-#: app/models/product_display.rb:24 app/models/system_actor_display.rb:23
-#: app/views/products/_form.rhtml:65 app/views/system_actors/_form.rhtml:75
+#: app/models/product_display.rb:25 app/models/system_actor_display.rb:23
+#: app/views/products/_form.rhtml:71 app/views/system_actors/_form.rhtml:75
 #, fuzzy
 msgid "Additional Information"
 msgstr "Categorias de Produtos"
+
+#: app/models/product_display.rb:26 app/models/bank_display.rb:14
+#: app/views/banks/_form.rhtml:12 app/views/point_of_sale/_table.rhtml:7
+#: app/views/products/_form.rhtml:65
+#, fuzzy
+msgid "Code"
+msgstr "Modelos"
 
 #: app/models/domain.rb:-
 msgid "domain"
@@ -2638,10 +2715,6 @@ msgstr ""
 #, fuzzy
 msgid "Periodicity|Organization"
 msgstr "Organização"
-
-#: app/models/stock_in.rb:26
-msgid "The price should be at least 0.01"
-msgstr ""
 
 #: app/models/image.rb:-
 msgid "image"
@@ -2704,6 +2777,11 @@ msgstr "Configurações"
 msgid "Template"
 msgstr ""
 
+#: app/models/stock_buy_display.rb:12 app/models/stock_in_display.rb:12
+#: app/views/products/_new_stock_entry.rhtml:20
+msgid "Buy Price"
+msgstr ""
+
 #: app/models/system_actor_display.rb:15 app/views/users/_form.rhtml:6
 #: app/views/system_actors/_form.rhtml:57
 msgid "Email"
@@ -2744,12 +2822,12 @@ msgstr ""
 #: app/views/shared_payments/_payment_debit_card_on_table.rhtml:7
 #: app/views/shared_payments/_payment_check_on_table.rhtml:7
 #: app/views/shared_payments/_payment_debit_card.rhtml:16
-#: app/views/bank_accounts/_form.rhtml:22
+#: app/views/bank_accounts/_form.rhtml:14
 msgid "Agency"
 msgstr ""
 
 #: app/models/bank_account_display.rb:12
-#: app/views/bank_accounts/_form.rhtml:34
+#: app/views/bank_accounts/_form.rhtml:27
 #, fuzzy
 msgid "Variation"
 msgstr "organização"
@@ -2760,7 +2838,7 @@ msgstr "organização"
 #: app/views/shared_payments/_payment_debit_card_on_table.rhtml:8
 #: app/views/shared_payments/_payment_check_on_table.rhtml:8
 #: app/views/shared_payments/_payment_debit_card.rhtml:21
-#: app/views/bank_accounts/_form.rhtml:28
+#: app/views/bank_accounts/_form.rhtml:21
 #, fuzzy
 msgid "Account"
 msgstr "Quantidade: "
@@ -2793,12 +2871,6 @@ msgstr ""
 #: app/models/bank.rb:-
 msgid "Bank|Site"
 msgstr ""
-
-#: app/models/bank_display.rb:14 app/views/banks/_form.rhtml:12
-#: app/views/point_of_sale/_table.rhtml:7
-#, fuzzy
-msgid "Code"
-msgstr "Modelos"
 
 #: app/models/bank_display.rb:15 app/views/banks/_form.rhtml:18
 #, fuzzy
@@ -2917,7 +2989,7 @@ msgstr "Apelido"
 msgid "The name %{fn} for a product category was already taken."
 msgstr ""
 
-#: app/models/document_display.rb:11 app/models/organization.rb:115
+#: app/models/document_display.rb:11 app/models/organization.rb:117
 #: app/views/documents/_form.rhtml:14
 #: app/views/shared_document/_document_form.rhtml:15 lib/describe_menu.rb:19
 msgid "Departments"
@@ -3027,6 +3099,10 @@ msgid "Stock|Invoice"
 msgstr "Produto"
 
 #: app/models/stock.rb:18
+msgid "Entrada em Estoque"
+msgstr ""
+
+#: app/models/stock.rb:19
 msgid "Sell"
 msgstr ""
 
@@ -3100,14 +3176,6 @@ msgid "bank account"
 msgstr ""
 
 #: app/models/bank_account.rb:-
-msgid "BankAccount|Owner type"
-msgstr ""
-
-#: app/models/bank_account.rb:-
-msgid "BankAccount|Owner"
-msgstr ""
-
-#: app/models/bank_account.rb:-
 msgid "BankAccount|Bank"
 msgstr ""
 
@@ -3133,7 +3201,12 @@ msgstr ""
 msgid "BankAccount|Description"
 msgstr "Descrição"
 
-#: app/models/bank_account.rb:6
+#: app/models/bank_account.rb:-
+#, fuzzy
+msgid "BankAccount|Organization"
+msgstr "Descrição"
+
+#: app/models/bank_account.rb:7
 msgid "Bank Accounts must be associated to an Bank"
 msgstr ""
 
@@ -3381,46 +3454,56 @@ msgstr "Número da conta do cheque"
 msgid "Ledger|Payment method"
 msgstr "Categorias de Livro Caixa"
 
-#: app/models/ledger.rb:87
+#: app/models/ledger.rb:-
+#, fuzzy
+msgid "Ledger|Organization"
+msgstr "Organização"
+
+#: app/models/ledger.rb:86
 msgid "You cannot schedule an add cash"
 msgstr ""
 
-#: app/models/ledger.rb:91
-msgid "The value must be minor or equal to 0"
+#: app/models/ledger.rb:90
+msgid "The value must be minor than 0"
 msgstr ""
 
-#: app/models/ledger.rb:95 app/models/ledger.rb:99
+#: app/models/ledger.rb:94
+msgid "You cannot have an remove cash with type different of %s"
+msgstr ""
+
+#: app/models/ledger.rb:98
 msgid "You cannot have an add cash with type different of %s"
 msgstr ""
 
-#: app/models/ledger.rb:103
+#: app/models/ledger.rb:102
 msgid "You cannot realize money operations whithout create the printer command"
 msgstr ""
 
-#: app/models/ledger.rb:106 app/models/ledger.rb:108
+#: app/models/ledger.rb:105
 msgid "The value should be at least 0.01"
 msgstr ""
 
-#: app/models/ledger.rb:110
+#: app/models/ledger.rb:107
 msgid "Date cannot be set"
 msgstr ""
 
-#: app/models/ledger.rb:113
-msgid "You canno't have a payment method not include in payment category list."
+#: app/models/ledger.rb:110
+msgid "You can't have a payment method not include in payment category list."
 msgstr ""
 
-#: app/models/ledger.rb:386 app/models/ledger.rb:393 app/models/ledger.rb:400
-#: app/models/ledger.rb:407
+#: app/models/ledger.rb:114
+msgid ""
+"You can't set this ledger as a effective ledger because the date of the "
+"ledger is in the future."
+msgstr ""
+
+#: app/models/ledger.rb:418 app/models/ledger.rb:425 app/models/ledger.rb:432
+#: app/models/ledger.rb:439
 msgid "This function cannot be accessed directly"
 msgstr ""
 
 #: app/models/periodicity_display.rb:10 app/views/periodicities/_form.rhtml:14
 msgid "Number of Days"
-msgstr ""
-
-#: app/models/stock_in_display.rb:12
-#: app/views/products/_new_stock_entry.rhtml:20
-msgid "Buy Price"
 msgstr ""
 
 #: app/models/organization.rb:-
@@ -3475,33 +3558,33 @@ msgstr "Apelido"
 msgid "Organization|Responsible person"
 msgstr "Nome"
 
-#: app/models/organization.rb:85
+#: app/models/organization.rb:87
 msgid "%{fn} is not valid."
 msgstr ""
 
-#: app/models/organization.rb:108
+#: app/models/organization.rb:110
 #, fuzzy
 msgid "Organization"
 msgstr "organização"
 
-#: app/models/organization.rb:110
+#: app/models/organization.rb:112
 #, fuzzy
 msgid "Department"
 msgstr "departamento"
 
-#: app/models/organization.rb:112
+#: app/models/organization.rb:114
 msgid "Commercial Proposal"
 msgstr ""
 
-#: app/models/organization.rb:117
+#: app/models/organization.rb:119
 msgid "Commercial Proposals"
 msgstr ""
 
-#: app/models/organization.rb:141
+#: app/models/organization.rb:143
 msgid "You cannot change the organization properties on demonstration version"
 msgstr ""
 
-#: app/models/organization.rb:161
+#: app/models/organization.rb:163
 msgid "An existing organization cannot be renamed."
 msgstr ""
 
@@ -3585,28 +3668,28 @@ msgstr ""
 
 #: app/helpers/point_of_sale_helper.rb:12
 #: app/helpers/support/display_actions.rb:13
-#: app/helpers/application_helper.rb:62
+#: app/helpers/application_helper.rb:55
 #: app/views/point_of_sale/popup_product.rhtml:8
 #: app/views/point_of_sale/popup_customer.rhtml:8
 msgid "Search"
 msgstr ""
 
 #: app/helpers/stock_helper.rb:21 app/helpers/support/display_actions.rb:326
-#: app/helpers/application_helper.rb:717
+#: app/helpers/application_helper.rb:721
 msgid "New entry"
 msgstr "Nova entrada"
 
 #: app/helpers/stock_helper.rb:22 app/helpers/support/display_actions.rb:327
-#: app/helpers/application_helper.rb:718
+#: app/helpers/application_helper.rb:722
 msgid "History"
 msgstr "Histórico"
 
 #: app/helpers/documents_helper.rb:50
 #: app/helpers/support/display_actions.rb:314
 #: app/helpers/organizations_helper.rb:12 app/helpers/document_helper.rb:45
-#: app/helpers/application_helper.rb:52 app/helpers/application_helper.rb:705
+#: app/helpers/application_helper.rb:45 app/helpers/application_helper.rb:709
 #: app/views/customer_categories/_list.rhtml:5
-#: app/views/stock_base/_display_stock_table.rhtml:25
+#: app/views/stock_base/_display_stock_table.rhtml:24
 #: app/views/contact_positions/list.rhtml:16
 #: app/views/product_categories/_list.rhtml:5
 #: app/views/categories/_list.rhtml:5 lib/document_information.rb:138
@@ -3616,8 +3699,9 @@ msgstr ""
 #: app/helpers/documents_helper.rb:54
 #: app/helpers/support/display_actions.rb:315
 #: app/helpers/organizations_helper.rb:13 app/helpers/document_helper.rb:47
-#: app/helpers/application_helper.rb:52 app/helpers/application_helper.rb:706
+#: app/helpers/application_helper.rb:45 app/helpers/application_helper.rb:710
 #: app/views/customer_categories/_list.rhtml:5
+#: app/views/stock_base/_display_stock_table.rhtml:24
 #: app/views/contact_positions/list.rhtml:16
 #: app/views/product_categories/_list.rhtml:5
 #: app/views/categories/_list.rhtml:5 lib/document_information.rb:139
@@ -3632,7 +3716,7 @@ msgstr "departamento"
 #: app/helpers/documents_helper.rb:72
 #: app/helpers/support/display_actions.rb:188
 #: app/helpers/support/display_actions.rb:216
-#: app/helpers/application_helper.rb:572 app/views/organizations/show.rhtml:9
+#: app/helpers/application_helper.rb:576 app/views/organizations/show.rhtml:9
 #: app/views/products/images.rhtml:28 app/views/mass_mails/show.rhtml:17
 #: app/views/mass_mails/filter_categories.rhtml:8
 #: app/views/mass_mails/attach.rhtml:10 lib/document_information.rb:147
@@ -3661,18 +3745,18 @@ msgid "Point of sale"
 msgstr ""
 
 #: app/helpers/support/display_actions.rb:14
-#: app/helpers/application_helper.rb:63
+#: app/helpers/application_helper.rb:56
 msgid "Add New"
 msgstr ""
 
 #: app/helpers/support/display_actions.rb:15
-#: app/helpers/application_helper.rb:64
+#: app/helpers/application_helper.rb:57
 #, fuzzy
 msgid "Reset search"
 msgstr "Cadastro"
 
 #: app/helpers/support/display_actions.rb:217
-#: app/helpers/application_helper.rb:576 app/views/users/new.rhtml:5
+#: app/helpers/application_helper.rb:580 app/views/users/new.rhtml:5
 #: app/views/users/edit.rhtml:5 app/views/point_of_sale/_cash_form.rhtml:14
 #: app/views/point_of_sale/_form_open_till.rhtml:7
 #: app/views/document_items/_edit.rhtml:9
@@ -3688,27 +3772,27 @@ msgid "Save"
 msgstr ""
 
 #: app/helpers/support/display_actions.rb:218
-#: app/helpers/application_helper.rb:580 app/views/departments/_new.rhtml:9
+#: app/helpers/application_helper.rb:584 app/views/departments/_new.rhtml:9
 #: app/views/products/_new.rhtml:9 app/views/system_actors/_new.rhtml:10
 msgid "Reset"
 msgstr ""
 
 #: app/helpers/support/display_actions.rb:270
-#: app/helpers/application_helper.rb:657
+#: app/helpers/application_helper.rb:661
 #, fuzzy
 msgid "False"
 msgstr "venda"
 
 #: app/helpers/support/display_actions.rb:274
-#: app/helpers/application_helper.rb:665
+#: app/helpers/application_helper.rb:669
 msgid "True"
 msgstr ""
 
-#: app/helpers/application_helper.rb:29
+#: app/helpers/application_helper.rb:22
 msgid "%{year}/%{month}/%{day}"
 msgstr ""
 
-#: app/helpers/application_helper.rb:110 app/views/layouts/login.rhtml:5
+#: app/helpers/application_helper.rb:103 app/views/layouts/login.rhtml:5
 #: app/views/layouts/organization.rhtml:5 app/views/layouts/default.rhtml:27
 #: app/views/layouts/point_of_sale.rhtml:5
 #: app/views/layouts/point_of_sale.rhtml:42
@@ -3716,39 +3800,39 @@ msgstr ""
 msgid "Abelo"
 msgstr ""
 
-#: app/helpers/application_helper.rb:237 app/helpers/application_helper.rb:305
+#: app/helpers/application_helper.rb:230 app/helpers/application_helper.rb:298
 msgid "Break Line"
 msgstr ""
 
-#: app/helpers/application_helper.rb:246 app/helpers/application_helper.rb:314
+#: app/helpers/application_helper.rb:239 app/helpers/application_helper.rb:307
 msgid "Display in List?"
 msgstr ""
 
-#: app/helpers/application_helper.rb:256 app/helpers/application_helper.rb:324
+#: app/helpers/application_helper.rb:249 app/helpers/application_helper.rb:317
 msgid "Display Title?"
 msgstr ""
 
-#: app/helpers/application_helper.rb:390
+#: app/helpers/application_helper.rb:383
 msgid "Abelo %s - Copyrigth &copy; 2007 %s. This software is under %s"
 msgstr ""
 
-#: app/helpers/application_helper.rb:390
+#: app/helpers/application_helper.rb:383
 msgid "Colivre"
 msgstr ""
 
-#: app/helpers/application_helper.rb:390
+#: app/helpers/application_helper.rb:383
 msgid "GPLv3"
 msgstr ""
 
-#: app/helpers/application_helper.rb:752
+#: app/helpers/application_helper.rb:756
 msgid "Tags:"
 msgstr ""
 
-#: app/helpers/application_helper.rb:770
+#: app/helpers/application_helper.rb:774
 msgid "%d/%m/%Y: %T"
 msgstr ""
 
-#: app/helpers/application_helper.rb:770
+#: app/helpers/application_helper.rb:774
 msgid "%d/%m/%Y"
 msgstr ""
 
@@ -4019,7 +4103,7 @@ msgstr "departamento"
 #: app/views/shared_payments/_table_ledgers.rhtml:9
 #: app/views/shared_payments/_ledgers_and_new_on_table.rhtml:9
 #: app/views/ledgers/_schedule_ledgers.rhtml:11
-#: app/views/stock_in/_invoice_table_items.rhtml:7
+#: app/views/stock_buys/_invoice_table_items.rhtml:7
 msgid "Options"
 msgstr ""
 
@@ -4041,15 +4125,15 @@ msgstr "Telefone"
 
 #: app/views/shared_payments/_table_ledgers.rhtml:26
 #: app/views/shared_payments/_ledgers_and_new_on_table.rhtml:27
+#: app/views/stock_buys/_invoice_new_items.rhtml:12
 #: app/views/products/images.rhtml:27 app/views/mass_mails/attach.rhtml:9
-#: app/views/stock_in/_invoice_new_items.rhtml:12
 msgid "Add"
 msgstr ""
 
 #: app/views/shared_payments/_ledgers_and_new_on_table.rhtml:35
-#: app/views/stock_in/_invoice_new_items.rhtml:15
-#: app/views/stock_in/_invoice_items.rhtml:19
-#: app/views/stock_in/_invoice_edit_items.rhtml:14
+#: app/views/stock_buys/_invoice_new_items.rhtml:15
+#: app/views/stock_buys/_invoice_items.rhtml:19
+#: app/views/stock_buys/_invoice_edit_items.rhtml:14
 #, fuzzy
 msgid "Total:"
 msgstr "Loja"
@@ -4089,8 +4173,8 @@ msgstr ""
 
 #: app/views/sales/_sales_table.rhtml:5 app/views/ledgers/_budget.rhtml:37
 #: app/views/point_of_sale/_table.rhtml:27
-#: app/views/stock_in/_invoice_table_items.rhtml:5
-#: app/views/stock_in/_invoice_items.rhtml:6
+#: app/views/stock_buys/_invoice_table_items.rhtml:5
+#: app/views/stock_buys/_invoice_items.rhtml:6
 #: app/design_blocks/financial_forecasting/views/index.rhtml:36
 msgid "Total"
 msgstr ""
@@ -4101,13 +4185,13 @@ msgid "Confimr Ledger"
 msgstr "Livro Caixa"
 
 #: app/views/sales/_sales_table.rhtml:13
-#: app/views/shared_financial/_display_financial_table.rhtml:178
+#: app/views/shared_financial/_display_financial_table.rhtml:190
 #, fuzzy
 msgid "Foreseen Ledger"
 msgstr "Livro Caixa"
 
 #: app/views/sales/_sales_table.rhtml:15
-#: app/views/shared_financial/_display_financial_table.rhtml:180
+#: app/views/shared_financial/_display_financial_table.rhtml:192
 #, fuzzy
 msgid "Cancelled Ledger"
 msgstr "Livro Caixa"
@@ -4127,9 +4211,14 @@ msgstr ""
 msgid "table"
 msgstr "venda"
 
-#: app/views/stock/_form.rhtml:45
-#: app/views/stock_in/_invoice_table_items.rhtml:3
-#: app/views/stock_in/_invoice_items.rhtml:4
+#: app/views/stock/_form.rhtml:22 app/views/stock_buys/_form.rhtml:32
+#, fuzzy
+msgid "Status"
+msgstr "Situação"
+
+#: app/views/stock/_form.rhtml:52
+#: app/views/stock_buys/_invoice_table_items.rhtml:3
+#: app/views/stock_buys/_invoice_items.rhtml:4
 #, fuzzy
 msgid "Unit Price"
 msgstr "Preço de venda"
@@ -4143,7 +4232,7 @@ msgstr "Nova entrada de estoque para %s"
 msgid "Edit stock for %s"
 msgstr "Edição de entrada de estoque para %s"
 
-#: app/views/stock/edit.rhtml:11 app/views/stock_in/edit.rhtml:18
+#: app/views/stock/edit.rhtml:11 app/views/stock_buys/edit.rhtml:18
 #, fuzzy
 msgid "Invoice Payments: "
 msgstr "pagamento"
@@ -4414,40 +4503,48 @@ msgstr ""
 msgid "Operation"
 msgstr ""
 
-#: app/views/shared_financial/_display_financial_table.rhtml:176
+#: app/views/shared_financial/_display_financial_table.rhtml:177
+msgid "Last Balance"
+msgstr ""
+
+#: app/views/shared_financial/_display_financial_table.rhtml:178
+msgid "Month %s"
+msgstr ""
+
+#: app/views/shared_financial/_display_financial_table.rhtml:188
 #, fuzzy
 msgid "Confirm Ledger"
 msgstr "Livro Caixa"
 
-#: app/views/shared_financial/_display_financial_table.rhtml:185
+#: app/views/shared_financial/_display_financial_table.rhtml:197
 msgid "Point of Sale: Sale %s"
 msgstr ""
 
-#: app/views/shared_financial/_display_financial_table.rhtml:187
+#: app/views/shared_financial/_display_financial_table.rhtml:199
 msgid "Point of Sale: Money Added to Cash"
 msgstr ""
 
-#: app/views/shared_financial/_display_financial_table.rhtml:189
+#: app/views/shared_financial/_display_financial_table.rhtml:201
 msgid "Point of Sale: Money Removed to Cash"
 msgstr ""
 
-#: app/views/shared_financial/_display_financial_table.rhtml:200
+#: app/views/shared_financial/_display_financial_table.rhtml:212
 #: app/views/document_items/_list.rhtml:6
 #: app/views/document_sections/_list.rhtml:10
 #: app/design_blocks/favorite_links/views/manage_links.rhtml:18
 msgid "Remove"
 msgstr ""
 
-#: app/views/shared_financial/_display_financial_table.rhtml:206
+#: app/views/shared_financial/_display_financial_table.rhtml:218
 msgid "Partial Total"
 msgstr ""
 
-#: app/views/shared_financial/_display_financial_table.rhtml:209
-#: app/views/shared_financial/_display_financial_table.rhtml:215
+#: app/views/shared_financial/_display_financial_table.rhtml:221
+#: app/views/shared_financial/_display_financial_table.rhtml:227
 msgid "Balance: %s"
 msgstr ""
 
-#: app/views/shared_financial/_display_financial_table.rhtml:212
+#: app/views/shared_financial/_display_financial_table.rhtml:224
 msgid "Geral Total"
 msgstr ""
 
@@ -4468,7 +4565,8 @@ msgstr ""
 msgid "Unitary price"
 msgstr ""
 
-#: app/views/point_of_sale/_table.rhtml:11
+#: app/views/point_of_sale/_table.rhtml:11 app/views/stock_ins/_form.rhtml:26
+#: app/views/stock_ins/_extended_form.rhtml:32
 msgid "Price"
 msgstr ""
 
@@ -4977,13 +5075,54 @@ msgid "%s of %s on %s"
 msgstr ""
 
 #: app/views/stock_base/_display_stock_table.rhtml:5
-#: app/views/stock_in/show.rhtml:2
+#: app/views/stock_buys/show.rhtml:2 app/views/stock_ins/show.rhtml:2
 msgid "Invoice"
 msgstr ""
 
 #: app/views/stock_base/_display_stock_table.rhtml:8
 msgid "Price (R$) "
 msgstr ""
+
+#: app/views/stock_buys/new.rhtml:2
+#, fuzzy
+msgid "New Invoice"
+msgstr "departamento"
+
+#: app/views/stock_buys/list.rhtml:1
+#, fuzzy
+msgid "Invoice Control"
+msgstr "Controle de Estoque"
+
+#: app/views/stock_buys/show.rhtml:6 app/views/stock_ins/show.rhtml:6
+msgid "Items"
+msgstr ""
+
+#: app/views/stock_buys/edit.rhtml:2
+msgid "Edit Invoice"
+msgstr ""
+
+#: app/views/stock_buys/edit.rhtml:12
+msgid "Invoice Items:"
+msgstr ""
+
+#: app/views/stock_ins/new.rhtml:2
+#, fuzzy
+msgid "New Stock In"
+msgstr "Controle de Estoque"
+
+#: app/views/stock_ins/add.rhtml:2
+#, fuzzy
+msgid "Stock Replenishment of Product %s"
+msgstr "Produto"
+
+#: app/views/stock_ins/edit.rhtml:2
+msgid "Edit Product Stock Replenishment"
+msgstr ""
+
+#: app/views/stock_ins/edit.rhtml:12
+#, fuzzy
+msgid "Payments: "
+msgstr "pagamento"
 
 #: app/views/public/edit_user.rhtml:2 app/views/permissions_base/edit.rhtml:2
 #, fuzzy
@@ -5088,7 +5227,7 @@ msgstr "produto"
 msgid "Adding New Bank Account"
 msgstr ""
 
-#: app/views/bank_accounts/_form.rhtml:15
+#: app/views/bank_accounts/_form.rhtml:33
 msgid "Is it the default bank account?"
 msgstr ""
 
@@ -5252,28 +5391,6 @@ msgstr "departamento"
 #, fuzzy
 msgid "User %s"
 msgstr "Usuários"
-
-#: app/views/stock_in/new.rhtml:2
-#, fuzzy
-msgid "New Invoice"
-msgstr "departamento"
-
-#: app/views/stock_in/list.rhtml:1
-#, fuzzy
-msgid "Invoice Control"
-msgstr "Controle de Estoque"
-
-#: app/views/stock_in/show.rhtml:6
-msgid "Items"
-msgstr ""
-
-#: app/views/stock_in/edit.rhtml:2
-msgid "Edit Invoice"
-msgstr ""
-
-#: app/views/stock_in/edit.rhtml:12
-msgid "Invoice Items:"
-msgstr ""
 
 #: app/views/system_actors/_menu.rhtml:2
 msgid "Personal Data"
@@ -5464,6 +5581,14 @@ msgid "Administration of users"
 msgstr ""
 
 #, fuzzy
+#~ msgid "The product was successfully created and added to stock."
+#~ msgstr "Documento criado com sucesso."
+
+#, fuzzy
+#~ msgid "It was successfully updated."
+#~ msgstr "Item atualizado com sucesso."
+
+#, fuzzy
 #~ msgid "Sintegra File was successfully created."
 #~ msgstr "Categoria criada com sucesso."
 
@@ -5571,9 +5696,6 @@ msgstr ""
 
 #~ msgid "Payment|Date"
 #~ msgstr "Data"
-
-#~ msgid "Payment|Value"
-#~ msgstr "Valor"
 
 #~ msgid "Payment|Type"
 #~ msgstr "Tipo"
@@ -5715,6 +5837,3 @@ msgstr ""
 
 #~ msgid "Worker|Function"
 #~ msgstr "Função"
-
-#~ msgid "Worker|Organization"
-#~ msgstr "Organização"

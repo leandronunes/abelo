@@ -130,10 +130,13 @@ class Profile < ActiveRecord::Base
     'organization_management' => [
       { 'controller' => 'categories', 'action' => '*' },
       { 'controller' => 'stock', 'action' => '*' },
-      { 'controller' => 'stock_in', 'action' => '*' },
-      { 'controller' => 'stock_devolution', 'action' => '*' },
-      { 'controller' => 'stock_out', 'action' => '*' },
-      { 'controller' => 'stock_down', 'action' => '*' },
+      { 'controller' => 'stock_buys', 'action' => '*' },
+#      { 'controller' => 'stock_base', 'action' => '*' },
+      { 'controller' => 'stock_ins', 'action' => '*' },
+# FIXME remove this
+#      { 'controller' => 'stock_ins', 'action' => '*' },
+      { 'controller' => 'stock_devolutions', 'action' => '*' },
+      { 'controller' => 'stock_downs', 'action' => '*' },
       { 'controller' => 'permissions', 'action' => '*' },
       { 'controller' => 'system_actors', 'action' => '*' },
       { 'controller' => 'point_of_sale', 'action' => '*' },

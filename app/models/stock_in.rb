@@ -1,25 +1,32 @@
 class StockIn < Stock
 
-  validates_presence_of :invoice_id
   validates_presence_of :supplier_id
   validates_presence_of :price
   validates_numericality_of :price
   validates_inclusion_of :amount, :in => InfiniteSet::POSITIVES, :if => lambda { |s| !s.amount.nil? } , :message => _('The amount must be a positive number')
+  has_many :ledgers, :as => :owner
 
   belongs_to :supplier
-  belongs_to :invoice
-#TODO remove it
-#  has_many :ledgers, :as => :owner
 
   before_validation do |stock|
-    unless stock.invoice.nil?
-      stock.date = stock.invoice.issue_date 
-      stock.supplier = stock.invoice.supplier
-    end
+    stock.status = Status::STATUS_DONE
   end
 
+  # Return the total cost of the buy
   def total_cost
     self.amount * self.price
+  end
+
+  #FIXME make this test
+  def total_payment
+    self.ledgers.sum(:foreseen_value) || 0
+  end
+  
+  # Returns the difference between the total cost and
+  # the total payment made, this the the balance.
+  #FIXME make this test
+  def balance
+    self.total_cost + self.total_payment
   end
 
   def validate

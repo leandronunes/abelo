@@ -75,34 +75,34 @@ class InvoiceTest < Test::Unit::TestCase
     assert !i.errors.invalid?(:status)
   end
 
-  def test_destroy_stock_ins_when_invoice_is_destroyed
+  def test_destroy_stock_buys_when_invoice_is_destroyed
     i = create_invoice
-    stock_in_count = StockIn.count
-    stock_in = create_stock_in(:product => @product, :invoice => i)
+    stock_in_count = StockBuy.count
+    stock_in = create_stock_buy(:product => @product, :invoice => i)
     assert stock_in.save
     p = create_product(:name => 'some')
-    stock_in = create_stock_in(:product => p, :invoice => i )
+    stock_in = create_stock_buy(:product => p, :invoice => i )
     assert stock_in.save
     i.reload
     assert i.destroy
-    assert_equal stock_in_count, StockIn.count
+    assert_equal stock_in_count, StockBuy.count
   end
 
 
   def test_change_stock_status_when_change_the_invoice_status
-    StockIn.destroy_all
+    StockBuy.destroy_all
     i = create_invoice(:status => Status::STATUS_PENDING)
-    create_stock_in(:product => @product, :status => Status::STATUS_PENDING, :invoice => i)
+    create_stock_buy(:product => @product, :status => Status::STATUS_PENDING, :invoice => i)
     p = create_product(:name => 'some')
-    create_stock_in(:product => p, :status => Status::STATUS_PENDING, :invoice => i)
+    create_stock_buy(:product => p, :status => Status::STATUS_PENDING, :invoice => i)
     i.reload
-    i.stock_ins.each do |s|
+    i.stock_buys.each do |s|
       assert_equal Status::STATUS_PENDING, s.status
     end
     i.status = Status::STATUS_DONE
     i.save
     i.reload
-    i.stock_ins.each do |s|
+    i.stock_buys.each do |s|
       assert_equal Status::STATUS_DONE, s.status
     end
   end
@@ -122,13 +122,13 @@ class InvoiceTest < Test::Unit::TestCase
     stock_in1.stubs(:total_cost).returns(23)
     stock_in2 = mock()
     stock_in2.stubs(:total_cost).returns(15)
-    Invoice.any_instance.stubs(:stock_ins).returns([stock_in1, stock_in2])
+    Invoice.any_instance.stubs(:stock_buys).returns([stock_in1, stock_in2])
     i = Invoice.new
     assert_equal 38, i.total_cost
   end
 
-  def test_total_cost_whithout_stock_ins_on_invoice
-    Invoice.any_instance.stubs(:stock_ins).returns([])
+  def test_total_cost_whithout_stock_buys_on_invoice
+    Invoice.any_instance.stubs(:stock_buys).returns([])
     i = Invoice.new
     assert_equal 0, i.total_cost
   end
@@ -139,15 +139,15 @@ class InvoiceTest < Test::Unit::TestCase
 #    stock_in1.stubs(:amount).returns(4)
 #    stock_in2 = mock()
 #    stock_in2.stubs(:amount).returns(7)
-#    Invoice.any_instance.stubs(:stock_ins).returns([stock_in1, stock_in2])
+#    Invoice.any_instance.stubs(:stock_buys).returns([stock_in1, stock_in2])
     i = create_invoice
-    create_stock_in(:amount => 11, :invoice => i)
-    create_stock_in(:amount => 7, :invoice => i)
+    create_stock_buy(:amount => 11, :invoice => i)
+    create_stock_buy(:amount => 7, :invoice => i)
     i.reload
     assert_equal 18, i.total_amount
   end
 
-  def test_total_amount_whithout_stock_ins_on_invoice
+  def test_total_amount_whithout_stock_buys_on_invoice
     i = create_invoice
     assert_equal 0, i.total_amount
   end
@@ -160,7 +160,7 @@ class InvoiceTest < Test::Unit::TestCase
     assert_equal 30, i.total_payment
   end
 
-  def test_total_payment_whithout_stock_ins_on_invoice
+  def test_total_payment_whithout_stock_buys_on_invoice
     i = create_invoice
     assert_equal 0, i.total_payment
   end

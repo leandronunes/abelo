@@ -15,6 +15,22 @@ class ApplicationControllerTest < Test::Unit::TestCase
     login_as('quentin')
   end
 
+  def test_num_to_currency_with_signal
+    get :num_to_currency, :value => 23
+    assert_tag :content => '23,00'
+
+    get :num_to_currency, :value => '-23'
+    assert_tag :content => '-23,00'
+  end
+
+  def test_num_to_currency_without_signal
+    get :num_to_currency, :value => 23, :signal => false
+    assert_tag :content => '23,00'
+
+    get :num_to_currency, :value => -23, :signal => false
+    assert_tag :content => '-23,00'
+  end
+
   def test_num_to_currency_nil
     get :num_to_currency_nil
     assert_tag :content => '0,00'

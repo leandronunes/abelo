@@ -19,18 +19,6 @@ class ProductTest < Test::Unit::TestCase
     @product = create_product
   end
 
-  def create_invoice
-    i =  Invoice.new(:number => 3434, :serie => 343, :organization => @organization,
-         :supplier => @supplier, :issue_date => Date.today) 
-    i.save
-    i
-  end 
-
-  def create_stock_in(params = {})
-    StockIn.create!({:supplier_id => @supplier.id, :amount => 50, :date => '2007-07-01', 
-                    :product => @product, :validity => Date.today, :price => 10, :invoice => @invoice}.merge(params))
-  end
-
   def test_setup
     assert @organization.valid?
     assert @org.valid?
@@ -203,6 +191,30 @@ class ProductTest < Test::Unit::TestCase
     create_product(:organization => @organization)
     p = Product.new(:organization => @organization)
     assert_equal 2, p.suggest_code
+  end
+
+  def test_decimal_value_for_sell_price
+    p = create_product(:name => 'Some name')  
+    assert p.valid?
+    p.sell_price = 23
+    assert p.save
+    assert_equal 23, p.sell_price
+    p.sell_price = "23.56"
+    assert p.save
+    assert_equal 2356, p.sell_price
+    p.sell_price = "23,56"
+    assert p.save
+    assert_equal 23.56, p.sell_price
+  end
+
+  def test_sell_price= 
+    p = Product.new
+    p.sell_price= '2'
+    assert_equal 2, p.sell_price
+    p.sell_price= '2.45'
+    assert_equal 245, p.sell_price
+    p.sell_price= '2,45'
+    assert_equal 2.45, p.sell_price
   end
   
 end

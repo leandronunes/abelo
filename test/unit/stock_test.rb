@@ -49,4 +49,16 @@ class StockTest < Test::Unit::TestCase
     end
   end
 
+  def test_decimal_amount
+    s = StockDown.new
+    s.amount = '15'
+    assert_equal 15, s.amount
+    s.amount = '15.45'
+    assert_equal 1545, s.amount
+    s.amount = '15,23'
+    assert_equal 15.23, s.amount
+    s.amount = '1.345,23'
+    assert_equal 1345.23, s.amount
+  end
+
 end

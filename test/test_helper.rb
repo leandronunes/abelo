@@ -172,16 +172,24 @@ class Test::Unit::TestCase
     Invoice.create!({:number => 3344, :serie => 33443, :issue_date => Date.today, :supplier => @supplier}.merge(params))
   end
 
-  def create_stock_in(params ={})
+  def create_stock_buy(params ={})
     invoice = params[:invoice] || @invoice || create_invoice
     product = params[:product] || @product || create_product
-    StockIn.create!({:supplier => @supplier, :amount => 30, :price => 1.99, :invoice => invoice, :product => product}.merge(params))
+    StockBuy.create!({:supplier => @supplier, :amount => 30, :price => 1.99, :invoice => invoice, :product => product}.merge(params))
+  end
+
+  def create_stock_in(params ={})
+    product = params[:product] || @product || create_product
+    StockIn.create!({:supplier => @supplier, :amount => 30, :price => 1.99, :product => product, :date => Date.today}.merge(params))
   end
 
   def create_stock_down(params = {})
     StockDown.create!(:amount => 1, :product => @product, :date => Date.today)
   end
 
+  def create_stock_devolution(params = {})
+    StockDevolution.create!({:amount => 1, :product => @product, :date => Date.today}.merge(params))
+  end
 
   def create_user(params = {})
     u = User.create!({ :login => 'quire', :email => (params[:login].nil? ? 'quire@example.com' : params[:login]+'colivre.coop.br'),

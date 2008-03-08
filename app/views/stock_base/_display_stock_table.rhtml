@@ -9,20 +9,19 @@
       <th> <%= _('Date') %> </th>
       <th> <%= _('Operation') %></th>
     </tr>
-
     <% for item in @stocks %>
       <tr id="list_item_<%=item.id %>">
         <td><%= Stock.describe(item.class.name) %></td>
-        <td><%= item.kind_of?(StockIn) ? item.supplier.name : '-' %></td>
-        <td><%= item.kind_of?(StockIn) ? item.invoice.number : '-' %></td>
+        <td><%= item.kind_of?(StockBuy) or item.kind_of?(StockIn) ? item.supplier.name : '-' %></td>
+        <td><%= item.kind_of?(StockBuy) ? item.invoice.number : '-' %></td>
         <td><%= item.product.name %></td>
         <td><%= item.amount %></td>
         <td><%= item.price || '-' %></td>
         <td><%= show_date(item.date) %></td>
         <td>
-          <%= button 'view_small', _('Show'), :show, :action => 'show', :id => item, :product_id => @product %>
-          <%= button('edit_small', _('Edit'), :edit, {:action => 'edit', :id => item, :product_id => @product}) %>
-          <%= button('del_small', _('Destroy'), :destroy, {:action => 'destroy', :id => item, :product_id => @product}) %>
+          <%= button 'view_small', _('Show'), :show, {:controller => item.class.name.tableize, :action => 'show', :id => item, :product_id => @product, :invoice_id => (item.invoice.id if item.respond_to?(:invoice))} %>
+          <%= button('edit_small', _('Edit'), :edit, {:controller => item.class.name.tableize, :action => 'edit', :id => item, :product_id => @product,:invoice_id => (item.invoice.id if item.respond_to?(:invoice))}) %>
+          <%= button('del_small', _('Destroy'), :destroy, {:controller => item.class.name.tableize,:action => 'destroy', :id => item, :product_id => @product, :invoice_id => (item.invoice.id if item.respond_to?(:invoice))}, :confirm => _('Are you sure?')) %>
         </td>
       </tr>
     <% end %>

@@ -1,6 +1,6 @@
 <%= title @title %>
 
-<% form_tag( :action => 'update', :id => @stock )  do %>
+<% form_tag( :action => 'update', :id => @stock, :type => params[:type] )  do %>
   <%= render :partial => 'stock_base/extended_form' %>
   <%= display_edit_info_options @stock %>
 <% end %>

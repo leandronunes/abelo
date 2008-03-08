@@ -2,3 +2,5 @@
 - Define the default image when no image exist in a product
 - Create an script to update all customers ledgers his organization
 - Remove the UserProfile Model
+- All entries with StockIn value will be StockBuy
+- Refresh the organization parameter profile

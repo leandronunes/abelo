@@ -1,7 +1,7 @@
 
 <%= title @title %>
 
-<% form_tag( :action => 'create' )  do %>
+<% form_tag( :action => 'create', :type => params[:type] )  do %>
 
   <%= render :partial => 'stock_base/extended_form'%>
 

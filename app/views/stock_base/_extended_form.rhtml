@@ -13,7 +13,7 @@
 
   <%= display_field_form( item, 'amount',
         :title => _('Amount'),
-        :content => text_field( 'stock', 'amount' )
+        :content => text_field( 'stock', 'amount', :value => @stock.amount )
     )
   %>
 

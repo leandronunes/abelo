@@ -4,6 +4,7 @@ class StockDown < Stock
 
   before_validation do |stock|
     stock.amount = stock.amount * -1 if !stock.amount.nil? and stock.amount > 0
+    stock.status = Status::STATUS_DONE
   end
 
   def validate

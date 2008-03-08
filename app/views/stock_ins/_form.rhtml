@@ -1,0 +1,33 @@
+
+<%= error_messages_for 'stock' %>
+
+<!--[form:stock_stock]-->
+
+<% display_form_info @stock do |item | %>
+
+  <%= display_field_form( item, 'amount',
+        :title => _('Amount'),
+        :content => text_field( 'stock', 'amount' )
+    )
+  %>
+  <%= display_field_form( item, 'date',
+        :title => _('Date'),
+        :content => date_select_abelo( 'stock', 'date' )
+    )
+  %>
+
+  <%= display_field_form( item, 'supplier',
+        :title => _('Supplier'),
+        :content => select_item( 'stock', 'supplier_id', @suppliers )
+    )
+  %>
+
+  <%= display_field_form( item, 'price',
+        :title => _('Price'),
+        :content => text_field( 'stock', 'price', :value => num_to_currency(@stock.price))
+    )
+  %>
+
+<% end %>
+
+<!--[eoform:stock_stock]-->

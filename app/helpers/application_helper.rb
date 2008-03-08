@@ -384,6 +384,7 @@ module ApplicationHelper
   end
 
   def select_item(object, method, collection=[], text_method=:name, value_method=:id )
+    collection ||= []
     text_method = text_method.to_s
     value_method = value_method.to_s
     select(object, method, collection.map{|c| [c.send(text_method), c.send(value_method)]}, :include_blank => true) 

@@ -53,6 +53,7 @@ ProductDisplay.find(:all).map do |d|
 end
 
 StockIn.find(:all).map do |s|
+  s.update_attribute('type', 'StockBuy')
   next unless s.invoice.nil?
   i = Invoice.new(:issue_date => s.date, :supplier => s.supplier, :number => rand(1000000), :serie => rand(1000000))
   i.save!

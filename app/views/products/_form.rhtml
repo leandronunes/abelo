@@ -45,7 +45,7 @@
 
   <%= display_field_form(item, 'sell_price',
         :title => _('Sell Price'),
-        :content => text_field('product', 'sell_price')
+        :content => text_field('product', 'sell_price', :value => num_to_currency(@product.sell_price))
       )
   %>
 

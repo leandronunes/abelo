@@ -86,11 +86,11 @@ class Ledger < ActiveRecord::Base
       self.errors.add(:date, _('You cannot schedule an add cash'))
     end
 
-    if (self.value >= 0) and (self.is_remove_cash? or self.is_change?)
-      self.errors.add(:value, _('The value must be minor or equal to 0'))                                
+    if (self.value >= 0) and self.expense?
+      self.errors.add(:value, _('The value must be minor than 0'))                                
     end
 
-    if (self.is_remove_cash? or self.is_change?) and (self.type_of != Payment::TYPE_OF_EXPENSE)
+    if (self.expense?) and (self.type_of != Payment::TYPE_OF_EXPENSE)
       self.errors.add(:type_of, _('You cannot have an remove cash with type different of %s') % Payment::TYPE_OF_EXPENSE)
     end
 
@@ -102,7 +102,7 @@ class Ledger < ActiveRecord::Base
       self.errors.add(_('You cannot realize money operations whithout create the printer command'))
     end
 
-    self.errors.add(:value, _("The value should be at least 0.01" )) if !self.expense? and (value.nil? || value < 0.00)
+    self.errors.add(:value, _("The value should be at least 0.01" )) if !self.expense? and (value.nil? || value <= 0.00)
 
     self.errors.add(:date, _("Date cannot be set" )) unless self[:date].nil?
 
@@ -305,7 +305,8 @@ class Ledger < ActiveRecord::Base
 
   # Check if the current ledger is a expense 
   def expense?
-    self.type_of == Payment::TYPE_OF_EXPENSE or self.is_remove_cash? or self.is_change?
+    type_of = self.type_of || (self.category.type_of unless self.category.nil?)
+    type_of == Payment::TYPE_OF_EXPENSE or self.is_remove_cash? or self.is_change?
   end
 
   # Search for ledgers that contain any data that match with the 
@@ -350,8 +351,7 @@ class Ledger < ActiveRecord::Base
   end
 
   def value= value
-    value ||= 0
-    value = value.kind_of?(String) ? (value.gsub!('.', ''); value.gsub(',','.')) : value
+    value = value.kind_of?(String) ? (value.gsub!('.', ''); value.gsub(',','.')).to_f : value
     value = ((value > 0) ? (value * -1) : value) if self.expense?
     self[:foreseen_value] = value if self.pending? or self.foreseen_value.nil?
     self[:effective_value] = value if self.done?

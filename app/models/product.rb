@@ -5,6 +5,7 @@ class Product < ActiveRecord::Base
   has_many :images
   has_and_belongs_to_many :suppliers
   has_many :stocks
+  has_many :stock_buys
   has_many :stock_ins
   has_many :stock_devolutions
   has_many :stock_outs
@@ -45,21 +46,21 @@ class Product < ActiveRecord::Base
     self.send(type.pluralize).sum(:amount, :conditions => {:status => Status::STATUS_DONE}).to_f
   end
 
-  def amount_in_stock_in
-    self.stock_ins.sum('amount').to_f
-  end
-
-  def amount_in_stock_devolution
-    self.stock_devolutions.sum('amount').to_f
-  end
-
-  def amount_in_stock_out
-    self.stock_outs.sum('amount').to_f
-  end
-
-  def amount_in_stock_down
-    self.stock_downs.sum('amount').to_f
-  end
+#  def amount_in_stock_in
+#    self.stock_ins.sum('amount').to_f
+#  end
+#
+#  def amount_in_stock_devolution
+#    self.stock_devolutions.sum('amount').to_f
+#  end
+#
+#  def amount_in_stock_out
+#    self.stock_outs.sum('amount').to_f
+#  end
+#
+#  def amount_in_stock_down
+#    self.stock_downs.sum('amount').to_f
+#  end
 
   def amount_consumed_by_customer(customer)
     customer.amount_consumed_by_product(self)
@@ -69,11 +70,16 @@ class Product < ActiveRecord::Base
     supplier.amount_purchased_of_product(self)
   end
 
-
   def total_cost
     total = 0
     self.stock_ins.each{ |s| total = total + s.price * s.amount}
     total
+  end
+
+  def sell_price= value
+    value ||= 0
+    value = value.kind_of?(String) ? (value.gsub!('.', ''); value.gsub(',','.')) : value
+    self[:sell_price] = value
   end
 
   def image

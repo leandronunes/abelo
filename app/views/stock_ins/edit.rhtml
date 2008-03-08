@@ -1,0 +1,16 @@
+
+<%= title _('Edit Product Stock Replenishment') %>
+
+<% form_tag( :action => 'update', :id => @stock )  do %>
+
+  <%= render :partial => 'extended_form'%>
+
+  <%= display_new_info_options @stock %>
+
+<% end %>
+
+<%= subtitle _("Payments: ") %>
+
+<div id="abelo_payment">
+  <%= render :partial => 'shared_payments/new_payment' %>
+</div>

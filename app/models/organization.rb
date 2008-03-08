@@ -367,6 +367,11 @@ class Organization < ActiveRecord::Base
     StockVirtual.create_virtuals(self.products.full_text_search(query), 'stock_devolution')
   end
 
+  def stock_virtual_ins(query = nil)
+    query ||= '*'
+    StockVirtual.create_virtuals(self.products.full_text_search(query), 'stock_in')
+  end
+
   def stock_virtual_downs(query = nil)
     query ||= '*'
     StockVirtual.create_virtuals(self.products.full_text_search(query), 'stock_down')

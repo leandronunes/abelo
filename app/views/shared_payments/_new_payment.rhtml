@@ -1,8 +1,8 @@
 
 <%= error_messages_for 'ledger' %>
 
-<% form_remote_tag :url => {:action => 'add_payment', :id => @invoice}, :update => 'abelo_payment' do %>
+<% form_remote_tag :url => {:action => 'add_payment', :id => @payment_object}, :update => 'abelo_payment' do %>
   <div id='abelo_payment_details'>
-    <%= render :partial => 'shared_payments/ledgers_and_new_on_table'%>
+    <%= render :partial => 'shared_payments/ledgers_and_new_on_table' %>
   </div>
 <% end %>

@@ -14,11 +14,25 @@ class Stock < ActiveRecord::Base
 
   def self.describe(class_name)
     {
-      'StockIn' => _('Buy'),
+      'StockBuy' => _('Buy'),
+      'StockIn' => _('Stock Replenishment'),
       'StockOut' => _('Sell'),
       'StockDown' => _('Stock Down'),
       'StockDevolution' => _('Devolution'),
     }[class_name] || class_name
   end
+
+  def price= value
+    value ||= 0
+    value = value.kind_of?(String) ? (value.gsub!('.', ''); value.gsub(',','.')) : value
+    self[:price] = value
+  end
+
+  def amount= value
+    value ||= 0
+    value = value.kind_of?(String) ? (value.gsub!('.', ''); value.gsub(',','.')) : value
+    self[:amount] = value
+  end
+
 
 end

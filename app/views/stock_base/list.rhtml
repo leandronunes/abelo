@@ -2,6 +2,6 @@
 
 <%= display_list_options 'product', 'name' %>
 
-<%= display_stock_collection @stocks  %>
+<%= display_stock_collection @stocks %>
 
 <%= pagination_links(@stock_pages, :params => {:query => @query}) %>

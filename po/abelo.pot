@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: abelo 0.4.2\n"
-"POT-Creation-Date: 2008-03-08 08:14-0300\n"
+"POT-Creation-Date: 2008-03-08 09:15-0300\n"
 "PO-Revision-Date: 2007-01-06 10:39-0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 #: app/design_blocks/financial_forecasting/controllers/financial_forecasting_controller.rb:8
 #: app/design_blocks/favorite_links/controllers/favorite_links_controller.rb:4
 #: app/design_blocks/product_store/controllers/product_store_controller.rb:8
-#: app/helpers/documents_helper.rb:46 app/helpers/documents_helper.rb:73
+#: app/helpers/documents_helper.rb:49 app/helpers/documents_helper.rb:77
 #: app/helpers/support/display_actions.rb:189
 #: app/helpers/support/display_actions.rb:313
 #: app/helpers/organizations_helper.rb:11 app/helpers/document_helper.rb:43
@@ -171,7 +171,7 @@ msgid "Ledger Category"
 msgstr "Categorias de Livro Caixa"
 
 #: app/controllers/tabs/admin_organization.rb:13
-#: app/helpers/documents_helper.rb:42
+#: app/helpers/documents_helper.rb:45
 #: app/helpers/support/display_actions.rb:312
 #: app/helpers/organizations_helper.rb:10 app/helpers/document_helper.rb:41
 #: app/helpers/application_helper.rb:707
@@ -211,7 +211,8 @@ msgstr "Controle de Estoque"
 msgid "Buy"
 msgstr ""
 
-#: app/controllers/tabs/stock.rb:21
+#: app/controllers/tabs/stock.rb:21 app/controllers/stock_ins_controller.rb:48
+#: app/models/stock.rb:18
 msgid "Stock Replenishment"
 msgstr ""
 
@@ -227,60 +228,60 @@ msgstr "Controle de Estoque"
 msgid "Stock Down"
 msgstr "Controle de Estoque"
 
-#: app/controllers/documents_controller.rb:38
+#: app/controllers/documents_controller.rb:37
 #, fuzzy
 msgid "Listing Documents from Model %s"
 msgstr "Listando Modelos de Documentos"
 
-#: app/controllers/documents_controller.rb:40
+#: app/controllers/documents_controller.rb:39
 msgid "Listing Document Models"
 msgstr "Listando Modelos de Documentos"
 
-#: app/controllers/documents_controller.rb:43
+#: app/controllers/documents_controller.rb:42
 #, fuzzy
 msgid "Listing Documents without Models"
 msgstr "Listando Modelos de Documentos"
 
-#: app/controllers/documents_controller.rb:57 lib/document_information.rb:56
+#: app/controllers/documents_controller.rb:56 lib/document_information.rb:56
 #, fuzzy
 msgid "New Document from model %s"
 msgstr "Nova entrada de estoque para %s"
 
-#: app/controllers/documents_controller.rb:59
+#: app/controllers/documents_controller.rb:58
 #, fuzzy
 msgid "New Document Model"
 msgstr "departamento"
 
-#: app/controllers/documents_controller.rb:59 lib/document_information.rb:59
+#: app/controllers/documents_controller.rb:58 lib/document_information.rb:59
 #, fuzzy
 msgid "New Blank Document"
 msgstr "departamento"
 
-#: app/controllers/documents_controller.rb:74 lib/document_information.rb:69
+#: app/controllers/documents_controller.rb:73 lib/document_information.rb:69
 msgid "The document was successfully created."
 msgstr "Documento criado com sucesso."
 
-#: app/controllers/documents_controller.rb:96
+#: app/controllers/documents_controller.rb:95
 #, fuzzy
 msgid "Editing Model Document"
 msgstr "departamento"
 
-#: app/controllers/documents_controller.rb:98
+#: app/controllers/documents_controller.rb:97
 #, fuzzy
 msgid "Editing Document"
 msgstr "departamento"
 
-#: app/controllers/documents_controller.rb:105
+#: app/controllers/documents_controller.rb:104
 #, fuzzy
 msgid "Document was successfully updated."
 msgstr "Departamento atualizado com sucesso."
 
-#: app/controllers/documents_controller.rb:127
+#: app/controllers/documents_controller.rb:126
 msgid "Models"
 msgstr "Modelos"
 
-#: app/controllers/documents_controller.rb:135
-#: app/helpers/documents_helper.rb:55 app/helpers/document_helper.rb:48
+#: app/controllers/documents_controller.rb:134
+#: app/helpers/documents_helper.rb:58 app/helpers/document_helper.rb:48
 #: app/views/departments/_menu.rhtml:3 app/views/system_actors/_menu.rhtml:4
 #, fuzzy
 msgid "Documents"
@@ -452,23 +453,18 @@ msgstr ""
 
 #: app/controllers/stock_ins_controller.rb:42
 #, fuzzy
-msgid "Stock In Control"
-msgstr "Controle de Estoque"
-
-#: app/controllers/stock_ins_controller.rb:48
-#, fuzzy
-msgid "Stock In"
-msgstr "Controle de Estoque"
+msgid "Stock Replenishment Control"
+msgstr "Produto"
 
 #: app/controllers/stock_ins_controller.rb:61
 #, fuzzy
-msgid "Stock In of Product"
+msgid "Stock Replenishment of Product"
 msgstr "Produto"
 
 #: app/controllers/stock_ins_controller.rb:115
 #, fuzzy
-msgid "Stock In History of %s"
-msgstr "Nova entrada de estoque para %s"
+msgid "Stock Replenishment History of %s"
+msgstr "Produto"
 
 #: app/controllers/stock_controller.rb:55
 #: app/controllers/stock_devolutions_controller.rb:68
@@ -1724,7 +1720,6 @@ msgstr "Loja"
 
 #: app/models/address_display.rb:13 app/views/stock/_form.rhtml:10
 #: app/views/organization/_form_address.rhtml:35
-#: app/views/stock_buys/_form.rhtml:9
 #, fuzzy
 msgid "Number"
 msgstr "Número do cheque"
@@ -2609,7 +2604,6 @@ msgid "Invoice number"
 msgstr ""
 
 #: app/models/invoice_display.rb:10 app/views/stock/_form.rhtml:16
-#: app/views/stock_buys/_form.rhtml:15
 #, fuzzy
 msgid "Serie"
 msgstr "Preço de venda"
@@ -3006,7 +3000,7 @@ msgid "Person/Organization Function"
 msgstr "Nome"
 
 #: app/models/document_display.rb:17
-msgid "Tag_list"
+msgid "Tag list"
 msgstr ""
 
 #: app/models/check_display.rb:23
@@ -3097,10 +3091,6 @@ msgstr "Estoque"
 #, fuzzy
 msgid "Stock|Invoice"
 msgstr "Produto"
-
-#: app/models/stock.rb:18
-msgid "Entrada em Estoque"
-msgstr ""
 
 #: app/models/stock.rb:19
 msgid "Sell"
@@ -3684,7 +3674,7 @@ msgstr "Nova entrada"
 msgid "History"
 msgstr "Histórico"
 
-#: app/helpers/documents_helper.rb:50
+#: app/helpers/documents_helper.rb:53
 #: app/helpers/support/display_actions.rb:314
 #: app/helpers/organizations_helper.rb:12 app/helpers/document_helper.rb:45
 #: app/helpers/application_helper.rb:45 app/helpers/application_helper.rb:709
@@ -3696,7 +3686,7 @@ msgstr "Histórico"
 msgid "Destroy"
 msgstr ""
 
-#: app/helpers/documents_helper.rb:54
+#: app/helpers/documents_helper.rb:57
 #: app/helpers/support/display_actions.rb:315
 #: app/helpers/organizations_helper.rb:13 app/helpers/document_helper.rb:47
 #: app/helpers/application_helper.rb:45 app/helpers/application_helper.rb:710
@@ -3708,12 +3698,12 @@ msgstr ""
 msgid "Are you sure?"
 msgstr "Você tem certeza"
 
-#: app/helpers/documents_helper.rb:59 app/helpers/document_helper.rb:50
+#: app/helpers/documents_helper.rb:62 app/helpers/document_helper.rb:50
 #, fuzzy
 msgid "New Document"
 msgstr "departamento"
 
-#: app/helpers/documents_helper.rb:72
+#: app/helpers/documents_helper.rb:76
 #: app/helpers/support/display_actions.rb:188
 #: app/helpers/support/display_actions.rb:216
 #: app/helpers/application_helper.rb:576 app/views/organizations/show.rhtml:9
@@ -3723,7 +3713,7 @@ msgstr "departamento"
 msgid "Back"
 msgstr ""
 
-#: app/helpers/documents_helper.rb:74
+#: app/helpers/documents_helper.rb:78
 #, fuzzy
 msgid "Print"
 msgstr "departamento"
@@ -4216,9 +4206,7 @@ msgstr "venda"
 msgid "Status"
 msgstr "Situação"
 
-#: app/views/stock/_form.rhtml:52
-#: app/views/stock_buys/_invoice_table_items.rhtml:3
-#: app/views/stock_buys/_invoice_items.rhtml:4
+#: app/views/stock/_form.rhtml:52 app/views/stock_buys/_invoice_items.rhtml:4
 #, fuzzy
 msgid "Unit Price"
 msgstr "Preço de venda"
@@ -5088,6 +5076,21 @@ msgstr ""
 msgid "New Invoice"
 msgstr "departamento"
 
+#: app/views/stock_buys/_form.rhtml:9
+#, fuzzy
+msgid "Invoice Number"
+msgstr "Número do cheque"
+
+#: app/views/stock_buys/_form.rhtml:15
+#, fuzzy
+msgid "Invoice Serie"
+msgstr "Fornecedor"
+
+#: app/views/stock_buys/_invoice_table_items.rhtml:3
+#, fuzzy
+msgid "Buy Unit Price"
+msgstr "Preço de venda"
+
 #: app/views/stock_buys/list.rhtml:1
 #, fuzzy
 msgid "Invoice Control"
@@ -5107,8 +5110,8 @@ msgstr ""
 
 #: app/views/stock_ins/new.rhtml:2
 #, fuzzy
-msgid "New Stock In"
-msgstr "Controle de Estoque"
+msgid "New Stock Replenishment"
+msgstr "Produto"
 
 #: app/views/stock_ins/add.rhtml:2
 #, fuzzy
@@ -5579,6 +5582,26 @@ msgstr "Loja"
 #: lib/describe_menu.rb:17
 msgid "Administration of users"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Stock In Control"
+#~ msgstr "Controle de Estoque"
+
+#, fuzzy
+#~ msgid "Stock In"
+#~ msgstr "Controle de Estoque"
+
+#, fuzzy
+#~ msgid "Stock In of Product"
+#~ msgstr "Produto"
+
+#, fuzzy
+#~ msgid "Stock In History of %s"
+#~ msgstr "Nova entrada de estoque para %s"
+
+#, fuzzy
+#~ msgid "New Stock In"
+#~ msgstr "Controle de Estoque"
 
 #, fuzzy
 #~ msgid "The product was successfully created and added to stock."

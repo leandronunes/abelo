@@ -23,7 +23,7 @@
 .document_small       { background-image: url(document-16x16.png) }
 .documents_small      { background-image: url(documents-16x16.png) }
 .new_document_small   { background-image: url(doc-new-16x16.png) }
-.print           { background-image: url(save.png) }
+.print           { background-image: url(print.png) }
 .personal_data    { background-image: url(permissions.png) }
 .cancelled_ledger { background-image: url(canceled_ledger.png) }
 .pending_ledger { background-image: url(foreseen_ledger.png) }

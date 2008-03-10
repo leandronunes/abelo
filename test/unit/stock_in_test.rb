@@ -12,10 +12,7 @@ class StockInTest < Test::Unit::TestCase
     cat_supp = SupplierCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
     @supplier = Supplier.create!(:name => 'Hering', :cnpj => '58178734000145', :organization_id => @organization.id, :email => 'contato@hering.com', :category_id => cat_supp.id)
 
-    @ledger_category = LedgerCategory.find(:first)
-    @ledger_category.type_of = 'I'
-    @ledger_category.is_stock = true
-    @ledger_category.save!
+    @ledger_category = create_ledger_category(:type_of => Payment::TYPE_OF_EXPENSE, :is_stock => true)
     @ledger = create_ledger
   end
 
@@ -26,7 +23,7 @@ class StockInTest < Test::Unit::TestCase
     assert @product.valid?
     assert @supplier.valid?
     assert @ledger_category.valid?
-    assert Payment.income?(@ledger_category.type_of)
+    assert Payment.expense?(@ledger_category.type_of)
     assert @ledger_category.is_stock?
     assert @ledger.valid?
   end

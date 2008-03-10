@@ -85,7 +85,7 @@ class Ledger < ActiveRecord::Base
     if self.new_record? and (self.date != Date.today) and (self.is_add_cash? or self.is_remove_cash?)
       self.errors.add(:date, _('You cannot schedule an add cash'))
     end
-    if (self.value > 0) and self.expense?
+    if (self.value >= 0) and self.expense?
       self.errors.add(:value, _('The value must be minor or equal to zero'))                                
     end
 

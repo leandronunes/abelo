@@ -85,7 +85,6 @@ class Ledger < ActiveRecord::Base
     if self.new_record? and (self.date != Date.today) and (self.is_add_cash? or self.is_remove_cash?)
       self.errors.add(:date, _('You cannot schedule an add cash'))
     end
-
     if (self.value > 0) and self.expense?
       self.errors.add(:value, _('The value must be minor or equal to zero'))                                
     end
@@ -306,8 +305,8 @@ class Ledger < ActiveRecord::Base
 
   # Check if the current ledger is a expense 
   def expense?
-    type_of = self.type_of || (self.category.type_of unless self.category.nil?)
-    type_of == Payment::TYPE_OF_EXPENSE or self.is_remove_cash? or self.is_change?
+    type_of_ledger = self.type_of || (self.category.type_of unless self.category.nil?)
+    type_of_ledger == Payment::TYPE_OF_EXPENSE or self.is_remove_cash? or self.is_change?
   end
 
   # Search for ledgers that contain any data that match with the 

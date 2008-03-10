@@ -73,6 +73,10 @@ Ledger.find(:all).map do |l|
   elsif l.owner.kind_of?(Till)
     l.update_attribute('organization', l.owner.organization)
   end
+
+  if !l.category.nil? and l.type_of != l.category.type_of
+    l.update_attribute('type_of', l.category.type_of)
+  end
  
   l.update_attribute('value', l.value * -1) if l.expense?  
 end

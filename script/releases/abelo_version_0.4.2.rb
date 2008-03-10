@@ -54,6 +54,7 @@ end
 
 StockIn.find(:all).map do |s|
   s.update_attribute('type', 'StockBuy')
+  s = StockBuy.find(s.id)
   next unless s.invoice.nil?
   i = Invoice.new(:issue_date => s.date, :supplier => s.supplier, :number => rand(1000000), :serie => rand(1000000))
   i.save!
@@ -70,3 +71,14 @@ Product.find(:all).map do |p|
   p.update_attribute('code', p.suggest_code)
 end
 
+LedgerCategory.find(:all) do |l|
+  if l.is_stock?
+    l.update_attribute('type_of', Payment::TYPE_OF_EXPENSE) 
+    l.update_attribute('is_sale', false) if l.is_stock?
+  end
+  l.update_attribute('type_of', Payment::TYPE_OF_INCOME) if l.is_sale?
+end
+
+DocumentDisplay.find(:all).map do |d|
+  d.destroy if d.field == 'owner_type'
+end

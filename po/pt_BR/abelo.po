@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: abelo 0.4.2\n"
-"POT-Creation-Date: 2008-03-08 09:15-0300\n"
+"POT-Creation-Date: 2008-03-09 20:19-0300\n"
 "PO-Revision-Date: 2008-02-08 14:07-0300\n"
 "Last-Translator: Leandro Nunes dos Santos <leandronunes@colivre.coop.br>\n"
 "Language-Team: Krishnamurti Lelis Lima Vieira Nunes <krishna@colivre.coop."
@@ -439,7 +439,7 @@ msgstr "Reposição de Estoque do Produto"
 msgid "Stock Replenishment History of %s"
 msgstr "Histórico de Reposição de Estoque de %s"
 
-#: app/controllers/stock_controller.rb:55
+#: app/controllers/stock_controller.rb:59
 #: app/controllers/stock_devolutions_controller.rb:68
 #: app/controllers/stock_downs_controller.rb:68
 msgid "It was successfully created."
@@ -552,6 +552,10 @@ msgid "Product|Name"
 msgstr "Produto|Nome"
 
 #: app/models/product.rb:-
+msgid "Product|Code"
+msgstr "Código"
+
+#: app/models/product.rb:-
 msgid "Product|Size"
 msgstr "Produto|Tamanho"
 
@@ -587,10 +591,6 @@ msgstr "Quantidade mínima"
 msgid "Product|Info"
 msgstr "Informação"
 
-#: app/models/product.rb:-
-msgid "Product|Code"
-msgstr "Código"
-
 #: app/models/product.rb:23
 msgid "Products must be associated to an organization"
 msgstr "Produtos devem ser associados a uma organização"
@@ -616,7 +616,7 @@ msgstr "Cada produto deve pertencer a uma categoria"
 #: app/views/shared_payments/_payment_debit_card.rhtml:10
 #: app/views/shared_payments/_payment_credit_card_on_table.rhtml:16
 #: app/views/banks/_form.rhtml:6 app/views/ledgers/_budget.rhtml:15
-#: app/views/ledger_categories/_form.rhtml:34
+#: app/views/ledger_categories/_form.rhtml:47
 #: app/views/customer_categories/list.rhtml:5
 #: app/views/organizations/new.rhtml:10 app/views/organizations/_form.rhtml:6
 #: app/views/organizations/show.rhtml:4 app/views/organizations/edit.rhtml:10
@@ -969,7 +969,7 @@ msgid "Date"
 msgstr "Date"
 
 #: app/models/ledger_display.rb:32 app/models/ledger_category_display.rb:10
-#: app/views/ledger_categories/_form.rhtml:41
+#: app/views/ledger_categories/_form.rhtml:54
 msgid "Interests"
 msgstr "Juros"
 
@@ -2259,7 +2259,7 @@ msgid "Days of Interests"
 msgstr "Dias dos juros"
 
 #: app/models/ledger_category_display.rb:12
-#: app/views/ledger_categories/_form.rhtml:53
+#: app/views/ledger_categories/_form.rhtml:66
 msgid "Periodicity"
 msgstr "Periodicidade"
 
@@ -2282,7 +2282,7 @@ msgid "Type"
 msgstr "Tipo"
 
 #: app/models/ledger_category_display.rb:17
-#: app/views/ledger_categories/_form.rhtml:26
+#: app/views/ledger_categories/_form.rhtml:39
 msgid "Payment Methods"
 msgstr "Formas de Pagamento"
 
@@ -3261,8 +3261,8 @@ msgstr ""
 "Você não pode definir este lançamento como efetivo porque a data do "
 "lançamento é no futuro."
 
-#: app/models/ledger.rb:418 app/models/ledger.rb:425 app/models/ledger.rb:432
-#: app/models/ledger.rb:439
+#: app/models/ledger.rb:419 app/models/ledger.rb:426 app/models/ledger.rb:433
+#: app/models/ledger.rb:440
 msgid "This function cannot be accessed directly"
 msgstr "Essa função não pode ser acessada diretamente"
 
@@ -3403,11 +3403,19 @@ msgstr "Você tem que escolher pelo menos uma forma de pagamento"
 msgid "You have to choose a valid payment method"
 msgstr "Você tem que escolher uma forma de pagamento válida"
 
-#: app/models/ledger_category.rb:58
+#: app/models/ledger_category.rb:31
+msgid "The sale operations must be type of income"
+msgstr ""
+
+#: app/models/ledger_category.rb:35
+msgid "The stock operations must be type of expense"
+msgstr ""
+
+#: app/models/ledger_category.rb:77
 msgid "(+) %s"
 msgstr "(+) %s"
 
-#: app/models/ledger_category.rb:58
+#: app/models/ledger_category.rb:77
 msgid "(-) %s"
 msgstr "(-) %s"
 
@@ -4118,25 +4126,21 @@ msgstr "Tags"
 msgid "New Ledger Category"
 msgstr "Nova Categoria de Lançamento"
 
-#: app/views/ledger_categories/_form.rhtml:47
-msgid "Interests days"
-msgstr "Dias dos juros"
-
-#: app/views/ledger_categories/_form.rhtml:59
-msgid "Number of parcels"
-msgstr "Número de parcelas"
-
-#: app/views/ledger_categories/_form.rhtml:65
-msgid "Is operational?"
-msgstr "É operacional?"
-
-#: app/views/ledger_categories/_form.rhtml:72
+#: app/views/ledger_categories/_form.rhtml:26
 msgid "Is operation of sale?"
 msgstr "É uma operação da venda"
 
-#: app/views/ledger_categories/_form.rhtml:79
+#: app/views/ledger_categories/_form.rhtml:33
 msgid "Is operation of stock?"
 msgstr "É uma operação do estoque?"
+
+#: app/views/ledger_categories/_form.rhtml:60
+msgid "Interests days"
+msgstr "Dias dos juros"
+
+#: app/views/ledger_categories/_form.rhtml:72
+msgid "Number of parcels"
+msgstr "Número de parcelas"
 
 #: app/views/ledger_categories/list.rhtml:1
 msgid "All Categories"
@@ -5189,6 +5193,9 @@ msgstr "Loja"
 #: lib/describe_menu.rb:17
 msgid "Administration of users"
 msgstr "Administração de usuários"
+
+#~ msgid "Is operational?"
+#~ msgstr "É operacional?"
 
 #~ msgid "Tag_list"
 #~ msgstr "Lista_de_Tags"

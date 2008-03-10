@@ -208,6 +208,7 @@ class Ledger < ActiveRecord::Base
 
   # Return the balance object of the current month
   def find_balance_of_month
+    return if self.bank_account.nil?
     start_date = Date.beginning_of_month(self.date)
     end_date = Date.end_of_month(self.date) + 1
     self.bank_account.balances.find(:first, :conditions => {:date => (start_date..end_date)})

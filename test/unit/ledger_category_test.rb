@@ -145,4 +145,52 @@ class LedgerCategoryTest < Test::Unit::TestCase
 
   end
 
+  def test_sale_operations_are_type_of_income
+    l = LedgerCategory.new
+    l.type_of = Payment::TYPE_OF_EXPENSE
+    l.is_sale = true
+    l.valid?
+    assert l.errors.invalid?(:is_sale), "You cannot have sale payment category with type of expense"
+
+    l.type_of = Payment::TYPE_OF_INCOME
+    l.is_sale
+    l.valid?
+    assert !l.errors.invalid?(:is_sale)
+  end
+
+  def test_stock_operations_are_type_of_expense
+    l = LedgerCategory.new
+    l.type_of = Payment::TYPE_OF_INCOME
+    l.is_stock = true
+    l.valid?
+    assert l.errors.invalid?(:is_stock), "You cannot have stock payment category with type of income"
+
+    l.type_of = Payment::TYPE_OF_EXPENSE
+    l.is_sale
+    l.valid?
+    assert !l.errors.invalid?(:is_stock)
+  end
+
+  def test_when_is_stock_is_not_sale
+    l = LedgerCategory.new
+    l.type_of = Payment::TYPE_OF_EXPENSE
+    l.is_stock = true
+    l.is_sale = true
+    l.valid?
+    assert l.errors.invalid?(:is_stock), "You cannot have stock and sale payment category at the same time"
+  end
+
+  def test_type_of_income
+    l = LedgerCategory.new
+    l.type_of = Payment::TYPE_OF_INCOME
+    assert l.income?
+  end
+
+  def test_type_of_expense
+    l = LedgerCategory.new
+    l.type_of = Payment::TYPE_OF_EXPENSE
+    assert l.expense?
+  end
+
+
 end

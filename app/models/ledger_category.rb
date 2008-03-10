@@ -26,6 +26,29 @@ class LedgerCategory < ActiveRecord::Base
     if (self.payment_methods - Payment::PAYMENT_METHODS.keys).length != 0 
       self.errors.add('payment_methods', _('You have to choose a valid payment method'))
     end
+
+    if self.is_sale? and !self.income?
+      self.errors.add(:is_sale, _("The sale operations must be type of income"))
+    end
+
+    if self.is_stock? and !self.expense?
+      self.errors.add(:is_stock, _("The stock operations must be type of expense"))
+    end
+
+    if self.is_stock? and self.is_sale?
+      self.errors.add(:is_stock, _("You canno't have a payment category sale an stock at the same time"))
+    end
+
+  end
+
+  # Return true if the ledger category in type of income
+  def income?
+    self.type_of == Payment::TYPE_OF_INCOME
+  end
+
+  # Return true if the ledger category in type of expense
+  def expense?
+    self.type_of == Payment::TYPE_OF_EXPENSE
   end
 
   def settings

@@ -21,7 +21,20 @@
         :content => radio_button('category', 'type_of', 'E')
       )
   %>
-  
+ 
+  <%= display_field_edit(item, 'is_sale',
+        :title => _('Is operation of sale?'),
+        :content => check_box('category', 'is_sale', {}, 'true', 'false'),
+        :html_options => {:style => 'clear: left;'}
+      )
+  %>
+
+  <%= display_field_edit(item, 'is_stock',
+        :title => _('Is operation of stock?'),
+        :content => check_box('category', 'is_stock', {}, 'true', 'false')
+      )
+  %>
+ 
   <%= display_field_edit(item, 'payment_methods',
         :title => _('Payment Methods'),
         :content =>  select_payments('category', 'payment_methods'),
@@ -58,27 +71,6 @@
   <%= display_field_edit(item, 'number_of_parcels',
         :title => _('Number of parcels'),
         :content => text_field('category', 'number_of_parcels')
-      )
-  %>
-
-  <%= display_field_edit(item, 'is_operational',
-        :title => _('Is operational?'),
-        :content => check_box('category', 'is_operational', {}, 'true', 'false'),
-        :html_options => {:style => 'clear: left;'}
-      )
-  %>
-
-  <%= display_field_edit(item, 'is_sale',
-        :title => _('Is operation of sale?'),
-        :content => check_box('category', 'is_sale', {}, 'true', 'false'),
-        :html_options => {:style => 'clear: left;'}
-      )
-  %>
-
-  <%= display_field_edit(item, 'is_stock',
-        :title => _('Is operation of stock?'),
-        :content => check_box('category', 'is_stock', {}, 'true', 'false'),
-        :html_options => {:style => 'clear: left;'}
       )
   %>
 

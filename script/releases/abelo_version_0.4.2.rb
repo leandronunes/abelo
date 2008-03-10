@@ -25,29 +25,6 @@ Organization.find(:all).map do |o|
   a.save
 end
 
-Ledger.find(:all).map do |l|
-  l.update_attribute('date', l.foreseen_date) if l.date.nil?
-
-  if l.payment_method == 'Money'
-    l.update_attribute('payment_method', Payment::MONEY)
-  end
-  if l.owner.kind_of?(Organization)
-    l.update_attribute('organization', l.owner)
-  elsif l.owner.kind_of?(Sale)
-    l.update_attribute('organization', l.owner.organization)
-  elsif l.owner.kind_of?(Till)
-    l.update_attribute('organization', l.owner.organization)
-  end
- 
-  l.update_attribute('value', l.value * -1) if l.expense?  
-end
-
-Ledger.find(:all) do |l|
-  next unless l.find_balance_of_month.nil?
-  b = l.create_balance_of_month
-  b.refresh
-end
-
 ProductDisplay.find(:all).map do |d|
   d.destroy if d.field == 'description'
 end
@@ -71,14 +48,38 @@ Product.find(:all).map do |p|
   p.update_attribute('code', p.suggest_code)
 end
 
-LedgerCategory.find(:all) do |l|
-  if l.is_stock?
-    l.update_attribute('type_of', Payment::TYPE_OF_EXPENSE) 
-    l.update_attribute('is_sale', false) if l.is_stock?
+LedgerCategory.find(:all).map do |c|
+  if c.is_stock?
+    c.update_attribute('type_of', Payment::TYPE_OF_EXPENSE) 
+    c.update_attribute('is_sale', false)
   end
-  l.update_attribute('type_of', Payment::TYPE_OF_INCOME) if l.is_sale?
+  c.update_attribute('type_of', Payment::TYPE_OF_INCOME) if c.is_sale?
 end
 
 DocumentDisplay.find(:all).map do |d|
   d.destroy if d.field == 'owner_type'
 end
+
+Ledger.find(:all).map do |l|
+  l.update_attribute('date', l.foreseen_date) if l.date.nil?
+
+  if l.payment_method == 'Money'
+    l.update_attribute('payment_method', Payment::MONEY)
+  end
+  if l.owner.kind_of?(Organization)
+    l.update_attribute('organization', l.owner)
+  elsif l.owner.kind_of?(Sale)
+    l.update_attribute('organization', l.owner.organization)
+  elsif l.owner.kind_of?(Till)
+    l.update_attribute('organization', l.owner.organization)
+  end
+ 
+  l.update_attribute('value', l.value * -1) if l.expense?  
+end
+
+Ledger.find(:all) do |l|
+  next unless l.find_balance_of_month.nil?
+  b = l.create_balance_of_month
+  b.refresh
+end
+

@@ -406,6 +406,11 @@ class Organization < ActiveRecord::Base
     return customers
   end
 
+  #FIXME make this test
+  def products_sorted
+    self.products.find(:all, :order => 'name')
+  end
+
   ################################
   # Configuration Actions
   ################################

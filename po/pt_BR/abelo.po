@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: abelo 0.4.2\n"
-"POT-Creation-Date: 2008-03-09 20:19-0300\n"
+"POT-Creation-Date: 2008-03-11 18:09-0300\n"
 "PO-Revision-Date: 2008-02-08 14:07-0300\n"
 "Last-Translator: Leandro Nunes dos Santos <leandronunes@colivre.coop.br>\n"
 "Language-Team: Krishnamurti Lelis Lima Vieira Nunes <krishna@colivre.coop."
@@ -177,8 +177,8 @@ msgstr "Categoria contábil"
 msgid "Show"
 msgstr "Mostrar"
 
-#: app/controllers/tabs/admin_organization.rb:21 app/helpers/support/menu.rb:5
-#: lib/describe_menu.rb:7
+#: app/controllers/tabs/admin_organization.rb:21
+#: app/helpers/support/menu.rb:22 lib/describe_menu.rb:7
 msgid "Configurations"
 msgstr "Configurações"
 
@@ -187,9 +187,9 @@ msgid "Users and Permissions"
 msgstr "Usuários e Permissões"
 
 #: app/controllers/tabs/admin_organization.rb:37
-#: app/models/organization.rb:115 app/helpers/support/menu.rb:16
-#: app/views/users/_admin.rhtml:6 app/views/public/index.rhtml:8
-#: lib/describe_menu.rb:20
+#: app/models/organization.rb:115 app/helpers/support/menu.rb:25
+#: app/helpers/support/menu.rb:34 app/views/users/_admin.rhtml:6
+#: app/views/public/index.rhtml:8 lib/describe_menu.rb:20
 msgid "Organizations"
 msgstr "Organizações"
 
@@ -402,7 +402,7 @@ msgstr "Arquivo anexado com sucesso."
 msgid "The configurations was successfully updated."
 msgstr "Configurações atualizadas com sucesso."
 
-#: app/controllers/banks_controller.rb:69 app/helpers/support/menu.rb:17
+#: app/controllers/banks_controller.rb:69 app/helpers/support/menu.rb:35
 msgid "Banks"
 msgstr "Bancos"
 
@@ -461,11 +461,11 @@ msgstr "Periodicidade criada com sucesso."
 msgid "Periodicity was successfully updated."
 msgstr "Periodicidade atualizada com sucesso."
 
-#: app/controllers/permissions_base_controller.rb:57
+#: app/controllers/permissions_base_controller.rb:58
 msgid "User successfully created."
 msgstr "Usuário criado com sucesso."
 
-#: app/controllers/permissions_base_controller.rb:83
+#: app/controllers/permissions_base_controller.rb:84
 msgid "User was successfully upated."
 msgstr "Usuário atualizado com sucesso."
 
@@ -549,7 +549,7 @@ msgstr "produto"
 
 #: app/models/product.rb:-
 msgid "Product|Name"
-msgstr "Produto|Nome"
+msgstr "Nome"
 
 #: app/models/product.rb:-
 msgid "Product|Code"
@@ -557,31 +557,31 @@ msgstr "Código"
 
 #: app/models/product.rb:-
 msgid "Product|Size"
-msgstr "Produto|Tamanho"
+msgstr "Tamanho"
 
 #: app/models/product.rb:-
 msgid "Product|Color"
-msgstr "Produto|Cor"
+msgstr "Cor"
 
 #: app/models/product.rb:-
 msgid "Product|Description"
-msgstr "Produto|Descrição"
+msgstr "Descrição"
 
 #: app/models/product.rb:-
 msgid "Product|Sell price"
-msgstr "Produto|Preço de venda"
+msgstr "Preço de venda"
 
 #: app/models/product.rb:-
 msgid "Product|Unit"
-msgstr "Produto|Unidade"
+msgstr "Unidade"
 
 #: app/models/product.rb:-
 msgid "Product|Organization"
-msgstr "Produto|Organização"
+msgstr "Organização"
 
 #: app/models/product.rb:-
 msgid "Product|Category"
-msgstr "Produto|categoria"
+msgstr "Categoria"
 
 #: app/models/product.rb:-
 msgid "Product|Minimum amount"
@@ -1138,28 +1138,28 @@ msgstr "Visualizar Cadastro de Fornecedor"
 msgid "View Product Register"
 msgstr "Visualizar Cadastro de Produto"
 
-#: app/models/profile.rb:203
+#: app/models/profile.rb:204
 msgid "Sales person"
 msgstr "Vendedor"
 
-#: app/models/profile.rb:204
+#: app/models/profile.rb:205
 msgid "Sales Supervisor"
 msgstr "Supervisor de vendas"
 
-#: app/models/profile.rb:205 app/helpers/support/menu.rb:13
+#: app/models/profile.rb:206 app/helpers/support/menu.rb:31
 #: lib/describe_menu.rb:8
 msgid "Financial"
 msgstr "Financeiro"
 
-#: app/models/profile.rb:206
+#: app/models/profile.rb:207
 msgid "Organization Management"
 msgstr "Gerenciamento da Organização"
 
-#: app/models/profile.rb:207 app/views/layouts/default.rhtml:7
+#: app/models/profile.rb:208 app/views/layouts/default.rhtml:7
 msgid "Administration"
 msgstr "Administração"
 
-#: app/models/profile.rb:208
+#: app/models/profile.rb:209
 msgid "Other"
 msgstr "Outro"
 
@@ -2587,14 +2587,14 @@ msgid "Login"
 msgstr "Login"
 
 #: app/models/user_display.rb:10 app/views/public/edit_user.rhtml:15
-#: app/views/permissions_base/_form.rhtml:14
+#: app/views/permissions_base/_form.rhtml:16
 msgid "E-mail"
 msgstr "Email"
 
 #: app/models/user_display.rb:11 app/views/users/login.rhtml:9
 #: app/views/users/_form.rhtml:10 app/views/point_of_sale/_login_form.rhtml:7
 #: app/views/public/edit_user.rhtml:19
-#: app/views/permissions_base/_form.rhtml:20
+#: app/views/permissions_base/_form.rhtml:23
 msgid "Password"
 msgstr "Senha"
 
@@ -2602,7 +2602,7 @@ msgstr "Senha"
 msgid "Password Confirmation"
 msgstr "Confirmação de Senha"
 
-#: app/models/user_display.rb:13 app/views/permissions_base/_form.rhtml:32
+#: app/models/user_display.rb:13 app/views/permissions_base/_form.rhtml:36
 msgid "Template"
 msgstr "Modelo"
 
@@ -2673,12 +2673,12 @@ msgstr "Conta"
 msgid "Is it default?"
 msgstr "É padrão?"
 
-#: app/models/user.rb:60
+#: app/models/user.rb:54
 msgid "You cannot change the user properties on demonstration version"
 msgstr ""
 "Você não pode mudar as propriedades do usuário na versão de demonstração"
 
-#: app/models/user.rb:63
+#: app/models/user.rb:57
 msgid ""
 "You don't have permissions to create a user with template %s. This template "
 msgstr ""
@@ -3221,39 +3221,39 @@ msgstr "Organização"
 msgid "You cannot schedule an add cash"
 msgstr "Você não pode agendar um pagamento em dinheiro"
 
-#: app/models/ledger.rb:90
-msgid "The value must be minor than 0"
-msgstr "O valor deve ser menor que 0"
+#: app/models/ledger.rb:89
+msgid "The value must be minor or equal to zero"
+msgstr "O valor deve ser menor ou igual a zero"
 
-#: app/models/ledger.rb:94
+#: app/models/ledger.rb:93
 msgid "You cannot have an remove cash with type different of %s"
 msgstr "Você não pode ter uma remoção de caixa com tipo diferente de %s"
 
-#: app/models/ledger.rb:98
+#: app/models/ledger.rb:97
 msgid "You cannot have an add cash with type different of %s"
 msgstr "Você não pode adicionar dinheiro com o tipo diferente de %s"
 
-#: app/models/ledger.rb:102
+#: app/models/ledger.rb:101
 msgid "You cannot realize money operations whithout create the printer command"
 msgstr ""
 "Você não pode realizar operações em dinheiro sem criar o comando da "
 "impressora."
 
-#: app/models/ledger.rb:105
+#: app/models/ledger.rb:104
 msgid "The value should be at least 0.01"
 msgstr "O valor deveria ser pelo menos 0.01"
 
-#: app/models/ledger.rb:107
+#: app/models/ledger.rb:106
 msgid "Date cannot be set"
 msgstr "Data não pode ser ajustada"
 
-#: app/models/ledger.rb:110
+#: app/models/ledger.rb:109
 msgid "You can't have a payment method not include in payment category list."
 msgstr ""
 "Você não pode ter uma forma de pagamento não inclusa na lista de categorias "
 "de pagamentos."
 
-#: app/models/ledger.rb:114
+#: app/models/ledger.rb:113
 msgid ""
 "You can't set this ledger as a effective ledger because the date of the "
 "ledger is in the future."
@@ -3411,11 +3411,15 @@ msgstr ""
 msgid "The stock operations must be type of expense"
 msgstr ""
 
-#: app/models/ledger_category.rb:77
+#: app/models/ledger_category.rb:39
+msgid "You canno't have a payment category sale an stock at the same time"
+msgstr "Você não pode ter uma categoria contábil de venda e de estoque ao mesmo tempo."
+
+#: app/models/ledger_category.rb:81
 msgid "(+) %s"
 msgstr "(+) %s"
 
-#: app/models/ledger_category.rb:77
+#: app/models/ledger_category.rb:81
 msgid "(-) %s"
 msgstr "(-) %s"
 
@@ -3429,6 +3433,7 @@ msgstr "RG"
 #: app/helpers/application_helper.rb:55
 #: app/views/point_of_sale/popup_product.rhtml:8
 #: app/views/point_of_sale/popup_customer.rhtml:8
+#: app/views/permissions_base/popup_user.rhtml:8
 msgid "Search"
 msgstr "Busca"
 
@@ -3484,19 +3489,19 @@ msgstr "Voltar"
 msgid "Print"
 msgstr "Imprimir"
 
-#: app/helpers/support/menu.rb:6 lib/describe_menu.rb:9
+#: app/helpers/support/menu.rb:23 lib/describe_menu.rb:9
 msgid "Stock"
 msgstr "Estoque"
 
-#: app/helpers/support/menu.rb:8
+#: app/helpers/support/menu.rb:26
 msgid "User administration"
 msgstr "Administração de usuários"
 
-#: app/helpers/support/menu.rb:9
+#: app/helpers/support/menu.rb:27
 msgid "Registers"
 msgstr "Cadastro"
 
-#: app/helpers/support/menu.rb:10 lib/describe_menu.rb:18
+#: app/helpers/support/menu.rb:28 lib/describe_menu.rb:18
 msgid "Point of sale"
 msgstr "Ponto de venda"
 
@@ -3969,7 +3974,7 @@ msgid "Sign up"
 msgstr "Registrar-se"
 
 #: app/views/users/_form.rhtml:14 app/views/public/edit_user.rhtml:24
-#: app/views/permissions_base/_form.rhtml:26
+#: app/views/permissions_base/_form.rhtml:30
 msgid "Confirm Password"
 msgstr "Confirmar Senha"
 
@@ -4265,6 +4270,7 @@ msgstr "Procurar Produto"
 #: app/views/point_of_sale/popup_customer.rhtml:3
 #: app/views/document_items/_new.rhtml:8
 #: app/views/document_sections/_new.rhtml:8
+#: app/views/permissions_base/popup_user.rhtml:3
 msgid "Close"
 msgstr "Fechar"
 
@@ -5013,6 +5019,11 @@ msgstr "Adicionando anexos"
 msgid "New User"
 msgstr "Novo usuário"
 
+#: app/views/permissions_base/_form.rhtml:13
+#: app/views/permissions_base/popup_user.rhtml:2
+msgid "Search User"
+msgstr "Buscas Usuário"
+
 #: app/views/permissions_base/list.rhtml:2
 msgid "Listing permissions"
 msgstr "Listando permissões"
@@ -5194,6 +5205,9 @@ msgstr "Loja"
 msgid "Administration of users"
 msgstr "Administração de usuários"
 
+#~ msgid "The value must be minor than 0"
+#~ msgstr "O valor deve ser menor que 0"
+
 #~ msgid "Is operational?"
 #~ msgstr "É operacional?"
 
@@ -5264,9 +5278,6 @@ msgstr "Administração de usuários"
 #~ msgid "Ledger|Type"
 #~ msgstr "Tipo"
 
-#~ msgid "You don't have a payment method associated to this ledger."
-#~ msgstr "Não há uma forma de pagamento associado a esse lançamento."
-
 #~ msgid "You cannot destroy sale ledgers"
 #~ msgstr "Você não pode destruir laçamentos da venda"
 
@@ -5299,9 +5310,6 @@ msgstr "Administração de usuários"
 
 #~ msgid "This is not a product code valid"
 #~ msgstr "Este não é um código de produto válido."
-
-#~ msgid "The value must be minor or equal to %s"
-#~ msgstr "O valor deve ser menor ou igual  a %s"
 
 #~ msgid "You have a pending sale. Close or Cancel it before open a new one"
 #~ msgstr ""
@@ -5681,9 +5689,6 @@ msgstr "Administração de usuários"
 
 #~ msgid "Cpf"
 #~ msgstr "CPF"
-
-#~ msgid "Search %s"
-#~ msgstr "Busca %s"
 
 #~ msgid "New top-level category"
 #~ msgstr "Nova categoria superior"

@@ -1,0 +1,6 @@
+<ul>
+  <% @users.each do |u| %>
+    <li> <%= link_to u.login, :action => 'new', :id => u.id, :organization_id => @organization %> </li>
+  <% end %>
+</ul>
+

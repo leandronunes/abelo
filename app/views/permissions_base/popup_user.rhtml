@@ -1,0 +1,12 @@
+<h2>
+  <%= _('Search User') %>
+  <%= link_to_close_popup _('Close'), {:class => 'button_close'}%>
+</h2> 
+
+<% form_remote_tag :url => params.merge({ :action => 'search_user', :organization_id => @organization}), :update => 'search_result' do %>
+  <%= text_field_tag('search') %>
+  <%= submit_tag _('Search') %>
+<% end %> 
+
+<div id='search_result'>
+</div>

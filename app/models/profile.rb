@@ -163,6 +163,7 @@ class Profile < ActiveRecord::Base
       { 'controller' => 'organization_configuration', 'action' => '*' },
       { 'controller' => 'sintegra', 'action' => '*' },
       { 'controller' => 'fiscal_printer', 'action' => '*' },
+      { 'controller' => 'public', 'action' => '*' },
     ],
     'other' => []
   }

@@ -1,5 +1,7 @@
 class PermissionsBaseController < ApplicationController
 
+  uses_popup_plugin
+
   def autocomplete_user_login
     @organization ||= Organization.find(params[:organization_id])
     escaped_string = Regexp.escape(params[:user][:login])
@@ -14,7 +16,6 @@ class PermissionsBaseController < ApplicationController
 
   verify :method => :post, :only => [ :destroy, :create_with_template, :update_template ], 
          :redirect_to => { :action => :list }
-
 
   def list
     @organization ||= Organization.find(params[:organization_id])
@@ -37,13 +38,13 @@ class PermissionsBaseController < ApplicationController
 
   def new
     @organization ||= Organization.find(params[:organization_id])
-    @user = User.new
+    @user = params[:id].nil? ? User.new : User.find(params[:id])
     render :template => 'permissions_base/new' 
   end
 
   def create
     @organization ||= Organization.find(params[:organization_id])
-    @user = User.new(params[:user])
+    @user = params[:id].nil? ? User.new : User.find(params[:id])
     @user.validates_profile = true
 
     template = params[:user][:template] unless params[:user].nil?
@@ -53,7 +54,7 @@ class PermissionsBaseController < ApplicationController
       @user.template_valid = true
     end
     
-    if @user.save
+    if @user.update_attributes(params[:user])
       flash[:notice] = _('User successfully created.')
       redirect_to :action => 'list', :organization_id => @organization
     else
@@ -99,6 +100,19 @@ class PermissionsBaseController < ApplicationController
     @organization ||= Organization.find(params[:organization_id])
     @organization.users.find(params[:id]).destroy    
     redirect_to :action => 'list', :organization_id => @organization
+  end
+
+  def popup_user
+    @organization ||= Organization.find(params[:organization_id])
+    render :template => 'permissions_base/popup_user', :layout => false
+  end
+
+  def search_user
+    @organization ||= Organization.find(params[:organization_id])
+    str = params[:search].blank? ? '*' : params[:search]
+    @users = User.full_text_search(str)
+    @users.delete(current_user)
+    render :template => 'permissions_base/search_user', :layout => false
   end
 
 end

@@ -10,15 +10,19 @@
       )
   %>
 
+  <%= link_to_popup content_tag('span', _('Search User')), {:action => 'popup_user', :organization_id => @organization}, {:accesskey => 'p', :class => 'button bt_big search_user with_text'}, 'select_customer', 'abelo_payment_customer'  %>
+
   <%= display_field_edit(item, 'email',
         :title => _('E-mail'),
-        :content => text_field('user', 'email')
+        :content => text_field('user', 'email'),
+        :html_options => {:class => 'break_line' }
       )
   %>
 
   <%= display_field_edit(item, 'password',
         :title => _('Password'),
-        :content => password_field('user', 'password')
+        :content => password_field('user', 'password'),
+        :html_options => {:class => 'break_line' }
       )
   %>
 

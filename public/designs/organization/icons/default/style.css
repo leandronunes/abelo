@@ -2,6 +2,7 @@
 .none_add       { background-image: url(none.png) }
 .add            { background-image: url(add.png) }
 .search         { background-image: url(search.png) }
+.search_customer { background-image: url('search_icon.png') }
 .edit_small     { background-image: url(edit_small.png) }
 .view_small     { background-image: url(view_small.png) }
 .del_small      { background-image: url(del_small.png) }
@@ -53,6 +54,7 @@
 .mass_mails    { background-image: url(mass_mails.png) }
 .store         { background-image: url(store.png) }
 .organizations { background-image: url(organizations.png) }
+.public        { background-image: url(organizations.png) }
 .banks         { background-image: url(banks.png) }
 .web_site_interface { background-image: url('web_site.png'); }
 

@@ -34,25 +34,19 @@ class User < Person
  
   before_destroy :destroy_profiles
 
-  after_create do |user|
+  after_save do |user|
     if user.validates_profile?
-      transaction do
+      profile = user.profile_by_organization(user.profile_organization)
+      if profile.nil?
         profile = Profile.new
         profile.name = user.template
         profile.template = user.template
         profile.organization = user.profile_organization
         profile.user_id = user.id
-        profile.save! 
-      end  
-    end
-  end
-
-  after_update do |user|
-    if user.validates_profile?
-      transaction do
-        profile = user.profile_by_organization(user.profile_organization)
-        profile.update_attributes(:name => user.template, :template => user.template)
-      end  
+        profile.save 
+     else
+       profile.update_attributes(:name => user.template, :template => user.template)
+     end
     end
   end
 

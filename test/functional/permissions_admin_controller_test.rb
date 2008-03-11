@@ -186,4 +186,17 @@ class PermissionsAdminControllerTest < Test::Unit::TestCase
     assert_equal count_user - 1, User.count
   end
 
+  def test_popup_user
+    get :popup_user, :organization_id => @organization.id
+    assert_response :success
+    assert_template 'permissions_base/popup_user'
+  end
+
+  def test_search_user
+    post :search_user, :organization_id => @organization.id
+    assert_response :success
+    assert_template 'permissions_base/search_user'
+    assert_not_nil assigns(:users)
+  end
+
 end

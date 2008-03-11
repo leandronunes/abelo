@@ -144,15 +144,15 @@ class Organization < ActiveRecord::Base
   end
 
   def country_obj
-    BSC::Country.find(self.country) unless self.country.nil?
+    BSC::Country.find(self.country) unless self.country.blank?
   end
 
   def state_obj
-    BSC::State.find(self.state) unless self.state.nil?
+    BSC::State.find(self.state) unless self.state.blank?
   end
 
   def city_obj
-    BSC::City.find(self.city) unless self.city.nil?
+    BSC::City.find(self.city) unless self.city.blank?
   end
 
 

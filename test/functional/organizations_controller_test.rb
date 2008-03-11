@@ -137,7 +137,7 @@ class OrganizationsControllerTest < Test::Unit::TestCase
   end
 
 
-  def ltest_unsuccessfully_create
+  def test_unsuccessfully_create
     num_organizations = Organization.count
 
     post :create, :organization => {:name => 'Some Organization', :identifier => nil}

@@ -35,9 +35,9 @@ class OrganizationsController < ApplicationController
 
   def create
     @organization = Organization.new(params[:organization])
-    if @organization.save!
+    if @organization.save
       flash[:notice] = _('Organization was successfully created.')
-      redirect_to :controller => 'configuration', :action => 'edit', :id => @organization
+      redirect_to :controller => 'configuration', :action => 'edit', :id => @organization, :organization_id => @organization
     else
       render :action => 'new'
     end

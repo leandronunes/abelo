@@ -73,8 +73,7 @@ class DebitCardTest < Test::Unit::TestCase
   end
 
   def test_create_printer_cmd_whith_fiscal_printer
-    @organization.configuration.fiscal_printer= true
-    assert @organization.has_fiscal_printer?
+    Ledger.any_instance.expects(:needs_fiscal_command?).returns(true)
     l = Ledger.new(:payment_method => Payment::DEBIT_CARD, :owner => @till, :organization => @organization)
     m  = DebitCard.new
     m.create_printer_cmd!(l)

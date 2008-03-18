@@ -39,8 +39,6 @@ class PointOfSaleController < ApplicationController
     cmd = PrinterCommand.pending_command(@till)
     return if cmd.nil?
     flash.now[:command_error] = _('%s') % cmd.error_message
-#    redirect_to :action => 'coupon_open'
-#    render :action => 'index' 
   end
 
   def run_pending_commands
@@ -58,7 +56,7 @@ class PointOfSaleController < ApplicationController
     if @organization.has_fiscal_printer? and printer.nil?
       flash[:notice] = _("You don't have a printer configured")
     else
-      @till = Till.load(@organization, current_user, printer)
+      @till = load_current_till
     end
     unless @till.nil?
       redirect_to :action => 'till_open'
@@ -85,7 +83,7 @@ class PointOfSaleController < ApplicationController
     end
 
     unless params[:cash].nil?
-      @cash ||= Ledger.new(params[:cash].merge(:owner => @till, :payment_method => Payment::ADD_CASH))
+      @cash ||= Ledger.new(params[:cash].merge(:owner => @till, :payment_method => Payment::ADD_CASH, :organization => @organization))
     end
     if @till.save
       @till.ledgers << @cash unless @cash.nil?

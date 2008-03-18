@@ -133,4 +133,9 @@ class AddCashTest < Test::Unit::TestCase
     assert cash.errors.invalid?(:date)
   end
 
+  def test_needs_printer_command
+    cash = Ledger.new(:payment_method => Payment::ADD_CASH)
+    assert cash.needs_fiscal_command
+  end
+
 end

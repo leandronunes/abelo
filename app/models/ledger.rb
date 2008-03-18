@@ -10,7 +10,7 @@ class Ledger < ActiveRecord::Base
 #  acts_as_ferret({:fields => ['description', 'category', 'tags'], :remote => true})
   acts_as_ferret :remote => true 
   
-  attr_accessor :repeat, :interval, :periodicity_id
+  attr_accessor :repeat, :interval, :periodicity_id, :needs_fiscal_command
 
   ############################################
   # Common Relationships and Methods
@@ -82,7 +82,7 @@ class Ledger < ActiveRecord::Base
   delegate :require_category?, :set_as_done_on_save?, :payment_initialize, :display_class, :create_printer_cmd!, :to => :payment_strategy
 
   def validate
-    if self.new_record? and (self.date != Date.today) and (self.is_add_cash? or self.is_remove_cash?)
+    if (self.date != Date.today) and (self.is_add_cash? or self.is_remove_cash? or self.is_change?)
       self.errors.add(:date, _('You cannot schedule an add cash'))
     end
     if (self.value >= 0) and self.expense?
@@ -97,7 +97,7 @@ class Ledger < ActiveRecord::Base
       self.errors.add(:type_of, _('You cannot have an add cash with type different of %s') % Payment::TYPE_OF_INCOME) 
     end
 
-    if self.printer_command.nil? and self.has_fiscal_printer?
+    if self.printer_command.nil? and self.needs_fiscal_command?
       self.errors.add(_('You cannot realize money operations whithout create the printer command'))
     end
 
@@ -143,6 +143,11 @@ class Ledger < ActiveRecord::Base
 
   def create_balance_of_month
     Balance.create_balance(:date => self.date, :bank_account => self.bank_account)
+  end
+
+  def needs_fiscal_command?
+   return false unless self.has_fiscal_printer? and self.printer_command.nil? and self.needs_fiscal_command == true
+   true
   end
 
   # Update the value attribute of the balance object with

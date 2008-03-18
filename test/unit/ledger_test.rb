@@ -594,4 +594,52 @@ class LedgerTest < Test::Unit::TestCase
     assert_equal @organization.default_bank_account, l.bank_account
   end
 
+  def test_needs_fiscal_printer_condition_1
+    l = Ledger.new
+    l.needs_fiscal_command = true
+    Ledger.any_instance.expects(:has_fiscal_printer?).returns(true)
+    Ledger.any_instance.expects(:printer_command).returns(nil)
+    assert l.needs_fiscal_command?, "You need a fiscal printer command when you set needs_fiscal_command to true, has the fiscal printer on organization configuration and dont't have a fiscal printer associated to the ledger"
+  end
+
+  def test_needs_fiscal_printer_condition_2
+    l = Ledger.new
+    l.needs_fiscal_command = true
+    Ledger.any_instance.expects(:has_fiscal_printer?).returns(false)
+    Ledger.stubs(:printer_command).returns(nil)
+    assert !l.needs_fiscal_command?, "You don't need a fiscal printer command when you hasn't the fiscal printer on organization configuration"
+  end
+
+  def test_needs_fiscal_printer_condition_3
+    l = Ledger.new
+    l.needs_fiscal_command = true
+    Ledger.any_instance.expects(:has_fiscal_printer?).returns(true)
+    Ledger.any_instance.expects(:printer_command).returns(mock())
+    assert !l.needs_fiscal_command?, "You don't need a fiscal printer command when already have it"
+  end
+
+  def test_needs_fiscal_printer_condition_4
+    l = Ledger.new
+    l.needs_fiscal_command = false
+    Ledger.any_instance.expects(:has_fiscal_printer?).returns(true)
+    Ledger.any_instance.expects(:printer_command).returns(nil)
+    assert !l.needs_fiscal_command?, "You don't need a fiscal printer command when you set needs_fiscal_command to false"
+  end
+
+  def test_needs_fiscal_printer_condition_5
+    l = Ledger.new
+    l.needs_fiscal_command = false
+    Ledger.any_instance.expects(:has_fiscal_printer?).returns(false)
+    Ledger.stubs(:printer_command).returns(nil)
+    assert !l.needs_fiscal_command?, "You don't need a fiscal printer command when you set needs_fiscal_command to false and haven't the fiscal printer on organization condfiguration"
+  end
+
+  def test_needs_fiscal_printer_condition_6
+    l = Ledger.new
+    l.needs_fiscal_command = false
+    Ledger.any_instance.expects(:has_fiscal_printer?).returns(true)
+    Ledger.any_instance.expects(:printer_command).returns(mock)
+    assert !l.needs_fiscal_command?, "You don't need a fiscal printer command when you set needs_fiscal_command to false and haven't the fiscal printer on organization configuration and already have the printer_command"
+  end
+
 end

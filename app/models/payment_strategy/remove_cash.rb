@@ -24,6 +24,7 @@ class RemoveCash < PaymentBase
     cash.type_of = Payment::TYPE_OF_EXPENSE
     cash.date = Date.today
     cash.bank_account = cash.organization.default_bank_account unless cash.organization.nil?
+    cash.needs_fiscal_command = true
     cash.pending!
   end
 

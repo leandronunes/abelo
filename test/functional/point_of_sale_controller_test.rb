@@ -95,18 +95,28 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
     assert :success
   end
   
-  def test_create_till_open
+  def test_create_till_open_with_existing_till
     Till.expects(:load).returns(@till)
     post :create_till_open
     assert_response :redirect
     assert_redirected_to :action => 'till_open'
   end
 
+  def test_create_till_open
+    Till.destroy_all
+    post :create_till_open
+    assert_response :redirect
+    assert_redirected_to :action => 'till_open'
+    assert_equal 1, Till.count
+  end
+
   def test_create_till_open_with_cash
+    Ledger.destroy_all
     Till.expects(:load).returns(@till)
     post :create_till_open, :cash => {:value => 12}
     assert_response :redirect
     assert_redirected_to :action => 'till_open'
+    assert_equal 1, Ledger.count
   end
 
   def test_till_open

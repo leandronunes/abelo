@@ -135,4 +135,9 @@ class RemoveCashTest < Test::Unit::TestCase
     assert_equal -10, l.value
   end
 
+  def test_needs_printer_command
+    cash = Ledger.new(:payment_method => Payment::REMOVE_CASH)
+    assert cash.needs_fiscal_command
+  end
+
 end

@@ -24,6 +24,7 @@ class AddCash < PaymentBase
     cash.type_of = Payment::TYPE_OF_INCOME
     cash.date = Date.today
     cash.bank_account = cash.owner.default_bank_account unless cash.owner.nil?
+    cash.needs_fiscal_command = true
     cash.pending!
   end
 

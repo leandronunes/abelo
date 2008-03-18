@@ -35,26 +35,18 @@ def create_configurations_tabs
 #  end
 #  t.named _('Fields Configurations')
 
-#  t = add_tab do
-#    links_to :controller => 'periodicities'
-#    in_set 'first'
-#    highlights_on :controller => 'periodicities'
-#  end
-#  t.named _('Periodicties')
-
   t = add_tab do
     links_to :controller => 'periodicities'
     in_set 'first'
     highlights_on :controller => 'periodicities'
   end
-  t.named _('Periodicties')
+  t.named _('Periodicities')
 
-#FIXME remove this for the 0.5.0 version
-#  t = add_tab do
-#    links_to :controller => 'fiscal_printer'
-#    in_set 'first'
-#    highlights_on :controller => 'fiscal_printer'
-#  end
-#  t.named _('Fiscal Printers')
+  t = add_tab do
+    links_to :controller => 'fiscal_printer'
+    in_set 'first'
+    highlights_on :controller => 'fiscal_printer'
+  end
+  t.named _('Fiscal Printers')
 
 end

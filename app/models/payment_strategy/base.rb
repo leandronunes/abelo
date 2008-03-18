@@ -43,7 +43,7 @@ class PaymentBase
   end
 
   def create_printer_cmd!(ledger)
-    return unless ledger.has_fiscal_printer? and ledger.printer_command.nil?
+    return unless ledger.needs_fiscal_command?
     till = ledger.owner.kind_of?(Sale) ? ledger.owner.owner : ledger.owner
     ledger.printer_command = PrinterCommand.new(till, 
             [

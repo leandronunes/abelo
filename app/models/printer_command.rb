@@ -152,10 +152,9 @@ class PrinterCommand < ActiveRecord::Base
   def self.get_serial
     printer_command = PrinterCommand.new(nil, [PrinterCommand::GET_SERIAL])
     printer_command.save
-    if printer_command.execute
-      return printer_command.response[1]
-    end
-    nil
+    serial = ''
+    serial = printer_command.response[1] if printer_command.execute
+    serial
   end
 
   def execute
@@ -173,7 +172,7 @@ class PrinterCommand < ActiveRecord::Base
      puts response
     # Removing bad informations
     response.shift
-    response[1] = response[1].gsub(/.*'(.*)',.*/, '\1').strip
+    response[1] = response[1].gsub(/.*'(.*)',.*/, '\1').strip unless response[1].nil?
     
     # Keep command response
     self.response = response

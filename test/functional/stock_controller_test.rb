@@ -286,6 +286,7 @@ class StockControllerTest < Test::Unit::TestCase
     assert assigns(:banks)
     assert assigns(:ledger_categories)
   end
+
   def test_add_payment_with_correct_params
     invoice = create_invoice
     get :add_payment, :id => invoice.id, :ledger => {:payment_method => 'money', :category => @ledger_category, :value => 343, :date => Date.today}
@@ -316,6 +317,24 @@ class StockControllerTest < Test::Unit::TestCase
     assert assigns(:banks)
     assert assigns(:ledger_categories)
   end
+
+  def test_add_payment_with_fiscal_printer_active
+    invoice = create_invoice
+    @organization.configuration.fiscal_printer = true
+    @organization.configuration.save
+    get :add_payment, :id => invoice.id, :ledger => {:payment_method => 'money', :category => @ledger_category, :value => 343, :date => Date.today}
+
+    assert_response :success
+    assert_template 'shared_payments/_new_payment'
+
+    assert assigns(:payment_object)
+    assert assigns(:ledger)
+    assert_equal 0, assigns(:ledger).errors.length
+    assert assigns(:ledgers)
+    assert assigns(:banks)
+    assert assigns(:ledger_categories)
+  end
+
 
 
 end

@@ -91,7 +91,7 @@ class ChangeCashTest < Test::Unit::TestCase
   end
 
   def test_initialize_remove_cash_with_date_today
-    l = Ledger.new(:payment_method => Payment::REMOVE_CASH)
+    l = Ledger.new(:payment_method => Payment::CHANGE)
     assert_equal Date.today,l.date
   end
 
@@ -101,12 +101,12 @@ class ChangeCashTest < Test::Unit::TestCase
   end
 
   def test_initialize_remove_cash_as_pending
-    l = Ledger.new(:payment_method => Payment::REMOVE_CASH)
+    l = Ledger.new(:payment_method => Payment::CHANGE)
     assert l.pending?
   end
 
   def test_date_is_today
-    cash = Ledger.new(:payment_method => Payment::REMOVE_CASH)
+    cash = Ledger.new(:payment_method => Payment::CHANGE)
     cash.date = Date.today - 1
     cash.valid?
     assert cash.errors.invalid?(:date)
@@ -116,7 +116,7 @@ class ChangeCashTest < Test::Unit::TestCase
   end
 
   def test_value_is_minor_then_zero
-    cash = Ledger.new(:payment_method => Payment::REMOVE_CASH)
+    cash = Ledger.new(:payment_method => Payment::CHANGE)
     cash.value =  2
     cash.valid?
     assert_equal -2, cash.value
@@ -126,7 +126,7 @@ class ChangeCashTest < Test::Unit::TestCase
   end
 
   def test_type_of_is_expense
-    cash = Ledger.new(:payment_method => Payment::REMOVE_CASH)
+    cash = Ledger.new(:payment_method => Payment::CHANGE)
     cash.type_of = Payment::TYPE_OF_INCOME
     cash.valid?
     assert cash.errors.invalid?(:type_of)
@@ -136,9 +136,15 @@ class ChangeCashTest < Test::Unit::TestCase
   end
 
   def test_value_is_negative_on_remove_cash
-    l = Ledger.new(:payment_method => Payment::REMOVE_CASH)
+    l = Ledger.new(:payment_method => Payment::CHANGE)
     l.value = 10
     assert_equal -10, l.value
   end
+
+  def test_needs_printer_command
+    cash = Ledger.new(:payment_method => Payment::CHANGE)
+    assert cash.needs_fiscal_command
+  end
+
 
 end

@@ -1,4 +1,4 @@
-class UnitDisplay < DisplayConfiguration
+class UnitMeasureDisplay < DisplayConfiguration
 
   def self.available_fields
     ['name', 'abbreviation']

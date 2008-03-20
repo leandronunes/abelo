@@ -1,4 +1,4 @@
-class Unit < ActiveRecord::Base
+class UnitMeasure < ActiveRecord::Base
 
   belongs_to :organization
 

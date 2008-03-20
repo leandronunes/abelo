@@ -3,7 +3,9 @@ one:
   id: 1
   name: 'kilogram'
   abbreviation: 'kg'
+  organization_id: 1
 two:
   id: 2
   name: 'gram'
   abbreviation: 'g'
+  organization_id: 1

@@ -7,7 +7,9 @@ class InvoiceTest < Test::Unit::TestCase
   def setup
     @organization = create_organization
     @supplier = Supplier.find(:first)
+    @product_category = create_product_category
     @product = create_product
+
   end
 
   def test_setup

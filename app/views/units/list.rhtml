@@ -1,0 +1,7 @@
+<%= title _('Listing Units') %>
+
+<%= display_list_options 'unit', 'name' %>
+
+<%= display_collection @units %>
+
+<%= pagination_links(@unit_pages, :params => {:query => @query}) %>

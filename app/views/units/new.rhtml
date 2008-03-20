@@ -1,0 +1,9 @@
+<%= title(_('New Unit')) %>
+
+<% form_tag :action => 'create' do %>
+
+  <%= render :partial => 'form' %>
+
+  <%= display_new_info_options @unit %> 
+<% end %>
+

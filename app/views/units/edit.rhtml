@@ -1,0 +1,8 @@
+
+<%= title(_('Editing Unit')) %>
+
+<% form_tag :action => 'update', :id => @unit do %>
+    <%= render :partial => 'form' %>   
+    <%= display_edit_info_options(@unit) %>
+    <%= button 'image', _('Images'), :img, :action => 'images', :id => @unit %>  
+<% end %>

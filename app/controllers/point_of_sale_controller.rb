@@ -329,7 +329,7 @@ class PointOfSaleController < ApplicationController
   private
 
   def load_printer
-    printer =  @organization.printers.find_by_computer_id(PrinterCommand.get_computer_id.strip)
+    printer =  @organization.printers.find_by_computer_id(PrinterCommand.get_computer_id)
     printer # Make the return value more clear
   end
 
@@ -337,6 +337,7 @@ class PointOfSaleController < ApplicationController
     printer = load_printer 
     if @organization.has_fiscal_printer? and printer.nil?
       flash[:notice] = _("You don't have a printer configured")
+raise 'fudeu'
       redirect_to :action => 'index'
     else
       @till = Till.load(@organization, current_user, printer)

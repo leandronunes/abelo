@@ -48,6 +48,8 @@ organization_admin:
     action: '*'
   - controller: 'fiscal_printer'
     action: '*'
+  - controller: 'units'
+    action: '*'
 another:
   id: 2
   user_id: 2

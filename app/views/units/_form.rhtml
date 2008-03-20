@@ -1,0 +1,22 @@
+<%= error_messages_for 'unit' %>
+
+<!--[form:unit]-->
+
+<% display_form_info @unit do |item| %>
+
+  <%= display_field_form(item, 'name',
+        :title => _('Name'),
+        :content => text_field('unit', 'name')
+      )
+  %>
+  
+  <%= display_field_form(item, 'abbreviation',
+        :title => _('Abbreviation'),
+        :content => text_field('unit', 'abbreviation')
+      )
+  %>
+  
+<% end %>
+
+<!--[eoform:unit]-->
+

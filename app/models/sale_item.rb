@@ -85,53 +85,67 @@ class SaleItem < ActiveRecord::Base
     self.item_product_code = code
   end
 
+  # The code of the product associated to this item
   def product_code
     self.product.nil? ? self.item_product_code : self.product.code
   end
 
+  # Needs for Fiscal Printer Commands
   def surcharge
     0
   end
 
+  # FIXME make this test
   def unit_desc
     'un'
 #    self.product.nil? ? '' : self.product.unit
   end
 
+  # FIXME make this test
   def unit
     'un'
 #    self.product.nil? ? '' : self.product.unit
   end
 
+  # FIXME make this test
   def discount
     0
   end
 
+  # FIXME make this test
   def taxcode
     'T01'
   end
 
+  # The same as product_code function bu it used for generate the printer command.
   def code
     self.product_code
   end
 
+  # FIXME make this test
   def description
     str_desc = (self.product.nil? ? '' : (self.product.description || self.product.name))
     str_desc.transliterate
   end
 
+  # FIXME make this test
   def amount= amount
     self[:amount] = amount unless amount.nil?
   end
 
+  # Returns nil if the product is nil and the
+  # product name otherwise.
   def name
     self.product.name unless self.product.nil?
   end
 
+  # Return the price of the sale item. The price is composed by
+  # (the product unitary price) * (amount needed)
   def price
     self.unitary_price * self.amount
   end
 
+  # FIXME make this test
   def self.products_by_sale(sales)
     sale_itens = []
     if sales.kind_of?(Array)
@@ -150,6 +164,7 @@ class SaleItem < ActiveRecord::Base
 
   private
 
+  # FIXME make this test
   def unitary_price= price
     raise "You cannot access this method"
   end

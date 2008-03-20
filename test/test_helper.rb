@@ -253,5 +253,10 @@ class Test::Unit::TestCase
     item
   end
 
+  def create_unit(params= {})
+    organization = params[:organization] || @organization || create_organization
+    Unit.create({:name => 'some', :abbreviation => 'so', :organization => organization}.merge(params))
+  end
+
 end
 

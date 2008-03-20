@@ -59,6 +59,7 @@ class PrinterCommand < ActiveRecord::Base
   validates_uniqueness_of :cmd_id, :scope => :till_id
   validates_uniqueness_of :sequence_number, :scope => :till_id
 
+  #FIXME make this test
   before_save do |printer_command|
     if printer_command.sequence_number.nil?
       current_sequence_number = PrinterCommand.maximum(:sequence_number, :conditions => {:till_id => printer_command.till}) || 0
@@ -71,6 +72,7 @@ class PrinterCommand < ActiveRecord::Base
     end
   end
 
+  #FIXME Make this tests
   def initialize(till, command, *args)
     super(*args)
     self.till = till
@@ -80,27 +82,32 @@ class PrinterCommand < ActiveRecord::Base
   end
 
   def str_command
-    self.cmd + ' ' + "'#{(self.cmd_params.blank? ? '' : (self.cmd_params))}'"
+    self.cmd + ' ' + (self.cmd_params.blank? ? '' : ("'#{self.cmd_params}'"))
   end
 
+  #FIXME make the tests
   def self.pending_command(till)
     self.find(:first, :conditions => {:till_id => till, :status => STATUS_PENDING}, :order => 'sequence_number')
   end
 
+  #FIXME make the tests
   def self.pending_commands(till)
     self.find(:all, :conditions => {:till_id => till, :status => STATUS_PENDING}, :order => 'sequence_number')
   end
 
 #TODO remove this
+  #FIXME make the tests
   def self.all_pending_commands
     self.find(:all, :conditions => {:status => STATUS_PENDING}, :order => 'sequence_number')
   end
 
 
+  #FIXME make the tests
   def self.has_pending?(till)
     self.find(:first, :conditions => {:till_id => till, :status => STATUS_PENDING}) != nil
   end
 
+  #FIXME make the tests
   def self.run_pendings(till)
     pending_cmd = self.pending_command(till)
     pending_cmd.valid! if pending_cmd.invalid?
@@ -110,12 +117,14 @@ class PrinterCommand < ActiveRecord::Base
     end
   end
 
+  #FIXME make the tests
   # Erase the error counter to make the command 
   # possible to print
   def valid!
     self.counter = 10
   end
 
+  #FIXME make the tests
   # Return true if the current command is invalid.
   # One command is invalid when the system tried to print 
   # it MAX_PRINTER_COUNTER times unsuccefully.
@@ -123,20 +132,24 @@ class PrinterCommand < ActiveRecord::Base
     self.counter == MAX_PRINTER_COUNTER
   end
 
+  #FIXME make the tests
   # Check if a sale was totalized
   def self.is_totalized? sale
     sale.printer_commands.detect{|p| p.cmd == TOTALIZE} != nil
   end
 
+  #FIXME make the tests
   def has_error?
     self.error_code != nil
   end
 
+  #FIXME make the tests
   def inc_counter
     self.counter = self.counter + 1
     self.save
   end
 
+  #FIXME make the tests
   def dec_counter
     self.counter = self.counter - 1
     self.save
@@ -146,9 +159,10 @@ class PrinterCommand < ActiveRecord::Base
     exec =  IO.popen("/sbin/ifconfig | grep HW")
     response = exec.readlines
     computer_id = response.first.gsub(/(.*)([\w]{2}(:[\w]{2}){5})/, '\2')
-    computer_id # Make the return valu more clear
+    computer_id.strip # Make the return value more clear
   end
 
+  #FIXME make the tests
   def self.get_serial
     printer_command = PrinterCommand.new(nil, [PrinterCommand::GET_SERIAL])
     printer_command.save
@@ -157,6 +171,7 @@ class PrinterCommand < ActiveRecord::Base
     serial
   end
 
+  #FIXME make the tests
   def execute
     if self.counter >= MAX_PRINTER_COUNTER
 #      self.owner.destroy unless self.owner.nil? #TODO remove it
@@ -182,6 +197,7 @@ class PrinterCommand < ActiveRecord::Base
     self.accept_command?(response) ? true : false
   end
 
+  #FIXME make the tests
   def done!
     self.status = STATUS_DONE
     unless self.owner.nil?
@@ -195,11 +211,13 @@ class PrinterCommand < ActiveRecord::Base
   end
 
 
+  #FIXME make the tests
   def set_error(code)
     self.error_code = code
     self.save
   end  
 
+  #FIXME make the tests
   def response_error?(response)
 #    response.shift
     code = response[0].to_i
@@ -288,16 +306,19 @@ class PrinterCommand < ActiveRecord::Base
     return true
   end
 
+  #FIXME make the tests
   def accept_command?(response)
     return false if self.response_error?(response) 
     self.done!
     return true
   end
 
+  #FIXME make the tests
   def error_message
     self.response[1] unless self.response.nil?
   end
 
+  #FIXME make the tests
   def make_reduction_z
     pc ||= PrinterCommand.new(self.till, [PrinterCommand::CLOSE_TILL, false])
 #    pc ||= PrinterCommand.new(self.till, [PrinterCommand::CLOSE_TILL, ((self.datetime < Date.today) ? false : true)]) #FIXME see if it's previous day or not
@@ -307,6 +328,7 @@ class PrinterCommand < ActiveRecord::Base
     pc.set_as_first
   end
 
+  #FIXME make the tests
   def set_as_first
     self.sequence_number = PrinterCommand.minimum(:sequence_number, :conditions => {:till_id => self.till}) - 1 || 0
     self.save!

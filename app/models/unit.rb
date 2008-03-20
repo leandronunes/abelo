@@ -1,35 +1,19 @@
 class Unit < ActiveRecord::Base
 
-  UNIT = {
-    'L' => _('Liter'),
-    'U' => _('Unit'),
-    'K' => _('Kilogram'),
-  }
+  belongs_to :organization
 
-  def self.find(*args)
-    size_objects = Array.new
+  validates_presence_of :name
+  validates_presence_of :abbreviation
+  validates_uniqueness_of :name, :scope => :organization_id
+  validates_uniqueness_of :abbreviation, :scope => :organization_id
+  validates_length_of :abbreviation, :maximum => 2
 
-    case args.first
-      when :first then UnitObject.new('U', UNIT['U'])
-      when :all then 
-        UNIT.each do |k,v|
-          size_objects.push(UnitObject.new(k, v))
-        end
-        size_objects
-      else UnitObject.new(args.first, UNIT[args.first])
-    end
-  end
+  acts_as_ferret :remote => true
 
-
-end
-
-class UnitObject
-
-  attr_accessor :name, :id
-
-  def initialize(id, name)
-    self.id = id
-    self.name = name
+  def self.full_text_search(q, options = {})
+    default_options = {:limit => :all, :offset => 0}
+    options = default_options.merge options
+    self.find_by_contents(q, options)
   end
 
 end

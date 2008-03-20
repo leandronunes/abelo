@@ -164,6 +164,7 @@ class Profile < ActiveRecord::Base
       { 'controller' => 'sintegra', 'action' => '*' },
       { 'controller' => 'fiscal_printer', 'action' => '*' },
       { 'controller' => 'public', 'action' => '*' },
+      { 'controller' => 'units', 'action' => '*' },
     ],
     'other' => []
   }

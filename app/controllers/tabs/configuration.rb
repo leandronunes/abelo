@@ -43,6 +43,13 @@ def create_configurations_tabs
   t.named _('Periodicities')
 
   t = add_tab do
+    links_to :controller => 'units'
+    in_set 'first'
+    highlights_on :controller => 'units'
+  end
+  t.named _('Units')
+
+  t = add_tab do
     links_to :controller => 'fiscal_printer'
     in_set 'first'
     highlights_on :controller => 'fiscal_printer'

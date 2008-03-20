@@ -119,4 +119,41 @@ class SaleItemTest < Test::Unit::TestCase
     assert 0, SaleItem.count
   end
 
+  def test_product_code= 
+    sale = mock()
+    organization = mock()
+    sale.expects(:organization).returns(organization)
+    product = create_product
+    organization.expects(:products).returns([product])
+    code = product.code
+    Array.any_instance.expects(:find_by_code).with(code).returns(product)
+    item = SaleItem.new
+    SaleItem.any_instance.stubs(:sale).returns(sale)
+    item.product_code= code
+    assert_equal product, item.product
+    assert_equal code, item.item_product_code
+  end
+
+  def test_product_code_when_product_is_nil
+    s = SaleItem.new  
+    code = 34
+    s.item_product_code = code
+    SaleItem.any_instance.expects(:product).returns(nil)
+    assert_equal code, s.product_code
+  end
+
+  def test_product_code_whith_existing_product
+    s = SaleItem.new  
+    code = 45
+    product = mock()
+    product.expects(:code).returns(code)
+    SaleItem.any_instance.stubs(:product).returns(product)
+    assert_equal code, s.product_code
+  end
+
+  def test_surcharge
+    s = SaleItem.new
+    assert_equal 0, s.surcharge
+  end
+
 end

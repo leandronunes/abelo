@@ -2,9 +2,7 @@ class CategoriesController < ApplicationController
 
   needs_organization
 
-
   uses_configurations_tabs
-
 
   CATEGORY_TYPES = %w[
     customer

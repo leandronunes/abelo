@@ -45,6 +45,7 @@ class Organization < ActiveRecord::Base
   has_many :address_displays, :through => :configuration
   has_many :printer_displays, :through => :configuration
   has_many :display_configurations, :through => :configuration
+  has_many :units
   # End displays has_many methods
   
   has_many :departments

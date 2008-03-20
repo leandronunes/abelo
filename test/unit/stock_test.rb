@@ -3,11 +3,11 @@ require File.dirname(__FILE__) + '/../test_helper'
 class StockTest < Test::Unit::TestCase
 
   def setup
-    @org = Organization.find_by_identifier('six') 
-    @cat_prod = ProductCategory.create(:name => 'Category for testing', :organization_id => @org.id)
-    @product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => @cat_prod.id) 
-    cat_supp = SupplierCategory.create(:name => 'Category for testing', :organization_id => @org.id)
-    @supplier = Supplier.create!(:name => 'Hering', :cnpj => '58178734000145', :organization_id => @org.id, :email => 'contato@hering.com', :category_id => cat_supp.id)
+    @organization = create_organization
+    @product_category = create_product_category
+    @product = create_product
+    cat_supp = SupplierCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
+    @supplier = Supplier.create!(:name => 'Hering', :cnpj => '58178734000145', :organization_id => @organization.id, :email => 'contato@hering.com', :category_id => cat_supp.id)
   end
 
   def test_relation_with_product
@@ -18,8 +18,8 @@ class StockTest < Test::Unit::TestCase
 
   def test_relation_with_organization
     entry = StockIn.create(:supplier_id => @supplier.id, :amount => 5,  :date => '2007-07-01', :product_id => @product.id)
-    entry.organization = @org
-    assert_equal @org, entry.organization
+    entry.organization = @organization
+    assert_equal @organization, entry.organization
   end
 
   def test_mandatory_field_product_id

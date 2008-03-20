@@ -5,7 +5,7 @@ class ImageTest < Test::Unit::TestCase
   fixtures :images, :products, :organizations
 
   def setup
-    @org = Organization.find_by_identifier('six') 
+    @organization = create_organization
   end
 
   def test_mandatory_field_description
@@ -37,7 +37,7 @@ class ImageTest < Test::Unit::TestCase
 
   def test_relation_with_product
     img = Image.new
-    product = Product.create(:name => 'Image of product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id) 
+    product = create_product
     img.product = product
     assert_equal product, img.product
   end

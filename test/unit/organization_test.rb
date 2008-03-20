@@ -44,7 +44,7 @@ class OrganizationTest < Test::Unit::TestCase
   end
 
   def test_relation_with_products
-    product = Product.create(:name => 'Image of product', :sell_price => 2.0, :unit => 'kg', :organization_id => @organization.id)
+    product = create_product
     @organization.products.concat(product)
     assert @organization.products.include?(product)
   end

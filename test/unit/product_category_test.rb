@@ -5,21 +5,21 @@ class ProductCategoryTest < Test::Unit::TestCase
   fixtures :organizations
 
   def setup
-    @org = Organization.find_by_identifier('six') 
+    @organization = create_organization
   end
 
   def test_relation_with_products
-    cat_prod = ProductCategory.create(:name => 'Category for testing', :organization_id => @org.id)
-    product = Product.new(:name => 'Image of product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id)
+    cat_prod = create_product_category
+    product = create_product(:category => cat_prod)
     cat_prod.products.concat(product)
     assert_equal 1, cat_prod.products.count
   end
 
   def test_relation_with_images
-    cat_prod = ProductCategory.create(:name => 'Category for testing', :organization_id => @org.id)
-    product = Product.create(:name => 'Image of product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => cat_prod.id)
+    cat_prod = create_product_category
+    product = create_product(:category => cat_prod)
     img = Image.new 
-    stream = StringIO.new(File.read('public/images/rails.png'))
+    stream = StringIO.new(File.read("#{RAILS_ROOT}/public/images/rails.png"))
     def stream.original_filename
       'rails.png'
     end
@@ -35,18 +35,18 @@ class ProductCategoryTest < Test::Unit::TestCase
   end
 
   def test_uniqueness_name
-    cat_prod_1 = ProductCategory.create(:name => 'Category for testing', :organization_id => @org.id)
-    cat_prod_2 = ProductCategory.create(:name => 'Category for testing', :organization_id => @org.id)
+    cat_prod_1 = ProductCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
+    cat_prod_2 = ProductCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
     assert cat_prod_2.errors.invalid?(:name)
   end
 
   def test_category_images
-    cat_prod_1 = ProductCategory.create(:name => 'Category for testing', :organization_id => @org.id)
-    cat_prod_2 = ProductCategory.create(:name => 'Category for testing 2', :organization_id => @org.id, :parent_id => cat_prod_1.id)
-    product = Product.create(:name => 'Image of product', :sell_price => 2.0, :unit => 'kg', :organization_id => @org.id, :category_id => cat_prod_2.id)
+    cat_prod_1 = ProductCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
+    cat_prod_2 = ProductCategory.create(:name => 'Category for testing 2', :organization_id => @organization.id, :parent_id => cat_prod_1.id)
 
+    product = create_product(:category => cat_prod_2)
     img = Image.new 
-    stream = StringIO.new(File.read('public/images/rails.png'))
+    stream = StringIO.new(File.read("#{RAILS_ROOT}/public/images/rails.png"))
     def stream.original_filename
       'rails.png'
     end

@@ -144,12 +144,14 @@ class Test::Unit::TestCase
   end
 
   def create_product_category(params = {})
-    ProductCategory.create!({:name => 'some', :organization => @organization}.merge(params))
+    organization = params[:organization] || @organization || create_organization
+    ProductCategory.create!({:name => 'some', :organization => organization}.merge(params))
   end
 
   def create_product(params = {})
-    @product_category ||= create_product_category
-    Product.create!({:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization => @organization, :category => @product_category}.merge(params))
+    product_category = params[:category] || @product_category || create_product_category
+    unit = params[:unit] || @unit || create_unit
+    Product.create!({:name => 'product', :sell_price => 2.0, :organization => @organization, :unit_measure => unit, :category => product_category}.merge(params))
   end
 
   def create_supplier
@@ -255,7 +257,9 @@ class Test::Unit::TestCase
 
   def create_unit(params= {})
     organization = params[:organization] || @organization || create_organization
-    Unit.create({:name => 'some', :abbreviation => 'so', :organization => organization}.merge(params))
+    u = UnitMeasure.find_by_abbreviation('au')
+    u ||= UnitMeasure.create!({:name => 'a unit', :abbreviation => 'au', :organization => organization}.merge(params))
+    u
   end
 
 end

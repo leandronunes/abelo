@@ -289,25 +289,32 @@ manager_category.name = 'manager_category'
 manager_category.organization = organization
 manager_category.save
 
+################### Unit ######################
+UnitMeasure.destroy_all
+unit_un = UnitMeasure.create!(:name => 'Unidade', :abbreviation => 'Un', :organization => organization)
+UnitMeasure.create!(:name => 'Quilograma', :abbreviation => 'Kg', :organization => organization)
+UnitMeasure.create!(:name => 'Grama', :abbreviation => 'g', :organization => organization)
+UnitMeasure.create!(:name => 'Litro', :abbreviation => 'Lt', :organization => organization)
+
 ############Products#############################
 Product.destroy_all
-camisa = Product.new(:name => 'camisa básica', :size => 'p', :color => 'azul', :sell_price => 25.00, :unit => 'U', :code => 1)
+camisa = Product.new(:name => 'camisa basica', :size => 'p', :color => 'azul', :sell_price => 25.00, :unit_measure => unit_un, :code => 1)
 camisa.organization = organization
 camisa.category = vestuario
 camisa.save!
-calca = Product.new(:name => 'calça xadrez', :size => 'p', :color => 'verde', :sell_price => 45.00, :unit => 'U', :code => 2)
+calca = Product.new(:name => 'calca xadrez', :size => 'p', :color => 'verde', :sell_price => 45.00, :unit_measure => unit_un, :code => 2)
 calca.organization = organization
 calca.category = vestuario
 calca.save!
-colar = Product.new(:name => 'colar golfinho', :size => '20', :color => 'preto', :sell_price => 20.00, :unit => 'U', :code => 3)
+colar = Product.new(:name => 'colar golfinho', :size => '20', :color => 'preto', :sell_price => 20.00, :unit_measure => unit_un, :code => 3)
 colar.organization = organization
 colar.category = acessorio
 colar.save!
-brinco = Product.new(:name => 'brinco madreperola', :size => '4', :color => 'branco', :sell_price => 15.00, :unit => 'U', :code => 4)
+brinco = Product.new(:name => 'brinco madreperola', :size => '4', :color => 'branco', :sell_price => 15.00, :unit_measure => unit_un, :code => 4)
 brinco.organization = organization
 brinco.category = acessorio
 brinco.save!
-monitor = Product.new(:name => 'monitor lcd', :size => '15', :color => 'preto', :sell_price => 6.00, :unit => 'U', :code => 5)
+monitor = Product.new(:name => 'monitor lcd', :size => '15', :color => 'preto', :sell_price => 6.00, :unit_measure => unit_un, :code => 5)
 monitor.organization = organization
 monitor.category = acessorio
 monitor.save!

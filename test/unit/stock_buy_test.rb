@@ -7,8 +7,8 @@ class StockBuyTest < Test::Unit::TestCase
   def setup
     @organization = create_organization
     @bank_account = BankAccount.find(:first)
-    @cat_prod = ProductCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
-    @product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @organization.id, :category_id => @cat_prod.id) 
+    @product_category = create_product_category
+    @product = create_product
     cat_supp = SupplierCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
     @supplier = Supplier.create!(:name => 'Hering', :cnpj => '58178734000145', :organization_id => @organization.id, :email => 'contato@hering.com', :category_id => cat_supp.id)
 
@@ -19,7 +19,7 @@ class StockBuyTest < Test::Unit::TestCase
   def test_setup
     assert @organization.valid?
     assert @bank_account.valid?
-    assert @cat_prod.valid?
+    assert @product_category.valid?
     assert @product.valid?
     assert @supplier.valid?
     assert @ledger_category.valid?

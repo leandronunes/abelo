@@ -9,6 +9,7 @@ class SaleTest < Test::Unit::TestCase
     @organization = create_organization
     BankAccount.create!(:organization => @organization, :account => 234, :bank_id => 1, :agency => 3434, :is_default => true )
     @user = User.create!("salt"=>"7e3041ebc2fc05a40c60028e2c4901a81035d3cd", "updated_at"=>nil, "crypted_password"=>"00742970dc9e6319f8019fd54864d3ea740f04b1", "type"=>"User", "remember_token_expires_at"=>nil, "id"=>"1", "administrator"=>false, "remember_token"=>nil, "login"=>"new_user", "email"=>"new_user@example.com", "created_at"=>"2007-07-14 18:03:29")
+    @product_category = create_product_category
     @product1 = create_product(:organization => @organization)
     @product2 = create_product(:organization => @organization, :name => 'another name')
   end
@@ -112,7 +113,7 @@ class SaleTest < Test::Unit::TestCase
     Product.any_instance.stubs(:amount_in_stock).returns(342)
     sale = create_sale
     cat_prod = ProductCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
-    product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @organization.id, :category_id => cat_prod.id)
+    product = create_product
     item = create_item(:product => product, :amount => 2, :sale => sale)
     sale.reload
     assert sale.sale_items.include?(item)
@@ -206,7 +207,7 @@ class SaleTest < Test::Unit::TestCase
     customer = Customer.create(:name => 'João da Silva', :birthday => '1984-08-15', :address => 'Rua Pará, nº 221, Pituba', :cpf => '85288242682', :organization_id => @organization.id, :email => 'customer', :category_id => cat.id)
     sale = create_sale()
     cat_prod = ProductCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
-    product = Product.create(:name => 'product', :sell_price => 2.0, :unit => 'kg', :organization_id => @organization.id, :category_id => cat_prod.id)
+    product = create_product
     item = create_item(:sale => sale, :product => product, :amount => 2)
     sale.reload
     sale.customer = customer

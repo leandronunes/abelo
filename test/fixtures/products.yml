@@ -4,7 +4,6 @@ first:
   name: 'Ice Cream'
   description: 'Ice Cream'
   sell_price: 10.00
-  unit: 'kg'
   organization_id: 1
   category_id: 5
   code: 1
@@ -13,7 +12,6 @@ second:
   name: 'Diapers'
   description: 'Diapers'
   sell_price: 3.00
-  unit: 'un'
   organization_id: 1
   category_id: 6
   code: 2
@@ -22,7 +20,6 @@ third:
   name: 'Water'
   description: 'Water'
   sell_price: 2.00
-  unit: 'un'
   organization_id: 1
   category_id: 5
   code: 3
@@ -31,7 +28,6 @@ fourth:
   name: 'Juice'
   description: 'Juice'
   sell_price: 2.50
-  unit: 'un'
   organization_id: 1
   category_id: 5
   code: 4
@@ -40,7 +36,6 @@ fifth:
   name: 'Bean'
   description: 'Bean'
   sell_price: 1.50
-  unit: 'kg'
   organization_id: 1
   category_id: 3
   code: 5
@@ -49,7 +44,6 @@ sixth:
   name: 'TV'
   description: 'TV'
   sell_price: 400.50
-  unit: 'un'
   organization_id: 1
   category_id: 2
   code: 6
@@ -58,7 +52,6 @@ seventh:
   name: 'Car'
   description: 'Car'
   sell_price: 30240.00
-  unit: 'un'
   organization_id: 2
   category_id: 6
   code: 7
@@ -67,7 +60,6 @@ eighth:
   name: 'Bike'
   description: 'Bike'
   sell_price: 130.50
-  unit: 'un'
   organization_id: 4 
   category_id: 9
   code: 8

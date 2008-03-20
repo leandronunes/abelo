@@ -2,7 +2,7 @@ class Product < ActiveRecord::Base
 
   belongs_to :organization
   belongs_to :category, :class_name => 'ProductCategory', :foreign_key => 'category_id'
-  belongs_to :unit_measure, :class_name => 'Unit', :foreign_key => 'unit_id'
+  belongs_to :unit_measure
 
   has_many :images
   has_and_belongs_to_many :suppliers
@@ -20,7 +20,7 @@ class Product < ActiveRecord::Base
   validates_uniqueness_of :code, :scope => :organization_id
   validates_presence_of :code
 
-  validates_presence_of :name, :sell_price#, :unit_id
+  validates_presence_of :name, :sell_price, :unit_measure_id
 
   validates_presence_of :organization_id, :message => _('Products must be associated to an organization')
 

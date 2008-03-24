@@ -23,6 +23,14 @@ def create_admin_organization_tabs
 
   t = add_tab do
     in_set 'first'
+    highlights_on :controller => 'tracker'
+  end
+  t.links_to :controller => 'tracker', :organization_id => params[:organization_id]
+  t.named _('Tracker')
+  t.show_if "!params[:organization_id].nil?"
+
+  t = add_tab do
+    in_set 'first'
     highlights_on :controller => 'permissions_admin'
   end
   t.links_to :controller => 'permissions_admin', :action => 'list', :organization_id => params[:organization_id]

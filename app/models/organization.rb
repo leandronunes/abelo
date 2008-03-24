@@ -73,14 +73,16 @@ class Organization < ActiveRecord::Base
   has_many :stock_ins, :through => :products
   has_many :stock_devolutions, :through => :products
   has_many :stock_downs, :through => :products
-  has_one  :environment, :as => :owner
   has_many :periodicities
   has_many :mass_mails
   has_many :invoices, :through => :suppliers
   # One Environment can be reached by many domains
   has_many :domains, :as => :owner
-  has_one :address, :as => :owner
   has_many :printers
+
+  has_one  :environment, :as => :owner
+  has_one :address, :as => :owner
+  has_one :tracker
 
   validates_presence_of :name
   validates_uniqueness_of :name
@@ -91,6 +93,7 @@ class Organization < ActiveRecord::Base
   validates_format_of :identifier, :with => IDENTIFIER_FORMAT
   validates_exclusion_of :identifier, :in => RESERVED_IDENTIFIERS
   validates_associated :address
+  validates_associated :tracker
 
   before_validation do |organization|
     if organization.address.nil?
@@ -99,6 +102,11 @@ class Organization < ActiveRecord::Base
       address.state = organization.state_obj
       address.city = organization.city_obj
       organization.address = address
+    end
+
+    if organization.tracker.nil?
+      tracker = Tracker.new
+      organization.tracker = tracker
     end
   end
 

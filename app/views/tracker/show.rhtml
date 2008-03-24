@@ -1,0 +1,5 @@
+<%= title _('Tracker of %s') % @organization.name %>
+
+<%= display_show_info @tracker %>
+
+<%= display_show_info_options(@tracker, :organization_id => @organization) %> 

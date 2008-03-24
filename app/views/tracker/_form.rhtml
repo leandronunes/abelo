@@ -1,0 +1,27 @@
+<%= error_messages_for 'tracker' %>
+
+<!--[form:tracker]-->
+
+<% display_form_info @tracker do |item| %>
+
+  <%= display_field_form(item, 'available_points',
+        :title => _('Total available points'),
+        :content => text_field('tracker', 'available_points')
+      )
+  %>
+
+  <%= display_field_form(item, 'specific_trackers',
+        :title => _('Points per user'),
+        :content => text_field('tracker', 'user')
+      )
+  %>
+
+  <%= display_field_form(item, 'specific_trackers',
+        :title => _('Points per web site'),
+        :content => text_field('tracker', 'web_site')
+      )
+  %>
+
+<% end %>
+
+

@@ -3,7 +3,7 @@ class ProductDisplay < DisplayConfiguration
   #FIXME remove info column and moves the information of this filed to the field description
 
   def self.available_fields
-    ['image', 'name', 'size', 'color', 'sell_price', 'unit_measure', 'category', 'suppliers', 'amount_in_stock', 'minimum_amount', 'info', 'code']
+    ['image', 'name', 'size', 'color', 'sell_price', 'unit', 'category', 'suppliers', 'amount_in_stock', 'minimum_amount', 'info', 'code']
   end
 
   def self.all_available?

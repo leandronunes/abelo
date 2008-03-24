@@ -707,6 +707,11 @@ module ApplicationHelper
     render :partial => 'display_array'
   end
 
+  def display_field_type_hash(content)
+    @displays = content
+    render :partial => 'display_hash'
+  end
+
   private 
 
   #Display a set of options available generally on list methods

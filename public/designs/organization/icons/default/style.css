@@ -6,6 +6,7 @@
 .edit_small     { background-image: url(edit_small.png) }
 .view_small     { background-image: url(view_small.png) }
 .del_small      { background-image: url(del_small.png) }
+.close          { background-image: url(del_small.png) }
 .edit           { background-image: url(edit.png) }
 .save           { background-image: url(save.png) }
 .back           { background-image: url(back.png) }

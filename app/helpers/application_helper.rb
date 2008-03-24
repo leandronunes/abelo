@@ -26,6 +26,15 @@ module ApplicationHelper
     date_select(object_name, method, {:include_blank => true, :use_month_numbers => true, :order => [:day, :month, :year]}.merge(options))
   end
 
+  def partial_for_class(klass)
+    name = klass.name.underscore
+    if File.exists?(File.join(RAILS_ROOT, 'app', 'views', params[:controller], "_#{name}.rhtml"))
+      name
+    else
+      partial_for_class(klass.superclass)
+    end
+  end
+
   def select_month_abelo(date = Date.today, options ={})
     select_month(date,{:include_blank => true, :use_month_numbers => true}.merge(options))
   end
@@ -774,5 +783,32 @@ module ApplicationHelper
     show_time == true ? date.strftime(_('%d/%m/%Y: %T')) : date.strftime(_('%d/%m/%Y'))
    
   end
+
+  #########################################
+  # Helpers for cms
+  #########################################
+ 
+  include LightboxHelper
+  
+  # returns the current environment beign viewed.
+  #
+  # Make sure that you use this helper method only in contexts where there
+  # should be a current environment (i.e. while viewing some environment's pages, or the
+  # environment info, etc), because if there is no profile an exception is thrown.
+  # FIXME See if it's usefull and make this test
+  def environment
+    @controller.send(:environment) || raise("There is no current environment")
+  end
+
+  #FIXME make this test
+  def button_bar(options = {}, &block)
+    concat(content_tag('div', capture(&block) + tag('br', :style => 'clear: left;'), { :class => 'button-bar' }.merge(options)), block.binding)
+  end
+
+  #FIXME make this test    
+  def file_manager_button(title, icon, url)
+    content_tag('div', link_to(image_tag(icon, :alt => title, :title => title) + content_tag('div', title), url), :class => 'file-manager-button')
+  end 
+
 
 end

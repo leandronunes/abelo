@@ -1,0 +1,3 @@
+class TextArticleDisplay < ArticleDisplay
+
+end

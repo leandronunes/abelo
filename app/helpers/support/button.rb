@@ -25,3 +25,13 @@
     design_display_button_submit_to_remote(button, name,  ( (local_html_options[:class]['with_text'])? title : '' ), options, local_html_options)
   end
 
+  #FIXME make this test
+  def icon(icon_name, html_options = {})
+    the_class = "button #{icon_name}"
+    if html_options.has_key?(:class)
+      the_class << ' ' << html_options[:class]
+    end
+    content_tag('div', '', html_options.merge(:class => the_class))
+  end
+
+

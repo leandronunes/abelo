@@ -121,12 +121,6 @@ class Organization < ActiveRecord::Base
       configuration.is_model = false
       configuration.save!
 
-      homepage = Article.new
-      homepage.title = organization.name
-      homepage.parent = Comatose::Page.root
-      homepage.slug = organization.identifier
-      homepage.save!
-
       environment = Environment.new
       environment.owner = organization
       environment.name = organization.identifier
@@ -136,8 +130,9 @@ class Organization < ActiveRecord::Base
   end
 
   after_destroy do |organization|
-    article = Article.find_by_path(organization.identifier)
-    article.destroy unless article.nil?
+#FIXME Refactory this
+#    article = Article.find_by_path(organization.identifier)
+#    article.destroy unless article.nil?
   end
 
   def validate

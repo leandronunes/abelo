@@ -6,6 +6,10 @@ margin-top: 108px;
 z-index: 999;
 }
 
+#menu .button{
+  float: none;
+}
+
 #menu ul {
 position: relative;
 background: url('../images/bgmenu.png') bottom right no-repeat;

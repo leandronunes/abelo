@@ -1,0 +1,65 @@
+<% if @article %>
+  <h2 id='article-full-path'>
+    <%= icon('cms') %>
+    <%= link_to @organization.name, :action => 'index' %>
+    <%= @article.hierarchy.map {|item| " / " + ((item == @article) ? item.name : link_to(item.name, :id => item.id)) } %>
+  </h2>
+<% else %>
+ <%= title _('Content management') %>
+ <%= lightbox_button('add', _('New article'),:new, {:action => 'new'}, {:class => 'with_text'}) %>
+<% end %>
+
+<%# subitem %>
+<% if !@subitems.empty? && @article %>
+  <%= toggle_panel(_('Hide subitems'), _('Show subitems'), 'article-subitems') %>
+<% end %>
+  
+<div id='article-subitems'>
+  <div class='file-manager-title'><%= @article ? _('Subitems') : _('Articles') %></div>
+  <div class='file-manager-small'>
+    <% unless @subitems.empty? %>
+      <ul>
+        <% @subitems.each do |item| %>
+          <li>
+          <%= file_manager_button(item.name, icon_for_article(item), :action => 'view', :id => item.id) %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+
+    <% if @article %>
+      <% button_bar(:class => 'file-manager-controls') do %>
+        <% if @article.allow_children? %>
+          <%= lightbox_button('add',  _('New subitem'),  :new, :action => 'new', :parent_id => @article.id) %>
+        <% end %>
+        <%= button('up', _('Go up one level'), :action => (@article.parent ? 'view' : 'index'), :id => @article.parent) %>
+      <% end %>
+    <% end %>
+  </div>
+</div> <!-- article-children -->
+
+<%# display the article content %>
+<div id='article-contents' style='clear: left;'>
+  <% if @article %>
+    <%= subtitle "%s" % content_tag(:div, [@article.name, image_tag(icon_for_article(@article))]) %>
+    <% button_bar(:id => 'article-controls') do %>
+
+      <ul>
+        <li>
+        <%= _('"%{article}", last changed by %{author}') % { :article => @article.name, :author => (@article.last_changed_by ? @article.last_changed_by.name : _('Unknown User')) } %>
+        </li>
+        <li>
+        <%= _('Public address of this article: %s') % link_to(url_for(@article.url), @article.url) %>
+        </li>
+        <li>
+        <%= _('Tags:') %> <%= @article.tag_list %>
+        </li>
+      </ul>
+
+      <%= button('edit', _('Edit'), :edit, { :action => 'edit', :id => @article}) %>
+      <%= button('home', _('Use as homepage'), :home, { :action => 'set_home_page', :id => @article }, { :method => :post  }) %>
+      <%= button('delete', _('Delete'), :destroy, { :action => 'destroy', :id => @article }, :method => :post, :confirm => _('Are you sure you wan to remove this article?')) %>
+    <% end %>
+    <%= @article.to_html %>
+  <% end %>
+</div>

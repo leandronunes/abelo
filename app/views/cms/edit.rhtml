@@ -1,5 +1,23 @@
-<h1>
-  <%= _("Edit Page") %>
-</h1>
+<%= error_messages_for 'article' %>
 
-<%= render :partial=>'form', :locals=>{:mode=>:edit} %>
+<% form_tag :action => 'new' do %>
+
+<% display_form_info @article do |item| %>
+
+  <%= hidden_field_tag("type", params[:type]) if params[:type] %>
+  <%= hidden_field_tag('parent_id', params[:parent_id]) if params[:parent_id] %>
+
+
+  <%= display_field_form(item, 'name',
+        :title => _('Name'),
+        :content => text_field('article', 'name')
+      )
+  %>
+
+  <%= render :partial => partial_for_class(@article.class), :locals => { :item => item } %>
+
+  <%= button('save', _('Save'), :save,  (@article.parent ? { :action => 'view', :id => @article.parent.id } : { :action => 'index' } )) %>
+
+<% end %>
+
+<% end %>

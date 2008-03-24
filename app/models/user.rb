@@ -62,6 +62,10 @@ class User < Person
     self.profile_template = value
   end
 
+  def name
+    self.login
+  end
+
   def user
     self
   end

@@ -22,8 +22,9 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'doc', :controller => 'doc'
 
 
-  # content administration 
-  map.cms 'cms/:organization_nickname/:action/:id', :controller => 'cms'
+#FIXME se if it's needed
+#  # content administration 
+#  map.cms 'cms/:organization_nickname/:action/:id', :controller => 'cms'
 
   map.connect ':organization_nickname/', :controller => 'organization'
   map.connect ':organization_nickname/:controller/:action/:id'

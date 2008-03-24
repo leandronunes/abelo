@@ -2,6 +2,7 @@
   background-color: red;
 }
 
+/* FIXME it was this Leandro changed for the description above. remove this if its not necessary
 .subtitle .button,
 .list_item_button .button,
 .display_info_options .button,
@@ -9,7 +10,21 @@
 .search_itens .button,
 .financial_table .button,
 .sales_table .button,
+.button-bar .button,
 table .button{
+  display: block;
+  float: left;
+  border: none;
+  opacity: 0.6;
+  margin-left: 5px;
+  width: 24px;
+  height: 24px;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+*/
+.button{
   display: block;
   float: left;
   border: none;

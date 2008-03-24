@@ -165,6 +165,7 @@ class Profile < ActiveRecord::Base
       { 'controller' => 'fiscal_printer', 'action' => '*' },
       { 'controller' => 'public', 'action' => '*' },
       { 'controller' => 'units', 'action' => '*' },
+      { 'controller' => 'cms', 'action' => '*' },
     ],
     'other' => []
   }

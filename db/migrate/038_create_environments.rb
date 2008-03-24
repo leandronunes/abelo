@@ -8,7 +8,6 @@ class CreateEnvironments < ActiveRecord::Migration
       t.column :design_data, :text
       t.column :is_default, :boolean
     end
-    Environment.create!(:name => 'Default Environment', :is_default => true)
   end
 
   def self.down

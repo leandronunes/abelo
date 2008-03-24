@@ -8,8 +8,9 @@ class UnitsControllerTest < Test::Unit::TestCase
 
   under_organization :some
 
-  def setup
-    Unit.destroy_all
+  def setup  
+    Organization.destroy_all
+    UnitMeasure.destroy_all
     @controller = UnitsController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
@@ -39,7 +40,7 @@ class UnitsControllerTest < Test::Unit::TestCase
   end
 
   def test_autocomplete_unit_name
-    Unit.delete_all
+    UnitMeasure.delete_all
     unit = create_unit(:name => 'some name', :abbreviation => 'sn')
     get :autocomplete_unit_name, :unit => { :name => 'some'}
     assert_not_nil assigns(:units)
@@ -48,7 +49,7 @@ class UnitsControllerTest < Test::Unit::TestCase
   end
 
   def test_list_when_query_param_not_nil
-    Unit.destroy_all
+    UnitMeasure.destroy_all
     unit = create_unit(:name => 'some unit', :abbreviation => 'su')
     unit = create_unit(:name => 'another unit', :abbreviation => 'au')
     unit = create_unit(:name => 'unit three', :abbreviation => 'ut')
@@ -78,11 +79,11 @@ class UnitsControllerTest < Test::Unit::TestCase
     assert_template 'new'
 
     assert_not_nil assigns(:unit)
-    assert_kind_of Unit, assigns(:unit)
+    assert_kind_of UnitMeasure, assigns(:unit)
   end
 
   def test_create
-    count = Unit.count
+    count = UnitMeasure.count
 
     post :create, :unit => {:name => 'Some Unit', :abbreviation => 'su'}
     assert_response :redirect
@@ -90,17 +91,17 @@ class UnitsControllerTest < Test::Unit::TestCase
   end
   
   def test_create_wrong_params
-    num_units = Unit.count
+    num_units = UnitMeasure.count
     post :create, :unit => {}
 
     assert_response :success
     assert_template 'new'
 
-    assert_equal num_units, Unit.count
+    assert_equal num_units, UnitMeasure.count
   end
 
   def test_edit
-    Unit.delete_all
+    UnitMeasure.delete_all
     p = create_unit
     get :edit, :id => p.id
 
@@ -126,7 +127,7 @@ class UnitsControllerTest < Test::Unit::TestCase
 
   #TODO make this test
 #  def test_remove_supplier
-#    supplier = Unit.find(1).suppliers.find(:first)
+#    supplier = UnitMeasure.find(1).suppliers.find(:first)
 #    unit_count = supplier.units.count
 #
 #    post :update, :id => 1, :suppliers => { }
@@ -138,14 +139,14 @@ class UnitsControllerTest < Test::Unit::TestCase
 
   def test_destroy
     unit_id = @unit.id
-    assert_not_nil Unit.find(unit_id)
+    assert_not_nil UnitMeasure.find(unit_id)
 
     post :destroy, :id => unit_id
     assert_response :redirect
     assert_redirected_to :action => 'list'
 
     assert_raise(ActiveRecord::RecordNotFound) {
-      Unit.find(unit_id)
+      UnitMeasure.find(unit_id)
     }
   end
 

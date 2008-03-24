@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../test_helper'
+  require File.dirname(__FILE__) + '/../test_helper'
 require 'stock_buys_controller'
 
 # Re-raise errors caught by the controller.
@@ -8,6 +8,7 @@ class StockBuysControllerTest < Test::Unit::TestCase
 
   under_organization :some
   def setup
+    Organization.destroy_all
     @controller = StockBuysController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
@@ -17,7 +18,7 @@ class StockBuysControllerTest < Test::Unit::TestCase
     @product = create_product()
     @supplier = create_supplier
     @ledger_category = create_ledger_category(:organization => @organization)
-    @product_category ||= create_product_category(:organization => @organization)
+    @product_category ||= create_product_category(:organization => @organization, :name => 'nother category')
     @invoice = create_invoice
     @stock_buy = create_stock_buy
   end

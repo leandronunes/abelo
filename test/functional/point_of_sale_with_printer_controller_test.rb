@@ -4,7 +4,7 @@ require 'point_of_sale_controller'
 # Re-raise errors caught by the controller.
 class PointOfSaleController; def rescue_action(e) raise e end; end
 
-class PointOfSaleControllerTest < Test::Unit::TestCase
+class PointOfSaleWithPrinterControllerTest < Test::Unit::TestCase
 
   fixtures :system_actors, :people, :products, :ledger_categories, :bank_accounts, :configurations
 

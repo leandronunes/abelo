@@ -7,7 +7,9 @@ class StockInsController; def rescue_action(e) raise e end; end
 class StockInsControllerTest < Test::Unit::TestCase
 
   under_organization :some
-  def setup
+  def setup 
+    Article.destroy_all
+    Organization.destroy_all
     @controller = StockInsController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
@@ -17,7 +19,6 @@ class StockInsControllerTest < Test::Unit::TestCase
     @product = create_product
     @supplier = create_supplier
     @ledger_category = create_ledger_category(:organization => @organization)
-    @product_category ||= create_product_category(:organization => @organization)
     @invoice = create_invoice
     @stock_in = create_stock_in
   end
@@ -27,7 +28,6 @@ class StockInsControllerTest < Test::Unit::TestCase
     assert @supplier.valid?
     assert @ledger_category.valid?
     assert @organization.valid?
-    assert @product_category.valid?
     assert @organization.products.include?(@product)
     assert @organization.suppliers.include?(@supplier)
     assert @invoice.valid?

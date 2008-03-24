@@ -9,12 +9,14 @@ class ProductsControllerTest < Test::Unit::TestCase
   under_organization :some
 
   def setup
+    Organization.destroy_all
     @controller = ProductsController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
 
     @organization = create_organization(:identifier => 'some')
     @product_category ||= create_product_category(:organization => @organization)
+    @unit = create_unit
     @product = create_product
     login_as("quentin")
   end
@@ -22,6 +24,8 @@ class ProductsControllerTest < Test::Unit::TestCase
   def test_setup
     assert @organization.valid?
     assert @product_category.valid?
+    assert @product.valid?
+    assert @unit.valid?
   end
 
   def test_index
@@ -42,7 +46,7 @@ class ProductsControllerTest < Test::Unit::TestCase
 
   def test_autocomplete_product_name
     Product.delete_all
-    product = Product.create!(:name => 'test product', :sell_price => 2.0, :unit => 'kg', :organization => @organization, :category => @product_category)
+    product = Product.create!(:name => 'test product', :sell_price => 2.0, :unit_measure => @unit, :organization => @organization, :category => @product_category)
     get :autocomplete_product_name, :product => { :name => 'test'}
     assert_not_nil assigns(:products)
     assert_kind_of Array, assigns(:products)
@@ -51,9 +55,9 @@ class ProductsControllerTest < Test::Unit::TestCase
 
   def test_list_when_query_param_not_nil
     Product.delete_all
-    Product.create!(:name => 'Some Product', :sell_price => '20', :unit => 'U', :organization_id => 1, :category_id => 1, :code => 1)
-    Product.create!(:name => 'Another Product', :sell_price => '25', :unit => 'U', :organization_id => 1, :category_id => 1, :code => 2)
-    Product.create!(:name => 'Product Three', :sell_price => '30', :unit => 'U', :organization_id => 1, :category_id => 1, :code => 3)
+    create_product(:name => 'Some Product')
+    create_product(:name => 'Another Product')
+    create_product(:name => 'Product Three')
     get :list, :query => 'Another*' 
 
     assert_not_nil assigns(:query)
@@ -86,10 +90,10 @@ class ProductsControllerTest < Test::Unit::TestCase
 
   def test_create
     count = Product.count
-    supplier = Supplier.find(:first)
+    supplier = create_supplier
     assert supplier.valid?
 
-    post :create, :id => 1, :product => {:name => 'Some Product', :sell_price => '20', :unit => 'U', :organization_id => 1, :category_id => 1, :supplier_ids => [supplier.id.to_s] }
+    post :create, :id => 1, :product => {:name => 'Some Product', :sell_price => '20', :unit_measure => @unit, :organization_id => 1, :category_id => 1, :supplier_ids => [supplier.id.to_s] }
     assert_response :redirect
     assert_redirected_to :action => 'list'
   end
@@ -118,7 +122,7 @@ class ProductsControllerTest < Test::Unit::TestCase
 
   def test_edit_product_not_found
     Product.delete_all
-    Product.create!(:name => 'Some Product', :sell_price => '20', :unit => 'U', :organization_id => 1, :category_id => 1)
+    create_product(:name => 'Some Product')
     get :edit, :id => 2
 
     assert_response :success
@@ -137,7 +141,7 @@ class ProductsControllerTest < Test::Unit::TestCase
     product = Product.new
     product.name = 'Test Department'
     product.sell_price = 20
-    product.unit = 'one'
+    product.unit_measure = @unit
     product.organization = @organization
     product.category = @product_category
     assert product.save!

@@ -1,6 +1,6 @@
 class ChangeProduct2 < ActiveRecord::Migration
   def self.up
-    add_column :products, :unit_id, :integer
+    add_column :products, :unit_measure_id, :integer
     Product.find(:all).map do |p|
       organization = p.organization
       unit = organization.units.find_by_abbreviation(p.unit)
@@ -19,6 +19,6 @@ class ChangeProduct2 < ActiveRecord::Migration
       p.unit = p.unit_measure.abbreviation
       p.save
     end
-    remove_column :products, :unit_id
+    remove_column :products, :unit_measure_id
   end
 end

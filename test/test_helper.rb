@@ -69,7 +69,10 @@ class Test::Unit::TestCase
   end
 
   def new_organization(params = {})
-     Organization.new({:name => 'some organization', :identifier => 'some', 
+     a = Article.find_by_slug(params[:identifier] || 'some')
+     a.destroy unless a.nil?
+     o = Organization.find_by_identifier(params[:identifier] || 'some')
+     o || Organization.new({:name => 'some organization', :identifier => 'some', 
                      :country => BSC::Country.find(:first).id,
                      :state => BSC::State.find(:first).id, 
                      :city => BSC::City.find(:first).id, 
@@ -77,7 +80,7 @@ class Test::Unit::TestCase
   end
 
   def create_bank
-    bank ||= Bank.create!(:name => 'some', :code => 3234, :site => 'http://www.some.com')
+    bank ||= Bank.find_by_code('3234') || Bank.create!(:name => 'some', :code => 3234, :site => 'http://www.some.com')
     bank
   end
 
@@ -132,9 +135,11 @@ class Test::Unit::TestCase
 
   def create_ledger_category(params = {})
     organization = params[:organization] || @organization
-    category = LedgerCategory.create!({:name => 'Some', :is_operational => false,
+    category = LedgerCategory.find_by_name(params[:name] || 'some')
+    category ||= LedgerCategory.create!({:name => 'some', :is_operational => false,
            :organization => organization, :type_of => Payment::TYPE_OF_INCOME,
            :payment_methods => ['money']}.merge(params))
+    category
   end
 
   def create_periodicity(params = {})
@@ -145,13 +150,15 @@ class Test::Unit::TestCase
 
   def create_product_category(params = {})
     organization = params[:organization] || @organization || create_organization
+#    ProductCategory.find_by_name('some') || ProductCategory.create!({:name => 'some', :organization => organization}.merge(params))
     ProductCategory.create!({:name => 'some', :organization => organization}.merge(params))
   end
 
   def create_product(params = {})
-    product_category = params[:category] || @product_category || create_product_category
+    product_category = params[:category] || @product_category || ProductCategory.find(:first) || create_product_category
     unit = params[:unit] || @unit || create_unit
-    Product.create!({:name => 'product', :sell_price => 2.0, :organization => @organization, :unit_measure => unit, :category => product_category}.merge(params))
+    p = Product.create!({:name => 'product', :sell_price => 2.0, :organization => @organization, :unit_measure => unit, :category => product_category}.merge(params))
+    p
   end
 
   def create_supplier

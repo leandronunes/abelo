@@ -11,6 +11,7 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   under_organization :some
 
   def setup
+    Organization.destroy_all
     Till.destroy_all
     Sale.destroy_all
     @controller = PointOfSaleController.new
@@ -26,11 +27,11 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
 #    @supervisor = User.create!("administrator"=>false, "login"=>"some", "email"=>"some@example.com", :password => 'test', :password_confirmation => 'test')
 #    Profile.create!(:name => 'Supervisor', :organization => @organization, :user => @supervisor, :template => 'sales_supervisor')
     @ledger_category = create_ledger_category(:is_sale => true)
-    login_as('quentin')
     @printer = create_printer
     @till = create_till(:printer => @printer)
     @sale = Sale.new(@till) 
     @sale.save!
+    login_as('quentin')
   end
 
 

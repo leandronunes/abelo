@@ -44,7 +44,7 @@ class ProductsController < ApplicationController
     @product.code = @product.suggest_code
     @sizes = Size.find(:all)
     @colors = Color.find(:all)
-    @units = Unit.find(:all)
+    @units = @organization.unit_measures
     @suppliers = @organization.suppliers
   end
 
@@ -69,7 +69,7 @@ class ProductsController < ApplicationController
       @suppliers = @organization.suppliers
       @sizes = Size.find(:all)
       @colors = Color.find(:all)
-      @units = Unit.find(:all)
+      @units = @organization.unit_measures
       render :action => 'new'
     end
   end
@@ -84,7 +84,7 @@ class ProductsController < ApplicationController
     @suppliers = @organization.suppliers
     @sizes = Size.find(:all)
     @colors = Color.find(:all)
-    @units = Unit.find(:all)
+    @units = @organization.unit_measures
   end
 
   def update
@@ -98,7 +98,7 @@ class ProductsController < ApplicationController
       @suppliers = @organization.suppliers
       @sizes = Size.find(:all)
       @colors = Color.find(:all)
-      @units = Unit.find(:all)
+      @units = @organization.unit_measures
       render :action => 'edit'
     end
   end

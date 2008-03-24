@@ -9,11 +9,11 @@ class StockDevolutionsControllerTest < Test::Unit::TestCase
   under_organization :some
 
   def setup
+    Organization.destroy_all
     @controller = StockDevolutionsController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     @organization = create_organization(:identifier => 'some')
-    @product_category = create_product_category
     @product = create_product
     login_as("quentin")
   end
@@ -21,7 +21,6 @@ class StockDevolutionsControllerTest < Test::Unit::TestCase
   def test_setup
     assert @product.valid?
     assert @organization.valid?
-    assert @product_category.valid?
   end
 
   def test_autocomplete_supplier_name

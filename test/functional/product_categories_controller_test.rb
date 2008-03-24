@@ -63,7 +63,7 @@ class ProductCategoriesControllerTest < Test::Unit::TestCase
   end
 
   def test_show
-    get :show, :id => 1, :category_type => 'product'
+    get :show, :id => @product_category.id, :category_type => 'product'
     assert_response :success
     assert_template 'show'
     assert_not_nil assigns(:category)
@@ -108,7 +108,7 @@ class ProductCategoriesControllerTest < Test::Unit::TestCase
   end
 
   def test_edit
-    get :edit, :id => @product_category, :category_type => 'product'
+    get :edit, :id => @product_category.id, :category_type => 'product'
 
     assert_response :success
     assert_template 'edit'
@@ -119,7 +119,7 @@ class ProductCategoriesControllerTest < Test::Unit::TestCase
   end
 
   def test_update
-    post :update, :id => @product_category
+    post :update, :id => @product_category.id
     assert_response :redirect
     assert_redirected_to :action => 'list'
   end
@@ -135,7 +135,7 @@ class ProductCategoriesControllerTest < Test::Unit::TestCase
   end
 
   def test_destroy
-    category_destroy = @organization.product_categories.find(:first)
+    category_destroy = create_product_category(:name => 'another category')
     assert_not_nil category_destroy
 
     post :destroy, :id => category_destroy.id

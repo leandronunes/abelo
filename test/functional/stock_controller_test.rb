@@ -10,6 +10,7 @@ class StockControllerTest < Test::Unit::TestCase
   under_organization :some
  
   def setup
+    Organization.destroy_all
     @controller = StockController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new

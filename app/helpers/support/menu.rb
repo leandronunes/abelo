@@ -13,24 +13,24 @@
       'permissions',  
       'organizations',
       'banks',
-#      'web_site_interface',
-#      'sales',
+      'web_site_interface',
+      'sales',
 #      'mass_mails',
     ]
       
     menu_legend = {
       'categories'                          => _('Configurations'),
       'stock'                               => _('Stock'),
-#      'web_site_interface'                  => _('Web Site'), TODO implements it
+      'web_site_interface'                  => _('Web Site'),
       'public'                              => _('Organizations'),
       'permissions'                         => _('User administration'),
       'system_actors'                       => _('Registers'),
       'point_of_sale'                       => _('Point of sale'),
-#      'sales'                               => _('Sales'),
+      'sales'                               => _('Sales'),
 #      'mass_mails'                          => _('Mass mail'), #TODO implements this function
       'ledgers'                             => _('Financial'),
-      'documents'                           => (@organization.nil? or @organization.id.nil?) ? '' : @organization.configuration.document_name_on_plural.camelcase, 
-      'departments'                         => (@organization.nil? or @organization.id.nil?) ? '' : @organization.configuration.department_name_on_plural.camelcase, #TODO see a better way to do that
+      'documents'                           => (@organization.nil? or @organization.new_record?) ? '' : @organization.configuration.document_name_on_plural.camelcase, 
+      'departments'                         => (@organization.nil? or @organization.new_record?) ? '' : @organization.configuration.department_name_on_plural.camelcase, #TODO see a better way to do that
       'organizations'                       => _('Organizations'),
       'banks'                               => _('Banks'),
     }

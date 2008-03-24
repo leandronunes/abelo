@@ -1,0 +1,82 @@
+
+#article_types li {
+  margin-bottom: 14px;
+  list-style: none;
+}
+
+#article_types a {
+  font-weight: bold;
+}
+
+#article-subitems-hide.hide-button {
+  float: right;
+  color: white;
+}
+#article-subitems-show.show-button {
+  float: right;
+}
+#article-subitems-hide.hide-button:hover {
+  background-color: transparent;
+  color: #B95;
+}
+
+#article-full-path {
+  border: 1px solid gray;
+  margin: 0px;
+  font-size: 120%;
+  overflow: auto;
+  padding: 2px;
+  background: #f4edcf;
+}
+
+#article-controls {
+  background: white;
+  border: 1px solid gray;
+  padding-top: 0px;
+  padding-bottom: 4px;
+  margin-bottom: 1em;
+}
+
+#article-controls .button {
+  position: relative;
+  top: -5px;
+}
+
+
+.file-manager-title {
+font-weight: bold;
+font-size: 18px;
+text-align: center;
+background: #f4edcf;
+}
+
+.file-manager-small ul {
+margin: 0px;
+padding: 10px;
+width: 300px;
+}
+
+.file-manager-small li {
+margin: 0px;
+list-style: none;
+padding: 0px;
+}
+
+.file-manager-button img {
+float: left; 
+border: 0px;
+}
+
+.file-manager-button div {
+display: block;
+height: 25px;
+margin: 2px;
+}
+.file-manager-button a:hover div {
+background: #f4edcf;
+}
+
+#article-subitems,
+.file-manager-small {
+  border: 1px solid #B95 !important; }
+

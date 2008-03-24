@@ -6,7 +6,9 @@
   </h2>
 <% else %>
  <%= title _('Content management') %>
- <%= lightbox_button('add', _('New article'),:new, {:action => 'new'}, {:class => 'with_text'}) %>
+ <div id='article-buttons'>
+  <%= lightbox_button('add', _('New article'),:new, {:action => 'new'}, {:class => 'with_text'}) %>
+ </div>
 <% end %>
 
 <%# subitem %>
@@ -20,9 +22,9 @@
     <% unless @subitems.empty? %>
       <ul>
         <% @subitems.each do |item| %>
-          <li>
-          <%= file_manager_button(item.name, icon_for_article(item), :action => 'view', :id => item.id) %>
-          </li>
+         <li>
+           <%= file_manager_button(item.name, icon_for_article(item), :action => 'view', :id => item.id) %>
+         </li>
         <% end %>
       </ul>
     <% end %>

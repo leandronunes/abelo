@@ -90,7 +90,7 @@ module ApplicationHelper
           content_tag( :div, msg ),
           :id => 'notice'
         ),
-        javascript_tag( visual_effect( :toggle_slide, 'notice', :duration => 10 ) )
+        javascript_tag( visual_effect( :toggle_slide, 'notice', :duration => 8 ) )
       ],
       :id => 'wrapper_notice'
     )

@@ -1,5 +1,3 @@
-/* Autor: Valessio S Brito <valessio@colivre.coop.br>  */
-
 @import url("autocomplete.css");
 @import url("content.css");
 @import url("form.css");
@@ -194,3 +192,4 @@ body {
   color: red;
   text-align: center;
 }
+

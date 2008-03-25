@@ -1,3 +1,8 @@
+.button {
+background-repeat: no-repeat;
+padding-left: 20px;
+}
+
 body {
   background-color: #ffffff;
   font-size: 12px;
@@ -82,15 +87,15 @@ bottom:47px;
 z-index:1; 
 }
 
-#container{
+#container {
 position:absolute;
-width:745px; /*FIXME 245 */
-height:540px; /*FXIME 240*/
-overflow:hidden;
+width: 245px; /*FIXME 245 */
+height: 240px; /*FXIME 240*/
+overflow: hidden;
 top:110px;
 left:177px;
 clip:rect(0,245,240,0);
-#visibility:hidden;
+visibility:hidden;
 z-index: 1;
 }
 
@@ -100,6 +105,7 @@ top:0px;
 left:0px;
 z-index: 1;
 }
+
 #path_away {
 position:absolute;
 overflow:hidden;

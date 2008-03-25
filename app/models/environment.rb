@@ -9,12 +9,14 @@ class Environment < ActiveRecord::Base
   
   has_many :articles, :dependent => :destroy
   #FIXME make this test
-  belongs_to :home_page, :class_name => Article.name, :foreign_key => 'home_page_id'
+  belongs_to :home_page, :class_name => Article.name, :foreign_key => :home_page_id, :dependent => :destroy
 
-  validates_associated :home_page
+# FIXME see a way to validate it
+#  validates_presence_of :home_page_id
+#  validates_associated :home_page, :class_name => Article.name, :foreign_key => :home_page_id
 
   acts_as_design :root =>  File.join('designs', 'organization')
-  before_create :insert_default_homepage
+  before_validation :insert_default_homepage
 
   def design_root
     if self.is_default?
@@ -112,6 +114,7 @@ class Environment < ActiveRecord::Base
   #FIXME make this test
   def insert_default_homepage
     self.home_page = self.articles.build(:name => _("%s's home page") % self.name, :body => _("<p>This is a default homepage created for %s. It can be changed though the control panel.</p>") % self.name)
+#    self.home_page = Article.new(:name => _("%s's home page") % self.name, :body => _("<p>This is a default homepage created for %s. It can be changed though the control panel.</p>") % self.name)
   end
 
 end

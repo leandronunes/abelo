@@ -28,7 +28,6 @@ class ContentViewerController < ApplicationController
     path = params[:page].join('/')
 
     if path.blank?
-#raise @environment.home_page.inspect
       @page = @environment.home_page
       if @page.nil?
         render :action => 'no_home_page', :layout => set_layout

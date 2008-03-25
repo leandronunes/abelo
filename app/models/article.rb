@@ -2,15 +2,11 @@ class Article < ActiveRecord::Base
   # FIXME make the test fo all model
 
   belongs_to :environment
-  validates_presence_of :environment_id, :name, :slug, :path
+  validates_presence_of :name, :slug, :path
 
   validates_uniqueness_of :slug, :scope => ['environment_id', 'parent_id'], :message => _('%{fn} (the code generated from the article name) is already being used by another article.')
 
   belongs_to :last_changed_by, :class_name => Person.name, :foreign_key => 'last_changed_by_id'
-
-  has_many :comments, :dependent => :destroy
-
-  has_and_belongs_to_many :categories
 
   acts_as_taggable  
   N_('Tag list')

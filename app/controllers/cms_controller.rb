@@ -36,7 +36,6 @@ class CmsController <  ApplicationController
   end
 
   def edit
-  raise "fudeu %s" % request.post?
     @article = @environment.articles.find(params[:id])
     if request.post?
       @article.last_changed_by = user

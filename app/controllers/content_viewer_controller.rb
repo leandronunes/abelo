@@ -1,11 +1,15 @@
 class ContentViewerController < ApplicationController
 
-  needs_environment
-
-#FIXME remove this
-#  design :holder => 'environment'
+  design :holder => 'environment'
 
   before_filter :detect_stuff_by_domain
+
+  skip_before_filter :login_required
+  skip_before_filter :check_access_control
+
+  def set_layout
+    File.join('organizations', @organization.identifier)
+  end
 
 #FIXME old implementation for comatose.
 #  def view_page
@@ -24,9 +28,10 @@ class ContentViewerController < ApplicationController
     path = params[:page].join('/')
 
     if path.blank?
+#raise @environment.home_page.inspect
       @page = @environment.home_page
       if @page.nil?
-        render :action => 'no_home_page'
+        render :action => 'no_home_page', :layout => set_layout
         return
       end
     else
@@ -45,10 +50,11 @@ class ContentViewerController < ApplicationController
       if data.nil?
         raise "No data for file"
       end
-
-      render :text => data, :layout => false
+      render :text => data, :layout => set_layout
       return
     end
+
+    render :layout => set_layout
   end
 
 end

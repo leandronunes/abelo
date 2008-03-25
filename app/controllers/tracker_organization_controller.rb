@@ -1,0 +1,2 @@
+class TrackerOrganizationController < ApplicationController
+end

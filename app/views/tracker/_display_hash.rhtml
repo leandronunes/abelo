@@ -1,5 +1,5 @@
 <ul>
   <% @displays.each_pair do |d, value|%> 
-    <li> <%= Tracker.describe(d) %>: <%= value %> </li>
+    <li> <%= Tracker.describe(d.to_s) %>: <%= value %> </li>
   <% end %>
 </ul>

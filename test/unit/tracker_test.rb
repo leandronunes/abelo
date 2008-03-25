@@ -43,4 +43,9 @@ class TrackerTest < Test::Unit::TestCase
     assert_equal 50, Tracker.find(t.id).web_site
   end
 
+  def test_describe
+    ['user', 'web_site'].each do |field|
+      assert_not_equal field, Tracker.describe(field)
+    end
+  end
 end

@@ -28,8 +28,7 @@ class Tracker < ActiveRecord::Base
     {
       'user' =>  _('User total points'),
       'web_site' => _('Web site total points'),
-
-   }[field] || field
+    }[field] || field
   end
 
 end

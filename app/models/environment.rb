@@ -15,7 +15,8 @@ class Environment < ActiveRecord::Base
 #  validates_presence_of :home_page_id
 #  validates_associated :home_page, :class_name => Article.name, :foreign_key => :home_page_id
 
-  acts_as_design :root =>  File.join('designs', 'organization')
+  acts_as_design :root => File.join('designs', 'organization')
+
   before_validation :insert_default_homepage
 
   def design_root

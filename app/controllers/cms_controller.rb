@@ -13,15 +13,9 @@ class CmsController <  ApplicationController
 
   design :interface_holder => 'organization', :content_holder => 'environment'
 
-# FIXME remove this
-#  define_option :page_class, Article
-#
-
   ARTICLE_TYPES = [
     StoreArticle,
     TextArticle,
-#    RssFeed,
-#    UploadedFile,
   ]
 
   def view
@@ -37,12 +31,15 @@ class CmsController <  ApplicationController
 
   def edit
     @article = @environment.articles.find(params[:id])
-    if request.post?
-      @article.last_changed_by = user
-      if @article.update_attributes(params[:article])
-        redirect_to :action => 'view', :id => @article.id
-        return
-      end
+  end
+
+  def update 
+    @article = @environment.articles.find(params[:id])
+    @article.last_changed_by = user
+    if @article.update_attributes(params[:article])
+      redirect_to :action => 'view', :id => @article.id
+    else
+      render :action => 'edit'
     end
   end
 
@@ -65,7 +62,27 @@ class CmsController <  ApplicationController
     raise "Invalid article type #{type}" unless ARTICLE_TYPES.map {|item| item.name}.include?(type)
     klass = type.constantize
     @article = klass.new(params[:article])
+  end
 
+  def create
+    # user must choose an article type first
+    type = params[:type]
+    if type.blank?
+      @article_types = []
+      ARTICLE_TYPES.each do |type|
+        @article_types.push({
+          :name => type.name,
+          :short_description => type.short_description,
+          :description => type.description
+        })
+      end
+      render :action => 'select_article_type', :layout => false
+      return
+    end
+
+    raise "Invalid article type #{type}" unless ARTICLE_TYPES.map {|item| item.name}.include?(type)
+    klass = type.constantize
+    @article = klass.new(params[:article])
 
     if params[:parent_id]
       parent = @environment.articles.find(params[:parent_id])
@@ -77,16 +94,14 @@ class CmsController <  ApplicationController
 
     @article.environment = @environment
     @article.last_changed_by = user
-    if request.post?
-      if @article.save
-        redirect_to :action => 'view', :id => @article.id
-        return
-      end
+    if @article.save
+      redirect_to :action => 'view', :id => @article.id
+    else
+      render :action => 'new'
     end
-
-    render :action => 'edit'
   end
 
+  #FIXME see if it's usefull
   post_only :set_home_page
   def set_home_page
     @article = @environment.articles.find(params[:id])
@@ -96,6 +111,7 @@ class CmsController <  ApplicationController
     redirect_to :action => 'view', :id => @article.id
   end
 
+  #FIXME see if it's usefull
   post_only :destroy
   def destroy
   raise "fudeu %s" % request.post?
@@ -103,7 +119,5 @@ class CmsController <  ApplicationController
     @article.destroy
     redirect_to :action => (@article.parent ? 'view' : 'index'), :id => @article.parent
   end
-
-
 
 end

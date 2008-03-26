@@ -15,9 +15,11 @@ class WebSiteInterfaceController < ApplicationController
    def block_types
     %w[
        FavoriteLinksWebSite
-       ComatoseMenuWebSite
-       ProductStore
      ] 
+#FIXME remove this blocks
+#       ComatoseMenuWebSite
+#       ProductStore
+#
   end
 
 end

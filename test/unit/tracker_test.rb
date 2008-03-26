@@ -48,4 +48,45 @@ class TrackerTest < Test::Unit::TestCase
       assert_not_equal field, Tracker.describe(field)
     end
   end
+
+  def test_not_numerical_available_points
+    t = Tracker.new(:available_points => 'x')
+    !t.valid?
+    assert t.errors.invalid?(:available_points)
+  end
+
+  def test_numericality_of_available_points
+    t = Tracker.new(:available_points => 50)
+    t.valid?
+    assert !t.errors.invalid?(:available_points)
+  end
+
+  def test_not_numerical_specific_trackers_user
+    t = Tracker.new
+    t.specific_trackers[:user] = 'x'
+    !t.valid?
+    assert t.errors.invalid?(:user)
+  end
+
+  def test_numerical_specific_trackers_user
+    t = Tracker.new
+    t.specific_trackers[:user] = 50
+    t.valid?
+    assert !t.errors.invalid?(:user)
+  end
+
+  def test_not_numerical_specific_trackers_web_site
+    t = Tracker.new
+    t.specific_trackers[:web_site] = 'x'
+    !t.valid?
+    assert t.errors.invalid?(:web_site)
+  end
+
+  def test_numerical_specific_trackers_web_site
+    t = Tracker.new
+    t.specific_trackers[:web_site] = 50
+    t.valid?
+    assert !t.errors.invalid?(:web_site)
+  end
+
 end

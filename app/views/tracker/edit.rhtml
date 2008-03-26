@@ -1,6 +1,6 @@
 <%= title _('Tracker of %s') % @organization.name %>
 
-<% form_tag :action => 'create', :organization_id => @organization do %>
+<% form_tag :action => 'update', :organization_id => @organization do %>
 
   <%= render :partial => 'form' %>
   <div class="display_info_options">

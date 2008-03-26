@@ -18,7 +18,7 @@ class TrackerController < ApplicationController
     @tracker = @organization.tracker
   end
 
-  def create
+  def update
     @organization = Organization.find(params[:organization_id])
     @tracker = @organization.tracker
     if @tracker.update_attributes(params[:tracker]) 
@@ -26,9 +26,8 @@ class TrackerController < ApplicationController
       redirect_to :action => 'show', :organization_id => @organization
     else
       flash[:notice] = _('Tracker was not updated.')
-      redirect_to :action => 'edit'
+      redirect_to :action => 'edit', :organization_id => @organization
     end
-  
   end
 
 end

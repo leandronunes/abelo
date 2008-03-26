@@ -88,15 +88,15 @@ z-index:1;
 }
 
 #container {
-position:absolute;
-width: 245px; /*FIXME 245 */
-height: 240px; /*FXIME 240*/
-overflow: hidden;
-top:110px;
-left:177px;
-clip:rect(0,245,240,0);
-visibility:hidden;
-z-index: 1;
+  position:absolute;
+  width: 245px; /*FIXME 245 */
+  height: 240px; /*FXIME 240*/
+  overflow: hidden;
+  top:110px;
+  left:177px;
+  clip:rect(0,245,240,0);
+  /*visibility:hidden;*/
+  z-index: 1;
 }
 
 #content{
@@ -107,16 +107,16 @@ z-index: 1;
 }
 
 #path_away {
-position:absolute;
-overflow:hidden;
-width: 280px;
-left:140px;
-top:42px;
-font-size: 9px;
-text-align: right;
-color: #6d3718;
-border: 0px;
-z-index:1; 
+  position:absolute;
+  overflow:hidden;
+  width: 280px;
+  left:140px;
+  top:42px;
+  font-size: 9px;
+  text-align: right;
+  color: #6d3718;
+  border: 0px;
+  z-index:1; 
 }
 #path_away a {
 text-decoration: none;
@@ -131,32 +131,32 @@ text-decoration: none;
 color: #000000;
 }
 #userbar {
-position:absolute;
-margin:0;
-padding:0;
-width:280px;
-height: 45px;
-left:140px;
-top:65px;
-font-size: 12px;
-z-index:1; 
+  position:absolute;
+  margin:0;
+  padding:0;
+  width:280px;
+  height: 45px;
+  left:140px;
+  top:65px;
+  font-size: 12px;
+  z-index:1; 
 }
 
 #userbar ul {
-vertical-align: middle;
-margin:0;
-padding:0;
+  vertical-align: middle;
+  margin:0;
+  padding:0;
 }
 #userbar li {
-list-style: none;
-display: block;
-float: right;
-text-align: right;
-margin-left: 5px;
-padding-right: 5px;
-margin-top: 0px;
-margin-bottom: 0px;
-border-right: 1px solid black;
+  list-style: none;
+  display: block;
+  float: right;
+  text-align: right;
+  margin-left: 5px;
+  padding-right: 5px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  border-right: 1px solid black;
 }
 
 #userbar a {
@@ -165,36 +165,36 @@ text-decoration: none;
 }
 
 #userbar a.active {
-font-weight: bold;
+  font-weight: bold;
 }
 
 #userbar a:hover {
-color: #00290d;
-text-decoration: underline;
+  color: #00290d;
+  text-decoration: underline;
 }
 #others {
-position: absolute;
-right: 0px;
-top: 0px;
-width: 320px;
-height: 424px;
-margin: 0;
-padding: 0;
-border: 0px;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  width: 320px;
+  height: 424px;
+  margin: 0;
+  padding: 0;
+  border: 0px;
 }
 
 #others iframe {
-width: 320px;
-height: 424px;
-border: 0px;
+  width: 320px;
+  height: 424px;
+  border: 0px;
 }
 
 #footer {
-position: absolute;
-bottom: 0;
-text-align: center;
-width: 100%;
-font-size: 8px;
-color: #545454;
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+  width: 100%;
+  font-size: 8px;
+  color: #545454;
 }
 

@@ -1,0 +1,10 @@
+<%= category_hierarchy @category %>
+
+<ul id="store_list">
+  <% @products.each do |p| %>
+    <li>
+      <%= image_link p.image, :url => hash_for_article_page_url({ :action => 'product', :product_id => p.id, :page => @page}) %>
+      <p><%= link_to_remote p.name, :url => hash_for_article_page_url({:action => 'product', :product_id => p.id, :page => @page}), :failure => "$('store_list').innerHTML=request.responseText" %></p>
+    </li>
+  <% end %>
+</ul>

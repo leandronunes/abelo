@@ -7,7 +7,6 @@
   <%= hidden_field_tag("type", params[:type]) if params[:type] %>
   <%= hidden_field_tag('parent_id', params[:parent_id]) if params[:parent_id] %>
 
-
   <%= display_field_form(item, 'name',
         :title => _('Name'),
         :content => text_field('article', 'name')

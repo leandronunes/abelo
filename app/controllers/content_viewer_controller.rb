@@ -7,6 +7,8 @@ class ContentViewerController < ApplicationController
   skip_before_filter :login_required
   skip_before_filter :check_access_control
 
+  layout :set_layout
+
   def set_layout
     File.join('organizations', @organization.identifier)
   end
@@ -25,12 +27,12 @@ class ContentViewerController < ApplicationController
 
 
   def view_page
-    path = params[:page].join('/')
+    path = (params[:page]||[]).join('/')
 
     if path.blank?
       @page = @environment.home_page
       if @page.nil?
-        render :action => 'no_home_page', :layout => set_layout
+        render :action => 'no_home_page'
         return
       end
     else
@@ -49,11 +51,16 @@ class ContentViewerController < ApplicationController
       if data.nil?
         raise "No data for file"
       end
-      render :text => data, :layout => set_layout
+      render :text => data
       return
     end
 
-    render :layout => set_layout
+    begin
+      "#{@page.class.name}Controller".constantize
+      redirect_to article_page_url(:controller => @page.class.name.underscore, :page => @page)
+    rescue
+      render :action => 'view_page'
+    end
   end
 
 end

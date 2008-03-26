@@ -18,7 +18,7 @@ class CmsController <  ApplicationController
 #
 
   ARTICLE_TYPES = [
-    TinyMceArticle,
+    StoreArticle,
     TextArticle,
 #    RssFeed,
 #    UploadedFile,

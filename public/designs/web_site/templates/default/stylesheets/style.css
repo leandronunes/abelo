@@ -1,6 +1,6 @@
 .button {
-background-repeat: no-repeat;
-padding-left: 20px;
+  background-repeat: no-repeat;
+  padding-left: 20px;
 }
 
 body {
@@ -53,13 +53,13 @@ body {
   z-index: 3;
 }
 #menu a {
-font-weight: bold;
-color: #00290d;
-text-decoration: none;
+  font-weight: bold;
+  color: #00290d;
+  text-decoration: none;
 }
 
 #menu a:hover {
-color: #000000;
+  color: #000000;
 }
 
 #options_site{
@@ -79,18 +79,18 @@ color: #000000;
   z-index: 4;
 }
 #control_container {
-position:absolute;
-width:60px; 
-height: 25px;
-left:370px;
-bottom:47px;
-z-index:1; 
+  position:absolute;
+  width:60px; 
+  height: 25px;
+  left:370px;
+  bottom:47px;
+  z-index:1; 
 }
 
 #container {
   position:absolute;
-  width: 245px; /*FIXME 245 */
-  height: 240px; /*FXIME 240*/
+  width: 505px; /*FIXME 245 */
+  height: 640px; /*FXIME 240*/
   overflow: hidden;
   top:110px;
   left:177px;
@@ -100,10 +100,10 @@ z-index:1;
 }
 
 #content{
-position:absolute;
-top:0px;
-left:0px;
-z-index: 1;
+  position:absolute;
+  top:0px;
+  left:0px;
+  z-index: 1;
 }
 
 #path_away {
@@ -160,8 +160,8 @@ color: #000000;
 }
 
 #userbar a {
-color: #000000;
-text-decoration: none;
+  color: #000000;
+  text-decoration: none;
 }
 
 #userbar a.active {

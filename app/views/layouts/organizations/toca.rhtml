@@ -4,10 +4,13 @@
   <head>
     <title> <%= @organization.name %> </title>
     <%= design_all_header_tags %>
+    <%= javascript_include_tag 'spinner' %>
+
     <link rel="shortcut icon" href="<%=image_path('logo.ico')%>" />
   </head>
 
   <body >
+    <%= image_tag 'spinner.gif', :id=>'spinner', :align=>'absmiddle', :style=>'display:none; float:left;' %>
     <div id="warp">
       <div id="frame">
         <div id="header">

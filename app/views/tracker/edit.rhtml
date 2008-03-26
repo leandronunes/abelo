@@ -3,7 +3,11 @@
 <% form_tag :action => 'create', :organization_id => @organization do %>
 
   <%= render :partial => 'form' %>
-  <%= display_edit_info_options(@tracker, :organization_id => @organization) %>
+  <div class="display_info_options">
+    <%= button('back', _('Back'), :back, :action => 'show', :id => @tracker, :organization_id => @organization) %> 
+    <%= display_save_button %>
+    <%= display_reset_button %>
+  </div>
 
 <% end %>
 

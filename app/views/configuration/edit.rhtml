@@ -13,6 +13,10 @@
     <%= render :partial => 'form' %>
   <% end %>
 
-  <%= display_edit_info_options(@configuration, :organization_id => (@organization.id unless @organization.nil?) ) %>
+  <div class="display_info_options">
+    <%= button('back', _('Back'), :back, :action => 'show', :id => @configuration, :organization_id => @organization) %> 
+    <%= display_save_button %>
+    <%= display_reset_button %>
+  </div>
 <% end %>
 

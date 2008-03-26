@@ -2,4 +2,6 @@
 
 <%= display_show_info @tracker %>
 
-<%= display_show_info_options(@tracker, :organization_id => @organization) %> 
+<div class="display_info_options">
+  <%= button('edit', _('Edit'), :edit, :action => 'edit', :id => @tracker, :organization_id => @organization) %> 
+</div>

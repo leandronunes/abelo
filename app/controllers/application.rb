@@ -105,6 +105,7 @@ class ApplicationController < ActionController::Base
   require 'tabs/web_site'
   require 'tabs/sales'
   require 'tabs/stock'
+  require 'tabs/tracker_organization'
 
   def self.uses_register_tabs
     before_filter :create_register_tabs
@@ -132,6 +133,10 @@ class ApplicationController < ActionController::Base
 
   def self.uses_sales_tabs
     before_filter :create_sales_tabs
+  end
+
+  def self.uses_tracker_organization_tabs
+    before_filter :create_tracker_organization_tabs
   end
 
   # END TABS DEFINITION

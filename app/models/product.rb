@@ -13,8 +13,13 @@ class Product < ActiveRecord::Base
   has_many :stock_outs
   has_many :stock_downs
 
-  before_validation  do |product|
+  before_validation do |product|
     product.code ||=(Product.maximum(:code, :conditions => {:organization_id => product.organization}) || 0).to_i + 1
+  end
+
+  before_create do |product|
+    product.organization.tracker.product_points ||= 0
+    product.organization.tracker.product_points += 1
   end
 
   validates_uniqueness_of :code, :scope => :organization_id

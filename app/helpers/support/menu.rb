@@ -15,6 +15,7 @@
       'banks',
       'web_site_interface',
       'sales',
+      'tracker_organization',
 #      'mass_mails',
     ]
       
@@ -33,6 +34,7 @@
       'departments'                         => (@organization.nil? or @organization.new_record?) ? '' : @organization.configuration.department_name_on_plural.camelcase, #TODO see a better way to do that
       'organizations'                       => _('Organizations'),
       'banks'                               => _('Banks'),
+      'tracker_organization'                => _('Tracker'),
     }
 
     x = 0

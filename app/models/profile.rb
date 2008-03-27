@@ -119,6 +119,7 @@ class Profile < ActiveRecord::Base
       { 'controller' => 'public', 'action' => '*' },
       { 'controller' => 'units', 'action' => '*' },
       { 'controller' => 'cms', 'action' => '*' },
+      { 'controller' => 'tracker_organization', 'action' => '*' },
     ],
     'other' => []
   }

@@ -89,4 +89,135 @@ class TrackerTest < Test::Unit::TestCase
     assert !t.errors.invalid?(:web_site)
   end
 
+  def test_product_points
+    organization = mock
+    organization.expects(:products).times(2).returns([mock, mock])
+    Tracker.any_instance.stubs(:organization).returns(organization)
+    t = Tracker.new
+    assert_equal 2, t.product_points
+  end
+
+  def test_product_points_when_products_are_nil
+    organization = mock
+    organization.expects(:products).returns(nil)
+    Tracker.any_instance.stubs(:organization).returns(organization)
+    t = Tracker.new
+    assert_equal 0, t.product_points
+  end
+
+  def test_customer_points
+    organization = mock
+    organization.expects(:customers).times(2).returns([mock, mock])
+    Tracker.any_instance.stubs(:organization).returns(organization)
+    t = Tracker.new
+    assert_equal 2, t.customer_points
+  end
+
+  def test_customer_points_when_customers_are_nil
+    organization = mock
+    organization.expects(:customers).returns(nil)
+    Tracker.any_instance.stubs(:organization).returns(organization)
+    t = Tracker.new
+    assert_equal 0, t.customer_points
+  end
+
+  def test_supplier_points
+    organization = mock
+    organization.expects(:suppliers).times(2).returns([mock, mock])
+    Tracker.any_instance.stubs(:organization).returns(organization)
+    t = Tracker.new
+    assert_equal 2, t.supplier_points
+  end
+
+  def test_supplier_points_when_suppliers_are_nil
+    organization = mock
+    organization.expects(:suppliers).returns(nil)
+    Tracker.any_instance.stubs(:organization).returns(organization)
+    t = Tracker.new
+    assert_equal 0, t.supplier_points
+  end
+
+  def test_worker_points
+    organization = mock
+    organization.expects(:workers).times(2).returns([mock, mock])
+    Tracker.any_instance.stubs(:organization).returns(organization)
+    t = Tracker.new
+    assert_equal 2, t.worker_points
+  end
+
+  def test_worker_points_when_workers_are_nil
+    organization = mock
+    organization.expects(:workers).returns(nil)
+    Tracker.any_instance.stubs(:organization).returns(organization)
+    t = Tracker.new
+    assert_equal 0, t.worker_points
+  end
+
+  def test_ledger_points
+    organization = mock
+    organization.expects(:ledgers).times(2).returns([mock, mock])
+    Tracker.any_instance.stubs(:organization).returns(organization)
+    t = Tracker.new
+    assert_equal 2, t.ledger_points
+  end
+
+  def test_ledger_points_when_ledgers_are_nil
+    organization = mock
+    organization.expects(:ledgers).returns(nil)
+    Tracker.any_instance.stubs(:organization).returns(organization)
+    t = Tracker.new
+    assert_equal 0, t.ledger_points
+  end
+
+  def test_document_points
+    organization = mock
+    organization.expects(:documents).times(2).returns([mock, mock])
+    Tracker.any_instance.stubs(:organization).returns(organization)
+    t = Tracker.new
+    assert_equal 2, t.document_points
+  end
+
+  def test_document_points_when_documents_are_nil
+    organization = mock
+    organization.expects(:documents).returns(nil)
+    Tracker.any_instance.stubs(:organization).returns(organization)
+    t = Tracker.new
+    assert_equal 0, t.document_points
+  end
+
+  def test_user_points
+    organization = mock
+    organization.expects(:users).returns([mock, mock, mock])
+    Tracker.any_instance.stubs(:organization).returns(organization)
+    h = mock
+    Tracker.any_instance.stubs(:specific_trackers).returns(h)
+    h.stubs(:[]).with(:user).returns(2)
+    t = Tracker.new
+    assert_equal 6, t.user_points
+  end
+
+  def test_user_points_when_users_are_blank
+    h = mock
+    Tracker.any_instance.stubs(:specific_trackers).returns(h)
+    h.stubs(:[]).with(:user).returns(nil)
+    t = Tracker.new
+    assert_equal 0, t.user_points
+  end
+  
+  def test_web_site_points
+    h = mock
+    Tracker.any_instance.stubs(:specific_trackers).returns(h)
+    h.stubs(:[]).with(:web_site).returns(2)
+    t = Tracker.new
+    assert_equal 2, t.web_site_points
+  end
+  
+  def test_web_site_points_when_web_sites_are_nil
+    h = mock
+    Tracker.any_instance.stubs(:specific_trackers).returns(h)
+    h.stubs(:[]).with(:web_site).returns(nil)
+    t = Tracker.new
+    assert_equal 0, t.web_site_points
+  end
+
 end

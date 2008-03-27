@@ -215,5 +215,18 @@ class ProductTest < Test::Unit::TestCase
     p.sell_price= '2,45'
     assert_equal 2.45, p.sell_price
   end
-  
+
+  def test_add_new_product_on_tracker_product_points
+    products_points = @organization.tracker.product_points
+    create_product
+    assert_equal products_points + 1, @organization.tracker.product_points
+  end
+
+  def test_add_first_product_on_tracker_product_points
+    assert_nil @org.tracker.product_points
+    
+    create_product(:organization => @org)
+    assert_equal 1, @org.tracker.product_points
+  end
+
 end

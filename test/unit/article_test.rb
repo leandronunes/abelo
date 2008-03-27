@@ -1,0 +1,65 @@
+require File.dirname(__FILE__) + '/../test_helper'
+
+class ArticleTest < Test::Unit::TestCase
+
+  def setup
+    Organization.destroy_all
+    @organization = create_organization
+    @environment = Environment.find(:first)
+  end
+
+  def test_associated_to_environment
+    a = Article.new
+    a.environment =  @environment
+    assert_not_nil a.environment
+  end
+
+  def test_presence_of_name
+    Article.destroy_all
+    a = Article.new
+    a.valid?
+    assert a.errors.invalid?(:name)
+
+    a.name = 'some'
+    a.valid?
+    assert !a.errors.invalid?(:name)
+  end
+
+  def test_presence_of_slug
+    Article.destroy_all
+    a = Article.new
+    a.valid?
+    assert a.errors.invalid?(:slug)
+
+    a.slug = 'some'
+    a.valid?
+    assert !a.errors.invalid?(:slug)
+  end
+
+  def test_presence_of_path
+    Article.destroy_all
+    a = Article.new
+    a.valid?
+    assert a.errors.invalid?(:path)
+
+    a.path = 'some'
+    a.valid?
+    assert !a.errors.invalid?(:path)
+  end
+
+  def test_uniqueness_of_slug
+    a1 = create_article(:slug => 'another_slug', :environment => @environment)
+    a2 = Article.new
+    a2.slug = 'another_slug'
+    a2.environment = @environment
+    a2.valid?
+    assert a2.errors.invalid?(:slug), "You cannot have more than one same slug article with the same environment"
+
+    a3 = Article.new
+    a3.slug = 'another_slug'
+    a3.parent = a1
+    a3.valid?
+    assert a2.errors.invalid?(:slug), "You cannot have more than one same slug article with the same parent"
+  end
+
+end

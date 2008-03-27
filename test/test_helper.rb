@@ -68,6 +68,15 @@ class Test::Unit::TestCase
     organization
   end
 
+  def create_environment(params={})
+    organization = params[:organization] || @organization ||create_organization 
+    Environment.create!({:name => 'some_name', :owner => organization}.merge(params))
+  end
+
+  def create_article(params = {})
+    Article.create!({:name => 'some article'}.merge(params))
+  end
+
   def new_organization(params = {})
      a = Article.find_by_slug(params[:identifier] || 'some')
      a.destroy unless a.nil?
@@ -268,6 +277,8 @@ class Test::Unit::TestCase
     u ||= UnitMeasure.create!({:name => 'a unit', :abbreviation => 'au', :organization => organization}.merge(params))
     u
   end
+
+
 
 end
 

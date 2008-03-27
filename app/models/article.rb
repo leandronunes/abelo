@@ -1,5 +1,4 @@
 class Article < ActiveRecord::Base
-  # FIXME make the test fo all model
 
   belongs_to :environment
   validates_presence_of :name, :slug, :path
@@ -15,13 +14,12 @@ class Article < ActiveRecord::Base
 
   acts_as_versioned
 
-  acts_as_searchable :fields => [ :name, :abstract, :body, :tag_list ]
+  acts_as_searchable :fields => [:name, :abstract, :body, :tag_list ]
 
   # retrieves all articles belonging to the given +environment+ that are not
   # sub-articles of any other article.
   def self.top_level_for(environment)
-#FIXME refactory this
-    self.find(:all, :conditions => [ 'parent_id is null and environment_id = ?', environment.id ])
+    self.find(:all, :conditions => { :parent_id => nil, :environment_id => environment })
   end
 
   # retrieves the latest +limit+ articles, sorted from the most recent to the

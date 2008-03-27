@@ -1,6 +1,5 @@
 <% if @article %>
   <h2 id='article-full-path'>
-    <%= icon('cms') %>
     <%= link_to @organization.name, :action => 'index' %>
     <%= @article.hierarchy.map {|item| " / " + ((item == @article) ? item.name : link_to(item.name, :id => item.id)) } %>
   </h2>
@@ -34,7 +33,7 @@
         <% if @article.allow_children? %>
           <%= lightbox_button('add',  _('New subitem'),  :new, :action => 'new', :parent_id => @article.id) %>
         <% end %>
-        <%= button('up', _('Go up one level'), :action => (@article.parent ? 'view' : 'index'), :id => @article.parent) %>
+        <%= button('up', _('Go up one level'), :up, :action => (@article.parent ? 'view' : 'index'), :id => @article.parent) %>
       <% end %>
     <% end %>
   </div>

@@ -80,6 +80,35 @@ module ApplicationHelper
     ].join("\n")
   end
 
+  #FIXME make this test
+  def hide(id)
+    "Element.hide(#{id.inspect});"
+  end
+
+  #FIXME make this test
+  def show(id)
+    "Element.show(#{id.inspect});"
+  end
+
+  #FIXME make this test
+  def toggle_panel(hide_label, show_label, id)
+    hide_button_id = id + "-hide"
+    show_button_id = id + "-show"
+
+    result = ""
+    result << button_to_function('open', show_label, show(id) + show(hide_button_id) + hide(show_button_id), :id => show_button_id, :class => 'show-button with-text', :style => 'display: none;' )
+
+    result < " "
+    result << button_to_function('close', hide_label, hide(id) + hide(hide_button_id) + show(show_button_id), :id => hide_button_id, :class => 'hide-button with-text')
+    result
+  end
+
+  def button_to_function(type, label, js_code, html_options = {})
+    html_options[:class] = "" unless html_options[:class]
+    html_options[:class] << " button #{type}"
+    link_to_function(label, js_code, html_options)
+  end
+
   def notice_box( msg )
     return if msg.nil?
     content_tag(

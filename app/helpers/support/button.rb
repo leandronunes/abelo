@@ -34,4 +34,3 @@
     content_tag('div', '', html_options.merge(:class => the_class))
   end
 
-

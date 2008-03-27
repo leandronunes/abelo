@@ -42,41 +42,51 @@
   top: -5px;
 }
 
-
 .file-manager-title {
-font-weight: bold;
-font-size: 18px;
-text-align: center;
-background: #f4edcf;
+  font-weight: bold;
+  font-size: 18px;
+  text-align: center;
+  background: #f4edcf;
+}
+
+
+/* FIXME Leandro colocou isso aqui para exergar os botoes dos subitems. Consertar isso. */
+.file-manager-small .file-manager-controls .button {
+  display: block;
+  background-color: green;
+  width: 24px;
+  height: 24px;
+  margin: 5px;  
 }
 
 .file-manager-small ul {
-margin: 0px;
-padding: 10px;
-width: 300px;
+  margin: 0px;
+  padding: 10px;
+  width: 300px;
 }
 
 .file-manager-small li {
-margin: 0px;
-list-style: none;
-padding: 0px;
+  margin: 0px;
+  list-style: none;
+  padding: 0px;
 }
 
 .file-manager-button img {
-float: left; 
-border: 0px;
+  float: left; 
+  border: 0px;
 }
 
 .file-manager-button div {
-display: block;
-height: 25px;
-margin: 2px;
+  display: block;
+  height: 25px;
+  margin: 2px;
 }
 .file-manager-button a:hover div {
-background: #f4edcf;
+  background: #f4edcf;
 }
 
 #article-subitems,
 .file-manager-small {
-  border: 1px solid #B95 !important; }
+  border: 1px solid #B95 !important; 
+}
 

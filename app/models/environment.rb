@@ -91,6 +91,11 @@ class Environment < ActiveRecord::Base
 
     options
   end
+ 
+  #FIXME Make this test
+  def identifier
+    self.owner.identifier
+  end
 
   def default_hostname
     if self.domains(true).empty?

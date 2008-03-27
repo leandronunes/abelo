@@ -11,8 +11,6 @@ class CmsController <  ApplicationController
 
   needs_organization
 
-  design :interface_holder => 'organization', :content_holder => 'environment'
-
   ARTICLE_TYPES = [
     StoreArticle,
     TextArticle,

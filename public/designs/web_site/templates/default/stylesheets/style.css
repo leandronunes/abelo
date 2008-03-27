@@ -27,7 +27,23 @@ body {
   z-index: 1;
 }
 
-#frame { 	
+/* Isso pode deletar quando implementar a seleção de nivel */
+
+#design_box_2 ul.website_menu {
+ position: absolute;
+ top: 214px;
+ right: 0;
+ border: 0px;
+  z-index: 4;
+}
+
+#design_box_2 ul.sub_menu {
+display:none ;
+}
+
+/* Coisas que podem deletar */
+
+#boxes { 	
   position:absolute;
   height:420px; 
   width:754px;
@@ -41,8 +57,8 @@ body {
   z-index: 2;
 }
 
-#menu { 	
-  position:relative;
+#design_box_2 { 	
+  position:absolute;
   height:420px; 
   width:165px;
   margin:0px;
@@ -52,25 +68,17 @@ body {
   border: 0px;
   z-index: 3;
 }
-#menu a {
+#design_box_2 a {
   font-weight: bold;
   color: #00290d;
   text-decoration: none;
 }
 
-#menu a:hover {
+#design_box_2 a:hover {
   color: #000000;
 }
 
-#options_site{
-  position: absolute;
-  top: 214px;
-  right: 0;
-  border: 0px;
-  z-index: 4;
-}
-
-#options_idioma{
+#options_idioma {
   position: absolute;
   width: 97px;
   bottom: 30px;
@@ -78,6 +86,7 @@ body {
   border: 0px;
   z-index: 4;
 }
+
 #control_container {
   position:absolute;
   width:60px; 
@@ -87,23 +96,16 @@ body {
   z-index:1; 
 }
 
-#container {
-  position:absolute;
-  width: 505px; /*FIXME 245 */
-  height: 640px; /*FXIME 240*/
-  overflow: hidden;
-  top:110px;
-  left:177px;
-  clip:rect(0,245,240,0);
-  /*visibility:hidden;*/
-  z-index: 1;
-}
-
-#content{
-  position:absolute;
-  top:0px;
-  left:0px;
-  z-index: 1;
+#design_box_1 {
+position: relative;
+width:280px;
+height:240px;
+overflow:auto;
+top:110px;
+left:177px;
+clip:rect(0,280,265,0);
+/* visibility:hidden; */
+z-index: 1;
 }
 
 #path_away {
@@ -118,6 +120,7 @@ body {
   border: 0px;
   z-index:1; 
 }
+
 #path_away a {
 text-decoration: none;
 color: #6d3718;
@@ -147,6 +150,7 @@ color: #000000;
   margin:0;
   padding:0;
 }
+
 #userbar li {
   list-style: none;
   display: block;

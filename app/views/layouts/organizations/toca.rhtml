@@ -5,43 +5,14 @@
     <title> <%= @organization.name %> </title>
     <%= design_all_header_tags %>
     <%= javascript_include_tag 'spinner' %>
-
-    <link rel="shortcut icon" href="<%=image_path('logo.ico')%>" />
-  </head>
-
-  <body >
+        <link rel="shortcut icon" href="<%=image_path('logo.ico')%>" />
+</head>
+  <body>
     <%= image_tag 'spinner.gif', :id=>'spinner', :align=>'absmiddle', :style=>'display:none; float:left;' %>
     <div id="warp">
       <div id="frame">
-        <div id="header">
-          <div id="path_away"><!-- Aqui listar em modo link o caminho de onde esta navegando Exemplo: <a href="#">Home</a> / <a href="#">Produtos</a> / <a href="#">Camisas</a> / <a href="#">Polo</a> / --></div>
-          <div id="userbar"><!-- Aqui listar opções de navegação da entrada padrão (submenu) --></div>
-        </div>
-        <div id="container">
-            <div id="content">
             <%= design_display(yield) %>
-          </div>
-        </div>
-
-        <div id="ControlContainer">
-        <a href="javascript:;" id="btScroll_up" onMouseOver="PerformScroll(7);" onMouseOut="CeaseScroll();"><span>Subir</span></a>
-            <a href="javascript:;" id="btScroll_down" onMouseOver="PerformScroll(-7);" onMouseOut="CeaseScroll();"><span>Down</span></a>
-        </div>
-
-        <div id="others">
-        </div>
-
       </div>
-
-      <div id='menu'>
-        <!-- 
-        Listar menu como por exemplo:
-        <ul>
-          <li><a href="x" id="b01 ou button_one" alt="x"><span>X</span></a></li>
-        </ul>
-        -->
-      </div>
-
     </div>
 
     <div id="footer">

@@ -64,12 +64,11 @@ function CeaseScroll(){
 } 
 var initialised; 
 function InitialiseScrollableArea(){ 
-    objContainer=new ConstructObject('divContainer') 
-    objScroller=new ConstructObject('divContent','divContainer') 
+    objContainer=new ConstructObject('container') 
+    objScroller=new ConstructObject('content','container') 
     objScroller.MoveArea(0,0) 
     objContainer.css.visibility='visible' 
     initialised=true; 
-   alert('leo');
 } 
 // end absolutely positioned scrollable area object scripts
 

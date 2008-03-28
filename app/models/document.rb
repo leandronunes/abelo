@@ -16,6 +16,11 @@ class Document < ActiveRecord::Base
   belongs_to :organization
   belongs_to :document_model, :class_name => 'Document', :foreign_key => 'document_model_id'
 
+  before_create do |document|
+    document.organization.tracker.document_points ||= 0
+    document.organization.tracker.document_points += 1
+  end
+
   #Allow gettext'
   def owner_class
     Document.describe(self.owner.class.to_s) unless owner.nil?

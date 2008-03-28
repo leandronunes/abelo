@@ -5,15 +5,8 @@ class DocumentTest < Test::Unit::TestCase
 
   def setup
     @organization = create_organization
+    @document = create_document
     @department = Department.find(:first)
-  end
-
-  def create_document(params = {})
-    Document.create(:name => 'Anohter Document Again', :organization => @organization, :is_model => params[:is_model] || false)
-  end
-
-  def new_document(params = {})
-    Document.new(:name => 'Anohter Document Again', :organization => @organization, :is_model => params[:is_model] || false, :departments => [@department])
   end
 
   def test_setup
@@ -40,12 +33,12 @@ class DocumentTest < Test::Unit::TestCase
   end
 
   def test_uniqueness_of_name
-    d = Document.new(:name => 'Some Another Document', :organization_id => 1, :is_model => true)
+    d = Document.new(:name => 'Some Another Document', :organization => @organization, :is_model => true)
     departments = Organization.find(1).departments
     d.departments = departments
     assert d.save
 
-    d = Document.new(:name => 'Some Another Document', :organization_id => 1, :is_model => true)
+    d = Document.new(:name => 'Some Another Document', :organization => @organization, :is_model => true)
     departments = Organization.find(1).departments
     d.departments = departments
     d.valid?
@@ -106,12 +99,12 @@ class DocumentTest < Test::Unit::TestCase
   end
 
   def test_the_presence_of_document_model_if_its_a_model_itself
-    model = Document.new(:name => 'Anohter Document', :organization_id => 1, :is_model => true)
+    model = Document.new(:name => 'Another Document', :organization => @organization, :is_model => true)
     departments = Organization.find(1).departments
     model.departments = departments
     assert model.save
 
-    d = Document.new(:name => 'Anohter Document Again', :organization_id => 1, :is_model => true)
+    d = Document.new(:name => 'Another Document Again', :organization => @organization, :is_model => true)
     departments = Organization.find(1).departments
     d.departments = departments
     d.document_model = model
@@ -120,7 +113,7 @@ class DocumentTest < Test::Unit::TestCase
 
   def test_presence_of_department
     Document.destroy_all
-    d = Document.new(:name => 'Anohter Document Again', :organization_id => 1, :is_model => true)
+    d = Document.new(:name => 'Another Document Again', :organization => @organization, :is_model => true)
     departments = Organization.find(1).departments
     d.departments = departments
     assert d.save
@@ -130,7 +123,7 @@ class DocumentTest < Test::Unit::TestCase
   end
 
   def test_presence_owner_model_document
-    d = Document.new(:name => 'Some Another Document', :organization_id => 1, :is_model => true)
+    d = Document.new(:name => 'Some Another Document', :organization => @organization, :is_model => true)
     d.owner = Customer.find(:first)
     departments = Organization.find(1).departments
     d.departments = departments
@@ -139,7 +132,7 @@ class DocumentTest < Test::Unit::TestCase
   end
 
   def test_presence_owner_document
-    d = Document.new(:name => 'Some Another Document', :organization_id => 1, :is_model => false)
+    d = Document.new(:name => 'Some Another Document', :organization => @organization, :is_model => false)
     d.save
     assert d.errors.invalid?(:owner)    
   end
@@ -151,7 +144,7 @@ class DocumentTest < Test::Unit::TestCase
   end
 
   def test_dclone
-    d = Document.new(:name => 'Anohter Document Again', :organization_id => 1, :is_model => true)
+    d = Document.new(:name => 'Another Document Again', :organization => @organization, :is_model => true)
     departments = Organization.find(1).departments
     d.departments = departments
     assert d.save
@@ -160,10 +153,25 @@ class DocumentTest < Test::Unit::TestCase
   end
 
   def test_cannot_clone_a_non_model_document
-    d = create_document(:is_model => false)
+    d = create_document(:name => 'Another Document', :is_model => false)
     assert !d.is_model?
     d_clone = d.dclone
     assert_nil d_clone
   end
 
+  def test_add_new_document_on_tracker_document_points
+    document_points = @organization.tracker.document_points
+    c = Document.count
+    create_document(:name => 'Another document')
+    assert_equal document_points + 1, @organization.tracker.document_points
+  end
+
+  def test_add_first_document_on_tracker_document_points
+    org = create_organization(:identifier => 'some_id', :cnpj => '62.667.776/0001-17', :name => 'some id')
+    assert_nil org.tracker.document_points
+
+    create_document(:name => 'some', :organization => org)
+    assert_equal 1, org.tracker.document_points
+  end
+  
 end

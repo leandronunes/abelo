@@ -186,6 +186,9 @@ class Test::Unit::TestCase
     CustomerCategory.create!(:name => 'some', :organization => @organization)
   end
 
+  def create_worker_category
+    WorkerCategory.create!(:name => 'some', :organization => @organization)
+  end
 
   def create_invoice(params = {})
     Invoice.create!({:number => 3344, :serie => 33443, :issue_date => Date.today, :supplier => @supplier}.merge(params))
@@ -229,9 +232,9 @@ class Test::Unit::TestCase
 
   def create_customer(params = {})
     @customer_category ||= create_customer_category
-    Customer.create!(:name => 'some', :organization => @organization, 
+    Customer.create!({:name => 'some', :organization => @organization, 
                      :cpf => '642.229.464-60', :category => @customer_category,
-                     :email => 'customer@colivre.coop.br')
+                     :email => 'customer@colivre.coop.br'}.merge(params))
   end
 
   def create_supplier(params = {})
@@ -241,6 +244,13 @@ class Test::Unit::TestCase
                      :email => 'supplier@colivre.coop.br'}.merge(params))
   end
 
+  def create_worker(params = {})
+    @worker_category ||= create_worker_category
+    Worker.create!({:name => 'some worker', :organization => @organization,
+                   :cpf => '642.229.464-60', :category => @worker_category,
+                   :email => 'worker@colivre.coop.br'}.merge(params))
+  end
+
 
   def create_document(params = {})
     @organization ||= create_organization
@@ -248,7 +258,7 @@ class Test::Unit::TestCase
     @customer ||= create_customer
     Document.create!({
       :name => 'Some Name', :is_model => false,
-      :organization => @organization,:departments => [@department],
+      :organization => @organization, :departments => [@department],
       :owner => (params[:is_model] == true ? nil : @customer),
       :document_model => params[:document_model]
     }.merge(params))

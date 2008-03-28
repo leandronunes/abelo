@@ -642,4 +642,18 @@ class LedgerTest < Test::Unit::TestCase
     assert !l.needs_fiscal_command?, "You don't need a fiscal printer command when you set needs_fiscal_command to false and haven't the fiscal printer on organization configuration and already have the printer_command"
   end
 
+  def test_add_new_ledger_on_tracker_ledger_points
+    ledger_points = @organization.tracker.ledger_points
+    create_ledger
+    assert_equal ledger_points + 1, @organization.tracker.ledger_points
+  end
+
+  def test_add_first_ledger_on_tracker_ledger_points
+    org = create_organization(:identifier => 'some_id', :cnpj => '62.667.776/0001-17', :name => 'some id')
+    assert_nil org.tracker.ledger_points
+    create_ledger(:organization => org)
+    assert_equal 1, org.tracker.ledger_points
+  end
+
+
 end

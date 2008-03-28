@@ -5,6 +5,11 @@ class Supplier < SystemActor
   has_many :invoices
   belongs_to :category, :class_name => 'SupplierCategory', :foreign_key => 'category_id' 
 
+  before_create do |supplier|
+    supplier.organization.tracker.supplier_points ||= 0
+    supplier.organization.tracker.supplier_points += 1
+  end
+
   def stock_virtuals
     StockVirtual.create_virtual_supplier(self)
   end

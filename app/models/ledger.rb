@@ -122,6 +122,11 @@ class Ledger < ActiveRecord::Base
     l.create_printer_cmd!(l) if l.has_fiscal_printer?
   end
 
+  before_create do |ledger|
+    ledger.organization.tracker.ledger_points ||= 0 
+    ledger.organization.tracker.ledger_points += 1 
+  end
+
   before_destroy do |ledger|
 #FIXME see a way to stop this
 #    raise _('You cannot destroy sale ledgers') if ledger.owner.kind_of? Sale

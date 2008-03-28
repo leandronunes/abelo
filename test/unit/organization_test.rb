@@ -100,7 +100,7 @@ class OrganizationTest < Test::Unit::TestCase
     assert @organization.workers.include?(worker)
   end
 
-  def test_relation_with_profiles
+    def test_relation_with_profiles
     profile = Profile.create(:organization_id => @organization.id, :user_id => @user.id, :permissions => [:controller => '*', :action => '*'])
     assert @organization.profiles.include?(profile)
   end
@@ -135,16 +135,17 @@ class OrganizationTest < Test::Unit::TestCase
 
   def test_uniqueness_cnpj
     Organization.destroy_all
-    org_1 = create_organization(:cnpj => '63182452000151')
-    org_2 = new_organization(:cnpj => '63182452000151')
+    org_1 = create_organization(:cnpj => '63182452000151', :identifier => 'org_1')
+    org_2 = new_organization(:cnpj => '63182452000151', :identifier => 'org_2')
     org_2.valid?
     assert org_2.errors.invalid?(:cnpj) 
   end
 
   def test_uniqueness_identifier
     Organization.destroy_all
-    org_1 = create_organization(:cnpj => '63182452000151', :identifier => 'org')
-    org_2 = new_organization(:name => 'Organization for testing 2', :cnpj => '67444545000168', :identifier => 'org')
+    org_1 = create_organization(:cnpj => '63182452000151', :identifier => 'org_1')
+
+    org_2 = new_organization(:name => 'Organization for testing 2', :cnpj => '67444545000168', :identifier => 'org_1')
     org_2.valid?
     assert org_2.errors.invalid?(:identifier) 
   end
@@ -338,4 +339,8 @@ class OrganizationTest < Test::Unit::TestCase
     end
   end
 
+  def test_tracker_association
+    o = create_organization(:identifier => 'some_id', :name =>'some name')
+    assert o.tracker
+  end
 end

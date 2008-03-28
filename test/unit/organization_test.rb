@@ -145,7 +145,7 @@ class OrganizationTest < Test::Unit::TestCase
     Organization.destroy_all
     org_1 = create_organization(:cnpj => '63182452000151', :identifier => 'org_1')
 
-    org_2 = new_organization(:name => 'Organization for testing 2', :cnpj => '67444545000168', :identifier => 'org_1')
+    org_2 = Organization.new(:identifier => 'org_1')
     org_2.valid?
     assert org_2.errors.invalid?(:identifier) 
   end

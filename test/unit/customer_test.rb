@@ -162,4 +162,18 @@ class CustomerTest < Test::Unit::TestCase
     assert c.save!
   end
 
+  def test_add_new_customer_on_tracker_customer_points
+    customers_points = @organization.tracker.customers_points
+    create_customer
+    assert_equal customer_points + 1, @organization.tracker.customer_points
+  end
+
+  def test_add_first_customer_on_tracker_customer_points
+    assert_nil @organization.tracker.customer_points
+    
+    create_product(:organization => @organization)
+    assert_equal 1, @organization.tracker.customer_points
+  end
+
+
 end

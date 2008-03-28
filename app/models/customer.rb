@@ -5,6 +5,11 @@ class Customer < SystemActor
 # TODO see a way to make this association
 #  has_many :ledgers, :through => Sale
 
+  after_create do |customer|
+    customer.organization.tracker.customer_points ||= 0
+    customer.organization.tracker.customer_points.next
+  end
+
   def products
     Sale.products_by_customer(self)  
   end

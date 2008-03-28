@@ -145,7 +145,7 @@ body {
 }
 
 #design_editor .design_blocks {
-  border: 2px dotted green;
+  border: 2px dotted #bb9955;
 }
 
 #design_editor .design_blocks .hover {
@@ -153,13 +153,10 @@ body {
   background: blue;
 }
 
-#design_editor_toolbar h3 {
-  font-size: 10px;
-  background: #dfdfdf;
+h3.design_block_header {
+  cursor: move;
   margin: 0px;
   padding: 1px;
-  text-align: right;
-  color: #545454;
 }
 
 #design_editor_toolbar a {
@@ -186,7 +183,6 @@ body {
   letter-spacing: -2px;
   color: #E80;
 }
-
 
 .login_failed{
   color: red;

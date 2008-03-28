@@ -8,7 +8,7 @@ class Environment < ActiveRecord::Base
   # #################################################
   
   has_many :articles, :dependent => :destroy
-  #FIXME make this test
+
   belongs_to :home_page, :class_name => Article.name, :foreign_key => :home_page_id, :dependent => :destroy
 
 # FIXME see a way to validate it

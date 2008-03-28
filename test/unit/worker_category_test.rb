@@ -5,22 +5,22 @@ class WorkerCategoryTest < Test::Unit::TestCase
   fixtures :organizations
 
   def setup
-    @org = Organization.find_by_identifier('six') 
+    @organization = create_organization
+    @worker_category = create_worker_category
   end
 
   def test_relation_with_workers
-    worker_cat = WorkerCategory.create(:name => 'Category for testing', :organization_id => @org.id)
-    worker = Worker.new(:name => 'Worker for testing', :organization_id => @org.id, :email => 'testing@email', :cpf => '65870844274')
-    worker_cat.workers.concat(worker)
-    assert_equal 1, worker_cat.workers.count
+    worker = Worker.new(:name => 'Worker for testing', :organization => @organization, :email => 'testing@email', :cpf => '65870844274')
+    @worker_category.workers.concat(worker)
+    assert_equal 1, @worker_category.workers.count
   end
 
   def test_uniqueness_field_name
-    worker_cat_1 = WorkerCategory.create(:name => 'Category for testing', :organization_id => @org.id)
+    worker_category_1 = WorkerCategory.create(:name => 'Category for testing', :organization => @organization)
     
-    worker_cat_2 = WorkerCategory.create(:name => 'Category for testing', :organization_id => @org.id)
+    worker_category_2 = WorkerCategory.create(:name => 'Category for testing', :organization => @organization)
 
-    assert worker_cat_2.errors.invalid?(:name)
+    assert worker_category_2.errors.invalid?(:name)
   end
 
 end

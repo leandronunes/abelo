@@ -5,22 +5,22 @@ class CustomerCategoryTest < Test::Unit::TestCase
   fixtures :organizations
 
   def setup
-    @org = Organization.find_by_identifier('six')
+    @organization = create_organization
+    @customer_category = create_customer_category
   end
 
   def test_relation_with_customers
-    cust_cat = CustomerCategory.create(:name => 'Category for testing', :organization_id => @org.id)
-    customer = Customer.new(:name => 'Customer for testing', :organization_id => @org.id, :email => 'testing@email', :cpf => '65870844274')
-    cust_cat.customers.concat(customer)
-    assert_equal 1, cust_cat.customers.count
+    customer = Customer.new(:name => 'Customer for testing', :organization => @organization, :email => 'testing@email', :cpf => '65870844274')
+    @customer_category.customers.concat(customer)
+    assert_equal 1, @customer_category.customers.count
   end
 
   def test_uniqueness_field_name
-    cust_cat_1 = CustomerCategory.create(:name => 'Category for testing', :organization_id => @org.id)
+    customer_category_1 = CustomerCategory.create(:name => 'Category for testing', :organization => @organization)
     
-    cust_cat_2 = CustomerCategory.create(:name => 'Category for testing', :organization_id => @org.id)
+    customer_category_2 = CustomerCategory.create(:name => 'Category for testing', :organization => @organization)
 
-    assert cust_cat_2.errors.invalid?(:name)
+    assert customer_category_2.errors.invalid?(:name)
   end
 
 end

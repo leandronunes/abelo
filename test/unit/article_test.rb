@@ -62,4 +62,56 @@ class ArticleTest < Test::Unit::TestCase
     assert a2.errors.invalid?(:slug), "You cannot have more than one same slug article with the same parent"
   end
 
+  should 'act as versioned' do
+    a = create_article(:name => 'my article', :body => 'my text', :environment => @environment)
+    assert_equal 1, a.versions(true).size
+    a.name = 'some other name'
+    a.save!
+    assert_equal 2, a.versions(true).size
+  end
+
+  should 'act as taggable' do 
+    a = create_article(:name => 'my article')
+    a.tag_list = ['one', 'two']
+    tags = a.tag_list.names
+    assert tags.include?('one')
+    assert tags.include?('two')
+  end
+
+  should 'act as filesystem' do
+    a = create_article(:name => 'my article')
+    b = a.children.build(:name => 'child article', :environment => @environment)
+    b.save!
+    assert_equal 'my-article/child-article', b.path
+
+    a.name = 'another name'
+    a.save!
+
+    assert_equal 'another-name/child-article', Article.find(b.id).path
+  end
+
+  def test_top_level_for
+    a1 = create_article(:name => 'article 1', :environment => @environment)  
+    a2 = create_article(:name => 'article 2', :environment => @environment)  
+
+    create_article(:name => 'article 3', :parent => a1, :environment => @environment)  
+    create_article(:name => 'article 4', :parent => a2, :environment => @environment)  
+    assert_equal 2, Article.top_level_for(@environment).length
+  end
+
+  def test_recent
+    a1 = create_article(:name => 'article 1', :environment => @environment)  
+    a2 = create_article(:name => 'article 2', :environment => @environment)  
+    a3 = create_article(:name => 'article 3', :environment => @environment)  
+    assert_equal a3, Article.recent(1)[0]
+    assert_equal a2, Article.recent(2)[1]
+    assert_equal a1, Article.recent(3)[2]
+  end
+
+  def test_title
+    a = Article.new(:name => 'article 1')
+    assert_equal 'article 1', a.title
+    
+  end
+
 end

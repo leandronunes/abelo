@@ -74,7 +74,8 @@ class Test::Unit::TestCase
   end
 
   def create_article(params = {})
-    Article.create!({:name => 'some article'}.merge(params))
+    environment = params[:environment] || @environment || create_environment
+    Article.create!({:name => 'some article', :environment => environment}.merge(params))
   end
 
   def new_organization(params = {})
@@ -278,6 +279,25 @@ class Test::Unit::TestCase
     u
   end
 
+
+  def self.should(name, &block)
+    @shoulds ||= []
+  
+    destname = 'test_should_' + name.gsub(/[^a-zA-z0-9]+/, '_')
+    if @shoulds.include?(destname)
+      raise "there is already a test named \"#{destname}\"" 
+    end
+  
+    @shoulds << destname
+    if block_given?
+      self.send(:define_method, destname, &block)
+    else
+      self.send(:define_method, destname) do
+        flunk 'pending: should ' + name
+      end
+    end
+
+  end
 
 
 end

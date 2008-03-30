@@ -17,8 +17,6 @@ class Environment < ActiveRecord::Base
 
   acts_as_design :root => File.join('designs', 'organization')
 
-  before_validation :insert_default_homepage
-
   def design_root
     if self.is_default?
       File.join('designs', 'organization')
@@ -115,8 +113,8 @@ class Environment < ActiveRecord::Base
   end
 
   #FIXME make this test
-  def insert_default_homepage
-    self.home_page = self.articles.build(:name => _("%s's home page") % self.name, :body => _("<p>This is a default homepage created for %s. It can be changed though the control panel.</p>") % self.name)
+  def home_page
+    self.articles.find(:first, :order => :position)
   end
 
 end

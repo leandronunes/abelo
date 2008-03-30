@@ -1,0 +1,10 @@
+<% if @page.nil? %>
+  <h2 id='article-full-path'>
+    <%= link_to @organization.name, hash_for_homepage_url %>
+  </h2>
+<% else %>
+  <h2 id='article-full-path'>
+    <%= link_to @organization.name, hash_for_homepage_url %>
+    <%= @page.hierarchy.map {|item| " / " + ((item == @article) ? item.name : link_to(item.name, File.join(homepage_url, item.slug))) } %>
+  </h2>
+<% end %>

@@ -120,6 +120,7 @@ class Profile < ActiveRecord::Base
       { 'controller' => 'units', 'action' => '*' },
       { 'controller' => 'cms', 'action' => '*' },
       { 'controller' => 'tracker_organization', 'action' => '*' },
+      { 'controller' => 'article_path', 'action' => '*' },
     ],
     'other' => []
   }

@@ -3,10 +3,11 @@ class CreateArticles < ActiveRecord::Migration
     create_table :articles do |t|
 
       # acts as filesystem
-      t.column :name, :string
-      t.column :slug, :string
-      t.column :path, :text, :default => ''
-      t.column :parent_id, :integer # acts as tree included
+      t.column :name,                :string
+      t.column :slug,                :string
+      t.column :path,                :text, :default => ''
+      t.column :parent_id,           :integer # acts as tree included
+      t.column :position,            :integer
 
       # main data
       t.column :body, :text
@@ -18,7 +19,7 @@ class CreateArticles < ActiveRecord::Migration
       # keep track of changes
       t.column :updated_on,  :datetime
       t.column :created_on,  :datetime 
-      t.column :last_changed_by_id, :integer
+      t.column :last_changed_by_id,  :integer
 
       # acts as versioned
       t.column :version, :integer

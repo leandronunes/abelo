@@ -62,6 +62,29 @@ class CmsController <  ApplicationController
     @article = klass.new(params[:article])
   end
 
+  def order
+    begin 
+      @article = @environment.articles.find(params[:id])
+    rescue
+      @article = nil
+    end
+
+    render :nothing and return if params["list_items"].nil?
+
+    params["list_items"].each_with_index do |article_id,position|
+     begin
+        a = @environment.articles.find(article_id)
+      rescue
+        next
+      end
+      a.position = position
+      a.save!
+    end
+
+    @subitems = @article.nil? ? @environment.top_level_articles : @article.children
+    render :partial => 'subitems'
+  end
+
   def create
     # user must choose an article type first
     type = params[:type]

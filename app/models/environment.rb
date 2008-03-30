@@ -70,19 +70,16 @@ class Environment < ActiveRecord::Base
   # Home page methods. It's used by cms 
   #######################################
 
-  #FIXME make this test
   def url
     generate_url(url_options.merge(:controller => 'content_viewer', :action => 'view_page', :page => []))
   end
 
-  #FIXME make this test
   def generate_url(options)
     url_options.merge(options)
   end
 
-  #FIXME make this test
   def url_options
-    options = { :host => self.default_hostname, :profile => self.owner.identifier}
+    options = { :host => self.default_hostname}
 
     # help developers by generating a suitable URL for development environment 
     if (ENV['RAILS_ENV'] == 'development')
@@ -92,11 +89,11 @@ class Environment < ActiveRecord::Base
     options
   end
  
-  #FIXME Make this test
   def identifier
     self.owner.identifier
   end
 
+  # FIXME make this test
   def default_hostname
     if self.domains(true).empty?
       'localhost'
@@ -120,7 +117,6 @@ class Environment < ActiveRecord::Base
   #FIXME make this test
   def insert_default_homepage
     self.home_page = self.articles.build(:name => _("%s's home page") % self.name, :body => _("<p>This is a default homepage created for %s. It can be changed though the control panel.</p>") % self.name)
-#    self.home_page = Article.new(:name => _("%s's home page") % self.name, :body => _("<p>This is a default homepage created for %s. It can be changed though the control panel.</p>") % self.name)
   end
 
 end

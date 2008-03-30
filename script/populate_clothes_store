@@ -10,7 +10,7 @@ city = BSC::City.create!(:name => 'Salvador', :state => state)
 
 
 ############Virtual Community########################
-Environment.delete_all
+Environment.destroy_all
 Environment.create!(:name => 'Default Environment', :is_default => true)
 
 

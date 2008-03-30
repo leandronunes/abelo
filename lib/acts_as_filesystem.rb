@@ -18,7 +18,7 @@ module ActsAsFileSystem
       include ActsAsFileSystem::InstanceMethods
 
       # a filesystem is a tree
-      acts_as_tree :order => 'name'
+      acts_as_tree :order => 'position'
 
       # calculate the right path
       before_create do |record|

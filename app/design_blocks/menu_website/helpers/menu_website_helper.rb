@@ -5,7 +5,7 @@ module MenuWebsiteHelper
       menu_itens.map do |menu|
         link_path =  father_path.blank? ? menu.slug : File.join(father_path,menu.slug)
         [
-          content_tag(:li, link_to(menu.title, :page => link_path), :id => menu.slug),
+          content_tag(:li, link_to(menu.title, :page => link_path), :id => "menu_item_#{menu.position}"),
           if menu.has_children?
             website_menu(menu.children, html_class + ' sub_menu', link_path)
           else

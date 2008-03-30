@@ -36,10 +36,6 @@ h3.design_block_header
    text-align: center;
 }
 
-.design_block span {
-display: none;
-}
-
 .design_block a.design_button_block:hover span {
   display: inline;
   position: absolute;

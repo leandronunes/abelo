@@ -93,6 +93,36 @@ class EnvironmentTest < Test::Unit::TestCase
     assert_equal true, env.is_default?
   end
 
+  should 'provide url to itself' do
+    env = create_environment(:name => "Test Profile")
+    create_domain(:owner => env, :name => 'mycolivre.net')
+
+    assert_equal({ :host => 'mycolivre.net', :controller => 'content_viewer', :action => 'view_page', :page => []}, env.url)
+  end
+
+  should 'generate URL' do
+    env = create_environment(:name => "Test Profile")
+    create_domain(:owner => env, :name => 'mycolivre.net')
+
+    assert_equal({ :host => 'mycolivre.net', :controller => 'content_viewer', :action => 'view_page' }, env.generate_url(:controller => 'content_viewer', :action => 'view_page'))
+  end
+
+  should 'help developers by adding a suitable port to url options' do
+    env = create_environment(:name => "Test Environment")
+    create_domain(:owner => env, :name => 'mycolivre.net')
+
+    ENV.expects(:[]).with('RAILS_ENV').returns('development')
+    env.expects(:development_url_options).returns({ :port => 9999 })
+    assert_block('Profile#url_options must include port option when running in development mode') { env.url_options[:port] == 9999 }
+  end
+
+  should 'return the identifier' do
+    env = Environment.new
+    org = mock
+    org.expects(:identifier).returns('some_id')
+    Environment.any_instance.expects(:owner).returns(org)
+    assert_equal 'some_id', env.identifier
+  end
 
 
 end

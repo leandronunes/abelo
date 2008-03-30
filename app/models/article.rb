@@ -4,6 +4,7 @@ class Article < ActiveRecord::Base
   validates_presence_of :name, :slug, :path
 
   validates_uniqueness_of :slug, :scope => ['environment_id', 'parent_id'], :message => _('%{fn} (the code generated from the article name) is already being used by another article.')
+  validates_numericality_of :position, :only_integer => true
 
   belongs_to :last_changed_by, :class_name => Person.name, :foreign_key => 'last_changed_by_id'
 
@@ -16,10 +17,14 @@ class Article < ActiveRecord::Base
 
   acts_as_searchable :fields => [:name, :abstract, :body, :tag_list ]
 
+  before_validation do |article|
+    article.position ||= ((Article.maximum(:position, :conditions => {:environment_id => article.environment, :parent_id => article.parent}) || 0) + 1 || 1)
+  end
+
   # retrieves all articles belonging to the given +environment+ that are not
   # sub-articles of any other article.
   def self.top_level_for(environment)
-    self.find(:all, :conditions => { :parent_id => nil, :environment_id => environment })
+    self.find(:all, :conditions => { :parent_id => nil, :environment_id => environment }, :order => :position)
   end
 
   # retrieves the latest +limit+ articles, sorted from the most recent to the

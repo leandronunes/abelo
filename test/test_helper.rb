@@ -69,7 +69,7 @@ class Test::Unit::TestCase
   end
 
   def create_environment(params={})
-    organization = params[:organization] || @organization ||create_organization 
+    organization = params[:organization] || @organization ||create_organization(:name => params[:name])
     Environment.create!({:name => 'some_name', :owner => organization}.merge(params))
   end
 
@@ -287,6 +287,10 @@ class Test::Unit::TestCase
     u = UnitMeasure.find_by_abbreviation('au')
     u ||= UnitMeasure.create!({:name => 'a unit', :abbreviation => 'au', :organization => organization}.merge(params))
     u
+  end
+
+  def create_domain(params = {})
+    Domain.create!({:name => 'mycolivre.net'}.merge(params))      
   end
 
 

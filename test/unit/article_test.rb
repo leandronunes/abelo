@@ -111,7 +111,43 @@ class ArticleTest < Test::Unit::TestCase
   def test_title
     a = Article.new(:name => 'article 1')
     assert_equal 'article 1', a.title
-    
   end
+
+  should "have the position" do
+    a = Article.new
+    a.valid?
+    assert_not_nil a.position
+    assert_equal 1, a.position
+  end
+
+  should "increment the position" do
+    a = create_article(:name => 'article 1')
+    assert_equal 1, a.position
+    a = create_article(:name => 'article 2')
+    assert_equal 2, a.position
+    a = create_article(:name => 'article 3')
+    assert_equal 3, a.position
+
+    env = create_environment
+    env.articles.destroy_all
+    a = create_article(:name => 'article 4', :environment => env)
+    assert_equal 1, a.position, "this is a position of another environment"
+  end
+
+  should "have a unique position on environment and parent_id scope" do
+    a = create_article(:name => 'article 1', :environment => @environment)
+    a2 = Article.new(:environment => @environment )
+    a2.position = a.position
+    a2.valid?
+    assert a2.errors.invalid?(:position)
+
+    env = create_environment
+    env.articles.destroy_all
+    a3 = Article.new(:environment => env)
+    a3.position = a.position
+    assert !a3.errors.invalid?(:position)
+  end
+
+
 
 end

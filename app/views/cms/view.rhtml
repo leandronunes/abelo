@@ -19,15 +19,10 @@
   <div class='file-manager-title'><%= @article ? _('Subitems') : _('Articles') %></div>
   <div class='file-manager-small'>
     <% unless @subitems.empty? %>
-      <ul>
-        <% @subitems.each do |item| %>
-         <li>
-           <%= file_manager_button(item.name, icon_for_article(item), :action => 'view', :id => item.id) %>
-         </li>
-        <% end %>
+      <ul id='list_items'>
+        <%= render :partial => 'subitems' %>
       </ul>
     <% end %>
-
     <% if @article %>
       <% button_bar(:class => 'file-manager-controls') do %>
         <% if @article.allow_children? %>

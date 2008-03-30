@@ -1,0 +1,14 @@
+<% @subitems.each do |item| %>
+ <li id="item_<%=item.id%>">
+   <%= file_manager_button(item.name, icon_for_article(item), :action => 'view', :id => item.id) %>
+   <%= _("Move") %>
+ </li>
+<% end %>
+
+<%= sortable_element 'list_items',
+  :update => 'list_items',
+  :complete => visual_effect(:highlight, 'list_items'),
+  :url => {:action => 'order', :id => @article}
+%>
+
+

@@ -1,0 +1,5 @@
+<ul>
+  <% @subitems.each do |item| %>
+    <li> <%= link_to item.name, File.join(homepage_url, item.path) %>  </li>
+  <% end %>
+</ul>

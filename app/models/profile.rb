@@ -121,6 +121,7 @@ class Profile < ActiveRecord::Base
       { 'controller' => 'cms', 'action' => '*' },
       { 'controller' => 'tracker_organization', 'action' => '*' },
       { 'controller' => 'article_path', 'action' => '*' },
+      { 'controller' => 'article_subitems', 'action' => '*' },
     ],
     'other' => []
   }

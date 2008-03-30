@@ -16,6 +16,7 @@ class WebSiteInterfaceController < ApplicationController
     %w[
        MenuWebsite
        ArticlePath
+       ArticleSubitems
      ] 
   end
 

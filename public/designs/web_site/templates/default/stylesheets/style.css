@@ -198,3 +198,41 @@ color: #000000;
   font-size: 8px;
   color: #545454;
 }
+
+/* Edition Mode */
+
+#design_editor .design_blocks {
+  list-style: none;
+  margin: 0px;
+  padding: 3px;
+}
+
+#design_editor .design_box {
+  border: 2px solid transparent;
+}
+
+#design_editor .hover {
+  border: 2px dotted red;
+  background: #ff6;
+}
+
+#design_editor_toolbar {
+  padding: 5px;
+}
+
+#design_editor .design_blocks {
+  border: 2px dotted #bb9955;
+}
+
+#design_editor .design_blocks .hover {
+  border: 2px dotted red;
+  background: blue;
+}
+
+#design_editor_toolbar a {
+  font-size: 10px;
+  padding: 5px;
+  background: #dfdfdf;
+  color: black;
+}
+

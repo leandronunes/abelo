@@ -2,7 +2,7 @@ class CmsController <  ApplicationController
 
   #FIXME make the test for all controller
 
-  uses_web_site_tabs
+  uses_website_tabs
 
   #FIXME i think that we can put needs_organization here. See the better way after
   layout 'organization'

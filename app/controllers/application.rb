@@ -102,7 +102,7 @@ class ApplicationController < ActionController::Base
   require 'tabs/register'
   require 'tabs/financial'
   require 'tabs/admin_organization'
-  require 'tabs/web_site'
+  require 'tabs/website'
   require 'tabs/sales'
   require 'tabs/stock'
   require 'tabs/tracker_organization'
@@ -119,8 +119,8 @@ class ApplicationController < ActionController::Base
     before_filter :create_financial_tabs
   end 
  
-  def self.uses_web_site_tabs
-    before_filter :create_web_site_tabs
+  def self.uses_website_tabs
+    before_filter :create_website_tabs
   end 
  
   def self.uses_admin_organization_tabs

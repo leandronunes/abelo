@@ -1,4 +1,6 @@
-<%= notice_box link_to flash[:message], "http://www.mozilla.com/en-US/firefox/" %>
+<% if @wrong_navigator %>
+  <%= notice_box link_to flash[:message], "http://www.mozilla.com/en-US/firefox/" %>
+<% end %>
 
 <div id="loginform">
 

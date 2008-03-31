@@ -247,12 +247,6 @@ class Organization < ActiveRecord::Base
 
   def ledgers_by_all(accounts, tags, categories, start_date, end_date, query = nil)
     return [] if accounts.blank? or !accounts.all?{|a| self.bank_accounts.include?(a)}
-# FIXME see a sql way to do this search
-#    conditions_clause = {}
-#    conditions_clause[:bank_account_id] = accounts
-#    conditions_clause[:category_id] = categories unless categories.blank?
-#    all_ledgers = Ledger.find_tagged_with(tags, :conditions => conditions_clause , :order => :date)
-#    all_ledgers = Ledger.find(:all, :conditions => conditions_clause , :order => :date)
 
     ledger_banks = ledgers_by_bank_account(accounts)
     ledger_tags = ledgers_by_tag(tags, accounts)
@@ -269,20 +263,20 @@ class Organization < ActiveRecord::Base
     all_ledgers.sort{|x,y| x.date <=> y.date}
   end
 
-# #FIXME uncomment this methods when we used it
-#  def sum_foreseen_value_by_date(bank_account, date = Date.today)
-#    ledgers = self.ledgers_by_bank_account(bank_account).select{|l| l.date.month == date.month}
-#    value = 0
-#    ledgers.collect{|l| value = value + l.foreseen_value }
-#    value
-#  end
-#
-#  def sum_effective_value_by_date(bank_account, date = Date.today)
-#    ledgers = self.ledgers_by_bank_account(bank_account).select{|l| !l.pending? and l.date.month == date.month}
-#    value = 0
-#    ledgers.collect{|l| value = value + l.foreseen_value }
-#    value
-#  end
+  def sum_foreseen_value_by_date(bank_account, date = Date.today)
+    ledgers = self.ledgers_by_bank_account(bank_account).select{|l| l.date.month == date.month}
+    value = 0
+    ledgers.collect{|l| value = value + l.foreseen_value }
+    value
+  end
+
+  def sum_effective_value_by_date(bank_account, date = Date.today)
+    ledgers = self.ledgers_by_bank_account(bank_account).select{|l| !l.pending? and l.date.month == date.month}
+    value = 0
+    ledgers.collect{|l| value = value + l.foreseen_value }
+    value
+  end
+
   #####################################
   # Documents Methods Related
   #####################################

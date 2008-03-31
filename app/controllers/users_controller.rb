@@ -112,4 +112,11 @@ class UsersController < ApplicationController
     end
   end
 
+  #FIXME make this test
+  skip_before_filter :check_navigator, :only => 'wrong_navigator'
+  def wrong_navigator
+    flash[:message] = _('This system only works properly with firefox navigator. Click here o get it now.')
+    render :action => 'login'
+  end
+
 end

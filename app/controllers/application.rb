@@ -238,13 +238,23 @@ class ApplicationController < ActionController::Base
   end
 
   # Access Control Plugin 
+  #FIXME see if it's usefull
   include PermissionCheck
   def organization
     @organization
   end
 
+  #FIXME see if it's usefull
   def user
     current_user.person if logged_in?
+  end
+
+  #FIXME make this test
+  before_filter :check_navigator
+  def check_navigator
+    navigator = request.user_agent.downcase
+    match = navigator.match('msie')
+    redirect_to :controller => 'users', :action => 'wrong_navigator' unless match.nil?
   end
 
 end

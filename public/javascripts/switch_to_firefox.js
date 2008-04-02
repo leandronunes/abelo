@@ -1,14 +1,3 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-  <head>
-    <title> <%= _('Abelo') %>  </title>
-    <%= design_all_header_tags %>
-    <link rel="shortcut icon" href="<%=image_path('logo.ico')%>" />
-
-<script type="text/javascript">
-
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
   Esse script gera um banner movel para a campanha "Troque o seu Navegador"
@@ -20,7 +9,7 @@
 
 if ( window.debugCampanhaFF ) { alert('Modo Debug Ativado'); }
 if ( window.debugCampanhaFF ) { if ( window.testarCampanhaFF ) { alert('Modo Teste Ativado\n(Rodar em toadas as plataformas)'); } }
-if ( navigator.appName.indexOf("Microsoft") > -1 || window.testarCampanhaFF ) { ///////////////////  INI só para o IE
+//if ( navigator.appName.indexOf("Microsoft") > -1 || window.testarCampanhaFF ) { ///////////////////  INI só para o IE
 if ( window.debugCampanhaFF ) { alert('validado.'); }
 
 function echo(str){ document.write(str); }
@@ -125,31 +114,5 @@ function trocaCelebridade(){
 
 if ( window.debugCampanhaFF ) { alert('Funções de animação chamadas.\nScript baixado por completo.'); }
 
-} //////////////////////////////////////////////////////////////////////////////////////////  FIM só para o IE
-
-</script>
-
-  </head>
-  <body>
-    <div id="warp">
-      <div id="frame">
-        <div id="header">
-          <div id="banner_header"> </div>
-        </div>
-
-        <%= notice_box flash[:notice] %>
-
-        <div id="content">
-          <div id="center_box">
-            <%= yield %>
-          </div>
-        </div>
-        <div id="footer">
-          <%= footer %>
-        </div>
-      </div>
-    </div>
-    <%= localist_menu %>
-  </body>
-</html>
+//} //////////////////////////////////////////////////////////////////////////////////////////  FIM só para o IE
 

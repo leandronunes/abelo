@@ -7,7 +7,6 @@
   margin-left: -145px;
   margin-top: -11px;
   left: 50%;
-  overflow: none;
   z-index: 1;
 }
 
@@ -17,7 +16,6 @@
   margin: -1px 0px 0px -145px;
   left: 50%;
   text-align: center;
-  overflow: none;
   z-index: 50;
 }
 #notice div {
@@ -26,7 +24,6 @@
 }
 
 #errorExplanation {
-  filter:alpha(opacity=50);
   -moz-opacity:.50;
   opacity:.50;
   border: 2px solid red;
@@ -39,9 +36,8 @@
 }
 
 #errorExplanation:hover {
-filter:alpha(opacity=100);
--moz-opacity:1.0;
-opacity:1.0;
+  -moz-opacity:1.0;
+  opacity:1.0;
 }
 
 #errorExplanation h2 {

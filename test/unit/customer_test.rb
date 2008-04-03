@@ -166,14 +166,14 @@ class CustomerTest < Test::Unit::TestCase
   def test_add_new_customer_on_tracker_customer_points
     customer_points = @organization.tracker.customer_points
     create_customer(:cpf => '96628353265')
-    assert_equal customer_points + 1, @organization.tracker.customer_points
+    assert_equal customer_points + 1, Organization.find_by_identifier('some').tracker.customer_points
   end
 
   def test_add_first_customer_on_tracker_customer_points
     org = create_organization(:identifier => 'some_id', :cnpj => '62.667.776/0001-17', :name => 'some id')
     assert_nil org.tracker.customer_points
     create_customer(:organization => org)
-    assert_equal 1, org.tracker.customer_points
+    assert_equal 1, Organization.find_by_identifier('some_id').tracker.customer_points
   end
 
 end

@@ -17,9 +17,10 @@ class Product < ActiveRecord::Base
     product.code ||=(Product.maximum(:code, :conditions => {:organization_id => product.organization}) || 0).to_i + 1
   end
 
-  before_create do |product|
+  after_create do |product|
     product.organization.tracker.product_points ||= 0
     product.organization.tracker.product_points += 1
+    product.organization.tracker.save!
   end
 
   validates_uniqueness_of :code, :scope => :organization_id

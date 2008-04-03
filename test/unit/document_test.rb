@@ -163,7 +163,7 @@ class DocumentTest < Test::Unit::TestCase
     document_points = @organization.tracker.document_points
     c = Document.count
     create_document(:name => 'Another document')
-    assert_equal document_points + 1, @organization.tracker.document_points
+    assert_equal document_points + 1, Organization.find_by_identifier('some').tracker.document_points
   end
 
   def test_add_first_document_on_tracker_document_points
@@ -171,7 +171,7 @@ class DocumentTest < Test::Unit::TestCase
     assert_nil org.tracker.document_points
 
     create_document(:name => 'some', :organization => org)
-    assert_equal 1, org.tracker.document_points
+    assert_equal 1, Organization.find_by_identifier('some_id').tracker.document_points
   end
   
 end

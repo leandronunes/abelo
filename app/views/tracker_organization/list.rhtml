@@ -2,42 +2,4 @@
 
 <%= title _('Listing Trackers') %>
 
-<div> 
-  <strong> <%=_('Product') %>: </strong>
-  <span> <%= @tracker.product_points %> </span>
-</div>
-
-<div>
-  <strong> <%= _('Customer') %>: </strong>
-  <span> <%= @tracker.customer_points %> </span>
-</div>
-
-<div>
-  <strong> <%= _('Supplier') %>: </strong>
-  <span> <%= @tracker.supplier_points %> </span>
-<div>
-
-<div>
-  <strong> <%= _('Worker') %>: </strong>
-  <span> <%= @tracker.worker_points %> </span>
-</div>
-
-<div>
-  <strong> <%= _('Ledger') %>: </strong>
-  <span> <%= @tracker.ledger_points %> </span>
-</div>
-
-<div>
-  <strong> <%= _('Document') %>: </strong>
-  <span> <%= @tracker.document_points %> </span>
-</div>
-
-<div>
-  <strong> <%= _('Points per User') %>: </strong>
-  <span> <%= @tracker.points_per_user %> </span>
-</div>
-
-<div>
-  <strong> <%= _('Points per Web Site') %>: </strong>
-  <span> <%= @tracker.points_per_web_site %> </span>
-</div>
+<%= display_show_info @tracker %>

@@ -164,14 +164,14 @@ class WorkerTest < Test::Unit::TestCase
   def test_add_new_worker_on_tracker_worker_points
     worker_points = @organization.tracker.worker_points
     create_worker(:cpf => '96628353265')
-    assert_equal worker_points + 1, @organization.tracker.worker_points
+    assert_equal worker_points + 1, Organization.find_by_identifier('some').tracker.worker_points
   end
 
   def test_add_first_worker_on_tracker_worker_points
     org = create_organization(:identifier => 'some_id', :cnpj => '62.667.776/0001-17', :name => 'some id')
     assert_nil org.tracker.worker_points
     create_worker(:organization => org)
-    assert_equal 1, org.tracker.worker_points
+    assert_equal 1, Organization.find_by_identifier('some_id').tracker.worker_points
   end
 
 end

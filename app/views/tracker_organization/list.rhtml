@@ -3,3 +3,10 @@
 <%= title _('Listing Trackers') %>
 
 <%= display_show_info @tracker %>
+
+<div>
+  <strong> <%= _('User points') %></strong>
+  <span> <%= @tracker.user_points %> </span>
+<div>
+
+<%= @tracker.total_points %>

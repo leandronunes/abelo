@@ -10,7 +10,7 @@ class CreateTrackers < ActiveRecord::Migration
       t.column :ledger_points,             :integer, :default => 0
       t.column :document_points,           :integer, :default => 0
       t.column :points_per_user,           :integer, :default => 0
-      t.column :points_per_web_site,       :integer, :default => 0
+      t.column :website_points,            :integer, :default => 0
     end
 
     Organization.find(:all) do |o|

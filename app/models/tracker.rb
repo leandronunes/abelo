@@ -10,13 +10,20 @@ class Tracker < ActiveRecord::Base
   validates_numericality_of :ledger_points, :only_integer => true, :allow_nil => true
   validates_numericality_of :document_points, :only_integer => true, :allow_nil => true
   validates_numericality_of :points_per_user, :only_integer => true, :allow_nil => true
-  validates_numericality_of :points_per_web_site, :only_integer => true, :allow_nil => true
+  validates_numericality_of :website_points, :only_integer => true, :allow_nil => true
 
   def self.describe(field)
     {
       'user' =>  _('User total points'),
-      'web_site' => _('Web site total points'),
+      'website' => _('Website points'),
     }[field] || field
   end
 
+  def user_points
+    self.organization.users.length * self.points_per_user
+  end
+
+  def total_points
+    self.product_points + self.customer_points + self.supplier_points + self.worker_points + self.ledger_points + self.document_points + self.user_points
+  end
 end

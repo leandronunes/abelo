@@ -29,7 +29,7 @@
       </tr>
       <tr>
         <td class="cell_balance_tit"> <%= _("Balance") %>: </td>
-        <td class="cell_balance_val cell_number"> <%= num_to_currency(@total - @total_payment) %> </td>
+        <td class="cell_balance_val cell_number"> <%= num_to_currency(@sale.balance) %> </td>
       </tr>
     </table>
   </div>

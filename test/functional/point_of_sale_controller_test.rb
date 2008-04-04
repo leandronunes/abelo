@@ -15,6 +15,8 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
     Till.destroy_all
     Sale.destroy_all
     @controller = PointOfSaleController.new
+#  ActionController::TestRequest.any_instance.stubs(:user_agent).returns('firefox')
+
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     Printer.destroy_all
@@ -29,7 +31,7 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
     @ledger_category = create_ledger_category(:is_sale => true)
     @printer = create_printer
     @till = create_till(:printer => @printer)
-    @sale = Sale.new(@till) 
+    @sale = Sale.new(:till => @till) 
     @sale.save!
     login_as('quentin')
   end

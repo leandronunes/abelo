@@ -43,9 +43,9 @@ class PaymentBase
   end
 
   def create_printer_cmd!(ledger)
-    return unless ledger.needs_fiscal_command?
-    till = ledger.owner.kind_of?(Sale) ? ledger.owner.owner : ledger.owner
-    ledger.printer_command = PrinterCommand.new(till, 
+    return unless ledger.is_fiscal_operation?
+    till = ledger.owner.till 
+    ledger.printer_command ||= PrinterCommand.new(till, 
             [
               PrinterCommand::ADD_PAYMENT, ledger.fiscal_payment_type, 
               ledger.payment_type, ledger.value
@@ -55,6 +55,10 @@ class PaymentBase
 
   def display_class
     MoneyDisplay
+  end
+
+  def fiscal_payment_type
+    '00'
   end
 
 end

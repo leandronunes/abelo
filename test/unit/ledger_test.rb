@@ -655,5 +655,54 @@ class LedgerTest < Test::Unit::TestCase
     assert_equal 1, Organization.find_by_identifier('some_id').tracker.ledger_points
   end
 
+  should "return if the ledger is a fiscal operation or not" do
+    l = Ledger.new(:payment_method => Payment::ADD_CASH, :organization => @organization )
+    assert_equal false, l.is_fiscal_operation?, "The ledger is a fiscal operation only with a fiscal printer associated to the oragnziation" 
+
+    Organization.any_instance.expects(:has_fiscal_printer?).times(1).returns(true)
+    l = Ledger.new(:payment_method => Payment::ADD_CASH, :organization => @organization )
+    assert l.is_fiscal_operation?, "All add cash operations with fiscal printer must be a fiscal operation"
+
+    Organization.any_instance.expects(:has_fiscal_printer?).times(1).returns(true)
+    l = Ledger.new(:payment_method => Payment::REMOVE_CASH, :organization => @organization )
+    assert l.is_fiscal_operation?, "All remove cash operations with fiscal printer must be a fiscal operation"
+
+    Organization.any_instance.expects(:has_fiscal_printer?).times(1).returns(true)
+    l = Ledger.new(:payment_method => Payment::CHANGE, :organization => @organization )
+    assert l.is_fiscal_operation?, "All change operations with fiscal printer must be a fiscal operation"
+
+    Organization.any_instance.expects(:has_fiscal_printer?).times(1).returns(true)
+    l = Ledger.new(:payment_method => Payment::MONEY, :organization => @organization )
+    assert_equal false, l.is_fiscal_operation?, "Money operations are fiscal operation only associated to a sale"
+    
+    Organization.any_instance.expects(:has_fiscal_printer?).times(1).returns(true)
+    l = Ledger.new(:payment_method => Payment::CHECK, :organization => @organization )
+    assert_equal false, l.is_fiscal_operation?, "Check operations are fiscal operation only associated to a sale"
+    
+    Organization.any_instance.expects(:has_fiscal_printer?).times(1).returns(true)
+    l = Ledger.new(:payment_method => Payment::CREDIT_CARD, :organization => @organization )
+    assert_equal false, l.is_fiscal_operation?, "Credit Card operations are fiscal operation only associated to a sale"
+    
+    Organization.any_instance.expects(:has_fiscal_printer?).times(1).returns(true)
+    l = Ledger.new(:payment_method => Payment::DEBIT_CARD, :organization => @organization )
+    assert_equal false, l.is_fiscal_operation?, "Debit Card operations are fiscal operation only associated to a sale"
+    
+    Organization.any_instance.expects(:has_fiscal_printer?).times(1).returns(true)
+    l = Ledger.new(:payment_method => Payment::MONEY, :organization => @organization, :owner => Sale.new )
+    assert l.is_fiscal_operation?, "Money operations are fiscal operation when associated to a sale"
+
+    Organization.any_instance.expects(:has_fiscal_printer?).times(1).returns(true)
+    l = Ledger.new(:payment_method => Payment::CHECK, :organization => @organization, :owner => Sale.new )
+    assert l.is_fiscal_operation?, "Check operations are fiscal operation when associated to a sale"
+
+    Organization.any_instance.expects(:has_fiscal_printer?).times(1).returns(true)
+    l = Ledger.new(:payment_method => Payment::CREDIT_CARD, :organization => @organization, :owner => Sale.new )
+    assert l.is_fiscal_operation?, "Credit card operations are fiscal operation when associated to a sale"
+
+    Organization.any_instance.expects(:has_fiscal_printer?).times(1).returns(true)
+    l = Ledger.new(:payment_method => Payment::DEBIT_CARD, :organization => @organization, :owner => Sale.new )
+    assert l.is_fiscal_operation?, "Debit card operations are fiscal operation when associated to a sale"
+
+  end
 
 end

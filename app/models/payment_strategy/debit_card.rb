@@ -8,4 +8,8 @@ class DebitCard < PaymentBase
     DebitCardDisplay
   end
 
+  def fiscal_payment_type
+    '03'
+  end
+
 end

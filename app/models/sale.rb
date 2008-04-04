@@ -5,7 +5,9 @@ class Sale < ActiveRecord::Base
   belongs_to :organization
   belongs_to :customer
   belongs_to :salesman, :class_name => 'User', :foreign_key => :user_id
-  belongs_to :owner, :polymorphic => true
+  belongs_to :till
+#FIXME remeber to remove this field of migration
+#  has_one :change, :as => :owner, :class_name => Ledger.name, :foreign_key => :change_id
   has_many :printer_commands, :as => :owner, :dependent => :destroy
   has_many :sale_items, :dependent => :destroy
   has_many :ledgers, :as => :owner, :dependent => :destroy
@@ -31,28 +33,29 @@ class Sale < ActiveRecord::Base
   end
 
   after_create do |sale|
-    sale.printer_commands << PrinterCommand.new(sale.owner, [PrinterCommand::OPEN]) if sale.has_fiscal_printer?
+    sale.printer_commands << PrinterCommand.new(sale.till, [PrinterCommand::OPEN]) if sale.has_fiscal_printer?
   end
 
   delegate :has_fiscal_printer?, :default_bank_account, :to => :organization
 
   def validate
-    pending = Sale.pending(self.owner)
+    pending = Sale.pending(self.till)
     if !pending.nil? and pending != self
       self.errors.add(:status, _('You cannot have two pendings sale'))
     end
 
-    opened = Sale.opened(self.owner)
+    opened = Sale.opened(self.till)
     if !opened.nil? and opened != self
       self.errors.add(:status, _('You cannot open a sale with a sale opened'))
     end
+
   end
 
-  def initialize(till, *args)
+  def initialize(*args)
     super(*args)
-    self.organization = till.organization
-    self.salesman = till.user
-    self.owner = till
+    till = self.till
+    self.organization = till.organization unless till.nil?
+    self.salesman = till.user unless till.nil?
     self.datetime = Time.now
   end
 
@@ -77,7 +80,7 @@ class Sale < ActiveRecord::Base
 
   def totalize
     if self.has_fiscal_printer? and not PrinterCommand.is_totalized?(self)
-      self.printer_commands << PrinterCommand.new(self.owner, [PrinterCommand::TOTALIZE]) 
+      self.printer_commands << PrinterCommand.new(self.till, [PrinterCommand::TOTALIZE]) 
     end
   end
 
@@ -132,7 +135,7 @@ class Sale < ActiveRecord::Base
     self.sale_items.collect{|i| i.cancel!}
     if self.has_fiscal_printer?
       self.status = STATUS_OPEN
-      self.printer_commands << PrinterCommand.new(self.owner, [PrinterCommand::CANCEL])
+      self.printer_commands << PrinterCommand.new(self.till, [PrinterCommand::CANCEL])
     end
     self.save
   end
@@ -150,8 +153,9 @@ class Sale < ActiveRecord::Base
     end
 
     if self.has_fiscal_printer?
-      self.status = STATUS_OPEN
-      self.printer_commands << PrinterCommand.new(self.owner, [PrinterCommand::CLOSE])
+# FIXME see if we need to set the status for open to print the clo command
+#      self.status = STATUS_OPEN
+      self.printer_commands << PrinterCommand.new(self.till, [PrinterCommand::CLOSE])
       self.save
     else
       self.done!
@@ -171,33 +175,44 @@ class Sale < ActiveRecord::Base
   # Return the total price of the sale. The total price is
   # the sum of each item of the sale
   def total_value
-    value = 0.0
+    value = 0
     self.sale_items.each{ |i|
       value = value + i.price
     }
-
     value
   end
 
   # Return the balance between the total value of sale_items and 
   # the total of payments realized
   def balance
-    total_value - total_payment
+    self.total_value - self.total_payment_balance
   end
 
   # Return the sum of payments of the sale
+  # FIXME see this test
   def total_payment
-    value = 0
-    self.ledgers.each{ |l|
-      value = value + l.value
-    }  
-    value #Making the return value more clear
+    self.ledgers.sum(:foreseen_value, :conditions => ['payment_method != ?', Payment::CHANGE]) || 0
+  end
+
+  #FIXME make this test
+  def total_payment_balance
+    self.total_payment + self.change_value
   end
 
   def change!
-    return unless self.balance < 0
+    return unless self.balance < 0 and self.change.nil?
     l = Ledger.new(:owner => self, :payment_method => Payment::CHANGE, :value => self.balance.abs, :organization => self.organization)
     l.save!
+  end
+
+  #FIXME make this test
+  def change_value
+    self.ledgers.find(:first, :conditions => {:payment_method => Payment::CHANGE} ).value
+  end
+
+  #FIXME make this test
+  def change
+    self.ledgers.find(:first, :conditions => {:payment_method => Payment::CHANGE} )
   end
 
   # Return the identifier of a customer. Now the identifier is the cpf

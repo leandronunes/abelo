@@ -140,4 +140,9 @@ class RemoveCashTest < Test::Unit::TestCase
     assert cash.needs_fiscal_command
   end
 
+  should "return the fiscal payment type" do
+    l = Ledger.new(:payment_method => Payment::REMOVE_CASH)
+    assert_equal '00', l.fiscal_payment_type
+  end
+
 end

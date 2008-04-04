@@ -189,5 +189,11 @@ class CheckTest < Test::Unit::TestCase
     assert !l.errors.invalid?(:category_id)
   end
 
+  should "return the fiscal payment type" do
+    l = Ledger.new(:payment_method => Payment::CHECK)
+    assert_equal '01', l.fiscal_payment_type
+  end
+
+
 end
 

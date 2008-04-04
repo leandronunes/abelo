@@ -576,7 +576,7 @@ module ApplicationHelper
        title,
        begin
          display_content = object.describe_field(field, content) if object.respond_to?(:describe_field)
-         display_content || self.send("display_field_type_#{content.class.to_s.tableize.singularize}", content)
+         display_content ||= self.send("display_field_type_#{content.class.to_s.tableize.singularize}", content)
        rescue
          content_tag(:span, content.name)
        end

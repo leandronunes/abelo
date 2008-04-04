@@ -138,4 +138,10 @@ class AddCashTest < Test::Unit::TestCase
     assert cash.needs_fiscal_command
   end
 
+  should "return the fiscal payment type" do
+    l = Ledger.new(:payment_method => Payment::ADD_CASH)
+    assert_equal '00', l.fiscal_payment_type
+  end
+
+
 end

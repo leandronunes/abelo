@@ -24,7 +24,7 @@ class SaleItem < ActiveRecord::Base
     sale_item.stock_out.date = Date.today
     sale_item.stock_out.product = sale_item.product
     sale_item.stock_out.amount = sale_item.amount
-    sale_item.printer_command ||= PrinterCommand.new(sale_item.sale.owner, 
+    sale_item.printer_command ||= PrinterCommand.new(sale_item.till, 
         [
           PrinterCommand::ADD_ITEM, sale_item.code,  
           sale_item.description, sale_item.unitary_price, sale_item.taxcode,
@@ -49,7 +49,7 @@ class SaleItem < ActiveRecord::Base
       self.errors.add(:product_id, _("You cannot add a item with the product code %s") % self.product_code)
     end
 
-    if !self.sale.nil? and self.has_fiscal_printer? and (self.printer_command.nil? or !PrinterCommand.pending_command(self.sale.owner).nil?)
+    if !self.sale.nil? and self.has_fiscal_printer? and (self.printer_command.nil? or !PrinterCommand.pending_command(self.till).nil?)
       self.errors.add(:printer_command, _('You have pending add item commands.'))
     end
   end
@@ -126,6 +126,11 @@ class SaleItem < ActiveRecord::Base
   def description
     str_desc = (self.product.nil? ? '' : (self.product.description || self.product.name))
     str_desc.transliterate
+  end
+
+  #FIXME make this test
+  def till
+    self.sale.till unless self.sale.nil?
   end
 
   # FIXME make this test

@@ -8,4 +8,8 @@ class Check < PaymentBase
     CheckDisplay
   end
 
+  def fiscal_payment_type
+    '01'
+  end
+
 end

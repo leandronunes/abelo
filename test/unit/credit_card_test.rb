@@ -182,6 +182,10 @@ class CreditCardTest < Test::Unit::TestCase
     assert !l.errors.invalid?(:category_id)
   end
 
+  should "return the fiscal payment type" do
+    l = Ledger.new(:payment_method => Payment::CREDIT_CARD)
+    assert_equal '02', l.fiscal_payment_type
+  end
 
 end
 

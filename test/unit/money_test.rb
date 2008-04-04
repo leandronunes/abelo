@@ -95,5 +95,10 @@ class MoneyTest < Test::Unit::TestCase
     assert !l.errors.invalid?(:category_id)
   end
 
+  should "return the fiscal payment type" do
+    l = Ledger.new(:payment_method => Payment::MONEY)
+    assert_equal '00', l.fiscal_payment_type
+  end
+
 
 end

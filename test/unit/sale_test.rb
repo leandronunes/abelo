@@ -58,9 +58,9 @@ class SaleTest < Test::Unit::TestCase
   def test_uniq_pending_sale
     Sale.delete_all
     sale1 = new_sale(:datetime => '2007-08-04', :salesman => @user)
-    assert sale1.save
-    sale2 = new_sale(:datetime => '2007-08-04', :salesman => @user, :owner => sale1.owner)
-    sale2.owner = sale1.owner
+    assert sale1.save!
+    sale2 = new_sale(:datetime => '2007-08-04', :salesman => @user, :till => sale1.till)
+    sale2.till = sale1.till
     assert !sale2.save
     assert sale2.errors.invalid?(:status)
     assert_equal 1, Sale.find(:all).length    
@@ -143,7 +143,7 @@ class SaleTest < Test::Unit::TestCase
   def test_pendind
     Sale.delete_all
     sale = create_sale()
-    assert_equal Sale.pending(sale.owner), sale
+    assert_equal Sale.pending(sale.till), sale
   end
 
   def test_open

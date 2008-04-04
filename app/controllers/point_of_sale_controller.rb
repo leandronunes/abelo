@@ -79,7 +79,7 @@ class PointOfSaleController < ApplicationController
   def create_till_open
     if @till.nil?
       printer = load_printer
-      @till = Till.new(@organization, current_user, printer)
+      @till = Till.new(:organization => @organization, :user => current_user, :printer => printer)
     end
 
     unless params[:cash].nil?
@@ -133,8 +133,6 @@ class PointOfSaleController < ApplicationController
   def change
     @sale = Sale.pending(@till)
     @sale.change!
-    @total = @sale.total_value 
-    @total_payment = @sale.total_payment 
   end
 
   def create_close_sale
@@ -152,13 +150,11 @@ class PointOfSaleController < ApplicationController
       @sale_item.product_code = params[:product_code] 
       @product = @sale_item.product
     end
-    @total = @sale.total_value 
-    @total_payment = @sale.total_payment 
     @payments = @sale.ledgers
   end
 
   def create_coupon_open
-    @sale =  Sale.new(@till)
+    @sale =  Sale.new(:till => @till)
     if @sale.save
       redirect_to :action => 'coupon_open'
     else
@@ -259,7 +255,7 @@ class PointOfSaleController < ApplicationController
     ledger_params = params['ledger'] || {}
     @ledger = Ledger.new(ledger_params.merge(:owner => @sale, :organization => @organization))
     @ledger_categories =  @organization.sale_ledger_categories_by_payment_method(@ledger.payment_method)
-    
+
     if @ledger.save
       if @sale.balance == 0
         @sale.close!      
@@ -337,7 +333,6 @@ class PointOfSaleController < ApplicationController
     printer = load_printer 
     if @organization.has_fiscal_printer? and printer.nil?
       flash[:notice] = _("You don't have a printer configured")
-raise 'fudeu'
       redirect_to :action => 'index'
     else
       @till = Till.load(@organization, current_user, printer)

@@ -1,5 +1,7 @@
 class Ledger < ActiveRecord::Base
 
+  #FIXME verify methods that are not tested
+
   include Status
   require 'payment_strategy/payment_strategy'
   include PaymentStrategy
@@ -80,13 +82,15 @@ class Ledger < ActiveRecord::Base
   # Part of the strategy pattern
   delegate :is_check?, :is_money?, :is_credit_card?, :is_debit_card?, :is_add_cash?, :is_remove_cash?, :is_change?, :to => :payment_strategy
   delegate :require_category?, :set_as_done_on_save?, :payment_initialize, :display_class, :create_printer_cmd!, :to => :payment_strategy
+  delegate :fiscal_payment_type, :to => :payment_strategy 
 
   def validate
     if (self.date != Date.today) and (self.is_add_cash? or self.is_remove_cash? or self.is_change?)
-      self.errors.add(:date, _('You cannot schedule an add cash'))
+      self.errors.add(:date, _('You cannot schedule this kind of ledger.'))
     end
+
     if (self.value >= 0) and self.expense?
-      self.errors.add(:value, _('The value must be minor or equal to zero'))                                
+      self.errors.add(:value, _('The value must be minor than zero.'))
     end
 
     if (self.expense?) and (self.type_of != Payment::TYPE_OF_EXPENSE)
@@ -111,6 +115,10 @@ class Ledger < ActiveRecord::Base
 
     if(!self.date.nil? and (self.date.to_datetime > DateTime.now) and self.done? )
       self.errors.add(:status, _("You can't set this ledger as a effective ledger because the date of the ledger is in the future.")) 
+    end
+
+    if self.owner.kind_of?(Sale) and self.is_change?
+      self.errors.add(_("You can't have two changes for the same sale")) unless self.owner.change.nil?
     end
   end
 
@@ -151,6 +159,7 @@ class Ledger < ActiveRecord::Base
     Balance.create_balance(:date => self.date, :bank_account => self.bank_account)
   end
 
+#FIXME see if this is needed
   def needs_fiscal_command?
    return false unless self.has_fiscal_printer? and self.printer_command.nil? and self.needs_fiscal_command == true
    true
@@ -282,12 +291,8 @@ class Ledger < ActiveRecord::Base
     s.destroy
   end
 
-  def fiscal_payment_type
-    00
-  end
-
   def payment_type
-    self.class.to_s.tableize.singularize
+    self.payment_method
   end
 
   def reload
@@ -314,10 +319,24 @@ class Ledger < ActiveRecord::Base
     self.type_of == Payment::TYPE_OF_INCOME
   end
 
+  
   # Check if the current ledger is a expense 
+  # FIXME make this test
   def expense?
-    type_of_ledger = self.type_of || (self.category.type_of unless self.category.nil?)
-    type_of_ledger == Payment::TYPE_OF_EXPENSE or self.is_remove_cash? or self.is_change?
+    (self.category.expense? unless self.category.nil?) or self.is_remove_cash? or self.is_change?
+  end
+
+  def category= category
+    self[:category_id] = category.kind_of?(LedgerCategory) ? category.id : category
+    self.change_signal
+  end
+  alias :category_id= :category=
+
+  #FIXME make this test
+  def change_signal
+    return if self.category.nil?
+    self[:foreseen_value] = self.value * -1 if ((self.foreseen_value || 0) > 0 and self.expense? )
+    self[:effective_value] = self.value * -1 if ((self.effective_value || 0) > 0 and self.expense?)
   end
 
   # Search for ledgers that contain any data that match with the 
@@ -361,10 +380,17 @@ class Ledger < ActiveRecord::Base
     self.organization.nil? ? false : self.organization.has_fiscal_printer?
   end
 
+  def is_fiscal_operation?
+    return false unless self.has_fiscal_printer?
+    self.is_add_cash? or self.is_remove_cash? or self.is_change? or self.owner.kind_of?(Sale)
+  end
+
   def value= value
+puts 'EMMMMMMMMMMMMMMM  VAAAAAAAAAAAAAAAAAALLLLLLLLLLLLLLLLLLLLLLL'
     return if value.nil?
     value = value.kind_of?(String) ? (value.gsub!('.', ''); value.gsub(',','.')).to_f : value
     value = ((value > 0) ? (value * -1) : value) if self.expense?
+#    self.set_table_value(value, 1)
     self[:foreseen_value] = value if self.pending? or self.foreseen_value.nil?
     self[:effective_value] = value if self.done?
   end

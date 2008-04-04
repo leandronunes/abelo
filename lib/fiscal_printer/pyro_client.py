@@ -84,6 +84,9 @@ def main():
 
   def add_payment():
     (payment_method, description, value ) = parameters
+#    print payment_method
+#    print description
+#    print value
     return printer.add_payment(payment_method, value, description)
 
   def close():

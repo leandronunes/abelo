@@ -10,7 +10,7 @@ class AddCash < PaymentBase
   end
 
   def create_printer_cmd!(ledger)
-    return unless ledger.has_fiscal_printer? and ledger.printer_command.nil?
+    return unless ledger.is_fiscal_operation? and ledger.printer_command.nil?
     ledger.printer_command ||= PrinterCommand.new(ledger.owner ,[PrinterCommand::TILL_ADD_CASH, ledger.value]) 
     ledger.cmd_sent!
   end

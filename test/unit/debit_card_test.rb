@@ -117,4 +117,9 @@ class DebitCardTest < Test::Unit::TestCase
     assert !c.errors.invalid?(:automatic_debit_account_number)
   end
 
+  should "return the fiscal payment type" do
+    l = Ledger.new(:payment_method => Payment::DEBIT_CARD)
+    assert_equal '03', l.fiscal_payment_type
+  end
+
 end

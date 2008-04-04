@@ -56,7 +56,10 @@ class Test::Unit::TestCase
   end
 
   def create_till(params = {})
-    till = Till.new(@organization, @user, params[:printer] || create_printer)
+    params[:organization] ||= @organization
+    params[:user] ||= @user
+    params[:printer] ||= create_printer
+    till = Till.new(params)
     till.save
     till
   end
@@ -271,8 +274,8 @@ class Test::Unit::TestCase
   end
 
   def new_sale(params = {})
-    till = params[:owner] || create_till
-    Sale.new(till, params)    
+    params[:till] ||= create_till 
+    Sale.new(params)    
   end
  
   def create_item(params = {})
@@ -313,6 +316,11 @@ class Test::Unit::TestCase
 
   end
 
+  class ActionController::TestRequest
+    def user_agent
+      'firefox'
+    end
+  end
 
 end
 

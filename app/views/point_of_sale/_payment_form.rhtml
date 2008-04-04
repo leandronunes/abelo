@@ -10,7 +10,7 @@
   <div class="info_field">
     <label name="sale_value"> <%= _('Value') %>: </label>
     <span class="field">
-      <%= text_field('ledger', 'value') %> 
+      <%= text_field('ledger', 'value', :value => num_to_currency(@ledger.value)) %> 
     </span><!-- fim class="field" -->
   </div><!-- fim class="info_field" -->
 

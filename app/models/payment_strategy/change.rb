@@ -14,8 +14,8 @@ class Change < PaymentBase
   end
 
   def create_printer_cmd!(ledger)
-    return unless ledger.has_fiscal_printer? and ledger.printer_command.nil?
-    till = ledger.owner.kind_of?(Sale) ? ledger.owner.owner : ledger.owner
+    return unless ledger.is_fiscal_operation? and ledger.printer_command.nil?
+    till = ledger.owner.till
 
 #TODO change the fiscal register. now it's hard coded
     ledger.printer_command ||= PrinterCommand.new(till ,

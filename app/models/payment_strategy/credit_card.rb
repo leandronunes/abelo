@@ -8,4 +8,8 @@ class CreditCard < PaymentBase
     CreditCardDisplay
   end
 
+  def fiscal_payment_type
+    '02'
+  end
+
 end

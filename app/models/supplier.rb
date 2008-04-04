@@ -6,9 +6,11 @@ class Supplier < SystemActor
   belongs_to :category, :class_name => 'SupplierCategory', :foreign_key => 'category_id' 
 
   after_create do |supplier|
-    supplier.organization.tracker.supplier_points ||= 0
-    supplier.organization.tracker.supplier_points += 1
-    supplier.organization.tracker.save!
+    supplier.organization.update_tracker('supplier_points', supplier.organization.suppliers.count)
+  end
+
+  after_destroy do |supplier|
+    supplier.organization.update_tracker('supplier_points', supplier.organization.suppliers.count) unless supplier.organization.nil?
   end
 
   def stock_virtuals

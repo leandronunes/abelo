@@ -17,9 +17,11 @@ class Document < ActiveRecord::Base
   belongs_to :document_model, :class_name => 'Document', :foreign_key => 'document_model_id'
 
   after_create do |document|
-    document.organization.tracker.document_points ||= 0
-    document.organization.tracker.document_points += 1
-    document.organization.tracker.save!
+    document.organization.update_tracker('document_points', document.organization.documents.count)
+  end
+
+  after_destroy do |document|
+    document.organization.update_tracker('document_points', document.organization.documents.count) unless document.organization.nil?
   end
 
   #Allow gettext'

@@ -229,4 +229,17 @@ class ProductTest < Test::Unit::TestCase
     assert_equal 1, Organization.find_by_identifier('some_id').tracker.product_points
   end
 
+  def test_remove_product_on_tracker_product_points
+    product_points = @organization.tracker.product_points
+    @organization.products.first.destroy
+    assert_equal product_points - 1, Organization.find_by_identifier('some').tracker.product_points
+  end
+
+  def test_remove_uniq_product_on_tracker_product_points
+    assert_nil @org.tracker.product_points
+    
+    create_product(:organization => @org)
+    @org.products.first.destroy
+    assert_equal 0, Organization.find_by_identifier('some_id').tracker.product_points
+  end
 end

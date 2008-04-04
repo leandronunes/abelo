@@ -1,16 +1,16 @@
 class CreateTrackers < ActiveRecord::Migration
   def self.up
     create_table :trackers do |t|
-      t.column :available_points,          :integer
+      t.column :available_points,          :integer, :default => 0
       t.column :organization_id,           :integer
-      t.column :product_points,            :integer
-      t.column :customer_points,           :integer
-      t.column :supplier_points,           :integer
-      t.column :worker_points,             :integer
-      t.column :ledger_points,             :integer
-      t.column :document_points,           :integer
-      t.column :points_per_user,           :integer
-      t.column :points_per_web_site,       :integer
+      t.column :product_points,            :integer, :default => 0
+      t.column :customer_points,           :integer, :default => 0
+      t.column :supplier_points,           :integer, :default => 0
+      t.column :worker_points,             :integer, :default => 0
+      t.column :ledger_points,             :integer, :default => 0
+      t.column :document_points,           :integer, :default => 0
+      t.column :points_per_user,           :integer, :default => 0
+      t.column :points_per_web_site,       :integer, :default => 0
     end
 
     Organization.find(:all) do |o|

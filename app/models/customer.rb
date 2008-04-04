@@ -6,10 +6,12 @@ class Customer < SystemActor
 #  has_many :ledgers, :through => Sale
 
   after_create do |customer|
-    customer.organization.tracker.customer_points ||= 0
-    customer.organization.tracker.customer_points += 1
-    customer.organization.tracker.save!
-  end
+    customer.organization.update_tracker('customer_points', customer.organization.customers.count)
+ end
+
+  after_destroy do |customer|
+    customer.organization.update_tracker('customer_points', customer.organization.customers.count) unless customer.organization.nil?
+ end
 
   def products
     Sale.products_by_customer(self)  

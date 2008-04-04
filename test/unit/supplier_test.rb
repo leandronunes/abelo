@@ -176,4 +176,19 @@ class SupplierTest < Test::Unit::TestCase
     assert_equal 1, Organization.find_by_identifier('some_id').tracker.supplier_points
   end
 
+  def test_remove_supplier_on_tracker_supplier_points
+    supplier_points = @organization.tracker.supplier_points
+    @organization.suppliers.first.destroy
+    assert_equal supplier_points - 1, Organization.find_by_identifier('some').tracker.supplier_points
+  end
+
+  def test_remove_uniq_supplier_on_tracker_supplier_points
+    org = create_organization(:identifier => 'some_id', :cnpj => '62.667.776/0001-17', :name => 'some id')
+    assert_nil org.tracker.supplier_points
+
+    create_supplier(:organization => org)
+    org.suppliers.first.destroy
+    assert_equal 0, Organization.find_by_identifier('some_id').tracker.supplier_points
+  end
+
 end

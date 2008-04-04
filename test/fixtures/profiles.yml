@@ -50,6 +50,8 @@ organization_admin:
     action: '*'
   - controller: 'units'
     action: '*'
+  - controller: 'tracker_organization'
+    action: '*'
 another:
   id: 2
   user_id: 2

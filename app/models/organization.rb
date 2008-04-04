@@ -147,6 +147,14 @@ class Organization < ActiveRecord::Base
     self.errors.add(_('You cannot change the organization properties on demonstration version')) if ACTIVATE_DEMOSTRATION == true and !self.new_record?
   end
 
+
+  def update_tracker(point_type, points)
+    unless self.tracker.nil?
+      self.tracker.send("#{point_type}=", points)
+      self.tracker.save
+    end
+  end
+
   def country_obj
     BSC::Country.find(self.country) unless self.country.blank?
   end

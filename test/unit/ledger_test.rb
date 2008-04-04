@@ -655,10 +655,24 @@ class LedgerTest < Test::Unit::TestCase
     assert_equal 1, Organization.find_by_identifier('some_id').tracker.ledger_points
   end
 
+  def test_remove_ledger_on_tracker_ledger_points
+    ledger_points = @organization.tracker.ledger_points
+    @organization.ledgers.first.destroy
+    assert_equal ledger_points - 1, Organization.find_by_identifier('some').tracker.ledger_points
+  end
+
+  def test_remove_uniq_ledger_on_tracker_ledger_points
+    org = create_organization(:identifier => 'some_id', :cnpj => '62.667.776/0001-17', :name => 'some id')
+    assert_nil org.tracker.ledger_points
+
+    create_ledger(:organization => org)
+    org.ledgers.first.destroy
+    assert_equal 0, Organization.find_by_identifier('some_id').tracker.ledger_points
+  end
+
   should "return if the ledger is a fiscal operation or not" do
     l = Ledger.new(:payment_method => Payment::ADD_CASH, :organization => @organization )
     assert_equal false, l.is_fiscal_operation?, "The ledger is a fiscal operation only with a fiscal printer associated to the oragnziation" 
-
     Organization.any_instance.expects(:has_fiscal_printer?).times(1).returns(true)
     l = Ledger.new(:payment_method => Payment::ADD_CASH, :organization => @organization )
     assert l.is_fiscal_operation?, "All add cash operations with fiscal printer must be a fiscal operation"

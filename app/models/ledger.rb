@@ -131,12 +131,12 @@ class Ledger < ActiveRecord::Base
   end
 
   after_create do |ledger|
-    ledger.organization.tracker.ledger_points ||= 0 
-    ledger.organization.tracker.ledger_points += 1
-    ledger.organization.tracker.save
+    ledger.organization.update_tracker('ledger_points', ledger.organization.ledgers.count)
   end
 
-  before_destroy do |ledger|
+  after_destroy do |ledger|
+    ledger.update_balance
+    ledger.organization.update_tracker('ledger_points', ledger.organization.ledgers.count) unless ledger.organization.nil?
 #FIXME see a way to stop this
 #    raise _('You cannot destroy sale ledgers') if ledger.owner.kind_of? Sale
   end
@@ -148,10 +148,6 @@ class Ledger < ActiveRecord::Base
   end
 
   after_save do |ledger|
-    ledger.update_balance
-  end
-
-  after_destroy do |ledger|
     ledger.update_balance
   end
 

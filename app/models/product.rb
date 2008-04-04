@@ -18,9 +18,11 @@ class Product < ActiveRecord::Base
   end
 
   after_create do |product|
-    product.organization.tracker.product_points ||= 0
-    product.organization.tracker.product_points += 1
-    product.organization.tracker.save!
+    product.organization.update_tracker('product_points', product.organization.products.count)
+  end
+
+  after_destroy do |product|
+    product.organization.update_tracker('product_points', product.organization.products.count) unless product.organization.nil?
   end
 
   validates_uniqueness_of :code, :scope => :organization_id

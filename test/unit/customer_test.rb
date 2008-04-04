@@ -176,4 +176,19 @@ class CustomerTest < Test::Unit::TestCase
     assert_equal 1, Organization.find_by_identifier('some_id').tracker.customer_points
   end
 
+  def test_remove_customer_on_tracker_customer_points
+    customer_points = @organization.tracker.customer_points
+    @organization.customers.first.destroy
+    assert_equal customer_points - 1, Organization.find_by_identifier('some').tracker.customer_points
+  end
+
+  def test_remove_uniq_customer_on_tracker_customer_points
+    org = create_organization(:identifier => 'some_id', :cnpj => '62.667.776/0001-17', :name => 'some id')
+    assert_nil org.tracker.customer_points
+    
+    create_customer(:organization => org)
+    org.customers.first.destroy
+    assert_equal 0, Organization.find_by_identifier('some_id').tracker.customer_points
+  end
+
 end

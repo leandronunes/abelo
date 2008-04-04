@@ -5,14 +5,32 @@ require 'tracker_organization_controller'
 class TrackerOrganizationController; def rescue_action(e) raise e end; end
 
 class TrackerOrganizationControllerTest < Test::Unit::TestCase
+
+  under_organization :some
+
   def setup
+    Organization.destroy_all
     @controller = TrackerOrganizationController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
+    login_as("quentin")
+    @organization = create_organization(:identifier => 'some')
   end
 
-  # Replace this with your real tests.
-  def test_truth
-    assert true
+  def test_setup
+    assert @organization.valid?
+  end
+
+  def test_index
+    get :index
+    assert_response :success
+    assert_template 'list' 
+  end
+
+  def test_list
+    get :list
+    assert_not_nil assigns(:tracker)
+    assert_response :success
+    assert_template 'list'
   end
 end

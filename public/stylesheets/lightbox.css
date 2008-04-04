@@ -22,6 +22,16 @@ Modified : February 1, 2006
 	text-align: left;
   padding: 1em;
 }
+
+#lightbox a {
+color: #B95;
+}
+
+#lightbox a:hover {
+color: black;
+}
+
+
 #lightbox[id]{
 	position:fixed;
 }

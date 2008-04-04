@@ -67,7 +67,7 @@ clear: both;
 }
 
 .button:hover {
-  opacity: 1;
+  opacity: 1.0;
 }
 
 .button span {

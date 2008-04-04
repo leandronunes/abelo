@@ -13,7 +13,7 @@
       'permissions',  
       'organizations',
       'banks',
-      'organization_website_interface',
+      'cms',
       'sales',
       'tracker_organization',
 #      'mass_mails',
@@ -22,7 +22,7 @@
     menu_legend = {
       'categories'                          => _('Configurations'),
       'stock'                               => _('Stock'),
-      'organization_website_interface'       => _('Web Site'),
+      'cms'                                 => _('Web Site'),
       'public'                              => _('Organizations'),
       'permissions'                         => _('User administration'),
       'system_actors'                       => _('Registers'),

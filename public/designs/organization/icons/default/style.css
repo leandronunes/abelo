@@ -57,6 +57,6 @@
 .organizations { background-image: url(organizations.png) }
 .public        { background-image: url(organizations.png) }
 .banks         { background-image: url(banks.png) }
-.organization_website_interface { background-image: url('web_site.png'); }
+.cms { background-image: url('web_site.png'); }
 .tracker_organization { background-image: url('web_site.png'); }
 

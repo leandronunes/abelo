@@ -1,7 +1,7 @@
 <% @subitems.each do |item| %>
  <li id="item_<%=item.id%>">
+   <%= button('move', _("Move"), :move ) %>
    <%= file_manager_button(item.name, icon_for_article(item), :action => 'view', :id => item.id) %>
-   <%= _("Move") %>
  </li>
 <% end %>
 

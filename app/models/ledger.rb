@@ -382,11 +382,9 @@ class Ledger < ActiveRecord::Base
   end
 
   def value= value
-puts 'EMMMMMMMMMMMMMMM  VAAAAAAAAAAAAAAAAAALLLLLLLLLLLLLLLLLLLLLLL'
     return if value.nil?
     value = value.kind_of?(String) ? (value.gsub!('.', ''); value.gsub(',','.')).to_f : value
     value = ((value > 0) ? (value * -1) : value) if self.expense?
-#    self.set_table_value(value, 1)
     self[:foreseen_value] = value if self.pending? or self.foreseen_value.nil?
     self[:effective_value] = value if self.done?
   end
@@ -403,6 +401,9 @@ puts 'EMMMMMMMMMMMMMMM  VAAAAAAAAAAAAAAAAAALLLLLLLLLLLLLLLLLLLLLLL'
   def date= date  
     self.pending? ? self[:foreseen_date] = date : self[:foreseen_date] ||= date
     self[:effective_date] = date unless self.pending?
+  end
+
+  def update_date
   end
 
   def cancel!

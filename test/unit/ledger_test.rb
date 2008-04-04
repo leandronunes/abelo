@@ -719,4 +719,11 @@ class LedgerTest < Test::Unit::TestCase
 
   end
 
+  should "have effective date" do
+    l = Ledger.new(:date => Date.today,:status => Status::STATUS_DONE )
+    assert_not_nil l.date
+    assert_not_nil l.foreseen_date
+    assert_not_nil l.effective_date
+  end
+
 end

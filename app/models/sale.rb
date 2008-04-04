@@ -207,7 +207,7 @@ class Sale < ActiveRecord::Base
 
   #FIXME make this test
   def change_value
-    self.ledgers.find(:first, :conditions => {:payment_method => Payment::CHANGE} ).value
+    self.change.nil? ? 0 : self.change.value
   end
 
   #FIXME make this test

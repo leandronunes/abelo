@@ -1,4 +1,3 @@
-
 .none_add       { background-image: url(none.png) }
 .add            { background-image: url(add.png) }
 .search         { background-image: url(search.png) }
@@ -6,6 +5,7 @@
 .edit_small     { background-image: url(edit_small.png) }
 .view_small     { background-image: url(view_small.png) }
 .del_small      { background-image: url(del_small.png) }
+.cancel          { background-image: url(cancel.png) }
 .close          { background-image: url(del_small.png) }
 .edit           { background-image: url(edit.png) }
 .save           { background-image: url(save.png) }
@@ -40,6 +40,7 @@
 .worker_icon   { background-image: url(worker.png); border: 2px solid red  }
 .supplier_icon { background-image: url(supplier.png); border: 2px solid red  }
 .customer_icon { background-image: url(consumer.png); border: 2px solid red  }
+.design_editor_blocksbar_item { background-image: url(add.png); }
 
 /* * * Menu Icons * * */
 

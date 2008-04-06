@@ -1,72 +1,90 @@
-/* Default Plain Theme for design_blocks */
+/* Modo Editor */
+#design_editor .design_blocks .hover {
+  border: 2px dotted red;
+  background: blue;
+}
 
+#design_editor h3.design_block_header {
+ cursor: move;
+ margin: 0px;
+ padding: 1px;
+}
+
+/* Modo View */
 .design_blocks{
   margin: 0px;
-  padding: 10px;
+  padding: 5px;
+  border: 1px solid black;
 }
 
-
-#design_box_2 .design_block
-{
+.design_block_content {
   list-style: none;
-	border: 1px solid #bc861f;
-	margin-bottom: 10px;
+  border: 1px solid red;
+  margin-bottom: 10px;
 }
 
-.design_block_control_list
-{
-	margin-left: 15px;
+/*
+.design_block_control_list{
+   border: 1px solid green;
+   margin-left: 15px;
    z-index: 10000;
 }
+*/
 
-.design_block_control_list li{
+.design_block_control_list li {
 	list-style: none;
 }
 
-h3.design_block_header
-{
-	color: #FFFFFF;
-	background: #e6d691;
-	font-family: Sans-serif;
-	border-bottom: 1px solid #bb9955;
-	height: 20px;
-	margin: 0px;
-	line-height: 20px;
-	padding-left: 10px;
+h3.design_block_header {
+   cursor: default;
+   color: #bb9955;
+   background: #e6d691;
+   font-family: Sans-serif;
+   border-bottom: 1px solid #bb9955;
+   height: 25px;
+   margin: 0px;
+   line-height: 20px;
+   vertical-align: bottom;
+   padding-left: 10px;
    text-align: center;
+   -moz-border-radius-topright: 10px;
+   -moz-border-radius-topleft: 10px;
+}
+
+.design_block a.design_button_block span {
+display: none;
 }
 
 .design_block a.design_button_block:hover span {
   display: inline;
   position: absolute;
-  color: #ffffff;
-  background: #bb9955;
-  border: 1px solid white;
+  color: #bb9955;
+  background: #e6d691;
+  border: 1px solid #bb9955;
   font-family: Sans-serif;
   font-size: 13px;
-  font-weight: normal;
+  font-weight: bold;
   margin: 10px;
   padding-left: 5px;
   padding-right: 5px;
+  -moz-border-radius: 10px;
 }
 
 .design_block a.design_button_block {
   display: block !important;
-  width: 10px !important;
-  height: 10px !important;
-  margin-top: 10px !important;
-  margin-right: 5px !important;
+  border: 2px outset #bb9955 !important;
+  width: 15px !important;
+  height: 15px !important;
+  margin: 3px !important;
   float: left !important;
 }
 
-.design_block a.button_block_hide {
-border-bottom: 3px solid #ffffff;
+.design_block a:hover.design_button_block {
+  border: 2px inset #bb9955 !important;
 }
 
-
-.design_block_content 
-{
-	padding: 5px;
+.design_block a.button_block_hide {
+border-bottom: 3px solid #bb9955;
 }
 
 .design_block ul {
@@ -94,7 +112,7 @@ border-bottom: 3px solid #ffffff;
 
 /* Financial Forecasting Details */
 
-.financial_forecasting .design_block_content{
+.financial_forecasting .design_block_content {
   margin: 0px;
   padding: 0px;
 }
@@ -197,5 +215,5 @@ background: red;
 }
 
 #design_editor a.design_button_block {
-  float: right !important;
+  float: left !important;
 }

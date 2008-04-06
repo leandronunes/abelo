@@ -71,13 +71,16 @@ height: 30px;
 }
 
 div.login_bar {
-  float: right;
+position: absolute;
+right: 0;
 }
 
 div.login_bar a {
-  background-position: top left;
+  background-position: left bottom !important;
   background-repeat: no-repeat;
-  padding-left: 18px;
+  display: inline;
+  padding-left: 20px;
   height: 26px;
-  padding-bottom: 2px;
+  float: left;
+  padding-top: 2px; 
 }

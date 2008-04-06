@@ -117,6 +117,8 @@ body {
 }
 
 #design_box_2 {
+position: absolute;
+right: 0;
 }
 
 #design_boxes_footer{
@@ -148,24 +150,6 @@ body {
   border: 2px dotted #bb9955;
 }
 
-#design_editor .design_blocks .hover {
-  border: 2px dotted red;
-  background: blue;
-}
-
-h3.design_block_header {
-  cursor: move;
-  margin: 0px;
-  padding: 1px;
-}
-
-#design_editor_toolbar a {
-  font-size: 10px;
-  padding: 5px;
-  background: #dfdfdf;
-  color: black;
-}
-
 #beta_info {
   background: url('../images/beta.png');
   width: 80px;
@@ -189,3 +173,51 @@ h3.design_block_header {
   text-align: center;
 }
 
+.controller-interface img {
+border: 0px;
+opacity: 0.6;
+}
+
+.controller-interface img:hover {
+opacity: 1.0;
+}
+
+.design_change_item, .design_editor_blocksbar_item {
+font-weight: bold;
+display: inline;
+margin: 2px;
+padding: 4px;
+height: 26px;
+border: 2px outset #C4A000;
+/* background: #f1e5c6; */
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+}
+
+.design_editor_blocksbar_item {
+background-position: top left;
+background-repeat: no-repeat;
+}
+
+.design_editor_blocksbar_item a {
+padding-left: 26px !important;
+}
+
+.design_change_item a, .design_editor_blocksbar_item a {
+color: gray !important;
+padding: 6px;
+}
+
+.design_change_item a:hover, .design_editor_blocksbar_item a:hover {
+color: black !important;
+}
+
+li:hover.design_change_item , li:hover.design_editor_blocksbar_item {
+border: 2px inset #C4A000;
+}
+
+.design_block_content {
+margin: 0px;
+padding: 0px;
+border: 0px;
+}

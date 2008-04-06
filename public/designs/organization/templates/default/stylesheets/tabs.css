@@ -19,6 +19,8 @@
  line-height: 20px;
  height: 20px;
  background: #F8F4C0 url('../images/tab-bg.png');
+ -moz-border-radius-topright: 5px;
+ -moz-border-radius-topleft: 5px;
 }
 
 .tabs .active {

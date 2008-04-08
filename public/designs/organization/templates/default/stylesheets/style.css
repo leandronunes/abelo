@@ -113,7 +113,7 @@ body {
 
 /* Main Content */
 #design_box_1 {
-  margin-right: 220px;
+  margin-right: 200px;
 }
 
 #design_box_2 {
@@ -190,8 +190,8 @@ padding: 4px;
 height: 26px;
 border: 2px outset #C4A000;
 /* background: #f1e5c6; */
--moz-border-radius: 5px;
--webkit-border-radius: 5px;
+-moz-border-radius: 10px;
+-webkit-border-radius: 10px;
 }
 
 .design_editor_blocksbar_item {

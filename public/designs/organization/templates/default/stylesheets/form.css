@@ -16,7 +16,7 @@
 border: 1px solid #545454;
 }
 
-#info_form input.button {
+input.button {
 cursor: pointer;
 border: 0px;
 }

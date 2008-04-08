@@ -3,7 +3,7 @@ class TrackerDisplay < DisplayConfiguration
   #FIXME remove info column and moves the information of this filed to the field description
 
   def self.available_fields
-    ['available_points', 'product_points', 'customer_points', 'supplier_points', 'worker_points', 'ledger_points', 'document_points', 'points_per_web_site']
+    ['available_points', 'product_points', 'customer_points', 'supplier_points', 'worker_points', 'ledger_points', 'document_points', 'website_points']
   end
 
   def self.describe(field)
@@ -16,7 +16,7 @@ class TrackerDisplay < DisplayConfiguration
       'ledger_points' => _('Ledger points'),
       'document_points' => _('Document points'),
       'points_per_user' => _('Points per user'),
-      'points_per_web_site' => _('Website points'),
+      'website_points' => _('Website points'),
    }[field] || field
   end
 

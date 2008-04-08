@@ -108,16 +108,16 @@ class TrackerTest < Test::Unit::TestCase
     assert !t.errors.invalid?(:points_per_user)
   end
 
-  def test_not_numerical_points_per_website
-    t = Tracker.new(:points_per_website => 'x')
+  def test_not_numerical_website_points
+    t = Tracker.new(:website_points => 'x')
     t.valid?
-    assert t.errors.invalid?(:points_per_website)
+    assert t.errors.invalid?(:website_points)
   end
 
-  def test_numericality_of_points_per_website
-    t = Tracker.new(:points_per_website => 50)
+  def test_numericality_of_website_points
+    t = Tracker.new(:website_points => 50)
     t.valid?
-    assert !t.errors.invalid?(:points_per_website)
+    assert !t.errors.invalid?(:website_points)
   end
 
   def test_sum_of_points
@@ -130,4 +130,5 @@ class TrackerTest < Test::Unit::TestCase
     Organization.any_instance.expects(:users).returns([mock, mock]) 
     assert_equal 20, @organization.tracker.user_points
   end
+
 end

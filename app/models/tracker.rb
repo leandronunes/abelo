@@ -24,6 +24,6 @@ class Tracker < ActiveRecord::Base
   end
 
   def total_points
-    self.product_points + self.customer_points + self.supplier_points + self.worker_points + self.ledger_points + self.document_points + self.user_points
+    self.product_points + self.customer_points + self.supplier_points + self.worker_points + self.ledger_points + self.document_points + self.website_points + self.user_points 
   end
 end

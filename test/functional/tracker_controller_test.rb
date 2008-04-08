@@ -25,7 +25,7 @@ class TrackerControllerTest < Test::Unit::TestCase
     assert_raise(RuntimeError){get :index}
     assert_raise(RuntimeError){get :show}
     assert_raise(RuntimeError){get :edit}
-    assert_raise(RuntimeError){get :create}
+    assert_raise(RuntimeError){get :update}
   end
 
   def test_index

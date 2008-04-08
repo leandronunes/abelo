@@ -21,6 +21,13 @@ class TrackerOrganizationControllerTest < Test::Unit::TestCase
     assert @organization.valid?
   end
 
+  def test_only_who_is_from_the_organization_has_access
+    login_as('aaron')
+    assert_raise(RuntimeError){get :index}
+    assert_raise(RuntimeError){get :list}
+    assert_raise(RuntimeError){get :draw}
+  end
+
   def test_index
     get :index
     assert_response :success
@@ -32,5 +39,10 @@ class TrackerOrganizationControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:tracker)
     assert_response :success
     assert_template 'list'
+  end
+
+  def test_draw  
+    get :draw
+    assert_response :success  
   end
 end

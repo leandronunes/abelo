@@ -1,0 +1,16 @@
+/* Footer */
+
+.content_menu {
+  list-style: none;
+  height: 48px;
+  text-align: center;
+  margin: 20px 0px 0px 0px;
+  padding: 0px;
+}
+ 
+.content_menu li{
+  text-align: center;
+  margin: 0px 0px 0px 10px;
+  padding: 0px;
+}
+

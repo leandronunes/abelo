@@ -16,7 +16,7 @@
 
 #loginform input#password ,#loginform  input#login,#loginform  input#user_login,
 #loginform input#user_email,#loginform  input#user_password,#loginform  input#user_password_confirmation {
-  background: url('../images/bginput.png'); no-repeat;
+  background: url('../images/bginput.png') no-repeat;
   overflow: hidden;
   border: 0px;
   padding: 7px 5px 0px 5px;

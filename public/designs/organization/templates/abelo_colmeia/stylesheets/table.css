@@ -51,3 +51,12 @@ border-right: 2px solid #f4edcf;
 td.endrow {
 border-bottom: 2px solid #f4edcf;
 }
+
+td b.income{
+  color: green;
+}
+
+td b.expense{
+  color: red;
+}
+

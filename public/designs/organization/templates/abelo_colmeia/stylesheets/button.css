@@ -1,11 +1,61 @@
-.button {
+/* FIXME it was this Leandro changed for the description above. remove this if its not necessary
+*/
+#article-buttons a,
+.subtitle .button,
+.list_item_button .button,
+.display_info_options .button,
+.content_menu .button,
+.search_itens .button,
+.financial_table .button,
+.sales_table .button,
+.button-bar .button,
+table .button{
+  display: block;
   float: left;
   border: none;
-  display: block;
   opacity: 0.6;
   margin-left: 5px;
   width: 24px;
   height: 24px;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+#article-buttons a{
+width: 200px;
+padding-left: 28px;
+font-weight: bold;
+font-size: 16px;
+opacity: 1.0;
+}
+
+#article-buttons {
+opacity: 1.0;
+display: block;
+height: 50px;
+clear: both;
+}
+
+/*
+.button{
+  display: block;
+  float: left;
+  border: none;
+  opacity: 0.6;
+  margin-left: 5px;
+  width: 24px;
+  height: 24px;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+*/
+
+.content_menu .button {
+  border: none;
+  opacity: 0.6;
+  width: 48px;
+  height: 48px;
   background-color: transparent;
   background-repeat: no-repeat;
   background-position: 50% 50%;
@@ -17,22 +67,18 @@
 }
 
 .button:hover {
-  opacity: 1;
+  opacity: 1.0;
 }
 
 .button span {
   display: none;
 }
 
-.list_item_button .button { width: 16px; height: 16px }
-
-.with_text {
-  padding: 3px 0px;
-  padding-left: 24px;
-  background-position: 0px 50%;
-  width: inherit !important;
-  display: inline !important;
+.list_item_button .button { 
+  width: 16px; 
+  height: 16px; 
 }
+
 .bt_small.with_text {
   padding-left: 18px;
 }
@@ -55,15 +101,33 @@ input.with_text {
   height: 33px;
   padding-top: 5px;
   background: url('../images/bgbutton.png') no-repeat 50% 50%;
+  opacity: 0.7;
+  display: block;
+  border: none;
+}
+
+div:hover.beault_button {
+opacity: 1.0;
+}
+
+.beault_button .button {
+  border: none;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: 0% 100%;
+  padding: 2px;
+  text-align: right;
 }
 
 .beault_button span, .beault_button input {
+  cursor: pointer;
   color: #654;
   height: 30px;
   line-height: 30px;
   font-size: 13px;
   font-weight: 800;
 }
+  
 .beault_button a {
   position: relative;
   top: 1px;
@@ -73,11 +137,24 @@ input.with_text {
   top: -2px;
 }
 
-.beault_button :hover {
-  color: #543 !important;
+.beault_button .button span {
+  margin-left: 25px;
+  text-decoration: none;
+}
+.beault_button input:hover, .button span:hover {
+  color: #000000 !important;
 }
 
 .beault_button .button_new {
   padding-left: 28px;
 }
 
+#lbContent a.lbAction {
+position: absolute;
+top: 0px;
+right: 0px;
+display: block;
+height: 28px;
+width: 28px;
+background-repeat: no-repeat;
+}

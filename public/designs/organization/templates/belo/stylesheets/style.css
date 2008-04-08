@@ -1,0 +1,55 @@
+@import url("footer.css");
+
+input {
+cursor: pointer;
+}
+
+body {
+font-family: Verdana, Sans-serif;
+}
+
+a {
+text-decoration: none;
+color: #545454;
+}
+
+a:hover {
+color: black;
+}
+
+div {
+border: 1px solid black;
+padding: 1px;
+margin: 2px;
+}
+
+.button {
+background-repeat: no-repeat;
+padding-left: 30px;
+margin-left: 5px;
+}
+
+.button_main span {
+display: inline;
+}
+
+.button_main {
+display: block;
+height: 45px;
+padding-left: 50px;
+vertical-align: middle;
+line-height: 45px;
+}
+
+li {
+list-style: none;
+}
+
+#logo_org {
+height: 50px;
+display: block;
+padding-left: 50px;
+font-size: 20px;
+font-weight: bold;
+background-repeat: no-repeat;
+}

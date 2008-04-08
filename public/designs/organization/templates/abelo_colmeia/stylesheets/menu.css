@@ -1,19 +1,30 @@
+
 #menu {
-  position: absolute;
-  width: 530px;
-  height: 360px;
-  background: url('../images/bgmenu.png') top left no-repeat;
+position: absolute;
+right: 15px;
+margin-top: 108px;
+width: 530px;
+height: 360px;
+background: url('../images/bgmenu.png') top left no-repeat;
   z-index: 999;
+  border: 2px solid #B95;
+  -moz-border-radius-bottomright: 15px;
+  -moz-border-radius-bottomleft: 15px;
+  border-top: 0px;
+}
+
+div#menu .button span {
+display: none !important;
 }
 
 #menu ul {
-  width: 530px;
+list-style: none;
+ width: 530px;
   height: 360px;
   margin: 0px;
   padding: 0px;
 }
 
-/*
 #menu li {
 width: 250px;
 margin: 3px;
@@ -32,27 +43,6 @@ color: #545454;
 text-decoration: none;
 }
 
-#menu a:hover {
-color: #000000;
-text-decoration: underline;
-}
-
-*/
-
-#menu a {
-display: block;
-list-style: none;
-text-decoration: none;
-width: 48px;
-height: 48px;
-border: 0px;
-margin: 0px;
-padding: 0px;
-}
-
-#menu a span {
-display: none;
-}
 
 #menu a:hover {
 z-index: 999;
@@ -60,7 +50,7 @@ z-index: 999;
 
 #menu a:hover span {
 position: absolute;
-display:table-cell;
+display:table-cell !important;
 background: url('../images/fundo_teste.png') bottom right no-repeat;
 width: 167px;
 height: 47px;

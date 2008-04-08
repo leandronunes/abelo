@@ -1,21 +1,21 @@
-/* Autor: Valessio S Brito <valessio@colivre.coop.br>  */
-
 @import url("autocomplete.css");
 @import url("content.css");
 @import url("form.css");
 @import url("login.css");
-@import url("menu.css");
 @import url("userbar.css");
 @import url("box.css");
-@import url("financial_calendar.css");
 @import url("listing.css");
-@import url("header.css");
+@import url("menu.css");
+@import url("menu_content.css");
 @import url("table.css");
 @import url("button.css");
 @import url("footer.css");
 @import url("localist.css");
 @import url("sidebar.css");
 @import url("tabs.css");
+@import url("tag_list.css");
+@import url("spinner.css");
+@import url("popup.css");
 
 body {
   margin:0px;
@@ -23,6 +23,13 @@ body {
   color: #545454;
   font: 14px/1.5em Verdana, Arial, sans-Serif;
   background: #fffaf0 url('../images/bgbody.png') top right repeat-y;
+}
+
+#header {
+  margin:0px;
+  padding:0px;
+  height: 110px;
+  background: #ffffff url('../images/bgheader.png') bottom left repeat-x;
 }
 
 #info_org {
@@ -37,7 +44,7 @@ body {
   font-size: 19px;
   font-weight: bold;
 }
-  
+
 #logo_org {
   float: left;
   margin-left: 5px;
@@ -49,8 +56,6 @@ body {
 #logo_org span {
   display: none;
 }
-
-
 
 #banner_top {
   position: absolute;
@@ -94,12 +99,6 @@ body {
   clear:both;
 }
 
-.controller-stock.action-history .main_title b {
-  font-size: 120%;
-  letter-spacing: -2px;
-  color: #E80;
-}
-
 #image_list div {
   float: left;
   margin: 0px 5px 20px 0px;
@@ -109,31 +108,32 @@ body {
   padding: 3px;
 }
 
-/* Boxes and Blocks */
-#box_1 { 
-  margin-right: 220px;
-  border: 2px solid black;
-#  float: left;
+
+/* Box and block css */
+
+/* Main Content */
+#design_box_1 {
+  margin-right: 200px;
 }
 
-#box_2 {
-  border: 2px solid black;
-#  float: left;
+#design_box_2 {
+position: absolute;
+right: 0;
 }
 
-#boxes_footer{
+#design_boxes_footer{
   clear: both;
 }
 
 /* Edition Mode */
 
-#design_editor .blocks {
+#design_editor .design_blocks {
   list-style: none;
   margin: 0px;
   padding: 3px;
 }
 
-#design_editor .box {
+#design_editor .design_box {
   border: 2px solid transparent;
 }
 
@@ -146,28 +146,78 @@ body {
   padding: 5px;
 }
 
-#design_editor .blocks {
-  border: 2px dotted green;
+#design_editor .design_blocks {
+  border: 2px dotted #bb9955;
 }
 
-#design_editor .blocks .hover {
-  border: 2px dotted red;
-  background: blue;
+#beta_info {
+  background: url('../images/beta.png');
+  width: 80px;
+  height: 58px;
+  position: absolute;
+  top: -20px;
+  right: 10px;
+}
+#beta_info span {
+  display: none;
 }
 
-#design_editor_toolbar h3 {
-  font-size: 10px;
-  background: #dfdfdf;
-  margin: 0px;
-  padding: 1px;
-  text-align: right;
-  color: #545454;
+.main_title b {
+  font-size: 120%;
+  letter-spacing: -2px;
+  color: #E80;
 }
 
-#design_editor_toolbar a {
-  font-size: 10px;
-  padding: 5px;
-  background: #dfdfdf;
-  color: black;
+.login_failed{
+  color: red;
+  text-align: center;
 }
 
+.controller-interface img {
+border: 0px;
+opacity: 0.6;
+}
+
+.controller-interface img:hover {
+opacity: 1.0;
+}
+
+.design_change_item, .design_editor_blocksbar_item {
+font-weight: bold;
+display: inline;
+margin: 2px;
+padding: 4px;
+height: 26px;
+border: 2px outset #C4A000;
+/* background: #f1e5c6; */
+-moz-border-radius: 10px;
+-webkit-border-radius: 10px;
+}
+
+.design_editor_blocksbar_item {
+background-position: top left;
+background-repeat: no-repeat;
+}
+
+.design_editor_blocksbar_item a {
+padding-left: 26px !important;
+}
+
+.design_change_item a, .design_editor_blocksbar_item a {
+color: gray !important;
+padding: 6px;
+}
+
+.design_change_item a:hover, .design_editor_blocksbar_item a:hover {
+color: black !important;
+}
+
+li:hover.design_change_item , li:hover.design_editor_blocksbar_item {
+border: 2px inset #C4A000;
+}
+
+.design_block_content {
+margin: 0px;
+padding: 0px;
+border: 0px;
+}

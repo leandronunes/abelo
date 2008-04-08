@@ -17,4 +17,23 @@ class TrackerOrganizationController < ApplicationController
     @tracker = @organization.tracker
   end
 
+  def draw
+    tracker = @organization.tracker
+    g = Gruff::SideStackedBar.new('700x100')
+    #g.theme_pastel
+    g.hide_legend=true
+    g.hide_title=true
+    g.minimum_value=0
+    g.maximum_value=100 #tracker.available_points
+
+    g.has_left_labels=true
+    g.data(_("Used Points"), tracker.total_points)
+    g.labels = {0 => _('Used Points')}
+
+    send_data(g.to_blob,
+      :disposition => 'inline',
+      :type => 'image/png',
+      :filename => "rail.png")
+  end
+
 end

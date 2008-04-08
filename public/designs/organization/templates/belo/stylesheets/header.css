@@ -1,0 +1,51 @@
+#header {
+height: 80px;
+position: relative;
+z-index: 0;
+}
+
+#userbar {
+width: 100%;
+top: 0px;
+position: absolute;
+}
+
+#logo_org {
+position: absolute;
+left: 5px;
+width: 50px;
+height: 50px;
+bottom: 0px;
+display: block;
+}
+
+#info_org {
+position: absolute;
+left: 60px;
+bottom: 0px;
+height: 50px;
+}
+
+#logo_org span {
+display: none;
+}
+
+div.login_bar {
+position: absolute;
+top: 0px;
+padding-right: 10px;
+width: 100%;
+background: #dfdfdf;
+text-align: right;
+}
+
+#banner_top {
+position: absolute;
+right: 10px;
+bottom: 0px;
+}
+
+.navigation_bar {
+position: absolute;
+top: 0px;
+}

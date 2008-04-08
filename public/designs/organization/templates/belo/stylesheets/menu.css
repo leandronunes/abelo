@@ -1,0 +1,23 @@
+#menu {
+position: absolute;
+top: 20px;
+right: 200px;
+background: #dfdfdf;
+border: 2px outset #545454;
+z-index: 1;
+}
+
+#menu ul {
+margin: 0px;
+padding: 0px;
+}
+
+#menu li {
+list-style: none;
+border: 1px solid transparent;
+}
+
+#menu li:hover {
+background-color: #efefef;
+border: 1px inset #545454;
+}

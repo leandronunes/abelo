@@ -12,18 +12,21 @@ height: 30px;
   text-decoration: none;
   margin: 0px 3px 2px 3px;
 }
-#userbar .navigation_bar a {
+.navigation_bar a {
   color: #654;
+  text-decoration: none;
 }
-#userbar .navigation_bar a:hover {
+.navigation_bar a:hover {
   color: #000;
   margin-bottom: 0px;
 }
-#userbar .navigation_bar {
-  padding-left: 60px;
+.navigation_bar {
+position: absolute;
+top: 85px;
+left: 60px;
 }
 
-#userbar .navigation_bar .control_header{
+.navigation_bar .control_header{
   position: absolute;
   left: 0;
   bottom: 0;
@@ -31,7 +34,7 @@ height: 30px;
   height: 22px;
 }
 
-#userbar .navigation_bar .control_header a {
+.navigation_bar .control_header a {
   margin:0px;
   padding:0px;
   border:0px;
@@ -39,28 +42,29 @@ height: 30px;
   height: 22px
 }
 
-#userbar .navigation_bar .control_header a:hover {
+.navigation_bar .control_header a:hover {
   display: table-cell;
   border: 0px;
   margin: 0px;
   padding: 0px;
 }
 
-#userbar .navigation_bar div.control_header a.show {
+.navigation_bar div.control_header a.show {
   background: url('../images/downbar.png') top left no-repeat;
 }
 
-#userbar .navigation_bar .control_header a.hide {
+.navigation_bar .control_header a.hide {
   background: url('../images/upbar.png') top left no-repeat;
 }
 
-#userbar .navigation_bar .control_header span {
+.navigation_bar .control_header span {
   display: none;
 }
 
 #userbar .login_bar a {
   opacity: 0.4;
 }
+
 #userbar .login_bar a#goto {
   opacity: 0.6;
 }

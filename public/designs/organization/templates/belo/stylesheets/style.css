@@ -1,3 +1,6 @@
+@import url("menu.css");
+@import url("header.css");
+@import url("tabs.css");
 @import url("footer.css");
 
 input {
@@ -5,6 +8,8 @@ cursor: pointer;
 }
 
 body {
+margin: 0px;
+padding: 0px;
 font-family: Verdana, Sans-serif;
 }
 
@@ -15,12 +20,6 @@ color: #545454;
 
 a:hover {
 color: black;
-}
-
-div {
-border: 1px solid black;
-padding: 1px;
-margin: 2px;
 }
 
 .button {

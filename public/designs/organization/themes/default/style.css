@@ -14,13 +14,16 @@
 .design_blocks{
   margin: 0px;
   padding: 5px;
-  border: 1px solid black;
 }
 
 .design_block_content {
   list-style: none;
-  border: 1px solid red;
   margin-bottom: 10px;
+}
+
+.design_block_content_footer {
+  border: 0px !important;
+  clear: both;
 }
 
 /*
@@ -43,12 +46,10 @@ h3.design_block_header {
    border-bottom: 1px solid #bb9955;
    height: 25px;
    margin: 0px;
-   line-height: 20px;
-   vertical-align: bottom;
+   line-height: 25px;
+   vertical-align: middle;
    padding-left: 10px;
    text-align: center;
-   -moz-border-radius-topright: 10px;
-   -moz-border-radius-topleft: 10px;
 }
 
 .design_block a.design_button_block span {
@@ -102,32 +103,45 @@ border-bottom: 3px solid #bb9955;
 }
 
 /* Favorite Links */
-.favorite_links_organization ul{
+.favorite_links_organization ul {
   list-style: none;
 }
 
-.favorite_links_organization input{
+.favorite_links_organization input {
   width: 90%;
 }
 
 /* Financial Forecasting Details */
 
-.financial_forecasting .design_block_content {
+.financial_forecasting .design_block_content div {
   margin: 0px;
   padding: 0px;
 }
 
-.financial_forecasting {
+.design_block_type {
   font-size: 10px;
-} 
+  -moz-border-radius: 10px;
+  border: 2px solid #e6d691;
+  margin-bottom: 10px;
+}
 
-.financial_forecasting table{
-  width: 100%;
+div.design_block_type main_block {
+ border: 0px;
+}
+
+.financial_forecasting table {
   margin: 0px;
   border: none;
   border-collapse: collapse;
 }
 
+.financial_forecasting .frist_col {
+  width: 100%;
+  border: none;
+}
+
+
+/*
 .financial_forecasting .line_odd td {
   background-color: #FCFAF0;
 }
@@ -143,9 +157,7 @@ border-bottom: 3px solid #bb9955;
   line-height: 14px;
 }
 
-.financial_forecasting .frist_col {
-  border: none;
-}
+
 
 .financial_forecasting .category_name {
   line-height: 12px;
@@ -187,6 +199,7 @@ border-bottom: 3px solid #bb9955;
   width: 90%;
 }
 
+*/
 /*Editor Informations*/
 
 #design_editor .design_block {

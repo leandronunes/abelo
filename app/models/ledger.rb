@@ -123,10 +123,11 @@ class Ledger < ActiveRecord::Base
   end
 
   before_validation do |l|
-    l.value = ((l.value > 0) ? (l.value * -1) : l.value) if l.is_remove_cash? or l.is_change?
+#    l.value = ((l.value > 0) ? (l.value * -1) : l.value) if l.is_remove_cash? or l.is_change?
+    l.change_signal
     l.type_of = l.category.type_of unless l.category.nil?
-    l[:effective_value] ||= l.foreseen_value unless l.pending?
-    l[:effective_date] ||= l.foreseen_date unless l.pending?
+    l[:effective_value] ||= l.foreseen_value if l.done?
+    l[:effective_date] ||= l.foreseen_date if l.done?
     l.create_printer_cmd!(l) if l.has_fiscal_printer?
   end
 
@@ -321,12 +322,6 @@ class Ledger < ActiveRecord::Base
   def expense?
     (self.category.expense? unless self.category.nil?) or self.is_remove_cash? or self.is_change?
   end
-
-  def category= category
-    self[:category_id] = category.kind_of?(LedgerCategory) ? category.id : category
-    self.change_signal
-  end
-  alias :category_id= :category=
 
   #FIXME make this test
   def change_signal

@@ -27,7 +27,7 @@ class PointOfSaleWithPrinterControllerTest < Test::Unit::TestCase
     login_as('quentin')
     @printer = create_printer
     @till = create_till(:printer => @printer)
-    @sale = Sale.new(@till) 
+    @sale = Sale.new(:till => @till) 
     @sale.save!
     printer = mock()
     Organization.any_instance.stubs(:has_fiscal_printer?).returns(true)

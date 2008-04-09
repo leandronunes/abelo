@@ -175,6 +175,7 @@ class DocumentsControllerTest < Test::Unit::TestCase
     assert_response :redirect
     assert_redirected_to :action => 'list', :document_model_id => @document_model.id, :models_list => true
 
+    @organization.reload
     assert @organization.documents_by_model(@document_model).include?(assigns(:document))
     assert_equal num_documents + 1, Document.count
   end
@@ -188,6 +189,7 @@ class DocumentsControllerTest < Test::Unit::TestCase
     assert_response :redirect
     assert_redirected_to :action => 'list', :models_list => true
 
+    @organization.reload
     assert @organization.documents_model.include?(assigns(:document))
     assert_equal num_documents + 1, Document.count
   end
@@ -197,13 +199,13 @@ class DocumentsControllerTest < Test::Unit::TestCase
 
     post :create, :document => {:name => 'Another Some Name', :is_model => false, :organization => @organization,:departments => [@department], :owner => @customer }
 
+    assert_equal num_documents + 1, Document.count
     assert_valid assigns(:document)
     assert_not_nil assigns(:document)
     assert_response :redirect
     assert_redirected_to :action => 'list' 
-
+    @organization.reload
     assert @organization.documents_without_model.include?(assigns(:document))
-    assert_equal num_documents + 1, Document.count
   end
 
   def test_create_wrong_params

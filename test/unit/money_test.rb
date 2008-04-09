@@ -76,7 +76,7 @@ class MoneyTest < Test::Unit::TestCase
   end
 
   def test_create_printer_cmd_whith_fiscal_printer
-    Ledger.any_instance.expects(:needs_fiscal_command?).returns(true)
+    Ledger.any_instance.expects(:is_fiscal_operation?).returns(true)
     l = Ledger.new(:payment_method => Payment::MONEY, :owner => @till, :organization => @organization)
     m  = Money.new
     m.create_printer_cmd!(l)

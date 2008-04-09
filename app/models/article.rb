@@ -4,6 +4,7 @@ class Article < ActiveRecord::Base
   validates_presence_of :name, :slug, :path
 
   validates_uniqueness_of :slug, :scope => ['environment_id', 'parent_id'], :message => _('%{fn} (the code generated from the article name) is already being used by another article.')
+  validates_uniqueness_of :position, :scope => ['environment_id', 'parent_id'], :message => _('%{fn} (the position generated to the page) is already being used by another page.')
   validates_numericality_of :position, :only_integer => true
 
   belongs_to :last_changed_by, :class_name => Person.name, :foreign_key => 'last_changed_by_id'

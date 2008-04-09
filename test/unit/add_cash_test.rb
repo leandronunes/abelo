@@ -15,12 +15,6 @@ class AddCashTest < Test::Unit::TestCase
     assert @user.valid?
   end   
 
-  def create_till(organization = @organization, user = @user, printer = nil)
-    till = Till.new(organization, user, printer)
-    till.save!
-    till
-  end
-
   def test_is_money?
     m = AddCash.new
     assert !m.is_money?
@@ -79,9 +73,8 @@ class AddCashTest < Test::Unit::TestCase
   def test_create_printer_cmd_whith_fiscal_printer
     @organization.configuration.fiscal_printer= true
     assert @organization.has_fiscal_printer?
-    @till = create_till(@organization, @user, create_printer)
-    assert @till.valid?
-    l = Ledger.new(:payment_method => Payment::ADD_CASH, :owner => @till, :organization => @organization)
+    till = create_till
+    l = Ledger.new(:payment_method => Payment::ADD_CASH, :owner => till, :organization => @organization)
     assert l.has_fiscal_printer?
     m  = AddCash.new
     m.create_printer_cmd!(l)

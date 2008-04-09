@@ -16,6 +16,7 @@ class LedgersControllerTest < Test::Unit::TestCase
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     login_as("quentin")
+    @user = User.find_by_login('quentin')
     @organization = create_organization(:identifier => 'some', :name => 'some')
     @ledger_category = create_ledger_category(:name => 'Some Category', :type_of => 'I', :organization => @organization , :payment_methods => ['money'])
     @another_bank_account = create_bank_account
@@ -423,7 +424,7 @@ class LedgersControllerTest < Test::Unit::TestCase
 
   def test_action_list_with_ledger_without_category
     Ledger.delete_all
-    @ledger = Ledger.new( :organization => @organization, :payment_method => Payment::ADD_CASH, :owner =>  Till.new(@organization, @user, nil))
+    @ledger = Ledger.new( :organization => @organization, :payment_method => Payment::ADD_CASH, :owner =>  create_till)
     @ledger.date = Date.today
     @ledger.bank_account = @organization.default_bank_account
     @ledger.type_of = Payment::TYPE_OF_INCOME

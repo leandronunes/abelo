@@ -135,7 +135,7 @@ class Test::Unit::TestCase
   end
 
   def create_remove_cash(params = {})
-    l = new_ledger(params.merge(:payment_method => Payment::REMOVE_CASH))
+    l = new_ledger(params.merge(:payment_method => Payment::REMOVE_CASH, :category => nil))
     l.category = nil
     l.save!
     l

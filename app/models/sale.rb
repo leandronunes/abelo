@@ -23,9 +23,16 @@ class Sale < ActiveRecord::Base
   end
 
   before_save do |sale|
-    sale.ledgers.update_all("status = #{sale.status}")
-    sale.sale_items.update_all("status = #{sale.status}")
-#FIXME This update are not so good. Improve this updates
+    sale.ledgers.collect{ |l|
+      l.status = sale.status
+      l.save
+    }
+
+    sale.sale_items.collect{|s|
+     s.status = sale.status
+     s.save
+    }
+
     sale.stock_outs.collect{ |s|
       s.status = sale.status
       s.save

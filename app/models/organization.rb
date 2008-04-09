@@ -182,13 +182,6 @@ class Organization < ActiveRecord::Base
     @homepage ||= Article.find_by_path(self.identifier)
   end
 
-# FIXME Remove this
-  # Returns all ledgers of organization. If 'id' is passed return 
-  # the ledger with parameter id equal 'id'
-#  def ledgers(id = nil)
-#    Ledger.find((id.nil? ? :all : id), :conditions => {:bank_account_id => self.bank_accounts.to_a})
-#  end
-
   def top_level_product_categories
     ProductCategory.top_level_for(self)
   end

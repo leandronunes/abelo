@@ -6,8 +6,6 @@ class OrganizationsController; def rescue_action(e) raise e end; end
 
 class OrganizationsControllerTest < Test::Unit::TestCase
 
-  fixtures :comatose_pages
-
   under_organization :admin #TODO see the better way to do that. This are admin controllers
  
 

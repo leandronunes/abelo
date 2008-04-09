@@ -168,7 +168,7 @@ class DocumentTest < Test::Unit::TestCase
 
   def test_add_first_document_on_tracker_document_points
     org = create_organization(:identifier => 'some_id', :cnpj => '62.667.776/0001-17', :name => 'some id')
-    assert_nil org.tracker.document_points
+    assert_equal 0, org.tracker.document_points
 
     create_document(:name => 'some', :organization => org)
     assert_equal 1, Organization.find_by_identifier('some_id').tracker.document_points
@@ -182,7 +182,7 @@ class DocumentTest < Test::Unit::TestCase
 
   def test_remove_uniq_document_on_tracker_document_points
     org = create_organization(:identifier => 'some_id', :cnpj => '62.667.776/0001-17', :name => 'some id')
-    assert_nil org.tracker.document_points
+    assert_equal 0, org.tracker.document_points
 
     create_document(:name => 'some', :organization => org)
     org.documents.first.destroy

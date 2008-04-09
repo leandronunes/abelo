@@ -68,6 +68,11 @@ class Till < ActiveRecord::Base
   end
 
   #FIXME make this test
+  def till
+    self
+  end
+
+  #FIXME make this test
   def save_and_print
    was_save = self.save
    return was_save unless self.has_fiscal_printer? or not was_save

@@ -215,8 +215,6 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
     assert_template 'coupon_open'
     assert_not_nil assigns(:sale)
     assert_not_nil assigns(:sale_item)
-    assert_not_nil assigns(:total)
-    assert_not_nil assigns(:total_payment)
     assert_not_nil assigns(:payments)
   end
 
@@ -425,7 +423,7 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
     post :create_coupon_add_payment, :id => @sale.id, :ledger => {:payment_method => 'money', :category_id => @ledger_category, :value => (@sale.balance + 1) }
     assert_response :redirect
     assert_redirected_to :action => 'change'
-    assert_equal num_payments + 1, assigns(:sale).ledgers.length
+    assert_equal num_payments + 2, assigns(:sale).ledgers.length
   end
   def test_coupon_add_payment_with_wrong_parameters
     num_payments = @sale.ledgers.length

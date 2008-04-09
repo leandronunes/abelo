@@ -650,7 +650,7 @@ class LedgerTest < Test::Unit::TestCase
 
   def test_add_first_ledger_on_tracker_ledger_points
     org = create_organization(:identifier => 'some_id', :cnpj => '62.667.776/0001-17', :name => 'some id')
-    assert_nil org.tracker.ledger_points
+    assert_equal 0, org.tracker.ledger_points
     create_ledger(:organization => org)
     assert_equal 1, Organization.find_by_identifier('some_id').tracker.ledger_points
   end
@@ -663,7 +663,7 @@ class LedgerTest < Test::Unit::TestCase
 
   def test_remove_uniq_ledger_on_tracker_ledger_points
     org = create_organization(:identifier => 'some_id', :cnpj => '62.667.776/0001-17', :name => 'some id')
-    assert_nil org.tracker.ledger_points
+    assert_equal 0, org.tracker.ledger_points
 
     create_ledger(:organization => org)
     org.ledgers.first.destroy

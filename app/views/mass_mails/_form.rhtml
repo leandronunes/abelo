@@ -2,9 +2,9 @@
 
 <!--[form:mass_mail]-->
 
-<% display_edit_info @mass_mail, :class => 'view_data' do |item| %> 
+<% display_form_info @mass_mail, :class => 'view_data' do |item| %> 
 
-  <%= display_field_edit (item, 'subject', 
+  <%= display_field_form(item, 'subject', 
         :title => _('Subject'),
         :content => text_field('mass_mail','subject'),
         :html_options => {:class => 'line_item' }

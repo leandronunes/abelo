@@ -1,8 +1,12 @@
 class MassMail < ActiveRecord::Base
 
   belongs_to :organization
-  has_many :attachments
+
   validates_presence_of :organization_id
+  validates_presence_of :subject
+  validates_presence_of :body
+#  validates_associated :organization
+
   
   acts_as_ferret :remote => true
 

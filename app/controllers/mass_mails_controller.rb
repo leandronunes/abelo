@@ -42,8 +42,8 @@ class MassMailsController < ApplicationController
   end
 
   def new
-  #  @mass_mail = MassMail.new
-  #  @mass_mail.organization = @organization
+    @mass_mail = MassMail.new
+    @mass_mail.organization = @organization
   end
 
   def create

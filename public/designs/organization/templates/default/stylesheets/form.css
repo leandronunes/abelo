@@ -4,7 +4,7 @@
   padding: 5px 0px 0px 0px;
   list-style: none;
   width: 60%;
-  text-align: right;
+/*  text-align: right; */
 }
 
 #info_form label {
@@ -29,14 +29,9 @@ border: 0px;
 .info_field {
   margin: 5px;
   padding: 5px;
-  float: right;
-  opacity: 0.6;
-}
-
-div:hover.info_field {
-  opacity: 1.0;
+  /* float: right; */
 }
 
 .display_info_options {
-float: right;
+/* float: right; */
 }

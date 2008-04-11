@@ -3,3 +3,7 @@
   padding: 1px;
   margin: 1px;
 }
+
+div.design_block_type main_block {
+border: 0px !important;
+}

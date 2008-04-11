@@ -4,15 +4,14 @@ class MassMailsController < ApplicationController
 
   needs_organization
 
+  uses_mass_mails_tabs
+
   def autocomplete_subject
     escaped_string = Regexp.escape(params[:mass_mail][:subject])
     re = Regexp.new(escaped_string, "i")
     @mass_mails = @organization.mass_mails.select { |mm| mm.subject.match re}
     render :layout=>false
   end
-
-
-  before_filter :create_tabs
 
   def index
     list
@@ -59,29 +58,10 @@ class MassMailsController < ApplicationController
 
   def edit
     @mass_mail = @organization.mass_mails.find(params[:id])
-    @attachment = Attachment.new
-    @files = @mass_mail.attachments
-#    @attachment = Attachment.new
   end
 
   def update
     @mass_mail = MassMail.find(params[:id])
-
-#    attach
-
-
-#    @attachment = Attachment.new(params[:attachment])
-#    @attachment.mass_mail_id = params[:id]
-#    if @attachment.save
-#      @mass_mail.attachments.push(@attachment)
-#    end
-
-    #    params[:file].each{ |file|
-#      @attachment = Attachment.new
-#      @attachment.file = file
-#      @attachment.mass_mail = @mass_mail
-#      @attachment.save
-#    }
 
     if @mass_mail.update_attributes(params[:mass_mail])
       flash[:notice] = 'MassMail was successfully updated.'
@@ -91,35 +71,7 @@ class MassMailsController < ApplicationController
     end
   end
 
-  def attach
-    @attachment = Attachment.new
-    @mass_mail = MassMail.find(params[:id])    
-  end
-
-  def add_attachment
-    @attachment = Attachment.new(params[:attachment])
-    @attachment.mass_mail_id = params[:id]
-    @mass_mail = MassMail.find(params[:id])
-    if @attachment.save
-      @mass_mail.attachments.push(@attachment)
-      flash[:notice] = _('Attachment was successfully added.')
-      redirect_to :action => 'attach', :id => @mass_mail
-    else
-      render :action => 'edit', :id => @mass_mail
-    end
-
-#      @files = @mass_mail.attachments
-#      render :update do |page|       
-#        page.replace_html 'files', :partial => 'file_list'
-#        page.replace_html 'new_file', :partial => 'attach'
-#      end
-
-#      render :partial => "file_list"
-#     render :action => "edit", :id => @mass_mail.id
-  end
-
   def destroy
-    Attachment.find(:all, :conditions => ["mass_mail_id = ?", params[:id]]).map { |e| e.destroy }
     @organization.mass_mails.find(params[:id]).destroy
     redirect_to :action => 'list'
   end
@@ -164,38 +116,5 @@ class MassMailsController < ApplicationController
       render :partial => "message", :layout => true
     end
   end
-
-  def create_tabs
-    add_tab do
-      named 'Mass mail'
-      links_to :controller => 'mass_mails', :action => 'list'
-      in_set 'first'
-      highlights_on :controller => 'mass_mails'
-    end
-  end
-
-  def new_attachment
-    @mass_mail = @organization.mass_mails.find(params[:mail_id])
-    @attachment = Attachment.new
-  end
-
-  def add_attachment_2
-    @mass_mail = @organization.mass_mails.find(params[:id])
-    @attachment = Attachment.new(:params[:attachment])
-    @attachment.mass_mail = @mass_mail
-    if @attachment.save
-      @mass_mail.attachments.push(@attachment)
-      flash[:notice] = _('Attachment was successfully added.')
-    end
-      render :partial => "attachments"
-  end
-
-  def remove_attachment
-    Attachment.find(params[:id]).destroy
-    render :update do |page|
-      page.remove "list_attachment_#{params[:id]}"
-    end
-  end
-
 
 end

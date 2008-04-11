@@ -1,9 +1,0 @@
-<% for file in @files %>
-  <div id="list_attachment_<%=file.id %>">
-    <%= File.basename(file.file) %>
-    <%= link_to_remote _('remove'), :url => {:action => 'remove_attachment', :id => file} %> <br>
-  </div>
-<% end %>
-<!--< %= check_box_tag ("#{File.basename(file)}")%> -->
-<% end %>
-

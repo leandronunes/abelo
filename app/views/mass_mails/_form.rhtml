@@ -10,21 +10,15 @@
         :html_options => {:class => 'line_item' }
       )
   %>
+
+
+  <%= display_field_edit(item, 'body',
+        :title => _('Body'),
+        :content => rich_text_editor('mass_mail', 'body')
+      )
+  %>
+
+
 <% end %>
 
-<label for="mass_mail_subject"><b><%= _('Subject:') %></b></label>
-<%= text_field 'mass_mail', 'subject', 'size' => 65  %>
-<br>
-<label for="attachment_file"><b>
-    <div id="attachments">
-    </div></label>
-<!--< %= link_to_function _('Attach a file '), nil, :id => "attach_file" do |page| 
- #  page.insert_html :bottom, :attachments, :partial => "attach", :object => @attachment
-   page.insert_html :bottom, :attachments, file_column_field('attachment', 'file') + '<br>'
-    #    page.replace_html :attachments2, submit_tag("teste") + '<br>'
-    end %><b></label>  
-    
-<br>
-<label for="mass_mail_body"><b><% _('Body') %></b></label><br/> 
-<%= rich_text_editor 'mass_mail', 'body', :width => '54%', :height => '300px' %> -->
 <!--[eoform:mass_mail]-->

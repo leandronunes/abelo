@@ -32,9 +32,11 @@ class MassMailTest < Test::Unit::TestCase
     assert m.errors.invalid?(:body)
 
     m.body = 'E-mail'
+    m.valid?
+    assert !m.errors.invalid?(:body)
   end
 
-  def test_associated_to_organization
+ def test_associated_to_organization
     m = MassMail.create!(:subject => 'Test', :body => 'E-mail for test', :organization => @organization)
     assert @organization.mass_mails.include?(m)
   end
@@ -45,6 +47,5 @@ class MassMailTest < Test::Unit::TestCase
     mass_mails = MassMail.full_text_search('test*')
     assert_equal 2, mass_mails.length
     assert mass_mails.include?(mass_mail_1)
- end  
-
+  end
 end

@@ -16,7 +16,7 @@
       'cms',
       'sales',
       'tracker_organization',
-#      'mass_mails',
+      'mass_mails',
     ]
       
     menu_legend = {
@@ -28,7 +28,7 @@
       'system_actors'                       => _('Registers'),
       'point_of_sale'                       => _('Point of sale'),
       'sales'                               => _('Sales'),
-#      'mass_mails'                          => _('Mass mail'), #TODO implements this function
+      'mass_mails'                          => _('Mass mail'), #TODO implements this function
       'ledgers'                             => _('Financial'),
       'documents'                           => (@organization.nil? or @organization.new_record?) ? '' : @organization.configuration.document_name_on_plural.camelcase, 
       'departments'                         => (@organization.nil? or @organization.new_record?) ? '' : @organization.configuration.department_name_on_plural.camelcase, #TODO see a better way to do that

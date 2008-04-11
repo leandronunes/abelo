@@ -5,7 +5,7 @@ class MassMail < ActiveRecord::Base
   validates_presence_of :organization_id
   validates_presence_of :subject
   validates_presence_of :body
-#  validates_associated :organization
+  validates_associated :organization
 
   
   acts_as_ferret :remote => true

@@ -61,11 +61,11 @@ class MassMailsController < ApplicationController
   end
 
   def update
-    @mass_mail = MassMail.find(params[:id])
+    @mass_mail = @organization.mass_mails.find(params[:id])
 
     if @mass_mail.update_attributes(params[:mass_mail])
-      flash[:notice] = 'MassMail was successfully updated.'
-      render :action => 'list'
+      flash[:notice] = _('MassMail was successfully updated.')
+      redirect_to :action => 'list'
     else
       render :action => 'edit'
     end

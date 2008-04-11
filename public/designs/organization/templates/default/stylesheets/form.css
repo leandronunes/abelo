@@ -3,7 +3,7 @@
   margin: 10px;
   padding: 5px 0px 0px 0px;
   list-style: none;
-  width: 60%;
+  width: auto;
 /*  text-align: right; */
 }
 
@@ -26,10 +26,12 @@ border: 0px;
   padding: 0px 4px;
 }
 
-.info_field {
+div.info_field {
+  position: relative;
+  display: inline;
   margin: 5px;
   padding: 5px;
-  /* float: right; */
+  float: left;
 }
 
 .display_info_options {

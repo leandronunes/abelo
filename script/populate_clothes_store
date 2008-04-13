@@ -559,12 +559,12 @@ invoice = Invoice.create(:number => 23432, :serie => 3344, :issue_date => Date.t
 
 ############Stock Entries#########################
 Stock.destroy_all
-camisa_entrada = StockBuy.create!(:supplier => hering, :amount => 50, :price => 10, :date => (DateTime.now - 2), :product => camisa, :validity => Date.today, :invoice => invoice)
-money_stock_in = Ledger.create!(:category => money_expense, :value => 12.3, :bank_account => account, :date => Date.today, :owner => organization, :payment_method => 'money')
-camisa_entrada = StockBuy.create!(:supplier => hering, :amount => 40, :price => 10, :date => (DateTime.now - 2), :product => camisa, :validity => Date.today, :invoice => invoice )
-money_stock_in = Ledger.create!(:category => money_expense, :value => 12.3, :bank_account => account, :date => Date.today, :owner => organization, :payment_method => 'money')
-calca_entrada = StockBuy.create!(:supplier => hering, :amount => 50, :price => 10, :date => (DateTime.now - 2), :product => calca,  :validity => Date.today, :invoice => invoice)
-money_stock_in = Ledger.create!(:category => money_expense, :value => 12.3, :bank_account => account, :date => Date.today, :owner => organization, :payment_method => 'money')
+camisa_entrada = StockBuy.create!(:supplier => hering, :amount => 50, :price => 10, :date => (DateTime.now - 2), :product => camisa, :validity => Date.today, :invoice => invoice, :status => Status::STATUS_DONE)
+money_stock_in = Ledger.create!(:category => money_expense, :value => 12.3, :bank_account => account, :date => Date.today, :owner => organization, :payment_method => 'money', :status => Status::STATUS_DONE)
+camisa_entrada = StockBuy.create!(:supplier => hering, :amount => 40, :price => 10, :date => (DateTime.now - 2), :product => camisa, :validity => Date.today, :invoice => invoice, :status => Status::STATUS_DONE)
+money_stock_in = Ledger.create!(:category => money_expense, :value => 12.3, :bank_account => account, :date => Date.today, :owner => organization, :payment_method => 'money', :status => Status::STATUS_DONE)
+calca_entrada = StockBuy.create!(:supplier => hering, :amount => 50, :price => 10, :date => (DateTime.now - 2), :product => calca,  :validity => Date.today, :invoice => invoice, :status => Status::STATUS_DONE)
+money_stock_in = Ledger.create!(:category => money_expense, :value => 12.3, :bank_account => account, :date => Date.today, :owner => organization, :payment_method => 'money', :status => Status::STATUS_DONE)
 
 
 ########### Creating Profiles (Role/RoleAssigment) ###############

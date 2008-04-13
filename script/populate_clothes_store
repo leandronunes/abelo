@@ -30,6 +30,18 @@ organization.save!
 
 ############Configuration#########################
 configuration = organization.configuration
+configuration.organization_name = 'Organização'
+configuration.product_name = 'Produto'
+configuration.department_name = 'Departamento'
+configuration.customer_name = 'Consumidor'
+configuration.document_name = 'Documento'
+configuration.organization_name_on_plural = 'Organizações'
+configuration.product_name_on_plural = 'Produtos'
+configuration.department_name_on_plural = 'Departamentos'
+configuration.customer_name_on_plural = 'Consumidores'
+configuration.document_name_on_plural = 'Documentos'
+configuration.save
+
 
 Configuration::DISPLAY_CONFIGURATION_CLASSES.each do |item|
   str = item.gsub('Display', '').underscore
@@ -555,7 +567,7 @@ Ledger.create!(:category => money_income, :value => 222.50, :bank_account => acc
 
 ############ Invoice #######################
 
-invoice = Invoice.create(:number => 23432, :serie => 3344, :issue_date => Date.today, :supplier => hering)
+invoice = Invoice.create(:number => 23432, :serie => 3344, :issue_date => Date.today, :supplier => hering, :status => Status::STATUS_DONE)
 
 ############Stock Entries#########################
 Stock.destroy_all

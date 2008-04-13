@@ -7,7 +7,7 @@ module MenuWebsiteHelper
         next if (heigth > @design_block.maximum_subitems)
         link_path =  father_path.blank? ? menu.slug : File.join(father_path,menu.slug)
         [
-          content_tag(:li, link_to(menu.title, :page => link_path), :id => "menu_item_#{menu.position}"),
+          content_tag(:li, link_to(menu.title, hash_for_homepage_url.merge({:page => link_path})), :id => "menu_item_#{menu.position}"),
           if menu.has_children?
             website_menu(menu.children, html_class + ' sub_menu', link_path, heigth)
           else

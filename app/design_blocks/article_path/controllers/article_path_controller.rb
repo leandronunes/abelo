@@ -11,7 +11,8 @@ class ArticlePathController < ApplicationController
 
   def index
 
-    path = (params[:page]||[]).join('/')
+    
+    path = params[:page].to_a.join('/')
 
     if path.blank?
       @page = @environment.home_page

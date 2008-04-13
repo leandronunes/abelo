@@ -1,7 +1,7 @@
 class ArticlePath < Design::Block
 
   def self.description
-    _('Article Path')
+    _('Website Path')
   end
 
 end

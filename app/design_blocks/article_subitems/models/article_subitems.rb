@@ -1,7 +1,7 @@
 class ArticleSubitems < Design::Block
 
   def self.description
-    _('Article Subitems')
+    _('Website Subitems')
   end
 
 end

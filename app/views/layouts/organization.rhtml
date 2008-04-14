@@ -33,10 +33,10 @@
               <%= design_display_button( 'with_text edit_small' , _('My account'), {:controller => 'public', :action => 'edit_user', :id => self.current_user}, :id => "edit_profile", :accesskey => "e") %> 
               <%= design_display_button( 'with_text system-log-out', _('Logout'), {:organization_nickname => nil, :controller => 'users', :action => 'logout'}, :id => "logout", :accesskey => "q", :confirm => _('Exit from system?'), :method => 'post') %>
             </div>
-            <%= display_navigation_bar %> 
+             
           </div>
-        </div>
-
+	<%= display_navigation_bar %>
+	</div>
         <%= notice_box flash[:notice] %>
 
         <%= tabbed_navigation 'first' %>

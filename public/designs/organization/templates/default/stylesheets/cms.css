@@ -1,92 +1,50 @@
-
-#article_types li {
-  margin-bottom: 14px;
-  list-style: none;
+.controller-cms .article__body_editor {
+opacity: 1.0;
 }
 
-#article_types a {
-  font-weight: bold;
+#article-subitems ul#list_items {
+margin: 0px;
+padding: 0px;
+list-style: none;
+border: 1px solid black;
 }
 
-#article-subitems-hide.hide-button {
-  float: right;
-  color: white;
+.file-manager-small ul#list_items li {
+	position: relative;
+	margin: 2px;
+	display: block;
+	border: 1px solid red;
 }
-#article-subitems-show.show-button {
-  float: right;
+.file-manager-small ul#list_items li div span {
+	display: block;
+	height: 25px;
+	width: 25px;
+	border: 1px solid green;
+	cursor: move;
+	float: left;
 }
-#article-subitems-hide.hide-button:hover {
-  background-color: transparent;
-  color: #B95;
-}
-
-#article-full-path {
-  border: 1px solid gray;
-  margin: 0px;
-  font-size: 120%;
-  overflow: auto;
-  padding: 2px;
-  background: #f4edcf;
-}
-
-#article-controls {
-  background: white;
-  border: 1px solid gray;
-  padding-top: 0px;
-  padding-bottom: 4px;
-  margin-bottom: 1em;
-}
-
-#article-controls .button {
-  position: relative;
-  top: -5px;
-}
-
-.file-manager-title {
-  font-weight: bold;
-  font-size: 18px;
-  text-align: center;
-  background: #f4edcf;
+div.file-manager-button a div {
+	position: absolute;
+	left: 60px;
+	top: 5px;
 }
 
 
-/* FIXME Leandro colocou isso aqui para exergar os botoes dos subitems. Consertar isso. */
-.file-manager-small .file-manager-controls .button {
-  display: block;
-  background-color: green;
-  width: 24px;
-  height: 24px;
-  margin: 5px;  
-}
+/*
 
-.file-manager-small ul {
-  margin: 0px;
-  padding: 10px;
-  width: 300px;
-}
+<div id='article-subitems'>
+  <div class='file-manager-title'>Articles</div>
+   <div class='file-manager-small'>
+ <ul id='list_items'>
+  <li id="item_1">
+    <div class="button move"><span>Move</span></div>
+      <div class="file-manager-button">
+       <a href="/toca/cms/view/1">
+        <img alt="Quem Somos" src="text-html.png" />
+	<div>Quem Somos</div>
+       </a>
+       </div>
+   </li>
 
-.file-manager-small li {
-  margin: 0px;
-  list-style: none;
-  padding: 0px;
-}
-
-.file-manager-button img {
-  float: left; 
-  border: 0px;
-}
-
-.file-manager-button div {
-  display: block;
-  height: 25px;
-  margin: 2px;
-}
-.file-manager-button a:hover div {
-  background: #f4edcf;
-}
-
-#article-subitems,
-.file-manager-small {
-  border: 1px solid #B95 !important; 
-}
-
+html > body .controller-cms action-index > div #warp > div #frame > div #content > div #boxes .design_boxes > div > div #design_box_1 .design_box > div #design_blocks_3 .design_blocks > div #design_block_2 .design_block > div .design_block_type main_block > div #design_block_content_2 .design_block_content > div > div #article-subitems > div .file-manager-small > ul #list_items
+*/

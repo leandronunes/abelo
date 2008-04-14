@@ -27,7 +27,7 @@
 }
 
 /*
-.design_block_control_list{
+.design_block_control_list {
    border: 1px solid green;
    margin-left: 15px;
    z-index: 10000;
@@ -124,11 +124,6 @@ border-bottom: 3px solid #bb9955;
   border: 2px solid #e6d691;
   margin-bottom: 10px;
 }
-
-div.design_block_type main_block {
- border: 0px;
-}
-
 .financial_forecasting table {
   margin: 0px;
   border: none;
@@ -141,65 +136,6 @@ div.design_block_type main_block {
 }
 
 
-/*
-.financial_forecasting .line_odd td {
-  background-color: #FCFAF0;
-}
-
-.financial_forecasting .line_pair:hover td,
-.financial_forecasting .line_odd:hover td {
-  background-color: #F8F0A0;
-} 
-
-.financial_forecasting th, .financial_forecasting td {
-  border-left: 1px dotted #CA8;
-  text-align: center;
-  line-height: 14px;
-}
-
-
-
-.financial_forecasting .category_name {
-  line-height: 12px;
-}
-
-.financial_forecasting .month_header {
-  border-bottom: 1px dotted #CA8;
-}
-
-.financial_forecasting .month_header div {
-  position: relative;
-}
-  
-.financial_forecasting .table_footer {
-  border-top: 1px dotted #CA8;
-}
-.financial_forecasting .table_footer th.balance {
-  border-left: none;
-} 
-
-.financial_forecasting .month_1, .financial_forecasting .month_3 {
-  display: block;
-  position: absolute;
-  top: 0px;
-  left: 3px;
-  font-weight: normal;
-}
-
-.financial_forecasting .month_3 {
-  left: inherit;
-  right: 3px;
-}
-
-#design_editor .financial_forecasting {
-  font-size: 14px;
-} 
-
-#design_editor .financial_forecasting input{
-  width: 90%;
-}
-
-*/
 /*Editor Informations*/
 
 #design_editor .design_block {
@@ -230,3 +166,8 @@ background: red;
 #design_editor a.design_button_block {
   float: left !important;
 }
+
+div.main_block {
+ border: 0px !important;
+}
+

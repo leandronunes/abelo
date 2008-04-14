@@ -1,5 +1,13 @@
 <%= title _('Tracker of %s') % @organization.name %>
 
+<div id="graphic_image">
+
+  <center>
+    <img src="<%= url_for(:action => 'draw', :organization_id => @organization) %>" />
+  </center>
+
+</div>
+
 <%= display_show_info @tracker %>
 
 <div class="display_info_options">

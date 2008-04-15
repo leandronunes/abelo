@@ -36,6 +36,35 @@ height: 50px;
 clear: both;
 }
 
+#mass_mail-buttons a,
+table .button{
+  display: block;
+  float: left;
+  border: none;
+  opacity: 0.6;
+  margin-left: 5px;
+  width: 200px;
+  height: 24px;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+
+#mass_mail-buttons a{
+width: 200px;
+padding-left: 28px;
+font-weight: bold;
+font-size: 16px;
+opacity: 1.0;
+}
+
+#mass_mail-buttons {
+opacity: 1.0;
+display: block;
+height: 50px;
+clear: both;
+}
+
 /*
 .button{
   display: block;

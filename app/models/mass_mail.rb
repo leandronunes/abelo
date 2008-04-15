@@ -7,6 +7,10 @@ class MassMail < ActiveRecord::Base
   validates_presence_of :body
   validates_associated :organization
 
+  OPTIONS_FOR_RECIPIENTS = [
+    N_('All'),
+    N_('Groups')
+  ]
   
   acts_as_ferret :remote => true
 
@@ -17,5 +21,7 @@ class MassMail < ActiveRecord::Base
     return results
   end
 
-
+  def self.options_for_recipients
+    MassMail::OPTIONS_FOR_RECIPIENTS
+  end
 end

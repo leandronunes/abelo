@@ -76,12 +76,19 @@ class MassMailsController < ApplicationController
     redirect_to :action => 'list'
   end
 
-  def filter_categories
+  def select_recipients
     @mass_mail = @organization.mass_mails.find(params[:id])
   end
 
+  def filter_recipients
+    @mass_mail = @organization.mass_mails.find(params[:id])
+    @recipient_type = params[:recipient_type]
+    @options_for_recipients = MassMail.options_for_recipients
+    render :action => 'filter_recipients', :layout => false
+  end
+
   def filter_customers
-    @mass_mail_id = params[:id]
+    @mass_mail = @organization.mass_mails.find(params[:id])
     @customers = []
     list_categories = params[:categories]
     list_products = params[:products]
@@ -102,6 +109,7 @@ class MassMailsController < ApplicationController
       customers_2.concat(@organization.customers_by_products(list_products))
       @customers = customers_1 & customers_2
     end  
+    render :action => 'select_article_type', :layout => false
   end
 
   def send_emails

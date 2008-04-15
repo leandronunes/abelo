@@ -15,12 +15,6 @@ class SystemActorsController < ApplicationController
 
   before_filter :check_actor_presence, :except => ['index', 'list']
 
-  SYSTEM_ACTORS = {
-    'customer' => _('Customer'),
-    'worker' => _('Workers'),
-    'supplier' => _('Supplier'),
-  }
-
   def autocomplete_system_actor_name
     actor = params[:actor]
     escaped_string = Regexp.escape(params[:system_actor][:name])

@@ -71,7 +71,7 @@ msgstr "Subitens do Site"
 
 #: app/design_blocks/menu_website/models/menu_website.rb:4
 msgid "Website's Menu"
-msgstr ""
+msgstr "Menu da Página"
 
 #: app/design_blocks/favorite_links/controllers/favorite_links_controller.rb:5
 msgid "Manage Links"
@@ -439,9 +439,8 @@ msgid "Document section was successfuly updated."
 msgstr "Seção do documento atualizada com sucesso."
 
 #: app/controllers/mass_mails_controller.rb:67
-#, fuzzy
 msgid "MassMail was successfully updated."
-msgstr "%s foi atualizado com sucesso."
+msgstr "MalaDireta foi atualizado com sucesso."
 
 #: app/controllers/organization_configuration_controller.rb:28
 #: app/controllers/configuration_controller.rb:50
@@ -476,7 +475,7 @@ msgstr "Impossível atualizar conta bancária: não encontrada."
 
 #: app/controllers/cms_controller.rb:131
 msgid "Article \"%s\" configured as home page."
-msgstr ""
+msgstr "Artigo \"%s\" configurado como site."
 
 #: app/controllers/stock_ins_controller.rb:42
 msgid "Stock Replenishment Control"
@@ -545,11 +544,13 @@ msgid ""
 "This system only works properly with firefox navigator. Click here o get it "
 "now."
 msgstr ""
+"Este sistema funciona somente com o navegador firefox. Clique aqui para instalar "
+"agora."
 
 #: app/controllers/tracker_organization_controller.rb:27
 #: app/controllers/tracker_organization_controller.rb:28
 msgid "Used Points"
-msgstr ""
+msgstr "Pontos Usados"
 
 #: app/controllers/stock_devolutions_controller.rb:36
 msgid "Stock Devolution Control"
@@ -820,7 +821,7 @@ msgstr "Você não pode agendar um lançamento começando em uma data no passado
 
 #: app/models/unit_measure.rb:-
 msgid "unit measure"
-msgstr ""
+msgstr "unidade de medida"
 
 #: app/models/unit_measure.rb:-
 msgid "UnitMeasure|Name"
@@ -1302,7 +1303,7 @@ msgstr "Página da Loja."
 
 #: app/models/store_article.rb:8
 msgid "Page that generates the organization's store."
-msgstr ""
+msgstr "Página que gera a loja da organização."
 
 #: app/models/profile_display.rb:9
 msgid "Permission"
@@ -1442,16 +1443,16 @@ msgstr "Pontos por usuário"
 
 #: app/models/tracker.rb:-
 msgid "Tracker|Website points"
-msgstr ""
+msgstr "Pontos do site"
 
 #: app/models/tracker.rb:17
 msgid "User total points"
-msgstr ""
+msgstr "Total de pontos do usuário"
 
 #: app/models/tracker.rb:18 app/models/tracker_display.rb:19
 #: app/views/tracker/_form.rhtml:20
 msgid "Website points"
-msgstr ""
+msgstr "Pontos do site"
 
 #: app/models/balance.rb:-
 msgid "balance"
@@ -2866,11 +2867,11 @@ msgstr "Nome"
 
 #: app/models/article.rb:-
 msgid "Article|Slug"
-msgstr ""
+msgstr "Slug"
 
 #: app/models/article.rb:-
 msgid "Article|Path"
-msgstr ""
+msgstr "Caminho"
 
 #: app/models/article.rb:-
 msgid "Article|Parent"
@@ -3005,9 +3006,8 @@ msgid "Environment|Is default"
 msgstr "É padrão"
 
 #: app/models/environment.rb:-
-#, fuzzy
 msgid "Environment|Home page"
-msgstr "Nome"
+msgstr "Página"
 
 #: app/models/product_category.rb:6
 msgid "The name %{fn} for a product category was already taken."
@@ -3416,12 +3416,10 @@ msgid "Ledger|Organization"
 msgstr "Organização"
 
 #: app/models/ledger.rb:89
-#, fuzzy
 msgid "You cannot schedule this kind of ledger."
-msgstr "Você não pode agendar um pagamento em dinheiro"
+msgstr "Você não pode agendar este tipo de lançamento"
 
 #: app/models/ledger.rb:93
-#, fuzzy
 msgid "The value must be minor than zero."
 msgstr "O valor deve ser menor que 0"
 
@@ -3462,9 +3460,8 @@ msgstr ""
 "lançamento é no futuro."
 
 #: app/models/ledger.rb:121
-#, fuzzy
 msgid "You can't have two changes for the same sale"
-msgstr "Você não pode ter duas vendas pendentes"
+msgstr "Você não pode ter dois trocos para a mesma venda"
 
 #: app/models/ledger.rb:448 app/models/ledger.rb:455 app/models/ledger.rb:462
 #: app/models/ledger.rb:469
@@ -3610,11 +3607,11 @@ msgstr "Você tem que escolher uma forma de pagamento válida"
 
 #: app/models/ledger_category.rb:31
 msgid "The sale operations must be type of income"
-msgstr ""
+msgstr "A operação de venda tem que ser do tipo entrada"
 
 #: app/models/ledger_category.rb:35
 msgid "The stock operations must be type of expense"
-msgstr ""
+msgstr "A operação de estoque tem que ser do tipo saída"
 
 #: app/models/ledger_category.rb:39
 msgid "You canno't have a payment category sale an stock at the same time"
@@ -3820,78 +3817,68 @@ msgid "New %s"
 msgstr "Novo %s"
 
 #: app/views/cms/view.rhtml:9
-#, fuzzy
 msgid "Content management"
-msgstr "Gerenciamento da Organização"
+msgstr "Gerenciamento de Conteúdo"
 
 #: app/views/cms/view.rhtml:11
-#, fuzzy
 msgid "New article"
-msgstr "Nova Venda"
+msgstr "Novo artigo"
 
 #: app/views/cms/view.rhtml:17
-#, fuzzy
 msgid "Hide subitems"
-msgstr "Adicionar itens"
+msgstr "Esconder subitens"
 
 #: app/views/cms/view.rhtml:17
 msgid "Show subitems"
-msgstr ""
+msgstr "Mostrar subitens"
 
 #: app/views/cms/view.rhtml:21
-#, fuzzy
 msgid "Subitems"
-msgstr "Itens"
+msgstr "Subitens"
 
 #: app/views/cms/view.rhtml:21
-#, fuzzy
 msgid "Articles"
-msgstr "Perfis"
+msgstr "Artigos"
 
 #: app/views/cms/view.rhtml:31
-#, fuzzy
 msgid "New subitem"
-msgstr "Novo item"
+msgstr "Novo subitem"
 
 #: app/views/cms/view.rhtml:33
 msgid "Go up one level"
-msgstr ""
+msgstr "Ir para um nível superior"
 
 #: app/views/cms/view.rhtml:47
 msgid "\"%{article}\", last changed by %{author}"
-msgstr ""
+msgstr "\"%{article}\", modificado por último por %{author}"
 
 #: app/views/cms/view.rhtml:47
-#, fuzzy
 msgid "Unknown User"
-msgstr "Novo usuário"
+msgstr "Usuário Desconhecido"
 
 #: app/views/cms/view.rhtml:50
 msgid "Public address of this article: %s"
-msgstr ""
+msgstr "Endereço público deste artigo: %s"
 
 #: app/views/cms/view.rhtml:58
 msgid "Use as homepage"
-msgstr ""
+msgstr "Usar como página"
 
 #: app/views/cms/view.rhtml:59
-#, fuzzy
 msgid "Delete"
-msgstr "apagar"
+msgstr "Apagar"
 
 #: app/views/cms/view.rhtml:59
-#, fuzzy
 msgid "Are you sure you wan to remove this article?"
-msgstr "Você tem certeza que quer apagar a página entitulada \"%s\"?"
+msgstr "Você tem certeza que quer apagar esta página?"
 
 #: app/views/cms/_subitems.rhtml:3
-#, fuzzy
 msgid "Move"
-msgstr "Levantar"
+msgstr "Mover"
 
 #: app/views/cms/select_article_type.rhtml:1
 msgid "Choose the type of article:"
-msgstr ""
+msgstr "Escolha o tipo de artigo:"
 
 #: app/views/cms/select_article_type.rhtml:12 app/views/users/new.rhtml:6
 #: app/views/users/signup.rhtml:15 app/views/users/edit.rhtml:7
@@ -4006,15 +3993,15 @@ msgstr "Editando Conta Bancária"
 
 #: app/views/content_viewer/view_page.rhtml:19
 msgid "Up"
-msgstr ""
+msgstr "Acima"
 
 #: app/views/content_viewer/no_home_page.rhtml:1
 msgid "Missing home page"
-msgstr ""
+msgstr "Faltando página"
 
 #: app/views/content_viewer/no_home_page.rhtml:4
 msgid "%s did not make his homepage yet."
-msgstr ""
+msgstr "%s não fez esta página ainda."
 
 #: app/views/content_viewer/not_found.rhtml:1
 msgid "There is no such page: %s"
@@ -4076,24 +4063,20 @@ msgid "Invoice Payments: "
 msgstr "Pagamentos da Nota Fiscal"
 
 #: app/views/units/new.rhtml:1
-#, fuzzy
 msgid "New Unit"
-msgstr "Novo item"
+msgstr "Nova Unidade"
 
 #: app/views/units/list.rhtml:1
-#, fuzzy
 msgid "Listing Units"
-msgstr "Listando %s"
+msgstr "Listando Unidades"
 
 #: app/views/units/show.rhtml:2
-#, fuzzy
 msgid "Unit %s"
-msgstr "Unidades"
+msgstr "Unidade %s"
 
 #: app/views/units/edit.rhtml:2
-#, fuzzy
 msgid "Editing Unit"
-msgstr "Editando Conta Bancária"
+msgstr "Editando Unidade"
 
 #: app/views/units/edit.rhtml:7 app/views/products/edit.rhtml:7
 msgid "Images"
@@ -4844,9 +4827,8 @@ msgid "Editing Presetation"
 msgstr "Editando Apresentação"
 
 #: app/views/tracker/show.rhtml:1 app/views/tracker/edit.rhtml:1
-#, fuzzy
 msgid "Tracker of %s"
-msgstr "Página %s de %s"
+msgstr "Pontos de %s"
 
 #: app/views/shared_document/list_documents.rhtml:3
 #: app/views/system_actors/list_document.rhtml:3
@@ -5037,9 +5019,8 @@ msgid "Editing product_category"
 msgstr "Editando categoria_produto"
 
 #: app/views/tracker_organization/list.rhtml:3
-#, fuzzy
 msgid "Listing Trackers"
-msgstr "Listando Impressoras"
+msgstr "Listando Pontos"
 
 #: app/views/products/new.rhtml:1 app/views/products/_new.rhtml:2
 msgid "New product"
@@ -5262,9 +5243,8 @@ msgid "Display title?"
 msgstr "Mostrar título?"
 
 #: app/design_blocks/menu_website/views/edit.rhtml:22
-#, fuzzy
 msgid "Max number of subitems"
-msgstr "Número máximo de links"
+msgstr "Número máximo de subitens"
 
 #: app/design_blocks/favorite_links/views/manage_links.rhtml:4
 msgid "Add Link"

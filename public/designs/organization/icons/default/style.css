@@ -61,3 +61,8 @@
 .cms { background-image: url('web_site.png'); }
 .tracker_organization { background-image: url('web_site.png'); }
 
+/* CMS */
+.file-manager-controls .button_up span { background-image: url(go-up.png) !important }
+.file-manager-controls .lbOn span  { background-image: url(new_entry.png) !important }
+.button_destroy { background-image: url(cancel.png) !important }
+.button_home { background-image: url(go-home.png) !important }

@@ -6,45 +6,76 @@ opacity: 1.0;
 margin: 0px;
 padding: 0px;
 list-style: none;
-border: 1px solid black;
+}
+
+.file-manager-small ul#list_items img {
+border: 0px;
 }
 
 .file-manager-small ul#list_items li {
 	position: relative;
 	margin: 2px;
 	display: block;
-	border: 1px solid red;
+	border: 1px solid #dfdfdf;
 }
 .file-manager-small ul#list_items li div span {
+display: none;
+}
+.file-manager-small div.button {
 	display: block;
+	background: url("../images/move.png") no-repeat;
+	background-position: 0px 3px;
 	height: 25px;
-	width: 25px;
-	border: 1px solid green;
+	width: 20px;
 	cursor: move;
 	float: left;
+	opacity: 0.5;
 }
+.file-manager-small div:hover.button {
+opacity: 1.0;
+}
+
 div.file-manager-button a div {
 	position: absolute;
-	left: 60px;
-	top: 5px;
+	left: 43px;
+	top: 3px;
 }
 
+div.file-manager-title {
+font-size: 15px;
+text-align: center;
+background: #dfdfdf;
+font-weight: bold;
+color: black;
+}
 
-/*
+#article-subitems {
+border: 1px solid black;
+}
 
-<div id='article-subitems'>
-  <div class='file-manager-title'>Articles</div>
-   <div class='file-manager-small'>
- <ul id='list_items'>
-  <li id="item_1">
-    <div class="button move"><span>Move</span></div>
-      <div class="file-manager-button">
-       <a href="/toca/cms/view/1">
-        <img alt="Quem Somos" src="text-html.png" />
-	<div>Quem Somos</div>
-       </a>
-       </div>
-   </li>
+#article-controls ul {
+margin: 0px;
+padding: 0px;
+}
 
-html > body .controller-cms action-index > div #warp > div #frame > div #content > div #boxes .design_boxes > div > div #design_box_1 .design_box > div #design_blocks_3 .design_blocks > div #design_block_2 .design_block > div .design_block_type main_block > div #design_block_content_2 .design_block_content > div > div #article-subitems > div .file-manager-small > ul #list_items
-*/
+#article-controls li {
+list-style: none;
+display: block;
+position: relative;
+}
+
+div.file-manager-controls span {
+display: block;
+float: right;
+padding-left: 18px;
+margin-right: 3px;
+background-repeat: no-repeat;
+}
+
+#article-subitems-hide {
+background: none;
+}
+
+#article-contents h2.subtitle img {
+float: right;
+}

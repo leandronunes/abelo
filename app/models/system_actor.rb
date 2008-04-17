@@ -4,6 +4,8 @@ class SystemActor < ActiveRecord::Base
   belongs_to :organization
   has_many :contacts
   has_many :documents, :as => :owner
+  has_many :system_actor_mass_mail_groups
+  has_many :mass_mail_groups, :through => :system_actor_mass_mail_groups
  
 
   attr_accessor :type_person
@@ -19,6 +21,12 @@ class SystemActor < ActiveRecord::Base
   validates_presence_of :cpf, :scope => :organization_id, :if  => lambda { |actor| actor.person_type == 'natural' }, :message => _('This %{fn} already exist')
   validates_uniqueness_of :cnpj, :scope => :organization_id, :if => lambda { |user| ! user.cnpj.blank? }, :message => _('This %{fn} already exist')
   validates_uniqueness_of :cpf, :scope => :organization_id, :if => lambda { |user| ! user.cpf.blank? }, :message => _('This %{fn} already exist')
+
+  SYSTEM_ACTORS = {
+    'customer' => N_('Customer'),
+    'worker' => N_('Workers'),
+    'supplier' => N_('Supplier'),
+  }
 
   def actor_type
     self.type_person ||= self.cnpj.nil? ? _('Natural Person') : _('Juristic Person')

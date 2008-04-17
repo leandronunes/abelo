@@ -24,4 +24,7 @@ class MassMail < ActiveRecord::Base
   def self.options_for_recipients
     MassMail::OPTIONS_FOR_RECIPIENTS
   end
+
+  def recipients
+  end
 end

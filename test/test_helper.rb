@@ -296,7 +296,18 @@ class Test::Unit::TestCase
     Domain.create!({:name => 'mycolivre.net'}.merge(params))      
   end
 
+  def create_mass_mail(params = {})
+    organization = params[:organization] || @organization || create_organization
+    m = MassMail.create!({:subject => "Some subject", :body => "Some body", :organization => organization}.merge(params))
+    m
+  end
 
+  def create_mass_mail_group(params = {})
+    organization = params[:organization] || @organization || create_organization
+    m = MassMailGroup.create!({:name => "Some mass mail group"}.merge(params))
+    m
+  end
+    
   def self.should(name, &block)
     @shoulds ||= []
   

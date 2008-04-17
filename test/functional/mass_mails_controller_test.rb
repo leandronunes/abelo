@@ -17,6 +17,7 @@ class MassMailsControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
     login_as("quentin")
     @organization = create_organization(:identifier => 'some')
+    @mass_mail = create_mass_mail
   
     ActionMailer::Base.delivery_method = :test
     ActionMailer::Base.perform_deliveries = true

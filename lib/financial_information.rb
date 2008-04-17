@@ -44,7 +44,7 @@ module FinancialInformation
     @end_date_year = @end_date.year
     @query = params[:query] unless params[:query].blank?
 
-    @last_balance = Balance.last_balance_before_date(object, @chosen_accounts.first, @start_date)
+    #@last_balance = Balance.last_balance_before_date(object, @chosen_accounts.first, @start_date)
 
     begin
       @chosen_accounts = @organization.bank_accounts.find(@chosen_accounts)

@@ -12,7 +12,7 @@
     <% for item in @stocks %>
       <tr id="list_item_<%=item.id %>">
         <td><%= Stock.describe(item.class.name) %></td>
-        <td><%= item.kind_of?(StockBuy) or item.kind_of?(StockIn) ? item.supplier.name : '-' %></td>
+        <td><%= (item.kind_of?(StockBuy) or item.kind_of?(StockIn)) ? item.supplier.name : '-' %></td>
         <td><%= item.kind_of?(StockBuy) ? item.invoice.number : '-' %></td>
         <td><%= item.product.name %></td>
         <td><%= item.amount %></td>

@@ -23,9 +23,6 @@
   <%= file_column_field 'image', 'picture' %>
   </p>
 
-  <div class='button_bar'>
-    <%= button 'add',_('Add'), :save %>
-    <%= button 'back',_('Back'), :back, :action => 'list' %>
-  </div>
+  <%= display_edit_info_options(@image) %>
 
 <% end %>

@@ -60,7 +60,10 @@ class SystemActor < ActiveRecord::Base
     }[actor]
   end
 
-  
+  def ledgers(options = {})
+    l = Ledger.find(:all, :conditions => {:owner_type => self.ledger_owner.to_s, :owner_id => self.ledger_owner_ids}.merge(options))
+  end
+
   # Return all ledgers of a sale filtering with the parameters:
   #   - Accounts
   #   - Tags
@@ -94,8 +97,7 @@ class SystemActor < ActiveRecord::Base
   # Return the organization ledgers between the start and end dates passed as arguments
   def ledgers_by_dates(start_date, end_date, accounts = [])
     return [] if start_date.nil? or end_date.nil? or !accounts.all?{|a| self.organization.bank_accounts.include?(a)}
-
-    l = self.ledgers(:effective_date => start_date..end_date, :foreseen_date => start_date..end_date, :bank_account_id => accounts)
+    Ledger.find(:all, :conditions => ['(effective_date IS ? AND foreseen_date BETWEEN ? AND ? AND bank_account_id IN (?)) OR (effective_date  BETWEEN ? AND ? AND bank_account_id IN (?) )', nil, start_date, end_date, accounts, start_date, end_date, accounts ])
   end
 
   # Return the organization ledgers by categories and bank accounts passed as arguments

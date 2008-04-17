@@ -55,7 +55,11 @@ class SystemActorsController < ApplicationController
     check_actor_presence
     @system_actor = @organization.system_actors.find(params[:id])
     get_financial_variables(@system_actor)
-    @ledger_categories = @organization.sale_ledger_categories
+    if @system_actor.kind_of?(Supplier)
+      @ledger_categories = @organization.stock_ledger_categories
+    else
+      @ledger_categories = @organization.sale_ledger_categories
+    end
 
     ledgers = @system_actor.ledgers_by_all(@chosen_accounts, @chosen_tags, @chosen_categories, @start_date, @end_date, @query)
     @ledger_pages, @ledgers = paginate_by_collection ledgers
@@ -68,7 +72,11 @@ class SystemActorsController < ApplicationController
   def display_financial_table
     system_actor = @organization.system_actors.find(params[:id])
     get_financial_variables(system_actor)
-    @ledger_categories = @organization.sale_ledger_categories
+    if system_actor.kind_of?(Supplier)
+      @ledger_categories = @organization.stock_ledger_categories
+    else
+      @ledger_categories = @organization.sale_ledger_categories
+    end
     ledgers = system_actor.ledgers_by_all(@chosen_accounts, @chosen_tags, @chosen_categories, @start_date, @end_date, @query)
     @ledger_pages, @ledgers = paginate_by_collection ledgers
     @total_income = Ledger.total_income(@ledgers)

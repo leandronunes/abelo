@@ -39,17 +39,6 @@
   padding: 0px 4px;
 }
 
-.info_list .item_image img {
-  float: left;
-  margin: 0px 8px 0px -6px;
-  padding: 3px;
-  background: #FFF;
-  border: 2px solid #B97;
-}
-.info_list .item_image strong {
-  display: none;
-}
-
 .info_list div.list_item_button {
   float: right;
   margin: -3px -6px 0px 0px;
@@ -83,3 +72,15 @@
 .controller-documents ul li{
    display: inline;
 }
+
+.info_list .item_image img {
+  float: left;
+  margin: 0px 8px 0px -6px;
+  padding: 3px;
+  background: #FFF;
+  border: 2px solid #B97;
+}
+.info_list .item_image strong {
+  display: none;
+}
+

@@ -1,5 +1,6 @@
 <div>
-  <% if @product.images.blank? %>
+  <strong> <%= _('All Images') %> </strong> <br/>
+  <% unless @product.images.blank? %>
     <% for image in @product.images %>
       <%= show_image image %>
     <% end %>

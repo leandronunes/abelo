@@ -59,7 +59,7 @@
 .public        { background-image: url(organizations.png) }
 .banks         { background-image: url(banks.png) }
 .cms { background-image: url('web_site.png'); }
-.tracker_organization { background-image: url('web_site.png'); }
+.tracker_organization { background-image: url('tracker.png'); }
 
 /* CMS */
 .file-manager-controls .button_up span { background-image: url(go-up.png) !important }

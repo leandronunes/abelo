@@ -46,6 +46,7 @@ class ProductsController < ApplicationController
     @colors = Color.find(:all)
     @units = @organization.unit_measures
     @suppliers = @organization.suppliers
+    @categories = @organization.product_categories
   end
 
   def new_stock_entry
@@ -70,6 +71,7 @@ class ProductsController < ApplicationController
       @sizes = Size.find(:all)
       @colors = Color.find(:all)
       @units = @organization.unit_measures
+      @categories = @organization.product_categories
       render :action => 'new'
     end
   end
@@ -82,6 +84,7 @@ class ProductsController < ApplicationController
       render :template => 'shared/not_found'
     end
     @suppliers = @organization.suppliers
+    @categories = @organization.product_categories
     @sizes = Size.find(:all)
     @colors = Color.find(:all)
     @units = @organization.unit_measures

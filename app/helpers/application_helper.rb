@@ -614,6 +614,10 @@ module ApplicationHelper
     button('back', _('Back'), :back, location)
   end
 
+  def display_image_button(location)
+    button('image', _('Save'), :image, location)
+  end
+
   def display_save_button
     button('save', _('Save'), :save)
   end

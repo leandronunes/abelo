@@ -14,7 +14,15 @@ class Invoice < ActiveRecord::Base
   acts_as_ferret :remote => true, :fields => ['number', 'serie']
 
   before_save do |invoice|
-    invoice.stock_buys.update_all("status = #{invoice.status}") unless invoice.stock_buys.blank?
+    invoice.stock_buys.each do |s|
+      s.status = invoice.status
+      s.save
+    end
+
+    invoice.ledgers.each do |l|
+      l.status = invoice.status
+      l.save
+    end
   end
 
   def self.full_text_search(q, options = {})

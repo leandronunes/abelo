@@ -12,18 +12,9 @@
   
   <%= display_field_form(item, 'category',
         :title => _('Category'),
-        :content => select_category('product', 'product')
+        :content => select_item('product', 'category_id', @categories)
       )
   %>
-
-  <%= display_field_form(item, 'suppliers',
-      :title => _('Suppliers'),
-      :content => multiple_select('product', 'supplier_ids', @suppliers ),
-      :html_options => {:class => 'break_line' }
-    )
-  %>
-
-
   <%= display_field_form(item, 'size',
         :title => _('Size'),
         :content => select_item('product', 'size', @sizes)
@@ -32,29 +23,24 @@
 
   <%= display_field_form(item, 'unit_measure',
         :title => _('Unit'),
-        :content => select_item('product', 'unit_measure', @units)
+        :content => select_item('product', 'unit_measure_id', @units),
+        :html_options => {:class => 'break_line' }
       )
   %>
 
   <%= display_field_form(item, 'color',
         :title => _('Color'),
-        :content => select_color('product', 'color', @colors),
-        :html_options => {:class => 'break_line' }
+        :content => select_color('product', 'color', @colors)
       )
   %>
 
   <%= display_field_form(item, 'sell_price',
         :title => _('Sell Price'),
-        :content => text_field('product', 'sell_price', :value => num_to_currency(@product.sell_price))
+        :content => text_field('product', 'sell_price', :value => num_to_currency(@product.sell_price)),
+        :html_options => {:class => 'break_line' }
       )
   %>
 
-  <%= display_field_form(item, 'description',
-        :title => _('Description'),
-        :content => text_field('product', 'description')  
-      )
-  %>
-  
   <%= display_field_form(item, 'minimum_amount',
         :title => _('Minimum Amount'),
         :content => text_field('product', 'minimum_amount')  
@@ -67,9 +53,16 @@
       )
   %>
 
+  <%= display_field_form(item, 'suppliers',
+      :title => _('Suppliers'),
+      :content => multiple_select('product', 'supplier_ids', @suppliers ),
+      :html_options => {:class => 'break_line' }
+    )
+  %>
+
   <%= display_field_edit(item, 'info',
-        :title => _('Additional Information'),
-        :content => rich_text_editor('product', 'info')
+        :content => rich_text_editor('product', 'info'),
+        :html_options => {:class => 'break_line' }
       )
   %>
 

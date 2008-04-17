@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: abelo 0.6.0\n"
-"POT-Creation-Date: 2008-04-17 15:32-0300\n"
+"POT-Creation-Date: 2008-04-17 18:23-0300\n"
 "PO-Revision-Date: 2008-02-08 14:07-0300\n"
 "Last-Translator: Leandro Nunes dos Santos <leandronunes@colivre.coop.br>\n"
 "Language-Team: Krishnamurti Lelis Lima Vieira Nunes <krishna@colivre.coop."
@@ -28,7 +28,7 @@ msgstr ""
 #: app/helpers/support/display_actions.rb:189
 #: app/helpers/support/display_actions.rb:313
 #: app/helpers/organizations_helper.rb:11 app/helpers/document_helper.rb:43
-#: app/helpers/application_helper.rb:610 app/helpers/application_helper.rb:751
+#: app/helpers/application_helper.rb:610 app/helpers/application_helper.rb:755
 #: app/views/cms/view.rhtml:57
 #: app/views/shared_payments/_ledgers_and_edit_on_table.rhtml:18
 #: app/views/shared_payments/_ledgers_and_edit_on_table.rhtml:27
@@ -145,7 +145,7 @@ msgid "Customers"
 msgstr "Consumidores"
 
 #: app/controllers/tabs/register.rb:21 app/models/product_display.rb:22
-#: app/models/category.rb:40 app/views/products/_form.rhtml:20
+#: app/models/category.rb:40 app/views/products/_form.rhtml:57
 msgid "Suppliers"
 msgstr "Fornecedores"
 
@@ -176,7 +176,7 @@ msgstr "Categoria contábil"
 #: app/helpers/documents_helper.rb:45
 #: app/helpers/support/display_actions.rb:312
 #: app/helpers/organizations_helper.rb:10 app/helpers/document_helper.rb:41
-#: app/helpers/application_helper.rb:750
+#: app/helpers/application_helper.rb:754
 #: app/views/shared_financial/_display_financial_table.rhtml:209
 #: app/views/stock_base/_display_stock_table.rhtml:22
 #: lib/document_information.rb:136
@@ -276,11 +276,11 @@ msgstr "Modelos"
 msgid "Documents"
 msgstr "Documentos"
 
-#: app/controllers/departments_controller.rb:54
+#: app/controllers/departments_controller.rb:51
 msgid "Department was successfully created."
 msgstr "Departamento criado com sucesso."
 
-#: app/controllers/departments_controller.rb:68
+#: app/controllers/departments_controller.rb:65
 msgid "Department was successfully updated."
 msgstr "Departamento atualizado com sucesso."
 
@@ -292,19 +292,19 @@ msgstr "A unidade foi criada com sucesso."
 msgid "The unit was successfully updated."
 msgstr "A unidade foi atualizada com sucesso."
 
-#: app/controllers/products_controller.rb:65
+#: app/controllers/products_controller.rb:66
 msgid "The product was successfully created."
 msgstr "O produto foi criado com sucesso."
 
-#: app/controllers/products_controller.rb:81
+#: app/controllers/products_controller.rb:83
 msgid "The product was not found"
 msgstr "Produto não encontrado"
 
-#: app/controllers/products_controller.rb:95
+#: app/controllers/products_controller.rb:98
 msgid "Product was successfully updated."
 msgstr "Produto atualizado com sucesso."
 
-#: app/controllers/products_controller.rb:122
+#: app/controllers/products_controller.rb:125
 msgid "Image was successfully added."
 msgstr "Imagem adicionada com sucesso."
 
@@ -650,7 +650,7 @@ msgstr "Cada produto deve pertencer a uma categoria"
 #: app/models/category_display.rb:9 app/models/ledger_category_display.rb:9
 #: app/models/unit_measure_display.rb:9 app/models/product_display.rb:16
 #: app/models/system_actor_display.rb:13 app/models/bank_display.rb:13
-#: app/models/document_display.rb:9 app/models/contact_display.rb:10
+#: app/models/document_display.rb:13 app/models/contact_display.rb:10
 #: app/models/article_display.rb:9 app/models/check_display.rb:19
 #: app/models/periodicity_display.rb:9 app/models/department_display.rb:9
 #: app/models/debit_card_display.rb:16 app/helpers/point_of_sale_helper.rb:10
@@ -1008,8 +1008,7 @@ msgstr "Valor"
 #: app/views/point_of_sale/_cash_form.rhtml:9
 #: app/views/configuration/new.rhtml:15
 #: app/views/organization/edit_contact.rhtml:35
-#: app/views/products/_form.rhtml:53 app/views/products/images.rhtml:18
-#: app/views/system_actors/_form.rhtml:69
+#: app/views/products/images.rhtml:18
 msgid "Description"
 msgstr "Descrição"
 
@@ -1629,22 +1628,21 @@ msgid "Street"
 msgstr "Rua"
 
 #: app/models/address_display.rb:13 app/views/stock/_form.rhtml:10
-#: app/views/organization/_form_address.rhtml:35
+#: app/views/organization/_form_address.rhtml:36
 msgid "Number"
 msgstr "Número "
 
 #: app/models/address_display.rb:14
-#: app/views/organization/_form_address.rhtml:53
 msgid "Complement"
 msgstr "Complemento"
 
 #: app/models/address_display.rb:15
-#: app/views/organization/_form_address.rhtml:41
+#: app/views/organization/_form_address.rhtml:42
 msgid "District"
 msgstr "Município"
 
 #: app/models/address_display.rb:16
-#: app/views/organization/_form_address.rhtml:47
+#: app/views/organization/_form_address.rhtml:48
 msgid "Zip Code"
 msgstr "CEP"
 
@@ -2491,7 +2489,7 @@ msgid "Juristic Person"
 msgstr "Pessoa Jurídica"
 
 #: app/models/system_actor.rb:49 app/models/document.rb:82
-#: app/models/document_display.rb:14 app/models/category.rb:43
+#: app/models/document_display.rb:18 app/models/category.rb:43
 #: app/models/organization.rb:140 app/views/sales/_sales_table.rhtml:4
 #: app/views/point_of_sale/_payment_form.rhtml:4
 #: app/views/documents/_form.rhtml:23 app/views/categories/_menu.rhtml:3
@@ -2500,7 +2498,7 @@ msgid "Customer"
 msgstr "Consumidor"
 
 #: app/models/system_actor.rb:50 app/models/document.rb:84
-#: app/models/document_display.rb:16 app/models/category.rb:41
+#: app/models/document_display.rb:20 app/models/category.rb:41
 #: app/views/documents/_form.rhtml:36 app/views/categories/_menu.rhtml:11
 #: app/views/categories/index.rhtml:6
 msgid "Worker"
@@ -2508,7 +2506,7 @@ msgstr "Trabalhador(a)"
 
 #: app/models/system_actor.rb:51 app/models/invoice_display.rb:11
 #: app/models/stock_buy_display.rb:10 app/models/document.rb:83
-#: app/models/document_display.rb:15 app/models/category.rb:39
+#: app/models/document_display.rb:19 app/models/category.rb:39
 #: app/models/stock_in_display.rb:10 app/views/stock/_form.rhtml:34
 #: app/views/documents/_form.rhtml:30
 #: app/views/stock_base/_display_stock_table.rhtml:4
@@ -2583,20 +2581,20 @@ msgstr "Você não pode criar uma devolução com estado diferente de confirmado
 msgid "Image"
 msgstr "Imagem"
 
-#: app/models/product_display.rb:17 app/views/products/_form.rhtml:28
+#: app/models/product_display.rb:17 app/views/products/_form.rhtml:19
 msgid "Size"
 msgstr "Tamanho"
 
-#: app/models/product_display.rb:18 app/views/products/_form.rhtml:40
+#: app/models/product_display.rb:18 app/views/products/_form.rhtml:32
 msgid "Color"
 msgstr "Cor"
 
 #: app/models/product_display.rb:19 app/models/stock_out_display.rb:11
-#: app/views/products/_form.rhtml:47
+#: app/views/products/_form.rhtml:38
 msgid "Sell Price"
 msgstr "Preço de venda"
 
-#: app/models/product_display.rb:20 app/views/products/_form.rhtml:34
+#: app/models/product_display.rb:20 app/views/products/_form.rhtml:25
 msgid "Unit"
 msgstr "Unidade"
 
@@ -2604,18 +2602,17 @@ msgstr "Unidade"
 msgid "Amount in Stock"
 msgstr "Quantidade em estoque"
 
-#: app/models/product_display.rb:24 app/views/products/_form.rhtml:59
+#: app/models/product_display.rb:24 app/views/products/_form.rhtml:45
 msgid "Minimum Amount"
 msgstr "Quantidade mínima"
 
 #: app/models/product_display.rb:25 app/models/system_actor_display.rb:23
-#: app/views/products/_form.rhtml:71 app/views/system_actors/_form.rhtml:75
 msgid "Additional Information"
 msgstr "Informação Adicional"
 
 #: app/models/product_display.rb:26 app/models/bank_display.rb:14
 #: app/views/banks/_form.rhtml:12 app/views/point_of_sale/_table.rhtml:7
-#: app/views/products/_form.rhtml:65
+#: app/views/products/_form.rhtml:51
 msgid "Code"
 msgstr "Código"
 
@@ -2814,7 +2811,7 @@ msgstr "Sítio Web"
 msgid "Subject"
 msgstr "Assunto"
 
-#: app/models/mass_mail_display.rb:10 app/models/document_display.rb:10
+#: app/models/mass_mail_display.rb:10 app/models/document_display.rb:14
 #: app/models/article_display.rb:10 app/views/documents/_form.rhtml:81
 #: app/views/shared_document/_document_form.rhtml:29
 #: app/views/mass_mails/_form.rhtml:16
@@ -2980,7 +2977,7 @@ msgid ""
 msgstr ""
 "%{fn} (a posição gerada para a página) está sendo utilizada por outra página."
 
-#: app/models/article.rb:13 app/models/document_display.rb:17
+#: app/models/article.rb:13 app/models/document_display.rb:21
 msgid "Tag list"
 msgstr "Lista de tags"
 
@@ -3040,17 +3037,17 @@ msgstr "Página"
 msgid "The name %{fn} for a product category was already taken."
 msgstr "O nome %{fn} para categoria de produto já foi usado."
 
-#: app/models/document_display.rb:11 app/models/organization.rb:144
+#: app/models/document_display.rb:15 app/models/organization.rb:144
 #: app/views/documents/_form.rhtml:14
 #: app/views/shared_document/_document_form.rhtml:15 lib/describe_menu.rb:19
 msgid "Departments"
 msgstr "Departamentos"
 
-#: app/models/document_display.rb:12
+#: app/models/document_display.rb:16
 msgid "Person/Organization Name"
 msgstr "Nome da Pessoa/Organização"
 
-#: app/models/document_display.rb:13
+#: app/models/document_display.rb:17
 msgid "Person/Organization Function"
 msgstr "Função da Pessoa/Organização"
 
@@ -3680,19 +3677,19 @@ msgid "Search"
 msgstr "Busca"
 
 #: app/helpers/stock_helper.rb:21 app/helpers/support/display_actions.rb:326
-#: app/helpers/application_helper.rb:764
+#: app/helpers/application_helper.rb:768
 msgid "New entry"
 msgstr "Nova entrada"
 
 #: app/helpers/stock_helper.rb:22 app/helpers/support/display_actions.rb:327
-#: app/helpers/application_helper.rb:765
+#: app/helpers/application_helper.rb:769
 msgid "History"
 msgstr "Histórico"
 
 #: app/helpers/documents_helper.rb:53
 #: app/helpers/support/display_actions.rb:314
 #: app/helpers/organizations_helper.rb:12 app/helpers/document_helper.rb:45
-#: app/helpers/application_helper.rb:54 app/helpers/application_helper.rb:752
+#: app/helpers/application_helper.rb:54 app/helpers/application_helper.rb:756
 #: app/views/customer_categories/_list.rhtml:5
 #: app/views/stock_base/_display_stock_table.rhtml:24
 #: app/views/contact_positions/list.rhtml:16
@@ -3704,7 +3701,7 @@ msgstr "Destruir"
 #: app/helpers/documents_helper.rb:57
 #: app/helpers/support/display_actions.rb:315
 #: app/helpers/organizations_helper.rb:13 app/helpers/document_helper.rb:47
-#: app/helpers/application_helper.rb:54 app/helpers/application_helper.rb:753
+#: app/helpers/application_helper.rb:54 app/helpers/application_helper.rb:757
 #: app/views/customer_categories/_list.rhtml:5
 #: app/views/stock_base/_display_stock_table.rhtml:24
 #: app/views/contact_positions/list.rhtml:16
@@ -3722,7 +3719,6 @@ msgstr "Novo documento"
 #: app/helpers/support/display_actions.rb:216
 #: app/helpers/application_helper.rb:614 app/views/organizations/show.rhtml:9
 #: app/views/configuration/edit.rhtml:17 app/views/tracker/edit.rhtml:7
-#: app/views/products/images.rhtml:28
 #: app/views/mass_mails/filter_categories.rhtml:8
 #: lib/document_information.rb:147
 msgid "Back"
@@ -3763,9 +3759,10 @@ msgid "Reset search"
 msgstr "Zerar pesquisa"
 
 #: app/helpers/support/display_actions.rb:217
-#: app/helpers/application_helper.rb:618 app/views/cms/new.rhtml:6
-#: app/views/cms/edit.rhtml:6 app/views/users/new.rhtml:5
-#: app/views/users/edit.rhtml:5 app/views/point_of_sale/_cash_form.rhtml:14
+#: app/helpers/application_helper.rb:618 app/helpers/application_helper.rb:622
+#: app/views/cms/new.rhtml:6 app/views/cms/edit.rhtml:6
+#: app/views/users/new.rhtml:5 app/views/users/edit.rhtml:5
+#: app/views/point_of_sale/_cash_form.rhtml:14
 #: app/views/point_of_sale/_form_open_till.rhtml:7
 #: app/views/document_items/_edit.rhtml:9
 #: app/views/customer_categories/edit.rhtml:6
@@ -3781,18 +3778,18 @@ msgid "Save"
 msgstr "Salvar"
 
 #: app/helpers/support/display_actions.rb:218
-#: app/helpers/application_helper.rb:622 app/views/departments/_new.rhtml:9
+#: app/helpers/application_helper.rb:626 app/views/departments/_new.rhtml:9
 #: app/views/products/_new.rhtml:9 app/views/system_actors/_new.rhtml:10
 msgid "Reset"
 msgstr "Reiniciar"
 
 #: app/helpers/support/display_actions.rb:270
-#: app/helpers/application_helper.rb:699
+#: app/helpers/application_helper.rb:703
 msgid "False"
 msgstr "Falso"
 
 #: app/helpers/support/display_actions.rb:274
-#: app/helpers/application_helper.rb:707
+#: app/helpers/application_helper.rb:711
 msgid "True"
 msgstr "Verdadeiro"
 
@@ -3836,15 +3833,15 @@ msgstr "Colivre"
 msgid "GPLv3"
 msgstr "GPLv3"
 
-#: app/helpers/application_helper.rb:799 app/views/cms/view.rhtml:53
+#: app/helpers/application_helper.rb:803 app/views/cms/view.rhtml:53
 msgid "Tags:"
 msgstr "Tags:"
 
-#: app/helpers/application_helper.rb:817
+#: app/helpers/application_helper.rb:821
 msgid "%d/%m/%Y: %T"
 msgstr "%d/%m/%Y: %T"
 
-#: app/helpers/application_helper.rb:817
+#: app/helpers/application_helper.rb:821
 msgid "%d/%m/%Y"
 msgstr "%d/%m/%Y"
 
@@ -3977,7 +3974,6 @@ msgstr "Telefone de contato"
 #: app/views/shared_payments/_table_ledgers.rhtml:26
 #: app/views/shared_payments/_ledgers_and_new_on_table.rhtml:27
 #: app/views/stock_buys/_invoice_new_items.rhtml:12
-#: app/views/products/images.rhtml:27
 msgid "Add"
 msgstr "Adicionar "
 
@@ -4667,180 +4663,182 @@ msgstr "Tem Modulo de Trabalhador"
 msgid "Worker Display Configuration"
 msgstr "Configuração da exibição do trabalhador"
 
-#: app/views/configuration/_form.rhtml:93
+#: app/views/configuration/_form.rhtml:94
 msgid "Has Worker Category Module"
 msgstr "Tem Módulo de Categoria de Trabalhador"
 
-#: app/views/configuration/_form.rhtml:105
+#: app/views/configuration/_form.rhtml:106
 #: app/views/organization_configuration/edit.rhtml:18
 msgid "Worker Category Display Configuration"
 msgstr "Configuração da exibição das categorias de trabalhadores"
 
-#: app/views/configuration/_form.rhtml:112
+#: app/views/configuration/_form.rhtml:113
 msgid "Has Customer Module"
 msgstr "Tem Módulo de Consumidor"
 
-#: app/views/configuration/_form.rhtml:124
+#: app/views/configuration/_form.rhtml:126
 #: app/views/organization_configuration/edit.rhtml:25
 msgid "Customer Display Configuration"
 msgstr "Configuração da exibição do consumidor"
 
-#: app/views/configuration/_form.rhtml:131
+#: app/views/configuration/_form.rhtml:134
 msgid "Has Customer Category Module"
 msgstr "Tem Módulo de Categoria do Cliente"
 
-#: app/views/configuration/_form.rhtml:143
+#: app/views/configuration/_form.rhtml:146
 #: app/views/organization_configuration/edit.rhtml:32
 msgid "Customer Category Display Configuration"
 msgstr "Configuração da exibição das categorias de consumidores"
 
-#: app/views/configuration/_form.rhtml:150
+#: app/views/configuration/_form.rhtml:153
 msgid "Has Supplier Module"
 msgstr "Tem Módulo de Fornecedor"
 
-#: app/views/configuration/_form.rhtml:162
+#: app/views/configuration/_form.rhtml:166
 #: app/views/organization_configuration/edit.rhtml:39
 msgid "Supplier Display Configuration"
 msgstr "Configuração da exibição do fornecedor"
 
-#: app/views/configuration/_form.rhtml:170
+#: app/views/configuration/_form.rhtml:175
 msgid "Has Supplier Category Module"
 msgstr "Tem Módulo de Categoria de Fornecedor"
 
-#: app/views/configuration/_form.rhtml:182
+#: app/views/configuration/_form.rhtml:187
 #: app/views/organization_configuration/edit.rhtml:46
 msgid "Supplier Category Display Configuration"
 msgstr "Configuração da exibição das categorias de fornecedores"
 
-#: app/views/configuration/_form.rhtml:189
+#: app/views/configuration/_form.rhtml:194
 msgid "Has Product Module"
 msgstr "Tem Módulo de produto"
 
-#: app/views/configuration/_form.rhtml:201
+#: app/views/configuration/_form.rhtml:207
 #: app/views/organization_configuration/edit.rhtml:53
 msgid "Product Display Configuration"
 msgstr "Configuração da exibição do produto"
 
-#: app/views/configuration/_form.rhtml:208
+#: app/views/configuration/_form.rhtml:215
 msgid "Has Product Category Module"
 msgstr "Tem Módulo Categoria de Produto"
 
-#: app/views/configuration/_form.rhtml:220
+#: app/views/configuration/_form.rhtml:228
 #: app/views/organization_configuration/edit.rhtml:60
 msgid "Product Category Display Configuration"
 msgstr "Configuração da exibição das categorias de produtos"
 
-#: app/views/configuration/_form.rhtml:227
+#: app/views/configuration/_form.rhtml:236
 msgid "Has Department Module"
 msgstr "Tem Módulo de Departamento"
 
-#: app/views/configuration/_form.rhtml:239
+#: app/views/configuration/_form.rhtml:249
 #: app/views/organization_configuration/edit.rhtml:67
 msgid "Department Display Configuration"
 msgstr "Configuração da exibição do departamento"
 
-#: app/views/configuration/_form.rhtml:246
+#: app/views/configuration/_form.rhtml:257
 msgid "Has Ledger Category Module"
 msgstr "Tem Módulo de Categoria Contábil"
 
-#: app/views/configuration/_form.rhtml:258
+#: app/views/configuration/_form.rhtml:270
 #: app/views/organization_configuration/edit.rhtml:74
 msgid "Ledger Category Display Configuration"
 msgstr "Configuração da Exibição das Categorias de Lançamentos"
 
-#: app/views/configuration/_form.rhtml:265
-msgid "Has BankAccount Module"
+#: app/views/configuration/_form.rhtml:278
+#, fuzzy
+msgid "Has Bank Account Module"
 msgstr "Tem Módulo de Conta Bancária"
 
-#: app/views/configuration/_form.rhtml:277
-msgid "BankAccount Display Configuration"
-msgstr "Configuração da exibição de conta bancária"
+#: app/views/configuration/_form.rhtml:291
+#: app/views/organization_configuration/edit.rhtml:81
+msgid "Bank Account Display Configuration"
+msgstr "Configuração de Exibição de Conta Bancária"
 
-#: app/views/configuration/_form.rhtml:285
+#: app/views/configuration/_form.rhtml:300
 msgid "Has Money Module"
 msgstr "Tem Módulo de Dinheiro"
 
-#: app/views/configuration/_form.rhtml:297
+#: app/views/configuration/_form.rhtml:314
 #: app/views/organization_configuration/edit.rhtml:88
 msgid "Money Display Configuration"
 msgstr "Configuração da exibição de dinheiro"
 
-#: app/views/configuration/_form.rhtml:304
+#: app/views/configuration/_form.rhtml:322
 msgid "Has Check Module"
 msgstr "Tem Módulo de Cheque"
 
-#: app/views/configuration/_form.rhtml:316
+#: app/views/configuration/_form.rhtml:335
 #: app/views/organization_configuration/edit.rhtml:95
 msgid "Check Display Configuration"
 msgstr "Configuração da exibição de cheque"
 
-#: app/views/configuration/_form.rhtml:323
+#: app/views/configuration/_form.rhtml:343
 msgid "Has CreditCard Module"
 msgstr "Tem Módulo de Cartão de Crédito"
 
-#: app/views/configuration/_form.rhtml:335
+#: app/views/configuration/_form.rhtml:356
 #: app/views/organization_configuration/edit.rhtml:102
 msgid "Credit Card Display Configuration"
 msgstr "Configuração da exibição de cartão de crédito"
 
-#: app/views/configuration/_form.rhtml:343
+#: app/views/configuration/_form.rhtml:365
 msgid "Has DebitCard Module"
 msgstr "Tem Módulo de Cartão de Débito"
 
-#: app/views/configuration/_form.rhtml:355
+#: app/views/configuration/_form.rhtml:378
 msgid "DebitCard Display Configuration"
 msgstr "Configuração da Exibição de Cartão de Débito"
 
-#: app/views/configuration/_form.rhtml:363
+#: app/views/configuration/_form.rhtml:387
 msgid "Has Stock Virtual Module"
 msgstr "Tem Módulo de Estoque Virtual"
 
-#: app/views/configuration/_form.rhtml:375
+#: app/views/configuration/_form.rhtml:400
 #: app/views/organization_configuration/edit.rhtml:116
 msgid "Stock Virtual Display Configuration"
 msgstr "Configuração da exibição de estoque virtual"
 
-#: app/views/configuration/_form.rhtml:383
+#: app/views/configuration/_form.rhtml:409
 msgid "Has Stock In Module"
 msgstr "Tem Módulo de Entrada de Estoque"
 
-#: app/views/configuration/_form.rhtml:395
+#: app/views/configuration/_form.rhtml:422
 #: app/views/organization_configuration/edit.rhtml:123
 msgid "Stock In Display Configuration"
 msgstr "Configuração da exibição de entrada de estoque"
 
-#: app/views/configuration/_form.rhtml:402
+#: app/views/configuration/_form.rhtml:430
 msgid "Has Stock Out Module"
 msgstr "Tem Módulo de Saída de Estoque"
 
-#: app/views/configuration/_form.rhtml:414
+#: app/views/configuration/_form.rhtml:443
 #: app/views/organization_configuration/edit.rhtml:130
 msgid "Stock Out Display Configuration"
 msgstr "Configuração da exibição de saída de estoque"
 
-#: app/views/configuration/_form.rhtml:421
+#: app/views/configuration/_form.rhtml:451
 msgid "Has User Module"
 msgstr "Tem Módulo de Usuário"
 
-#: app/views/configuration/_form.rhtml:433
+#: app/views/configuration/_form.rhtml:464
 #: app/views/organization_configuration/edit.rhtml:137
 msgid "User Display Configuration"
 msgstr "Configuração da exibição de usuário"
 
-#: app/views/configuration/_form.rhtml:440
+#: app/views/configuration/_form.rhtml:472
 msgid "Has Periodicity Module"
 msgstr "Tem Módulo de Periodicidade"
 
-#: app/views/configuration/_form.rhtml:452
+#: app/views/configuration/_form.rhtml:485
 #: app/views/organization_configuration/edit.rhtml:144
 msgid "Periodicity Display Configuration"
 msgstr "Configuração da exibição de periodicidade"
 
-#: app/views/configuration/_form.rhtml:460
+#: app/views/configuration/_form.rhtml:494
 msgid "Has Document Module"
 msgstr "Tem Módulo de Documento"
 
-#: app/views/configuration/_form.rhtml:472
+#: app/views/configuration/_form.rhtml:507
 #: app/views/organization_configuration/edit.rhtml:151
 msgid "Document Display Configuration"
 msgstr "Configuração da Exibição de Documento"
@@ -5101,6 +5099,11 @@ msgstr "Adicionar Imagem"
 msgid "Image file"
 msgstr "Arquivo de imagem"
 
+#: app/views/products/_list_images.rhtml:2
+#, fuzzy
+msgid "All Images"
+msgstr "Imagens"
+
 #: app/views/products/_new_stock_entry.rhtml:38
 msgid "Payment status ok?"
 msgstr "Estado do pagamento OK?"
@@ -5260,10 +5263,6 @@ msgstr "Configuração dos Campos de %s"
 msgid "Editing Fields Configuration of %s"
 msgstr "Editando Configuração dos Campos de %s"
 
-#: app/views/organization_configuration/edit.rhtml:81
-msgid "Bank Account Display Configuration"
-msgstr "Configuração de Exibição de Conta Bancária"
-
 #: app/views/organization_configuration/edit.rhtml:109
 msgid "Debit Card Display Configuration"
 msgstr "Configuração da exibição de cartão de débito"
@@ -5341,6 +5340,9 @@ msgstr "Loja"
 #: lib/describe_menu.rb:17
 msgid "Administration of users"
 msgstr "Administração de usuários"
+
+#~ msgid "BankAccount Display Configuration"
+#~ msgstr "Configuração da exibição de conta bancária"
 
 #~ msgid "Contact|System actor"
 #~ msgstr "Ator do sistema"

@@ -61,19 +61,14 @@
 
   <%= display_field_edit(item, 'category',
         :title => _('Category'),
-        :content => select_category('system_actor', @actor)
+        :content => select_category('system_actor', @actor),
+	:html_options => {:class => 'break_line'}
       )
   %>
 
   <%= display_field_edit(item, 'description',
-        :title => _('Description'),
-        :content => text_field('system_actor', 'description')
-      )
-  %>
-
-  <%= display_field_edit(item, 'info',
-        :title => _('Additional Information'),
-        :content => rich_text_editor('system_actor', 'info')
+        :content => rich_text_editor('system_actor', 'info'),
+	:html_options => {:class => 'break_line'}
       )
   %>
 

@@ -1,0 +1,17 @@
+<%= beta_info %>
+
+<%= title _('SINTEGRA') %>
+
+<% form_tag( :action => 'generate' ) do %>
+  <p>
+    <label for="sintegra_month">Month:</label><br>
+    <%= select_month(Date.today, :use_month_numbers => true) %>
+  </p>
+  <p>
+    <label for="sintegra_year">Year:</label><br>
+      <%= select_year(Date.today) %>
+  </p>
+
+  <%= submit_tag _("Create") %>
+<% end %>
+

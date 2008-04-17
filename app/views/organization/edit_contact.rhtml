@@ -1,0 +1,52 @@
+<%= title _('Editing Organization Contact') %>
+
+<% form_tag :action => 'update_contact' do %>
+
+  <%= error_messages_for 'contact' %>
+
+<!--[form:address]-->
+  <% display_form_info @contact do |item| %>
+
+    <%= display_field_form(item, 'name',
+          :title => _('Organization Responsible'),
+          :content => text_field('contact', 'name')
+        )
+    %>
+
+    <%= display_field_form(item, 'phone',
+          :title => _('Phone'),
+          :content => text_field('contact', 'phone')
+        )
+    %>
+
+    <%= display_field_form(item, 'fax',
+          :title => _('Fax'),
+          :content => text_field('contact', 'fax')
+        )
+    %>
+
+    <%= display_field_form(item, 'email',
+          :title => _('Email'),
+          :content => text_field('contact', 'email')
+        )
+    %>
+
+    <%= display_field_form(item, 'description',
+          :title => _('Description'),
+          :content => text_field('contact', 'description')
+        )
+    %>
+
+  <% end %>
+  <!--[eoform:address]-->
+
+    <%= content_tag(:div,
+          [
+            display_back_button({:action => 'contact'}),
+            display_save_button,
+            display_reset_button,
+          ].join("\n"),
+          display_html_options
+        )
+   %>
+<% end %>

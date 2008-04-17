@@ -11,15 +11,15 @@ ActionController::Routing::Routes.draw do |map|
 
   # Allow downloading Web Service WSDL as a file with an extension
   # instead of a file named 'wsdl'
-  map.connect ':controller/service.wsdl', :action => 'wsdl'
+  #map.connect ':controller/service.wsdl', :action => 'wsdl'
+
+  # documentation browser
+  map.connect 'doc', :controller => 'doc'
 
   # You can have the root of your site routed by hooking up '' 
   # -- just remember to delete public/index.html.
   map.connect '', :controller => 'users'
   map.connect 'public', :controller => 'public'
-
-  # documentation browser
-  map.connect 'doc', :controller => 'doc'
 
 
 #FIXME se if it's needed

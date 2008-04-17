@@ -1,9 +1,11 @@
 class Contact < ActiveRecord::Base
 
-  #FIXME We have to refactoring this funtionality
+  #FIXME make the test for all model
+  belongs_to :owner, :polymorphic => true
 
-  validates_presence_of :name
-  validates_presence_of :system_actor_id, :message => 'Every contact must be associated to an actor'
-  validates_presence_of :category_id, :message => 'Every contact must belongs to a cetegory'
-  belongs_to :system_actor
+  #FIXME make this test
+  def responsible
+    self.name
+  end
+
 end

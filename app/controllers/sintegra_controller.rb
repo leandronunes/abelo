@@ -4,29 +4,12 @@ class SintegraController < ApplicationController
 
   uses_sales_tabs
 
-  def index
-    redirect_to :action => 'configure_sintegra'
-  end
-
-  def configure_sintegra
-    @sintegra = Sintegra.new(@organization)
-  end
-
-  def build_file
-    @sintegra = Sintegra.new(@organization, params[:date][:month], params[:date][:year])
-    send_file(@sintegra.generate_sintegra.path,
+  def generate
+    sintegra = SintegraGenerator.new(:organization => @organization, :month => params[:date][:month], :year => params[:date][:year])
+    send_file(sintegra.generate.path,
           :disposition => 'downloaded',
           :type => 'text',
-          :filename => "sintegra.txt")
-
-    #render :text => params.inspect
-    #return
-#    if @sintegra.generate_sintegra
-#      flash[:notice] = _('Sintegra File was successfully created.')
-#      redirect_to :action => 'configure_sintegra'
-#    else
-#      render :action => 'configure_sintegra'
-#    end
+          :filename => sintegra.filename)
   end
 
 end

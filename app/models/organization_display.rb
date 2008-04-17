@@ -1,7 +1,7 @@
 class OrganizationDisplay < DisplayConfiguration
 
   def self.available_fields
-    ['name', 'cnpj', 'presentation', 'country']
+    ['name', 'cnpj', 'country', 'presentation']
   end
 
   def self.describe(field)
@@ -14,7 +14,7 @@ class OrganizationDisplay < DisplayConfiguration
   end
 
   def self.inlist_available_fields
-    ['presentation', 'name', 'cnpj', 'country']
+    ['name', 'cnpj', 'country']
   end
 
   def self.break_lines

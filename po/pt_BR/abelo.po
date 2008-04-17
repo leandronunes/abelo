@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: abelo 0.6.0\n"
-"POT-Creation-Date: 2008-04-12 21:32-0300\n"
+"POT-Creation-Date: 2008-04-17 15:32-0300\n"
 "PO-Revision-Date: 2008-02-08 14:07-0300\n"
 "Last-Translator: Leandro Nunes dos Santos <leandronunes@colivre.coop.br>\n"
 "Language-Team: Krishnamurti Lelis Lima Vieira Nunes <krishna@colivre.coop."
@@ -38,13 +38,13 @@ msgstr ""
 #: app/views/document_items/_list.rhtml:5
 #: app/views/customer_categories/_list.rhtml:4
 #: app/views/organizations/show.rhtml:10 app/views/configuration/show.rhtml:10
-#: app/views/organization/index.rhtml:1 app/views/tracker/show.rhtml:6
+#: app/views/organization/index.rhtml:1 app/views/tracker/show.rhtml:14
 #: app/views/stock_base/_display_stock_table.rhtml:23
 #: app/views/stock_buys/_invoice_table_items.rhtml:16
 #: app/views/stock_buys/_invoice_edit_items.rhtml:11
 #: app/views/contact_positions/list.rhtml:15
 #: app/views/product_categories/_list.rhtml:4
-#: app/views/mass_mails/show.rhtml:13 app/views/categories/_list.rhtml:4
+#: app/views/categories/_list.rhtml:4
 #: app/views/organization_configuration/show.rhtml:263
 #: lib/document_information.rb:137 lib/document_information.rb:148
 msgid "Edit"
@@ -77,44 +77,15 @@ msgstr "Menu da Página"
 msgid "Manage Links"
 msgstr "Gerenciar Atalhos"
 
-#: app/controllers/system_actors_controller.rb:19
-#: app/models/system_actor.rb:49 app/models/document.rb:82
-#: app/models/document_display.rb:14 app/models/category.rb:43
-#: app/models/organization.rb:122 app/views/sales/_sales_table.rhtml:4
-#: app/views/point_of_sale/_payment_form.rhtml:4
-#: app/views/documents/_form.rhtml:23 app/views/categories/_menu.rhtml:3
-#: app/views/categories/index.rhtml:5
-msgid "Customer"
-msgstr "Consumidor"
-
-#: app/controllers/system_actors_controller.rb:20
-#: app/controllers/tabs/register.rb:7 app/models/category.rb:42
-msgid "Workers"
-msgstr "Trabalhadores"
-
-#: app/controllers/system_actors_controller.rb:21
-#: app/models/system_actor.rb:51 app/models/invoice_display.rb:11
-#: app/models/stock_buy_display.rb:10 app/models/document.rb:83
-#: app/models/document_display.rb:15 app/models/category.rb:39
-#: app/models/stock_in_display.rb:10 app/views/stock/_form.rhtml:34
-#: app/views/documents/_form.rhtml:30
-#: app/views/stock_base/_display_stock_table.rhtml:4
-#: app/views/stock_buys/_form.rhtml:21 app/views/stock_ins/_form.rhtml:20
-#: app/views/stock_ins/_extended_form.rhtml:26
-#: app/views/products/_new_stock_entry.rhtml:8
-#: app/views/categories/_menu.rhtml:15
-msgid "Supplier"
-msgstr "Fornecedor"
-
-#: app/controllers/system_actors_controller.rb:109
+#: app/controllers/system_actors_controller.rb:103
 msgid "%s was successfully created."
 msgstr "%s foi criado com sucesso."
 
-#: app/controllers/system_actors_controller.rb:127
+#: app/controllers/system_actors_controller.rb:121
 msgid "%s was successfully updated."
 msgstr "%s foi atualizado com sucesso."
 
-#: app/controllers/system_actors_controller.rb:164
+#: app/controllers/system_actors_controller.rb:158
 msgid "This actor it's not valid"
 msgstr "Este ator não é válido"
 
@@ -163,8 +134,12 @@ msgstr "Impressoras Fiscais"
 msgid "Tracker"
 msgstr "Pontos"
 
+#: app/controllers/tabs/register.rb:7 app/models/category.rb:42
+msgid "Workers"
+msgstr "Trabalhadores"
+
 #: app/controllers/tabs/register.rb:14 app/models/category.rb:44
-#: app/models/organization.rb:127 app/views/products/show.rhtml:6
+#: app/models/organization.rb:145 app/views/products/show.rhtml:6
 #: app/views/mass_mails/filter_customers.rhtml:2
 msgid "Customers"
 msgstr "Consumidores"
@@ -175,7 +150,7 @@ msgid "Suppliers"
 msgstr "Fornecedores"
 
 #: app/controllers/tabs/register.rb:28 app/models/category.rb:38
-#: app/models/organization.rb:125 app/views/system_actors/_menu.rhtml:6
+#: app/models/organization.rb:143 app/views/system_actors/_menu.rhtml:6
 msgid "Products"
 msgstr "Produtos"
 
@@ -218,7 +193,7 @@ msgid "Users and Permissions"
 msgstr "Usuários e Permissões"
 
 #: app/controllers/tabs/admin_organization.rb:45
-#: app/models/organization.rb:124 app/helpers/support/menu.rb:26
+#: app/models/organization.rb:142 app/helpers/support/menu.rb:26
 #: app/helpers/support/menu.rb:35 app/views/users/_admin.rhtml:6
 #: app/views/public/index.rhtml:8 lib/describe_menu.rb:20
 msgid "Organizations"
@@ -369,15 +344,20 @@ msgstr "Categoria atualizada com sucesso."
 msgid "Welcome to Abelo System"
 msgstr "Bem-Vindo ao Sistema Abelo"
 
-#: app/controllers/organization_controller.rb:53
+#: app/controllers/organization_controller.rb:73
 msgid "Presentation"
 msgstr "Apresentação"
 
-#: app/controllers/organization_controller.rb:62
+#: app/controllers/organization_controller.rb:82
 #: app/models/system_actor_display.rb:14
 #: app/views/system_actors/_form.rhtml:50
 msgid "Address"
 msgstr "Endereço"
+
+#: app/controllers/organization_controller.rb:91
+#, fuzzy
+msgid "Contacts"
+msgstr "Contatos:"
 
 #: app/controllers/ledgers_controller.rb:101
 msgid "The ledger was successfully created"
@@ -395,6 +375,13 @@ msgstr "Pontos foram atualizados com sucesso."
 msgid "Tracker was not updated."
 msgstr "Pontos não foram atualizados."
 
+#: app/controllers/tracker_controller.rb:45
+#: app/controllers/tracker_controller.rb:46
+#: app/controllers/tracker_organization_controller.rb:27
+#: app/controllers/tracker_organization_controller.rb:28
+msgid "Used Points"
+msgstr "Pontos Usados"
+
 #: app/controllers/public_controller.rb:24
 #: app/controllers/users_controller.rb:108
 msgid "User was successfully updated."
@@ -409,7 +396,7 @@ msgid "The user %s don't have permissions to cancel a coupon."
 msgstr "O usuário %s não tem permissão para cancelar um cupom."
 
 #: app/controllers/point_of_sale_controller.rb:41
-#: app/views/system_actors/show.rhtml:4
+#: app/views/mass_mails/show.rhtml:1 app/views/system_actors/show.rhtml:4
 msgid "%s"
 msgstr "%s"
 
@@ -544,13 +531,8 @@ msgid ""
 "This system only works properly with firefox navigator. Click here o get it "
 "now."
 msgstr ""
-"Este sistema funciona somente com o navegador firefox. Clique aqui para instalar "
-"agora."
-
-#: app/controllers/tracker_organization_controller.rb:27
-#: app/controllers/tracker_organization_controller.rb:28
-msgid "Used Points"
-msgstr "Pontos Usados"
+"Este sistema funciona somente com o navegador firefox. Clique aqui para "
+"instalar agora."
 
 #: app/controllers/stock_devolutions_controller.rb:36
 msgid "Stock Devolution Control"
@@ -668,11 +650,11 @@ msgstr "Cada produto deve pertencer a uma categoria"
 #: app/models/category_display.rb:9 app/models/ledger_category_display.rb:9
 #: app/models/unit_measure_display.rb:9 app/models/product_display.rb:16
 #: app/models/system_actor_display.rb:13 app/models/bank_display.rb:13
-#: app/models/document_display.rb:9 app/models/article_display.rb:9
-#: app/models/check_display.rb:19 app/models/periodicity_display.rb:9
-#: app/models/department_display.rb:9 app/models/debit_card_display.rb:16
-#: app/helpers/point_of_sale_helper.rb:10 app/views/cms/_form.rhtml:9
-#: app/views/fiscal_printer/_form.rhtml:8
+#: app/models/document_display.rb:9 app/models/contact_display.rb:10
+#: app/models/article_display.rb:9 app/models/check_display.rb:19
+#: app/models/periodicity_display.rb:9 app/models/department_display.rb:9
+#: app/models/debit_card_display.rb:16 app/helpers/point_of_sale_helper.rb:10
+#: app/views/cms/_form.rhtml:9 app/views/fiscal_printer/_form.rhtml:8
 #: app/views/shared_payments/_payment_credit_card.rhtml:22
 #: app/views/shared_payments/_payment_check.rhtml:10
 #: app/views/shared_payments/_payment_debit_card_on_table.rhtml:16
@@ -772,7 +754,7 @@ msgid "Pending Reduction Z"
 msgstr "Redução Pendente Z"
 
 #: app/models/stock_virtual_display.rb:9 app/models/stock_display.rb:11
-#: app/models/category.rb:37 app/models/organization.rb:120
+#: app/models/category.rb:37 app/models/organization.rb:138
 #: app/views/point_of_sale/_table.rhtml:8
 #: app/views/stock_base/_extended_form.rhtml:9
 #: app/views/stock_base/_display_stock_table.rhtml:6
@@ -1017,14 +999,17 @@ msgid "Value"
 msgstr "Valor"
 
 #: app/models/ledger_display.rb:29 app/models/system_actor_display.rb:21
+#: app/models/contact_display.rb:13
 #: app/views/shared_payments/_ledgers_and_edit_on_table.rhtml:7
 #: app/views/shared_payments/_table_ledgers.rhtml:7
 #: app/views/shared_payments/_ledgers_and_new_on_table.rhtml:7
 #: app/views/ledgers/_schedule_ledgers.rhtml:10
 #: app/views/shared_financial/_display_financial_table.rhtml:166
 #: app/views/point_of_sale/_cash_form.rhtml:9
-#: app/views/configuration/new.rhtml:15 app/views/products/_form.rhtml:53
-#: app/views/products/images.rhtml:18 app/views/system_actors/_form.rhtml:69
+#: app/views/configuration/new.rhtml:15
+#: app/views/organization/edit_contact.rhtml:35
+#: app/views/products/_form.rhtml:53 app/views/products/images.rhtml:18
+#: app/views/system_actors/_form.rhtml:69
 msgid "Description"
 msgstr "Descrição"
 
@@ -1382,6 +1367,16 @@ msgid "Contact|Phone"
 msgstr "Fone"
 
 #: app/models/contact.rb:-
+#, fuzzy
+msgid "Contact|Cell phone"
+msgstr "Fone"
+
+#: app/models/contact.rb:-
+#, fuzzy
+msgid "Contact|Fax"
+msgstr "Nome "
+
+#: app/models/contact.rb:-
 msgid "Contact|Email"
 msgstr "Email"
 
@@ -1390,16 +1385,18 @@ msgid "Contact|Description"
 msgstr "Descrição"
 
 #: app/models/contact.rb:-
-msgid "Contact|System actor"
-msgstr "Ator do sistema"
-
-#: app/models/contact.rb:-
 msgid "Contact|Category"
 msgstr "Categoria"
 
 #: app/models/contact.rb:-
-msgid "Contact|Info"
-msgstr "Informação"
+#, fuzzy
+msgid "Contact|Owner type"
+msgstr "Tipo de dono"
+
+#: app/models/contact.rb:-
+#, fuzzy
+msgid "Contact|Owner"
+msgstr "Fone"
 
 #: app/models/tracker.rb:-
 msgid "tracker"
@@ -1707,6 +1704,14 @@ msgstr "EmailEmMassa|Corpo"
 #: app/models/mass_mail.rb:-
 msgid "MassMail|Organization"
 msgstr "EmailEmMassa|Organização"
+
+#: app/models/mass_mail.rb:11
+msgid "All"
+msgstr ""
+
+#: app/models/mass_mail.rb:12
+msgid "Groups"
+msgstr ""
 
 #: app/models/color.rb:-
 msgid "color"
@@ -2485,12 +2490,34 @@ msgstr "Pessoa física"
 msgid "Juristic Person"
 msgstr "Pessoa Jurídica"
 
+#: app/models/system_actor.rb:49 app/models/document.rb:82
+#: app/models/document_display.rb:14 app/models/category.rb:43
+#: app/models/organization.rb:140 app/views/sales/_sales_table.rhtml:4
+#: app/views/point_of_sale/_payment_form.rhtml:4
+#: app/views/documents/_form.rhtml:23 app/views/categories/_menu.rhtml:3
+#: app/views/categories/index.rhtml:5
+msgid "Customer"
+msgstr "Consumidor"
+
 #: app/models/system_actor.rb:50 app/models/document.rb:84
 #: app/models/document_display.rb:16 app/models/category.rb:41
 #: app/views/documents/_form.rhtml:36 app/views/categories/_menu.rhtml:11
 #: app/views/categories/index.rhtml:6
 msgid "Worker"
 msgstr "Trabalhador(a)"
+
+#: app/models/system_actor.rb:51 app/models/invoice_display.rb:11
+#: app/models/stock_buy_display.rb:10 app/models/document.rb:83
+#: app/models/document_display.rb:15 app/models/category.rb:39
+#: app/models/stock_in_display.rb:10 app/views/stock/_form.rhtml:34
+#: app/views/documents/_form.rhtml:30
+#: app/views/stock_base/_display_stock_table.rhtml:4
+#: app/views/stock_buys/_form.rhtml:21 app/views/stock_ins/_form.rhtml:20
+#: app/views/stock_ins/_extended_form.rhtml:26
+#: app/views/products/_new_stock_entry.rhtml:8
+#: app/views/categories/_menu.rhtml:15
+msgid "Supplier"
+msgstr "Fornecedor"
 
 #: app/models/invoice.rb:-
 msgid "invoice"
@@ -2688,7 +2715,8 @@ msgstr "Modelo"
 msgid "Buy Price"
 msgstr "Preço de Compra"
 
-#: app/models/system_actor_display.rb:15 app/views/users/_form.rhtml:6
+#: app/models/system_actor_display.rb:15 app/models/contact_display.rb:11
+#: app/views/users/_form.rhtml:6 app/views/organization/edit_contact.rhtml:29
 #: app/views/system_actors/_form.rhtml:57
 msgid "Email"
 msgstr "Email"
@@ -2950,8 +2978,7 @@ msgid ""
 "%{fn} (the position generated to the page) is already being used by another "
 "page."
 msgstr ""
-"%{fn} (a posição gerada para a página) está sendo utilizada por outra "
-"página."
+"%{fn} (a posição gerada para a página) está sendo utilizada por outra página."
 
 #: app/models/article.rb:13 app/models/document_display.rb:17
 msgid "Tag list"
@@ -3013,7 +3040,7 @@ msgstr "Página"
 msgid "The name %{fn} for a product category was already taken."
 msgstr "O nome %{fn} para categoria de produto já foi usado."
 
-#: app/models/document_display.rb:11 app/models/organization.rb:126
+#: app/models/document_display.rb:11 app/models/organization.rb:144
 #: app/views/documents/_form.rhtml:14
 #: app/views/shared_document/_document_form.rhtml:15 lib/describe_menu.rb:19
 msgid "Departments"
@@ -3026,6 +3053,17 @@ msgstr "Nome da Pessoa/Organização"
 #: app/models/document_display.rb:13
 msgid "Person/Organization Function"
 msgstr "Função da Pessoa/Organização"
+
+#: app/models/contact_display.rb:12
+#: app/views/organization/edit_contact.rhtml:17
+#, fuzzy
+msgid "Phone"
+msgstr "Fone:"
+
+#: app/models/contact_display.rb:14
+#: app/views/organization/edit_contact.rhtml:23
+msgid "Fax"
+msgstr ""
 
 #: app/models/check_display.rb:23
 #: app/views/shared_payments/_payment_check.rhtml:28
@@ -3516,32 +3554,32 @@ msgstr "Organização|Registro Estadual"
 msgid "Organization|Responsible person"
 msgstr "Organização|Pessoa Responsável"
 
-#: app/models/organization.rb:90
+#: app/models/organization.rb:97
 msgid "%{fn} is not valid."
 msgstr "%{fn} não é válido."
 
-#: app/models/organization.rb:119
+#: app/models/organization.rb:137
 msgid "Organization"
 msgstr "Organização"
 
-#: app/models/organization.rb:121
+#: app/models/organization.rb:139
 msgid "Department"
 msgstr "Departamento"
 
-#: app/models/organization.rb:123
+#: app/models/organization.rb:141
 msgid "Commercial Proposal"
 msgstr "Proposta Comercial"
 
-#: app/models/organization.rb:128
+#: app/models/organization.rb:146
 msgid "Commercial Proposals"
 msgstr "Propostas Comerciais"
 
-#: app/models/organization.rb:147
+#: app/models/organization.rb:165
 msgid "You cannot change the organization properties on demonstration version"
 msgstr ""
 "Você não pode mudar as propriedades da organização na versão de demonstração"
 
-#: app/models/organization.rb:175
+#: app/models/organization.rb:195
 msgid "An existing organization cannot be renamed."
 msgstr "Uma organização existente não pode ser renomeada."
 
@@ -3684,7 +3722,7 @@ msgstr "Novo documento"
 #: app/helpers/support/display_actions.rb:216
 #: app/helpers/application_helper.rb:614 app/views/organizations/show.rhtml:9
 #: app/views/configuration/edit.rhtml:17 app/views/tracker/edit.rhtml:7
-#: app/views/products/images.rhtml:28 app/views/mass_mails/show.rhtml:14
+#: app/views/products/images.rhtml:28
 #: app/views/mass_mails/filter_categories.rhtml:8
 #: lib/document_information.rb:147
 msgid "Back"
@@ -4277,11 +4315,12 @@ msgid "Edit Ledger Category"
 msgstr "Editar Categoria de Lançamento"
 
 #: app/views/sintegra/configure_sintegra.rhtml:3
+#: app/views/sintegra/index.rhtml:3
 msgid "SINTEGRA"
 msgstr "SINTEGRA"
 
 #: app/views/sintegra/configure_sintegra.rhtml:15
-#: app/views/customer_categories/new.rhtml:6
+#: app/views/sintegra/index.rhtml:15 app/views/customer_categories/new.rhtml:6
 #: app/views/departments/_new.rhtml:8 app/views/contact_positions/new.rhtml:6
 #: app/views/product_categories/new.rhtml:6 app/views/products/_new.rhtml:8
 #: app/views/system_actors/_new.rhtml:9
@@ -4814,16 +4853,32 @@ msgstr "Editando Configuração %s"
 msgid "Editing Configuration of Organization %s"
 msgstr "Editando Configurações da Organização %s"
 
+#: app/views/organization/contact.rhtml:2
+#, fuzzy
+msgid "Organization Contact"
+msgstr "Nome da Organização"
+
 #: app/views/organization/address.rhtml:1
 msgid "Organization Address"
 msgstr "Endereço da Organização"
+
+#: app/views/organization/edit_contact.rhtml:1
+#, fuzzy
+msgid "Editing Organization Contact"
+msgstr "Editando Organização %s"
+
+#: app/views/organization/edit_contact.rhtml:11
+#, fuzzy
+msgid "Organization Responsible"
+msgstr "Organização|Pessoa Responsável"
 
 #: app/views/organization/edit_address.rhtml:1
 msgid "Editing Organization Address"
 msgstr "Editando Endereço da Organização"
 
 #: app/views/organization/edit.rhtml:1
-msgid "Editing Presetation"
+#, fuzzy
+msgid "Editing Presentation"
 msgstr "Editando Apresentação"
 
 #: app/views/tracker/show.rhtml:1 app/views/tracker/edit.rhtml:1
@@ -5091,17 +5146,10 @@ msgstr "Enviado com sucesso!"
 msgid "Listing mass mail"
 msgstr "Listando email em massa"
 
-#: app/views/mass_mails/show.rhtml:4
-msgid "Body:"
-msgstr "Corpo:"
-
 #: app/views/mass_mails/show.rhtml:8
-msgid "Send to: "
-msgstr "Para:"
-
-#: app/views/mass_mails/show.rhtml:9
-msgid "Filter customers"
-msgstr "Filtrar consumidores"
+#, fuzzy
+msgid "Select recipients"
+msgstr "Selecionar modelo"
 
 #: app/views/mass_mails/filter_categories.rhtml:5
 msgid "Consumed Products"
@@ -5293,6 +5341,21 @@ msgstr "Loja"
 #: lib/describe_menu.rb:17
 msgid "Administration of users"
 msgstr "Administração de usuários"
+
+#~ msgid "Contact|System actor"
+#~ msgstr "Ator do sistema"
+
+#~ msgid "Contact|Info"
+#~ msgstr "Informação"
+
+#~ msgid "Body:"
+#~ msgstr "Corpo:"
+
+#~ msgid "Send to: "
+#~ msgstr "Para:"
+
+#~ msgid "Filter customers"
+#~ msgstr "Filtrar consumidores"
 
 #~ msgid "Comatose Menu"
 #~ msgstr "Menu Comatose"
@@ -5831,9 +5894,6 @@ msgstr "Administração de usuários"
 #~ msgid "Profile type"
 #~ msgstr "Tipo de perfil"
 
-#~ msgid "Select template"
-#~ msgstr "Selecionar modelo"
-
 #~ msgid ""
 #~ "Are you sure you want to remove this userprofile ? He(she) will not be "
 #~ "able to access the system anymore, unless he(she) has another profile."
@@ -6207,17 +6267,11 @@ msgstr "Administração de usuários"
 #~ msgid "Generate extract"
 #~ msgstr "Gerar extrato"
 
-#~ msgid "Phone:"
-#~ msgstr "Fone:"
-
 #~ msgid "Email:"
 #~ msgstr "Email:"
 
 #~ msgid "Edit Customer"
 #~ msgstr "Editar Consumidor"
-
-#~ msgid "Contacts:"
-#~ msgstr "Contatos:"
 
 #~ msgid "Ok"
 #~ msgstr "OK"

@@ -1,6 +1,7 @@
 class Organization < ActiveRecord::Base
 
-  attr_accessor :country, :state, :city
+  attr_accessor :country_id, :state_id, :city_id
+  attr_accessor :contact_name, :contact_phone, :contact_email, :contact_fax_number
 
   # Valid identifiers must match this format.
   IDENTIFIER_FORMAT = /^[a-z][a-z0-9_]*[a-z0-9]$/
@@ -66,7 +67,7 @@ class Organization < ActiveRecord::Base
   has_many :workers
   has_many :profiles
   has_many :users, :through => :profiles  
-  has_many :contacts, :through => :customers
+  has_many :customer_contacts, :through => :customers
   has_many :bank_accounts
   has_many :balances, :through => :bank_accounts
   has_many :stocks, :through => :products
@@ -80,9 +81,15 @@ class Organization < ActiveRecord::Base
   has_many :domains, :as => :owner
   has_many :printers
 
-  has_one  :environment, :as => :owner
+  has_one :environment, :as => :owner
   has_one :address, :as => :owner
   has_one :tracker
+  has_one :contact, :as => :owner, :dependent => :destroy
+
+  # Delegates methods
+  # FIXME make this test
+  delegate :city, :state, :country, :street, :number, :complement, :district, :zip_code, :to => :address
+  delegate :fax, :phone, :responsible, :email, :to => :contact
 
   validates_presence_of :name
   validates_uniqueness_of :name
@@ -93,6 +100,7 @@ class Organization < ActiveRecord::Base
   validates_format_of :identifier, :with => IDENTIFIER_FORMAT
   validates_exclusion_of :identifier, :in => RESERVED_IDENTIFIERS
   validates_associated :address
+  validates_associated :contact #FIXME see if needs change something old
   validates_associated :tracker
 
   before_validation do |organization|
@@ -102,6 +110,16 @@ class Organization < ActiveRecord::Base
       address.state = organization.state_obj
       address.city = organization.city_obj
       organization.address = address
+    end
+
+    #FIXME make this test
+    if organization.contact.nil?
+      contact = Contact.new
+      contact.phone = organization.contact_phone
+      contact.name = organization.contact_name
+      contact.email = organization.contact_email
+      contact.fax = organization.contact_fax_number
+      organization.contact = contact
     end
 
     if organization.tracker.nil?
@@ -155,16 +173,18 @@ class Organization < ActiveRecord::Base
     end
   end
 
+  #FIXME make this test
   def country_obj
-    BSC::Country.find(self.country) unless self.country.blank?
+    BSC::Country.find(self.country_id) unless self.country_id.blank?
   end
 
+  #FIXME make this test
   def state_obj
-    BSC::State.find(self.state) unless self.state.blank?
+    BSC::State.find(self.state_id) unless self.state_id.blank?
   end
 
   def city_obj
-    BSC::City.find(self.city) unless self.city.blank?
+    BSC::City.find(self.city_id) unless self.city_id.blank?
   end
 
 

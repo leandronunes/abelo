@@ -2,9 +2,6 @@ class DepartmentsController < ApplicationController
 
   needs_organization
 
-#  protect 'view_department', :organization, :only => [:index, :list, :show, :autocomplete_name, :department_tabs ]
-#  protect 'edit_department', :organization, :only => [:new, :edit, :create, :update ]
-
   before_filter :department_tabs
 
   include DocumentInformation

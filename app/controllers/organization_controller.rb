@@ -42,7 +42,27 @@ class OrganizationController < ApplicationController
       render :action => 'edit_address'
     end
   end
+  
+  #FIXME make this test
+  def contact
+    @contact = @organization.contact
+  end
 
+  #FIXME make this test
+  def edit_contact
+    @contact = @organization.contact
+  end
+
+  #FIXME make this test
+  def update_contact
+    @contact = @organization.contact
+    if @contact.update_attributes(params[:contact])
+      redirect_to :action => 'contact'
+    else
+      render :action => 'edit_contact'
+    end
+  end
+  
   def create_organization_tabs
     t = add_tab do
       links_to :action => 'index'
@@ -55,11 +75,20 @@ class OrganizationController < ApplicationController
     t = add_tab do
       links_to :action => 'address'
       in_set 'first'
-      highlights_on :controller => 'organization'
-      highlights_off :action => 'index'
-      highlights_off :action => 'edit'
+      highlights_on :controller => 'organization', :action => 'address'
+      highlights_on :controller => 'organization', :action => 'update_address'
+      highlights_on :controller => 'organization', :action => 'edit_address'
     end
     t.named _('Address')
+
+    t = add_tab do
+      links_to :action => 'contact'
+      in_set 'first'
+      highlights_on :controller => 'organization', :action => 'contact'
+      highlights_on :controller => 'organization', :action => 'update_contact'
+      highlights_on :controller => 'organization', :action => 'edit_contact'
+    end
+    t.named _('Contacts')
   end
 
 end

@@ -140,7 +140,7 @@ module ApplicationHelper
         (@organization.nil? or current_user.administrator) ? 
               link_to(_('Abelo'), :controller => 'organizations') : 
               (can(:controller => 'organization') ? 
-                 link_to(@organization.name, :controller => 'organization') : 
+                 link_to_organization(@organization) : 
                  link_to(@organization.name, :controller => 'public') 
               ),
         if controller.controller_name != 'organization'

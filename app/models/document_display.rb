@@ -1,5 +1,9 @@
 class DocumentDisplay < DisplayConfiguration
 
+  def self.all_available?
+    false
+  end
+
   def self.available_fields
     ['name', 'body', 'departments', 'owner', 'owner_class', 'tag_list'] 
   end

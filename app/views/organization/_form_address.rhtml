@@ -27,7 +27,8 @@
 
   <%= display_field_form(item, 'street',
         :title => _('Street'),
-        :content => text_field('address', 'street')
+        :content => text_field('address', 'street'),
+	:html_options => {:class => 'break_line'}
       )
   %>
 
@@ -50,7 +51,6 @@
   %>
   
   <%= display_field_edit(item, 'complement',
-        :title => _('Complement'),
         :content => rich_text_editor('address', 'complement')
       )
   %>

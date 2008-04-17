@@ -23,9 +23,13 @@ organization.identifier = 'toca'
 organization.state_registration = 12345
 organization.trade_name = 'Loja Toca LTDA'
 organization.responsible_person = 'Jose Silva'
-organization.country = country.id
-organization.state = state.id
-organization.city = city.id
+organization.country_id = country.id
+organization.state_id = state.id
+organization.city_id = city.id
+organization.contact_name = 'Juca Cunha'
+organization.contact_phone = '3456 3422'
+organization.contact_fax_number = '3465 3456'
+organization.contact_email = 'toca@colivre.coop.br'
 organization.save!
 
 ############Configuration#########################
@@ -462,11 +466,6 @@ Customer.destroy_all
 cliente_one = Customer.create!(:name => 'João da Silva', :email => 'joao@colibre.coop.br', :birthday => '1984-08-15', :address => 'Rua Pará, nº 221, Pituba', :cpf => '74676743920', :organization => organization, :category => consumidor_empresa)
 cliente_two = Customer.create!(:name => 'Alice Soares', :email => 'livia@localhost', :birthday => '1970-10-22', :address => 'Rua João das Botas, nº 15, Canela', :cpf => '93791122894', :organization => organization, :category => consumidor_pessoa)
 cliente_three = Customer.create!(:name => 'Lívia Barreiros', :email => 'livinhaba@gmail.com', :birthday => '1982-03-05', :address => 'Rua Prado Valadares, nº 19, apt202, Nazaré', :cpf => '01652747516', :organization => organization, :category => consumidor_pessoa)
-
-############Contacts###############################
-Contact.destroy_all
-
-############Contact Positions######################
 
 ############Workers################################
 Worker.destroy_all

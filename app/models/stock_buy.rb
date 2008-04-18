@@ -11,7 +11,6 @@ class StockBuy < Stock
 
   before_validation do |stock|
     unless stock.invoice.nil?
-      stock.status = stock.invoice.status
       stock.date = stock.invoice.issue_date 
       stock.supplier = stock.invoice.supplier
     end

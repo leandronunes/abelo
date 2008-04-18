@@ -14,7 +14,8 @@
 
 <%= display_field_form(@ledger, 'payment_method',
       :title => _('Agency'),
-      :content => text_field('ledger', 'automatic_debit_account_agency')
+      :content => text_field('ledger', 'automatic_debit_account_agency'),
+      :html_options => {:class => 'break_line'}
     )
 %>
 <%= display_field_form(@ledger, 'payment_method',

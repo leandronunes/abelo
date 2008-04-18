@@ -16,7 +16,7 @@ class Invoice < ActiveRecord::Base
   before_save do |invoice|
     invoice.stock_buys.each do |s|
       s.status = invoice.status
-      s.save
+      s.save!
     end
 
     invoice.ledgers.each do |l|

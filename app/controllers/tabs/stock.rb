@@ -13,12 +13,12 @@ def create_stock_tabs
   end
   t.named _('Buy')
 
-  t = add_tab do
-    links_to :controller => 'stock_ins'
-    in_set 'first'
-    highlights_on :controller => 'stock_ins'
-  end
-  t.named _('Stock Replenishment')
+#  t = add_tab do
+#    links_to :controller => 'stock_ins'
+#    in_set 'first'
+#    highlights_on :controller => 'stock_ins'
+#  end
+#  t.named _('Stock Replenishment')
 
   t = add_tab do
     links_to :controller => 'stock_devolutions'

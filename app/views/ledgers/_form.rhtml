@@ -11,14 +11,14 @@
 
   <%= display_field_form(item, 'date',
         :title => _('Date:'),
-        :content => date_select('ledger', 'date', :order => [:day, :month, :year]),
-        :html_options => {:class => 'line_item'}
+        :content => date_select('ledger', 'date', :order => [:day, :month, :year])
       )
   %>
 
   <%= display_field_form(item, 'payment_method',
         :title => _('Payment Method'),
-        :content =>  select_payment('ledger', 'payment_method')
+        :content =>  select_payment('ledger', 'payment_method'),
+        :html_options => {:class => 'break_line'}
       )
   %>
 
@@ -80,19 +80,20 @@
   <%= display_field_form(item, 'tag_list',
         :title => _('Tags (separated by comma):'),
         :content => text_field('ledger', 'tag_list'),
-        :html_options => {:class => 'line_item'}
+        :html_options => {:class => 'break_line'}
       )
   %>
 
   <%= display_field_form(item, 'value',
         :title => _('Value:'),
-        :content => text_field('ledger', 'value')
+        :content => text_field('ledger', 'value'),
+        :html_options => {:class => 'break_line'}
       )
   %>
 
   <%= display_field_form(item, 'description',
-        :title => _('Description:'),
-        :content => rich_text_editor('ledger', 'description')
+        :content => rich_text_editor('ledger', 'description'),
+        :html_options => {:class => 'break_line'}
       )
   %>
   <% if @ledger.scheduled? %>

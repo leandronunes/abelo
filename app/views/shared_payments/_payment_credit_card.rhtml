@@ -20,7 +20,8 @@
 
 <%= display_field_form(@ledger, 'payment_method',
       :title => _('Name'),
-      :content => text_field('ledger', 'credit_card_owner_name')
+      :content => text_field('ledger', 'credit_card_owner_name'),
+      :html_options => {:class => 'break_line'}
     )
 %>
 

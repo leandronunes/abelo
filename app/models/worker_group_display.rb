@@ -1,0 +1,3 @@
+class WorkerGroupDisplay < MassMailGroupDisplay
+
+end

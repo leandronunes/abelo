@@ -1,0 +1,9 @@
+<%= render :partial => 'menu' %>
+
+<%= title _('New %s group') % MassMailGroup.describe(@group_type) %>
+
+<% form_tag :action => 'create', :group_type => @group_type do %>
+  <%= render :partial => 'form' %>
+  <%= display_edit_info_options(@mass_mail_group, {:group_type => @group_type}) %>
+<% end %>
+

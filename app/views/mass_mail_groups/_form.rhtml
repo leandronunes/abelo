@@ -1,0 +1,17 @@
+<%= error_messages_for 'mass_mail_group' %>
+
+<!--[form:mass_mail_group]-->
+
+<% display_form_info @mass_mail_group, :class => 'view_data' do |item| %> 
+
+  <%= display_field_form(item, 'name', 
+        :title => _('Name'),
+        :content => text_field('mass_mail_group','name'),
+        :html_options => {:class => 'line_item' }
+      )
+  %>
+
+
+<% end %>
+
+<!--[eoform:mass_mail]-->

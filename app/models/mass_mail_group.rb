@@ -1,8 +1,18 @@
 class MassMailGroup < ActiveRecord::Base
 
-  validates_presence_of :name
-  validates_associated :system_actor_mass_mail_groups
+  belongs_to :organization
 
-  has_many :system_actor_mass_mail_groups
-  has_many :system_actors, :through => :system_actor_mass_mail_groups
+  validates_presence_of :organization_id
+  validates_presence_of :name
+
+  def self.describe(name)
+    {
+      'worker' => _('Worker'),
+      'workers' => _('Workers'),
+      'customer' => _('Customer'),
+      'customers' => _('Customers'),
+
+    }[name] || name
+  end
+
 end

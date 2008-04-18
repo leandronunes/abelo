@@ -54,6 +54,9 @@ class Organization < ActiveRecord::Base
   has_many :ledgers
   has_many :sales
   has_many :mass_mails
+  has_many :mass_mail_groups
+  has_many :customer_groups
+  has_many :worker_groups
   has_many :documents
   has_many :categories
   has_many :product_categories
@@ -75,7 +78,6 @@ class Organization < ActiveRecord::Base
   has_many :stock_devolutions, :through => :products
   has_many :stock_downs, :through => :products
   has_many :periodicities
-  has_many :mass_mails
   has_many :invoices, :through => :suppliers
   # One Environment can be reached by many domains
   has_many :domains, :as => :owner

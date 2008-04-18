@@ -1,0 +1,3 @@
+class CustomerGroupDisplay < MassMailGroupDisplay
+
+end

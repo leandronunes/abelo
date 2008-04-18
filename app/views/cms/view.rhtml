@@ -8,7 +8,7 @@
 <% else %>
  <%= title _('Content management') %>
  <div id='article-buttons'>
-  <%= lightbox_button('add', _('New article'),:new, {:action => 'new'}, {:class => 'with_text'}) %>
+  <%= lightbox_button('add', _('New page'),:new, {:action => 'new'}, {:class => 'with_text'}) %>
  </div>
 <% end %>
 
@@ -18,7 +18,7 @@
 <% end %>
   
 <div id='article-subitems'>
-  <div class='file-manager-title'><%= @article ? _('Subitems') : _('Articles') %></div>
+  <div class='file-manager-title'><%= @article ? _('Subitems') : _('Pages') %></div>
   <div class='file-manager-small'>
     <% unless @subitems.empty? %>
       <ul id='list_items'>
@@ -55,7 +55,9 @@
       </ul>
 
       <%= button('edit', _('Edit'), :edit, { :action => 'edit', :id => @article}) %>
-      <%= button('home', _('Use as homepage'), :home, { :action => 'set_home_page', :id => @article }, { :method => :post  }) %>
+      <%= 
+        #button('home', _('Use as homepage'), :home, { :action => 'set_home_page', :id => @article }, { :method => :post  }) 
+      %>
       <%= button('delete', _('Delete'), :destroy, { :action => 'destroy', :id => @article }, :method => :post, :confirm => _('Are you sure you wan to remove this article?')) %>
     <% end %>
     <%= @article.to_html %>

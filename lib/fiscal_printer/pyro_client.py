@@ -48,8 +48,7 @@ def main():
     return 'printer01'
 
   def summarize():
-#    return printer.summarize()
-    return ''
+    return printer.summarize()
 
   def till_add_cash():
     value = parameters[0]
@@ -61,8 +60,7 @@ def main():
 
   def close_till():
     is_today = parameters[0]
-#    return printer.close_till(is_today)
-    return None
+    return printer.close_till(is_today)
 
   def open():
     return printer.open()
@@ -84,9 +82,6 @@ def main():
 
   def add_payment():
     (payment_method, description, value ) = parameters
-#    print payment_method
-#    print description
-#    print value
     return printer.add_payment(payment_method, value, description)
 
   def close():

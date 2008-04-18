@@ -86,9 +86,9 @@ class Test::Unit::TestCase
      a.destroy unless a.nil?
      o = Organization.find_by_identifier(params[:identifier] || 'some')
      o || Organization.new({:name => 'some organization', :identifier => 'some', 
-                     :country => BSC::Country.find(:first).id,
-                     :state => BSC::State.find(:first).id, 
-                     :city => BSC::City.find(:first).id, 
+                     :country_id => BSC::Country.find(:first).id,
+                     :state_id => BSC::State.find(:first).id, 
+                     :city_id => BSC::City.find(:first).id, 
      }.merge(params))
   end
 

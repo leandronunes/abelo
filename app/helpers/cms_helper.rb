@@ -42,4 +42,8 @@ module CmsHelper
     content_tag('div', result)
   end
 
+  def display_save_button
+    button('save', _('Save'), :save,  (@article.parent ? { :action => 'view', :id => @article.parent.id } : { :action => 'index' } ))
+  end
+
 end

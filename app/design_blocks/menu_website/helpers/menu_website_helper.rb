@@ -2,13 +2,14 @@
 module MenuWebsiteHelper
   def website_menu(menu_itens, html_class = '',  father_path = '', heigth = 0)
     heigth = heigth + 1
+    item = 0
     content_tag(:ul,
       menu_itens.map do |menu|
-        next if (heigth > @design_block.maximum_subitems)
+        item = item + 1
         link_path =  father_path.blank? ? menu.slug : File.join(father_path,menu.slug)
         [
-          content_tag(:li, link_to(menu.title, hash_for_homepage_url.merge({:page => link_path})), :id => "menu_item_#{menu.position}"),
-          if menu.has_children?
+          content_tag(:li, link_to(content_tag(:span, menu.title), hash_for_homepage_url.merge({:page => link_path})), :id => "menu_item_#{item}"),
+          if menu.has_children? and heigth < @design_block.maximum_subitems
             website_menu(menu.children, html_class + ' sub_menu', link_path, heigth)
           else
             ''

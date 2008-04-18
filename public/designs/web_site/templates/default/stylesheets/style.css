@@ -10,13 +10,14 @@ body {
   color: #00290d;
   padding:0px;
   margin:0px;
+  background: url('../images/fundo_rep.jpg') repeat;
 }
 
 #warp {
   position:absolute;
   height:420px;
   width:754px;
-  background: url('../images/fundo.jpg');
+  background: url('../images/fundo2.jpg');
   margin:-210px 0px 0px -377px;
   top: 50%;
   left: 50%;
@@ -30,13 +31,30 @@ body {
 /* Isso pode deletar quando implementar a seleção de nivel */
 
 #design_box_2 ul.website_menu {
- position: absolute;
- top: 214px;
- right: 0;
- border: 0px;
+  position: absolute;
+  top: 214px;
+  right: 0;
+  border: 0px;
   z-index: 4;
+  list-style: none;
 }
 
+#design_box_2 ul.website_menu li {
+  width: 126px;
+  height: 21px;
+}
+
+#design_box_2 ul.website_menu li#menu_item_1 {
+#  background: url('../images/b01_on.png');
+}
+
+#design_box_2 ul.website_menu li#menu_item_2 {
+#  background: url('../images/b03_on.png');
+}
+
+#design_box_2 ul.website_menu li#menu_item_3 {
+#  background: url('../images/b05_on.png');
+}
 
 /* Coisas que podem deletar */
 
@@ -236,3 +254,36 @@ color: #000000;
   color: black;
 }
 
+.article_path{
+  margin-left: 200px;
+  margin-top: 50px;
+  font-size: 9px;
+  position: absolute;
+}
+
+.article_subitems{
+  margin-left: 200px;
+  margin-top: 80px;
+  font-size: 8px;
+  position: absolute;
+}
+
+.article_subitems li{
+  display: inline;
+}
+
+#store_content li{
+  display: inline;
+  float: left;
+  margin-left: 10px;
+}
+
+#store_content a{
+  color: black;
+}
+
+#store_content img{
+  border: none;
+  width: 50px;
+  height: 50px;
+}

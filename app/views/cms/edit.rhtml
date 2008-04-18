@@ -3,6 +3,6 @@
 
   <%=  render :partial => 'form' %>
 
-  <%= button('save', _('Save'), :save,  (@article.parent ? { :action => 'view', :id => @article.parent.id } : { :action => 'index' } )) %>
+  <%= display_new_info_options @article %> 
 
 <% end %>

@@ -4,7 +4,6 @@
   </h2>
 <% else %>
   <h2 id='article-full-path'>
-    <%= link_to @organization.name, hash_for_homepage_url %>
-    <%= @page.hierarchy.map {|item| " / " + ((item == @article) ? item.name : link_to(item.name, File.join(homepage_url, item.path))) } %>
+    <%= "%s%s" % [(link_to @organization.name, hash_for_homepage_url), (@page.hierarchy.map {|item| ((item == @article) ? item.name : "/" + link_to(item.name, File.join(homepage_url, item.path))) })] %>
   </h2>
 <% end %>

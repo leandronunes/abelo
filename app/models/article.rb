@@ -73,17 +73,17 @@ class Article < ActiveRecord::Base
 
   def self.short_description
     if self == Article
-      _('Article')
+      _('Page')
     else
-      _('"%s" article') % self.article_type_name
+      _('"%s" page') % self.article_type_name
     end
   end
 
   def self.description
     if self == Article
-      _('An ordinary article')
+      _('An ordinary page')
     else
-      _('An article of type "%s"') % self.article_type_name
+      _('An page of type "%s"') % self.article_type_name
     end
   end
 

@@ -21,11 +21,12 @@ class CmsController <  ApplicationController
     @subitems = @article.children
   end
 
-   def index
+  def index
     @article = nil
     @subitems = @environment.top_level_articles
     render :action => 'view'
   end
+  alias :list :index
 
   def edit
     @article = @environment.articles.find(params[:id])
@@ -78,7 +79,7 @@ class CmsController <  ApplicationController
         next
       end
       a.position = position
-      a.save!
+      a.save
     end
 
     @subitems = @article.nil? ? @environment.top_level_articles : @article.children
@@ -135,7 +136,6 @@ class CmsController <  ApplicationController
   #FIXME see if it's usefull
   post_only :destroy
   def destroy
-  raise "fudeu %s" % request.post?
     @article = @environment.articles.find(params[:id])
     @article.destroy
     redirect_to :action => (@article.parent ? 'view' : 'index'), :id => @article.parent

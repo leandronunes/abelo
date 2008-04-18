@@ -5,7 +5,7 @@
   <% @categories.each do |pc| %>
     <li>
        <%= image_link randon(pc.category_images), :url => hash_for_article_page_url({:action => 'category', :category_id => pc, :page => @page }), :failure => "$('store_list').innerHTML=request.responseText" %>
-       <%= link_to_remote pc.name,:url => hash_for_article_page_url({:controller => 'store_article', :action => 'category', :category_id => pc, :page => @page}), :failure => "$('store_list').innerHTML=request.responseText" %> 
+       <p><%= link_to_remote pc.name,:url => hash_for_article_page_url({:controller => 'store_article', :action => 'category', :category_id => pc, :page => @page}), :failure => "$('store_list').innerHTML=request.responseText" %> </p>
     </li>
   <% end %>
 </ul>

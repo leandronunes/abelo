@@ -64,7 +64,7 @@ class SintegraGenerator #< ActiveRecord::Base
       self.organization.district,
       self.organization.zip_code,
       self.organization.responsible,
-      self.phone)
+      self.organization.phone)
 
     # Issue data of fiscal coupon
     # FIXME see a way to do that
@@ -104,7 +104,7 @@ class SintegraGenerator #< ActiveRecord::Base
       product.code,
       "", # Code or Product Name in Mercosul
       product.name, # Description
-      product.unit, # Unit of Measure
+      product.unit_measure.name, # Unit of Measure
       0, # IPI Aliquot
       0, # Reduction of Calc Base of ICMS
       0, # Calc Base of ICMS of Tax Substitution
@@ -234,7 +234,7 @@ class SintegraGenerator #< ActiveRecord::Base
     value = (value.to_f * 100).floor
     string << value.to_s[0..11].rjust(12,'0')
     # 7. Blanks 79 A;
-    string << "".ljust(79,' ') << "\n"
+    string << "".ljust(79,' ') << "\r\n"
     return string
   end
 
@@ -263,7 +263,7 @@ class SintegraGenerator #< ActiveRecord::Base
     product_tax = (product_tax.to_f * 100).floor
     string << product_tax.to_s[0..3].ljust(4)
     # 9. Blanks 54 A;
-    string << "".ljust(54,' ') << "\n"
+    string << "".ljust(54,' ') << "\r\n"
     return string
   end
 
@@ -310,7 +310,7 @@ class SintegraGenerator #< ActiveRecord::Base
     aliquot = (aliquot.to_f * 100).floor
     string << aliquot.to_s[0..3].rjust(4,'0')
     # 17. Fiscal Note Situation 1 A;
-    string << situation.to_s[0] << "\n"
+    string << situation.to_s[0] << "\r\n"
     return string
   end
 
@@ -358,7 +358,7 @@ class SintegraGenerator #< ActiveRecord::Base
     string << ipi.to_s[0..11].rjust(12,'0') 
     # 16. ICMS Aliquot (with two decimals) 4 N;
     icms = (icms.to_f * 100).floor
-    string << icms.to_s[0..3].rjust(4,'0') << "\n"
+    string << icms.to_s[0..3].rjust(4,'0') << "\r\n"
     return string
   end
 
@@ -389,7 +389,7 @@ class SintegraGenerator #< ActiveRecord::Base
     string << reduction_icms.to_s[0..4].rjust(5,'0')
     # 11. Calc Base of ICMS of Tax Substitution (with two decimals) 13 N;
     base_icms = (base_icms.to_f * 100).floor
-    string << base_icms.to_s[0..12].rjust(13,'0') << "\n"
+    string << base_icms.to_s[0..12].rjust(13,'0') << "\r\n"
     return string
   end
 

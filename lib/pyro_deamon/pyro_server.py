@@ -95,8 +95,6 @@ class Printer(Pyro.core.ObjBase):
     price = Decimal(price)
     discount = Decimal(discount)
     surcharge = Decimal(surcharge)
-#    print "SSSSSSSSSSSSSSSSEEEEEEEEEEEEEEEEEEEEEEEEEERRRRRRRRRRRR"
-#    print taxcode
     self._device.add_item(code, description, price, taxcode,
                           quantity, unit, discount, surcharge,
                           unit_desc)
@@ -107,7 +105,6 @@ class Printer(Pyro.core.ObjBase):
     print value
     print description
     self._device.add_payment(payment_method, value, description)
-#    self._device.add_payment(payment_method, value, description)
 
 
 if len(sys.argv) == 2 and sys.argv[1] == 'shutdown':

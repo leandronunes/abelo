@@ -96,6 +96,7 @@ class Profile < ActiveRecord::Base
       { 'controller' => 'point_of_sale', 'action' => '*' },
       { 'controller' => 'sales', 'action' => '*' },
       { 'controller' => 'mass_mails', 'action' => '*' },
+      { 'controller' => 'mass_mail_groups', 'action' => '*' },
       { 'controller' => 'ledgers', 'action' => '*' },
       { 'controller' => 'ledger_categories', 'action' => '*' },
       { 'controller' => 'documents', 'action' => '*' },

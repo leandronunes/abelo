@@ -1,0 +1,40 @@
+<!-- <!%  form_tag :action => 'send_emails', :id => @mass_mail_id do %>
+<br><p><label for="customers"><!%= _("Customers") %></label>
+<!%= select_customers @customers if @customers %></p>
+<!%= button 'send_mail', :save, nil, { :class => 'button button_send_mail' } %>
+<!%= button 'back',"Back", :cancel, :action => 'filter_categories', :id => @mass_mail_id %>
+<!% end %> -->
+
+<%= title _("%s") % @recipient_type.capitalize %>
+
+<% display_form_info @mass_mail do |item| %>
+
+<%= display_field_form(item, @recipient_type,
+        :title => _('All'),
+        :content => radio_button('mass_mail', 'recipients', "all_#{@recipient_type}"),
+        :html_options => {:style => 'clear: left;'}
+      )
+  %>
+
+  <%= display_field_form(item, @recipient_type,
+      :title => _('Personalized'),
+      :content => radio_button('mass_mail', 'recipients', "personalized_#{@recipient_type}"),
+      :html_options => {:style => 'clear: left;'}
+    )
+  %>
+
+  <%= observe_field("mass_mail_recipients_personalized_#{@recipient_type}",
+          :update => 'personalized_recipients_choosen',
+          :url => {:action => 'get_groups'},
+          :with => "value"
+        )
+      %>
+
+  <div id='personalized_recipients_choosen'>
+    <%= render :partial => 'personalize_recipients' %>
+  </div>
+<% end %>
+
+<%= lightbox_close_button(_('Cancel')) %>
+
+

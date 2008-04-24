@@ -1,0 +1,45 @@
+<% form_tag :action => 'filter_customers', :id => @mass_mail.id do %>
+
+<br><p><label for="categories"><%= _("Categories") %></label>
+<%= select_categories @mass_mail  %></p>
+<br><p><label for="consumed_products"><%= _("Consumed Products") %></label>
+<%= select_products @mass_mail  %></p>
+<%= button 'save', _("Filter"), :save %>
+<%= button 'back', _("Back"), :cancel, :action => "show", :id => @mass_mail.id %>
+<% end %>
+
+<% display_form_info @mass_mail do |item| %>
+
+  <%= display_field_form(item, 'customers',
+      :title => _('Customers'),
+      :content => select_recipients('mass_mail', 'recipients', @recipients),
+      :html_options => {:class => 'break_line' }
+    )
+  %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <p><input type="radio" id="mass_mail_dest_1" name="mass_mail[dest]" value="all_customers" />
+  <label for='mass_mail_dest_1'><%= _('All customers') %></label></p>
+  <p><input type="radio" id="mass_mail_dest_2" name="mass_mail[dest]" value="receive_newsletter" />
+  <label for='mass_mail_dest_2'><%= _('Select customers') %></label></p>
+
+<% end %>

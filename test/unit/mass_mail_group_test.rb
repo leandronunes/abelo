@@ -4,12 +4,10 @@ class MassMailGroupTest < Test::Unit::TestCase
 
   def setup
     @organization = create_organization
-    @mass_mail_group = create_mass_mail_group
   end
 
   def test_setup
     assert @organization.valid?
-    assert @mass_mail_group.valid?
   end
 
   def test_absence_of_name
@@ -24,6 +22,18 @@ class MassMailGroupTest < Test::Unit::TestCase
     m.valid?
     
     assert !m.errors.invalid?(:name)
+  end
+
+  def test_absence_of_organization
+    m = MassMailGroup.create(:name => 'Some mass mail group for testing')
+    !m.valid?
+
+    assert !m.errors.invalid?(:organization)
+  end
+
+  def test_relation_with_organization
+    m = CustomerGroup.create(:name => 'Some mass mail group for testing', :organization => @organization)
+    assert_equal @organization, m.organization
   end
 
 end

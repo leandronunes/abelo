@@ -2,6 +2,7 @@ class MassMailGroup < ActiveRecord::Base
 
   belongs_to :organization
 
+  validates_associated :organization
   validates_presence_of :organization_id
   validates_presence_of :name
 

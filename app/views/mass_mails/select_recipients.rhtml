@@ -4,7 +4,7 @@
 
   <% @recipients.each do |recipient| %>
     <%= lightbox_button('new_entry', recipient, :filter_recipients, {:action => 'filter_recipients', :id => @mass_mail, :recipient_type => recipient.downcase}, {:class => 'with_text'}) %>
-    <%= render :partial => 'selected_recipients' %>
+    <%= render :partial => 'personalize_recipients' %>
   <% end %>
 
 </div>

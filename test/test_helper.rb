@@ -302,12 +302,18 @@ class Test::Unit::TestCase
     m
   end
 
-  def create_mass_mail_group(params = {})
+  def create_customer_group(params = {})
     organization = params[:organization] || @organization || create_organization
-    m = MassMailGroup.create!({:name => "Some mass mail group"}.merge(params))
-    m
+    g = CustomerGroup.create!({:name => "Some customer mass mail group", :organization => organization}.merge(params))
+    g
   end
-    
+ 
+  def create_worker_group(params = {})
+    organization = params[:organization] || @organization || create_organization
+    g = WorkerGroup.create!({:name => "Some customer mass mail group", :organization => organization}.merge(params))
+    g
+  end
+
   def self.should(name, &block)
     @shoulds ||= []
   

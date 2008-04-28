@@ -31,9 +31,4 @@ class MassMailGroupTest < Test::Unit::TestCase
     assert !m.errors.invalid?(:organization)
   end
 
-  def test_relation_with_organization
-    m = CustomerGroup.create(:name => 'Some mass mail group for testing', :organization => @organization)
-    assert_equal @organization, m.organization
-  end
-
 end

@@ -2,8 +2,6 @@ class Customer < SystemActor
 
   belongs_to :category, :class_name => 'CustomerCategory', :foreign_key => 'category_id'
   has_many :sales
-  has_many :customer_mass_mail_groups
-  has_many :customer_groups, :through => :customer_mass_mail_groups, :foreign_key => 'mass_mail_group_id'
  
 # TODO see a way to make this association
 #  has_many :ledgers, :through => Sale

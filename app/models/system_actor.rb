@@ -4,6 +4,8 @@ class SystemActor < ActiveRecord::Base
   belongs_to :organization
   has_many :contacts
   has_many :documents, :as => :owner
+  has_many :system_actor_mass_mail_groups
+  has_many :mass_mail_groups, :through => :system_actor_mass_mail_groups
 
   attr_accessor :type_person
 

@@ -1,12 +1,12 @@
 class MassMailGroupDisplay < DisplayConfiguration
 
-  def self.available_fields
-    ['name']
-  end
-
   def self.describe(field)
     {
       'name' => _('Name'),
+      'customers' => _('Customers'),
+      'customer' => _('Customer'),
+      'workers' => _('Workers'),
+      'worker' => _('Worker'),
     } [field] || field
   end
 

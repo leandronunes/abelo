@@ -15,29 +15,39 @@ class WorkerGroupTest < Test::Unit::TestCase
   end
 
   def test_absence_of_name
-    m = WorkerGroup.create
-    !m.valid?
+    g = WorkerGroup.create
+    !g.valid?
 
-    assert m.errors.invalid?(:name)
+    assert g.errors.invalid?(:name)
   end
   
   def test_presence_of_name
-    m = WorkerGroup.create(:name => 'Mass Mail Group')
-    m.valid?
+    g = WorkerGroup.create(:name => 'Mass Mail Group')
+    g.valid?
     
-    assert !m.errors.invalid?(:name)
+    assert !g.errors.invalid?(:name)
   end
 
   def test_absence_of_organization
-    m = WorkerGroup.create(:name => 'Some mass mail group for testing')
-    !m.valid?
+    g = WorkerGroup.create(:name => 'Some mass mail group for testing')
+    !g.valid?
 
-    assert !m.errors.invalid?(:organization)
+    assert !g.errors.invalid?(:organization)
   end
 
+  def test_uniqueness_of_name
+    g_1 = create_worker_group(:name => 'Mass Mail Group')
+    g_1.valid?
+
+    assert_raise ActiveRecord::RecordInvalid do
+      g_2 = create_worker_group(:name => 'Mass Mail Group')
+    end
+
+  end 
+
   def test_relation_with_organization
-    m = WorkerGroup.create(:name => 'Some mass mail group for testing', :organization => @organization)
-    assert_equal @organization, m.organization
+    g = create_worker_group(:name => 'Some mass mail group for testing')
+    assert_equal @organization, g.organization
   end
 
   def test_relation_with_system_actors    
@@ -47,18 +57,33 @@ class WorkerGroupTest < Test::Unit::TestCase
   end
 
   def test_adding_a_worker
-    worker = create_worker(:cpf => '12187389014')
-    count = @worker_group.system_actors.length
-
-    @worker_group.system_actors << worker
-    assert_equal count + 1, @worker_group.system_actors.length
+    @worker_group.system_actors << @worker
+    assert @worker_group.system_actors.include?(@worker)
   end
 
   def test_worker_only_once_in_a_group
+    @worker_group.system_actors << @worker
     count = @worker_group.system_actors.length
 
-    @worker_group.system_actors << @worker
-    @worker_group.system_actors << @worker
+    assert_raise ActiveRecord::RecordInvalid do
+       @worker_group.system_actors << @worker
+    end
     assert_equal count, @worker_group.system_actors.length
+  end
+
+  def test_removing_a_worker
+    @worker_group.system_actors << @worker
+
+    @worker_group.system_actors.delete @worker
+
+    assert !@worker_group.system_actors.include?(@worker)
+  end
+
+  def test_full_text_search
+    mass_mail_group_1 = create_worker_group(:name => 'Group test')
+    mass_mail_group_2 = create_worker_group(:name => 'Group test2')
+    mass_mail_groups = WorkerGroup.full_text_search('test2')
+    assert_equal 1, mass_mail_groups.length
+    assert mass_mail_groups.include?(mass_mail_group_2)
   end
 end

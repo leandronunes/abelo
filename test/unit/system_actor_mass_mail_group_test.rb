@@ -114,4 +114,44 @@ class SystemActorMassMailGroupTest < Test::Unit::TestCase
     assert_equal 0, s.errors.length
   end
 
+  def test_if_relation_is_deleted_when_a_worker_is_deleted_from_a_group
+    @worker_group.system_actors << @worker  
+    count = SystemActorMassMailGroup.count
+
+    @worker_group.system_actors.delete @worker
+    assert_equal count - 1, SystemActorMassMailGroup.count
+  end
+
+  def test_if_relation_is_deleted_when_a_customer_is_deleted_from_a_group
+    @customer_group.system_actors << @customer  
+    count = SystemActorMassMailGroup.count
+
+    @customer_group.system_actors.delete @customer
+    assert_equal count - 1, SystemActorMassMailGroup.count
+  end
+
+  def test_if_relation_is_deleted_when_a_group_is_deleted_from_a_worker
+    @worker.mass_mail_groups << @worker_group  
+    count = SystemActorMassMailGroup.count
+
+    @worker.mass_mail_groups.delete @worker_group
+    assert_equal count - 1, SystemActorMassMailGroup.count
+  end
+
+  def test_if_relation_is_deleted_when_a_group_is_deleted_from_a_customer
+    @customer.mass_mail_groups << @customer_group  
+    count = SystemActorMassMailGroup.count
+
+    @customer.mass_mail_groups.delete @customer_group
+    assert_equal count - 1, SystemActorMassMailGroup.count
+  end
+
+  def test_if_relations_are_deleted_when_a_group_is_deleted
+    @worker_group.system_actors << @worker
+    count = SystemActorMassMailGroup.count
+
+    @worker_group.destroy
+
+    assert_equal count - 1, SystemActorMassMailGroup.count
+  end
 end

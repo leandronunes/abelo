@@ -188,4 +188,20 @@ class WorkerTest < Test::Unit::TestCase
     org.workers.first.destroy
     assert_equal 0, Organization.find_by_identifier('some_id').tracker.worker_points
   end
+
+  def test_relation_with_worker_group
+    worker_group = create_worker_group
+    @worker.mass_mail_groups << worker_group
+  
+    assert @worker.mass_mail_groups.include?(worker_group)
+  end
+
+  def test_removing_a_worker_group
+    worker_group = create_worker_group
+    @worker.mass_mail_groups << worker_group
+    @worker.mass_mail_groups.delete worker_group
+    
+    assert !@worker.mass_mail_groups.include?(worker_group)   
+  end
+
 end

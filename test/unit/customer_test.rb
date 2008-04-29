@@ -191,4 +191,18 @@ class CustomerTest < Test::Unit::TestCase
     assert_equal 0, Organization.find_by_identifier('some_id').tracker.customer_points
   end
 
+  def test_relation_with_customer_group
+    customer_group = create_customer_group
+    @customer.mass_mail_groups << customer_group
+  
+    assert @customer.mass_mail_groups.include?(customer_group)
+  end
+
+  def test_removing_a_customer_group
+    customer_group = create_customer_group
+    @customer.mass_mail_groups << customer_group
+    @customer.mass_mail_groups.delete customer_group
+    
+    assert !@customer.mass_mail_groups.include?(customer_group)   
+  end
 end

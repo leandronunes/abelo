@@ -16,6 +16,8 @@ organization_admin:
     action: '*'
   - controller: 'mass_mails'
     action: '*'
+  - controller: 'mass_mail_groups'
+    action: '*'
   - controller: 'ledgers'
     action: '*'
   - controller: 'ledger_categories'

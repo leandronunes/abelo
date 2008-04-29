@@ -1,0 +1,8 @@
+<%= render :partial => 'menu' %>
+
+<%= title(_('Editing group %s')) % @mass_mail_group.name %>
+
+<% form_tag :action => 'update', :id => @mass_mail_group, :group_type => @group_type do %>
+    <%= render :partial => 'form' %>   
+    <%= display_edit_info_options(@mass_mail_group, {:group_type => @group_type}) %>
+<% end %>

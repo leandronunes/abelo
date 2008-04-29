@@ -6,7 +6,7 @@ class MassMailsController < ApplicationController
 
   uses_mass_mails_tabs
 
-  def autocomplete_subject
+  def autocomplete_mass_mail_subject
     escaped_string = Regexp.escape(params[:mass_mail][:subject])
     re = Regexp.new(escaped_string, "i")
     @mass_mails = @organization.mass_mails.select { |mm| mm.subject.match re}

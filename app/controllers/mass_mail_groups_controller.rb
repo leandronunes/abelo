@@ -11,7 +11,7 @@ class MassMailGroupsController < ApplicationController
     worker
   ]
 
-  def autocomplete_name
+  def autocomplete_mass_mail_group_name
     escaped_string = Regexp.escape(params[:mass_mail_group][:name])
     re = Regexp.new(escaped_string, "i")
 
@@ -39,7 +39,7 @@ class MassMailGroupsController < ApplicationController
         @mass_mail_groups = @organization.send("#{@group_type}_groups")
         @mass_mail_groups_pages, @mass_mail_groups = paginate_by_collection @mass_mail_groups
       else
-        @mass_mail_groups = @organization.send("#{@group_type}_groups")
+        @mass_mail_groups = @organization.send("#{@group_type}_groups").full_text_search(@query)
         @mass_mail_groups_pages, @mass_mail_groups = paginate_by_collection @mass_mail_groups
       end
     else
@@ -56,8 +56,6 @@ class MassMailGroupsController < ApplicationController
     @group_type = params[:group_type]
     if GROUP_TYPES.include?(@group_type)
       @mass_mail_group = MassMailGroup.new
-      @mass_mail_group.organization = @organization
-      render :action => 'new'
     else 
       render_error(_("This type doesn't exist"))
     end
@@ -67,9 +65,8 @@ class MassMailGroupsController < ApplicationController
     @group_type = params[:group_type]
     if GROUP_TYPES.include?(@group_type)
       @mass_mail_group = eval("#{@group_type.camelize}Group").new(params[:mass_mail_group])
-      @mass_mail_group.organization = @organization
       if @mass_mail_group.save
-        flash[:notice] = _('Mass mail was successfully created.')
+        flash[:notice] = _('Group was successfully created.')
         redirect_to :action => 'list', :group_type => @group_type
       else
         render :action => 'new'
@@ -91,14 +88,14 @@ class MassMailGroupsController < ApplicationController
       flash[:notice] = _('Group was successfully updated.')
       redirect_to :action => 'list', :group_type => @group_type
     else
-      render :action => 'edit', :id => @mass_mail_group
+      render :action => 'edit'
     end
   end
 
   def destroy
     mass_mail_group = @organization.mass_mail_groups.find(params[:id])
     group_type  = mass_mail_group.class.to_s.gsub(/Group/,'').downcase
-    category.destroy
+    mass_mail_group.destroy
     redirect_to :action => 'list', :group_type => group_type
   end
 

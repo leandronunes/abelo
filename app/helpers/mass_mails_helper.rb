@@ -27,4 +27,14 @@ module MassMailsHelper
     }.join("\n")
   end
 
+  def select_groups(recipient_type)  
+    groups = MassMailGroup.find_by_recipient_type(recipient_type)
+    groups.map { |g|
+      content_tag(
+        'div',
+        check_box_tag("groups[#{g.id}]", 1) + g.name
+      )
+    }.join("\n")
+  end
+
 end

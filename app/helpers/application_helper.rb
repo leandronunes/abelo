@@ -391,6 +391,31 @@ module ApplicationHelper
     select_tag("#{object}[parent_id]", "<option value=""></option>" + categories.map { |c| options_for_category(c,c.id) }.join(' '), { :include_blank => true }) 
   end
 
+#  <p><input type="radio" id="mass_mail_dest_1" name="mass_mail[dest]" value="all_customers" />
+#  <label for='mass_mail_dest_1'><%= _('All customers') %></label></p>
+#select_recipients('mass_mail', 'recipients', 'customers', @options_for_recipients),
+
+  def select_recipients(object, method, collection=[], title="", text_method=:name, value_method=:id )
+    value_method = value_method.to_s
+    text_method = text_method.to_s
+    content_tag('p', 
+      [
+            collection.map do |c|
+              content_tag('p',
+              [
+                  content_tag('input', 
+                           c, 
+                           :name => "#{object}[#{method}]", 
+                           :type => 'radio', :value => c , 
+                           :checked => 'checked' 
+                 ) 
+              ].join("\n")
+            )
+            end
+      ].join("\n")
+    )
+  end
+
   def limit_string(s,tam=50)
     (!s.blank? && s.size > tam) ? s.first(tam)+"..." : s
   end

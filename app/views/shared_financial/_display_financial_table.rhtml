@@ -193,7 +193,9 @@ tag:
           <% end %> 
           <%= ledger.date.strftime('%d/%m/%Y') %>
         </td>
-        <% if ledger.owner.kind_of?(Sale) %>
+        <% if ledger.payment_method == Payment::CHANGE %>
+          <td> <%= _('Point of Sale: Change') %></td>
+        <% elsif ledger.owner.kind_of?(Sale) %>
           <td> <%= _('Point of Sale: Sale %s') % (ledger.category.name unless ledger.category.nil?) %></td>
         <% elsif ledger.payment_method == Payment::ADD_CASH %>
           <td> <%= _('Point of Sale: Money Added to Cash') %></td>

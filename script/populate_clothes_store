@@ -539,14 +539,13 @@ saving_account.save!
 LedgerCategory.delete_all
 money_expense = LedgerCategory.create!(:name => 'Limpeza', :organization => organization, :type_of => Payment::TYPE_OF_EXPENSE, :payment_methods => ['money'])
 money_income = LedgerCategory.create!(:name => 'Emprestimo', :organization => organization, :type_of => Payment::TYPE_OF_INCOME, :payment_methods => ['money', 'check'])
-LedgerCategory.create!(:name => 'A vista', :organization => organization, :type_of => Payment::TYPE_OF_INCOME, :payment_methods => ['money', 'check', 'debit_card'], :is_sale => true)
+LedgerCategory.create!(:name => 'A Vista', :organization => organization, :type_of => Payment::TYPE_OF_INCOME, :payment_methods => ['money', 'check', 'debit_card'], :is_sale => true)
 
 check_income = LedgerCategory.create!(:name => 'Cheque 3 X', :organization => organization, :type_of => Payment::TYPE_OF_INCOME, :payment_methods => ['check'], :is_sale => true)
 LedgerCategory.create!(:name => '1x sem juros', :organization => organization, :type_of => Payment::TYPE_OF_INCOME, :payment_methods => ['credit_card'], :is_sale => true)
 
 stock_category = LedgerCategory.create!(:name => 'Compra de Produto', :organization => organization, :type_of => Payment::TYPE_OF_EXPENSE, :payment_methods => ['money', 'check'], :is_stock => true )
 
-sale_category = LedgerCategory.create!(:name => 'A Vista', :organization => organization, :type_of => Payment::TYPE_OF_INCOME, :payment_methods => ['money', 'check'], :is_sale => true )
 #############################
 # Period
 # ###########################

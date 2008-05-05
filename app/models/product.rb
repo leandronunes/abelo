@@ -53,24 +53,8 @@ class Product < ActiveRecord::Base
   end
 
   def amount_in_stock(type = 'stock')
-    self.send(type.pluralize).sum(:amount, :conditions => {:status => Status::STATUS_DONE}).to_f
+    self.send(type.pluralize).sum(:amount, :conditions => {:status => [Status::STATUS_DONE, Status::STATUS_OPEN]}).to_f
   end
-
-#  def amount_in_stock_in
-#    self.stock_ins.sum('amount').to_f
-#  end
-#
-#  def amount_in_stock_devolution
-#    self.stock_devolutions.sum('amount').to_f
-#  end
-#
-#  def amount_in_stock_out
-#    self.stock_outs.sum('amount').to_f
-#  end
-#
-#  def amount_in_stock_down
-#    self.stock_downs.sum('amount').to_f
-#  end
 
   def amount_consumed_by_customer(customer)
     customer.amount_consumed_by_product(self)

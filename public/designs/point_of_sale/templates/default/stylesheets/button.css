@@ -30,6 +30,20 @@
   display: none;
 }
 
+#lbContent a.lbAction {
+position: absolute;
+top: 0px;
+right: 0px;
+display: block;
+height: 28px;
+width: 28px;
+background-repeat: no-repeat;
+}
+
+#lbContent .button span {
+  display: block;
+}
+
 .button_show    { width: 16px; height: 16px }
 .list_item_button .button_edit { width: 16px; height: 16px }
 .button_remove,

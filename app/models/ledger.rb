@@ -85,7 +85,7 @@ class Ledger < ActiveRecord::Base
   delegate :fiscal_payment_type, :to => :payment_strategy 
 
   def validate
-    if (self.date != Date.today) and (self.is_add_cash? or self.is_remove_cash? or self.is_change?)
+    if (self.date.to_datetime != Date.today.to_datetime) and (self.is_add_cash? or self.is_remove_cash? or self.is_change?)
       self.errors.add(:date, _('You cannot schedule this kind of ledger.'))
     end
 
@@ -117,7 +117,7 @@ class Ledger < ActiveRecord::Base
       self.errors.add(:status, _("You can't set this ledger as a effective ledger because the date of the ledger is in the future.")) 
     end
 
-    if self.owner.kind_of?(Sale) and self.is_change?
+    if self.owner.kind_of?(Sale) and self.is_change? and (self.owner.change != self)
       self.errors.add(_("You can't have two changes for the same sale")) unless self.owner.change.nil?
     end
   end

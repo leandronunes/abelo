@@ -1,7 +1,4 @@
-<h2>
-  <%= _('Search Customer') %>
-  <%= link_to_close_popup _('Close'), {:class => 'button_close'}%>
-</h2> 
+  <%= subtitle _('Search Customer') %>
 
 <% form_remote_tag :url => params.merge({ :action => 'search_customer'}), :update => 'customer_search' do %>
   <%= text_field_tag('search') %>
@@ -10,3 +7,6 @@
 
 <div id='customer_search'>
 </div>
+
+<%= lightbox_close_button(_('Cancel')) %>
+

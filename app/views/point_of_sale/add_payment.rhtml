@@ -2,7 +2,9 @@
 <%= title _('Coupon Open - Payment') %>
 
   <div id="cumpom_bar">
-    <%= link_to_popup content_tag('span', _('Search Customer')), {:action => 'popup_customer'}, {:accesskey => 'p', :class => 'button bt_big search_customer with_text'}, 'select_customer', 'abelo_payment_customer'  %>
+
+    <%= lightbox_button('add',  _('Search Customer'), :new, {:action => 'popup_customer'}, {:class => 'with_text'}) %>
+
     <% if @sale.balance <= 0 %>
       <%= link_to content_tag('span', _('Close Sale')), {:action => 'change'}, :accesskey => 'f', :class => 'button bt_big cancel_sale with_text' %>
     <% end %>

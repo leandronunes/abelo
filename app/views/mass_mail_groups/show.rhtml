@@ -7,6 +7,5 @@
 <%= display_show_info_options(@mass_mail_group) %>
 
 <div class="display_info_options">
-  <%= button('search', _('Select recipients'), :select_recipients, :action => 'select_recipients', :id => @mass_mail) %> 
+  <%= lightbox_button('add', _('Add'), :manage_system_actors, {:action => 'manage_system_actors', :id => @mass_mail_group}, {:class => 'with_text'}) %>
 </div>
-

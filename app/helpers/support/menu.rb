@@ -16,7 +16,7 @@
       'cms',
       'sales',
       'tracker_organization',
-#      'mass_mails',
+      'mass_mails',
     ]
       
     menu_legend = {

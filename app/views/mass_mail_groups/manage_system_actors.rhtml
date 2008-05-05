@@ -1,0 +1,13 @@
+<%= error_messages_for 'mass_mail_group' %>
+
+<%= subtitle _("Add %s") % @group_type.pluralize %>
+
+<% form_remote_tag :url => params.merge({:action => 'search_system_actor', :id => @mass_mail_group, :group_type => @group_type}), :update => 'search_result' do %>
+  <%= text_field_tag('search') %>
+  <%= submit_tag _('Search') %>
+<% end %>
+
+<div id='search_result'>
+</div>
+
+<%= lightbox_close_button(_('Cancel')) %>

@@ -1,0 +1,5 @@
+<%= subtitle _("Current %s") % @group_type.pluralize %>
+
+<% unless @mass_mail_group.system_actors.blank? %>
+  <%= display_groups_collection @mass_mail_group.system_actors, :id => @mass_mail_group, :url => {:action => 'remove_system_actor'} %>
+<% end %>

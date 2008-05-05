@@ -19,7 +19,7 @@ module MassMailGroupsHelper
   def display_groups_collection_options(item, params ={})
     content_tag(:div,
       [
-        link_to_remote(_('Add'), :update => 'search_result', :url => {:action => 'add_system_actor', :system_actor => item}.merge(params)),
+        link_to(_('Add'), :action => 'add_system_actor', :id => 3, :system_actor => item),
       ].join("\n"),
       :class => 'list_item_button'
     )

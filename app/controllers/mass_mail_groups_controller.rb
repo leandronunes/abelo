@@ -49,7 +49,7 @@ class MassMailGroupsController < ApplicationController
 
   def show
     @mass_mail_group = @organization.mass_mail_groups.find(params[:id])
-    @group_type = params[:group_type]
+    @group_type = @mass_mail_group.class.to_s.gsub(/Group/,'').downcase
   end
 
   def new
@@ -99,4 +99,32 @@ class MassMailGroupsController < ApplicationController
     redirect_to :action => 'list', :group_type => group_type
   end
 
+  def remove_system_actor
+    @mass_mail_group = @organization.mass_mail_groups.find(params[:id])
+    system_actor = @mass_mail_group.system_actors.find(params[:system_actor])
+    @mass_mail_group.system_actors.delete system_actor
+    render :action => 'manage_system_actors'
+  end
+
+  def manage_system_actors
+    @mass_mail_group = @organization.mass_mail_groups.find(params[:id])
+    @group_type = @mass_mail_group.class.to_s.gsub(/Group/,'').downcase
+    render :layout => false
+  end
+
+  def add_system_actor
+    @mass_mail_group = @organization.mass_mail_groups.find(params[:id])
+    system_actor = @organization.system_actors.find(params[:system_actor])
+    @mass_mail_group.system_actors << system_actor
+    redirect_to :action => 'show', :id => @mass_mail_group
+  end
+
+  def search_system_actor
+    @mass_mail_group = @organization.mass_mail_groups.find(params[:id])
+    group_type = @mass_mail_group.class.to_s.gsub(/Group/,'').downcase
+    str = params[:search].blank? ? '*' : params[:search]
+    @searched = @organization.send("#{group_type.pluralize}").full_text_search(str)
+    @searched = @searched - @mass_mail_group.system_actors
+    render :action => 'result_search', :layout => false
+  end
 end

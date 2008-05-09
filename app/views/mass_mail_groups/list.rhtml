@@ -2,7 +2,7 @@
 
 <%= title _('Listing %s groups') % MassMailGroup.describe(@group_type) %>
 
-<%= display_list_options 'mass_mail_group', 'name' %>
+<%= display_list_options 'mass_mail_group', 'name', :group_type => @group_type %>
 
 <%= display_collection @mass_mail_groups %>
 

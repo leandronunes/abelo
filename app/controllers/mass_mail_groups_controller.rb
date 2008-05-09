@@ -49,13 +49,14 @@ class MassMailGroupsController < ApplicationController
 
   def show
     @mass_mail_group = @organization.mass_mail_groups.find(params[:id])
-    @group_type = @mass_mail_group.class.to_s.gsub(/Group/,'').downcase
+    @group_type = params[:group_type] || @mass_mail_group.class.to_s.gsub(/Group/,'').downcase
   end
 
   def new
     @group_type = params[:group_type]
     if GROUP_TYPES.include?(@group_type)
       @mass_mail_group = MassMailGroup.new
+      @mass_mail_group.organization = @organization
     else 
       render_error(_("This type doesn't exist"))
     end
@@ -65,6 +66,7 @@ class MassMailGroupsController < ApplicationController
     @group_type = params[:group_type]
     if GROUP_TYPES.include?(@group_type)
       @mass_mail_group = eval("#{@group_type.camelize}Group").new(params[:mass_mail_group])
+      @mass_mail_group.organization = @organization 
       if @mass_mail_group.save
         flash[:notice] = _('Group was successfully created.')
         redirect_to :action => 'list', :group_type => @group_type
@@ -99,14 +101,25 @@ class MassMailGroupsController < ApplicationController
     redirect_to :action => 'list', :group_type => group_type
   end
 
-  def remove_system_actor
+  def remove_system_actors
     @mass_mail_group = @organization.mass_mail_groups.find(params[:id])
-    system_actor = @mass_mail_group.system_actors.find(params[:system_actor])
-    @mass_mail_group.system_actors.delete system_actor
-    render :action => 'manage_system_actors'
+    @group_type = @mass_mail_group.class.to_s.gsub(/Group/,'').downcase
+    render :layout => false
   end
 
-  def manage_system_actors
+  def remove_system_actor
+    @mass_mail_group = @organization.mass_mail_groups.find(params[:id])
+    system_actors = params[:options]
+    if system_actors
+      system_actors.keys.each {
+        |s|
+        @mass_mail_group.system_actors.delete @mass_mail_group.system_actors.find(s)
+      }
+     redirect_to :action => 'show', :id => @mass_mail_group
+    end
+  end
+
+  def add_system_actors
     @mass_mail_group = @organization.mass_mail_groups.find(params[:id])
     @group_type = @mass_mail_group.class.to_s.gsub(/Group/,'').downcase
     render :layout => false
@@ -114,9 +127,14 @@ class MassMailGroupsController < ApplicationController
 
   def add_system_actor
     @mass_mail_group = @organization.mass_mail_groups.find(params[:id])
-    system_actor = @organization.system_actors.find(params[:system_actor])
-    @mass_mail_group.system_actors << system_actor
-    redirect_to :action => 'show', :id => @mass_mail_group
+    system_actors = params[:options]
+    if system_actors
+      system_actors.keys.each { 
+      	|s|
+        @mass_mail_group.system_actors << @organization.system_actors.find(s)
+      }
+      redirect_to :action => 'show', :id => @mass_mail_group
+    end
   end
 
   def search_system_actor

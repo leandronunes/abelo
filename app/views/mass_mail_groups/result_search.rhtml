@@ -1,4 +1,7 @@
 <% unless @searched.blank? %>
-  <%= display_groups_collection @searched, :id => @mass_mail_group %>
+  <% form_tag :action => 'add_system_actor', :id => @mass_mail_group do %>
+    <%= select_groups_collection @searched, :id => @mass_mail_group %>
+    <%= display_save_button %>
+  <% end %>
 <% end %>
 

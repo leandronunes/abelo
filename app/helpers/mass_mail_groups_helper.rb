@@ -1,6 +1,7 @@
 module MassMailGroupsHelper
 
-  def display_groups_collection(collection = Array.new, params = {}, html_options = {})
+
+  def select_groups_collection(collection = Array.new, params = {}, html_options = {})
 
     content = Array.new
     collection.each do |c|
@@ -19,7 +20,7 @@ module MassMailGroupsHelper
   def display_groups_collection_options(item, params ={})
     content_tag(:div,
       [
-        link_to(_('Add'), :action => 'add_system_actor', :id => 3, :system_actor => item),
+      	check_box_tag("options[#{item.id}]", 1)
       ].join("\n"),
       :class => 'list_item_button'
     )

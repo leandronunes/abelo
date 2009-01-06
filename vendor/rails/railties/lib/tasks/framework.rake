@@ -2,13 +2,13 @@ namespace :rails do
   namespace :freeze do
     desc "Lock this application to the current gems (by unpacking them into vendor/rails)"
     task :gems do
-      deps = %w(actionpack activerecord actionmailer activesupport actionwebservice)
+      deps = %w(actionpack activerecord actionmailer activesupport activeresource)
       require 'rubygems'
-      Gem.manage_gems
+      require 'rubygems/gem_runner'
 
       rails = (version = ENV['VERSION']) ?
-        Gem.cache.search('rails', "= #{version}").first :
-        Gem.cache.search('rails').sort_by { |g| g.version }.last
+        Gem.cache.find_name('rails', "= #{version}").first :
+        Gem.cache.find_name('rails').sort_by { |g| g.version }.last
 
       version ||= rails.version
 
@@ -21,48 +21,54 @@ namespace :rails do
       rm_rf   "vendor/rails"
       mkdir_p "vendor/rails"
 
-      chdir("vendor/rails") do
-        rails.dependencies.select { |g| deps.include? g.name }.each do |g|
-          Gem::GemRunner.new.run(["unpack", "-v", "#{g.version_requirements}", "#{g.name}"])
-          mv(Dir.glob("#{g.name}*").first, g.name)
-        end
+      begin
+        chdir("vendor/rails") do
+          rails.dependencies.select { |g| deps.include? g.name }.each do |g|
+            Gem::GemRunner.new.run(["unpack", g.name, "--version", g.version_requirements.to_s])
+            mv(Dir.glob("#{g.name}*").first, g.name)
+          end
 
-        Gem::GemRunner.new.run(["unpack", "-v", "=#{version}", "rails"])
-        FileUtils.mv(Dir.glob("rails*").first, "railties")
+          Gem::GemRunner.new.run(["unpack", "rails", "--version", "=#{version}"])
+          FileUtils.mv(Dir.glob("rails*").first, "railties")
+        end
+      rescue Exception
+        rm_rf "vendor/rails"
+        raise
       end
     end
 
-    desc "Lock to latest Edge Rails or a specific revision with REVISION=X (ex: REVISION=4021) or a tag with TAG=Y (ex: TAG=rel_1-1-0)"
+    desc 'Lock to latest Edge Rails, for a specific release use RELEASE=1.2.0'
     task :edge do
-      $verbose = false
-      `svn --version` rescue nil
-      unless !$?.nil? && $?.success?
-        $stderr.puts "ERROR: Must have subversion (svn) available in the PATH to lock this application to Edge Rails"
-        exit 1
-      end
-            
-      rm_rf   "vendor/rails"
-      mkdir_p "vendor/rails"
-      
-      svn_root = "http://dev.rubyonrails.org/svn/rails/"
+      require 'open-uri'
+      version = ENV["RELEASE"] || "edge"
+      target  = "rails_#{version}.zip"
+      commits = "http://github.com/api/v1/yaml/rails/rails/commits/master"
+      url     = "http://dev.rubyonrails.org/archives/#{target}"
 
-      if ENV['TAG']
-        rails_svn = "#{svn_root}/tags/#{ENV['TAG']}"
-        touch "vendor/rails/TAG_#{ENV['TAG']}"
-      else
-        rails_svn = "#{svn_root}/trunk"
+      chdir 'vendor' do
+        latest_revision = YAML.load(open(commits))["commits"].first["id"]
 
-        if ENV['REVISION'].nil?
-          ENV['REVISION'] = /^r(\d+)/.match(%x{svn -qr HEAD log #{svn_root}})[1]
-          puts "REVISION not set. Using HEAD, which is revision #{ENV['REVISION']}."
+        puts "Downloading Rails from #{url}"
+        File.open('rails.zip', 'wb') do |dst|
+          open url do |src|
+            while chunk = src.read(4096)
+              dst << chunk
+            end
+          end
         end
 
-        touch "vendor/rails/REVISION_#{ENV['REVISION']}"
+        puts 'Unpacking Rails'
+        rm_rf 'rails'
+        `unzip rails.zip`
+        %w(rails.zip rails/Rakefile rails/cleanlogs.sh rails/pushgems.rb rails/release.rb).each do |goner|
+          rm_f goner
+        end
+
+        touch "rails/REVISION_#{latest_revision}"
       end
-      
-      for framework in %w( railties actionpack activerecord actionmailer activesupport actionwebservice )
-        system "svn export #{rails_svn}/#{framework} vendor/rails/#{framework}" + (ENV['REVISION'] ? " -r #{ENV['REVISION']}" : "")
-      end
+
+      puts 'Updating current scripts, javascripts, and configuration settings'
+      Rake::Task['rails:update'].invoke
     end
   end
 
@@ -99,7 +105,7 @@ namespace :rails do
       require 'railties_path'  
       project_dir = RAILS_ROOT + '/public/javascripts/'
       scripts = Dir[RAILTIES_PATH + '/html/javascripts/*.js']
-      scripts.reject!{|s| File.basename(s) == 'application.js'} if File.exists?(project_dir + 'application.js')
+      scripts.reject!{|s| File.basename(s) == 'application.js'} if File.exist?(project_dir + 'application.js')
       FileUtils.cp(scripts, project_dir)
     end
 

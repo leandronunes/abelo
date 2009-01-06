@@ -1,0 +1,306 @@
+FckeditorController: missing default helper path fckeditor_helper
+  [4;36;1mSQL (0.188011)[0m   [0;1mCREATE TABLE schema_info (version integer)[0m
+  [4;35;1mSQL (0.012000)[0m   [0mINSERT INTO schema_info (version) VALUES(0)[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSQLite3::SQLException: table schema_info already exists: CREATE TABLE schema_info (version integer)[0m
+  [4;35;1mSQL (0.004000)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to CreateOrganizations (1)
+  [4;36;1mSQL (0.036002)[0m   [0;1mCREATE TABLE organizations ("id" INTEGER PRIMARY KEY NOT NULL, "name" varchar(255) NOT NULL, "cnpj" varchar(255) DEFAULT NULL, "design_data" text DEFAULT NULL, "point_of_sale_design_data" text DEFAULT NULL, "web_site_design_data" text DEFAULT NULL, "presentation" text DEFAULT NULL, "identifier" varchar(255) NOT NULL) [0m
+  [4;35;1mSQL (0.016001)[0m   [0mUPDATE schema_info SET version = 1[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSELECT version FROM schema_info[0m
+Migrating to CreateProducts (2)
+  [4;35;1mSQL (0.032002)[0m   [0mCREATE TABLE products ("id" INTEGER PRIMARY KEY NOT NULL, "name" varchar(255) NOT NULL, "code" varchar(255) DEFAULT NULL, "size" varchar(255) DEFAULT NULL, "color" varchar(255) DEFAULT NULL, "description" text DEFAULT NULL, "sell_price" float NOT NULL, "unit" varchar(255) NOT NULL, "organization_id" integer NOT NULL, "category_id" integer NOT NULL, "minimum_amount" integer DEFAULT NULL, "info" text DEFAULT NULL) [0m
+  [4;36;1mSQL (0.028002)[0m   [0;1mUPDATE schema_info SET version = 2[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to CreateImages (3)
+  [4;36;1mSQL (0.032002)[0m   [0;1mCREATE TABLE images ("id" INTEGER PRIMARY KEY NOT NULL, "description" varchar(255) NOT NULL, "picture" varchar(255) NOT NULL, "product_id" integer NOT NULL) [0m
+  [4;35;1mSQL (0.028001)[0m   [0mUPDATE schema_info SET version = 3[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSELECT version FROM schema_info[0m
+Migrating to ProductsSuppliers (4)
+  [4;35;1mSQL (0.052003)[0m   [0mCREATE TABLE products_suppliers ("product_id" integer NOT NULL, "supplier_id" integer NOT NULL) [0m
+  [4;36;1mSQL (0.020001)[0m   [0;1mUPDATE schema_info SET version = 4[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to CreateStocks (5)
+  [4;36;1mSQL (0.032002)[0m   [0;1mCREATE TABLE stocks ("id" INTEGER PRIMARY KEY NOT NULL, "type" varchar(255) NOT NULL, "price" float DEFAULT NULL, "product_id" integer NOT NULL, "amount" float NOT NULL, "purpose" integer DEFAULT 0, "status" integer DEFAULT 0, "date" date DEFAULT NULL, "supplier_id" integer DEFAULT NULL, "validity" date DEFAULT NULL, "sell_id" integer DEFAULT NULL) [0m
+  [4;35;1mSQL (0.020001)[0m   [0mUPDATE schema_info SET version = 5[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSELECT version FROM schema_info[0m
+Migrating to CreateSystemActors (6)
+  [4;35;1mSQL (0.028002)[0m   [0mCREATE TABLE system_actors ("id" INTEGER PRIMARY KEY NOT NULL, "name" varchar(255) NOT NULL, "organization_id" integer NOT NULL, "address" varchar(255) DEFAULT NULL, "description" text DEFAULT NULL, "email" varchar(255) DEFAULT NULL, "type" varchar(255) DEFAULT NULL, "category_id" integer NOT NULL, "info" text DEFAULT NULL, "cnpj" varchar(255) DEFAULT NULL, "cpf" varchar(255) DEFAULT NULL, "rg" varchar(255) DEFAULT NULL, "birthday" date DEFAULT NULL) [0m
+  [4;36;1mSQL (0.020001)[0m   [0;1mUPDATE schema_info SET version = 6[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to CreateContacts (7)
+  [4;36;1mSQL (0.028002)[0m   [0;1mCREATE TABLE contacts ("id" INTEGER PRIMARY KEY NOT NULL, "name" varchar(255) NOT NULL, "phone" varchar(255) DEFAULT NULL, "email" varchar(255) DEFAULT NULL, "description" text DEFAULT NULL, "system_actor_id" integer NOT NULL, "category_id" integer NOT NULL, "info" text DEFAULT NULL) [0m
+  [4;35;1mSQL (0.020001)[0m   [0mUPDATE schema_info SET version = 7[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSELECT version FROM schema_info[0m
+Migrating to CreatePeople (8)
+  [4;35;1mSQL (0.032002)[0m   [0mCREATE TABLE people ("id" INTEGER PRIMARY KEY NOT NULL, "type" varchar(255) DEFAULT NULL, "login" varchar(255) DEFAULT NULL, "administrator" boolean DEFAULT 'f' NOT NULL, "email" varchar(255) DEFAULT NULL, "crypted_password" varchar(40) DEFAULT NULL, "salt" varchar(40) DEFAULT NULL, "created_at" datetime DEFAULT NULL, "updated_at" datetime DEFAULT NULL, "remember_token" varchar(255) DEFAULT NULL, "remember_token_expires_at" datetime DEFAULT NULL) [0m
+  [4;36;1mSQL (0.020001)[0m   [0;1mUPDATE schema_info SET version = 8[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to CreateProfiles (9)
+  [4;36;1mSQL (0.028002)[0m   [0;1mCREATE TABLE profiles ("id" INTEGER PRIMARY KEY NOT NULL, "user_id" integer DEFAULT NULL, "environment_id" integer DEFAULT NULL, "name" varchar(255) DEFAULT NULL, "organization_id" integer DEFAULT NULL, "is_model" boolean DEFAULT NULL, "permissions" text DEFAULT NULL) [0m
+  [4;35;1mSQL (0.020001)[0m   [0mUPDATE schema_info SET version = 9[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSELECT version FROM schema_info[0m
+Migrating to CreateSales (12)
+  [4;35;1mSQL (0.032002)[0m   [0mCREATE TABLE sales ("id" INTEGER PRIMARY KEY NOT NULL, "organization_id" integer NOT NULL, "customer_id" integer DEFAULT NULL, "datetime" datetime NOT NULL, "status" integer DEFAULT 0 NOT NULL, "user_id" integer NOT NULL, "owner_type" varchar(255) DEFAULT NULL, "owner_id" integer DEFAULT NULL) [0m
+  [4;36;1mSQL (0.020001)[0m   [0;1mUPDATE schema_info SET version = 12[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to CreateSaleItems (13)
+  [4;36;1mSQL (0.032002)[0m   [0;1mCREATE TABLE sale_items ("id" INTEGER PRIMARY KEY NOT NULL, "sale_id" integer NOT NULL, "product_id" integer NOT NULL, "amount" float DEFAULT 0 NOT NULL, "unitary_price" float DEFAULT 0 NOT NULL, "status" integer DEFAULT 0) [0m
+  [4;35;1mSQL (0.020001)[0m   [0mUPDATE schema_info SET version = 13[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSELECT version FROM schema_info[0m
+Migrating to CreateMassMails (14)
+  [4;35;1mSQL (0.024002)[0m   [0mCREATE TABLE mass_mails ("id" INTEGER PRIMARY KEY NOT NULL, "subject" varchar(255) DEFAULT NULL, "body" text DEFAULT NULL, "organization_id" integer NOT NULL) [0m
+  [4;36;1mSQL (0.020001)[0m   [0;1mUPDATE schema_info SET version = 14[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to CreateDocuments (18)
+  [4;36;1mSQL (0.032002)[0m   [0;1mCREATE TABLE documents ("id" INTEGER PRIMARY KEY NOT NULL, "name" varchar(255) NOT NULL, "is_model" boolean DEFAULT 'f', "organization_id" integer NOT NULL, "document_model_id" integer DEFAULT NULL, "body" text DEFAULT NULL, "owner_type" varchar(255) DEFAULT NULL, "owner_id" integer DEFAULT NULL) [0m
+  [4;35;1mSQL (0.020001)[0m   [0mUPDATE schema_info SET version = 18[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSELECT version FROM schema_info[0m
+Migrating to CreateDocumentItems (19)
+  [4;35;1mSQL (0.028001)[0m   [0mCREATE TABLE document_items ("id" INTEGER PRIMARY KEY NOT NULL, "document_section_id" integer NOT NULL, "quantity" integer NOT NULL, "number" integer DEFAULT NULL, "unitary_value" float NOT NULL, "product_id" integer DEFAULT NULL, "service_id" integer DEFAULT NULL) [0m
+  [4;36;1mSQL (0.024002)[0m   [0;1mUPDATE schema_info SET version = 19[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to CreateDepartments (20)
+  [4;36;1mSQL (0.028001)[0m   [0;1mCREATE TABLE departments ("id" INTEGER PRIMARY KEY NOT NULL, "name" varchar(255) NOT NULL, "organization_id" integer NOT NULL) [0m
+  [4;35;1mSQL (0.020001)[0m   [0mUPDATE schema_info SET version = 20[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSELECT version FROM schema_info[0m
+Migrating to CreateDepartmentsDocuments (21)
+  [4;35;1mSQL (0.032002)[0m   [0mCREATE TABLE departments_documents ("document_id" integer NOT NULL, "department_id" integer NOT NULL) [0m
+  [4;36;1mSQL (0.020001)[0m   [0;1mUPDATE schema_info SET version = 21[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to CreateDocumentSections (23)
+  [4;36;1mSQL (0.032002)[0m   [0;1mCREATE TABLE document_sections ("id" INTEGER PRIMARY KEY NOT NULL, "name" varchar(255) NOT NULL, "document_id" integer NOT NULL) [0m
+  [4;35;1mSQL (0.020001)[0m   [0mUPDATE schema_info SET version = 23[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSELECT version FROM schema_info[0m
+Migrating to CreateCategories (24)
+  [4;35;1mSQL (0.032002)[0m   [0mCREATE TABLE categories ("id" INTEGER PRIMARY KEY NOT NULL, "name" varchar(255) NOT NULL, "type" varchar(255) NOT NULL, "parent_id" integer DEFAULT NULL, "organization_id" integer NOT NULL, "description" text DEFAULT NULL) [0m
+  [4;36;1mSQL (0.020001)[0m   [0;1mUPDATE schema_info SET version = 24[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to CreateLedgers (25)
+  [4;36;1mSQL (0.028001)[0m   [0;1mCREATE TABLE ledgers ("id" INTEGER PRIMARY KEY NOT NULL, "owner_type" varchar(255) NOT NULL, "owner_id" integer NOT NULL, "type" varchar(255) NOT NULL, "type_of" varchar(1) NOT NULL, "category_id" integer DEFAULT NULL, "foreseen_value" float DEFAULT NULL, "effective_value" float DEFAULT NULL, "description" varchar(255) DEFAULT '', "date" datetime DEFAULT NULL, "foreseen_date" date DEFAULT NULL, "effective_date" date DEFAULT NULL, "interests" float DEFAULT 0, "interests_days" integer DEFAULT 0, "number_of_parcels" integer DEFAULT 1, "parcel_number" integer DEFAULT 1, "operational" boolean DEFAULT 'f' NOT NULL, "bank_account_id" integer NOT NULL, "status" integer DEFAULT 0, "is_operational" boolean DEFAULT 'f', "schedule_ledger_id" integer DEFAULT NULL, "credit_card_number" varchar(255) DEFAULT NULL, "credit_card_validity" date DEFAULT NULL, "credit_card_secutiry_code" varchar(255) DEFAULT NULL, "credit_card_owner_name" varchar(255) DEFAULT NULL, "credit_card_cnpj" varchar(255) DEFAULT NULL, "credit_card_cpf" varchar(255) DEFAULT NULL, "check_bank_id" integer DEFAULT NULL, "check_owner_name" varchar(255) DEFAULT NULL, "check_account_agency" varchar(255) DEFAULT NULL, "check_account_number" varchar(255) DEFAULT NULL, "check_number" varchar(255) DEFAULT NULL, "check_contact_telephone" varchar(255) DEFAULT NULL, "check_rg" varchar(255) DEFAULT NULL, "check_cpf" varchar(255) DEFAULT NULL, "check_cnpj" varchar(255) DEFAULT NULL, "automatic_debit_owner_name" varchar(255) DEFAULT NULL, "automatic_debit_bank_id" integer DEFAULT NULL, "automatic_debit_account_agency" varchar(255) DEFAULT NULL, "automatic_debit_account_number" varchar(255) DEFAULT NULL) [0m
+  [4;35;1mSQL (0.032002)[0m   [0mCREATE INDEX "index_ledgers_on_category_id" ON ledgers ("category_id")[0m
+  [4;36;1mSQL (0.020001)[0m   [0;1mUPDATE schema_info SET version = 25[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to ActsAsTaggableMigration (26)
+  [4;36;1mSQL (0.032002)[0m   [0;1mCREATE TABLE tags ("id" INTEGER PRIMARY KEY NOT NULL, "name" varchar(255) DEFAULT NULL) [0m
+  [4;35;1mSQL (0.028002)[0m   [0mCREATE TABLE taggings ("id" INTEGER PRIMARY KEY NOT NULL, "tag_id" integer DEFAULT NULL, "taggable_id" integer DEFAULT NULL, "taggable_type" varchar(255) DEFAULT NULL, "created_at" datetime DEFAULT NULL) [0m
+  [4;36;1mSQL (0.028001)[0m   [0;1mCREATE INDEX "index_taggings_on_tag_id" ON taggings ("tag_id")[0m
+  [4;35;1mSQL (0.024002)[0m   [0mCREATE INDEX "index_taggings_on_taggable_id_and_taggable_type" ON taggings ("taggable_id", "taggable_type")[0m
+  [4;36;1mSQL (0.020001)[0m   [0;1mUPDATE schema_info SET version = 26[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to CreateSchedules (27)
+  [4;36;1mSQL (0.024001)[0m   [0;1mCREATE TABLE schedules ("id" INTEGER PRIMARY KEY NOT NULL, "created_at" datetime NOT NULL) [0m
+  [4;35;1mSQL (0.020002)[0m   [0mUPDATE schema_info SET version = 27[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSELECT version FROM schema_info[0m
+Migrating to CreateLedgerCategories (28)
+  [4;35;1mSQL (0.040003)[0m   [0mCREATE TABLE ledger_categories ("id" INTEGER PRIMARY KEY NOT NULL, "name" varchar(255) NOT NULL, "is_operational" boolean DEFAULT 'f', "is_sale" boolean DEFAULT 'f', "is_stock" boolean DEFAULT 'f', "interests" float DEFAULT 0, "interests_days" integer DEFAULT 0, "number_of_parcels" integer DEFAULT 1, "organization_id" integer NOT NULL, "type_of" varchar(1) NOT NULL, "settings" text DEFAULT NULL) [0m
+  [4;36;1mSQL (0.012000)[0m   [0;1mUPDATE schema_info SET version = 28[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to DesignMigration (29)
+  [4;36;1mSQL (0.028002)[0m   [0;1mCREATE TABLE design_boxes ("id" INTEGER PRIMARY KEY NOT NULL, "name" varchar(255) DEFAULT NULL, "title" varchar(255) DEFAULT NULL, "number" integer DEFAULT NULL, "owner_type" varchar(255) DEFAULT NULL, "owner_id" integer DEFAULT NULL) [0m
+  [4;35;1mSQL (0.024001)[0m   [0mCREATE TABLE design_blocks ("id" INTEGER PRIMARY KEY NOT NULL, "description" text DEFAULT NULL, "title" varchar(255) DEFAULT NULL, "box_id" integer DEFAULT NULL, "position" integer DEFAULT NULL, "type" varchar(255) DEFAULT NULL, "settings" text DEFAULT NULL) [0m
+  [4;36;1mSQL (0.016001)[0m   [0;1mUPDATE schema_info SET version = 29[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to CreateBanks (30)
+  [4;36;1mSQL (0.224013)[0m   [0;1mCREATE TABLE banks ("id" INTEGER PRIMARY KEY NOT NULL, "name" varchar(255) NOT NULL, "code" varchar(255) NOT NULL, "site" varchar(255) DEFAULT NULL) [0m
+  [4;35;1mSQL (2.940168)[0m   [0mUPDATE schema_info SET version = 30[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSELECT version FROM schema_info[0m
+Migrating to CreateAttachments (31)
+  [4;35;1mSQL (0.068003)[0m   [0mCREATE TABLE attachments ("id" INTEGER PRIMARY KEY NOT NULL, "file" varchar(255) NOT NULL, "mass_mail_id" integer NOT NULL) [0m
+  [4;36;1mSQL (0.032002)[0m   [0;1mUPDATE schema_info SET version = 31[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to CreateConfigurations (32)
+  [4;36;1mSQL (0.028002)[0m   [0;1mCREATE TABLE configurations ("id" INTEGER PRIMARY KEY NOT NULL, "organization_id" integer DEFAULT NULL, "is_model" boolean DEFAULT NULL, "name" varchar(255) DEFAULT NULL, "description" text DEFAULT NULL, "settings" text DEFAULT NULL) [0m
+  [4;35;1mSQL (0.020001)[0m   [0mUPDATE schema_info SET version = 32[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSELECT version FROM schema_info[0m
+Migrating to CreateBankAccounts (33)
+  [4;35;1mSQL (0.032002)[0m   [0mCREATE TABLE bank_accounts ("id" INTEGER PRIMARY KEY NOT NULL, "owner_type" varchar(255) DEFAULT NULL, "owner_id" integer DEFAULT NULL, "bank_id" integer DEFAULT NULL, "agency" varchar(255) DEFAULT NULL, "variation" varchar(255) DEFAULT NULL, "account" varchar(255) DEFAULT NULL, "is_default" boolean DEFAULT 'f', "description" text DEFAULT NULL) [0m
+  [4;36;1mSQL (0.020001)[0m   [0;1mUPDATE schema_info SET version = 33[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to CreatePeriodicities (34)
+  [4;36;1mSQL (0.028002)[0m   [0;1mCREATE TABLE periodicities ("id" INTEGER PRIMARY KEY NOT NULL, "name" varchar(255) NOT NULL, "number_of_days" integer NOT NULL, "organization_id" integer NOT NULL) [0m
+  [4;35;1mSQL (0.020001)[0m   [0mUPDATE schema_info SET version = 34[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSELECT version FROM schema_info[0m
+Migrating to CreateScheduleLedgers (35)
+  [4;35;1mSQL (0.028002)[0m   [0mCREATE TABLE schedule_ledgers ("id" INTEGER PRIMARY KEY NOT NULL, "periodicity_id" integer DEFAULT NULL, "start_date" date DEFAULT NULL, "interval" integer DEFAULT NULL) [0m
+  [4;36;1mSQL (0.020001)[0m   [0;1mUPDATE schema_info SET version = 35[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to CreateDisplayConfigurations (36)
+  [4;36;1mSQL (0.028002)[0m   [0;1mCREATE TABLE display_configurations ("id" INTEGER PRIMARY KEY NOT NULL, "owner_type" varchar(255) DEFAULT NULL, "owner_id" integer DEFAULT NULL, "type" varchar(255) DEFAULT NULL, "configuration_id" integer DEFAULT NULL, "field" varchar(255) DEFAULT NULL, "position" integer DEFAULT NULL, "settings" text DEFAULT NULL) [0m
+  [4;35;1mSQL (0.020001)[0m   [0mUPDATE schema_info SET version = 36[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSELECT version FROM schema_info[0m
+Migrating to CreateDomains (37)
+  [4;35;1mSQL (0.028001)[0m   [0mCREATE TABLE domains ("id" INTEGER PRIMARY KEY NOT NULL, "name" varchar(255) DEFAULT NULL, "owner_type" varchar(255) DEFAULT NULL, "owner_id" integer DEFAULT NULL) [0m
+  [4;36;1mSQL (0.024002)[0m   [0;1mUPDATE schema_info SET version = 37[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to CreateEnvironments (38)
+  [4;36;1mSQL (0.032001)[0m   [0;1mCREATE TABLE environments ("id" INTEGER PRIMARY KEY NOT NULL, "owner_type" varchar(255) DEFAULT NULL, "owner_id" integer DEFAULT NULL, "name" varchar(255) DEFAULT NULL, "settings" text DEFAULT NULL, "design_data" text DEFAULT NULL, "is_default" boolean DEFAULT NULL) [0m
+  [4;35;1mSQL (0.020002)[0m   [0mUPDATE schema_info SET version = 38[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSELECT version FROM schema_info[0m
+Migrating to BscPluginMigration (40)
+  [4;35;1mSQL (0.028001)[0m   [0mCREATE TABLE countries ("id" INTEGER PRIMARY KEY NOT NULL, "name" varchar(255) DEFAULT NULL) [0m
+  [4;36;1mSQL (0.032002)[0m   [0;1mCREATE TABLE states ("id" INTEGER PRIMARY KEY NOT NULL, "name" varchar(255) DEFAULT NULL, "code" varchar(255) DEFAULT NULL, "country_id" integer DEFAULT NULL) [0m
+  [4;35;1mSQL (0.032002)[0m   [0mCREATE TABLE cities ("id" INTEGER PRIMARY KEY NOT NULL, "name" varchar(255) DEFAULT NULL, "state_id" integer DEFAULT NULL, "zip_code" varchar(255) DEFAULT NULL) [0m
+  [4;36;1mSQL (0.020001)[0m   [0;1mUPDATE schema_info SET version = 40[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to AccessControlMigration (41)
+  [4;36;1mSQL (0.032002)[0m   [0;1mCREATE TABLE roles ("id" INTEGER PRIMARY KEY NOT NULL, "name" varchar(255) DEFAULT NULL, "permissions" varchar(255) DEFAULT NULL) [0m
+  [4;35;1mSQL (0.032002)[0m   [0mCREATE TABLE role_assignments ("id" INTEGER PRIMARY KEY NOT NULL, "accessor_id" integer DEFAULT NULL, "accessor_type" varchar(255) DEFAULT NULL, "resource_id" integer DEFAULT NULL, "resource_type" varchar(255) DEFAULT NULL, "role_id" integer DEFAULT NULL, "is_global" boolean DEFAULT NULL) [0m
+  [4;36;1mSQL (0.020001)[0m   [0;1mUPDATE schema_info SET version = 41[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to CreatePrinterCommands (42)
+  [4;36;1mSQL (0.032002)[0m   [0;1mCREATE TABLE printer_commands ("id" INTEGER PRIMARY KEY NOT NULL, "cmd" varchar(255) NOT NULL, "cmd_params" varchar(255) DEFAULT NULL, "owner_id" integer DEFAULT NULL, "owner_type" varchar(255) DEFAULT NULL, "status" integer DEFAULT 0, "datetime" datetime NOT NULL, "till_id" integer NOT NULL, "sequence_number" integer NOT NULL, "cmd_id" integer NOT NULL, "counter" integer DEFAULT 0, "error_code" integer DEFAULT NULL) [0m
+  [4;35;1mSQL (0.020001)[0m   [0mUPDATE schema_info SET version = 42[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSELECT version FROM schema_info[0m
+Migrating to CreateTills (43)
+  [4;35;1mSQL (0.028001)[0m   [0mCREATE TABLE tills ("id" INTEGER PRIMARY KEY NOT NULL, "datetime" datetime NOT NULL, "status" integer DEFAULT 0, "printer_id" varchar(255) DEFAULT NULL, "user_id" integer NOT NULL, "organization_id" integer NOT NULL) [0m
+  [4;36;1mSQL (0.020001)[0m   [0;1mUPDATE schema_info SET version = 43[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to ChangeColumnScheduleLedgers (44)
+  [4;36;1mSQL (0.004000)[0m   [0;1mCREATE TEMPORARY TABLE altered_schedule_ledgers ("id" INTEGER PRIMARY KEY NOT NULL, "periodicity_id" integer DEFAULT NULL, "start_date" date DEFAULT NULL, "interval" integer DEFAULT NULL) [0m
+  [4;35;1mSQL (0.000000)[0m   [0mPRAGMA index_list(schedule_ledgers)[0m
+  [4;36;1mSQL (0.004000)[0m   [0;1mDROP TABLE schedule_ledgers[0m
+  [4;35;1mSQL (0.004000)[0m   [0mCREATE TABLE schedule_ledgers ("id" INTEGER PRIMARY KEY NOT NULL, "periodicity_id" integer DEFAULT NULL, "start_date" datetime DEFAULT NULL, "interval" integer DEFAULT NULL) [0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mPRAGMA index_list(altered_schedule_ledgers)[0m
+  [4;35;1mSQL (0.000000)[0m   [0mDROP TABLE altered_schedule_ledgers[0m
+  [4;36;1mSQL (0.024002)[0m   [0;1mUPDATE schema_info SET version = 44[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to ChangeColumnLedgers (45)
+  [4;36;1mSQL (0.000000)[0m   [0;1mCREATE TEMPORARY TABLE altered_ledgers ("id" INTEGER PRIMARY KEY NOT NULL, "owner_type" varchar(255) NOT NULL, "owner_id" integer NOT NULL, "type" varchar(255) NOT NULL, "type_of" varchar(1) NOT NULL, "category_id" integer DEFAULT NULL, "foreseen_value" float DEFAULT NULL, "effective_value" float DEFAULT NULL, "description" varchar(255) DEFAULT '', "date" datetime DEFAULT NULL, "foreseen_date" date DEFAULT NULL, "effective_date" date DEFAULT NULL, "interests" float DEFAULT 0.0, "interests_days" integer DEFAULT 0, "number_of_parcels" integer DEFAULT 1, "parcel_number" integer DEFAULT 1, "operational" boolean DEFAULT 'f' NOT NULL, "bank_account_id" integer NOT NULL, "status" integer DEFAULT 0, "is_operational" boolean DEFAULT 'f', "schedule_ledger_id" integer DEFAULT NULL, "credit_card_number" varchar(255) DEFAULT NULL, "credit_card_validity" date DEFAULT NULL, "credit_card_secutiry_code" varchar(255) DEFAULT NULL, "credit_card_owner_name" varchar(255) DEFAULT NULL, "credit_card_cnpj" varchar(255) DEFAULT NULL, "credit_card_cpf" varchar(255) DEFAULT NULL, "check_bank_id" integer DEFAULT NULL, "check_owner_name" varchar(255) DEFAULT NULL, "check_account_agency" varchar(255) DEFAULT NULL, "check_account_number" varchar(255) DEFAULT NULL, "check_number" varchar(255) DEFAULT NULL, "check_contact_telephone" varchar(255) DEFAULT NULL, "check_rg" varchar(255) DEFAULT NULL, "check_cpf" varchar(255) DEFAULT NULL, "check_cnpj" varchar(255) DEFAULT NULL, "automatic_debit_owner_name" varchar(255) DEFAULT NULL, "automatic_debit_bank_id" integer DEFAULT NULL, "automatic_debit_account_agency" varchar(255) DEFAULT NULL, "automatic_debit_account_number" varchar(255) DEFAULT NULL) [0m
+  [4;35;1mSQL (0.004000)[0m   [0mPRAGMA index_list(ledgers)[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mPRAGMA index_info('index_ledgers_on_category_id')[0m
+  [4;35;1mSQL (0.000000)[0m   [0mCREATE INDEX "temp_index_altered_ledgers_on_category_id" ON altered_ledgers ("category_id")[0m
+  [4;36;1mSQL (0.004001)[0m   [0;1mDROP TABLE ledgers[0m
+  [4;35;1mSQL (0.000000)[0m   [0mCREATE TABLE ledgers ("id" INTEGER PRIMARY KEY NOT NULL, "owner_type" varchar(255) NOT NULL, "owner_id" integer NOT NULL, "type" varchar(255) NOT NULL, "type_of" varchar(1) NOT NULL, "category_id" integer DEFAULT NULL, "foreseen_value" float DEFAULT NULL, "effective_value" float DEFAULT NULL, "description" varchar(255) DEFAULT '', "date" datetime DEFAULT NULL, "foreseen_date" datetime DEFAULT NULL, "effective_date" date DEFAULT NULL, "interests" float DEFAULT 0.0, "interests_days" integer DEFAULT 0, "number_of_parcels" integer DEFAULT 1, "parcel_number" integer DEFAULT 1, "operational" boolean DEFAULT 'f' NOT NULL, "bank_account_id" integer NOT NULL, "status" integer DEFAULT 0, "is_operational" boolean DEFAULT 'f', "schedule_ledger_id" integer DEFAULT NULL, "credit_card_number" varchar(255) DEFAULT NULL, "credit_card_validity" date DEFAULT NULL, "credit_card_secutiry_code" varchar(255) DEFAULT NULL, "credit_card_owner_name" varchar(255) DEFAULT NULL, "credit_card_cnpj" varchar(255) DEFAULT NULL, "credit_card_cpf" varchar(255) DEFAULT NULL, "check_bank_id" integer DEFAULT NULL, "check_owner_name" varchar(255) DEFAULT NULL, "check_account_agency" varchar(255) DEFAULT NULL, "check_account_number" varchar(255) DEFAULT NULL, "check_number" varchar(255) DEFAULT NULL, "check_contact_telephone" varchar(255) DEFAULT NULL, "check_rg" varchar(255) DEFAULT NULL, "check_cpf" varchar(255) DEFAULT NULL, "check_cnpj" varchar(255) DEFAULT NULL, "automatic_debit_owner_name" varchar(255) DEFAULT NULL, "automatic_debit_bank_id" integer DEFAULT NULL, "automatic_debit_account_agency" varchar(255) DEFAULT NULL, "automatic_debit_account_number" varchar(255) DEFAULT NULL) [0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mPRAGMA index_list(altered_ledgers)[0m
+  [4;35;1mSQL (0.000000)[0m   [0mPRAGMA index_info('temp_index_altered_ledgers_on_category_id')[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mCREATE INDEX "index_ledgers_on_category_id" ON ledgers ("category_id")[0m
+  [4;35;1mSQL (0.000000)[0m   [0mDROP TABLE altered_ledgers[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mCREATE TEMPORARY TABLE altered_ledgers ("id" INTEGER PRIMARY KEY NOT NULL, "owner_type" varchar(255) NOT NULL, "owner_id" integer NOT NULL, "type" varchar(255) NOT NULL, "type_of" varchar(1) NOT NULL, "category_id" integer DEFAULT NULL, "foreseen_value" float DEFAULT NULL, "effective_value" float DEFAULT NULL, "description" varchar(255) DEFAULT '', "date" datetime DEFAULT NULL, "foreseen_date" datetime DEFAULT NULL, "effective_date" date DEFAULT NULL, "interests" float DEFAULT 0.0, "interests_days" integer DEFAULT 0, "number_of_parcels" integer DEFAULT 1, "parcel_number" integer DEFAULT 1, "operational" boolean DEFAULT 'f' NOT NULL, "bank_account_id" integer NOT NULL, "status" integer DEFAULT 0, "is_operational" boolean DEFAULT 'f', "schedule_ledger_id" integer DEFAULT NULL, "credit_card_number" varchar(255) DEFAULT NULL, "credit_card_validity" date DEFAULT NULL, "credit_card_secutiry_code" varchar(255) DEFAULT NULL, "credit_card_owner_name" varchar(255) DEFAULT NULL, "credit_card_cnpj" varchar(255) DEFAULT NULL, "credit_card_cpf" varchar(255) DEFAULT NULL, "check_bank_id" integer DEFAULT NULL, "check_owner_name" varchar(255) DEFAULT NULL, "check_account_agency" varchar(255) DEFAULT NULL, "check_account_number" varchar(255) DEFAULT NULL, "check_number" varchar(255) DEFAULT NULL, "check_contact_telephone" varchar(255) DEFAULT NULL, "check_rg" varchar(255) DEFAULT NULL, "check_cpf" varchar(255) DEFAULT NULL, "check_cnpj" varchar(255) DEFAULT NULL, "automatic_debit_owner_name" varchar(255) DEFAULT NULL, "automatic_debit_bank_id" integer DEFAULT NULL, "automatic_debit_account_agency" varchar(255) DEFAULT NULL, "automatic_debit_account_number" varchar(255) DEFAULT NULL) [0m
+  [4;35;1mSQL (0.000000)[0m   [0mPRAGMA index_list(ledgers)[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mPRAGMA index_info('index_ledgers_on_category_id')[0m
+  [4;35;1mSQL (0.004001)[0m   [0mCREATE INDEX "temp_index_altered_ledgers_on_category_id" ON altered_ledgers ("category_id")[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mDROP TABLE ledgers[0m
+  [4;35;1mSQL (0.000000)[0m   [0mCREATE TABLE ledgers ("id" INTEGER PRIMARY KEY NOT NULL, "owner_type" varchar(255) NOT NULL, "owner_id" integer NOT NULL, "type" varchar(255) NOT NULL, "type_of" varchar(1) NOT NULL, "category_id" integer DEFAULT NULL, "foreseen_value" float DEFAULT NULL, "effective_value" float DEFAULT NULL, "description" varchar(255) DEFAULT '', "date" datetime DEFAULT NULL, "foreseen_date" datetime DEFAULT NULL, "effective_date" datetime DEFAULT NULL, "interests" float DEFAULT 0.0, "interests_days" integer DEFAULT 0, "number_of_parcels" integer DEFAULT 1, "parcel_number" integer DEFAULT 1, "operational" boolean DEFAULT 'f' NOT NULL, "bank_account_id" integer NOT NULL, "status" integer DEFAULT 0, "is_operational" boolean DEFAULT 'f', "schedule_ledger_id" integer DEFAULT NULL, "credit_card_number" varchar(255) DEFAULT NULL, "credit_card_validity" date DEFAULT NULL, "credit_card_secutiry_code" varchar(255) DEFAULT NULL, "credit_card_owner_name" varchar(255) DEFAULT NULL, "credit_card_cnpj" varchar(255) DEFAULT NULL, "credit_card_cpf" varchar(255) DEFAULT NULL, "check_bank_id" integer DEFAULT NULL, "check_owner_name" varchar(255) DEFAULT NULL, "check_account_agency" varchar(255) DEFAULT NULL, "check_account_number" varchar(255) DEFAULT NULL, "check_number" varchar(255) DEFAULT NULL, "check_contact_telephone" varchar(255) DEFAULT NULL, "check_rg" varchar(255) DEFAULT NULL, "check_cpf" varchar(255) DEFAULT NULL, "check_cnpj" varchar(255) DEFAULT NULL, "automatic_debit_owner_name" varchar(255) DEFAULT NULL, "automatic_debit_bank_id" integer DEFAULT NULL, "automatic_debit_account_agency" varchar(255) DEFAULT NULL, "automatic_debit_account_number" varchar(255) DEFAULT NULL) [0m
+  [4;36;1mSQL (0.004000)[0m   [0;1mPRAGMA index_list(altered_ledgers)[0m
+  [4;35;1mSQL (0.000000)[0m   [0mPRAGMA index_info('temp_index_altered_ledgers_on_category_id')[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mCREATE INDEX "index_ledgers_on_category_id" ON ledgers ("category_id")[0m
+  [4;35;1mSQL (0.000000)[0m   [0mDROP TABLE altered_ledgers[0m
+  [4;36;1mSQL (0.012001)[0m   [0;1mUPDATE schema_info SET version = 45[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to AddColumnLedgerCategory (46)
+  [4;36;1mSQL (0.016001)[0m   [0;1mALTER TABLE ledger_categories ADD "periodicity_id" integer[0m
+  [4;35;1mSQL (0.048002)[0m   [0mVACUUM[0m
+  [4;36;1mSQL (0.020001)[0m   [0;1mUPDATE schema_info SET version = 46[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to AddColumnSaleItems (47)
+  [4;36;1mSQL (0.020001)[0m   [0;1mALTER TABLE sale_items ADD "stock_id" integer[0m
+  [4;35;1mSQL (0.052003)[0m   [0mVACUUM[0m
+  [4;36;1mSQL (0.016001)[0m   [0;1mUPDATE schema_info SET version = 47[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to ChangeColumnStocks (48)
+  [4;36;1mSQL (0.000000)[0m   [0;1mCREATE TEMPORARY TABLE altered_stocks ("id" INTEGER PRIMARY KEY NOT NULL, "type" varchar(255) NOT NULL, "price" float DEFAULT NULL, "product_id" integer NOT NULL, "amount" float NOT NULL, "purpose" integer DEFAULT 0, "status" integer DEFAULT 0, "date" date DEFAULT NULL, "supplier_id" integer DEFAULT NULL, "validity" date DEFAULT NULL, "sell_id" integer DEFAULT NULL) [0m
+  [4;35;1mSQL (0.000000)[0m   [0mPRAGMA index_list(stocks)[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mDROP TABLE stocks[0m
+  [4;35;1mSQL (0.000000)[0m   [0mCREATE TABLE stocks ("id" INTEGER PRIMARY KEY NOT NULL, "type" varchar(255) NOT NULL, "price" float DEFAULT NULL, "product_id" integer NOT NULL, "amount" float NOT NULL, "purpose" integer DEFAULT 0, "status" integer DEFAULT 0, "date" datetime DEFAULT NULL, "supplier_id" integer DEFAULT NULL, "validity" date DEFAULT NULL, "sell_id" integer DEFAULT NULL) [0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mPRAGMA index_list(altered_stocks)[0m
+  [4;35;1mSQL (0.000000)[0m   [0mDROP TABLE altered_stocks[0m
+  [4;36;1mSQL (0.016001)[0m   [0;1mUPDATE schema_info SET version = 48[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to CreateInvoices (49)
+  [4;36;1mSQL (0.020001)[0m   [0;1mCREATE TABLE invoices ("id" INTEGER PRIMARY KEY NOT NULL, "number" varchar(255) DEFAULT NULL, "serie" varchar(255) DEFAULT NULL, "issue_date" datetime DEFAULT NULL, "status" integer DEFAULT 0, "supplier_id" integer DEFAULT NULL) [0m
+  [4;35;1mSQL (0.016001)[0m   [0mUPDATE schema_info SET version = 49[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSELECT version FROM schema_info[0m
+Migrating to AddColumnStocks (50)
+  [4;35;1mSQL (0.016001)[0m   [0mALTER TABLE stocks ADD "invoice_id" integer[0m
+  [4;36;1mSQL (0.052003)[0m   [0;1mVACUUM[0m
+  [4;35;1mSQL (0.016001)[0m   [0mUPDATE schema_info SET version = 50[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSELECT version FROM schema_info[0m
+Migrating to ChangeLedgers1 (51)
+  [4;35;1mSQL (0.028002)[0m   [0mALTER TABLE ledgers ADD "payment_method" varchar(255)[0m
+  [4;36;1mSQL (0.048002)[0m   [0;1mVACUUM[0m
+  [4;35;1mSQL (0.004001)[0m   [0mUPDATE ledgers SET payment_method = type;[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mCREATE TEMPORARY TABLE altered_ledgers ("id" INTEGER PRIMARY KEY NOT NULL, "owner_type" varchar(255) NOT NULL, "owner_id" integer NOT NULL, "type" varchar(255) NOT NULL, "type_of" varchar(1) NOT NULL, "category_id" integer DEFAULT NULL, "foreseen_value" float DEFAULT NULL, "effective_value" float DEFAULT NULL, "description" varchar(255) DEFAULT '', "date" datetime DEFAULT NULL, "foreseen_date" datetime DEFAULT NULL, "effective_date" datetime DEFAULT NULL, "interests" float DEFAULT 0.0, "interests_days" integer DEFAULT 0, "number_of_parcels" integer DEFAULT 1, "parcel_number" integer DEFAULT 1, "operational" boolean DEFAULT 'f' NOT NULL, "bank_account_id" integer NOT NULL, "status" integer DEFAULT 0, "is_operational" boolean DEFAULT 'f', "schedule_ledger_id" integer DEFAULT NULL, "credit_card_number" varchar(255) DEFAULT NULL, "credit_card_validity" date DEFAULT NULL, "credit_card_secutiry_code" varchar(255) DEFAULT NULL, "credit_card_owner_name" varchar(255) DEFAULT NULL, "credit_card_cnpj" varchar(255) DEFAULT NULL, "credit_card_cpf" varchar(255) DEFAULT NULL, "check_bank_id" integer DEFAULT NULL, "check_owner_name" varchar(255) DEFAULT NULL, "check_account_agency" varchar(255) DEFAULT NULL, "check_account_number" varchar(255) DEFAULT NULL, "check_number" varchar(255) DEFAULT NULL, "check_contact_telephone" varchar(255) DEFAULT NULL, "check_rg" varchar(255) DEFAULT NULL, "check_cpf" varchar(255) DEFAULT NULL, "check_cnpj" varchar(255) DEFAULT NULL, "automatic_debit_owner_name" varchar(255) DEFAULT NULL, "automatic_debit_bank_id" integer DEFAULT NULL, "automatic_debit_account_agency" varchar(255) DEFAULT NULL, "automatic_debit_account_number" varchar(255) DEFAULT NULL, "payment_method" varchar(255) DEFAULT NULL) [0m
+  [4;35;1mSQL (0.000000)[0m   [0mPRAGMA index_list(ledgers)[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mPRAGMA index_info('index_ledgers_on_category_id')[0m
+  [4;35;1mSQL (0.000000)[0m   [0mCREATE INDEX "temp_index_altered_ledgers_on_category_id" ON altered_ledgers ("category_id")[0m
+  [4;36;1mSQL (0.004000)[0m   [0;1mDROP TABLE ledgers[0m
+  [4;35;1mSQL (0.000000)[0m   [0mCREATE TABLE ledgers ("id" INTEGER PRIMARY KEY NOT NULL, "owner_type" varchar(255) NOT NULL, "owner_id" integer NOT NULL, "type_of" varchar(1) NOT NULL, "category_id" integer DEFAULT NULL, "foreseen_value" float DEFAULT NULL, "effective_value" float DEFAULT NULL, "description" varchar(255) DEFAULT '', "date" datetime DEFAULT NULL, "foreseen_date" datetime DEFAULT NULL, "effective_date" datetime DEFAULT NULL, "interests" float DEFAULT 0.0, "interests_days" integer DEFAULT 0, "number_of_parcels" integer DEFAULT 1, "parcel_number" integer DEFAULT 1, "operational" boolean DEFAULT 'f' NOT NULL, "bank_account_id" integer NOT NULL, "status" integer DEFAULT 0, "is_operational" boolean DEFAULT 'f', "schedule_ledger_id" integer DEFAULT NULL, "credit_card_number" varchar(255) DEFAULT NULL, "credit_card_validity" date DEFAULT NULL, "credit_card_secutiry_code" varchar(255) DEFAULT NULL, "credit_card_owner_name" varchar(255) DEFAULT NULL, "credit_card_cnpj" varchar(255) DEFAULT NULL, "credit_card_cpf" varchar(255) DEFAULT NULL, "check_bank_id" integer DEFAULT NULL, "check_owner_name" varchar(255) DEFAULT NULL, "check_account_agency" varchar(255) DEFAULT NULL, "check_account_number" varchar(255) DEFAULT NULL, "check_number" varchar(255) DEFAULT NULL, "check_contact_telephone" varchar(255) DEFAULT NULL, "check_rg" varchar(255) DEFAULT NULL, "check_cpf" varchar(255) DEFAULT NULL, "check_cnpj" varchar(255) DEFAULT NULL, "automatic_debit_owner_name" varchar(255) DEFAULT NULL, "automatic_debit_bank_id" integer DEFAULT NULL, "automatic_debit_account_agency" varchar(255) DEFAULT NULL, "automatic_debit_account_number" varchar(255) DEFAULT NULL, "payment_method" varchar(255) DEFAULT NULL) [0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mPRAGMA index_list(altered_ledgers)[0m
+  [4;35;1mSQL (0.000000)[0m   [0mPRAGMA index_info('temp_index_altered_ledgers_on_category_id')[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mCREATE INDEX "index_ledgers_on_category_id" ON ledgers ("category_id")[0m
+  [4;35;1mSQL (0.000000)[0m   [0mDROP TABLE altered_ledgers[0m
+  [4;36;1mSQL (0.012001)[0m   [0;1mUPDATE schema_info SET version = 51[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to AddColumnPrinterCommands (52)
+  [4;36;1mSQL (0.016001)[0m   [0;1mALTER TABLE printer_commands ADD "response" text[0m
+  [4;35;1mSQL (0.048002)[0m   [0mVACUUM[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mCREATE TEMPORARY TABLE altered_printer_commands ("id" INTEGER PRIMARY KEY NOT NULL, "cmd" varchar(255) NOT NULL, "cmd_params" varchar(255) DEFAULT NULL, "owner_id" integer DEFAULT NULL, "owner_type" varchar(255) DEFAULT NULL, "status" integer DEFAULT 0, "datetime" datetime NOT NULL, "till_id" integer NOT NULL, "sequence_number" integer NOT NULL, "cmd_id" integer NOT NULL, "counter" integer DEFAULT 0, "error_code" integer DEFAULT NULL, "response" text DEFAULT NULL) [0m
+  [4;35;1mSQL (0.000000)[0m   [0mPRAGMA index_list(printer_commands)[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mDROP TABLE printer_commands[0m
+  [4;35;1mSQL (0.000000)[0m   [0mCREATE TABLE printer_commands ("id" INTEGER PRIMARY KEY NOT NULL, "cmd" varchar(255) NOT NULL, "cmd_params" varchar(255) DEFAULT NULL, "owner_id" integer DEFAULT NULL, "owner_type" varchar(255) DEFAULT NULL, "status" integer DEFAULT 0, "datetime" datetime NOT NULL, "sequence_number" integer NOT NULL, "cmd_id" integer NOT NULL, "counter" integer DEFAULT 0, "error_code" integer DEFAULT NULL, "response" text DEFAULT NULL) [0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mPRAGMA index_list(altered_printer_commands)[0m
+  [4;35;1mSQL (0.000000)[0m   [0mDROP TABLE altered_printer_commands[0m
+  [4;36;1mSQL (0.016001)[0m   [0;1mALTER TABLE printer_commands ADD "till_id" integer[0m
+  [4;35;1mSQL (0.052003)[0m   [0mVACUUM[0m
+  [4;36;1mSQL (0.020001)[0m   [0;1mUPDATE schema_info SET version = 52[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to AddColumnOrganizations (53)
+  [4;36;1mSQL (0.016001)[0m   [0;1mALTER TABLE organizations ADD "trade_name" varchar(255) DEFAULT '' NOT NULL[0m
+  [4;35;1mSQL (0.048003)[0m   [0mVACUUM[0m
+  [4;36;1mSQL (0.020001)[0m   [0;1mALTER TABLE organizations ADD "state_registration" varchar(255)[0m
+  [4;35;1mSQL (0.048003)[0m   [0mVACUUM[0m
+  [4;36;1mSQL (0.016001)[0m   [0;1mALTER TABLE organizations ADD "responsible_person" varchar(255)[0m
+  [4;35;1mSQL (0.048003)[0m   [0mVACUUM[0m
+  [4;36;1mSQL (0.020001)[0m   [0;1mUPDATE schema_info SET version = 53[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to CreateAddresses (54)
+  [4;36;1mSQL (0.024001)[0m   [0;1mCREATE TABLE addresses ("id" INTEGER PRIMARY KEY NOT NULL, "owner_type" varchar(255) NOT NULL, "owner_id" integer NOT NULL, "city_id" integer NOT NULL, "state_id" integer NOT NULL, "country_id" integer NOT NULL, "street" varchar(255) DEFAULT NULL, "number" varchar(255) DEFAULT NULL, "complement" varchar(255) DEFAULT NULL, "district" varchar(255) DEFAULT NULL, "zip_code" varchar(255) DEFAULT NULL) [0m
+  [4;35;1mSQL (0.016001)[0m   [0mUPDATE schema_info SET version = 54[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSELECT version FROM schema_info[0m
+Migrating to CreatePrinters (55)
+  [4;35;1mSQL (0.024002)[0m   [0mCREATE TABLE printers ("id" INTEGER PRIMARY KEY NOT NULL, "name" varchar(255) DEFAULT NULL, "serial" varchar(255) NOT NULL, "organization_id" integer NOT NULL, "computer_id" varchar(255) NOT NULL) [0m
+  [4;36;1mSQL (0.020001)[0m   [0;1mUPDATE schema_info SET version = 55[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to ChangeLedgers2 (56)
+  [4;36;1mSQL (0.028002)[0m   [0;1mALTER TABLE ledgers ADD "organization_id" integer[0m
+  [4;35;1mSQL (0.052002)[0m   [0mVACUUM[0m
+  [4;36;1mSQL (0.020002)[0m   [0;1mUPDATE schema_info SET version = 56[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to CreateBalances (57)
+  [4;36;1mSQL (0.024001)[0m   [0;1mCREATE TABLE balances ("id" INTEGER PRIMARY KEY NOT NULL, "value" float DEFAULT 0, "date" date DEFAULT NULL, "bank_account_id" integer DEFAULT NULL) [0m
+  [4;35;1mSQL (0.016001)[0m   [0mUPDATE schema_info SET version = 57[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSELECT version FROM schema_info[0m
+Migrating to RemoveColumnBankAccounts (58)
+  [4;35;1mSQL (0.020001)[0m   [0mALTER TABLE bank_accounts ADD "organization_id" integer[0m
+  [4;36;1mSQL (0.056003)[0m   [0;1mVACUUM[0m
+  [4;35;1mSQL (0.004000)[0m   [0mupdate bank_accounts set organization_id = owner_id[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mCREATE TEMPORARY TABLE altered_bank_accounts ("id" INTEGER PRIMARY KEY NOT NULL, "owner_type" varchar(255) DEFAULT NULL, "owner_id" integer DEFAULT NULL, "bank_id" integer DEFAULT NULL, "agency" varchar(255) DEFAULT NULL, "variation" varchar(255) DEFAULT NULL, "account" varchar(255) DEFAULT NULL, "is_default" boolean DEFAULT 'f', "description" text DEFAULT NULL, "organization_id" integer DEFAULT NULL) [0m
+  [4;35;1mSQL (0.000000)[0m   [0mPRAGMA index_list(bank_accounts)[0m
+  [4;36;1mSQL (0.004001)[0m   [0;1mDROP TABLE bank_accounts[0m
+  [4;35;1mSQL (0.000000)[0m   [0mCREATE TABLE bank_accounts ("id" INTEGER PRIMARY KEY NOT NULL, "owner_type" varchar(255) DEFAULT NULL, "bank_id" integer DEFAULT NULL, "agency" varchar(255) DEFAULT NULL, "variation" varchar(255) DEFAULT NULL, "account" varchar(255) DEFAULT NULL, "is_default" boolean DEFAULT 'f', "description" text DEFAULT NULL, "organization_id" integer DEFAULT NULL) [0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mPRAGMA index_list(altered_bank_accounts)[0m
+  [4;35;1mSQL (0.000000)[0m   [0mDROP TABLE altered_bank_accounts[0m
+  [4;36;1mSQL (0.004000)[0m   [0;1mCREATE TEMPORARY TABLE altered_bank_accounts ("id" INTEGER PRIMARY KEY NOT NULL, "owner_type" varchar(255) DEFAULT NULL, "bank_id" integer DEFAULT NULL, "agency" varchar(255) DEFAULT NULL, "variation" varchar(255) DEFAULT NULL, "account" varchar(255) DEFAULT NULL, "is_default" boolean DEFAULT 'f', "description" text DEFAULT NULL, "organization_id" integer DEFAULT NULL) [0m
+  [4;35;1mSQL (0.000000)[0m   [0mPRAGMA index_list(bank_accounts)[0m
+  [4;36;1mSQL (0.004000)[0m   [0;1mDROP TABLE bank_accounts[0m
+  [4;35;1mSQL (0.004001)[0m   [0mCREATE TABLE bank_accounts ("id" INTEGER PRIMARY KEY NOT NULL, "bank_id" integer DEFAULT NULL, "agency" varchar(255) DEFAULT NULL, "variation" varchar(255) DEFAULT NULL, "account" varchar(255) DEFAULT NULL, "is_default" boolean DEFAULT 'f', "description" text DEFAULT NULL, "organization_id" integer DEFAULT NULL) [0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mPRAGMA index_list(altered_bank_accounts)[0m
+  [4;35;1mSQL (0.000000)[0m   [0mDROP TABLE altered_bank_accounts[0m
+  [4;36;1mSQL (0.012000)[0m   [0;1mUPDATE schema_info SET version = 58[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to ChangeProduct1 (59)
+  [4;36;1mSQL (0.004000)[0m   [0;1mCREATE TEMPORARY TABLE altered_products ("id" INTEGER PRIMARY KEY NOT NULL, "name" varchar(255) NOT NULL, "code" varchar(255) DEFAULT NULL, "size" varchar(255) DEFAULT NULL, "color" varchar(255) DEFAULT NULL, "description" text DEFAULT NULL, "sell_price" float NOT NULL, "unit" varchar(255) NOT NULL, "organization_id" integer NOT NULL, "category_id" integer NOT NULL, "minimum_amount" integer DEFAULT NULL, "info" text DEFAULT NULL) [0m
+  [4;35;1mSQL (0.000000)[0m   [0mPRAGMA index_list(products)[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mDROP TABLE products[0m
+  [4;35;1mSQL (0.000000)[0m   [0mCREATE TABLE products ("id" INTEGER PRIMARY KEY NOT NULL, "name" varchar(255) NOT NULL, "code" integer(255) DEFAULT NULL, "size" varchar(255) DEFAULT NULL, "color" varchar(255) DEFAULT NULL, "description" text DEFAULT NULL, "sell_price" float NOT NULL, "unit" varchar(255) NOT NULL, "organization_id" integer NOT NULL, "category_id" integer NOT NULL, "minimum_amount" integer DEFAULT NULL, "info" text DEFAULT NULL) [0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mPRAGMA index_list(altered_products)[0m
+  [4;35;1mSQL (0.000000)[0m   [0mDROP TABLE altered_products[0m
+  [4;36;1mSQL (0.016001)[0m   [0;1mUPDATE schema_info SET version = 59[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to CreateUnitMeasures (60)
+  [4;36;1mSQL (0.020001)[0m   [0;1mCREATE TABLE unit_measures ("id" INTEGER PRIMARY KEY NOT NULL, "name" varchar(255) NOT NULL, "abbreviation" varchar(255) NOT NULL, "organization_id" integer DEFAULT NULL) [0m
+  [4;35;1mSQL (0.012001)[0m   [0mUPDATE schema_info SET version = 60[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSELECT version FROM schema_info[0m
+Migrating to ChangeProduct2 (61)
+  [4;35;1mSQL (0.016001)[0m   [0mALTER TABLE products ADD "unit_measure_id" integer[0m
+  [4;36;1mSQL (0.092005)[0m   [0;1mVACUUM[0m

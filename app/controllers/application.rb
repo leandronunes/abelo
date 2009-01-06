@@ -26,8 +26,9 @@ class ApplicationController < ActionController::Base
   ###########################################
   # Internationalization Settings 
   ###########################################
-  GetText.locale = 'pt_BR'
-  init_gettext 'abelo'
+#FIXME remove gettext stuff
+#  GetText.locale = 'pt_BR'
+#  init_gettext 'abelo'
   
   ###########################################
   # MENU DETAILS 

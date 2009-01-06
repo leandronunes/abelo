@@ -56,7 +56,7 @@ end
 # Include your application configuration below
 require 'jcode'
 $KCODE = 'u'
-require 'gettext/rails'
+#require 'gettext/rails'
 Localist.supported_locales = %w[en-US pt-BR]
 Localist.default_locale = "pt-BR"
 Localist.callback = lambda { |l| GetText.locale= l }

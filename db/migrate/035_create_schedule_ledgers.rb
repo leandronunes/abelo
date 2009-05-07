@@ -1,9 +1,9 @@
 class CreateScheduleLedgers < ActiveRecord::Migration
   def self.up
     create_table :schedule_ledgers do |t|
-      t.column :periodicity_id,  :integer
-      t.column :start_date,      :date
-      t.column :interval,        :integer
+      t.references :periodicity
+      t.timestamps
+      t.integer :interval
     end
   end
 

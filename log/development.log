@@ -572,3 +572,332 @@ Migrating to ChangeProduct2 (61)
  FROM sqlite_master
  WHERE type = 'table' AND NOT name = 'sqlite_sequence'
 [0m
+  [4;36;1mSQL (10.6ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (5.7ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateOrganizations (1)
+Migrating to CreateProducts (2)
+Migrating to CreateImages (3)
+Migrating to ProductsSuppliers (4)
+Migrating to CreateStocks (5)
+Migrating to CreateSystemActors (6)
+Migrating to CreateContacts (7)
+Migrating to CreatePeople (8)
+Migrating to CreateProfiles (9)
+Migrating to CreateSales (12)
+Migrating to CreateSaleItems (13)
+Migrating to CreateMassMails (14)
+Migrating to CreateDocuments (18)
+Migrating to CreateDocumentItems (19)
+Migrating to CreateDepartments (20)
+Migrating to CreateDepartmentsDocuments (21)
+Migrating to CreateDocumentSections (23)
+Migrating to CreateCategories (24)
+Migrating to CreateLedgers (25)
+Migrating to ActsAsTaggableMigration (26)
+Migrating to CreateSchedules (27)
+Migrating to CreateLedgerCategories (28)
+Migrating to DesignMigration (29)
+Migrating to CreateBanks (30)
+Migrating to CreateAttachments (31)
+Migrating to CreateConfigurations (32)
+Migrating to CreateBankAccounts (33)
+Migrating to CreatePeriodicities (34)
+Migrating to CreateScheduleLedgers (35)
+Migrating to CreateDisplayConfigurations (36)
+Migrating to CreateDomains (37)
+Migrating to CreateEnvironments (38)
+Migrating to BscPluginMigration (40)
+Migrating to AccessControlMigration (41)
+Migrating to CreatePrinterCommands (42)
+Migrating to CreateTills (43)
+Migrating to ChangeColumnScheduleLedgers (44)
+Migrating to ChangeColumnLedgers (45)
+Migrating to AddColumnLedgerCategory (46)
+Migrating to AddColumnSaleItems (47)
+Migrating to ChangeColumnStocks (48)
+Migrating to CreateInvoices (49)
+Migrating to AddColumnStocks (50)
+Migrating to ChangeLedgers1 (51)
+Migrating to AddColumnPrinterCommands (52)
+Migrating to AddColumnOrganizations (53)
+Migrating to CreateAddresses (54)
+Migrating to CreatePrinters (55)
+Migrating to ChangeLedgers2 (56)
+Migrating to CreateBalances (57)
+Migrating to RemoveColumnBankAccounts (58)
+Migrating to ChangeProduct1 (59)
+Migrating to CreateUnitMeasures (60)
+Migrating to ChangeProduct2 (61)
+  [4;36;1mSQL (0.4ms)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSQLite3::SQLException: duplicate column name: unit_measure_id: ALTER TABLE "products" ADD "unit_measure_id" integer[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mselect sqlite_version(*)[0m
+  [4;36;1mSQL (105.0ms)[0m   [0;1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [4;35;1mSQL (23.4ms)[0m   [0mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.6ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateOrganizations (1)
+  [4;36;1mSQL (50.4ms)[0m   [0;1mCREATE TABLE "organizations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) NOT NULL, "cnpj" varchar(255), "design_data" text, "point_of_sale_design_data" text, "web_site_design_data" text, "presentation" text, "identifier" varchar(255) NOT NULL) [0m
+  [4;35;1mSQL (43.3ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('1')[0m
+Migrating to CreateProducts (2)
+  [4;36;1mSQL (19.9ms)[0m   [0;1mCREATE TABLE "products" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) NOT NULL, "code" varchar(255), "size" varchar(255), "color" varchar(255), "description" text, "sell_price" float NOT NULL, "unit" varchar(255) NOT NULL, "organization_id" integer NOT NULL, "category_id" integer NOT NULL, "minimum_amount" integer, "info" text) [0m
+  [4;35;1mSQL (29.3ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('2')[0m
+Migrating to CreateImages (3)
+  [4;36;1mSQL (21.1ms)[0m   [0;1mCREATE TABLE "images" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "description" varchar(255) NOT NULL, "picture" varchar(255) NOT NULL, "product_id" integer NOT NULL) [0m
+  [4;35;1mSQL (21.3ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('3')[0m
+Migrating to ProductsSuppliers (4)
+  [4;36;1mSQL (22.8ms)[0m   [0;1mCREATE TABLE "products_suppliers" ("product_id" integer NOT NULL, "supplier_id" integer NOT NULL) [0m
+  [4;35;1mSQL (23.2ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('4')[0m
+Migrating to CreateStocks (5)
+  [4;36;1mSQL (21.5ms)[0m   [0;1mCREATE TABLE "stocks" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "type" varchar(255) NOT NULL, "price" float, "product_id" integer NOT NULL, "amount" float NOT NULL, "purpose" integer DEFAULT 0, "status" integer DEFAULT 0, "date" date, "supplier_id" integer, "validity" date, "sell_id" integer) [0m
+  [4;35;1mSQL (19.2ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('5')[0m
+Migrating to CreateSystemActors (6)
+  [4;36;1mSQL (20.2ms)[0m   [0;1mCREATE TABLE "system_actors" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) NOT NULL, "organization_id" integer NOT NULL, "address" varchar(255), "description" text, "email" varchar(255), "type" varchar(255), "category_id" integer NOT NULL, "info" text, "cnpj" varchar(255), "cpf" varchar(255), "rg" varchar(255), "birthday" date) [0m
+  [4;35;1mSQL (24.4ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('6')[0m
+Migrating to CreateContacts (7)
+  [4;36;1mSQL (29.5ms)[0m   [0;1mCREATE TABLE "contacts" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) NOT NULL, "phone" varchar(255), "email" varchar(255), "description" text, "system_actor_id" integer NOT NULL, "category_id" integer NOT NULL, "info" text) [0m
+  [4;35;1mSQL (16.8ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('7')[0m
+Migrating to CreatePeople (8)
+  [4;36;1mSQL (28.4ms)[0m   [0;1mCREATE TABLE "people" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "type" varchar(255), "login" varchar(255), "administrator" boolean DEFAULT 'f' NOT NULL, "email" varchar(255), "crypted_password" varchar(40), "salt" varchar(40), "created_at" datetime, "updated_at" datetime, "remember_token" varchar(255), "remember_token_expires_at" datetime) [0m
+  [4;35;1mSQL (16.7ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('8')[0m
+Migrating to CreateProfiles (9)
+  [4;36;1mSQL (29.0ms)[0m   [0;1mCREATE TABLE "profiles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer, "environment_id" integer, "name" varchar(255), "organization_id" integer, "is_model" boolean, "permissions" text) [0m
+  [4;35;1mSQL (16.2ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('9')[0m
+Migrating to CreateSales (12)
+  [4;36;1mSQL (24.2ms)[0m   [0;1mCREATE TABLE "sales" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "organization_id" integer NOT NULL, "customer_id" integer, "datetime" datetime NOT NULL, "status" integer DEFAULT 0 NOT NULL, "user_id" integer NOT NULL, "owner_type" varchar(255), "owner_id" integer) [0m
+  [4;35;1mSQL (16.9ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('12')[0m
+Migrating to CreateSaleItems (13)
+  [4;36;1mSQL (22.9ms)[0m   [0;1mCREATE TABLE "sale_items" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "sale_id" integer NOT NULL, "product_id" integer NOT NULL, "amount" float DEFAULT 0 NOT NULL, "unitary_price" float DEFAULT 0 NOT NULL, "status" integer DEFAULT 0) [0m
+  [4;35;1mSQL (16.7ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('13')[0m
+Migrating to CreateMassMails (14)
+  [4;36;1mSQL (25.0ms)[0m   [0;1mCREATE TABLE "mass_mails" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "subject" varchar(255), "body" text, "organization_id" integer NOT NULL) [0m
+  [4;35;1mSQL (16.3ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('14')[0m
+Migrating to CreateDocuments (18)
+  [4;36;1mSQL (24.1ms)[0m   [0;1mCREATE TABLE "documents" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) NOT NULL, "is_model" boolean DEFAULT 'f', "organization_id" integer NOT NULL, "document_model_id" integer, "body" text, "owner_type" varchar(255), "owner_id" integer) [0m
+  [4;35;1mSQL (16.6ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('18')[0m
+Migrating to CreateDocumentItems (19)
+  [4;36;1mSQL (27.6ms)[0m   [0;1mCREATE TABLE "document_items" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "document_section_id" integer NOT NULL, "quantity" integer NOT NULL, "number" integer, "unitary_value" float NOT NULL, "product_id" integer, "service_id" integer) [0m
+  [4;35;1mSQL (13.2ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('19')[0m
+Migrating to CreateDepartments (20)
+  [4;36;1mSQL (29.3ms)[0m   [0;1mCREATE TABLE "departments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) NOT NULL, "organization_id" integer NOT NULL) [0m
+  [4;35;1mSQL (20.0ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('20')[0m
+Migrating to CreateDepartmentsDocuments (21)
+  [4;36;1mSQL (25.6ms)[0m   [0;1mCREATE TABLE "departments_documents" ("document_id" integer NOT NULL, "department_id" integer NOT NULL) [0m
+  [4;35;1mSQL (12.4ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('21')[0m
+Migrating to CreateDocumentSections (23)
+  [4;36;1mSQL (29.4ms)[0m   [0;1mCREATE TABLE "document_sections" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) NOT NULL, "document_id" integer NOT NULL) [0m
+  [4;35;1mSQL (16.6ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('23')[0m
+Migrating to CreateCategories (24)
+  [4;36;1mSQL (24.5ms)[0m   [0;1mCREATE TABLE "categories" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) NOT NULL, "type" varchar(255) NOT NULL, "parent_id" integer, "organization_id" integer NOT NULL, "description" text) [0m
+  [4;35;1mSQL (12.2ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('24')[0m
+Migrating to CreateLedgers (25)
+  [4;36;1mSQL (30.1ms)[0m   [0;1mCREATE TABLE "ledgers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "owner_type" varchar(255) NOT NULL, "owner_id" integer NOT NULL, "type" varchar(255) NOT NULL, "type_of" varchar(1) NOT NULL, "category_id" integer, "foreseen_value" float, "effective_value" float, "description" varchar(255) DEFAULT '', "date" datetime, "foreseen_date" date, "effective_date" date, "interests" float DEFAULT 0, "interests_days" integer DEFAULT 0, "number_of_parcels" integer DEFAULT 1, "parcel_number" integer DEFAULT 1, "operational" boolean DEFAULT 'f' NOT NULL, "bank_account_id" integer NOT NULL, "status" integer DEFAULT 0, "is_operational" boolean DEFAULT 'f', "schedule_ledger_id" integer, "credit_card_number" varchar(255), "credit_card_validity" date, "credit_card_secutiry_code" varchar(255), "credit_card_owner_name" varchar(255), "credit_card_cnpj" varchar(255), "credit_card_cpf" varchar(255), "check_bank_id" integer, "check_owner_name" varchar(255), "check_account_agency" varchar(255), "check_account_number" varchar(255), "check_number" varchar(255), "check_contact_telephone" varchar(255), "check_rg" varchar(255), "check_cpf" varchar(255), "check_cnpj" varchar(255), "automatic_debit_owner_name" varchar(255), "automatic_debit_bank_id" integer, "automatic_debit_account_agency" varchar(255), "automatic_debit_account_number" varchar(255)) [0m
+  [4;35;1mSQL (31.8ms)[0m   [0mCREATE INDEX "index_ledgers_on_category_id" ON "ledgers" ("category_id")[0m
+  [4;36;1mSQL (15.5ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('25')[0m
+Migrating to ActsAsTaggableMigration (26)
+  [4;35;1mSQL (25.2ms)[0m   [0mCREATE TABLE "tags" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255)) [0m
+  [4;36;1mSQL (26.3ms)[0m   [0;1mCREATE TABLE "taggings" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "tag_id" integer, "taggable_id" integer, "taggable_type" varchar(255), "created_at" datetime) [0m
+  [4;35;1mSQL (27.4ms)[0m   [0mCREATE INDEX "index_taggings_on_tag_id" ON "taggings" ("tag_id")[0m
+  [4;36;1mSQL (27.4ms)[0m   [0;1mCREATE INDEX "index_taggings_on_taggable_id_and_taggable_type" ON "taggings" ("taggable_id", "taggable_type")[0m
+  [4;35;1mSQL (16.5ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('26')[0m
+Migrating to CreateSchedules (27)
+  [4;36;1mSQL (25.4ms)[0m   [0;1mCREATE TABLE "schedules" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime NOT NULL) [0m
+  [4;35;1mSQL (12.2ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('27')[0m
+Migrating to CreateLedgerCategories (28)
+  [4;36;1mSQL (23.9ms)[0m   [0;1mCREATE TABLE "ledger_categories" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) NOT NULL, "is_operational" boolean DEFAULT 'f', "is_sale" boolean DEFAULT 'f', "is_stock" boolean DEFAULT 'f', "interests" float DEFAULT 0, "interests_days" integer DEFAULT 0, "number_of_parcels" integer DEFAULT 1, "organization_id" integer NOT NULL, "type_of" varchar(1) NOT NULL, "settings" text) [0m
+  [4;35;1mSQL (16.7ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('28')[0m
+Migrating to DesignMigration (29)
+  [4;36;1mSQL (25.2ms)[0m   [0;1mCREATE TABLE "design_boxes" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "title" varchar(255), "number" integer, "owner_type" varchar(255), "owner_id" integer) [0m
+  [4;35;1mSQL (26.1ms)[0m   [0mCREATE TABLE "design_blocks" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "description" text, "title" varchar(255), "box_id" integer, "position" integer, "type" varchar(255), "settings" text) [0m
+  [4;36;1mSQL (16.5ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('29')[0m
+Migrating to CreateBanks (30)
+  [4;35;1mSQL (25.0ms)[0m   [0mCREATE TABLE "banks" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) NOT NULL, "code" varchar(255) NOT NULL, "site" varchar(255)) [0m
+  [4;36;1mSQL (20.6ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('30')[0m
+Migrating to CreateAttachments (31)
+  [4;35;1mSQL (29.5ms)[0m   [0mCREATE TABLE "attachments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "file" varchar(255) NOT NULL, "mass_mail_id" integer NOT NULL) [0m
+  [4;36;1mSQL (16.3ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('31')[0m
+Migrating to CreateConfigurations (32)
+  [4;35;1mSQL (82.5ms)[0m   [0mCREATE TABLE "configurations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "organization_id" integer, "is_model" boolean, "name" varchar(255), "description" text, "settings" text) [0m
+  [4;36;1mSQL (42.2ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('32')[0m
+Migrating to CreateBankAccounts (33)
+  [4;35;1mSQL (25.6ms)[0m   [0mCREATE TABLE "bank_accounts" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "owner_type" varchar(255), "owner_id" integer, "bank_id" integer, "agency" varchar(255), "variation" varchar(255), "account" varchar(255), "is_default" boolean DEFAULT 'f', "description" text) [0m
+  [4;36;1mSQL (16.5ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('33')[0m
+Migrating to CreatePeriodicities (34)
+  [4;35;1mSQL (25.5ms)[0m   [0mCREATE TABLE "periodicities" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) NOT NULL, "number_of_days" integer NOT NULL, "organization_id" integer NOT NULL) [0m
+  [4;36;1mSQL (16.5ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('34')[0m
+Migrating to CreateScheduleLedgers (35)
+  [4;35;1mSQL (29.7ms)[0m   [0mCREATE TABLE "schedule_ledgers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "periodicity_id" integer, "start_date" date, "interval" integer) [0m
+  [4;36;1mSQL (16.7ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('35')[0m
+Migrating to CreateDisplayConfigurations (36)
+  [4;35;1mSQL (24.5ms)[0m   [0mCREATE TABLE "display_configurations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "owner_type" varchar(255), "owner_id" integer, "type" varchar(255), "configuration_id" integer, "field" varchar(255), "position" integer, "settings" text) [0m
+  [4;36;1mSQL (16.3ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('36')[0m
+Migrating to CreateDomains (37)
+  [4;35;1mSQL (29.7ms)[0m   [0mCREATE TABLE "domains" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "owner_type" varchar(255), "owner_id" integer) [0m
+  [4;36;1mSQL (16.3ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('37')[0m
+Migrating to CreateEnvironments (38)
+  [4;35;1mSQL (24.6ms)[0m   [0mCREATE TABLE "environments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "owner_type" varchar(255), "owner_id" integer, "name" varchar(255), "settings" text, "design_data" text, "is_default" boolean) [0m
+  [4;36;1mSQL (17.0ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('38')[0m
+Migrating to BscPluginMigration (40)
+  [4;35;1mSQL (29.2ms)[0m   [0mCREATE TABLE "countries" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255)) [0m
+  [4;36;1mSQL (26.9ms)[0m   [0;1mCREATE TABLE "states" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "code" varchar(255), "country_id" integer) [0m
+  [4;35;1mSQL (34.9ms)[0m   [0mCREATE TABLE "cities" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "state_id" integer, "zip_code" varchar(255)) [0m
+  [4;36;1mSQL (16.6ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('40')[0m
+Migrating to AccessControlMigration (41)
+  [4;35;1mSQL (25.1ms)[0m   [0mCREATE TABLE "roles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "permissions" varchar(255)) [0m
+  [4;36;1mSQL (30.4ms)[0m   [0;1mCREATE TABLE "role_assignments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "accessor_id" integer, "accessor_type" varchar(255), "resource_id" integer, "resource_type" varchar(255), "role_id" integer, "is_global" boolean) [0m
+  [4;35;1mSQL (16.6ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('41')[0m
+Migrating to CreatePrinterCommands (42)
+  [4;36;1mSQL (28.2ms)[0m   [0;1mCREATE TABLE "printer_commands" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "cmd" varchar(255) NOT NULL, "cmd_params" varchar(255), "owner_id" integer, "owner_type" varchar(255), "status" integer DEFAULT 0, "datetime" datetime NOT NULL, "till_id" integer NOT NULL, "sequence_number" integer NOT NULL, "cmd_id" integer NOT NULL, "counter" integer DEFAULT 0, "error_code" integer) [0m
+  [4;35;1mSQL (16.6ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('42')[0m
+Migrating to CreateTills (43)
+  [4;36;1mSQL (24.7ms)[0m   [0;1mCREATE TABLE "tills" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "datetime" datetime NOT NULL, "status" integer DEFAULT 0, "printer_id" varchar(255), "user_id" integer NOT NULL, "organization_id" integer NOT NULL) [0m
+  [4;35;1mSQL (16.8ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('43')[0m
+Migrating to ChangeColumnScheduleLedgers (44)
+  [4;36;1mSQL (0.8ms)[0m   [0;1mCREATE TEMPORARY TABLE "altered_schedule_ledgers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "periodicity_id" integer, "start_date" date, "interval" integer) [0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_list("schedule_ledgers")[0m
+  [4;36;1mSQL (1.0ms)[0m   [0;1mDROP TABLE "schedule_ledgers"[0m
+  [4;35;1mSQL (0.7ms)[0m   [0mCREATE TABLE "schedule_ledgers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "periodicity_id" integer, "start_date" datetime, "interval" integer) [0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mPRAGMA index_list("altered_schedule_ledgers")[0m
+  [4;35;1mSQL (0.7ms)[0m   [0mDROP TABLE "altered_schedule_ledgers"[0m
+  [4;36;1mSQL (14.6ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('44')[0m
+Migrating to ChangeColumnLedgers (45)
+  [4;35;1mSQL (0.8ms)[0m   [0mCREATE TEMPORARY TABLE "altered_ledgers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "owner_type" varchar(255) NOT NULL, "owner_id" integer NOT NULL, "type" varchar(255) NOT NULL, "type_of" varchar(1) NOT NULL, "category_id" integer, "foreseen_value" float, "effective_value" float, "description" varchar(255) DEFAULT '', "date" datetime, "foreseen_date" date, "effective_date" date, "interests" float DEFAULT 0.0, "interests_days" integer DEFAULT 0, "number_of_parcels" integer DEFAULT 1, "parcel_number" integer DEFAULT 1, "operational" boolean DEFAULT 'f' NOT NULL, "bank_account_id" integer NOT NULL, "status" integer DEFAULT 0, "is_operational" boolean DEFAULT 'f', "schedule_ledger_id" integer, "credit_card_number" varchar(255), "credit_card_validity" date, "credit_card_secutiry_code" varchar(255), "credit_card_owner_name" varchar(255), "credit_card_cnpj" varchar(255), "credit_card_cpf" varchar(255), "check_bank_id" integer, "check_owner_name" varchar(255), "check_account_agency" varchar(255), "check_account_number" varchar(255), "check_number" varchar(255), "check_contact_telephone" varchar(255), "check_rg" varchar(255), "check_cpf" varchar(255), "check_cnpj" varchar(255), "automatic_debit_owner_name" varchar(255), "automatic_debit_bank_id" integer, "automatic_debit_account_agency" varchar(255), "automatic_debit_account_number" varchar(255)) [0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mPRAGMA index_list("ledgers")[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mPRAGMA index_info('index_ledgers_on_category_id')[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mCREATE INDEX "temp_index_altered_ledgers_on_category_id" ON "altered_ledgers" ("category_id")[0m
+  [4;35;1mSQL (1.2ms)[0m   [0mDROP TABLE "ledgers"[0m
+  [4;36;1mSQL (1.0ms)[0m   [0;1mCREATE TABLE "ledgers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "owner_type" varchar(255) NOT NULL, "owner_id" integer NOT NULL, "type" varchar(255) NOT NULL, "type_of" varchar(1) NOT NULL, "category_id" integer, "foreseen_value" float, "effective_value" float, "description" varchar(255) DEFAULT '', "date" datetime, "foreseen_date" datetime, "effective_date" date, "interests" float DEFAULT 0.0, "interests_days" integer DEFAULT 0, "number_of_parcels" integer DEFAULT 1, "parcel_number" integer DEFAULT 1, "operational" boolean DEFAULT 'f' NOT NULL, "bank_account_id" integer NOT NULL, "status" integer DEFAULT 0, "is_operational" boolean DEFAULT 'f', "schedule_ledger_id" integer, "credit_card_number" varchar(255), "credit_card_validity" date, "credit_card_secutiry_code" varchar(255), "credit_card_owner_name" varchar(255), "credit_card_cnpj" varchar(255), "credit_card_cpf" varchar(255), "check_bank_id" integer, "check_owner_name" varchar(255), "check_account_agency" varchar(255), "check_account_number" varchar(255), "check_number" varchar(255), "check_contact_telephone" varchar(255), "check_rg" varchar(255), "check_cpf" varchar(255), "check_cnpj" varchar(255), "automatic_debit_owner_name" varchar(255), "automatic_debit_bank_id" integer, "automatic_debit_account_agency" varchar(255), "automatic_debit_account_number" varchar(255)) [0m
+  [4;35;1mSQL (0.3ms)[0m   [0mPRAGMA index_list("altered_ledgers")[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mPRAGMA index_info('temp_index_altered_ledgers_on_category_id')[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mCREATE INDEX "index_ledgers_on_category_id" ON "ledgers" ("category_id")[0m
+  [4;36;1mSQL (0.6ms)[0m   [0;1mDROP TABLE "altered_ledgers"[0m
+  [4;35;1mSQL (0.9ms)[0m   [0mCREATE TEMPORARY TABLE "altered_ledgers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "owner_type" varchar(255) NOT NULL, "owner_id" integer NOT NULL, "type" varchar(255) NOT NULL, "type_of" varchar(1) NOT NULL, "category_id" integer, "foreseen_value" float, "effective_value" float, "description" varchar(255) DEFAULT '', "date" datetime, "foreseen_date" datetime, "effective_date" date, "interests" float DEFAULT 0.0, "interests_days" integer DEFAULT 0, "number_of_parcels" integer DEFAULT 1, "parcel_number" integer DEFAULT 1, "operational" boolean DEFAULT 'f' NOT NULL, "bank_account_id" integer NOT NULL, "status" integer DEFAULT 0, "is_operational" boolean DEFAULT 'f', "schedule_ledger_id" integer, "credit_card_number" varchar(255), "credit_card_validity" date, "credit_card_secutiry_code" varchar(255), "credit_card_owner_name" varchar(255), "credit_card_cnpj" varchar(255), "credit_card_cpf" varchar(255), "check_bank_id" integer, "check_owner_name" varchar(255), "check_account_agency" varchar(255), "check_account_number" varchar(255), "check_number" varchar(255), "check_contact_telephone" varchar(255), "check_rg" varchar(255), "check_cpf" varchar(255), "check_cnpj" varchar(255), "automatic_debit_owner_name" varchar(255), "automatic_debit_bank_id" integer, "automatic_debit_account_agency" varchar(255), "automatic_debit_account_number" varchar(255)) [0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mPRAGMA index_list("ledgers")[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mPRAGMA index_info('index_ledgers_on_category_id')[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mCREATE INDEX "temp_index_altered_ledgers_on_category_id" ON "altered_ledgers" ("category_id")[0m
+  [4;35;1mSQL (1.3ms)[0m   [0mDROP TABLE "ledgers"[0m
+  [4;36;1mSQL (1.0ms)[0m   [0;1mCREATE TABLE "ledgers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "owner_type" varchar(255) NOT NULL, "owner_id" integer NOT NULL, "type" varchar(255) NOT NULL, "type_of" varchar(1) NOT NULL, "category_id" integer, "foreseen_value" float, "effective_value" float, "description" varchar(255) DEFAULT '', "date" datetime, "foreseen_date" datetime, "effective_date" datetime, "interests" float DEFAULT 0.0, "interests_days" integer DEFAULT 0, "number_of_parcels" integer DEFAULT 1, "parcel_number" integer DEFAULT 1, "operational" boolean DEFAULT 'f' NOT NULL, "bank_account_id" integer NOT NULL, "status" integer DEFAULT 0, "is_operational" boolean DEFAULT 'f', "schedule_ledger_id" integer, "credit_card_number" varchar(255), "credit_card_validity" date, "credit_card_secutiry_code" varchar(255), "credit_card_owner_name" varchar(255), "credit_card_cnpj" varchar(255), "credit_card_cpf" varchar(255), "check_bank_id" integer, "check_owner_name" varchar(255), "check_account_agency" varchar(255), "check_account_number" varchar(255), "check_number" varchar(255), "check_contact_telephone" varchar(255), "check_rg" varchar(255), "check_cpf" varchar(255), "check_cnpj" varchar(255), "automatic_debit_owner_name" varchar(255), "automatic_debit_bank_id" integer, "automatic_debit_account_agency" varchar(255), "automatic_debit_account_number" varchar(255)) [0m
+  [4;35;1mSQL (0.3ms)[0m   [0mPRAGMA index_list("altered_ledgers")[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mPRAGMA index_info('temp_index_altered_ledgers_on_category_id')[0m
+  [4;35;1mSQL (0.7ms)[0m   [0mCREATE INDEX "index_ledgers_on_category_id" ON "ledgers" ("category_id")[0m
+  [4;36;1mSQL (0.7ms)[0m   [0;1mDROP TABLE "altered_ledgers"[0m
+  [4;35;1mSQL (14.2ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('45')[0m
+Migrating to AddColumnLedgerCategory (46)
+  [4;36;1mSQL (19.3ms)[0m   [0;1mALTER TABLE "ledger_categories" ADD "periodicity_id" integer[0m
+  [4;35;1mSQL (60.3ms)[0m   [0mVACUUM[0m
+  [4;36;1mSQL (14.6ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('46')[0m
+Migrating to AddColumnSaleItems (47)
+  [4;35;1mSQL (18.9ms)[0m   [0mALTER TABLE "sale_items" ADD "stock_id" integer[0m
+  [4;36;1mSQL (42.1ms)[0m   [0;1mVACUUM[0m
+  [4;35;1mSQL (20.8ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('47')[0m
+Migrating to ChangeColumnStocks (48)
+  [4;36;1mSQL (0.7ms)[0m   [0;1mCREATE TEMPORARY TABLE "altered_stocks" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "type" varchar(255) NOT NULL, "price" float, "product_id" integer NOT NULL, "amount" float NOT NULL, "purpose" integer DEFAULT 0, "status" integer DEFAULT 0, "date" date, "supplier_id" integer, "validity" date, "sell_id" integer) [0m
+  [4;35;1mSQL (0.2ms)[0m   [0mPRAGMA index_list("stocks")[0m
+  [4;36;1mSQL (1.1ms)[0m   [0;1mDROP TABLE "stocks"[0m
+  [4;35;1mSQL (0.9ms)[0m   [0mCREATE TABLE "stocks" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "type" varchar(255) NOT NULL, "price" float, "product_id" integer NOT NULL, "amount" float NOT NULL, "purpose" integer DEFAULT 0, "status" integer DEFAULT 0, "date" datetime, "supplier_id" integer, "validity" date, "sell_id" integer) [0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mPRAGMA index_list("altered_stocks")[0m
+  [4;35;1mSQL (0.7ms)[0m   [0mDROP TABLE "altered_stocks"[0m
+  [4;36;1mSQL (17.5ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('48')[0m
+Migrating to CreateInvoices (49)
+  [4;35;1mSQL (28.0ms)[0m   [0mCREATE TABLE "invoices" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "number" varchar(255), "serie" varchar(255), "issue_date" datetime, "status" integer DEFAULT 0, "supplier_id" integer) [0m
+  [4;36;1mSQL (12.7ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('49')[0m
+Migrating to AddColumnStocks (50)
+  [4;35;1mSQL (18.7ms)[0m   [0mALTER TABLE "stocks" ADD "invoice_id" integer[0m
+  [4;36;1mSQL (44.9ms)[0m   [0;1mVACUUM[0m
+  [4;35;1mSQL (14.2ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('50')[0m
+Migrating to ChangeLedgers1 (51)
+  [4;36;1mSQL (29.6ms)[0m   [0;1mALTER TABLE "ledgers" ADD "payment_method" varchar(255)[0m
+  [4;35;1mSQL (38.0ms)[0m   [0mVACUUM[0m
+  [4;36;1mSQL (2.8ms)[0m   [0;1mUPDATE ledgers SET payment_method = type;[0m
+  [4;35;1mSQL (0.9ms)[0m   [0mCREATE TEMPORARY TABLE "altered_ledgers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "owner_type" varchar(255) NOT NULL, "owner_id" integer NOT NULL, "type" varchar(255) NOT NULL, "type_of" varchar(1) NOT NULL, "category_id" integer, "foreseen_value" float, "effective_value" float, "description" varchar(255) DEFAULT '', "date" datetime, "foreseen_date" datetime, "effective_date" datetime, "interests" float DEFAULT 0.0, "interests_days" integer DEFAULT 0, "number_of_parcels" integer DEFAULT 1, "parcel_number" integer DEFAULT 1, "operational" boolean DEFAULT 'f' NOT NULL, "bank_account_id" integer NOT NULL, "status" integer DEFAULT 0, "is_operational" boolean DEFAULT 'f', "schedule_ledger_id" integer, "credit_card_number" varchar(255), "credit_card_validity" date, "credit_card_secutiry_code" varchar(255), "credit_card_owner_name" varchar(255), "credit_card_cnpj" varchar(255), "credit_card_cpf" varchar(255), "check_bank_id" integer, "check_owner_name" varchar(255), "check_account_agency" varchar(255), "check_account_number" varchar(255), "check_number" varchar(255), "check_contact_telephone" varchar(255), "check_rg" varchar(255), "check_cpf" varchar(255), "check_cnpj" varchar(255), "automatic_debit_owner_name" varchar(255), "automatic_debit_bank_id" integer, "automatic_debit_account_agency" varchar(255), "automatic_debit_account_number" varchar(255), "payment_method" varchar(255)) [0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mPRAGMA index_list("ledgers")[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mPRAGMA index_info('index_ledgers_on_category_id')[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mCREATE INDEX "temp_index_altered_ledgers_on_category_id" ON "altered_ledgers" ("category_id")[0m
+  [4;35;1mSQL (1.3ms)[0m   [0mDROP TABLE "ledgers"[0m
+  [4;36;1mSQL (0.8ms)[0m   [0;1mCREATE TABLE "ledgers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "owner_type" varchar(255) NOT NULL, "owner_id" integer NOT NULL, "type_of" varchar(1) NOT NULL, "category_id" integer, "foreseen_value" float, "effective_value" float, "description" varchar(255) DEFAULT '', "date" datetime, "foreseen_date" datetime, "effective_date" datetime, "interests" float DEFAULT 0.0, "interests_days" integer DEFAULT 0, "number_of_parcels" integer DEFAULT 1, "parcel_number" integer DEFAULT 1, "operational" boolean DEFAULT 'f' NOT NULL, "bank_account_id" integer NOT NULL, "status" integer DEFAULT 0, "is_operational" boolean DEFAULT 'f', "schedule_ledger_id" integer, "credit_card_number" varchar(255), "credit_card_validity" date, "credit_card_secutiry_code" varchar(255), "credit_card_owner_name" varchar(255), "credit_card_cnpj" varchar(255), "credit_card_cpf" varchar(255), "check_bank_id" integer, "check_owner_name" varchar(255), "check_account_agency" varchar(255), "check_account_number" varchar(255), "check_number" varchar(255), "check_contact_telephone" varchar(255), "check_rg" varchar(255), "check_cpf" varchar(255), "check_cnpj" varchar(255), "automatic_debit_owner_name" varchar(255), "automatic_debit_bank_id" integer, "automatic_debit_account_agency" varchar(255), "automatic_debit_account_number" varchar(255), "payment_method" varchar(255)) [0m
+  [4;35;1mSQL (0.3ms)[0m   [0mPRAGMA index_list("altered_ledgers")[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mPRAGMA index_info('temp_index_altered_ledgers_on_category_id')[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mCREATE INDEX "index_ledgers_on_category_id" ON "ledgers" ("category_id")[0m
+  [4;36;1mSQL (0.6ms)[0m   [0;1mDROP TABLE "altered_ledgers"[0m
+  [4;35;1mSQL (11.5ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('51')[0m
+Migrating to AddColumnPrinterCommands (52)
+  [4;36;1mSQL (18.4ms)[0m   [0;1mALTER TABLE "printer_commands" ADD "response" text[0m
+  [4;35;1mSQL (35.8ms)[0m   [0mVACUUM[0m
+  [4;36;1mSQL (0.6ms)[0m   [0;1mCREATE TEMPORARY TABLE "altered_printer_commands" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "cmd" varchar(255) NOT NULL, "cmd_params" varchar(255), "owner_id" integer, "owner_type" varchar(255), "status" integer DEFAULT 0, "datetime" datetime NOT NULL, "till_id" integer NOT NULL, "sequence_number" integer NOT NULL, "cmd_id" integer NOT NULL, "counter" integer DEFAULT 0, "error_code" integer, "response" text) [0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_list("printer_commands")[0m
+  [4;36;1mSQL (1.0ms)[0m   [0;1mDROP TABLE "printer_commands"[0m
+  [4;35;1mSQL (0.9ms)[0m   [0mCREATE TABLE "printer_commands" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "cmd" varchar(255) NOT NULL, "cmd_params" varchar(255), "owner_id" integer, "owner_type" varchar(255), "status" integer DEFAULT 0, "datetime" datetime NOT NULL, "sequence_number" integer NOT NULL, "cmd_id" integer NOT NULL, "counter" integer DEFAULT 0, "error_code" integer, "response" text) [0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mPRAGMA index_list("altered_printer_commands")[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mDROP TABLE "altered_printer_commands"[0m
+  [4;36;1mSQL (14.7ms)[0m   [0;1mALTER TABLE "printer_commands" ADD "till_id" integer[0m
+  [4;35;1mSQL (34.8ms)[0m   [0mVACUUM[0m
+  [4;36;1mSQL (20.6ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('52')[0m
+Migrating to AddColumnOrganizations (53)
+  [4;35;1mSQL (19.0ms)[0m   [0mALTER TABLE "organizations" ADD "trade_name" varchar(255) DEFAULT '' NOT NULL[0m
+  [4;36;1mSQL (34.9ms)[0m   [0;1mVACUUM[0m
+  [4;35;1mSQL (20.2ms)[0m   [0mALTER TABLE "organizations" ADD "state_registration" varchar(255)[0m
+  [4;36;1mSQL (35.0ms)[0m   [0;1mVACUUM[0m
+  [4;35;1mSQL (26.3ms)[0m   [0mALTER TABLE "organizations" ADD "responsible_person" varchar(255)[0m
+  [4;36;1mSQL (42.1ms)[0m   [0;1mVACUUM[0m
+  [4;35;1mSQL (18.6ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('53')[0m
+Migrating to CreateAddresses (54)
+  [4;36;1mSQL (24.0ms)[0m   [0;1mCREATE TABLE "addresses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "owner_type" varchar(255) NOT NULL, "owner_id" integer NOT NULL, "city_id" integer NOT NULL, "state_id" integer NOT NULL, "country_id" integer NOT NULL, "street" varchar(255), "number" varchar(255), "complement" varchar(255), "district" varchar(255), "zip_code" varchar(255)) [0m
+  [4;35;1mSQL (12.9ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('54')[0m
+Migrating to CreatePrinters (55)
+  [4;36;1mSQL (29.3ms)[0m   [0;1mCREATE TABLE "printers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "serial" varchar(255) NOT NULL, "organization_id" integer NOT NULL, "computer_id" varchar(255) NOT NULL) [0m
+  [4;35;1mSQL (16.5ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('55')[0m
+Migrating to ChangeLedgers2 (56)
+  [4;36;1mSQL (29.7ms)[0m   [0;1mALTER TABLE "ledgers" ADD "organization_id" integer[0m
+  [4;35;1mSQL (38.0ms)[0m   [0mVACUUM[0m
+  [4;36;1mSQL (17.4ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('56')[0m
+Migrating to CreateBalances (57)
+  [4;35;1mSQL (25.8ms)[0m   [0mCREATE TABLE "balances" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "value" float DEFAULT 0, "date" date, "bank_account_id" integer) [0m
+  [4;36;1mSQL (17.3ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('57')[0m
+Migrating to RemoveColumnBankAccounts (58)
+  [4;35;1mSQL (18.9ms)[0m   [0mALTER TABLE "bank_accounts" ADD "organization_id" integer[0m
+  [4;36;1mSQL (41.6ms)[0m   [0;1mVACUUM[0m
+  [4;35;1mSQL (2.7ms)[0m   [0mupdate bank_accounts set organization_id = owner_id[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mCREATE TEMPORARY TABLE "altered_bank_accounts" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "owner_type" varchar(255), "owner_id" integer, "bank_id" integer, "agency" varchar(255), "variation" varchar(255), "account" varchar(255), "is_default" boolean DEFAULT 'f', "description" text, "organization_id" integer) [0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_list("bank_accounts")[0m
+  [4;36;1mSQL (1.0ms)[0m   [0;1mDROP TABLE "bank_accounts"[0m
+  [4;35;1mSQL (1.1ms)[0m   [0mCREATE TABLE "bank_accounts" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "owner_type" varchar(255), "bank_id" integer, "agency" varchar(255), "variation" varchar(255), "account" varchar(255), "is_default" boolean DEFAULT 'f', "description" text, "organization_id" integer) [0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mPRAGMA index_list("altered_bank_accounts")[0m
+  [4;35;1mSQL (0.6ms)[0m   [0mDROP TABLE "altered_bank_accounts"[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mCREATE TEMPORARY TABLE "altered_bank_accounts" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "owner_type" varchar(255), "bank_id" integer, "agency" varchar(255), "variation" varchar(255), "account" varchar(255), "is_default" boolean DEFAULT 'f', "description" text, "organization_id" integer) [0m
+  [4;35;1mSQL (0.2ms)[0m   [0mPRAGMA index_list("bank_accounts")[0m
+  [4;36;1mSQL (1.1ms)[0m   [0;1mDROP TABLE "bank_accounts"[0m
+  [4;35;1mSQL (0.6ms)[0m   [0mCREATE TABLE "bank_accounts" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "bank_id" integer, "agency" varchar(255), "variation" varchar(255), "account" varchar(255), "is_default" boolean DEFAULT 'f', "description" text, "organization_id" integer) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_list("altered_bank_accounts")[0m
+  [4;35;1mSQL (0.7ms)[0m   [0mDROP TABLE "altered_bank_accounts"[0m
+  [4;36;1mSQL (13.5ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('58')[0m
+Migrating to ChangeProduct1 (59)
+  [4;35;1mSQL (0.6ms)[0m   [0mCREATE TEMPORARY TABLE "altered_products" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) NOT NULL, "code" varchar(255), "size" varchar(255), "color" varchar(255), "description" text, "sell_price" float NOT NULL, "unit" varchar(255) NOT NULL, "organization_id" integer NOT NULL, "category_id" integer NOT NULL, "minimum_amount" integer, "info" text) [0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mPRAGMA index_list("products")[0m
+  [4;35;1mSQL (0.9ms)[0m   [0mDROP TABLE "products"[0m
+  [4;36;1mSQL (1.0ms)[0m   [0;1mCREATE TABLE "products" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) NOT NULL, "code" integer(255), "size" varchar(255), "color" varchar(255), "description" text, "sell_price" float NOT NULL, "unit" varchar(255) NOT NULL, "organization_id" integer NOT NULL, "category_id" integer NOT NULL, "minimum_amount" integer, "info" text) [0m
+  [4;35;1mSQL (0.2ms)[0m   [0mPRAGMA index_list("altered_products")[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mDROP TABLE "altered_products"[0m
+  [4;35;1mSQL (15.9ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('59')[0m
+Migrating to CreateUnitMeasures (60)
+  [4;36;1mSQL (28.2ms)[0m   [0;1mCREATE TABLE "unit_measures" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) NOT NULL, "abbreviation" varchar(255) NOT NULL, "organization_id" integer) [0m
+  [4;35;1mSQL (16.8ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('60')[0m
+Migrating to ChangeProduct2 (61)
+  [4;36;1mSQL (18.1ms)[0m   [0;1mALTER TABLE "products" ADD "unit_measure_id" integer[0m
+  [4;35;1mSQL (49.5ms)[0m   [0mVACUUM[0m
+  [4;36;1mSQL (4.4ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (2.8ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m

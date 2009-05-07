@@ -7,6 +7,7 @@ class CreateEnvironments < ActiveRecord::Migration
       t.column :settings,    :text
       t.column :design_data, :text
       t.column :is_default, :boolean
+      t.references :home_page
     end
   end
 

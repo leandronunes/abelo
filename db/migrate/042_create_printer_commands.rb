@@ -7,11 +7,12 @@ class CreatePrinterCommands < ActiveRecord::Migration
       t.column :owner_type,              :string
       t.column :status,                  :integer, :default => 0
       t.column :datetime,                :datetime, :null => false
-      t.column :till_id,                 :integer, :null => false
       t.column :sequence_number,         :integer, :null => false
       t.column :cmd_id,                  :integer, :null => false
       t.column :counter,                 :integer, :default => 0
       t.column :error_code,              :integer
+      t.text :response
+      t.references :till
     end
   end
 

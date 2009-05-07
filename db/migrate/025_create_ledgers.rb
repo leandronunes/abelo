@@ -3,16 +3,16 @@ class CreateLedgers < ActiveRecord::Migration
     create_table :ledgers do |t|
       t.column :owner_type,             :string, :null => false
       t.column :owner_id,               :integer, :null => false
-      t.column :type,                   :string, :null => false
       t.column :type_of,                :string, :limit => 1, :null => false
+      t.string :payment_method
       t.column :category_id,            :integer
       t.column :foreseen_value,         :float
       t.column :effective_value,        :float
       t.column :description,            :string, :default => ''
       # The attribute date must be always nil it was created to solve a problem with date passed by view
       t.column :date,                   :datetime 
-      t.column :foreseen_date,          :date
-      t.column :effective_date,         :date
+      t.column :foreseen_date,          :datetime
+      t.column :effective_date,         :datetime
       t.column :interests,              :float, :default => 0
       t.column :interests_days,         :integer, :default => 0
       t.column :number_of_parcels,      :integer, :default => 1
@@ -48,6 +48,7 @@ class CreateLedgers < ActiveRecord::Migration
       t.column :automatic_debit_account_agency,  :string
       t.column :automatic_debit_account_number,  :string
 
+      t.references :organization
     end
     
     add_index :ledgers, :category_id

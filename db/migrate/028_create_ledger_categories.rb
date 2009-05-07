@@ -11,6 +11,7 @@ class CreateLedgerCategories < ActiveRecord::Migration
       t.column :organization_id,        :integer, :null => false
       t.column :type_of,                :string, :limit => 1, :null => false
       t.column :settings,               :text
+      t.references :periodicity
     end
   end
 

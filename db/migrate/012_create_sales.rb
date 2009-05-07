@@ -6,8 +6,7 @@ class CreateSales < ActiveRecord::Migration
       t.column :datetime,        :datetime, :null => false
       t.column :status,          :integer,  :null => false, :default => 0
       t.column :user_id,         :integer,  :null => false
-      t.column :owner_type,      :string
-      t.column :owner_id,        :integer
+      t.references :till
     end
   end
 

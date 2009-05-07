@@ -25,7 +25,7 @@ class CreateStocks < ActiveRecord::Migration
       t.column :purpose, :integer, :default => 0
       t.column :status, :integer, :default => 0
       # the date when the entry is created
-      t.column :date, :date
+      t.timestamps
 
       ###############################
       ### fields used only by StockIn
@@ -40,6 +40,8 @@ class CreateStocks < ActiveRecord::Migration
       ################################
       # in the case the entry is related to a sell, it must indicate which one
       t.column :sell_id, :integer
+
+      t.references :invoice
     end
   end
 

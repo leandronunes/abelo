@@ -9,6 +9,8 @@ class CreateOrganizations < ActiveRecord::Migration
       t.column :web_site_design_data,        :text
       t.column :presentation,                :text
       t.column :identifier,                  :string, :null => false
+      t.string :trade_name, :null => false, :default => ''
+      t.string :state_registration, :responsible_person
     end
   end
 

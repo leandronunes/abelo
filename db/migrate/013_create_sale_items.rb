@@ -6,6 +6,7 @@ class CreateSaleItems < ActiveRecord::Migration
       t.column :amount,        :float,     :null => false, :default => 0
       t.column :unitary_price, :float,     :null => false, :default => 0
       t.column :status,        :integer,   :default => 0
+      t.references :stock
     end
   end
 

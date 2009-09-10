@@ -4,3 +4,7 @@
 - Remove the UserProfile Model
 - All entries with StockIn value will be StockBuy
 - Refresh the organization parameter profile
+
+
+- Atualizar o plugin design
+- Popular os dados das cidades. Criar o script populate.

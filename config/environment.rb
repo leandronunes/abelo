@@ -74,7 +74,7 @@ Rails::Initializer.run do |config|
   config.gem "gettext_rails"
 
 end
-
+ACTIVATE_DEMOSTRATION = false
 #I18nParserConfig.locales= ['en','pt-br']
 require 'acts_as_filesystem'
 require 'acts_as_searchable'

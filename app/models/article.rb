@@ -1,3 +1,5 @@
+require 'acts_as_filesystem'
+require 'acts_as_searchable'
 class Article < ActiveRecord::Base
 
   belongs_to :environment

@@ -28397,3 +28397,8 @@ ActionView::TemplateError (You must have at least the interface defined) on line
 Rendered rescues/_trace (52.6ms)
 Rendered rescues/_request_and_response (2.3ms)
 Rendering rescues/layout (internal_server_error)
+  [4;36;1mSQL (54.8ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (2.5ms)[0m   [0mSELECT version FROM schema_migrations[0m

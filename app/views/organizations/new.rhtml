@@ -32,13 +32,16 @@
   %>
 
   <%= observe_field('organization_country',
-     :url => 'select_state',
+     :url => select_state_admin_organizations_path,
+#     :url => 'select_state',
      :update => 'state_option',
      :with => "'country_id=' + escape(value)"
    )%>
 
   <div id="state_option">
-    <%= render :partial => 'state' %>
+    <% unless @organization.country.nil? %>
+      <%= render :partial => 'state' %>
+    <% end %>
   </div>
 
   <% end %>

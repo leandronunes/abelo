@@ -4,5 +4,5 @@
 
 <%= display_collection @organizations %> 
 
-<%= pagination_links(@organization_pages, :params => {:query => @query}) %>
+<%= will_paginate(@organizations, :params => {:query => @query}) %>
 

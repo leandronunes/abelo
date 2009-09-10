@@ -69,7 +69,12 @@ Rails::Initializer.run do |config|
 # FIXME put i18n plugin to works
 #  config.i18n.default_locale = 'en'
 #  config.i18n.load_path = Dir[File.join(RAILS_ROOT, 'lang', '*.{rb,yml}')]
+  config.gem "locale_rails"
+  config.gem "gettext_activerecord"
+  config.gem "gettext_rails"
 
 end
 
 #I18nParserConfig.locales= ['en','pt-br']
+require 'acts_as_filesystem'
+require 'acts_as_searchable'

@@ -90,7 +90,7 @@ class Organization < ActiveRecord::Base
 
   # Delegates methods
   # FIXME make this test
-  delegate :city, :state, :country, :street, :number, :complement, :district, :zip_code, :to => :address
+  delegate :city, :state, :country, :country=, :street, :number, :complement, :district, :zip_code, :to => :address
   delegate :fax, :phone, :responsible, :email, :to => :contact
 
   validates_presence_of :name
@@ -167,6 +167,10 @@ class Organization < ActiveRecord::Base
     self.errors.add(_('You cannot change the organization properties on demonstration version')) if ACTIVATE_DEMOSTRATION == true and !self.new_record?
   end
 
+  def initialize(*args)
+    super(*args)
+    self.address = Address.new
+  end
 
   def update_tracker(point_type, points)
     unless self.tracker.nil?

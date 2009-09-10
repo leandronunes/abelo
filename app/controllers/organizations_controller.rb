@@ -22,7 +22,7 @@ class OrganizationsController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @organization_pages, @organizations = paginate :organizations, :per_page => 10
+    @organizations = Organization.paginate(:page => params[:page], :per_page => 10)
   end
 
   def show

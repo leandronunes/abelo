@@ -1,0 +1,6 @@
+[submodule "vendor/plugins/bsc_plugin"]
+	path = vendor/plugins/bsc_plugin
+	url = git://github.com/leandronunes/bsc_plugin.git
+[submodule "vendor/plugins/design"]
+	path = vendor/plugins/design
+	url = git://github.com/leandronunes/design.git

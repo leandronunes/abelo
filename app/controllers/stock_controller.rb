@@ -56,7 +56,7 @@ class StockController < ApplicationController
     @stock.invoice = @invoice
     
     if @invoice.save and @invoice.stock_buys << @stock
-      flash.now[:notice] = _('It was successfully created.')
+      flash.now[:notice] = t(:it_was_successfully_created)
       redirect_to :action => 'edit', :invoice_id => @invoice,  :stock_id => @stock
     else
       @suppliers = product.suppliers

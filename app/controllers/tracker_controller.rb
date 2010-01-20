@@ -22,10 +22,10 @@ class TrackerController < ApplicationController
     @organization = Organization.find(params[:organization_id])
     @tracker = @organization.tracker
     if @tracker.update_attributes(params[:tracker]) 
-      flash[:notice] = _('Tracker was successfully updated.')
+      flash[:notice] = t(:tracker_was_successfully_updated)
       redirect_to :action => 'show', :organization_id => @organization
     else
-      flash[:notice] = _('Tracker was not updated.')
+      flash[:notice] = t(:tracker_was_not_updated)
       redirect_to :action => 'edit', :organization_id => @organization
     end
   end
@@ -43,7 +43,7 @@ class TrackerController < ApplicationController
     g.marker_font_size=18
     g.has_left_labels=true
     g.data(_("Used Points"), tracker.total_points)
-    g.labels = {0 => _('Used Points')}
+    g.labels = {0 => t(:used_points)}
 
     send_data(g.to_blob,
       :disposition => 'inline',

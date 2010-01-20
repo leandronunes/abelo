@@ -4,6 +4,7 @@ STATS_DIRECTORIES = [
   %w(Models             app/models),
   %w(Libraries          lib/),
   %w(APIs               app/apis),
+  %w(Components         components),
   %w(Integration\ tests test/integration),
   %w(Functional\ tests  test/functional),
   %w(Unit\ tests        test/unit)

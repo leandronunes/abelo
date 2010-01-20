@@ -87,9 +87,9 @@ module ActionController #:nodoc:
             __send__(action_callback_method_name)     if respond_to?(action_callback_method_name, true)
           end
 
-          def method_missing(method, *arguments, &block)
+          def method_missing(method, *arguments)
             return if @controller.nil?
-            @controller.__send__(method, *arguments, &block)
+            @controller.__send__(method, *arguments)
           end
       end
     end

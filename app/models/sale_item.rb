@@ -14,7 +14,7 @@ class SaleItem < ActiveRecord::Base
 
   validates_presence_of :sale_id, :product_id, :amount, :unitary_price
   validates_inclusion_of :status, :in => ALL_STATUS
-  validates_associated :stock_out, :message => _("You don't have sufficient product in stock")
+  validates_associated :stock_out, :message => t(:insufficient_product_in_stock)
   validates_associated :printer_command
 
   before_validation do |sale_item|
@@ -42,7 +42,7 @@ class SaleItem < ActiveRecord::Base
 
   def validate
     if self.unitary_price <= 0
-      self.errors.add(:unitary_price, _('The price must be greater than 0'))
+      self.errors.add(:unitary_price, t(:the_price_must_be_greater_than_0))
     end
 
     if !self.sale.nil? and !self.sale.organization.products.include?(self.product)
@@ -50,7 +50,7 @@ class SaleItem < ActiveRecord::Base
     end
 
     if !self.sale.nil? and self.has_fiscal_printer? and (self.printer_command.nil? or !PrinterCommand.pending_command(self.till).nil?)
-      self.errors.add(:printer_command, _('You have pending add item commands.'))
+      self.errors.add(:printer_command, t(:you_have_pending_add_item_commands))
     end
   end
 

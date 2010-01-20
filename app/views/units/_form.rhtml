@@ -5,13 +5,13 @@
 <% display_form_info @unit do |item| %>
 
   <%= display_field_form(item, 'name',
-        :title => _('Name'),
+        :title => t(:name),
         :content => text_field('unit', 'name')
       )
   %>
   
   <%= display_field_form(item, 'abbreviation',
-        :title => _('Abbreviation'),
+        :title => t(:abbreviation),
         :content => text_field('unit', 'abbreviation')
       )
   %>

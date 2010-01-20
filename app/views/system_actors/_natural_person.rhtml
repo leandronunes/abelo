@@ -1,18 +1,18 @@
 <%= display_field_edit( @system_actor, 'cpf',
-      :title => _('CPF'),
+      :title => t(:cpf),
       :content => text_field('system_actor', 'cpf'),
        :html_options => {:style => 'clear: left;'}
     )
 %>
 
 <%= display_field_edit(@system_actor, 'rg',
-      :title => _('RG'),
+      :title => t(:rg),
       :content => text_field('system_actor', 'rg')
     )
 %>
 
 <%= display_field_edit(@system_actor, 'birthday',
-      :title => _('Born Day'),
+      :title => t(:born_day),
       :content => date_select_abelo('system_actor', 'birthday', :start_year => Date.today.year - 100),
       :html_options => {:class => 'break_line'}
     )

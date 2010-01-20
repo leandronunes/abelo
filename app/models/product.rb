@@ -30,9 +30,9 @@ class Product < ActiveRecord::Base
 
   validates_presence_of :name, :sell_price, :unit_measure_id
 
-  validates_presence_of :organization_id, :message => _('Products must be associated to an organization')
+  validates_presence_of :organization_id, :message => t(:product_associated_to_organization)
 
-  validates_presence_of :category_id, :message => _('Every product must belong to a category')
+  validates_presence_of :category_id, :message => t(:product_belongs_to_category)
 
   has_many :sale_items
 

@@ -165,11 +165,13 @@ module Admin
 end
 
 # a test case to exercise the new capabilities TestRequest & TestResponse
-class ActionPackAssertionsControllerTest < ActionController::TestCase
+class ActionPackAssertionsControllerTest < Test::Unit::TestCase
   # let's get this party started
   def setup
     ActionController::Routing::Routes.reload
     ActionController::Routing.use_controllers!(%w(action_pack_assertions admin/inner_module user content admin/user))
+    @controller = ActionPackAssertionsController.new
+    @request, @response = ActionController::TestRequest.new, ActionController::TestResponse.new
   end
 
   def teardown
@@ -233,13 +235,13 @@ class ActionPackAssertionsControllerTest < ActionController::TestCase
         map.connect   ':controller/:action/:id'
       end
       process :redirect_to_named_route
-      assert_raise(ActiveSupport::TestCase::Assertion) do
+      assert_raise(Test::Unit::AssertionFailedError) do
         assert_redirected_to 'http://test.host/route_two'
       end
-      assert_raise(ActiveSupport::TestCase::Assertion) do
+      assert_raise(Test::Unit::AssertionFailedError) do
         assert_redirected_to :controller => 'action_pack_assertions', :action => 'nothing', :id => 'two'
       end
-      assert_raise(ActiveSupport::TestCase::Assertion) do
+      assert_raise(Test::Unit::AssertionFailedError) do
         assert_redirected_to route_two_url
       end
     end
@@ -326,11 +328,11 @@ class ActionPackAssertionsControllerTest < ActionController::TestCase
   # check if we were rendered by a file-based template?
   def test_rendered_action
     process :nothing
-    assert_nil @response.rendered[:template]
+    assert_nil @response.rendered_template
 
     process :hello_world
-    assert @response.rendered[:template]
-    assert 'hello_world', @response.rendered[:template].to_s
+    assert @response.rendered_template
+    assert 'hello_world', @response.rendered_template.to_s
   end
 
   # check the redirection location
@@ -364,12 +366,6 @@ class ActionPackAssertionsControllerTest < ActionController::TestCase
   def test_missing_response_code
     process :response404
     assert @response.missing?
-  end
-
-  # check client errors
-  def test_client_error_response_code
-    process :response404
-    assert @response.client_error?
   end
 
   # check to see if our redirection matches a pattern
@@ -414,7 +410,7 @@ class ActionPackAssertionsControllerTest < ActionController::TestCase
 
   def test_assert_redirection_fails_with_incorrect_controller
     process :redirect_to_controller
-    assert_raise(ActiveSupport::TestCase::Assertion) do
+    assert_raise(Test::Unit::AssertionFailedError) do
       assert_redirected_to :controller => "action_pack_assertions", :action => "flash_me"
     end
   end
@@ -461,16 +457,16 @@ class ActionPackAssertionsControllerTest < ActionController::TestCase
 
   def test_assert_valid
     get :get_valid_record
-    assert_deprecated { assert_valid assigns('record') }
+    assert_valid assigns('record')
   end
 
   def test_assert_valid_failing
     get :get_invalid_record
 
     begin
-      assert_deprecated { assert_valid assigns('record') }
+      assert_valid assigns('record')
       assert false
-    rescue ActiveSupport::TestCase::Assertion => e
+    rescue Test::Unit::AssertionFailedError => e
     end
   end
 
@@ -479,7 +475,7 @@ class ActionPackAssertionsControllerTest < ActionController::TestCase
     get :index
     assert_response :success
     flunk 'Expected non-success response'
-  rescue ActiveSupport::TestCase::Assertion => e
+  rescue Test::Unit::AssertionFailedError => e
     assert e.message.include?('FAIL')
   end
 
@@ -488,29 +484,31 @@ class ActionPackAssertionsControllerTest < ActionController::TestCase
     get :show
     assert_response :success
     flunk 'Expected non-success response'
-  rescue ActiveSupport::TestCase::Assertion
-    # success
+  rescue Test::Unit::AssertionFailedError
   rescue
     flunk "assert_response failed to handle failure response with missing, but optional, exception."
   end
 end
 
-class ActionPackHeaderTest < ActionController::TestCase
-  tests ActionPackAssertionsController
+class ActionPackHeaderTest < Test::Unit::TestCase
+  def setup
+    @controller = ActionPackAssertionsController.new
+    @request, @response = ActionController::TestRequest.new, ActionController::TestResponse.new
+  end
 
   def test_rendering_xml_sets_content_type
     process :hello_xml_world
-    assert_equal('application/xml; charset=utf-8', @response.headers['Content-Type'])
+    assert_equal('application/xml; charset=utf-8', @response.headers['type'])
   end
 
   def test_rendering_xml_respects_content_type
     @response.headers['type'] = 'application/pdf'
     process :hello_xml_world
-    assert_equal('application/pdf; charset=utf-8', @response.headers['Content-Type'])
+    assert_equal('application/pdf; charset=utf-8', @response.headers['type'])
   end
 
   def test_render_text_with_custom_content_type
     get :render_text_with_custom_content_type
-    assert_equal 'application/rss+xml; charset=utf-8', @response.headers['Content-Type']
+    assert_equal 'application/rss+xml; charset=utf-8', @response.headers['type']
   end
 end

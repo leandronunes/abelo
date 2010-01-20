@@ -2,7 +2,7 @@
    "http://www.w3.org/TR/html4/loose.dtd">
 <html>
   <head>
-    <title> <%= _('Abelo') %> </title>
+    <title> <%= t(:abelo) %> </title>
     <%= javascript_include_tag 'fckeditor/fckeditor' %>
     <%= design_all_header_tags %>
     <%= javascript_include_tag 'spinner' %>
@@ -21,17 +21,17 @@
 
         <div id="header">
           <div style="background-image: url(<%= image_path('org_toca.png') %>)"
-               id="logo_org"><span> <%= _('Organization Logo') %></span></div>
+               id="logo_org"><span> <%= t(:organization_logo) %></span></div>
           <div id="info_org">
             <span><%= @organization.name %></span><br />
-            <%= _('CNPJ')%>: <%= @organization.cnpj %>
+            <%= t(:cnpj)%>: <%= @organization.cnpj %>
           </div>
           <div id="banner_top"><span>Abelo</span></div>
           <div id="userbar">
             <div class="login_bar">
-              <%= design_display_function_button( 'with_text go-jump', _('Go to'),visual_effect(:toggle_slide, 'menu', :duration => 0.6), {:id => "goto", :accesskey => "g"}) %>
+              <%= design_display_function_button( 'with_text go-jump', t(:go_to),visual_effect(:toggle_slide, 'menu', :duration => 0.6), {:id => "goto", :accesskey => "g"}) %>
               <%= design_display_button( 'with_text edit_small' , _('My account'), {:controller => 'public', :action => 'edit_user', :id => self.current_user}, :id => "edit_profile", :accesskey => "e") %> 
-              <%= design_display_button( 'with_text system-log-out', _('Logout'), {:organization_nickname => nil, :controller => 'users', :action => 'logout'}, :id => "logout", :accesskey => "q", :confirm => _('Exit from system?'), :method => 'post') %>
+              <%= design_display_button( 'with_text system-log-out', t(:logout'),_{:organization_nickname_=>_nil,_:controller_=>_'users',_:action_=>_'logout'},_:id_=>_"logout",_:accesskey_=>_"q",_:confirm_=>__('exit_from_system?'),_:method_=>_'post) %>
             </div>
              
           </div>

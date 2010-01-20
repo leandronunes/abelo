@@ -14,11 +14,11 @@ class Stock < ActiveRecord::Base
 
   def self.describe(class_name)
     {
-      'StockBuy' => _('Buy'),
-      'StockIn' => _('Stock Replenishment'),
-      'StockOut' => _('Sell'),
-      'StockDown' => _('Stock Down'),
-      'StockDevolution' => _('Devolution'),
+      'StockBuy' => t(:buy),
+      'StockIn' => t(:stock_replenishment),
+      'StockOut' => t(:sell),
+      'StockDown' => t(:stock_down),
+      'StockDevolution' => t(:devolution),
     }[class_name] || class_name
   end
 

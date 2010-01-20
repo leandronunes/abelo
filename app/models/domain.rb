@@ -10,14 +10,14 @@ class Domain < ActiveRecord::Base
 
   # <tt>name</tt> must be a sequence of word characters (a to z, plus 0 to 9,
   # plus '_'). Letters must be lowercase
-  validates_format_of :name, :with => /^([a-z0-9_]+\.)+[a-z0-9_]+$/, :message => _('%{fn} must be composed only of lowercase latters (a to z), numbers (0 to 9) and "_"')
+  validates_format_of :name, :with => /^([a-z0-9_]+\.)+[a-z0-9_]+$/, :message => :domain_format_name
 
   # checks validations that could not be expressed using Rails' predefined
   # validations. In particular:
   # * <tt>name</tt> must not start with 'www.'
   def validate
     if self.name =~ /^www\./
-      self.errors.add(:name, _('%{fn} must not start with www.'))
+      self.errors.add(:name, t(:name_must_not_start_with_www))
     end
   end
 

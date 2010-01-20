@@ -38,7 +38,7 @@ class PointOfSaleController < ApplicationController
     return unless @organization.has_fiscal_printer? 
     cmd = PrinterCommand.pending_command(@till)
     return if cmd.nil?
-    flash.now[:command_error] = _('%s') % cmd.error_message
+    flash.now[:command_error] = cmd.error_message
   end
 
   def run_pending_commands
@@ -101,7 +101,7 @@ class PointOfSaleController < ApplicationController
     @cash = Ledger.new(params[:cash].merge(:organization => @organization, :owner => @till, :payment_method => Payment::ADD_CASH))
 
     if @cash.save
-      flash[:notice] = _('The cash was added successfully')
+      flash[:notice] = t(:the_cash_was_added_successfully)
       redirect_to :action => 'till_open'
     else
       render :action => 'add_cash'
@@ -115,7 +115,7 @@ class PointOfSaleController < ApplicationController
   def create_remove_cash
     @cash = Ledger.new(params[:cash].merge(:owner => @till, :payment_method => Payment::REMOVE_CASH, :organization => @organization))
     if @cash.save
-      flash[:notice] = _('The cash was removed successfully')
+      flash[:notice] = t(:the_cash_was_removed_successfully)
       redirect_to :action => 'till_open'
     else
       render :action => 'remove_cash'
@@ -191,7 +191,7 @@ class PointOfSaleController < ApplicationController
     @product = @organization.products.find_by_code(code)
     if @product.nil?
       render :update do |page|
-        page.replace_html('abelo_product_identification', _('Invalid product code %s') % code)
+        page.replace_html('abelo_product_identification', t(:invalid_product_code_%s) % code)
       end
     else
       render :update do |page|
@@ -206,7 +206,7 @@ class PointOfSaleController < ApplicationController
     @sale = Sale.pending(till)
 
     unless can(:controller => 'point_of_sale', :action => 'create_coupon_cancel')
-      flash[:notice] = _('Only sales supervisor can cancel a coupon') if flash[:notice].nil?
+      flash[:notice] = t(:only_sales_supervisor_can_cancel_a_coupon) if flash[:notice].nil?
     end
     @total = @sale.total_value 
     @total_payment = @sale.total_payment 

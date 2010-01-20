@@ -1,3 +1,4 @@
+require 'action_controller/integration'
 require 'active_support/testing/performance'
 require 'active_support/testing/default'
 

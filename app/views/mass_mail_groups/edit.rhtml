@@ -1,6 +1,6 @@
 <%= render :partial => 'menu' %>
 
-<%= title(_('Editing group %s')) % @mass_mail_group.name %>
+<%= title(t(:editing_group_%s)) % @mass_mail_group.name %>
 
 <% form_tag :action => 'update', :id => @mass_mail_group, :group_type => @group_type do %>
     <%= render :partial => 'form' %>   

@@ -6,8 +6,8 @@ class StockVirtualDisplay < StockDisplay
 
   def self.describe(field)
     {
-      'product_in_list' => _('Product'),
-      'amount_in_list' =>  _('Amount'),
+      'product_in_list' => t(:product),
+      'amount_in_list' =>  t(:amount),
     }[field] || field
   end
 

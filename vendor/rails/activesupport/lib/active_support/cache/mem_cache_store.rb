@@ -13,7 +13,6 @@ module ActiveSupport
     #   server goes down, then MemCacheStore will ignore it until it goes back
     #   online.
     # - Time-based expiry support. See #write and the +:expires_in+ option.
-    # - Per-request in memory cache for all communication with the MemCache server(s).
     class MemCacheStore < Store
       module Response # :nodoc:
         STORED      = "STORED\r\n"
@@ -39,8 +38,6 @@ module ActiveSupport
         addresses = ["localhost"] if addresses.empty?
         @addresses = addresses
         @data = MemCache.new(addresses, options)
-
-        extend Strategy::LocalCache
       end
 
       def read(key, options = nil) # :nodoc:
@@ -83,7 +80,6 @@ module ActiveSupport
       def exist?(key, options = nil) # :nodoc:
         # Doesn't call super, cause exist? in memcache is in fact a read
         # But who cares? Reading is very fast anyway
-        # Local cache is checked first, if it doesn't know then memcache itself is read from
         !read(key, options).nil?
       end
 
@@ -98,6 +94,7 @@ module ActiveSupport
 
       def decrement(key, amount = 1) # :nodoc:
         log("decrement", key, amount)
+
         response = @data.decr(key, amount)
         response == Response::NOT_FOUND ? nil : response
       rescue MemCache::MemCacheError
@@ -105,8 +102,6 @@ module ActiveSupport
       end
 
       def delete_matched(matcher, options = nil) # :nodoc:
-        # don't do any local caching at present, just pass
-        # through and let the error happen
         super
         raise "Not supported by Memcache"
       end

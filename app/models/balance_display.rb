@@ -10,9 +10,9 @@ class BalanceDisplay < DisplayConfiguration
 
   def self.describe(field)
     {
-      'value' => _('Value'),
-      'date' => _('Date'),
-      'bank_account' => _('Bank Account'),
+      'value' => t(:value),
+      'date' => t(:date),
+      'bank_account' => t(:bank_account),
     }[field] || field
   end
 

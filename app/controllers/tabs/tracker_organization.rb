@@ -4,6 +4,6 @@ def create_tracker_organization_tabs
     in_set 'first'
     highlights_on :controller => 'tracker_organization'
   end
-  t.named _('Tracker')
+  t.named t(:tracker)
 
 end

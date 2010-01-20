@@ -1,8 +1,8 @@
-<p><label for="item_product"><%= _('product') %></label>
+<p><label for="item_product"><%= t(:product) %></label>
 <%= select('commercial_proposal_item', 'product_id', @organization.products.collect { |p| [ p.description, p.id ] }, { :include_blank => true }) %></p>
 
-<p><label for="item_quantity"><%= _('quantity') %></label>
+<p><label for="item_quantity"><%= t(:quantity) %></label>
 <%= text_field 'commercial_proposal_item', 'quantity'%></p>
 
-<p><label for="item_unitary_value"><%= _('Unitary value') %></label>
+<p><label for="item_unitary_value"><%= t(:unitary_value) %></label>
 <%= text_field 'commercial_proposal_item', 'unitary_value'%></p>

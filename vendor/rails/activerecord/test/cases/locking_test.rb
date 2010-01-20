@@ -35,25 +35,7 @@ class OptimisticLockingTest < ActiveRecord::TestCase
     assert_equal 0, p2.lock_version
 
     p2.first_name = 'sue'
-    assert_raise(ActiveRecord::StaleObjectError) { p2.save! }
-  end
-
-  def test_lock_destroy
-    p1 = Person.find(1)
-    p2 = Person.find(1)
-    assert_equal 0, p1.lock_version
-    assert_equal 0, p2.lock_version
-
-    p1.first_name = 'stu'
-    p1.save!
-    assert_equal 1, p1.lock_version
-    assert_equal 0, p2.lock_version
-
-    assert_raises(ActiveRecord::StaleObjectError) { p2.destroy }
-
-    assert p1.destroy
-    assert_equal true, p1.frozen?
-    assert_raises(ActiveRecord::RecordNotFound) { Person.find(1) }
+    assert_raises(ActiveRecord::StaleObjectError) { p2.save! }
   end
 
   def test_lock_repeating
@@ -68,9 +50,9 @@ class OptimisticLockingTest < ActiveRecord::TestCase
     assert_equal 0, p2.lock_version
 
     p2.first_name = 'sue'
-    assert_raise(ActiveRecord::StaleObjectError) { p2.save! }
+    assert_raises(ActiveRecord::StaleObjectError) { p2.save! }
     p2.first_name = 'sue2'
-    assert_raise(ActiveRecord::StaleObjectError) { p2.save! }
+    assert_raises(ActiveRecord::StaleObjectError) { p2.save! }
   end
 
   def test_lock_new
@@ -89,7 +71,7 @@ class OptimisticLockingTest < ActiveRecord::TestCase
     assert_equal 0, p2.lock_version
 
     p2.first_name = 'sue'
-    assert_raise(ActiveRecord::StaleObjectError) { p2.save! }
+    assert_raises(ActiveRecord::StaleObjectError) { p2.save! }
   end
 
   def test_lock_new_with_nil
@@ -113,7 +95,7 @@ class OptimisticLockingTest < ActiveRecord::TestCase
     assert_equal 0, t2.version
 
     t2.tps_report_number = 800
-    assert_raise(ActiveRecord::StaleObjectError) { t2.save! }
+    assert_raises(ActiveRecord::StaleObjectError) { t2.save! }
   end
 
   def test_lock_column_is_mass_assignable

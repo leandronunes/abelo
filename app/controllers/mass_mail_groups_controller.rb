@@ -68,7 +68,7 @@ class MassMailGroupsController < ApplicationController
       @mass_mail_group = eval("#{@group_type.camelize}Group").new(params[:mass_mail_group])
       @mass_mail_group.organization = @organization 
       if @mass_mail_group.save
-        flash[:notice] = _('Group was successfully created.')
+        flash[:notice] = t(:group_was_successfully_created)
         redirect_to :action => 'list', :group_type => @group_type
       else
         render :action => 'new'
@@ -87,7 +87,7 @@ class MassMailGroupsController < ApplicationController
     @group_type = params[:group_type]
     @mass_mail_group = @organization.mass_mail_groups.find(params[:id])
     if @mass_mail_group.update_attributes(params[:mass_mail_group])
-      flash[:notice] = _('Group was successfully updated.')
+      flash[:notice] = t(:group_was_successfully_updated)
       redirect_to :action => 'list', :group_type => @group_type
     else
       render :action => 'edit'

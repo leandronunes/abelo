@@ -2,10 +2,10 @@
 
 <%= form_remote_tag(:url => {:controller => 'commercial_proposal_sections' ,:action => 'add', :id => @commercial_proposal_id}, :update => {:success => 'proposal_sections', :failure => 'new_component'}) %>
 
-<p><label for="section_name"><%= _('Section') %></label>
+<p><label for="section_name"><%= t(:section) %></label>
 <%= text_field 'commercial_proposal_section', 'name'%></p>
 
-<%= link_to_remote _('Close'), {:url => {:action => 'cancel'}, :update => 'new_component'}, :class => 'button button_close' %>
-<%= submit_tag _('Add section'), :class => 'button' %>
+<%= link_to_remote t(:close), {:url => {:action => 'cancel'}, :update => 'new_component'}, :class => 'button button_close' %>
+<%= submit_tag t(:add_section), :class => 'button' %>
 
 <%= end_form_tag %>

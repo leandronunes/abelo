@@ -8,16 +8,16 @@ class TrackerDisplay < DisplayConfiguration
 
   def self.describe(field)
     {
-      'available_points' => _('Total available points'),
-      'product_points'   => _('Product points'),
-      'customer_points'  => _('Customer points'),
-      'supplier_points'  => _('Supplier points'),
-      'worker_points'    => _('Worker points'),
-      'ledger_points'    => _('Ledger points'),
-      'document_points'  => _('Document points'),
-      'points_per_user'  => _('Points per user'),
-      'website_points'   => _('Website points'),
-      'user_points'      => _('User points'),
+      'available_points' => t(:total_available_points),
+      'product_points'   => t(:product_points),
+      'customer_points'  => t(:customer_points),
+      'supplier_points'  => t(:supplier_points),
+      'worker_points'    => t(:worker_points),
+      'ledger_points'    => t(:ledger_points),
+      'document_points'  => t(:document_points),
+      'points_per_user'  => t(:points_per_user),
+      'website_points'   => t(:website_points),
+      'user_points'      => t(:user_points),
    }[field] || field
   end
 

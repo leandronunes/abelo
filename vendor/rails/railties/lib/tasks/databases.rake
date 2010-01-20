@@ -1,12 +1,7 @@
 namespace :db do
-  task :load_config => :rails_env do
-    require 'active_record'
-    ActiveRecord::Base.configurations = Rails::Configuration.new.database_configuration
-  end
-
   namespace :create do
     desc 'Create all the local databases defined in config/database.yml'
-    task :all => :load_config do
+    task :all => :environment do
       ActiveRecord::Base.configurations.each_value do |config|
         # Skip entries that don't have a database key, such as the first entry here:
         #
@@ -27,7 +22,7 @@ namespace :db do
   end
 
   desc 'Create the database defined in config/database.yml for the current RAILS_ENV'
-  task :create => :load_config do
+  task :create => :environment do
     create_database(ActiveRecord::Base.configurations[RAILS_ENV])
   end
 
@@ -81,7 +76,7 @@ namespace :db do
 
   namespace :drop do
     desc 'Drops all the local databases defined in config/database.yml'
-    task :all => :load_config do
+    task :all => :environment do
       ActiveRecord::Base.configurations.each_value do |config|
         # Skip entries that don't have a database key
         next unless config['database']
@@ -92,7 +87,7 @@ namespace :db do
   end
 
   desc 'Drops the database for the current RAILS_ENV'
-  task :drop => :load_config do
+  task :drop => :environment do
     config = ActiveRecord::Base.configurations[RAILS_ENV || 'development']
     begin
       drop_database(config)
@@ -110,7 +105,7 @@ namespace :db do
   end
 
 
-  desc "Migrate the database through scripts in db/migrate and update db/schema.rb by invoking db:schema:dump. Target specific version with VERSION=x. Turn off output with VERBOSE=false."
+  desc "Migrate the database through scripts in db/migrate. Target specific version with VERSION=x. Turn off output with VERBOSE=false."
   task :migrate => :environment do
     ActiveRecord::Migration.verbose = ENV["VERBOSE"] ? ENV["VERBOSE"] == "true" : true
     ActiveRecord::Migrator.migrate("db/migrate/", ENV["VERSION"] ? ENV["VERSION"].to_i : nil)
@@ -250,7 +245,6 @@ namespace :db do
       File.open(ENV['SCHEMA'] || "#{RAILS_ROOT}/db/schema.rb", "w") do |file|
         ActiveRecord::SchemaDumper.dump(ActiveRecord::Base.connection, file)
       end
-      Rake::Task["db:schema:dump"].reenable
     end
 
     desc "Load a schema.rb file into the database"
@@ -381,7 +375,7 @@ namespace :db do
   end
 
   namespace :sessions do
-    desc "Creates a sessions migration for use with ActiveRecord::SessionStore"
+    desc "Creates a sessions migration for use with CGI::Session::ActiveRecordStore"
     task :create => :environment do
       raise "Task unavailable to this database (no migration support)" unless ActiveRecord::Base.connection.supports_migrations?
       require 'rails_generator'
@@ -399,7 +393,6 @@ end
 def drop_database(config)
   case config['adapter']
   when 'mysql'
-    ActiveRecord::Base.establish_connection(config)
     ActiveRecord::Base.connection.drop_database config['database']
   when /^sqlite/
     FileUtils.rm(File.join(RAILS_ROOT, config['database']))

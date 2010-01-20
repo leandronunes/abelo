@@ -2,13 +2,13 @@
 
 <%= link_to_close_popup " ", {:class => 'button_close'}, 'edit_section', 'proposal_sections' %>
 
-<h2><%= _('Edit section') %></h2>
+<h2><%= t(:edit_section) %></h2>
 
 <%= popup_form_tag( {:action => 'update', :id => @commercial_proposal_section.id, :commercial_proposal_id => @commercial_proposal_id  } ) %>
 
-<p><label for="section_name"><%= _('Name') %></label>
+<p><label for="section_name"><%= t(:name) %></label>
 <%= text_field 'commercial_proposal_section', 'name'%></p>
 
-<%= submit_tag _('Save') %>
+<%= submit_tag t(:save) %>
 
 <%= end_form_tag %>

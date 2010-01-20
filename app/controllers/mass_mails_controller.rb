@@ -49,7 +49,7 @@ class MassMailsController < ApplicationController
     @mass_mail = MassMail.new(params[:mass_mail])
     @mass_mail.organization = @organization
     if @mass_mail.save
-      flash[:notice] = _('Mass mail was successfully created.')
+      flash[:notice] = t(:mass_mail_was_successfully_created)
       redirect_to :action => 'list'
     else
       render :action => 'new'
@@ -64,7 +64,7 @@ class MassMailsController < ApplicationController
     @mass_mail = @organization.mass_mails.find(params[:id])
 
     if @mass_mail.update_attributes(params[:mass_mail])
-      flash[:notice] = _('Mass mail was successfully updated.')
+      flash[:notice] = t(:mass_mail_was_successfully_updated)
       redirect_to :action => 'list'
     else
       render :action => 'edit'

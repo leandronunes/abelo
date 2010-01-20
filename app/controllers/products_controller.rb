@@ -63,7 +63,7 @@ class ProductsController < ApplicationController
     @product = Product.new(params[:product])
     @product.organization = @organization
     if @product.save
-      flash[:notice] = _('The product was successfully created.')
+      flash[:notice] = t(:the_product_was_successfully_created)
       redirect_to :action => 'list'
     else
       @product.code = @product.suggest_code
@@ -80,7 +80,7 @@ class ProductsController < ApplicationController
     begin
       @product = @organization.products.find(params[:id])
     rescue
-      @message = _('The product was not found')
+      @message = t(:the_product_was_not_found)
       render :template => 'shared/not_found'
     end
     @suppliers = @organization.suppliers
@@ -95,7 +95,7 @@ class ProductsController < ApplicationController
     @product.supplier_ids = params[:suppliers].keys if params[:suppliers]
 
     if @product.update_attributes(params[:product])
-      flash[:notice] = _('Product was successfully updated.')
+      flash[:notice] = t(:product_was_successfully_updated)
       redirect_to :action => 'list'
     else
       @suppliers = @organization.suppliers
@@ -122,7 +122,7 @@ class ProductsController < ApplicationController
     @image.product_id = params[:id]
     if @image.save
       @product.images.push(@image)
-      flash[:notice] = _('Image was successfully added.')
+      flash[:notice] = t(:image_was_successfully_added)
       redirect_to :action => 'images', :id => @product
     else
       render :action => 'images', :id => @product

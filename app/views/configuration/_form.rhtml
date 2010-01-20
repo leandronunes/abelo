@@ -2,67 +2,67 @@
 <!--[form:organization]-->
 
   <%= display_field_form(@configuration, 'organization_name',
-        :title => _('Organization Name'),
+        :title => t(:organization_name),
         :content => text_field('configuration', 'organization_name')
       )
   %>
 
   <%= display_field_form(@configuration, 'organization_name',
-        :title => _('Organization Name Plural'),
+        :title => t(:organization_name_plural),
         :content => text_field('configuration', 'organization_name_on_plural')
       )
   %>
 
   <%= display_field_form(@configuration, 'department_name',
-        :title => _('Department Name'),
+        :title => t(:department_name),
         :content => text_field('configuration', 'department_name')
       )
   %>
 
   <%= display_field_form(@configuration, 'department_name',
-        :title => _('Department Name Plural'),
+        :title => t(:department_name_plural),
         :content => text_field('configuration', 'department_name_on_plural')
       )
   %>
 
   <%= display_field_form(@configuration, 'customer_name',
-        :title => _('Customer Name'),
+        :title => t(:customer_name),
         :content => text_field('configuration', 'customer_name')
       )
   %>
 
   <%= display_field_form(@configuration, 'customer_name',
-        :title => _('Customer Name Plural'),
+        :title => t(:customer_name_plural),
         :content => text_field('configuration', 'customer_name_on_plural')
       )
   %>
 
   <%= display_field_form(@configuration, 'document_name',
-        :title => _('Document Name'),
+        :title => t(:document_name),
         :content => text_field('configuration', 'document_name')
       )
   %>
 
   <%= display_field_form(@configuration, 'document_name',
-        :title => _('Document Name Plural'),
+        :title => t(:document_name_plural),
         :content => text_field('configuration', 'document_name_on_plural')
       )
   %>
 
   <%= display_field_form(@configuration, 'product_name',
-        :title => _('Product Name'),
+        :title => t(:product_name),
         :content => text_field('configuration', 'product_name')
       )
   %>
 
   <%= display_field_form(@configuration, 'product_name',
-        :title => _('Product Name Plural'),
+        :title => t(:product_name_plural),
         :content => text_field('configuration', 'product_name_on_plural')
       )
   %>
 
   <%= display_field_form(@configuration, 'fiscal_printer',
-        :title => _('Has Fiscal Printer'),
+        :title => t(:has_fiscal_printer),
         :content => check_box('configuration', 'fiscal_printer',{}, true, false),
         :html_options => {:class => 'break_line'}
       )
@@ -70,7 +70,7 @@
 
 
   <%= display_field_form(@configuration, 'worker_module',
-        :title => _('Has Worker Module'),
+        :title => t(:has_worker_module),
         :content => check_box('configuration', 'worker_module',{}, true, false),
         :html_options => {:class => 'break_line'}
       )
@@ -83,7 +83,7 @@
 
   <div id="configuration_worker" style="<%= unless @configuration.has_worker_module?; 'display: none;' end %>" >
     <%= display_field_form(@configuration, 'worker_displays',
-          :title => _('Worker Display Configuration'),
+          :title => t(:worker_display_configuration),
           :content => select_display_configuration('configuration', 'WorkerDisplay', @worker_fields),
           :html_options => {:class => 'break_line'}
         )
@@ -91,7 +91,7 @@
   </div>
 
   <%= display_field_form(@configuration, 'worker_category_module',
-        :title => _('Has Worker Category Module'),
+        :title => t(:has_worker_category_module),
         :content => check_box('configuration', 'worker_category_module',{}, true, false)
       )
   %>
@@ -103,14 +103,14 @@
 
   <div id="configuration_worker_category" style="<%= unless @configuration.has_worker_category_module?; 'display: none;' end %>" >
     <%= display_field_form(@configuration, 'worker_category_displays',
-          :title => _('Worker Category Display Configuration'),
+          :title => t(:worker_category_display_configuration),
           :content => select_display_configuration('configuration', 'WorkerCategoryDisplay', @worker_category_fields)
         )
     %>
   </div>
 
   <%= display_field_form(@configuration, 'customer_module',
-        :title => _('Has Customer Module'),
+        :title => t(:has_customer_module),
         :content => check_box('configuration', 'customer_module',{}, true, false),
         :html_options => {:class => 'break_line'}
       )
@@ -123,7 +123,7 @@
 
   <div id="configuration_customer" style="<%= unless @configuration.has_customer_module?; 'display: none;' end %>" >
     <%= display_field_form(@configuration, 'customer_displays',
-          :title => _('Customer Display Configuration'),
+          :title => t(:customer_display_configuration),
           :content => select_display_configuration('configuration', 'CustomerDisplay', @customer_fields),
           :html_options => {:class => 'break_line'}
         )
@@ -131,7 +131,7 @@
   </div>
 
   <%= display_field_form(@configuration, 'customer_category_module',
-        :title => _('Has Customer Category Module'),
+        :title => t(:has_customer_category_module),
         :content => check_box('configuration', 'customer_category_module',{}, true, false)
       )
   %>
@@ -143,14 +143,14 @@
 
   <div id="configuration_customer_category" style="<%= unless @configuration.has_customer_category_module?; 'display: none;' end %>" >
     <%= display_field_form(@configuration, 'customer_category_displays',
-          :title => _('Customer Category Display Configuration'),
+          :title => t(:customer_category_display_configuration),
           :content => select_display_configuration('configuration', 'CustomerCategoryDisplay', @customer_category_fields)
         )
     %>
   </div>
 
   <%= display_field_form(@configuration, 'supplier_module',
-        :title => _('Has Supplier Module'),
+        :title => t(:has_supplier_module),
         :content => check_box('configuration', 'supplier_module',{}, true, false),
         :html_options => {:class => 'break_line'}
       )
@@ -163,7 +163,7 @@
 
   <div id="configuration_supplier" style="<%= unless @configuration.has_supplier_module?; 'display: none;' end %>" >
     <%= display_field_form(@configuration, 'supplier_displays',
-          :title => _('Supplier Display Configuration'),
+          :title => t(:supplier_display_configuration),
           :content => select_display_configuration('configuration', 'SupplierDisplay', @supplier_fields),
           :html_options => {:class => 'break_line'}
         )
@@ -172,7 +172,7 @@
 
 
   <%= display_field_form(@configuration, 'supplier_category_module',
-        :title => _('Has Supplier Category Module'),
+        :title => t(:has_supplier_category_module),
         :content => check_box('configuration', 'supplier_category_module',{}, true, false)
       )
   %>
@@ -184,14 +184,14 @@
 
   <div id="configuration_supplier_category" style="<%= unless @configuration.has_supplier_category_module?; 'display: none;' end %>" >
     <%= display_field_form(@configuration, 'supplier_category_displays',
-          :title => _('Supplier Category Display Configuration'),
+          :title => t(:supplier_category_display_configuration),
           :content => select_display_configuration('configuration', 'SupplierCategoryDisplay', @supplier_category_fields)
         )
     %>
   </div>
 
   <%= display_field_form(@configuration, 'product_module',
-        :title => _('Has Product Module'),
+        :title => t(:has_product_module),
         :content => check_box('configuration', 'product_module',{}, true, false),
         :html_options => {:class => 'break_line'}
       )
@@ -204,7 +204,7 @@
 
   <div id="configuration_product" style="<%= unless @configuration.has_product_module?; 'display: none;' end %>" >
     <%= display_field_form(@configuration, 'product_displays',
-          :title => _('Product Display Configuration'),
+          :title => t(:product_display_configuration),
           :content => select_display_configuration('configuration', 'ProductDisplay', @product_fields),
           :html_options => {:class => 'break_line'}
         )
@@ -212,7 +212,7 @@
   </div>
 
   <%= display_field_form(@configuration, 'product_category_module',
-        :title => _('Has Product Category Module'),
+        :title => t(:has_product_category_module),
         :content => check_box('configuration', 'product_category_module',{}, true, false),
         :html_options => {:class => 'break_line'}
       )
@@ -225,7 +225,7 @@
 
   <div id="configuration_product_category" style="<%= unless @configuration.has_product_category_module?; 'display: none;' end %>" >
     <%= display_field_form(@configuration, 'product_category_displays',
-          :title => _('Product Category Display Configuration'),
+          :title => t(:product_category_display_configuration),
           :content => select_display_configuration('configuration', 'ProductCategoryDisplay', @product_category_fields),
           :html_options => {:class => 'break_line'}
         )
@@ -233,7 +233,7 @@
   </div>
 
   <%= display_field_form(@configuration, 'department_module',
-        :title => _('Has Department Module'),
+        :title => t(:has_department_module),
         :content => check_box('configuration', 'department_module',{}, true, false),
         :html_options => {:class => 'break_line'}
       )
@@ -246,7 +246,7 @@
 
   <div id="configuration_department" style="<%= unless @configuration.has_department_module?; 'display: none;' end %>" >
     <%= display_field_form(@configuration, 'department_displays',
-          :title => _('Department Display Configuration'),
+          :title => t(:department_display_configuration),
           :content => select_display_configuration('configuration', 'DepartmentDisplay', @department_fields),
           :html_options => {:class => 'break_line'}
         )
@@ -254,7 +254,7 @@
   </div>
 
   <%= display_field_form(@configuration, 'ledger_category_module',
-        :title => _('Has Ledger Category Module'),
+        :title => t(:has_ledger_category_module),
         :content => check_box('configuration', 'ledger_category_module',{}, true, false),
         :html_options => {:class => 'break_line'}
       )
@@ -267,7 +267,7 @@
 
   <div id="configuration_ledger_category" style="<%= unless @configuration.has_ledger_category_module?; 'display: none;' end %>" >
     <%= display_field_form(@configuration, 'ledger_category_displays',
-          :title => _('Ledger Category Display Configuration'),
+          :title => t(:ledger_category_display_configuration),
           :content => select_display_configuration('configuration', 'LedgerCategoryDisplay', @ledger_category_fields),
           :html_options => {:class => 'break_line'}
         )
@@ -275,7 +275,7 @@
   </div>
 
   <%= display_field_form(@configuration, 'bank_account_module',
-        :title => _('Has Bank Account Module'),
+        :title => t(:has_bank_account_module),
         :content => check_box('configuration', 'bank_account_module',{}, true, false),
         :html_options => {:class => 'break_line'}
       )
@@ -288,7 +288,7 @@
 
   <div id="configuration_bank_account" style="<%= unless @configuration.has_bank_account_module?; 'display: none;' end %>" >
     <%= display_field_form(@configuration, 'bank_account_displays',
-          :title => _('Bank Account Display Configuration'),
+          :title => t(:bank_account_display_configuration),
           :content => select_display_configuration('configuration', 'BankAccountDisplay', @bank_account_fields),
           :html_options => {:class => 'break_line'}
         )
@@ -297,7 +297,7 @@
 
 
   <%= display_field_form(@configuration, 'money_module',
-        :title => _('Has Money Module'),
+        :title => t(:has_money_module),
         :content => check_box('configuration', 'money_module',{}, true, false),
         :html_options => {:class => 'break_line'}
       )
@@ -311,7 +311,7 @@
 
   <div id="configuration_money" style="<%= unless @configuration.has_money_module?; 'display: none;' end %>" >
     <%= display_field_form(@configuration, 'money_displays',
-          :title => _('Money Display Configuration'),
+          :title => t(:money_display_configuration),
           :content => select_display_configuration('configuration', 'MoneyDisplay', @money_fields),
           :html_options => {:class => 'break_line'}
         )
@@ -319,7 +319,7 @@
   </div>
 
   <%= display_field_form(@configuration, 'check_module',
-        :title => _('Has Check Module'),
+        :title => t(:has_check_module),
         :content => check_box('configuration', 'check_module',{}, true, false),
         :html_options => {:class => 'break_line'}
       )
@@ -332,7 +332,7 @@
 
   <div id="configuration_check" style="<%= unless @configuration.has_check_module?; 'display: none;' end %>" >
     <%= display_field_form(@configuration, 'check_displays',
-          :title => _('Check Display Configuration'),
+          :title => t(:check_display_configuration),
           :content => select_display_configuration('configuration', 'CheckDisplay', @check_fields),
           :html_options => {:class => 'break_line'}
         )
@@ -340,7 +340,7 @@
   </div>
 
   <%= display_field_form(@configuration, 'credit_card_module',
-        :title => _('Has CreditCard Module'),
+        :title => t(:has_creditcard_module),
         :content => check_box('configuration', 'credit_card_module',{}, true, false),
         :html_options => {:class => 'break_line'}
       )
@@ -353,7 +353,7 @@
 
   <div id="configuration_credit_card" style="<%= unless @configuration.has_credit_card_module?; 'display: none;' end %>" >
     <%= display_field_form(@configuration, 'credit_card_displays',
-          :title => _('Credit Card Display Configuration'),
+          :title => t(:credit_card_display_configuration),
           :content => select_display_configuration('configuration', 'CreditCardDisplay', @credit_card_fields),
           :html_options => {:class => 'break_line'}
         )
@@ -362,7 +362,7 @@
 
 
   <%= display_field_form(@configuration, 'debit_card_module',
-        :title => _('Has DebitCard Module'),
+        :title => t(:has_debitcard_module),
         :content => check_box('configuration', 'debit_card_module',{}, true, false),
         :html_options => {:class => 'break_line'}
       )
@@ -375,7 +375,7 @@
 
   <div id="configuration_debit_card" style="<%= unless @configuration.has_debit_card_module?; 'display: none;' end %>" >
     <%= display_field_form(@configuration, 'debit_card_displays',
-          :title => _('DebitCard Display Configuration'),
+          :title => t(:debitcard_display_configuration),
           :content => select_display_configuration('configuration', 'DebitCardDisplay', @debit_card_fields),
           :html_options => {:class => 'break_line'}
         )
@@ -384,7 +384,7 @@
 
 
   <%= display_field_form(@configuration, 'stock_virtual_module',
-        :title => _('Has Stock Virtual Module'),
+        :title => t(:has_stock_virtual_module),
         :content => check_box('configuration', 'stock_virtual_module',{}, true, false),
         :html_options => {:class => 'break_line'}
       )
@@ -397,7 +397,7 @@
 
   <div id="configuration_stock_virtual" style="<%= unless @configuration.has_stock_virtual_module?; 'display: none;' end %>" >
     <%= display_field_form(@configuration, 'stock_virtual_displays',
-          :title => _('Stock Virtual Display Configuration'),
+          :title => t(:stock_virtual_display_configuration),
           :content => select_display_configuration('configuration', 'StockVirtualDisplay', @stock_virtual_fields),
           :html_options => {:class => 'break_line'}
         )
@@ -406,7 +406,7 @@
 
 
   <%= display_field_form(@configuration, 'stock_in_module',
-        :title => _('Has Stock In Module'),
+        :title => t(:has_stock_in_module),
         :content => check_box('configuration', 'stock_in_module',{}, true, false),
         :html_options => {:class => 'break_line'}
       )
@@ -419,7 +419,7 @@
 
   <div id="configuration_stock_in" style="<%= unless @configuration.has_stock_in_module?; 'display: none;' end %>" >
     <%= display_field_form(@configuration, 'stock_in_displays',
-          :title => _('Stock In Display Configuration'),
+          :title => t(:stock_in_display_configuration),
           :content => select_display_configuration('configuration', 'StockInDisplay', @stock_in_fields),
           :html_options => {:class => 'break_line'}
         )
@@ -427,7 +427,7 @@
   </div>
 
   <%= display_field_form(@configuration, 'stock_out_module',
-        :title => _('Has Stock Out Module'),
+        :title => t(:has_stock_out_module),
         :content => check_box('configuration', 'stock_out_module',{}, true, false),
         :html_options => {:class => 'break_line'}
       )
@@ -440,7 +440,7 @@
 
   <div id="configuration_stock_out" style="<%= unless @configuration.has_stock_out_module?; 'display: none;' end %>" >
     <%= display_field_form(@configuration, 'stock_out_displays',
-          :title => _('Stock Out Display Configuration'),
+          :title => t(:stock_out_display_configuration),
           :content => select_display_configuration('configuration', 'StockOutDisplay', @stock_out_fields),
           :html_options => {:class => 'break_line'}
         )
@@ -448,7 +448,7 @@
   </div>
 
   <%= display_field_form(@configuration, 'user_module',
-        :title => _('Has User Module'),
+        :title => t(:has_user_module),
         :content => check_box('configuration', 'user_module',{}, true, false),
         :html_options => {:class => 'break_line'}
       )
@@ -461,7 +461,7 @@
 
   <div id="configuration_user" style="<%= unless @configuration.has_user_module?; 'display: none;' end %>" >
     <%= display_field_form(@configuration, 'user_displays',
-          :title => _('User Display Configuration'),
+          :title => t(:user_display_configuration),
           :content => select_display_configuration('configuration', 'UserDisplay', @user_fields),
           :html_options => {:class => 'break_line'}
         )
@@ -469,7 +469,7 @@
   </div>
 
   <%= display_field_form(@configuration, 'periodicity_module',
-        :title => _('Has Periodicity Module'),
+        :title => t(:has_periodicity_module),
         :content => check_box('configuration', 'periodicity_module',{}, true, false),
         :html_options => {:class => 'break_line'}
       )
@@ -482,7 +482,7 @@
 
   <div id="configuration_periodicity" style="<%= unless @configuration.has_periodicity_module?; 'display: none;' end %>" >
     <%= display_field_form(@configuration, 'periodicity_displays',
-          :title => _('Periodicity Display Configuration'),
+          :title => t(:periodicity_display_configuration),
           :content => select_display_configuration('configuration', 'PeriodicityDisplay', @periodicity_fields),
           :html_options => {:class => 'break_line'}
         )
@@ -491,7 +491,7 @@
 
 
   <%= display_field_form(@configuration, 'document_module',
-        :title => _('Has Document Module'),
+        :title => t(:has_document_module),
         :content => check_box('configuration', 'document_module',{}, true, false),
         :html_options => {:class => 'break_line'}
       )
@@ -504,7 +504,7 @@
 
   <div id="configuration_document" style="<%= unless @configuration.has_document_module?; 'display: none;' end %>" >
     <%= display_field_form(@configuration, 'document_displays',
-          :title => _('Document Display Configuration'),
+          :title => t(:document_display_configuration),
           :content => select_display_configuration('configuration', 'DocumentDisplay', @document_fields),
           :html_options => {:class => 'break_line'}
         )

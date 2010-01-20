@@ -1,21 +1,21 @@
 <%= error_messages_for :ledger %>
 <div id="payment_details">
   <div class="info_field" id="abelo_payment_customer">
-    <label name="sale_customer"> <%= _('Customer') %>: </label>
+    <label name="sale_customer"> <%= t(:customer) %>: </label>
     <span class="field">
       <%= text_field 'sale', 'customer_identifier' %>
     </span><!-- fim class="field" -->
   </div>
 
   <div class="info_field">
-    <label name="sale_value"> <%= _('Value') %>: </label>
+    <label name="sale_value"> <%= t(:value) %>: </label>
     <span class="field">
       <%= text_field('ledger', 'value', :value => num_to_currency(@ledger.value)) %> 
     </span><!-- fim class="field" -->
   </div><!-- fim class="info_field" -->
 
   <div class="info_field">
-    <label name="sale_payment_method"> <%= _('Payment Method') %>: </label>
+    <label name="sale_payment_method"> <%= t(:payment_method) %>: </label>
     <span class="field">
       <%= select_payment('ledger', 'payment_method') %>
     </span><!-- fim class="field" -->
@@ -31,7 +31,7 @@
         :failure => "$('abelo_action').innerHTML = request.responseText"
   )
 %>
-<h2> <%= _('Payment method details:') %> </h2>
+<h2> <%= t(:payment_method_details:) %> </h2>
 
 <div id="payment_category">
   <% if !@ledger.payment_method.nil? %>
@@ -39,4 +39,4 @@
   <% end %>
 </div><!-- category -->
 
-<%= button 'pay', _('Pay'), :save, {}, {:class => 'button bt_big with_text'} %>
+<%= button 'pay', t(:pay), :save, {}, {:class => 'button bt_big with_text'} %>

@@ -38,7 +38,7 @@ class UsersController < ApplicationController
         self.current_user.remember_me
         cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }
       end
-      flash[:notice] = _("Logged in successfully")
+      flash[:notice] = t(:logged_successfully)
       if self.current_user.organizations.count == 1
          if can(:controller => 'organization')
            redirect_to :controller => 'organization', :organization_nickname => self.current_user.organization.identifier
@@ -55,7 +55,7 @@ class UsersController < ApplicationController
         redirect_to :controller => 'public'
       end
     end
-    flash[:failed] = _('Wrong password or login')
+    flash[:failed] = t(:wrong_password_or_login)
   end
 
   def signup
@@ -82,7 +82,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
     if @user.save
-      flash[:notice] = _('User was successfully created.')
+      flash[:notice] = t(:user_was_successfully_created)
       redirect_to :action => 'list'
     else
       render :action => 'new'
@@ -105,7 +105,7 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update_attributes(params[:user])
-      flash[:notice] = _('User was successfully updated.')
+      flash[:notice] = t(:user_was_successfully_updated)
       redirect_to :action => 'list'
     else
       render :action => 'edit'
@@ -116,7 +116,7 @@ class UsersController < ApplicationController
   skip_before_filter :check_navigator, :only => 'wrong_navigator'
   def wrong_navigator
     @wrong_navigator = true
-    flash[:message] = _('This system only works properly with firefox navigator. Click here o get it now.')
+    flash[:message] = t(:this_system_only_works_properly_with_firefox_navigator_click_here_o_get_it_now)
     render :action => 'login'
   end
 

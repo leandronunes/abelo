@@ -7,8 +7,8 @@ module Gem
 end
 
 module Rails
-  class GemDependency < Gem::Dependency
-    attr_accessor :lib, :source, :dep
+  class GemDependency
+    attr_accessor :lib, :source
 
     def self.unpacked_path
       @unpacked_path ||= File.join(RAILS_ROOT, 'vendor', 'gems')
@@ -29,6 +29,18 @@ module Rails
       end
     end
 
+    def framework_gem?
+      @@framework_gems.has_key?(name)
+    end
+
+    def vendor_rails?
+      Gem.loaded_specs.has_key?(name) && Gem.loaded_specs[name].loaded_from.empty?
+    end
+
+    def vendor_gem?
+      Gem.loaded_specs.has_key?(name) && Gem.loaded_specs[name].loaded_from.include?(self.class.unpacked_path)
+    end
+
     def initialize(name, options = {})
       require 'rubygems' unless Object.const_defined?(:Gem)
 
@@ -40,11 +52,10 @@ module Rails
         req = Gem::Requirement.default
       end
 
+      @dep = Gem::Dependency.new(name, req)
       @lib      = options[:lib]
       @source   = options[:source]
       @loaded   = @frozen = @load_paths_added = false
-
-      super(name, req)
     end
 
     def add_load_paths
@@ -54,7 +65,7 @@ module Rails
         @load_paths_added = @loaded = @frozen = true
         return
       end
-      gem self
+      gem @dep
       @spec = Gem.loaded_specs[name]
       @frozen = @spec.loaded_from.include?(self.class.unpacked_path) if @spec
       @load_paths_added = true
@@ -63,65 +74,41 @@ module Rails
 
     def dependencies
       return [] if framework_gem?
-      return [] unless installed?
-      specification.dependencies.reject do |dependency|
-        dependency.type == :development
-      end.map do |dependency|
+      all_dependencies = specification.dependencies.map do |dependency|
         GemDependency.new(dependency.name, :requirement => dependency.version_requirements)
       end
+      all_dependencies += all_dependencies.map(&:dependencies).flatten
+      all_dependencies.uniq
     end
 
-    def specification
-      # code repeated from Gem.activate. Find a matching spec, or the currently loaded version.
-      # error out if loaded version and requested version are incompatible.
-      @spec ||= begin
-        matches = Gem.source_index.search(self)
-        matches << @@framework_gems[name] if framework_gem?
-        if Gem.loaded_specs[name] then
-          # This gem is already loaded.  If the currently loaded gem is not in the
-          # list of candidate gems, then we have a version conflict.
-          existing_spec = Gem.loaded_specs[name]
-          unless matches.any? { |spec| spec.version == existing_spec.version } then
-            raise Gem::Exception,
-                  "can't activate #{@dep}, already activated #{existing_spec.full_name}"
-          end
-          # we're stuck with it, so change to match
-          version_requirements = Gem::Requirement.create("=#{existing_spec.version}")
-          existing_spec
-        else
-          # new load
-          matches.last
-        end
-      end
+    def gem_dir(base_directory)
+      File.join(base_directory, specification.full_name)
+    end
+
+    def spec_filename(base_directory)
+      File.join(gem_dir(base_directory), '.specification')
+    end
+
+    def load
+      return if @loaded || @load_paths_added == false
+      require(@lib || name) unless @lib == false
+      @loaded = true
+    rescue LoadError
+      puts $!.to_s
+      $!.backtrace.each { |b| puts b }
+    end
+
+    def name
+      @dep.name.to_s
     end
 
     def requirement
-      r = version_requirements
+      r = @dep.version_requirements
       (r == Gem::Requirement.default) ? nil : r
-    end
-
-    def built?
-      # TODO: If Rubygems ever gives us a way to detect this, we should use it
-      false
-    end
-
-    def framework_gem?
-      @@framework_gems.has_key?(name)
     end
 
     def frozen?
       @frozen ||= vendor_rails? || vendor_gem?
-    end
-
-    def installed?
-      Gem.loaded_specs.keys.include?(name)
-    end
-
-    def load_paths_added?
-      # always try to add load paths - even if a gem is loaded, it may not
-      # be a compatible version (ie random_gem 0.4 is loaded and a later spec
-      # needs >= 0.5 - gem 'random_gem' will catch this and error out)
-      @load_paths_added
     end
 
     def loaded?
@@ -147,49 +134,46 @@ module Rails
       end
     end
 
-    def vendor_rails?
-      Gem.loaded_specs.has_key?(name) && Gem.loaded_specs[name].loaded_from.empty?
-    end
-
-    def vendor_gem?
-      specification && File.exists?(unpacked_gem_directory)
-    end
-
-    def build
-      require 'rails/gem_builder'
-      unless built?
-        return unless File.exists?(unpacked_specification_filename)
-        spec = YAML::load_file(unpacked_specification_filename)
-        Rails::GemBuilder.new(spec, unpacked_gem_directory).build_extensions
-        puts "Built gem: '#{unpacked_gem_directory}'"
-      end
-      dependencies.each { |dep| dep.build }
+    def load_paths_added?
+      # always try to add load paths - even if a gem is loaded, it may not
+      # be a compatible version (ie random_gem 0.4 is loaded and a later spec
+      # needs >= 0.5 - gem 'random_gem' will catch this and error out)
+      @load_paths_added
     end
 
     def install
-      unless installed?
-        cmd = "#{gem_command} #{install_command.join(' ')}"
-        puts cmd
-        puts %x(#{cmd})
+      cmd = "#{gem_command} #{install_command.join(' ')}"
+      puts cmd
+      puts %x(#{cmd})
+    end
+
+    def unpack_to(directory)
+      FileUtils.mkdir_p directory
+      Dir.chdir directory do
+        Gem::GemRunner.new.run(unpack_command)
+      end
+
+      # Gem.activate changes the spec - get the original
+      real_spec = Gem::Specification.load(specification.loaded_from)
+      write_spec(directory, real_spec)
+
+    end
+
+    def write_spec(directory, spec)
+      # copy the gem's specification into GEMDIR/.specification so that
+      # we can access information about the gem on deployment systems
+      # without having the gem installed
+      File.open(spec_filename(directory), 'w') do |file|
+        file.puts spec.to_yaml
       end
     end
 
-    def load
-      return if @loaded || @load_paths_added == false
-      require(@lib || name) unless @lib == false
-      @loaded = true
-    rescue LoadError
-      puts $!.to_s
-      $!.backtrace.each { |b| puts b }
-    end
-
-    def refresh
-      Rails::VendorGemSourceIndex.silence_spec_warnings = true
+    def refresh_spec(directory)
       real_gems = Gem.source_index.installed_source_index
       exact_dep = Gem::Dependency.new(name, "= #{specification.version}")
       matches = real_gems.search(exact_dep)
       installed_spec = matches.first
-      if frozen?
+      if File.exist?(File.dirname(spec_filename(directory)))
         if installed_spec
           # we have a real copy
           # get a fresh spec - matches should only have one element
@@ -197,11 +181,11 @@ module Rails
           # spec is the same as the copy from real_gems - Gem.activate changes
           # some of the fields
           real_spec = Gem::Specification.load(matches.first.loaded_from)
-          write_specification(real_spec)
+          write_spec(directory, real_spec)
           puts "Reloaded specification for #{name} from installed gems."
         else
           # the gem isn't installed locally - write out our current specs
-          write_specification(specification)
+          write_spec(directory, specification)
           puts "Gem #{name} not loaded locally - writing out current spec."
         end
       else
@@ -213,44 +197,42 @@ module Rails
       end
     end
 
-    def unpack(options={})
-      unless frozen? || framework_gem?
-        FileUtils.mkdir_p unpack_base
-        Dir.chdir unpack_base do
-          Gem::GemRunner.new.run(unpack_command)
-        end
-        # Gem.activate changes the spec - get the original
-        real_spec = Gem::Specification.load(specification.loaded_from)
-        write_specification(real_spec)
-      end
-      dependencies.each { |dep| dep.unpack } if options[:recursive]
-    end
-
-    def write_specification(spec)
-      # copy the gem's specification into GEMDIR/.specification so that
-      # we can access information about the gem on deployment systems
-      # without having the gem installed
-      File.open(unpacked_specification_filename, 'w') do |file|
-        file.puts spec.to_yaml
-      end
-    end
-
     def ==(other)
       self.name == other.name && self.requirement == other.requirement
     end
     alias_method :"eql?", :"=="
 
-    private
+    def hash
+      @dep.hash
+    end
 
-      def gem_command
-        case RUBY_PLATFORM
-          when /win32/
-            'gem.bat'
-          when /java/
-            'jruby -S gem'
-          else
-            'gem'
+    def specification
+      # code repeated from Gem.activate. Find a matching spec, or the currently loaded version.
+      # error out if loaded version and requested version are incompatible.
+      @spec ||= begin
+        matches = Gem.source_index.search(@dep)
+        matches << @@framework_gems[name] if framework_gem?
+        if Gem.loaded_specs[name] then
+          # This gem is already loaded.  If the currently loaded gem is not in the
+          # list of candidate gems, then we have a version conflict.
+          existing_spec = Gem.loaded_specs[name]
+          unless matches.any? { |spec| spec.version == existing_spec.version } then
+            raise Gem::Exception,
+                  "can't activate #{@dep}, already activated #{existing_spec.full_name}"
+          end
+          # we're stuck with it, so change to match
+          @dep.version_requirements = Gem::Requirement.create("=#{existing_spec.version}")
+          existing_spec
+        else
+          # new load
+          matches.last
         end
+      end
+    end
+
+    private
+      def gem_command
+        RUBY_PLATFORM =~ /win32/ ? 'gem.bat' : 'gem'
       end
 
       def install_command
@@ -265,18 +247,5 @@ module Rails
         cmd << "--version" << "= "+specification.version.to_s if requirement
         cmd
       end
-
-      def unpack_base
-        Rails::GemDependency.unpacked_path
-      end
-
-      def unpacked_gem_directory
-        File.join(unpack_base, specification.full_name)
-      end
-
-      def unpacked_specification_filename
-        File.join(unpacked_gem_directory, '.specification')
-      end
-
   end
 end

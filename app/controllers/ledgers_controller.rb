@@ -98,7 +98,7 @@ class LedgersController < ApplicationController
     @ledger = Ledger.new(params[:ledger].merge(:organization => @organization))
  
     if @ledger.save
-      flash[:notice] = _('The ledger was successfully created')
+      flash[:notice] = t(:the_ledger_was_successfully_created)
       redirect_to :action => 'list'
     else
       @banks = Bank.find(:all)
@@ -120,7 +120,7 @@ class LedgersController < ApplicationController
     @ledger = @organization.ledgers.find(params[:id])
 
     if @ledger.update_attributes(params[:ledger])
-      flash[:notice] = _('The ledger was successfully updated')
+      flash[:notice] = t(:the_ledger_was_successfully_updated)
       redirect_to :action => 'list'
     else
       @ledger_categories =  @organization.ledger_categories_sorted_by_name

@@ -1,8 +1,8 @@
   <%= error_messages_for 'till' %>
 
-  <p><label name="cash_value"> <%= _('Value') %> </label>
+  <p><label name="cash_value"> <%= t(:value) %> </label>
     <%= text_field('cash', 'value') %>
   </p>
-  <%= button 'cancel', _('Cancel'), :cancel, :action => 'index' %>
-  <%= button 'save', _('Save'), :save %>
+  <%= button 'cancel', t(:cancel), :cancel, :action => 'index' %>
+  <%= button 'save', t(:save), :save %>
 

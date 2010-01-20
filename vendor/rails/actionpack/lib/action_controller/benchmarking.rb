@@ -23,8 +23,8 @@ module ActionController #:nodoc:
       def benchmark(title, log_level = Logger::DEBUG, use_silence = true)
         if logger && logger.level == log_level
           result = nil
-          ms = Benchmark.ms { result = use_silence ? silence { yield } : yield }
-          logger.add(log_level, "#{title} (#{('%.1f' % ms)}ms)")
+          seconds = Benchmark.realtime { result = use_silence ? silence { yield } : yield }
+          logger.add(log_level, "#{title} (#{('%.1f' % (seconds * 1000))}ms)")
           result
         else
           yield
@@ -48,7 +48,7 @@ module ActionController #:nodoc:
           end
 
           render_output = nil
-          @view_runtime = Benchmark.ms { render_output = render_without_benchmark(options, extra_options, &block) }
+          @view_runtime = Benchmark::realtime { render_output = render_without_benchmark(options, extra_options, &block) }
 
           if Object.const_defined?("ActiveRecord") && ActiveRecord::Base.connected?
             @db_rt_before_render = db_runtime
@@ -65,11 +65,11 @@ module ActionController #:nodoc:
     private
       def perform_action_with_benchmark
         if logger
-          ms = [Benchmark.ms { perform_action_without_benchmark }, 0.01].max
+          seconds = [ Benchmark::measure{ perform_action_without_benchmark }.real, 0.0001 ].max
           logging_view          = defined?(@view_runtime)
           logging_active_record = Object.const_defined?("ActiveRecord") && ActiveRecord::Base.connected?
 
-          log_message  = 'Completed in %.0fms' % ms
+          log_message  = "Completed in #{sprintf("%.0f", seconds * 1000)}ms"
 
           if logging_view || logging_active_record
             log_message << " ("
@@ -83,25 +83,25 @@ module ActionController #:nodoc:
             end
           end
 
-          log_message << " | #{response.status}"
+          log_message << " | #{headers["Status"]}"
           log_message << " [#{complete_request_uri rescue "unknown"}]"
 
           logger.info(log_message)
-          response.headers["X-Runtime"] = "%.0f" % ms
+          response.headers["X-Runtime"] = "#{sprintf("%.0f", seconds * 1000)}ms"
         else
           perform_action_without_benchmark
         end
       end
 
       def view_runtime
-        "View: %.0f" % @view_runtime
+        "View: %.0f" % (@view_runtime * 1000)
       end
 
       def active_record_runtime
         db_runtime = ActiveRecord::Base.connection.reset_runtime
         db_runtime += @db_rt_before_render if @db_rt_before_render
         db_runtime += @db_rt_after_render if @db_rt_after_render
-        "DB: %.0f" % db_runtime
+        "DB: %.0f" % (db_runtime * 1000)
       end
   end
 end

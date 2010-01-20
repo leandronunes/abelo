@@ -42,24 +42,24 @@ module DocumentsHelper
   def display_document_model_collection_options(item, params ={})
     content_tag(:div,
       [
-        button('view_small', _('Show'), :show,
+        button('view_small', t(:show), :show,
               { :action => 'show',
                 :id => item.id,
                 :models_list => true }.merge(params) ),
-        button('edit_small', _('Edit'), :edit,
+        button('edit_small', t(:edit), :edit,
               { :action => 'edit',
                 :id => item.id,
                 :models_list => true }.merge(params) ),
-        button('del_small', _('Destroy'), :destroy,
+        button('del_small', t(:destroy), :destroy,
               { :action => 'destroy',
                 :id => item.id,
                 :models_list => true }.merge(params),
-                :method => 'post', :confirm => _('Are you sure?') ),
-        button('documents_small', _('Documents'), :list,
+                :method => 'post', :confirm => t(:are_you_sure?) ),
+        button('documents_small', t(:documents), :list,
               { :action => 'list',
                 :document_model_id => item.id,
                 :models_list => true }.merge(params) ),
-        button('new_document_small', _('New Document'), :new,
+        button('new_document_small', t(:new_document), :new,
               { :action => 'new',
                 :document_model_id => item.id,
                 :models_list => true }.merge(params) )
@@ -73,9 +73,9 @@ module DocumentsHelper
     html_options[:class] = html_options[:class].nil? ? 'display_info_options' : 'display_show ' + html_options[:class]
     content_tag(:div,
       [
-        button('back', _('Back'), :back, {:action => 'list'}.merge(params)),
-        button('edit', _('Edit'), :edit, {:action => 'edit', :id => object.id}.merge(params)),
-        button('print', _('Print'), :print, {:action => 'print', :id => object.id}.merge(params), :popup => ['menubar=1'])
+        button('back', t(:back), :back, {:action => 'list'}.merge(params)),
+        button('edit', t(:edit), :edit, {:action => 'edit', :id => object.id}.merge(params)),
+        button('print', t(:print), :print, {:action => 'print', :id => object.id}.merge(params), :popup => ['menubar=1'])
       ].join("\n"),
       html_options
     )

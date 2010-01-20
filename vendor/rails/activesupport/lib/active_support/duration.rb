@@ -1,5 +1,3 @@
-require 'active_support/basic_object'
-
 module ActiveSupport
   # Provides accurate date and time measurements using Date#advance and 
   # Time#advance, respectively. It mainly supports the methods on Numeric,
@@ -70,7 +68,7 @@ module ActiveSupport
       [:years, :months, :days, :minutes, :seconds].map do |length|
         n = consolidated[length]
         "#{n} #{n == 1 ? length.to_s.singularize : length.to_s}" if n.nonzero?
-      end.compact.to_sentence(:locale => :en)
+      end.compact.to_sentence
     end
 
     protected

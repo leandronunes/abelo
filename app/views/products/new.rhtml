@@ -1,15 +1,15 @@
-<%= title(_('New product')) %>
+<%= title(t(:new_product)) %>
 
 <% form_tag :action => 'create' do %>
 
   <%= render :partial => 'form' %>
 
 <!--
-  <label><%= _('Add to stock?') %><%= check_box_tag 'new_entry' %></label>
+  <label><%= t(:add_to_stock?) %><%= check_box_tag 'new_entry' %></label>
 
   <div id='stock_entry'>
     <% if @entry %>
-      <%= subtitle _('New stock entry for %s') % @product.name %>
+      <%= subtitle t(:new_stock_entry_for_%s) % @product.name %>
       <%=# render :partial => 'new_stock_entry' 
 %>
     <% end %>

@@ -1,12 +1,12 @@
-  <%= subtitle _('Search Customer') %>
+  <%= subtitle t(:search_customer) %>
 
 <% form_remote_tag :url => params.merge({ :action => 'search_customer'}), :update => 'customer_search' do %>
   <%= text_field_tag('search') %>
-  <%= submit_tag _('Search') %>
+  <%= submit_tag t(:search) %>
 <% end %> 
 
 <div id='customer_search'>
 </div>
 
-<%= lightbox_close_button(_('Cancel')) %>
+<%= lightbox_close_button(t(:cancel)) %>
 

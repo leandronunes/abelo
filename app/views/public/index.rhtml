@@ -1,11 +1,11 @@
-<%= title  _('Hello, %s!') % @current_user.login  %>
+<%= title  t(:hello,_%s!) % @current_user.login  %>
 
 <% if current_user.administrator? %>
-  <%= link_to _('Manage Organizations'), :controller => 'organizations' %>
+  <%= link_to t(:manage_organizations), :controller => 'organizations' %>
 <% end %>
 
 <% unless @organizations.empty? %>
-  <h3><%= _('Organizations') %></h3>
+  <h3><%= t(:organizations) %></h3>
   <ul>
     <% for organization in @organizations %>
       <li><%= link_to_organization organization %></li>

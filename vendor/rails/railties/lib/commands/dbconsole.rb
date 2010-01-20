@@ -3,23 +3,12 @@ require 'yaml'
 require 'optparse'
 
 include_password = false
-options = {}
 
 OptionParser.new do |opt|
   opt.banner = "Usage: dbconsole [options] [environment]"
   opt.on("-p", "--include-password", "Automatically provide the password from database.yml") do |v|
     include_password = true
   end
-
-  opt.on("--mode [MODE]", ['html', 'list', 'line', 'column'],
-    "Automatically put the sqlite3 database in the specified mode (html, list, line, column).") do |mode|
-      options['mode'] = mode
-  end
-
-  opt.on("-h", "--header") do |h|
-    options['header'] = h
-  end
-
   opt.parse!(ARGV)
   abort opt.to_s unless (0..1).include?(ARGV.size)
 end
@@ -52,7 +41,7 @@ when "mysql"
 
   if config['password'] && include_password
     args << "--password=#{config['password']}"
-  elsif config['password'] && !config['password'].to_s.empty?
+  elsif config['password'] && !config['password'].empty?
     args << "-p"
   end
 
@@ -71,13 +60,8 @@ when "sqlite"
   exec(find_cmd('sqlite'), config["database"])
 
 when "sqlite3"
-  args = []
+  exec(find_cmd('sqlite3'), config["database"])
 
-  args << "-#{options['mode']}" if options['mode']
-  args << "-header" if options['header']
-  args << config['database']
-
-  exec(find_cmd('sqlite3'), *args)
 else
   abort "Unknown command-line client for #{config['database']}. Submit a Rails patch to add support!"
 end

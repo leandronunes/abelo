@@ -5,35 +5,35 @@
 <% display_edit_info @user, :class => 'view_data' do |item| %>
 
   <%= display_field_edit(item, 'login',
-        :title => _('Login'),
+        :title => t(:login),
         :content => text_field('user', 'login')
       )
   %>
 
-  <%= link_to_popup content_tag('span', _('Search User')), {:action => 'popup_user', :organization_id => @organization}, {:accesskey => 'p', :class => 'button bt_big search_user with_text'}, 'select_customer', 'abelo_payment_customer'  %>
+  <%= link_to_popup content_tag('span', t(:search_user)), {:action => 'popup_user', :organization_id => @organization}, {:accesskey => 'p', :class => 'button bt_big search_user with_text'}, 'select_customer', 'abelo_payment_customer'  %>
 
   <%= display_field_edit(item, 'email',
-        :title => _('E-mail'),
+        :title => t(:e-mail),
         :content => text_field('user', 'email'),
         :html_options => {:class => 'break_line' }
       )
   %>
 
   <%= display_field_edit(item, 'password',
-        :title => _('Password'),
+        :title => t(:password),
         :content => password_field('user', 'password'),
         :html_options => {:class => 'break_line' }
       )
   %>
 
   <%= display_field_edit(item, 'password_confirmation',
-        :title => _('Confirm Password'),
+        :title => t(:confirm_password),
         :content => password_field('user', 'password_confirmation')
       )
   %>
 
   <%= display_field_edit(item, 'template_description',
-        :title => _('Template'),
+        :title => t(:template),
         :content => select_template('user', 'template') 
       )
   %>

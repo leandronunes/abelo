@@ -17,18 +17,18 @@ class SystemActor < ActiveRecord::Base
   validates_presence_of :name, :organization_id, :category_id, :email    
   validates_as_cnpj :cnpj
   validates_as_cpf :cpf
-  validates_presence_of :cpf, :scope => :organization_id, :if  => lambda { |actor| actor.person_type == 'natural' }, :message => _('This %{fn} already exist')
-  validates_uniqueness_of :cnpj, :scope => :organization_id, :if => lambda { |user| ! user.cnpj.blank? }, :message => _('This %{fn} already exist')
-  validates_uniqueness_of :cpf, :scope => :organization_id, :if => lambda { |user| ! user.cpf.blank? }, :message => _('This %{fn} already exist')
+  validates_presence_of :cpf, :scope => :organization_id, :if  => lambda { |actor| actor.person_type == 'natural' }, :message => t(:validates_presence_of_cpf)
+  validates_uniqueness_of :cnpj, :scope => :organization_id, :if => lambda { |user| ! user.cnpj.blank? }, :message => t(:validates_uniqueness_of_cnpj)
+  validates_uniqueness_of :cpf, :scope => :organization_id, :if => lambda { |user| ! user.cpf.blank? }, :message => t(:validates_uniqueness_of_cpf)
 
   SYSTEM_ACTORS = {
-    'customer' => N_('Customer'),
-    'worker' => N_('Workers'),
-    'supplier' => N_('Supplier'),
+    'customer' => t(:customer),
+    'worker' => t(:workers),
+    'supplier' => t(:supplier),
   }
 
   def actor_type
-    self.type_person ||= self.cnpj.nil? ? _('Natural Person') : _('Juristic Person')
+    self.type_person ||= self.cnpj.nil? ? t(:natural_person) : t(:juristic_person)
   end
 
   def person_type 
@@ -53,9 +53,9 @@ class SystemActor < ActiveRecord::Base
   # maps an actor to an human-readable string
   def self.describe(actor)
     return {
-      'customer' => _('Customer'),
-      'worker' => _('Worker'),
-      'supplier' => _('Supplier')
+      'customer' => t(:customer),
+      'worker' => t(:worker),
+      'supplier' => t(:supplier)
     }[actor]
   end
 

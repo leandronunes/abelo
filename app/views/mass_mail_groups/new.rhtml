@@ -1,6 +1,6 @@
 <%= render :partial => 'menu' %>
 
-<%= title _('New %s group') % MassMailGroup.describe(@group_type) %>
+<%= title t(:new_%s_group) % MassMailGroup.describe(@group_type) %>
 
 <% form_tag :action => 'create', :group_type => @group_type do %>
   <%= render :partial => 'form' %>

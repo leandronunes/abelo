@@ -1,7 +1,11 @@
 # encoding: utf-8
+
 require 'abstract_unit'
 
+uses_mocha "MultibyteUnicodeDatabaseTest" do
+
 class MultibyteUnicodeDatabaseTest < Test::Unit::TestCase
+
   def setup
     @ucd = ActiveSupport::Multibyte::UnicodeDatabase.new
   end
@@ -19,4 +23,6 @@ class MultibyteUnicodeDatabaseTest < Test::Unit::TestCase
       assert @ucd.send(attribute).length > 1
     end
   end
+end
+
 end

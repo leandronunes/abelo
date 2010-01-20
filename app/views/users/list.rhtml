@@ -1,19 +1,19 @@
-<h2><%= _('Users') %></h2>
+<h2><%= t(:users) %></h2>
 
 <table>
   <tr>
-    <th><%= _('Login') %></th>
+    <th><%= t(:login) %></th>
   </tr>
   <% for user in @users %>
     <tr>
       <td><%= user.login %></td>
       <td>
-        <%= button _('Edit'), :edit, :action => 'edit', :id => user %>
+        <%= button t(:edit), :edit, :action => 'edit', :id => user %>
       </td>
     </tr>
   <% end%>
 </table>
 
 <div class='button_bar'>
-<%= button _('New user'), :new, :action => 'new' %>
+<%= button t(:new_user), :new, :action => 'new' %>
 </div>

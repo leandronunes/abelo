@@ -4,7 +4,7 @@
   <head>
     <title> 
       <% if current_user.administrator %>
-        Abelo &rarr; <%= _('Administration') %>  
+        Abelo &rarr; <%= t(:administration) %>  
       <% else %>
         Abelo 
       <% end %>
@@ -22,9 +22,9 @@
         <div id="header">
           <div id="info_org">
             <% if current_user.administrator? %>
-              <span><%= _('Abelo Administration') %></span>
+              <span><%= t(:abelo_administration) %></span>
             <% else %>
-              <span><%= _('Abelo') %></span>
+              <span><%= t(:abelo) %></span>
             <% end %>
           </div>
 
@@ -33,10 +33,10 @@
           <div id="userbar">
             <div class="login_bar" >
               <% if current_user.administrator %>
-                <%= design_display_function_button( 'go-jump', _('Go to'),visual_effect(:toggle_slide, 'menu', :duration => 0.6), {:id => "goto", :accesskey => "g"}) %>
+                <%= design_display_function_button( 'go-jump', t(:go_to),visual_effect(:toggle_slide, 'menu', :duration => 0.6), {:id => "goto", :accesskey => "g"}) %>
               <% end %>
               <%= design_display_button('edit_small' , _('My Account'), {:controller => 'public', :action => 'edit_user', :id => self.current_user}, :id => "edit_profile", :accesskey => "e") %> 
-              <%= design_display_button( 'system-log-out', _('Logout'), {:organization_nickname => nil, :controller => 'users', :action => 'logout'}, :id => "logout", :accesskey => "q", :confirm => _('Exit from system?'), :method => 'post') %>
+              <%= design_display_button( 'system-log-out', t(:logout'),_{:organization_nickname_=>_nil,_:controller_=>_'users',_:action_=>_'logout'},_:id_=>_"logout",_:accesskey_=>_"q",_:confirm_=>__('exit_from_system?'),_:method_=>_'post) %>
             </div>
         
 	</div>

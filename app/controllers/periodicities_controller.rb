@@ -50,7 +50,7 @@ class PeriodicitiesController < ApplicationController
     @periodicity = Periodicity.new(params[:periodicity])
     @periodicity.organization = @organization
     if @periodicity.save
-      flash[:notice] = _('Periodicity was successfully created.')
+      flash[:notice] = t(:periodicity_was_successfully_created)
       redirect_to :action => 'list'
     else
       render :action => 'new'
@@ -64,7 +64,7 @@ class PeriodicitiesController < ApplicationController
   def update
     @periodicity = @organization.periodicities.find(params[:id])
     if @periodicity.update_attributes(params[:periodicity])
-      flash[:notice] = _('Periodicity was successfully updated.')
+      flash[:notice] = t(:periodicity_was_successfully_updated)
       redirect_to :action => 'show', :id => @periodicity
     else
       render :action => 'edit'

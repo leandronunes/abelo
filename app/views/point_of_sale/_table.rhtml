@@ -4,11 +4,11 @@
 
     <table id="items_tb_list">
       <tr>
-        <th class="cell_code"><div><%= _('Code') %><div>&nbsp;</div></div></th>
-        <th class="cell_desc"><div><%= _('Product') %><div>&nbsp;</div></div></th>
-        <th class="cell_un_price"><div><%= _('Unitary price') %><div>&nbsp;</div></div></th>
-        <th class="cell_amount"><div><%= _('Amount') %><div>&nbsp;</div></div></th>
-        <th class="cell_price"><div><%= _('Price') %><div>&nbsp;</div></div></th>
+        <th class="cell_code"><div><%= t(:code) %><div>&nbsp;</div></div></th>
+        <th class="cell_desc"><div><%= t(:product) %><div>&nbsp;</div></div></th>
+        <th class="cell_un_price"><div><%= t(:unitary_price) %><div>&nbsp;</div></div></th>
+        <th class="cell_amount"><div><%= t(:amount) %><div>&nbsp;</div></div></th>
+        <th class="cell_price"><div><%= t(:price) %><div>&nbsp;</div></div></th>
       </tr>
       <div id='abelo_items_tb'>
         <%= render :partial => 'table_items' %>

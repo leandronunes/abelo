@@ -10,7 +10,7 @@ def create_admin_organization_tabs
     highlights_on :controller => 'organizations'
   end
   t.links_to :controller => 'organizations', :action => 'show', :organization_id => params[:organization_id]
-  t.named _('Show')
+  t.named t(:show)
   t.show_if "!params[:organization_id].nil?"
 
   t = add_tab do
@@ -18,7 +18,7 @@ def create_admin_organization_tabs
     highlights_on :controller => 'configuration'
   end
   t.links_to :controller => 'configuration', :action => 'show', :organization_id => params[:organization_id]
-  t.named _('Configurations')
+  t.named t(:configurations)
   t.show_if "!params[:organization_id].nil?"
 
   t = add_tab do
@@ -26,7 +26,7 @@ def create_admin_organization_tabs
     highlights_on :controller => 'tracker'
   end
   t.links_to :controller => 'tracker', :organization_id => params[:organization_id]
-  t.named _('Tracker')
+  t.named t(:tracker)
   t.show_if "!params[:organization_id].nil?"
 
   t = add_tab do
@@ -34,7 +34,7 @@ def create_admin_organization_tabs
     highlights_on :controller => 'permissions_admin'
   end
   t.links_to :controller => 'permissions_admin', :action => 'list', :organization_id => params[:organization_id]
-  t.named _('Users and Permissions')
+  t.named t(:users_and_permissions)
   t.show_if "!params[:organization_id].nil?"
 
   t = add_tab do
@@ -50,7 +50,7 @@ def create_admin_organization_tabs
     highlights_on :controller => 'configuration'
     links_to :controller => 'configuration', :action => 'list'
   end
-  t.named _('Organizations Profiles')
+  t.named t(:organizations_profiles)
   t.show_if "params[:organization_id].nil?"
 
 end

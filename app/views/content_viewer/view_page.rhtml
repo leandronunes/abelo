@@ -4,7 +4,7 @@
 
 <% if logged_in? && can(:controller => 'cms') %>
 <div class="article-actions">
-  <%= link_to content_tag( 'span', _('Edit') ),
+  <%= link_to content_tag( 'span', t(:edit) ),
       { :controller => 'cms', :action => 'edit', :id => @page },
       :class => 'button with-text icon-edit' %>
 </div>
@@ -16,7 +16,7 @@
 
 <% if @page.parent && !@page.parent.path.blank? %>
 <div class="article-parent">
-  <%= link_to_document(@page.parent, _('Up')) %>
+  <%= link_to_document(@page.parent, t(:up)) %>
 </div>
 <% end %>
 

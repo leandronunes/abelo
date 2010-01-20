@@ -11,7 +11,7 @@ class DisplayConfiguration < ActiveRecord::Base
   end
 
   def validate
-    self.errors.add(:field, _("The field %s is not a valid field") % self.field ) unless self.class.available_fields.include?(self.field)
+    self.errors.add(:field, t(:the_field_is_not_valid)) unless self.class.available_fields.include?(self.field)
   end
 
   serialize :settings
@@ -21,7 +21,7 @@ class DisplayConfiguration < ActiveRecord::Base
   end
 
   def self.title
-    raise "You have to define a title class method to class "
+    raise "You have to define a title class method to class"
   end
 
   def self.all_available?
@@ -61,7 +61,7 @@ class DisplayConfiguration < ActiveRecord::Base
   end
 
   def display_in_list
-    settings['display_in_list'].to_s == 'true' ? _('Yes') : _('No')
+    settings['display_in_list'].to_s == 'true' ? t(:yes) : t(:no)
   end
 
   def display_in_list= value
@@ -73,7 +73,7 @@ class DisplayConfiguration < ActiveRecord::Base
   end
 
   def break_line
-    settings['break_line'].to_s == 'true' ? _('Yes') : _('No')
+    settings['break_line'].to_s == 'true' ? t(:yes) : t(:no)
   end
 
   def break_line= value
@@ -85,7 +85,7 @@ class DisplayConfiguration < ActiveRecord::Base
   end
 
   def display_title
-    settings['display_title'].to_s == 'true' ? _('Yes') : _('No')
+    settings['display_title'].to_s == 'true' ? t(:yes) : t(:no)
   end
 
   def display_title= value

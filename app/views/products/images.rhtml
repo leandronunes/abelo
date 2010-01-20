@@ -1,9 +1,9 @@
-<%= title _('Managing images for %s') % @product.name %>
+<%= title t(:managing_images_for_%s) % @product.name %>
 
 <%= error_messages_for 'product' %>
 
 
-<%= subtitle _('Current images')  %>
+<%= subtitle t(:current_images)  %>
 
 <div id="image_list">
 <% for image in @product.images %>
@@ -11,15 +11,15 @@
 <% end %>
 </div>
 
-<%= subtitle _('Add Image')%>
+<%= subtitle t(:add_image)%>
 
 <% form_tag({:action => 'add_image', :id => @product}, :multipart => true) do %>
   <p>
-    <label for='image_description'><%= _('Description') %></label>
+    <label for='image_description'><%= t(:description) %></label>
     <%= text_field 'image', 'description' %>
   </p>
   <P>
-    <label for='image_picture'><%= _('Image file') %></label>
+    <label for='image_picture'><%= t(:image_file) %></label>
   <%= file_column_field 'image', 'picture' %>
   </p>
 

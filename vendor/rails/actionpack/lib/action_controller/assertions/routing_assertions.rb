@@ -134,7 +134,7 @@ module ActionController
           path = "/#{path}" unless path.first == '/'
 
           # Assume given controller
-          request = ActionController::TestRequest.new
+          request = ActionController::TestRequest.new({}, {}, nil)
           request.env["REQUEST_METHOD"] = request_method.to_s.upcase if request_method
           request.path   = path
 

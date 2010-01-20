@@ -2,7 +2,7 @@
    "http://www.w3.org/TR/html4/loose.dtd">
 <html class="controller-<%= params[:controller] %> action-<%= params[:action] %>" id="abelo_html_id">
 <head>
-  <title> <%= _('Abelo') %> </title>
+  <title> <%= t(:abelo) %> </title>
   <%= design_all_header_tags %>
   <%= javascript_include_tag 'comatose_admin' %>
   <%= javascript_include_tag 'showAccessKeys' %>
@@ -24,7 +24,7 @@
     
     <div id="org_bar">
       <div id="org_link"> <%= link_to_organization @organization %> </div>
-      <div id="salesman"> <%= _('Salesman: <i>%s</i>') % self.current_user.login %> </div>
+      <div id="salesman"> <%= t(:salesman:_<i>%s</i>) % self.current_user.login %> </div>
     </div> <!-- org_bar -->
 
   </div><!-- user_bar -->
@@ -40,10 +40,10 @@
 
 
 <div id="footer">
-  <div id="banner_bottom"><span> <%= _('Abelo') %> </span></div>
+  <div id="banner_bottom"><span> <%= t(:abelo) %> </span></div>
 </div><!-- footer -->
 
-<%= link_to_function content_tag(:span,_('Access Keys Help')), "showAccessKeys({intro: '#{_('This are the access keys on this page:')}'})", :id => 'show_access_keys', :class => 'button help', :accesskey => 'h' %> 
+<%= link_to_function content_tag(:span,t(:access_keys_help')),_"showaccesskeys({intro:_'#{_('this_are_the_access_keys_on_this_page:)}'})", :id => 'show_access_keys', :class => 'button help', :accesskey => 'h' %> 
 
 </body>
 </html>

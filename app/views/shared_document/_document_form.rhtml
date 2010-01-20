@@ -6,27 +6,27 @@
 <% display_form_info @document do |item| %>
 
   <%= display_field_form(item, 'name', 
-        :title => _('Name'),
+        :title => t(:name),
         :content => text_field('document', 'name')
       )
   %>
 
   <%= display_field_form(item, 'departments', 
-        :title => _('Departments'),
+        :title => t(:departments),
         :content => multiple_select('document', 'department_ids', @departments),
         :html_options => {:class => 'break_line'}
       )
   %>
 
   <%= display_field_form(item, 'tag_list',
-        :title => _('Tags (separated by comma):'),
+        :title => t(:tags_(separated_by_comma):),
         :content => text_field('document', 'tag_list'),
         :html_options => {:class => 'break_line'}
       )
   %>
 
   <%= display_field_form(item, 'body', 
-        :title => _('Body'),
+        :title => t(:body),
         :content => rich_text_editor_default('document', 'body')
       )
   %>

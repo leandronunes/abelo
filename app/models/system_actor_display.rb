@@ -10,17 +10,17 @@ class SystemActorDisplay < DisplayConfiguration
 
   def self.describe(field)
     {
-      'name' =>  _('Name'),
-      'address' => _('Address'),
-      'email' => _('Email'),
-      'category' => _('Category'),
-      'cnpj' => _('CNPJ'),
-      'cpf' => _('CPF') ,
-      'rg' => _('RG'),
-      'birthday' => _('Birthday'),
-      'description' => _('Description'),
-      'actor_type' => _('Natural Person or Juristic Person'),
-      'info' => _('Additional Information'),
+      'name' =>  t(:name),
+      'address' => t(:address),
+      'email' => t(:email),
+      'category' => t(:category),
+      'cnpj' => t(:cnpj),
+      'cpf' => t(:cpf) ,
+      'rg' => t(:rg),
+      'birthday' => t(:birthday),
+      'description' => t(:description),
+      'actor_type' => t(:natural_person_or_juristic_person),
+      'info' => t(:additional_information),
     }[field] || field
   end
 

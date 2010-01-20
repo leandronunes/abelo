@@ -47,7 +47,7 @@ class ConfigurationController < ApplicationController
     @configuration = Configuration.new(params[:configuration])
     @configuration.is_model = true
     if @configuration.save
-      flash[:notice] = _('The configurations was successfully updated.')
+      flash[:notice] = t(:the_configurations_was_successfully_updated)
       redirect_to :action => 'list'
     else
       form_variables
@@ -66,7 +66,7 @@ class ConfigurationController < ApplicationController
     @configuration = Configuration.find(params[:id])
     @organization = @configuration.organization
     if @configuration.update_attributes(params[:configuration])
-      flash[:notice] = _('The configurations was successfully updated.')
+      flash[:notice] = t(:the_configurations_was_successfully_updated)
       redirect_to :action => 'show', :organization_id => @organization, :id => @configuration
     else
       form_variables
@@ -78,9 +78,9 @@ class ConfigurationController < ApplicationController
     c = Configuration.find(params[:id])
     if Configuration.models.include?(c)
       c.destroy 
-      flash[:notice] =  _('The configuration model was successfully removed')
+      flash[:notice] =  t(:the_configuration_model_was_successfully_removed)
     else
-      flash[:notice] = _('This configuration cannot be removed')
+      flash[:notice] = t(:this_configuration_cannot_be_removed)
     end
     redirect_to :action => 'list'
   end

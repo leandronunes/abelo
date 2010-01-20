@@ -4,7 +4,7 @@ class StockBuy < Stock
   validates_presence_of :supplier_id
   validates_presence_of :price
   validates_numericality_of :price
-  validates_inclusion_of :amount, :in => InfiniteSet::POSITIVES, :if => lambda { |s| !s.amount.nil? } , :message => _('The amount must be a positive number')
+  validates_inclusion_of :amount, :in => InfiniteSet::POSITIVES, :if => lambda { |s| !s.amount.nil? } , :message => t(:amount_must_be_positive)
 
   belongs_to :supplier
   belongs_to :invoice

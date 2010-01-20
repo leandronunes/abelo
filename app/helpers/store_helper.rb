@@ -13,7 +13,7 @@ module StoreHelper
       result = separator + link_to_unless_current(c.name, { :action => 'category', :id => c }) + result
       c = c.parent
     end
-    result = link_to_unless_current(_('Start'), { :action => '' }) + result
+    result = link_to_unless_current(t(:start), { :action => '' }) + result
   end
 
   def randon(array)

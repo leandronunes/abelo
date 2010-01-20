@@ -1,10 +1,10 @@
 <% parameters ||= nil %>
 
-<label for='document_models' ><%= _('Choose a Document Model') %>:</label>
+<label for='document_models' ><%= t(:choose_a_document_model) %>:</label>
 
 <ul>
   <% for document in @document_models  %>
     <li><%= link_to document.name, {:action => 'new_document', :model_id => document.id, :id => params[:id]}.merge(parameters.nil? ? {} : parameters) %></li>
   <% end %>
-  <li><%= link_to _('Blank Document'), {:action => 'new_document', :id => params[:id]}.merge(parameters.nil? ? {} : parameters) %></li>
+  <li><%= link_to t(:blank_document), {:action => 'new_document', :id => params[:id]}.merge(parameters.nil? ? {} : parameters) %></li>
 </ul>

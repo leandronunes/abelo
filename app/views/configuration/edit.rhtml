@@ -1,7 +1,7 @@
 <% if @organization.nil? %>
-  <%= title _('Editing Configuration %s') % @configuration.name %>
+  <%= title t(:editing_configuration_%s) % @configuration.name %>
 <% else %>
-  <%= title _('Editing Configuration of Organization %s') % @organization.name %>
+  <%= title t(:editing_configuration_of_organization_%s) % @organization.name %>
 <% end %>
 
 
@@ -14,7 +14,7 @@
   <% end %>
 
   <div class="display_info_options">
-    <%= button('back', _('Back'), :back, :action => 'show', :id => @configuration, :organization_id => @organization) %> 
+    <%= button('back', t(:back), :back, :action => 'show', :id => @configuration, :organization_id => @organization) %> 
     <%= display_save_button %>
     <%= display_reset_button %>
   </div>

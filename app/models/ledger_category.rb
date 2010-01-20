@@ -20,11 +20,11 @@ class LedgerCategory < ActiveRecord::Base
 
   def validate
     if self.payment_methods.length < 1
-      self.errors.add('payment_methods', _('You have to choose at least one payment method'))
+      self.errors.add('payment_methods', t(:you_have_to_choose_at_least_one_payment_method))
     end
             
     if (self.payment_methods - Payment::PAYMENT_METHODS.keys).length != 0 
-      self.errors.add('payment_methods', _('You have to choose a valid payment method'))
+      self.errors.add('payment_methods', t(:you_have_to_choose_a_valid_payment_method))
     end
 
     if self.is_sale? and !self.income?

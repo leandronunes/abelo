@@ -5,14 +5,19 @@ class Article < ActiveRecord::Base
   belongs_to :environment
   validates_presence_of :name, :slug, :path
 
-  validates_uniqueness_of :slug, :scope => ['environment_id', 'parent_id'], :message => _('%{fn} (the code generated from the article name) is already being used by another article.')
-  validates_uniqueness_of :position, :scope => ['environment_id', 'parent_id'], :message => _('%{fn} (the position generated to the page) is already being used by another page.')
+  validates_uniqueness_of :slug, :scope => ['environment_id', 'parent_id'], :message => t(:uniqueness_of_slug_required)
+  # TODO fix it
+  #t(:%{fn}_(the_code_generated_from_the_article_name)_is_already_being_used_by_another_article.)
+  validates_uniqueness_of :position, :scope => ['environment_id', 'parent_id'], :message => t(:uniqueness_of_position_required)
+  # TODO fix it
+  #t(:%{fn}_(the_position_generated_to_the_page)_is_already_being_used_by_another_page.)
   validates_numericality_of :position, :only_integer => true
 
   belongs_to :last_changed_by, :class_name => Person.name, :foreign_key => 'last_changed_by_id'
 
   acts_as_taggable  
-  N_('Tag list')
+  # TODO fix it
+  #Nt(:tag_list)
 
   acts_as_filesystem
 
@@ -66,7 +71,7 @@ class Article < ActiveRecord::Base
   end
 
   def mime_type_description
-    _('HTML Text document')
+    t(:html_text_document)
   end
 
   def title
@@ -75,17 +80,17 @@ class Article < ActiveRecord::Base
 
   def self.short_description
     if self == Article
-      _('Page')
+      t(:page)
     else
-      _('"%s" page') % self.article_type_name
+      self.article_type_name + t(:page)
     end
   end
 
   def self.description
     if self == Article
-      _('An ordinary page')
+      t(:an_ordinary_page)
     else
-      _('An page of type "%s"') % self.article_type_name
+      t(:an_page_of_type) + self.article_type_name
     end
   end
 

@@ -1,14 +1,14 @@
 <%= render :partial => 'menu' %>
 
-<%= title _('%s Products') % @system_actor.name %>
+<%= title t(:%s_products) % @system_actor.name %>
 
 <table>
   <tr> 
-    <th> <%= _('Product') %> </th>
+    <th> <%= t(:product) %> </th>
     <% if @system_actor.kind_of?(Customer) %>
-      <th> <%= _('Sale Quantity') %> </th>
+      <th> <%= t(:sale_quantity) %> </th>
     <% else %>
-      <th> <%= _('Purchased Quantity') %> </th>
+      <th> <%= t(:purchased_quantity) %> </th>
     <% end %>
   </tr>
   <% @product_virtuals.each do |stock| %>

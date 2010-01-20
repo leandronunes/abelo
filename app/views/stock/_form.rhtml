@@ -7,49 +7,49 @@
 <% display_form_info @invoice, @stock do |item | %>
 
   <%= display_field_form( item, 'number',
-        :title => _('Number'),
+        :title => t(:number),
         :content => text_field( 'invoice', 'number' )
     )
   %>
 
   <%= display_field_form( item, 'serie',
-        :title => _('Serie'),
+        :title => t(:serie),
         :content => text_field( 'invoice', 'serie' )
     )
   %>
 
   <%= display_field_form( item, 'status',
-        :title => _('Status'),
+        :title => t(:status),
         :content => select_status( 'invoice', 'status') 
     )
   %>
 
   <%= display_field_form( item, 'issue_date',
-        :title => _('Date'),
+        :title => t(:date),
         :content => date_select_abelo( 'invoice', 'issue_date' )
     )
   %>
 
   <%= display_field_form( item, 'supplier_id',
-        :title => _('Supplier'),
+        :title => t(:supplier),
         :content => select( 'invoice', 'supplier_id', @suppliers.map { |s| [ s.name, s.id] } ) 
     )
   %>
 
   <%= display_field_form( item, 'supplier_id',
-        :title => _('Amount'),
+        :title => t(:amount),
         :content => text_field( 'stock', 'amount' )
     )
   %>
 
   <%= display_field_form( item, 'supplier_id',
-        :title => _('Validity'),
+        :title => t(:validity),
         :content => date_select_abelo( 'stock', 'validity' )
     )
   %>
 
   <%= display_field_form( item, 'supplier_id',
-        :title => _('Unit Price'),
+        :title => t(:unit_price),
         :content => text_field( 'stock', 'price', :value => num_to_currency(@stock.price) )
     )
   %>

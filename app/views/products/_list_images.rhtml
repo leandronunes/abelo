@@ -1,5 +1,5 @@
 <div>
-  <strong> <%= _('All Images') %> </strong> <br/>
+  <strong> <%= t(:all_images) %> </strong> <br/>
   <% unless @product.images.blank? %>
     <% for image in @product.images %>
       <%= show_image image %>

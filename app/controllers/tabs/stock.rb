@@ -4,35 +4,35 @@ def create_stock_tabs
     in_set 'first'
     highlights_on :controller => 'stock'
   end
-  t.named _('Stock control')
+  t.named t(:stock_control)
 
   t = add_tab do
     links_to :controller => 'stock_buys'
     in_set 'first'
     highlights_on :controller => 'stock_buys'
   end
-  t.named _('Buy')
+  t.named t(:buy)
 
 #  t = add_tab do
 #    links_to :controller => 'stock_ins'
 #    in_set 'first'
 #    highlights_on :controller => 'stock_ins'
 #  end
-#  t.named _('Stock Replenishment')
+#  t.named t(:stock_replenishment)
 
   t = add_tab do
     links_to :controller => 'stock_devolutions'
     in_set 'first'
     highlights_on :controller => 'stock_devolutions'
   end
-  t.named _('Devolution')
+  t.named t(:devolution)
 
   t = add_tab do
     links_to :controller => 'stock_downs'
     in_set 'first'
     highlights_on :controller => 'stock_downs'
   end
-  t.named _('Stock Down')
+  t.named t(:stock_down)
 
 end
 

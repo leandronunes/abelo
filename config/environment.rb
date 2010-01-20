@@ -54,6 +54,9 @@ Rails::Initializer.run do |config|
     :secret      => 'f17946546786aabb7f5d237e94886548480da0b26b617886190e45518c267f178c0a7e9c503a2e3872bf6a274e342e58963a1b59495f761dc75a772091d5cef8'
   }
 
+  config.i18n.default_locale = 'en'
+  config.i18n.load_path = Dir[File.join(RAILS_ROOT, 'lang', '*.{rb,yml}'), File.join(RAILS_ROOT, 'vendor', 'plugins', '*','lang', '*.{rb,yml}')]
+
   # Use the database for sessions instead of the cookie-based default,
   # which shouldn't be used to store highly confidential information
   # (create the session table with "rake db:sessions:create")
@@ -69,12 +72,15 @@ Rails::Initializer.run do |config|
 # FIXME put i18n plugin to works
 #  config.i18n.default_locale = 'en'
 #  config.i18n.load_path = Dir[File.join(RAILS_ROOT, 'lang', '*.{rb,yml}')]
-  config.gem "locale_rails"
-  config.gem "gettext_activerecord"
-  config.gem "gettext_rails"
+#  config.gem "locale_rails"
+#  config.gem "gettext_activerecord"
+#  config.gem "gettext_rails"
 
 end
 ACTIVATE_DEMOSTRATION = false
 #I18nParserConfig.locales= ['en','pt-br']
 require 'acts_as_filesystem'
 require 'acts_as_searchable'
+
+I18nParserConfig.locales= ['en','pt-br'] # I18nParser plugin stuff
+

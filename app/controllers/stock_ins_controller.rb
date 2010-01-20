@@ -39,13 +39,13 @@ class StockInsController < ApplicationController
 
     @stocks = @organization.stock_virtual_ins(@query)
     @stock_pages, @stocks = paginate_by_collection @stocks
-    @title = _('Stock Replenishment Control')
+    @title = t(:stock_replenishment_control)
     render :template => 'stock_base/list'
   end
 
   def show
     @stock = @organization.stock_ins.find(params[:id])
-    @title = _('Stock Replenishment')
+    @title = t(:stock_replenishment)
     render :template => 'stock_base/show'
   end
 
@@ -58,7 +58,7 @@ class StockInsController < ApplicationController
     @stock = StockIn.new(:date => Date.today, :amount => 1)
     @products = @organization.products
     @suppliers = @organization.suppliers
-    @title = _('Stock Replenishment of Product')
+    @title = t(:stock_replenishment_of_product)
   end
 
   def add
@@ -112,7 +112,7 @@ class StockInsController < ApplicationController
   def history
     @product = @organization.products.find(params[:product_id])
     @stocks = @product.stock_ins
-    @title  = _('Stock Replenishment History of %s') % "<b>#{@product.name} </b>"
+    @title  = t(:stock_replenishment_history)
     render :template => 'stock_base/history'
   end
 

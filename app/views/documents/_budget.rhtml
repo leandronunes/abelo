@@ -1,5 +1,5 @@
-<p><label for="document_budget"><%= _('Budget') %></label>
+<p><label for="document_budget"><%= t(:budget) %></label>
 
-<%= link_to_remote _('New section'), :url => {:controller => 'document_sections', :action => 'new', :id => @document.id }, :update => 'new_component' %>
+<%= link_to_remote t(:new_section), :url => {:controller => 'document_sections', :action => 'new', :id => @document.id }, :update => 'new_component' %>
 
 <%= render :partial => 'document_sections/list' %>

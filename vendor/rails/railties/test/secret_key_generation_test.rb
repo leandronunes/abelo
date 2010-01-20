@@ -1,4 +1,4 @@
-require 'abstract_unit'
+require 'test/unit'
 
 # Must set before requiring generator libs.
 if defined?(RAILS_ROOT)
@@ -22,7 +22,7 @@ require 'rails_generator'
 require 'rails_generator/secret_key_generator'
 require 'rails_generator/generators/applications/app/app_generator'
 
-class SecretKeyGenerationTest < ActiveSupport::TestCase
+class SecretKeyGenerationTest < Test::Unit::TestCase
   SECRET_KEY_MIN_LENGTH = 128
   APP_NAME = "foo"
 

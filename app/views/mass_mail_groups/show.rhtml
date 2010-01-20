@@ -7,6 +7,6 @@
 <%= display_show_info_options(@mass_mail_group) %>
 
 <div class="display_info_options">
-  <%= lightbox_button('add', _('Add'), :add_system_actors, {:action => 'add_system_actors', :id => @mass_mail_group}, {:class => 'with_text'}) %>
-  <%= lightbox_button('remove', _('Remove'), :remove_system_actors, {:action => 'remove_system_actors', :id => @mass_mail_group}, {:class => 'with_text'}) unless @mass_mail_group.system_actors.empty? %>
+  <%= lightbox_button('add', t(:add), :add_system_actors, {:action => 'add_system_actors', :id => @mass_mail_group}, {:class => 'with_text'}) %>
+  <%= lightbox_button('remove', t(:remove), :remove_system_actors, {:action => 'remove_system_actors', :id => @mass_mail_group}, {:class => 'with_text'}) unless @mass_mail_group.system_actors.empty? %>
 </div>

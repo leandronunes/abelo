@@ -1,4 +1,4 @@
-<%= title _('Edit stock for %s') % @stock.product.name %>
+<%= title t(:edit_stock_for_%s) % @stock.product.name %>
 
 <% form_tag( :action => 'update', :invoice_id => @invoice, :stock_id => @stock )  do %>
 

@@ -1,7 +1,7 @@
 require 'abstract_unit'
 require 'controller/fake_controllers'
 
-class TestTest < ActionController::TestCase
+class TestTest < Test::Unit::TestCase
   class TestController < ActionController::Base
     def no_op
       render :text => 'dummy'
@@ -23,13 +23,8 @@ class TestTest < ActionController::TestCase
       render :text => 'Success'
     end
 
-    def reset_the_session
-      reset_session
-      render :text => 'ignore me'
-    end
-
     def render_raw_post
-      raise ActiveSupport::TestCase::Assertion, "#raw_post is blank" if request.raw_post.blank?
+      raise Test::Unit::AssertionFailedError, "#raw_post is blank" if request.raw_post.blank?
       render :text => request.raw_post
     end
 
@@ -174,24 +169,6 @@ XML
     assert_equal 'value1', session[:string]
     assert_equal 'value2', session['symbol']
     assert_equal 'value2', session[:symbol]
-  end
-
-  def test_session_is_cleared_from_controller_after_reset_session
-    process :set_session
-    process :reset_the_session
-    assert_equal Hash.new, @controller.session.to_hash
-  end
-
-  def test_session_is_cleared_from_response_after_reset_session
-    process :set_session
-    process :reset_the_session
-    assert_equal Hash.new, @response.session.to_hash
-  end
-
-  def test_session_is_cleared_from_request_after_reset_session
-    process :set_session
-    process :reset_the_session
-    assert_equal Hash.new, @request.session.to_hash
   end
 
   def test_process_with_request_uri_with_no_params
@@ -603,7 +580,7 @@ XML
     assert_equal @response.redirect_url, redirect_to_url
 
     # Must be a :redirect response.
-    assert_raise(ActiveSupport::TestCase::Assertion) do
+    assert_raise(Test::Unit::AssertionFailedError) do
       assert_redirected_to 'created resource'
     end
   end
@@ -625,9 +602,9 @@ XML
     end
 end
 
-class CleanBacktraceTest < ActionController::TestCase
+class CleanBacktraceTest < Test::Unit::TestCase
   def test_should_reraise_the_same_object
-    exception = ActiveSupport::TestCase::Assertion.new('message')
+    exception = Test::Unit::AssertionFailedError.new('message')
     clean_backtrace { raise exception }
   rescue Exception => caught
     assert_equal exception.object_id, caught.object_id
@@ -636,7 +613,7 @@ class CleanBacktraceTest < ActionController::TestCase
 
   def test_should_clean_assertion_lines_from_backtrace
     path = File.expand_path("#{File.dirname(__FILE__)}/../../lib/action_controller")
-    exception = ActiveSupport::TestCase::Assertion.new('message')
+    exception = Test::Unit::AssertionFailedError.new('message')
     exception.set_backtrace ["#{path}/abc", "#{path}/assertions/def"]
     clean_backtrace { raise exception }
   rescue Exception => caught
@@ -652,17 +629,21 @@ class CleanBacktraceTest < ActionController::TestCase
   end
 end
 
-class InferringClassNameTest < ActionController::TestCase
+class InferringClassNameTest < Test::Unit::TestCase
   def test_determine_controller_class
     assert_equal ContentController, determine_class("ContentControllerTest")
   end
 
   def test_determine_controller_class_with_nonsense_name
-    assert_nil determine_class("HelloGoodBye")
+    assert_raises ActionController::NonInferrableControllerError do
+      determine_class("HelloGoodBye")
+    end
   end
 
   def test_determine_controller_class_with_sensible_name_where_no_controller_exists
-    assert_nil determine_class("NoControllerWithThisNameTest")
+    assert_raises ActionController::NonInferrableControllerError do
+      determine_class("NoControllerWithThisNameTest")
+    end
   end
 
   private

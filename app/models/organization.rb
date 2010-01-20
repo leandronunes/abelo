@@ -90,13 +90,13 @@ class Organization < ActiveRecord::Base
 
   # Delegates methods
   # FIXME make this test
-  delegate :city, :state, :country, :country=, :street, :number, :complement, :district, :zip_code, :to => :address
+  delegate :city, :state, :country, :street, :number, :complement, :district, :zip_code, :to => :address
   delegate :fax, :phone, :responsible, :email, :to => :contact
 
   validates_presence_of :name
   validates_uniqueness_of :name
   validates_uniqueness_of :cnpj, :if => lambda{|organization| not organization.cnpj.blank?}
-  validates_as_cnpj :cnpj, :message => _('%{fn} is not valid.')
+  validates_as_cnpj :cnpj, :message => t(:validate_cnpj)
   validates_presence_of :identifier, :name
   validates_uniqueness_of :identifier
   validates_format_of :identifier, :with => IDENTIFIER_FORMAT
@@ -106,13 +106,13 @@ class Organization < ActiveRecord::Base
   validates_associated :tracker
 
   before_validation do |organization|
-    if organization.address.nil?
-      address = Address.new
-      address.country = organization.country_obj
-      address.state = organization.state_obj
-      address.city = organization.city_obj
-      organization.address = address
-    end
+    organization.address ||= Address.new
+    address = organization.address
+    address.country = organization.country_obj
+    address.state = organization.state_obj
+    address.city = organization.city_obj
+
+#    organization.address = address
 
     #FIXME make this test
     if organization.contact.nil?
@@ -136,16 +136,16 @@ class Organization < ActiveRecord::Base
       configuration = Configuration.new
       configuration.organization = organization
       organization.configuration = configuration
-      configuration.organization_name = _('Organization')
-      configuration.product_name = _('Product')
-      configuration.department_name = _('Department')
-      configuration.customer_name = _('Customer')
-      configuration.document_name = _('Commercial Proposal')
-      configuration.organization_name_on_plural = _('Organizations')
-      configuration.product_name_on_plural = _('Products')
-      configuration.department_name_on_plural = _('Departments')
-      configuration.customer_name_on_plural = _('Customers')
-      configuration.document_name_on_plural = _('Commercial Proposals')
+      configuration.organization_name = t(:organization)
+      configuration.product_name = t(:product)
+      configuration.department_name = t(:department)
+      configuration.customer_name = t(:customer)
+      configuration.document_name = t(:commercial_proposal)
+      configuration.organization_name_on_plural = t(:organizations)
+      configuration.product_name_on_plural = t(:products)
+      configuration.department_name_on_plural = t(:departments)
+      configuration.customer_name_on_plural = t(:customers)
+      configuration.document_name_on_plural = t(:commercial_proposals)
       configuration.is_model = false
       configuration.save!
 
@@ -164,7 +164,7 @@ class Organization < ActiveRecord::Base
   end
 
   def validate
-    self.errors.add(_('You cannot change the organization properties on demonstration version')) if ACTIVATE_DEMOSTRATION == true and !self.new_record?
+    self.errors.add(t(:you_cannot_change_the_organization_properties_on_demonstration_version)) if ACTIVATE_DEMOSTRATION == true and !self.new_record?
   end
 
   def initialize(*args)
@@ -198,7 +198,7 @@ class Organization < ActiveRecord::Base
   # existing profile (since profiles cannot be renamed)
   def identifier=(value)
     unless self.new_record?
-      raise ArgumentError.new(_('An existing organization cannot be renamed.'))
+      raise ArgumentError.new(t(:an_existing_organization_cannot_be_renamed))
     end
     self[:identifier] = value
   end

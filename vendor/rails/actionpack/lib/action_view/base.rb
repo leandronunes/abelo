@@ -3,12 +3,9 @@ module ActionView #:nodoc:
   end
 
   class MissingTemplate < ActionViewError #:nodoc:
-    attr_reader :path
-
     def initialize(paths, path, template_format = nil)
-      @path = path
       full_template_path = path.include?('.') ? path : "#{path}.erb"
-      display_paths = paths.compact.join(":")
+      display_paths = paths.join(':')
       template_type = (path =~ /layouts/i) ? 'layout' : 'template'
       super("Missing #{template_type} #{full_template_path} in view path #{display_paths}")
     end
@@ -160,7 +157,7 @@ module ActionView #:nodoc:
   #
   # See the ActionView::Helpers::PrototypeHelper::GeneratorMethods documentation for more details.
   class Base
-    include Helpers, Partials, ::ERB::Util
+    include ERB::Util
     extend ActiveSupport::Memoizable
 
     attr_accessor :base_path, :assigns, :template_extension
@@ -175,21 +172,25 @@ module ActionView #:nodoc:
       delegate :logger, :to => 'ActionController::Base'
     end
 
-    @@debug_rjs = false
-    ##
-    # :singleton-method:
+    # Templates that are exempt from layouts
+    @@exempt_from_layout = Set.new([/\.rjs$/])
+
+    # Don't render layouts for templates with the given extensions.
+    def self.exempt_from_layout(*extensions)
+      regexps = extensions.collect do |extension|
+        extension.is_a?(Regexp) ? extension : /\.#{Regexp.escape(extension.to_s)}$/
+      end
+      @@exempt_from_layout.merge(regexps)
+    end
+
     # Specify whether RJS responses should be wrapped in a try/catch block
     # that alert()s the caught exception (and then re-raises it).
+    @@debug_rjs = false
     cattr_accessor :debug_rjs
 
-    # Specify whether templates should be cached. Otherwise the file we be read everytime it is accessed.
-    # Automatically reloading templates are not thread safe and should only be used in development mode.
-    @@cache_template_loading = nil
-    cattr_accessor :cache_template_loading
-
-    def self.cache_template_loading?
-      ActionController::Base.allow_concurrency || (cache_template_loading.nil? ? !ActiveSupport::Dependencies.load? : cache_template_loading)
-    end
+    # A warning will be displayed whenever an action results in a cache miss on your view paths.
+    @@warn_cache_misses = false
+    cattr_accessor :warn_cache_misses
 
     attr_internal :request
 
@@ -221,43 +222,38 @@ module ActionView #:nodoc:
     def initialize(view_paths = [], assigns_for_first_render = {}, controller = nil)#:nodoc:
       @assigns = assigns_for_first_render
       @assigns_added = nil
+      @_render_stack = []
       @controller = controller
       @helpers = ProxyModule.new(self)
       self.view_paths = view_paths
-
-      @_first_render = nil
-      @_current_render = nil
     end
 
     attr_reader :view_paths
 
     def view_paths=(paths)
       @view_paths = self.class.process_view_paths(paths)
-      # we might be using ReloadableTemplates, so we need to let them know this a new request
-      @view_paths.load!
     end
 
-    # Returns the result of a render that's dictated by the options hash. The primary options are:
-    #
-    # * <tt>:partial</tt> - See ActionView::Partials.
-    # * <tt>:update</tt> - Calls update_page with the block given.
-    # * <tt>:file</tt> - Renders an explicit template file (this used to be the old default), add :locals to pass in those.
-    # * <tt>:inline</tt> - Renders an inline template similar to how it's done in the controller.
-    # * <tt>:text</tt> - Renders the text passed in out.
-    #
-    # If no options hash is passed or :update specified, the default is to render a partial and use the second parameter
-    # as the locals hash.
+    # Renders the template present at <tt>template_path</tt> (relative to the view_paths array).
+    # The hash in <tt>local_assigns</tt> is made available as local variables.
     def render(options = {}, local_assigns = {}, &block) #:nodoc:
       local_assigns ||= {}
 
-      case options
-      when Hash
+      if options.is_a?(String)
+        ActiveSupport::Deprecation.warn(
+          "Calling render with a string will render a partial from Rails 2.3. " +
+          "Change this call to render(:file => '#{options}', :locals => locals_hash)."
+        )
+
+        render(:file => options, :locals => local_assigns)
+      elsif options == :update
+        update_page(&block)
+      elsif options.is_a?(Hash)
         options = options.reverse_merge(:locals => {})
         if options[:layout]
           _render_with_layout(options, local_assigns, &block)
         elsif options[:file]
-          template = self.view_paths.find_template(options[:file], template_format)
-          template.render_template(self, options[:locals])
+          _pick_template(options[:file]).render_template(self, options[:locals])
         elsif options[:partial]
           render_partial(options)
         elsif options[:inline]
@@ -265,10 +261,6 @@ module ActionView #:nodoc:
         elsif options[:text]
           options[:text]
         end
-      when :update
-        update_page(&block)
-      else
-        render_partial(:partial => options, :locals => local_assigns)
       end
     end
 
@@ -279,7 +271,7 @@ module ActionView #:nodoc:
       if defined? @template_format
         @template_format
       elsif controller && controller.respond_to?(:request)
-        @template_format = controller.request.template_format.to_sym
+        @template_format = controller.request.template_format
       else
         @template_format = :html
       end
@@ -288,19 +280,7 @@ module ActionView #:nodoc:
     # Access the current template being rendered.
     # Returns a ActionView::Template object.
     def template
-      @_current_render
-    end
-
-    def template=(template) #:nodoc:
-      @_first_render ||= template
-      @_current_render = template
-    end
-
-    def with_template(current_template)
-      last_template, self.template = template, current_template
-      yield
-    ensure
-      self.template = last_template
+      @_render_stack.last
     end
 
     private
@@ -325,6 +305,50 @@ module ActionView #:nodoc:
         if controller.respond_to?(:response)
           controller.response.content_type ||= content_type
         end
+      end
+
+      def _pick_template(template_path)
+        return template_path if template_path.respond_to?(:render)
+
+        path = template_path.sub(/^\//, '')
+        if m = path.match(/(.*)\.(\w+)$/)
+          template_file_name, template_file_extension = m[1], m[2]
+        else
+          template_file_name = path
+        end
+
+        # OPTIMIZE: Checks to lookup template in view path
+        if template = self.view_paths["#{template_file_name}.#{template_format}"]
+          template
+        elsif template = self.view_paths[template_file_name]
+          template
+        elsif (first_render = @_render_stack.first) && first_render.respond_to?(:format_and_extension) &&
+            (template = self.view_paths["#{template_file_name}.#{first_render.format_and_extension}"])
+          template
+        elsif template_format == :js && template = self.view_paths["#{template_file_name}.html"]
+          @template_format = :html
+          template
+        else
+          template = Template.new(template_path, view_paths)
+
+          if self.class.warn_cache_misses && logger
+            logger.debug "[PERFORMANCE] Rendering a template that was " +
+              "not found in view path. Templates outside the view path are " +
+              "not cached and result in expensive disk operations. Move this " +
+              "file into #{view_paths.join(':')} or add the folder to your " +
+              "view path list"
+          end
+
+          template
+        end
+      end
+      memoize :_pick_template
+
+      def _exempt_from_layout?(template_path) #:nodoc:
+        template = _pick_template(template_path).to_s
+        @@exempt_from_layout.any? { |ext| template =~ ext }
+      rescue ActionView::MissingTemplate
+        return false
       end
 
       def _render_with_layout(options, local_assigns, &block) #:nodoc:

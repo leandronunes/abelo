@@ -20,21 +20,21 @@
     ]
       
     menu_legend = {
-      'categories'                          => _('Configurations'),
-      'stock'                               => _('Stock'),
-      'cms'                                 => _('Web Site'),
-      'public'                              => _('Organizations'),
-      'permissions'                         => _('User administration'),
-      'system_actors'                       => _('Registers'),
-      'point_of_sale'                       => _('Point of sale'),
-      'sales'                               => _('Sales'),
-      'mass_mails'                          => _('Mass mail'), #TODO implements this function
-      'ledgers'                             => _('Financial'),
+      'categories'                          => t(:configurations),
+      'stock'                               => t(:stock),
+      'cms'                                 => t(:web_site),
+      'public'                              => t(:organizations),
+      'permissions'                         => t(:user_administration),
+      'system_actors'                       => t(:registers),
+      'point_of_sale'                       => t(:point_of_sale),
+      'sales'                               => t(:sales),
+      'mass_mails'                          => t(:mass_mail), #TODO implements this function
+      'ledgers'                             => t(:financial),
       'documents'                           => (@organization.nil? or @organization.new_record?) ? '' : @organization.configuration.document_name_on_plural.camelcase, 
       'departments'                         => (@organization.nil? or @organization.new_record?) ? '' : @organization.configuration.department_name_on_plural.camelcase, #TODO see a better way to do that
-      'organizations'                       => _('Organizations'),
-      'banks'                               => _('Banks'),
-      'tracker_organization'                => _('Tracker'),
+      'organizations'                       => t(:organizations),
+      'banks'                               => t(:banks),
+      'tracker_organization'                => t(:tracker),
     }
 
     x = 0

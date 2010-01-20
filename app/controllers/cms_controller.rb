@@ -129,7 +129,7 @@ class CmsController <  ApplicationController
     @article = @environment.articles.find(params[:id])
     @environment.home_page = @article
     @environment.save!
-    flash[:notice] = _('Article "%s" configured as home page.') % @article.name
+    flash[:notice] = t(:article_configured_as_home_page)
     redirect_to :action => 'view', :id => @article.id
   end
 

@@ -68,13 +68,13 @@ class CategoriesController < ApplicationController
       @category = eval("#{@category_type.camelize}Category").new(params[:category])
       @category.organization = @organization
       if @category.save
-        flash[:notice] = _('Category was successfully created.')
+        flash[:notice] = t(:category_was_successfully_created)
         redirect_to :action => 'list', :category_type => @category_type
       else
         render :action => 'new' 
       end
     else
-      render_error(_("This type didn't exist"))
+      render_error(t(:type_not_exist))
     end
 
   end
@@ -88,7 +88,7 @@ class CategoriesController < ApplicationController
     @category_type = params[:category_type]
     @category = @organization.categories.find(params[:id])
     if @category.update_attributes(params[:category])
-      flash[:notice] = _('Category was successfully updated.')
+      flash[:notice] = t(:category_was_successfully_updated)
       redirect_to :action => 'list', :category_type => @category.class.to_s.gsub(/Category/,'').downcase
     else
       render :action => 'edit', :id => @category

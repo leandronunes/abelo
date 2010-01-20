@@ -12,8 +12,8 @@
   <% for column in ContactPosition.content_columns %>
     <td><%=h contact_position.send(column.name) %></td>
   <% end %>
-    <td><%= button _('Edit'), :edit, :action => 'edit', :id => contact_position %></td>
-    <td><%= button _('Destroy'), :remove, { :action => 'destroy', :id => contact_position }, :confirm => _('Are you sure?'), :method => 'post' %></td>
+    <td><%= button t(:edit), :edit, :action => 'edit', :id => contact_position %></td>
+    <td><%= button t(:destroy'),_:remove,_{_:action_=>_'destroy',_:id_=>_contact_position_},_:confirm_=>__('are_you_sure?), :method => 'post' %></td>
   </tr>
 <% end %>
 </table>
@@ -21,4 +21,4 @@
 
 <br />
 
-<%= button _('New contact_position'), :add, :action => 'new' %>
+<%= button t(:new_contact_position), :add, :action => 'new' %>

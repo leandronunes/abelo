@@ -5,7 +5,7 @@
 <% display_form_info @mass_mail, :class => 'view_data' do |item| %> 
 
   <%= display_field_form(item, 'subject', 
-        :title => _('Subject'),
+        :title => t(:subject),
         :content => text_field('mass_mail','subject'),
         :html_options => {:class => 'line_item' }
       )
@@ -13,7 +13,7 @@
 
 
   <%= display_field_edit(item, 'body',
-        :title => _('Body'),
+        :title => t(:body),
         :content => rich_text_editor('mass_mail', 'body')
       )
   %>

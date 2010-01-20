@@ -1,6 +1,6 @@
 class StockDevolution < Stock
 
-  validates_inclusion_of :amount, :in => InfiniteSet::POSITIVES, :if => lambda { |s| !s.amount.nil? } , :message => _('The amount must be a positive number')
+  validates_inclusion_of :amount, :in => InfiniteSet::POSITIVES, :if => lambda { |s| !s.amount.nil? } , :message => t(:the_amount_must_be_a_positive_number)
 
   before_validation do |stock|
     stock.amount = stock.amount * -1 if !stock.amount.nil? and stock.amount < 0

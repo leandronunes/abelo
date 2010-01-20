@@ -27,7 +27,7 @@ module CmsHelper
   def select_categories(object_name)
     object = instance_variable_get("@#{object_name}")
 
-    result = content_tag('h4', _('Categories'))
+    result = content_tag('h4', t(:categories))
     environment.top_level_categories.each do |toplevel|
       toplevel.map_traversal do |cat|
         if cat.top_level?
@@ -43,7 +43,7 @@ module CmsHelper
   end
 
   def display_save_button
-    button('save', _('Save'), :save,  (@article.parent ? { :action => 'view', :id => @article.parent.id } : { :action => 'index' } ))
+    button('save', t(:save), :save,  (@article.parent ? { :action => 'view', :id => @article.parent.id } : { :action => 'index' } ))
   end
 
 end

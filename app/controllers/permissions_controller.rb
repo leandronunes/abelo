@@ -10,7 +10,7 @@ class PermissionsController < PermissionsBaseController
       in_set 'first'
       highlights_on :controller => 'permissions'
     end
-    t.named _('Users and permissions')
+    t.named t(:users_and_permissions)
   end
 
 end

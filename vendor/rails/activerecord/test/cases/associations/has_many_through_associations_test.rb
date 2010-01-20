@@ -1,19 +1,11 @@
 require "cases/helper"
 require 'models/post'
 require 'models/person'
-require 'models/reference'
-require 'models/job'
 require 'models/reader'
 require 'models/comment'
-require 'models/tag'
-require 'models/tagging'
-require 'models/author'
-require 'models/owner'
-require 'models/pet'
-require 'models/toy'
 
 class HasManyThroughAssociationsTest < ActiveRecord::TestCase
-  fixtures :posts, :readers, :people, :comments, :authors, :owners, :pets, :toys
+  fixtures :posts, :readers, :people, :comments, :authors
 
   def test_associate_existing
     assert_queries(2) { posts(:thinking);people(:david) }
@@ -90,24 +82,6 @@ class HasManyThroughAssociationsTest < ActiveRecord::TestCase
     end
     
     assert posts(:welcome).reload.people(true).empty?
-  end
-
-  def test_destroy_association
-    assert_difference "Person.count", -1 do
-      posts(:welcome).people.destroy(people(:michael))
-    end
-
-    assert posts(:welcome).reload.people.empty?
-    assert posts(:welcome).people(true).empty?
-  end
-
-  def test_destroy_all
-    assert_difference "Person.count", -1 do
-      posts(:welcome).people.destroy_all
-    end
-
-    assert posts(:welcome).reload.people.empty?
-    assert posts(:welcome).people(true).empty?
   end
 
   def test_replace_association
@@ -227,10 +201,6 @@ class HasManyThroughAssociationsTest < ActiveRecord::TestCase
     assert_equal 2, people(:michael).posts.count(:include => :readers)
   end
 
-  def test_inner_join_with_quoted_table_name
-    assert_equal 2, people(:michael).jobs.size
-  end
-
   def test_get_ids
     assert_equal [posts(:welcome).id, posts(:authorless).id].sort, people(:michael).post_ids.sort
   end
@@ -251,10 +221,12 @@ class HasManyThroughAssociationsTest < ActiveRecord::TestCase
     assert !person.posts.loaded?
   end
 
-  def test_association_proxy_transaction_method_starts_transaction_in_association_class
-    Tag.expects(:transaction)
-    Post.find(:first).tags.transaction do
-      # nothing
+  uses_mocha 'mocking Tag.transaction' do
+    def test_association_proxy_transaction_method_starts_transaction_in_association_class
+      Tag.expects(:transaction)
+      Post.find(:first).tags.transaction do
+        # nothing
+      end
     end
   end
 
@@ -271,9 +243,5 @@ class HasManyThroughAssociationsTest < ActiveRecord::TestCase
     author.author_favorites.create(:favorite_author_id => 2)
     author.author_favorites.create(:favorite_author_id => 3)
     assert_equal post.author.author_favorites, post.author_favorites
-  end
-
-  def test_has_many_association_through_a_has_many_association_with_nonstandard_primary_keys
-    assert_equal 1, owners(:blackbeard).toys.count
   end
 end

@@ -55,6 +55,8 @@ class QueryCacheTest < ActiveRecord::TestCase
   end
 end
 
+uses_mocha 'QueryCacheExpiryTest' do
+
 class QueryCacheExpiryTest < ActiveRecord::TestCase
   fixtures :tasks, :posts, :categories, :categories_posts
 
@@ -120,4 +122,6 @@ class QueryCacheExpiryTest < ActiveRecord::TestCase
       p.categories.delete_all
     end
   end
+end
+
 end

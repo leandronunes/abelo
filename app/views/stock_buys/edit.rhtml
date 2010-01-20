@@ -1,5 +1,5 @@
 
-<%= title _('Edit Invoice') %>
+<%= title t(:edit_invoice) %>
 
 <% form_tag( :action => 'update', :id => @invoice )  do %>
 
@@ -9,7 +9,7 @@
 
 <% end %>
 
-<%= subtitle _('Invoice Items:') %>
+<%= subtitle t(:invoice_items:) %>
 
 <div id="abelo_invoice_items">
   <%= render :partial => 'invoice_new_items' %>

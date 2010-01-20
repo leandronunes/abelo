@@ -6,19 +6,19 @@
 <% display_form_info @stock do |item | %>
 
   <%= display_field_form( item, 'product',
-        :title => _('Product'),
+        :title => t(:product),
         :content => select( 'stock', 'product_id', @products.map { |p| [ p.name, p.id] } ) 
     )
   %>
 
   <%= display_field_form( item, 'amount',
-        :title => _('Amount'),
+        :title => t(:amount),
         :content => text_field( 'stock', 'amount', :value => @stock.amount )
     )
   %>
 
   <%= display_field_form( item, 'date',
-        :title => _('Date'),
+        :title => t(:date),
         :content => date_select_abelo( 'stock', 'date' )
     )
   %>

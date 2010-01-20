@@ -1,6 +1,6 @@
 <%= render :partial => 'menu' %>
 
-<%= title _('Listing %s') % Category.describe(@category_type.pluralize) %>
+<%= title t(:listing_%s) % Category.describe(@category_type.pluralize) %>
 
 <%= display_list_options 'category', 'name', :category_type => @category_type %>
 

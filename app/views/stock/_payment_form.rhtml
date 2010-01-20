@@ -1,20 +1,20 @@
 <% display_form_info @ledger do |item | %>
 
   <%= display_field_form( item, 'date',
-      :title => _('Date'),
+      :title => t(:date),
       :content =>  date_select_abelo('ledger', 'date')
       )
   %>
 
 
   <%= display_field_form( item, 'value',
-      :title => _('Value'),
+      :title => t(:value),
       :content =>  text_field('ledger', 'value')
       )
   %>
 
   <%= display_field_form( item, 'payment_method',
-      :title => _('Payment Method'),
+      :title => t(:payment_method),
       :content =>  select_payment('ledger', 'payment_method')
       )
   %>

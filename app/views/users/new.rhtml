@@ -2,7 +2,7 @@
 <% form_tag({ :action => 'create' }) do %>
 <%= render :partial => 'form' %>
 <div class='button_bar'>
-<%= button 'save', _('Save'), :save %>
-<%= button 'del', _('Cancel'), :cancel, :action => 'list' %>
+<%= button 'save', t(:save), :save %>
+<%= button 'del', t(:cancel), :cancel, :action => 'list' %>
 </div>
 <% end %>

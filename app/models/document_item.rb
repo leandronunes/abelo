@@ -16,7 +16,7 @@ class DocumentItem < ActiveRecord::Base
   def validate
     filled = [:product_id, :service_id].find_all { |i| self.send(i) != nil }
     if filled.length != 1
-      self.errors.add(_('None a type of item chosen'))
+      self.errors.add(t(:none_a_type_of_item_chosen))
     end
   end
 

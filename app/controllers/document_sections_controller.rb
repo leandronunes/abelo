@@ -29,7 +29,7 @@ class DocumentSectionsController < ApplicationController
     if @document_section.update_attributes(params[:document_section])
       @document = Document.find(params[:document_id])
       @sections = @document.document_sections
-      flash[:notice] = _('Document section was successfuly updated.')
+      flash[:notice] = t(:document_section_was_successfuly_updated)
       render :partial => 'list'
     else
     end

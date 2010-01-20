@@ -48,12 +48,12 @@ class Sale < ActiveRecord::Base
   def validate
     pending = Sale.pending(self.till)
     if !pending.nil? and pending != self
-      self.errors.add(:status, _('You cannot have two pendings sale'))
+      self.errors.add(:status, t(:you_cannot_have_two_pendings_sale))
     end
 
     opened = Sale.opened(self.till)
     if !opened.nil? and opened != self
-      self.errors.add(:status, _('You cannot open a sale with a sale opened'))
+      self.errors.add(:status, t(:you_cannot_open_a_sale_with_a_sale_opened))
     end
 
   end
@@ -134,7 +134,7 @@ class Sale < ActiveRecord::Base
   # Cancels a sale
   def cancel!
     if self.status != STATUS_PENDING
-      self.errors.add('status', _('Only open sales can be cancelled')) 
+      self.errors.add('status', t(:only_open_sales_can_be_cancelled)) 
       return false
     end
     self.status = STATUS_CANCELLED
@@ -150,12 +150,12 @@ class Sale < ActiveRecord::Base
   # closes a sale. No item can be added to it anymore
   def close!
     if self.status != STATUS_PENDING
-      self.errors.add('status', _('Only open sales can be closed')) 
+      self.errors.add('status', t(:only_open_sales_can_be_closed)) 
       return false
     end
 
     if self.balance != 0
-      self.errors.add('value', _('Only sales with balance equal to zero can be closed')) 
+      self.errors.add('value', t(:only_sales_with_balance_equal_to_zero_can_be_closed)) 
       return false
     end
 
@@ -230,7 +230,7 @@ class Sale < ActiveRecord::Base
   # Return the customer's name of the sale. If there is no customer on the sale 
   # the string 'None' its returned
   def customer_description
-    self.customer.nil? ? _('None') :  self.customer.name
+    self.customer.nil? ? t(:none) :  self.customer.name
   end
 
   def customers_products(list_products, org)

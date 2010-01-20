@@ -6,8 +6,8 @@ class UnitMeasureDisplay < DisplayConfiguration
 
   def self.describe(field)
     {
-      'name' =>  _('Name'),
-      'abbreviation' => _('Abbreviation'),
+      'name' =>  t(:name),
+      'abbreviation' => t(:abbreviation),
     }[field] || field
   end
 

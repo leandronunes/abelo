@@ -4,14 +4,14 @@
 </div>
 
 <div id="search_product">
-  <%= link_to_popup content_tag('span', _('Search Product')), {:action => 'popup_product'}, {:accesskey => 'p', :class => 'button button_search'}, 'select_product', 'code_product'  %>
+  <%= link_to_popup content_tag('span', t(:search_product)), {:action => 'popup_product'}, {:accesskey => 'p', :class => 'button button_search'}, 'select_product', 'code_product'  %>
 </div>
     
 <% form_remote_tag :url => { :action => 'create_coupon_add_item'}, :failure => "$('abelo_action').innerHTML = request.responseText" do %>
         
-  <%= submit_tag '', :title => _('Add item'), :id => 'button_add_product', :accesskey => 'x' %>
+  <%= submit_tag '', :title => t(:add_item), :id => 'button_add_product', :accesskey => 'x' %>
   <div id="code_product">
-    <h1><%= _('Product code') %></h1>
+    <h1><%= t(:product_code) %></h1>
     <%= text_field('sale_item', 'product_code', :accesskey => "c") %>
    <%=  #FIXME see wy the observer didnt works
    %>
@@ -24,12 +24,12 @@
   </div>
   <div id="insert_amount">
     <div id="result_amount">
-      <h1><%= _('Unitary Value') %></h1>
+      <h1><%= t(:unitary_value) %></h1>
       <div id="abelo_value_product">&nbsp;
         <%= @product.sell_price unless @product.nil? %>
       </div>
     </div>
-    <h1><%= _('Amount') %></h1>
+    <h1><%= t(:amount) %></h1>
     <%= text_field('sale_item', 'amount', :value => '1') %>
   </div>
 <% end %>

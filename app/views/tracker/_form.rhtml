@@ -5,19 +5,19 @@
 <% display_form_info @tracker do |item| %>
 
   <%= display_field_form(item, 'available_points',
-        :title => _('Total available points'),
+        :title => t(:total_available_points),
         :content => text_field('tracker', 'available_points')
       )
   %>
 
   <%= display_field_form(item, 'points_per_user',
-        :title => _('Points per user'),
+        :title => t(:points_per_user),
         :content => text_field('tracker', 'points_per_user')
       )
   %>
 
   <%= display_field_form(item, 'website_points',
-        :title => _('Website points'),
+        :title => t(:website_points),
         :content => text_field('tracker', 'website_points')
       )
   %>

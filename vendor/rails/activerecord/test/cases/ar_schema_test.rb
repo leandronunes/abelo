@@ -1,4 +1,5 @@
 require "cases/helper"
+require 'active_record/schema'
 
 if ActiveRecord::Base.connection.supports_migrations?
 

@@ -3,19 +3,19 @@
 <% display_form_info @bank do |item| %>
 
   <%= display_field_form(item, 'name',
-        :title => _('Name'),
+        :title => t(:name),
         :content => text_field('bank', 'name')
       )
   %>
 
   <%= display_field_form(item, 'code',
-        :title => _('Code'),
+        :title => t(:code),
         :content => text_field('bank', 'code')
       )
   %>
 
   <%= display_field_form(item, 'site',
-        :title => _('Web Site'),
+        :title => t(:web_site),
         :content => text_field('bank', 'site')
       )
   %>

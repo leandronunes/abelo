@@ -1,25 +1,25 @@
 
 <%= display_field_form(@ledger, 'payment_method',
-      :title => _('Bank'),
+      :title => t(:bank),
       :content => select_item('ledger', 'automatic_debit_bank_id', @banks),
       :html_options => {:class => 'break_line'}
     )
 %>
 
 <%= display_field_form(@ledger, 'payment_method',
-      :title => _('Name'),
+      :title => t(:name),
       :content => text_field('ledger', 'automatic_debit_owner_name')
     )
 %>
 
 <%= display_field_form(@ledger, 'payment_method',
-      :title => _('Agency'),
+      :title => t(:agency),
       :content => text_field('ledger', 'automatic_debit_account_agency'),
       :html_options => {:class => 'break_line'}
     )
 %>
 <%= display_field_form(@ledger, 'payment_method',
-      :title => _('Account'),
+      :title => t(:account),
       :content => text_field('ledger', 'automatic_debit_account_number')
     )
 %>

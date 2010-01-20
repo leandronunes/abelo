@@ -1,4 +1,4 @@
-<%= title _('Editing Fields Configuration of %s') % @organization.name %>
+<%= title t(:editing_fields_configuration_of_%s) % @organization.name %>
 
 <% form_tag :action => 'update' do %>
 
@@ -8,147 +8,147 @@
   <div id='info_form'>
     <% if @configuration.has_worker_module? %>
       <div class='info_field'>
-        <label> <%= _('Worker Display Configuration') %> </label>
+        <label> <%= t(:worker_display_configuration) %> </label>
         <span class='field'> <%=  select_organization_display_configuration('configuration', 'WorkerDisplay', @worker_fields) %> </span>
       </div>
     <% end %>
   
     <% if @configuration.has_worker_category_module? %>
       <div class='info_field'>
-        <label> <%= _('Worker Category Display Configuration') %> </label>
+        <label> <%= t(:worker_category_display_configuration) %> </label>
         <span class='field'> <%=  select_organization_display_configuration('configuration', 'WorkerCategoryDisplay', @worker_category_fields) %> </span>
       </div>
     <% end %>
   
     <% if @configuration.has_customer_module? %>
       <div class='info_field'>
-        <label> <%= _('Customer Display Configuration') %> </label>
+        <label> <%= t(:customer_display_configuration) %> </label>
         <span class='field'> <%=  select_organization_display_configuration('configuration', 'CustomerDisplay', @customer_fields) %> </span>
       </div>
     <% end %>
   
     <% if @configuration.has_customer_category_module? %>
       <div class='info_field'>
-        <label> <%= _('Customer Category Display Configuration') %> </label>
+        <label> <%= t(:customer_category_display_configuration) %> </label>
         <span class='field'> <%=  select_organization_display_configuration('configuration', 'CustomerCategoryDisplay', @customer_category_fields) %> </span>
       </div>
     <% end %>
   
     <% if @configuration.has_supplier_module? %>
       <div class='info_field'>
-        <label> <%= _('Supplier Display Configuration') %> </label>
+        <label> <%= t(:supplier_display_configuration) %> </label>
         <span class='field'> <%=  select_organization_display_configuration('configuration', 'SupplierDisplay', @supplier_fields) %> </span>
       </div>
     <% end %>
   
     <% if @configuration.has_supplier_category_module? %>
       <div class='info_field'>
-        <label> <%= _('Supplier Category Display Configuration') %> </label>
+        <label> <%= t(:supplier_category_display_configuration) %> </label>
         <span class='field'> <%=  select_organization_display_configuration('configuration', 'SupplierCategoryDisplay', @supplier_category_fields) %> </span>
       </div>
     <% end %>
   
     <% if @configuration.has_product_module? %>
       <div class='info_field'>
-        <label> <%= _('Product Display Configuration') %> </label>
+        <label> <%= t(:product_display_configuration) %> </label>
         <span class='field'> <%=  select_organization_display_configuration('configuration', 'ProductDisplay', @product_fields) %> </span>
       </div>
     <% end %>
   
     <% if @configuration.has_product_category_module? %>
       <div class='info_field'>
-        <label> <%= _('Product Category Display Configuration') %> </label>
+        <label> <%= t(:product_category_display_configuration) %> </label>
         <span class='field'> <%=  select_organization_display_configuration('configuration', 'ProductCategoryDisplay', @product_category_fields) %> </span>
       </div>
     <% end %>
   
     <% if @configuration.has_department_module? %>
       <div class='info_field'>
-        <label> <%= _('Department Display Configuration') %> </label>
+        <label> <%= t(:department_display_configuration) %> </label>
         <span class='field'> <%=  select_organization_display_configuration('configuration', 'DepartmentDisplay', @department_fields) %> </span>
       </div>
     <% end %>
   
     <% if @configuration.has_ledger_category_module? %>
       <div class='info_field'>
-        <label> <%= _('Ledger Category Display Configuration') %> </label>
+        <label> <%= t(:ledger_category_display_configuration) %> </label>
         <span class='field'> <%=  select_organization_display_configuration('configuration', 'LedgerCategoryDisplay', @ledger_category_fields) %> </span>
       </div>
     <% end %>
   
     <% if @configuration.has_bank_account_module? %>
       <div class='info_field'>
-        <label> <%= _('Bank Account Display Configuration') %> </label>
+        <label> <%= t(:bank_account_display_configuration) %> </label>
         <span class='field'> <%=  select_organization_display_configuration('configuration', 'BankAccountDisplay', @bank_account_fields) %> </span>
       </div>
     <% end %>
   
     <% if @configuration.has_money_module? %>
       <div class='info_field'>
-        <label> <%= _('Money Display Configuration') %> </label>
+        <label> <%= t(:money_display_configuration) %> </label>
         <span class='field'> <%=  select_organization_display_configuration('configuration', 'MoneyDisplay', @money_fields) %> </span>
       </div>
     <% end %>
   
     <% if @configuration.has_check_module? %>
       <div class='info_field'>
-        <label> <%= _('Check Display Configuration') %> </label>
+        <label> <%= t(:check_display_configuration) %> </label>
         <span class='field'> <%=  select_organization_display_configuration('configuration', 'CheckDisplay', @check_fields) %> </span>
       </div>
     <% end %>
   
     <% if @configuration.has_credit_card_module? %>
       <div class='info_field'>
-        <label> <%= _('Credit Card Display Configuration') %> </label>
+        <label> <%= t(:credit_card_display_configuration) %> </label>
         <span class='field'> <%=  select_organization_display_configuration('configuration', 'CreditCardDisplay', @credit_card_fields) %> </span>
       </div>
     <% end %>
   
     <% if @configuration.has_debit_card_module? %>
       <div class='info_field'>
-        <label> <%= _('Debit Card Display Configuration') %> </label>
+        <label> <%= t(:debit_card_display_configuration) %> </label>
         <span class='field'> <%=  select_organization_display_configuration('configuration', 'DebitCardDisplay', @debit_card_fields) %> </span>
       </div>
     <% end %>
   
     <% if @configuration.has_stock_virtual_module? %>
       <div class='info_field'>
-        <label> <%= _('Stock Virtual Display Configuration') %> </label>
+        <label> <%= t(:stock_virtual_display_configuration) %> </label>
         <span class='field'> <%=  select_organization_display_configuration('configuration', 'StockVirtualDisplay', @stock_virtual_fields) %> </span>
       </div>
     <% end %>
   
     <% if @configuration.has_stock_in_module? %>
       <div class='info_field'>
-        <label> <%= _('Stock In Display Configuration') %> </label>
+        <label> <%= t(:stock_in_display_configuration) %> </label>
         <span class='field'> <%=  select_organization_display_configuration('configuration', 'StockInDisplay', @stock_in_fields) %> </span>
       </div>
     <% end %>
   
     <% if @configuration.has_stock_out_module? %>
       <div class='info_field'>
-        <label> <%= _('Stock Out Display Configuration') %> </label>
+        <label> <%= t(:stock_out_display_configuration) %> </label>
         <span class='field'> <%=  select_organization_display_configuration('configuration', 'StockOutDisplay', @stock_out_fields) %> </span>
       </div>
     <% end %>
   
     <% if @configuration.has_user_module? %>
       <div class='info_field'>
-        <label> <%= _('User Display Configuration') %> </label>
+        <label> <%= t(:user_display_configuration) %> </label>
         <span class='field'> <%=  select_organization_display_configuration('configuration', 'UserDisplay', @user_fields) %> </span>
       </div>
     <% end %>
   
     <% if @configuration.has_periodicity_module? %>
       <div class='info_field'>
-        <label> <%= _('Periodicity Display Configuration') %> </label>
+        <label> <%= t(:periodicity_display_configuration) %> </label>
         <span class='field'> <%=  select_organization_display_configuration('configuration', 'PeriodicityDisplay', @periodicity_fields) %> </span>
       </div>
     <% end %>
 
     <% if @configuration.has_document_module? %>
       <div class='info_field'>
-        <label> <%= _('Document Display Configuration') %> </label>
+        <label> <%= t(:document_display_configuration) %> </label>
         <span class='field'> <%=  select_organization_display_configuration('configuration', 'DocumentDisplay', @document_fields) %> </span>
       </div>
     <% end %>

@@ -180,10 +180,7 @@ module ActiveRecord
             record["#{@reflection.options[:as]}_id"]   = @owner.id unless @owner.new_record?
             record["#{@reflection.options[:as]}_type"] = @owner.class.base_class.name.to_s
           else
-            unless @owner.new_record?
-              primary_key = @reflection.options[:primary_key] || :id
-              record[@reflection.primary_key_name] = @owner.send(primary_key)
-            end
+            record[@reflection.primary_key_name] = @owner.id unless @owner.new_record?
           end
         end
 
@@ -191,7 +188,6 @@ module ActiveRecord
         def merge_options_from_reflection!(options)
           options.reverse_merge!(
             :group   => @reflection.options[:group],
-            :having  => @reflection.options[:having],
             :limit   => @reflection.options[:limit],
             :offset  => @reflection.options[:offset],
             :joins   => @reflection.options[:joins],
@@ -210,10 +206,7 @@ module ActiveRecord
         # Forwards any missing method call to the \target.
         def method_missing(method, *args)
           if load_target
-            unless @target.respond_to?(method)
-              message = "undefined method `#{method.to_s}' for \"#{@target}\":#{@target.class.to_s}"
-              raise NoMethodError, message
-            end
+            raise NoMethodError unless @target.respond_to?(method)
 
             if block_given?
               @target.send(method, *args)  { |*block_args| yield(*block_args) }

@@ -1,10 +1,10 @@
 <table>
   <tr>
-    <th> <%= _('Product') %> </th>
-    <th> <%= _('Unit Price') %> </th>
-    <th> <%= _('Amount') %> </th>
-    <th> <%= _('Total') %> </th>
-    <th> <%= _('Validity') %> </th>
+    <th> <%= t(:product) %> </th>
+    <th> <%= t(:unit_price) %> </th>
+    <th> <%= t(:amount) %> </th>
+    <th> <%= t(:total) %> </th>
+    <th> <%= t(:validity) %> </th>
   </tr>
   <% @stocks.each do |stock| %>
     <tr>
@@ -12,11 +12,11 @@
       <td> <%= stock.price %> </td>
       <td> <%= stock.amount %> </td>
       <td> <%= stock.total_cost %> </td>
-      <td> <%= stock.validity || _('None') %> </td>
+      <td> <%= stock.validity || t(:none) %> </td>
     </tr>
   <% end %>
   <tr>
-    <th colspan=2> <%= _('Total:') %></th>
+    <th colspan=2> <%= t(:total:) %></th>
     <td> <%= @invoice.total_amount %> </td>
     <td> <%= @invoice.total_cost %> </td>
   </tr>

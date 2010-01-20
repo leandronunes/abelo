@@ -39,7 +39,7 @@ class LedgerCategoriesController < ApplicationController
     @category.organization = @organization
 
     if @category.save
-      flash[:notice] = _('Ledger category was successfully created.')
+      flash[:notice] = t(:ledger_category_was_successfully_created)
       redirect_to :action => 'list'
     else
       @periodicities = @organization.periodicities
@@ -56,7 +56,7 @@ class LedgerCategoriesController < ApplicationController
     @category = @organization.ledger_categories.find(params[:id])
 
     if @category.update_attributes(params[:category])
-      flash[:notice] = _('Ledger category was successfully updated.')
+      flash[:notice] = t(:ledger_category_was_successfully_updated)
       redirect_to :action => 'list'
     else
       @periodicities = @organization.periodicities
@@ -69,7 +69,7 @@ class LedgerCategoriesController < ApplicationController
     if @organization.ledger_categories.find(params[:id]).destroy
       redirect_to :action => 'list'
     else
-      flash[:notice] = _('The ledger category cannot be destroy with ledgers associated to its')
+      flash[:notice] = t(:the_ledger_category_cannot_be_destroy_with_ledgers_associated_to_its)
       redirect_to :action => 'list'
     end
   end

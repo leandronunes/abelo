@@ -1,10 +1,10 @@
 class StoreArticle < Article
 
   def self.short_description
-    _('Store page.')
+    t(:store_page)
   end
 
   def self.description
-    _("Page that generates the organization's store.")
+    t(:page_that_generates_the_organization_store)
   end
 end

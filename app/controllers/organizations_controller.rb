@@ -36,7 +36,7 @@ class OrganizationsController < ApplicationController
   def create
     @organization = Organization.new(params[:organization])
     if @organization.save
-      flash[:notice] = _('Organization was successfully created.')
+      flash[:notice] = t(:organization_was_successfully_created)
       redirect_to :controller => 'configuration', :action => 'edit', :id => @organization, :organization_id => @organization
     else
       render :action => 'new'
@@ -50,7 +50,7 @@ class OrganizationsController < ApplicationController
   def update
     @organization = Organization.find(params[:id])
     if @organization.update_attributes(params[:organization])
-      flash[:notice] = _('The organization was successfully updated.')
+      flash[:notice] = t(:the_organization_was_successfully_updated)
       redirect_to :action => 'show', :organization_id => @organization
     else
       render :action => 'edit'

@@ -1,7 +1,7 @@
 
 <%= render :partial => 'menu' %>
 
-<%= title( _('Editing %s %s') % [@document.name, @system_actor.name] ) %>
+<%= title( t(:editing_%s_%s) % [@document.name, @system_actor.name] ) %>
 
 <%= render :partial => 'shared_document/document_edit', :locals => { :parameters => {:actor => @actor} } %>
 

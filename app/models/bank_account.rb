@@ -4,7 +4,9 @@ class BankAccount < ActiveRecord::Base
   has_many :ledgers, :foreign_key => :bank_account_id
   has_many :balances
 
-  validates_presence_of :bank_id, :message => _('Bank Accounts must be associated to an Bank')
+  validates_presence_of :bank_id, :message => t(:bank_id_is_required)
+  # TODO fix it
+  #t(:bank_accounts_must_be_associated_to_an_bank)
   validates_presence_of :organization_id
 
   after_save do |account|

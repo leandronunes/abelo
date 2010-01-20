@@ -1,6 +1,6 @@
 <%= render :partial => 'menu' %>
 
-<%= title _('Listing %s groups') % MassMailGroup.describe(@group_type) %>
+<%= title t(:listing_%s_groups) % MassMailGroup.describe(@group_type) %>
 
 <%= display_list_options 'mass_mail_group', 'name', :group_type => @group_type %>
 

@@ -4,7 +4,7 @@
 <% display_form_info @address do |item| %>
 
   <%= display_field_form(item, 'country',
-        :title => _('Country'),
+        :title => t(:country),
         :content => select_item('address', 'country_id', @countries)
       )
   %>
@@ -14,38 +14,38 @@
  %> 
 
   <%= display_field_form(item, 'state',
-        :title => _('State'),
+        :title => t(:state),
         :content => select_item('address', 'state_id', @states)
       )
   %>
 
   <%= display_field_form(item, 'city',
-        :title => _('City'),
+        :title => t(:city),
         :content => select_item('address', 'city_id', @cities)
       )
   %>
 
   <%= display_field_form(item, 'street',
-        :title => _('Street'),
+        :title => t(:street),
         :content => text_field('address', 'street'),
 	:html_options => {:class => 'break_line'}
       )
   %>
 
   <%= display_field_form(item, 'number',
-        :title => _('Number'),
+        :title => t(:number),
         :content => text_field('address', 'number')
       )
   %>
   
   <%= display_field_form(item, 'district',
-        :title => _('District'),
+        :title => t(:district),
         :content => text_field('address', 'district')
       )
   %>
 
   <%= display_field_form(item, 'zip_code',
-        :title => _('Zip Code'),
+        :title => t(:zip_code),
         :content => text_field('address', 'zip_code')
       )
   %>

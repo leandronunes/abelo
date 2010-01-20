@@ -8,28 +8,13 @@ class ContactTest < Test::Unit::TestCase
     @category = ContactCategory.find(:all).first
   end
 
-  def test_mandatory_fields
-    count = Contact.count
-
+  def test_name_is_mandatory
     c = Contact.new
-    assert(!c.save)
-
+    c.valid?
+    assert c.errors.invalid?(:name)
     c.name = 'Test'
-    assert(!c.save)
-
-    c.system_actor_id = @customer.id
-    assert(!c.save)
-
-    c.category_id = @category.id
-    assert(c.save)
-
-    assert_equal count + 1, Contact.count
-  end
-  
-  def test_relation_with_system_actor
-    contact = Contact.find(1)
-    assert_not_nil contact.system_actor
-    assert_equal Customer, contact.system_actor.class
+    c.valid?
+    assert !c.errors.invalid?(:name)
   end
 
 end

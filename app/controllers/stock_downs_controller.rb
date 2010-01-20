@@ -33,13 +33,13 @@ class StockDownsController < ApplicationController
 
     @stocks = @organization.stock_virtual_downs(@query)
     @stock_pages, @stocks = paginate_by_collection @stocks
-    @title = _('Stock Down Control')
+    @title = t(:stock_down_control)
     render :template => 'stock_base/list'
   end
 
   def show
     @stock = @organization.stock_downs.find(params[:id])
-    @title = _('Stock Down')
+    @title = t(:stock_down)
     render :template => 'stock_base/show'
   end
 
@@ -50,14 +50,14 @@ class StockDownsController < ApplicationController
     end
     @stock = StockDown.new(:date => Date.today, :amount => 1)
     @products = @organization.products
-    @title = _('Stock Down of Product')
+    @title = t(:stock_down_of_product)
     render :template => 'stock_base/new'
   end
 
   def add
     product = @organization.products.find(params[:product_id])
     @stock = StockDown.new(:product => product, :date => Date.today, :amount => 1)
-    @title = _('Stock Down of Product %s') % product.name
+    @title = t(:stock_down_of_product)
     render :template => 'stock_base/add'
   end
 
@@ -65,15 +65,15 @@ class StockDownsController < ApplicationController
     @stock = StockDown.new(params[:stock])
 
     if @stock.save
-      flash[:notice] = _('It was successfully created.')
+      flash[:notice] = t(:it_was_successfully_created)
       redirect_to :action => 'history', :product_id => @stock.product
     else
       @products = @organization.products
       if params[:product_id].blank?
-        @title = _('Stock Down of Product')
+        @title = t(:stock_down_of_product)
         render :template => 'stock_base/new'
       else
-        @title = _('Stock Down of Product %s') % @stock.product.name
+        @title = t(:stock_down_of_product)
         render :template => 'stock_base/add'
       end
     end
@@ -82,7 +82,7 @@ class StockDownsController < ApplicationController
   def history
     @product = @organization.products.find(params[:product_id])
     @stocks = @product.stock_downs
-    @title  = _('Stock Down History of %s') % "<b>#{@product.name} </b>"
+    @title  = t(:stock_down_history_of)
     render :template => 'stock_base/history'
   end
 
@@ -94,7 +94,7 @@ class StockDownsController < ApplicationController
   def edit
     @stock = @organization.stock_downs.find(params[:id])
     @products = @organization.products
-    @title = _('Edit Stock Down of Product')
+    @title = t(:edit_stock_down_of_product)
     render :template => 'stock_base/edit'
   end
 
@@ -105,7 +105,7 @@ class StockDownsController < ApplicationController
       redirect_to :action => 'list'
     else
       @products = @organization.products
-      @title = _('Edit Stock Down of Product')
+      @title = t(:edit_stock_down_of_product)
       render :template => 'stock_base/edit'
     end
   end

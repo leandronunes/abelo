@@ -634,11 +634,9 @@ class FilterTest < Test::Unit::TestCase
 
   private
     def test_process(controller, action = "show")
-      ActionController::Base.class_eval { include ActionController::ProcessWithTest } unless ActionController::Base < ActionController::ProcessWithTest
       request = ActionController::TestRequest.new
       request.action = action
-      controller = controller.new if controller.is_a?(Class)
-      controller.process_with_test(request, ActionController::TestResponse.new)
+      controller.process(request, ActionController::TestResponse.new)
     end
 end
 
@@ -876,10 +874,8 @@ class YieldingAroundFiltersTest < Test::Unit::TestCase
 
   protected
     def test_process(controller, action = "show")
-      ActionController::Base.class_eval { include ActionController::ProcessWithTest } unless ActionController::Base < ActionController::ProcessWithTest
       request = ActionController::TestRequest.new
       request.action = action
-      controller = controller.new if controller.is_a?(Class)
-      controller.process_with_test(request, ActionController::TestResponse.new)
+      controller.process(request, ActionController::TestResponse.new)
     end
 end

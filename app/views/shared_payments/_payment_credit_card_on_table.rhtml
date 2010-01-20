@@ -1,11 +1,11 @@
 <table>
   <tr>
-    <th colspan='5' > <%= _('Credit Card Informations') %> </th>
+    <th colspan='5' > <%= t(:credit_card_informations) %> </th>
   </tr>
   <tr>
-    <th colspan=2> <%= _('Credit Card Number') %> </th>
-    <th> <%= _('Security Code') %> </th>
-    <th> <%= _('Validity') %> </th>
+    <th colspan=2> <%= t(:credit_card_number) %> </th>
+    <th> <%= t(:security_code) %> </th>
+    <th> <%= t(:validity) %> </th>
   </tr>
   <tr>
     <td colspan=2> <%= text_field('ledger', 'credit_card_number') %> </td>
@@ -13,8 +13,8 @@
     <td> <%= date_select_abelo('ledger', 'credit_card_validity') %> </td>
   </tr>
   <tr>
-    <th colspan=3> <%= _('Name') %> </th>
-    <th> <%= _('CPF') %> </th>
+    <th colspan=3> <%= t(:name) %> </th>
+    <th> <%= t(:cpf) %> </th>
   </tr>
   <tr>
     <td colspan=3> <%= text_field('ledger', 'credit_card_owner_name') %> </td>

@@ -7,7 +7,7 @@ class OrganizationController < ApplicationController
   before_filter :create_organization_tabs
 
   def index
-    @organization.presentation ||= _('Welcome to Abelo System')
+    @organization.presentation ||= t(:welcome_to_abelo_system)
   end
 
   def update
@@ -70,7 +70,7 @@ class OrganizationController < ApplicationController
       highlights_on :action => 'index'
       highlights_on :action => 'edit'
     end
-    t.named _('Presentation')
+    t.named t(:presentation)
 
     t = add_tab do
       links_to :action => 'address'
@@ -79,7 +79,7 @@ class OrganizationController < ApplicationController
       highlights_on :controller => 'organization', :action => 'update_address'
       highlights_on :controller => 'organization', :action => 'edit_address'
     end
-    t.named _('Address')
+    t.named t(:address)
 
     t = add_tab do
       links_to :action => 'contact'
@@ -88,7 +88,7 @@ class OrganizationController < ApplicationController
       highlights_on :controller => 'organization', :action => 'update_contact'
       highlights_on :controller => 'organization', :action => 'edit_contact'
     end
-    t.named _('Contacts')
+    t.named t(:contacts)
   end
 
 end

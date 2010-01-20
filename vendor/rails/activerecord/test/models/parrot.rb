@@ -4,8 +4,6 @@ class Parrot < ActiveRecord::Base
   has_and_belongs_to_many :treasures
   has_many :loots, :as => :looter
   alias_attribute :title, :name
-
-  validates_presence_of :name
 end
 
 class LiveParrot < Parrot

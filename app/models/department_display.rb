@@ -6,7 +6,7 @@ class DepartmentDisplay < DisplayConfiguration
 
   def self.describe(field)
     {
-      'name' =>  _('Name'),
+      'name' =>  t(:name),
     }[field] || field
   end
 

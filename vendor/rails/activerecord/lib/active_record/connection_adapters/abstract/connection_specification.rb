@@ -7,8 +7,6 @@ module ActiveRecord
       end
     end
 
-    ##
-    # :singleton-method:
     # The connection handler
     cattr_accessor :connection_handler, :instance_writer => false
     @@connection_handler = ConnectionAdapters::ConnectionHandler.new
@@ -123,7 +121,6 @@ module ActiveRecord
         connection_handler.retrieve_connection(self)
       end
 
-      # Returns true if +ActiveRecord+ is connected.
       def connected?
         connection_handler.connected?(self)
       end

@@ -6,19 +6,19 @@
     <%= @article.hierarchy.map {|item| " / " + ((item == @article) ? item.name : link_to(item.name, :id => item.id)) } %>
   </h2>
 <% else %>
- <%= title _('Content management') %>
+ <%= title t(:content_management) %>
  <div id='article-buttons'>
-  <%= lightbox_button('add', _('New Page'),:new, {:action => 'new'}, {:class => 'with_text'}) %>
+  <%= lightbox_button('add', t(:new_page),:new, {:action => 'new'}, {:class => 'with_text'}) %>
  </div>
 <% end %>
 
 <%# subitem %>
 <% if !@subitems.empty? && @article %>
-  <%= toggle_panel(_('Hide subitems'), _('Show subitems'), 'article-subitems') %>
+  <%= toggle_panel(t(:hide_subitems'),__('show_subitems'),_'article-subitems) %>
 <% end %>
   
 <div id='article-subitems'>
-  <div class='file-manager-title'><%= @article ? _('Subitems') : _('Pages') %></div>
+  <div class='file-manager-title'><%= @article ? t(:subitems')_:__('pages) %></div>
   <div class='file-manager-small'>
     <% unless @subitems.empty? %>
       <ul id='list_items'>
@@ -28,9 +28,9 @@
     <% if @article %>
       <% button_bar(:class => 'file-manager-controls') do %>
         <% if @article.allow_children? %>
-          <%= lightbox_button('add',  _('New subitem'),  :new, :action => 'new', :parent_id => @article.id) %>
+          <%= lightbox_button('add',  t(:new_subitem),  :new, :action => 'new', :parent_id => @article.id) %>
         <% end %>
-        <%= button('up', _('Go up one level'), :up, :action => (@article.parent ? 'view' : 'index'), :id => @article.parent) %>
+        <%= button('up', t(:go_up_one_level'),_:up,_:action_=>_(@article.parent_?_'view'_:_'index), :id => @article.parent) %>
       <% end %>
     <% end %>
   </div>
@@ -44,21 +44,21 @@
 
       <ul>
         <li>
-        <%= _('"%{article}", last changed by %{author}') % { :article => @article.name, :author => (@article.last_changed_by ? @article.last_changed_by.name : _('Unknown User')) } %>
+        <%= t(:"%{article}",_last_changed_by_%{author}')_%_{_:article_=>_@article.name,_:author_=>_(@article.last_changed_by_?_@article.last_changed_by.name_:__('unknown_user)) } %>
         </li>
         <li>
-        <%= _('Public address of this article: %s') % link_to(url_for(@article.url), @article.url) %>
+        <%= t(:public_address_of_this_article:_%s) % link_to(url_for(@article.url), @article.url) %>
         </li>
         <li>
-        <%= _('Tags:') %> <%= @article.tag_list %>
+        <%= t(:tags:) %> <%= @article.tag_list %>
         </li>
       </ul>
 
-      <%= button('edit', _('Edit'), :edit, { :action => 'edit', :id => @article}) %>
+      <%= button('edit', t(:edit), :edit, { :action => 'edit', :id => @article}) %>
       <%= 
-        #button('home', _('Use as homepage'), :home, { :action => 'set_home_page', :id => @article }, { :method => :post  }) 
+        #button('home', t(:use_as_homepage), :home, { :action => 'set_home_page', :id => @article }, { :method => :post  }) 
       %>
-      <%= button('delete', _('Delete'), :destroy, { :action => 'destroy', :id => @article }, :method => :post, :confirm => _('Are you sure you wan to remove this article?')) %>
+      <%= button('delete', t(:delete'),_:destroy,_{_:action_=>_'destroy',_:id_=>_@article_},_:method_=>_:post,_:confirm_=>__('are_you_sure_you_wan_to_remove_this_article?)) %>
     <% end %>
     <%= @article.to_html %>
   <% end %>

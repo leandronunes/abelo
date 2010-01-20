@@ -1,5 +1,6 @@
 require 'cgi'
 require 'uri'
+require 'action_controller/polymorphic_routes'
 require 'action_controller/routing/optimisations'
 require 'action_controller/routing/routing_ext'
 require 'action_controller/routing/route'
@@ -83,11 +84,9 @@ module ActionController
   # This sets up +blog+ as the default controller if no other is specified.
   # This means visiting '/' would invoke the blog controller.
   #
-  # More formally, you can include arbitrary parameters in the route, thus:
+  # More formally, you can define defaults in a route with the <tt>:defaults</tt> key.
   #
-  #   map.connect ':controller/:action/:id', :action => 'show', :page => 'Dashboard'
-  #
-  # This will pass the :page parameter to all incoming requests that match this route.
+  #   map.connect ':controller/:action/:id', :action => 'show', :defaults => { :page => 'Dashboard' }
   #
   # Note: The default routes, as provided by the Rails generator, make all actions in every
   # controller accessible via GET requests. You should consider removing them or commenting
@@ -193,8 +192,9 @@ module ActionController
   #
   #   map.connect '*path' , :controller => 'blog' , :action => 'unrecognized?'
   #
-  # will glob all remaining parts of the route that were not recognized earlier. 
-  # The globbed values are in <tt>params[:path]</tt> as an array of path segments.
+  # will glob all remaining parts of the route that were not recognized earlier. This idiom
+  # must appear at the end of the path. The globbed values are in <tt>params[:path]</tt> in
+  # this case.
   #
   # == Route conditions
   #
@@ -267,7 +267,7 @@ module ActionController
   module Routing
     SEPARATORS = %w( / . ? )
 
-    HTTP_METHODS = [:get, :head, :post, :put, :delete, :options]
+    HTTP_METHODS = [:get, :head, :post, :put, :delete]
 
     ALLOWED_REQUIREMENTS_FOR_OPTIMISATION = [:controller, :action].to_set
 

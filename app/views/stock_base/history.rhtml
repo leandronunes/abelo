@@ -13,7 +13,7 @@
   )
 %>
 
-<%= select_year @start_date_year, :field_name => 'start_date_year' %> <br/> <%= _('to') %> <br/>
+<%= select_year @start_date_year, :field_name => 'start_date_year' %> <br/> <%= t(:to) %> <br/>
 
 <%= observe_field('date_start_date_year',
   :update => 'abelo_financial_table',

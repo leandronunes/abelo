@@ -7,11 +7,11 @@ class BankAccountDisplay < DisplayConfiguration
 
   def self.describe(field)
     {
-      'bank' =>  _('Bank'),
-      'agency' => _('Agency'),
-      'variation' => _('Variation'),
-      'account' => _('Account'),
-      'is_default' => _('Is it default?'),
+      'bank' =>  t(:bank),
+      'agency' => t(:agency),
+      'variation' => t(:variation),
+      'account' => t(:account),
+      'is_default' => t(:is_it_default?),
     }[field] || field
   end
 

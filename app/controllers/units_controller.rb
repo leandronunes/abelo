@@ -41,7 +41,7 @@ class UnitsController < ApplicationController
     @unit = UnitMeasure.new(params[:unit])
     @unit.organization = @organization
     if @unit.save
-      flash[:notice] = _('The unit was successfully created.')
+      flash[:notice] = t(:the_unit_was_successfully_created)
       redirect_to :action => 'list'
     else
       render :action => 'new'
@@ -56,7 +56,7 @@ class UnitsController < ApplicationController
     @unit = @organization.unit_measures.find(params[:id])
 
     if @unit.update_attributes(params[:unit])
-      flash[:notice] = _('The unit was successfully updated.')
+      flash[:notice] = t(:the_unit_was_successfully_updated)
       redirect_to :action => 'list'
     else
       render :action => 'edit'

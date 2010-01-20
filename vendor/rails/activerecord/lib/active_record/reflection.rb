@@ -65,11 +65,6 @@ module ActiveRecord
       def reflect_on_association(association)
         reflections[association].is_a?(AssociationReflection) ? reflections[association] : nil
       end
-
-      # Returns an array of AssociationReflection objects for all associations which have <tt>:autosave</tt> enabled.
-      def reflect_on_all_autosave_associations
-        reflections.values.select { |reflection| reflection.options[:autosave] }
-      end
     end
 
 
@@ -197,18 +192,10 @@ module ActiveRecord
 
       def counter_cache_column
         if options[:counter_cache] == true
-          "#{active_record.name.demodulize.underscore.pluralize}_count"
+          "#{active_record.name.underscore.pluralize}_count"
         elsif options[:counter_cache]
           options[:counter_cache]
         end
-      end
-
-      def columns(tbl_name, log_msg)
-        @columns ||= klass.connection.columns(tbl_name, log_msg)
-      end
-
-      def reset_column_information
-        @columns = nil
       end
 
       def check_validity!

@@ -3,20 +3,20 @@
 <% display_form_info @ledger do |item| %>
 
   <%= display_field_form(item, 'bank_account_id',
-        :title => _('Bank Account'),
+        :title => t(:bank_account),
         :content => select_item('ledger', 'bank_account_id', @bank_accounts ),
         :html_options => {:class => 'line_item'}
       )
   %>
 
   <%= display_field_form(item, 'date',
-        :title => _('Date:'),
+        :title => t(:date:),
         :content => date_select('ledger', 'date', :order => [:day, :month, :year])
       )
   %>
 
   <%= display_field_form(item, 'payment_method',
-        :title => _('Payment Method'),
+        :title => t(:payment_method),
         :content =>  select_payment('ledger', 'payment_method'),
         :html_options => {:class => 'break_line'}
       )
@@ -36,40 +36,40 @@
   %>
 
   <%= display_field_form(item, 'status',
-        :title => _('Is it a foreseen?'),
+        :title => t(:is_it_a_foreseen?),
         :html_options => {:style => 'clear: left;'}
       )
   %>
 
   <%= display_field_edit(item, 'status',
-        :title => _('Yes'),
+        :title => t(:yes),
         :content => radio_button('ledger', 'status', Status::STATUS_PENDING)
       )
   %>
 
   <%= display_field_edit(item, 'status',
-        :title => _('No'),
+        :title => t(:no),
         :content => radio_button('ledger', 'status', Status::STATUS_DONE)
       )
   %>
 
   <% unless @ledger.scheduled? %>
     <%= display_field_form(item, 'schedule_repeat',
-          :title => _('Repeat this ledger?'),
+          :title => t(:repeat_this_ledger?),
           :content => check_box('ledger', 'schedule_repeat', {:onchange => "show_hide('repeat_informations')"}, 'true', 'false' ),
           :html_options => {:style => 'clear: left;'}
         )
     %>
     <div id="repeat_informations" style="<%= @ledger.schedule_repeat? ? 'display: block;' : 'display: none;'%>">
       <%= display_field_edit(@ledger, 'schedule_periodicity_id',
-            :title => _('Periodicity?'),
+            :title => t(:periodicity?),
             :content => select_item('ledger', 'schedule_periodicity_id', @periodicities),
             :html_options => {:style => 'clear: left;'}
           )
       %>
 
       <%= display_field_edit(@ledger, 'schedule_interval',
-            :title => _('Interval:'),
+            :title => t(:interval:),
             :content => (text_field 'ledger', 'schedule_interval'),
             :html_options => {:class => 'line_item'}
           )
@@ -78,14 +78,14 @@
   <% end %>
   
   <%= display_field_form(item, 'tag_list',
-        :title => _('Tags (separated by comma):'),
+        :title => t(:tags_(separated_by_comma):),
         :content => text_field('ledger', 'tag_list'),
         :html_options => {:class => 'break_line'}
       )
   %>
 
   <%= display_field_form(item, 'value',
-        :title => _('Value:'),
+        :title => t(:value:),
         :content => text_field('ledger', 'value'),
         :html_options => {:class => 'break_line'}
       )
@@ -98,7 +98,7 @@
   %>
   <% if @ledger.scheduled? %>
     <%= display_field_form(item, 'schedule_repeat',
-          :title => _('This ledger is scheduled for %s. Schedule associated with this:') % [parse_date(item.date, false)],
+          :title => t(:this_ledger_is_scheduled_for_%s._schedule_associated_with_this:) % [parse_date(item.date, false)],
           :content => content_tag(:div,  (render :partial => 'schedule_ledgers'), :id => 'abelo_schedule_ledger'),
           :html_options => {:style => 'clear: left;'}
         )

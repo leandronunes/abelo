@@ -56,9 +56,9 @@ module ActiveRecord
           "#{@reflection.name}_count"
         end
 
-        def insert_record(record, force = false, validate = true)
+        def insert_record(record)
           set_belongs_to_association_for(record)
-          force ? record.save! : record.save(validate)
+          record.save
         end
 
         # Deletes the records according to the <tt>:dependent</tt> option.

@@ -2,11 +2,11 @@ class MassMailGroupDisplay < DisplayConfiguration
 
   def self.describe(field)
     {
-      'name' => _('Name'),
-      'customers' => _('Customers'),
-      'customer' => _('Customer'),
-      'workers' => _('Workers'),
-      'worker' => _('Worker'),
+      'name' => t(:name),
+      'customers' => t(:customers),
+      'customer' => t(:customer),
+      'workers' => t(:workers),
+      'worker' => t(:worker),
     } [field] || field
   end
 

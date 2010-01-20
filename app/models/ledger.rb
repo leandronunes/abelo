@@ -86,23 +86,23 @@ class Ledger < ActiveRecord::Base
 
   def validate
     if (self.date.to_datetime != Date.today.to_datetime) and (self.is_add_cash? or self.is_remove_cash? or self.is_change?)
-      self.errors.add(:date, _('You cannot schedule this kind of ledger.'))
+      self.errors.add(:date, t(:you_cannot_schedule_this_kind_of_ledger))
     end
 
     if (self.value >= 0) and self.expense?
-      self.errors.add(:value, _('The value must be minor than zero.'))
+      self.errors.add(:value, t(:the_value_must_be_minor_than_zero))
     end
 
     if (self.expense?) and (self.type_of != Payment::TYPE_OF_EXPENSE)
-      self.errors.add(:type_of, _('You cannot have an remove cash with type different of %s') % Payment::TYPE_OF_EXPENSE)
+      self.errors.add(:type_of, t(:you_cannot_have_an_remove_cash_with_type_different_of_expense))
     end
 
     if self.is_add_cash? and ( self.type_of != Payment::TYPE_OF_INCOME)
-      self.errors.add(:type_of, _('You cannot have an add cash with type different of %s') % Payment::TYPE_OF_INCOME) 
+      self.errors.add(:type_of, t(:you_cannot_have_an_add_cash_with_type_different_of_income))
     end
 
     if self.printer_command.nil? and self.needs_fiscal_command?
-      self.errors.add(_('You cannot realize money operations whithout create the printer command'))
+      self.errors.add(t(:you_cannot_realize_money_operations_whithout_create_the_printer_command))
     end
 
     self.errors.add(:value, _("The value should be at least 0.01" )) if !self.expense? and (value.nil? || value <= 0.00)
@@ -139,7 +139,7 @@ class Ledger < ActiveRecord::Base
     ledger.update_balance
     ledger.organization.update_tracker('ledger_points', ledger.organization.ledgers.count) unless ledger.organization.nil?
 #FIXME see a way to stop this
-#    raise _('You cannot destroy sale ledgers') if ledger.owner.kind_of? Sale
+#    raise t(:you_cannot_destroy_sale_ledgers) if ledger.owner.kind_of? Sale
   end
 
   before_save do |ledger|
@@ -445,28 +445,28 @@ class Ledger < ActiveRecord::Base
 #  #You have to access the date method and this method
 #  #set the correct value of foreseen_date attribute
   def foreseen_date= date
-    raise _('This function cannot be accessed directly')
+    raise t(:this_function_cannot_be_accessed_directly)
   end
 
 #  #This method cannot be access directly. 
 #  #You have to access the value method and this method
 #  #set the correct value of foreseen_value attribute
   def foreseen_value= value
-    raise _('This function cannot be accessed directly')
+    raise t(:this_function_cannot_be_accessed_directly)
   end
 
 #  #This method cannot be access directly. 
 #  #You have to access the date method and this method
 #  #set the correct value of effective_date attribute
   def effective_date= date
-    raise _('This function cannot be accessed directly')
+    raise t(:this_function_cannot_be_accessed_directly)
   end
 
 #  #This method cannot be access directly. 
 #  #You have to access the value method and this method
 #  #set the correct value of effective_value attribute
   def effective_value= value
-    raise _('This function cannot be accessed directly')
+    raise t(:this_function_cannot_be_accessed_directly)
   end
 
 end

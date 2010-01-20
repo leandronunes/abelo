@@ -2,8 +2,8 @@
   <ul>
   <% for item in items %>
     <li><%= item.description %>
-    <%= link_to_remote _('Edit'), :url => {:controller => 'document_items', :action => 'edit', :id => item.id, :document_id => @document.id }, :update => 'new_component' %>
-    <%= link_to_remote _('Remove'), :url => {:controller => 'document_items', :action => 'destroy', :id => item.id, :document_id => @document.id }, :update => 'proposal_sections', :confirm => _('Are you sure'), :method => 'post' %></li>
+    <%= link_to_remote t(:edit), :url => {:controller => 'document_items', :action => 'edit', :id => item.id, :document_id => @document.id }, :update => 'new_component' %>
+    <%= link_to_remote t(:remove'),_:url_=>_{:controller_=>_'document_items',_:action_=>_'destroy',_:id_=>_item.id,_:document_id_=>_@document.id_},_:update_=>_'proposal_sections',_:confirm_=>__('are_you_sure), :method => 'post' %></li>
   <% end %>
   </ul>
 </div>

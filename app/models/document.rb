@@ -38,10 +38,10 @@ class Document < ActiveRecord::Base
   end  
 
   def validate
-    self.errors.add(:document_model_id, _('You cannot have a document model in a model document')) if self.is_model? and not self.document_model.nil?
-    self.errors.add( _('You have to choose almost an department to the document')) if  (not self.organization.nil?) and (not self.organization.departments.empty?) and (self.departments.empty?)
+    self.errors.add(:document_model_id, t(:you_cannot_have_a_document_model_in_a_model_document)) if self.is_model? and not self.document_model.nil?
+    self.errors.add( t(:you_have_to_choose_almost_an_department_to_the_document)) if  (not self.organization.nil?) and (not self.organization.departments.empty?) and (self.departments.empty?)
     self.errors.add( _("You can't associate a person/organization to a document model'")) if self.is_model? and not self.owner.nil?
-    self.errors.add(:owner, _('You cannot have a non document model whitout a customer, supplier or worker associated to him')) if !self.is_model? and (self.owner_type.nil? or self.owner_id.nil?)
+    self.errors.add(:owner, t(:you_cannot_have_a_non_document_model_whitout_a_customer,_supplier_or_worker_associated_to_him)) if !self.is_model? and (self.owner_type.nil? or self.owner_id.nil?)
   end
 
   def validate_on_destroy
@@ -79,9 +79,9 @@ class Document < ActiveRecord::Base
 
   def self.describe(field)
     {
-      'Customer' => _('Customer'),
-      'Supplier' => _('Supplier'),
-      'Worker' => _('Worker')
+      'Customer' => t(:customer),
+      'Supplier' => t(:supplier),
+      'Worker' => t(:worker)
     }[field] || field
   end
 

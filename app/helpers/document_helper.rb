@@ -38,16 +38,16 @@ module DocumentHelper
   def display_document_model_collection_options(item, params ={})
     content_tag(:div,
       [
-        button('view_small', _('Show'), :show,
+        button('view_small', t(:show), :show,
               {:action => 'show', :id => item.id}.merge(params)),
-        button('edit_small', _('Edit'), :edit,
+        button('edit_small', t(:edit), :edit,
               {:action => 'edit', :id => item.id}.merge(params)),
-        button('del_small', _('Destroy'), :destroy,
+        button('del_small', t(:destroy), :destroy,
               {:action => 'destroy', :id => item.id}.merge(params),
-               :method => 'post', :confirm => _('Are you sure?')),
-        button('document_small', _('Documents'), :list,
+               :method => 'post', :confirm => t(:are_you_sure?)),
+        button('document_small', t(:documents), :list,
               {:action => 'list', :show_documents => true}.merge(params)),
-        button('new_document_small', _('New Document'), :new,
+        button('new_document_small', t(:new_document), :new,
               {:action => 'new',
                :document_model_id => params[:document_model_id] }.merge(params))
       ].join("\n"),

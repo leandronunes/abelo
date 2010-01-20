@@ -14,8 +14,8 @@ class Tracker < ActiveRecord::Base
 
   def self.describe(field)
     {
-      'user' =>  _('User total points'),
-      'website' => _('Website points'),
+      'user' =>  t(:user_total_points),
+      'website' => t(:website_points),
     }[field] || field
   end
 

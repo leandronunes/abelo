@@ -11,7 +11,7 @@
 <% display_form_info @mass_mail do |item| %>
 
   <%= display_field_form(item, 'customers',
-      :title => _('Customers'),
+      :title => t(:customers),
       :content => select_recipients('mass_mail', 'recipients', @recipients),
       :html_options => {:class => 'break_line' }
     )
@@ -38,8 +38,8 @@
 
 
   <p><input type="radio" id="mass_mail_dest_1" name="mass_mail[dest]" value="all_customers" />
-  <label for='mass_mail_dest_1'><%= _('All customers') %></label></p>
+  <label for='mass_mail_dest_1'><%= t(:all_customers) %></label></p>
   <p><input type="radio" id="mass_mail_dest_2" name="mass_mail[dest]" value="receive_newsletter" />
-  <label for='mass_mail_dest_2'><%= _('Select customers') %></label></p>
+  <label for='mass_mail_dest_2'><%= t(:select_customers) %></label></p>
 
 <% end %>

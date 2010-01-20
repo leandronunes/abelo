@@ -6,9 +6,9 @@ class StockDisplay < DisplayConfiguration
   
   def self.describe(field)
     {
-      'date' => _('Date'),
-      'amount' => _('Amount'),
-      'product' => _('Product')
+      'date' => t(:date),
+      'amount' => t(:amount),
+      'product' => t(:product)
     }[field] || field
   end
 

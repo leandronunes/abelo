@@ -5,56 +5,56 @@
 <% display_form_info @product do |item| %>
 
   <%= display_field_form(item, 'name',
-        :title => _('Name'),
+        :title => t(:name),
         :content => text_field('product', 'name')
       )
   %>
   
   <%= display_field_form(item, 'category',
-        :title => _('Category'),
+        :title => t(:category),
         :content => select_item('product', 'category_id', @categories)
       )
   %>
   <%= display_field_form(item, 'size',
-        :title => _('Size'),
+        :title => t(:size),
         :content => select_item('product', 'size', @sizes)
       )
   %>
 
   <%= display_field_form(item, 'unit_measure',
-        :title => _('Unit'),
+        :title => t(:unit),
         :content => select_item('product', 'unit_measure_id', @units),
         :html_options => {:class => 'break_line' }
       )
   %>
 
   <%= display_field_form(item, 'color',
-        :title => _('Color'),
+        :title => t(:color),
         :content => select_color('product', 'color', @colors)
       )
   %>
 
   <%= display_field_form(item, 'sell_price',
-        :title => _('Sell Price'),
+        :title => t(:sell_price),
         :content => text_field('product', 'sell_price', :value => num_to_currency(@product.sell_price)),
         :html_options => {:class => 'break_line' }
       )
   %>
 
   <%= display_field_form(item, 'minimum_amount',
-        :title => _('Minimum Amount'),
+        :title => t(:minimum_amount),
         :content => text_field('product', 'minimum_amount')  
       )
   %>
 
   <%= display_field_form(item, 'code',
-        :title => _('Code'),
+        :title => t(:code),
         :content => text_field('product', 'code')
       )
   %>
 
   <%= display_field_form(item, 'suppliers',
-      :title => _('Suppliers'),
+      :title => t(:suppliers),
       :content => multiple_select('product', 'supplier_ids', @suppliers ),
       :html_options => {:class => 'break_line' }
     )

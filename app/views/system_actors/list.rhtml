@@ -1,5 +1,5 @@
 
-<%= title (_('Listing %s') % SystemActor.describe(@actor).downcase) %>
+<%= title (t(:listing_%s) % SystemActor.describe(@actor).downcase) %>
 
 <%= display_list_options 'system_actor', 'name', :actor => @actor %>
 

@@ -5,12 +5,12 @@
 <%= show_image i %>
 <% end %>
 <ul>
-  <li> <%= product_title(_('Price:')) %>  <%= @product.sell_price  %></li>
-  <li> <%= product_title(_('Unit:')) %> <%= @product.unit_measure.name %></li>
+  <li> <%= product_title(t(:price:)) %>  <%= @product.sell_price  %></li>
+  <li> <%= product_title(t(:unit:)) %> <%= @product.unit_measure.name %></li>
   <% if !@product.size.blank? %>
-    <li>  <%= product_title(_('Size:')) + @product.size %></li>
+    <li>  <%= product_title(t(:size:)) + @product.size %></li>
   <% end %>
   <% if !@product.color.blank? %>
-    <li> <%= product_title(_('Color:')) + @product.color %></li>
+    <li> <%= product_title(t(:color:)) + @product.color %></li>
   <% end %>
 </ul>

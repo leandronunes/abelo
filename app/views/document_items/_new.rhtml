@@ -1,11 +1,11 @@
 <%= error_messages_for 'commercial_proposal_item' %>
 
-<h2><%= _('New item') %></h2>
+<h2><%= t(:new_item) %></h2>
 
 <% form_remote_tag(:url => {:controller => 'commercial_proposal_items', :action => 'add', :id => @commercial_section_id, :commercial_proposal_id => @commercial_proposal_id }, :update => {:success => 'proposal_sections', :failure => 'new_component'} ) do %>
 
 <%= render :partial => 'form' %>
-<%= link_to_remote _('Close'), {:url => {:action => 'cancel'}, :update => 'new_component'}, :class => 'button' %>
-<%= submit_tag _('Add item'), :class => 'button' %>
+<%= link_to_remote t(:close), {:url => {:action => 'cancel'}, :update => 'new_component'}, :class => 'button' %>
+<%= submit_tag t(:add_item), :class => 'button' %>
 
 <%= end %>

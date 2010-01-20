@@ -1,8 +1,8 @@
-<%= title _('Categories') %>
+<%= title t(:categories) %>
 
 <ul>
-  <li> <%= link_to _('Product'), {:action => 'list', :category_type => 'product' } %> </li>
-  <li> <%= link_to _('Customer'), {:action => 'list', :category_type => 'customer' } %> </li>
-  <li> <%= link_to _('Worker'), {:action => 'list', :category_type => 'worker' } %> </li>
-  <li> <%= link_to _('Ledgers'), {:controller => 'ledger_categories'} %> </li>
+  <li> <%= link_to t(:product), {:action => 'list', :category_type => 'product' } %> </li>
+  <li> <%= link_to t(:customer), {:action => 'list', :category_type => 'customer' } %> </li>
+  <li> <%= link_to t(:worker), {:action => 'list', :category_type => 'worker' } %> </li>
+  <li> <%= link_to t(:ledgers), {:controller => 'ledger_categories'} %> </li>
 </ul>

@@ -10,10 +10,10 @@
 
   <div class="button_bar">
    <div class="beault_button">
-     <%= button 'password', _('Cancel Sale'), :save, {}, {:class => 'button button_login with_text'} %>
+     <%= button 'password', t(:cancel_sale), :save, {}, {:class => 'button button_login with_text'} %>
    </div>
    <div class="beault_button">
-    <%= button 'back', content_tag('span', _('Voltar')), :back, {:action => 'coupon_open', :id => @sale}, :accesskey => 'v', :class => 'button back with_text' %>
+    <%= button 'back', content_tag('span', t(:voltar)), :back, {:action => 'coupon_open', :id => @sale}, :accesskey => 'v', :class => 'button back with_text' %>
    </div>
   </div>
 </div>

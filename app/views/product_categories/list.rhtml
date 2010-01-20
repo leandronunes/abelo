@@ -1,8 +1,8 @@
-<h2><%= _('Listing product_categories') %></h2>
+<h2><%= t(:listing_product_categories) %></h2>
 
 <table>
   <tr>
-    <th><%= _('Name') %></th>
+    <th><%= t(:name) %></th>
   </tr>
   
 <% for product_category in @product_categories.select { |c| c.top_level? } %>
@@ -12,4 +12,4 @@
 
 <br />
 
-<%= button _('New top-level product category'), :add, :action => 'new' %>
+<%= button t(:new_top-level_product_category), :add, :action => 'new' %>

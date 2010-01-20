@@ -6,10 +6,10 @@ class OrganizationDisplay < DisplayConfiguration
 
   def self.describe(field)
     {
-      'name' =>  _('Name'),
-      'cnpj' => _('CNPJ'),
-      'presentation' => _('Presentation Name'),
-      'country' => _('Country'),
+      'name' =>  t(:name),
+      'cnpj' => t(:cnpj),
+      'presentation' => t(:presentation_name),
+      'country' => t(:country),
     }[field] || field
   end
 

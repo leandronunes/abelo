@@ -5,13 +5,13 @@
 <% display_form_info @periodicity do |item| %>
 
   <%= display_field_form(item, 'name',
-        :title => _('Name'),
+        :title => t(:name),
         :content => text_field('periodicity', 'name')
       ) 
   %>
 
   <%= display_field_form(item, 'number_of_days',
-        :title => _('Number of Days'),
+        :title => t(:number_of_days),
         :content => text_field('periodicity', 'number_of_days')
       ) 
   %>

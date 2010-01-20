@@ -1,10 +1,10 @@
-<h2> <%= _('New customer_category') %> </h2>
+<h2> <%= t(:new_customer_category) %> </h2>
 
 <% form_tag :action => 'create' do %>
   <%= render :partial => 'form' %>
   <div class='button_bar'>
     <%= button _("Create"), :save %>
-    <%= button _('Cancel'), :cancel, :action => 'list' %>
+    <%= button t(:cancel), :cancel, :action => 'list' %>
   </div>
 <% end %>
 

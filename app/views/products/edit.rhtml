@@ -1,8 +1,8 @@
 
-<%= title(_('Editing product')) %>
+<%= title(t(:editing_product)) %>
 
 <% form_tag :action => 'update', :id => @product do %>
     <%= render :partial => 'form' %>   
     <%= display_edit_info_options(@product) %>
-    <%= button 'image', _('Images'), :img, :action => 'images', :id => @product %>  
+    <%= button 'image', t(:images), :img, :action => 'images', :id => @product %>  
 <% end %>

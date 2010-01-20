@@ -10,14 +10,14 @@
 <% display_form_info @mass_mail do |item| %>
 
 <%= display_field_form(item, @recipient_type,
-        :title => _('All'),
+        :title => t(:all),
         :content => radio_button('mass_mail', 'recipients', "all_#{@recipient_type}"),
         :html_options => {:style => 'clear: left;'}
       )
   %>
 
   <%= display_field_form(item, @recipient_type,
-      :title => _('Personalized'),
+      :title => t(:personalized),
       :content => radio_button('mass_mail', 'recipients', "personalized_#{@recipient_type}"),
       :html_options => {:style => 'clear: left;'}
     )
@@ -35,6 +35,6 @@
   </div>
 <% end %>
 
-<%= lightbox_close_button(_('Cancel')) %>
+<%= lightbox_close_button(t(:cancel)) %>
 
 

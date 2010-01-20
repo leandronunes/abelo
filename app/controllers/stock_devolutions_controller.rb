@@ -33,13 +33,13 @@ class StockDevolutionsController < ApplicationController
 
     @stocks = @organization.stock_virtual_devolutions(@query)
     @stock_pages, @stocks = paginate_by_collection @stocks
-    @title = _('Stock Devolution Control')
+    @title = t(:stock_devolution_control)
     render :template => 'stock_base/list'
   end
 
   def show
     @stock = @organization.stock_devolutions.find(params[:id])
-    @title = _('Devolution')
+    @title = t(:devolution)
     render :template => 'stock_base/show'
   end
 
@@ -50,14 +50,14 @@ class StockDevolutionsController < ApplicationController
     end
     @stock = StockDevolution.new(:date => Date.today, :amount => 1)
     @products = @organization.products
-    @title = _('Devolution of Product')
+    @title = t(:devolution_of_product)
     render :template => 'stock_base/new'
   end
 
   def add
     product = @organization.products.find(params[:product_id])
     @stock = StockDevolution.new(:product => product, :date => Date.today, :amount => 1)
-    @title = _('Devolution of Product %s') % product.name
+    @title = t(:devolution_of_product)
     render :template => 'stock_base/add'
   end
 
@@ -65,15 +65,15 @@ class StockDevolutionsController < ApplicationController
     @stock = StockDevolution.new(params[:stock])
 
     if @stock.save
-      flash[:notice] = _('It was successfully created.')
+      flash[:notice] = t(:it_was_successfully_created)
       redirect_to :action => 'history', :product_id => @stock.product
     else
       @products = @organization.products
       if params[:product_id].blank?
-        @title = _('Devolution of Product')
+        @title = t(:devolution_of_product)
         render :template => 'stock_base/new'
       else
-        @title = _('Devolution of Product %s') % @stock.product.name
+        @title = t(:devolution_of_product)
         render :template => 'stock_base/add'
       end
     end
@@ -82,7 +82,7 @@ class StockDevolutionsController < ApplicationController
   def history
     @product = @organization.products.find(params[:product_id])
     @stocks = @product.stock_devolutions
-    @title  = _('Devolution History of %s') % "<b>#{@product.name} </b>"
+    @title  = t(:devolution_history_of)
     render :template => 'stock_base/history'
   end
 
@@ -94,7 +94,7 @@ class StockDevolutionsController < ApplicationController
   def edit
     @stock = @organization.stock_devolutions.find(params[:id])
     @products = @organization.products
-    @title = _('Edit Devolution of Product')
+    @title = t(:edit_devolution_of_product)
     render :template => 'stock_base/edit'
   end
 
@@ -105,7 +105,7 @@ class StockDevolutionsController < ApplicationController
       redirect_to :action => 'history', :product_id => @stock.product
     else
       @products = @organization.products
-      @title = _('Edit Devolution of Product')
+      @title = t(:edit_devolution_of_product)
       render :template => 'stock_base/edit'
     end
   end

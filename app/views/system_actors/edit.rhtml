@@ -1,4 +1,4 @@
-<%= title(_('Editing %s') % SystemActor.describe(@actor)) %>
+<%= title(t(:editing_%s) % SystemActor.describe(@actor)) %>
 
 <% form_tag :action => 'update', :id => @system_actor do %>
   <%= render :partial => 'form' %>

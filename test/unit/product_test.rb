@@ -60,15 +60,8 @@ class ProductTest < Test::Unit::TestCase
   def test_relation_with_images
     product = Product.create(:name => 'product', :sell_price => 2.0, :unit_measure => @unit, :organization_id => @org.id, :category_id => @product_category.id)
     img = Image.new 
-    stream = StringIO.new(File.read("#{RAILS_ROOT}/public/images/rails.png"))
-    def stream.original_filename
-      'rails.png'
-    end
-    def stream.content_type
-      'image/png'
-    end
-    img.description = ('Image for testing')
-    img.picture = stream
+    img.uploaded_data = ActionController::TestUploadedFile.new(File.join(RAILS_ROOT, 'public', 'images', 'rails.png'), 'image/png')
+    img.description = 'Image for testing'
     img.product = product
     img.save
     
@@ -160,15 +153,8 @@ class ProductTest < Test::Unit::TestCase
   def test_image
     product = Product.create(:name => 'product', :sell_price => 2.0, :unit_measure => @unit, :organization_id => @org.id, :category_id => @product_category.id)
     img = Image.new 
-    stream = StringIO.new(File.read("#{RAILS_ROOT}/public/images/rails.png"))
-    def stream.original_filename
-      'rails.png'
-    end
-    def stream.content_type
-      'image/png'
-    end
-    img.description = ('Image for testing')
-    img.picture = stream
+    img.uploaded_data = ActionController::TestUploadedFile.new(File.join(RAILS_ROOT, 'public', 'images', 'rails.png'), 'image/png')
+    img.description = 'Image for testing'
     img.product = product
     img.save
     

@@ -18,8 +18,8 @@ module StockHelper
   def display_stock_collection_options(item, params ={})
     content_tag(:div,
       [
-        button('new_entry', _('New entry'), :new_entry, {:action => 'add', :product_id => item.product_in_list.id}.merge(params)),
-        button('history', _('History'), :history, {:action => 'history', :product_id => item.product_in_list.id}.merge(params))
+        button('new_entry', t(:new_entry), :new_entry, {:action => 'add', :product_id => item.product_in_list.id}.merge(params)),
+        button('history', t(:history), :history, {:action => 'history', :product_id => item.product_in_list.id}.merge(params))
       ].join("\n"),
       :class => 'list_item_button'
     )

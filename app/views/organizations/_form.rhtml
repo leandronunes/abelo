@@ -3,20 +3,20 @@
 <% display_form_info @organization do |item| %>
 
   <%= display_field_form(item, 'name',
-        :title => _('Name'),
+        :title => t(:name),
         :content => text_field('organization', 'name')
       )
   %>
 
   <%= display_field_form(item, 'identifier',
-        :title => _('Nickname'),
+        :title => t(:nickname),
         :content => text_field('organization', 'identifier'),
         :html_options => {:class => 'break_line'}
       )
   %>
 
   <%= display_field_form(item, 'cnpj',
-        :title => _('CNPJ'),
+        :title => t(:cnpj),
         :content => text_field('organization', 'cnpj')
       )
   %>

@@ -10,15 +10,15 @@ class DocumentDisplay < DisplayConfiguration
 
   def self.describe(field)
     {
-      'name' => _('Name'),
-      'body' => _('Body'),
-      'departments' => _('Departments'),
-      'owner' => _('Person/Organization Name'),
-      'owner_class' => _('Person/Organization Function'),
-      'customer' => _('Customer'),
-      'supplier' => _('Supplier'),
-      'worker' => _('Worker'),
-      'tag_list' => _('Tag list'),
+      'name' => t(:name),
+      'body' => t(:body),
+      'departments' => t(:departments),
+      'owner' => t(:person/organization_name),
+      'owner_class' => t(:person/organization_function),
+      'customer' => t(:customer),
+      'supplier' => t(:supplier),
+      'worker' => t(:worker),
+      'tag_list' => t(:tag_list),
     }[field] || field
   end
 

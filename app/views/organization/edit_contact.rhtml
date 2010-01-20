@@ -1,4 +1,4 @@
-<%= title _('Editing Organization Contact') %>
+<%= title t(:editing_organization_contact) %>
 
 <% form_tag :action => 'update_contact' do %>
 
@@ -8,31 +8,31 @@
   <% display_form_info @contact do |item| %>
 
     <%= display_field_form(item, 'name',
-          :title => _('Organization Responsible'),
+          :title => t(:organization_responsible),
           :content => text_field('contact', 'name')
         )
     %>
 
     <%= display_field_form(item, 'phone',
-          :title => _('Phone'),
+          :title => t(:phone),
           :content => text_field('contact', 'phone')
         )
     %>
 
     <%= display_field_form(item, 'fax',
-          :title => _('Fax'),
+          :title => t(:fax),
           :content => text_field('contact', 'fax')
         )
     %>
 
     <%= display_field_form(item, 'email',
-          :title => _('Email'),
+          :title => t(:email),
           :content => text_field('contact', 'email')
         )
     %>
 
     <%= display_field_form(item, 'description',
-          :title => _('Description'),
+          :title => t(:description),
           :content => text_field('contact', 'description')
         )
     %>

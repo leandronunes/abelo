@@ -1,10 +1,10 @@
 <% if current_user.administrator %>
 
-<h3><%= _('Administrative tasks') %></h3>
+<h3><%= t(:administrative_tasks) %></h3>
 
 <ul>
-  <li><%= link_to _('Organizations'), { :controller => 'organizations' } %> </li>
-  <li><%= link_to _('Users administration'), { :controller => 'users', :action => 'list' } %> </li>
+  <li><%= link_to t(:organizations), { :controller => 'organizations' } %> </li>
+  <li><%= link_to t(:users_administration), { :controller => 'users', :action => 'list' } %> </li>
 </ul>
 
 <% end %>

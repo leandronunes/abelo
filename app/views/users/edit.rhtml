@@ -2,11 +2,11 @@
 <% form_tag({ :action => 'update', :id => @user }) do %>
 <%= render :partial => 'form' %>
 <div class='button_bar'>
-<%= button 'save', _('Save'), :save %>
+<%= button 'save', t(:save), :save %>
 <% if current_user.administrator %>
-  <%= button 'del', _('Cancel'), :cancel, :action => 'list' %>
+  <%= button 'del', t(:cancel), :cancel, :action => 'list' %>
 <% else %>
-  <%= button 'del', _('Cancel'), :cancel, :action => 'index' %>
+  <%= button 'del', t(:cancel), :cancel, :action => 'index' %>
 <% end %>
 </div>
 <% end %>

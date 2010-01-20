@@ -33,7 +33,8 @@ class CreateStocks < ActiveRecord::Migration
       # from who we bought the items
       t.column :supplier_id, :integer
       # the validity of the product
-      t.column :validity, :date
+      t.date :date, :validity
+
 
       ################################
       ### fields used only by StockOut

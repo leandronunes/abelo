@@ -1,11 +1,12 @@
 #!/usr/bin/env ruby
 require File.dirname(__FILE__) + '/../config/environment'
 
-
 ############Country, State, City########################
-BSC::Country.destroy_all
+BSC::Country.delete_all
 country = BSC::Country.create!(:name => 'Brazil')
+BSC::State.delete_all
 state = BSC::State.create!(:name => 'Bahia', :country => country)
+BSC::City.delete_all
 city = BSC::City.create!(:name => 'Salvador', :state => state)
 
 
@@ -30,6 +31,8 @@ organization.contact_name = 'Juca Cunha'
 organization.contact_phone = '3456 3422'
 organization.contact_fax_number = '3465 3456'
 organization.contact_email = 'toca@colivre.coop.br'
+address = Address.new(:city => city, :state => state, :country => country, :street => 'some')
+organization.address = address
 organization.save!
 
 ############Configuration#########################
@@ -268,7 +271,7 @@ PrinterDisplay.available_fields.collect { |d|
 }
 configuration.set_printer_displays=(params)
 
-configuration.save!
+#configuration.save!
 
 ###########Categories###################################
 Category.destroy_all
@@ -342,14 +345,8 @@ IMAGE_PATH_DIR = "#{RAILS_ROOT}/script/test_images"
 
 camisa_img = Image.new
 camisa_img.description = 'camisa básica azul'
-stream = StringIO.new(File.read("#{IMAGE_PATH_DIR}/camisa_basica_azul.jpg"))
-def stream.original_filename
-  'camisa_basica_azul.jpg'
-end
-def stream.content_type
-  'image/jpg'
-end
-camisa_img.picture = stream
+camisa_img.temp_data = File.join("#{IMAGE_PATH_DIR}/camisa_basica_azul.jpg")
+
 camisa_img.product = camisa
 camisa_img.save!
 

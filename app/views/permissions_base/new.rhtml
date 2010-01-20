@@ -1,4 +1,4 @@
-<%= title( _('New User')) %>
+<%= title( t(:new_user)) %>
 
 <% form_tag :action => 'create', :id => @user, :organization_id => @organization.id  do %>
   <%= render :partial => 'permissions_base/form' %>

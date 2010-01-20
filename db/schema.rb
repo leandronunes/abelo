@@ -68,11 +68,6 @@ ActiveRecord::Schema.define(:version => 100) do
     t.integer  "width"
   end
 
-  create_table "attachments", :force => true do |t|
-    t.string  "file",         :null => false
-    t.integer "mass_mail_id", :null => false
-  end
-
   create_table "balances", :force => true do |t|
     t.float   "value",           :default => 0.0
     t.date    "date"
@@ -123,10 +118,12 @@ ActiveRecord::Schema.define(:version => 100) do
     t.string  "cell_phone"
     t.string  "fax"
     t.string  "email"
-    t.text    "description"
     t.integer "category_id"
-    t.string  "owner_type",  :null => false
-    t.integer "owner_id",    :null => false
+    t.string  "owner_type"
+    t.integer "owner_id"
+    t.integer "system_actor_id"
+    t.text    "info"
+    t.text    "description"
   end
 
   create_table "countries", :force => true do |t|
@@ -211,9 +208,18 @@ ActiveRecord::Schema.define(:version => 100) do
   end
 
   create_table "images", :force => true do |t|
-    t.string  "description", :null => false
-    t.string  "picture",     :null => false
-    t.integer "product_id",  :null => false
+    t.string   "content_type"
+    t.string   "filename"
+    t.string   "thumbnail"
+    t.string   "image_hash"
+    t.integer  "size"
+    t.integer  "width"
+    t.integer  "height"
+    t.integer  "product_id"
+    t.integer  "parent_id"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "invoices", :force => true do |t|
@@ -436,6 +442,7 @@ ActiveRecord::Schema.define(:version => 100) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "supplier_id"
+    t.date     "date"
     t.date     "validity"
     t.integer  "sell_id"
     t.integer  "invoice_id"

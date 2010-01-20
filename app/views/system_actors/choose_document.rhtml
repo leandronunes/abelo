@@ -1,6 +1,6 @@
 <%= render :partial => 'menu' %>
 
-<%=  title _('%s for %s %s') % [@organization.camel_document_name, @system_actor.name.camelcase, SystemActor.describe(@actor)]%>
+<%=  title t(:%s_for_%s_%s) % [@organization.camel_document_name, @system_actor.name.camelcase, SystemActor.describe(@actor)]%>
 
 <%= render :partial => 'shared_document/document_choose', :locals => { :parameters => {:actor => @actor} } %>
 

@@ -3,7 +3,7 @@
 <% if @configuration.has_worker_module? %>
 <div class="field_item">
   <div>
-    <strong><%= _('Worker Fields') %></strong>
+    <strong><%= t(:worker_fields) %></strong>
     <ul>
       <% @worker_fields.each do |@field| %>
         <%= render :partial => 'field_display' %>
@@ -16,7 +16,7 @@
 <% if @configuration.has_worker_category_module? %>
 <div class="field_item">
   <div>
-    <strong><%= _('Worker Category Fields') %></strong>
+    <strong><%= t(:worker_category_fields) %></strong>
     <ul>
       <% @worker_category_fields.each do |@field| %>
         <%= render :partial => 'field_display' %>
@@ -29,7 +29,7 @@
 <% if @configuration.has_customer_module? %>
 <div class="field_item">
   <div>
-    <strong><%= _('Customer Fields') %></strong>
+    <strong><%= t(:customer_fields) %></strong>
     <ul>
       <% @customer_fields.each do |@field| %>
         <%= render :partial => 'field_display' %>
@@ -42,7 +42,7 @@
 <% if @configuration.has_customer_category_module? %>
 <div class="field_item">
   <div>
-    <strong><%= _('Customer Category Fields') %></strong>
+    <strong><%= t(:customer_category_fields) %></strong>
     <ul>
       <% @customer_category_fields.each do |@field| %>
         <%= render :partial => 'field_display' %>
@@ -55,7 +55,7 @@
 <% if @configuration.has_supplier_module? %>
 <div class="field_item">
   <div>
-    <strong><%= _('Supplier Fields') %></strong>
+    <strong><%= t(:supplier_fields) %></strong>
     <ul>
       <% @supplier_fields.each do |@field| %>
         <%= render :partial => 'field_display' %>
@@ -68,7 +68,7 @@
 <% if @configuration.has_supplier_category_module? %>
 <div class="field_item">
   <div>
-    <strong><%= _('Supplier Category Fields') %></strong>
+    <strong><%= t(:supplier_category_fields) %></strong>
     <ul>
       <% @supplier_category_fields.each do |@field| %>
         <%= render :partial => 'field_display' %>
@@ -81,7 +81,7 @@
 <% if @configuration.has_product_module? %>
 <div class="field_item">
   <div>
-    <strong><%= _('Product Fields') %></strong>
+    <strong><%= t(:product_fields) %></strong>
     <ul>
       <% @product_fields.each do |@field| %>
         <%= render :partial => 'field_display' %>
@@ -94,7 +94,7 @@
 <% if @configuration.has_product_category_module? %>
 <div class="field_item">
   <div>
-    <strong><%= _('Product Category Fields') %></strong>
+    <strong><%= t(:product_category_fields) %></strong>
     <ul>
       <% @product_category_fields.each do |@field| %>
         <%= render :partial => 'field_display' %>
@@ -107,7 +107,7 @@
 <% if @configuration.has_department_module? %>
 <div class="field_item">
   <div>
-    <strong><%= _('Department Fields') %></strong>
+    <strong><%= t(:department_fields) %></strong>
     <ul>
       <% @department_fields.each do |@field| %>
         <%= render :partial => 'field_display' %>
@@ -120,7 +120,7 @@
 <% if @configuration.has_ledger_category_module? %>
 <div class="field_item">
   <div>
-    <strong><%= _('Ledger Category Fields') %></strong>
+    <strong><%= t(:ledger_category_fields) %></strong>
     <ul>
       <% @ledger_category_fields.each do |@field| %>
         <%= render :partial => 'field_display' %>
@@ -133,7 +133,7 @@
 <% if @configuration.has_bank_account_module? %>
 <div class="field_item">
   <div>
-    <strong><%= _('Bank Account Fields') %></strong>
+    <strong><%= t(:bank_account_fields) %></strong>
     <ul>
       <% @bank_account_fields.each do |@field| %>
         <%= render :partial => 'field_display' %>
@@ -146,7 +146,7 @@
 <% if @configuration.has_money_module? %>
 <div class="field_item">
   <div>
-    <strong><%= _('Money Fields') %></strong>
+    <strong><%= t(:money_fields) %></strong>
     <ul>
       <% @money_fields.each do |@field| %>
         <%= render :partial => 'field_display' %>
@@ -159,7 +159,7 @@
 <% if @configuration.has_check_module? %>
 <div class="field_item">
   <div>
-    <strong><%= _('Check Fields') %></strong>
+    <strong><%= t(:check_fields) %></strong>
     <ul>
       <% @check_fields.each do |@field| %>
         <%= render :partial => 'field_display' %>
@@ -172,7 +172,7 @@
 <% if @configuration.has_credit_card_module? %>
 <div class="field_item">
   <div>
-    <strong><%= _('Credit Card Fields') %></strong>
+    <strong><%= t(:credit_card_fields) %></strong>
     <ul>
       <% @credit_card_fields.each do |@field| %>
         <%= render :partial => 'field_display' %>
@@ -185,7 +185,7 @@
 <% if @configuration.has_debit_card_module? %>
 <div class="field_item">
   <div>
-    <strong><%= _('Debit Card Fields') %></strong>
+    <strong><%= t(:debit_card_fields) %></strong>
     <ul>
       <% @debit_card_fields.each do |@field| %>
         <%= render :partial => 'field_display' %>
@@ -198,7 +198,7 @@
 <% if @configuration.has_stock_virtual_module? %>
 <div class="field_item">
   <div>
-    <strong><%= _('Stock Virtual Fields') %></strong>
+    <strong><%= t(:stock_virtual_fields) %></strong>
     <ul>
       <% @stock_virtual_fields.each do |@field| %>
         <%= render :partial => 'field_display' %>
@@ -211,7 +211,7 @@
 <% if @configuration.has_stock_in_module? %>
 <div class="field_item">
   <div>
-    <strong><%= _('Stock In Fields') %></strong>
+    <strong><%= t(:stock_in_fields) %></strong>
     <ul>
       <% @stock_in_fields.each do |@field| %>
         <%= render :partial => 'field_display' %>
@@ -224,7 +224,7 @@
 <% if @configuration.has_stock_out_module? %>
 <div class="field_item">
   <div>
-    <strong><%= _('Stock Out Fields') %></strong>
+    <strong><%= t(:stock_out_fields) %></strong>
     <ul>
       <% @stock_out_fields.each do |@field| %>
         <%= render :partial => 'field_display' %>
@@ -237,7 +237,7 @@
 <% if @configuration.has_user_module? %>
 <div class="field_item">
   <div>
-    <strong><%= _('User Fields') %></strong>
+    <strong><%= t(:user_fields) %></strong>
     <ul>
       <% @user_fields.each do |@field| %>
         <%= render :partial => 'field_display' %>
@@ -250,7 +250,7 @@
 <% if @configuration.has_periodicity_module? %>
 <div class="field_item">
   <div>
-    <strong><%= _('Periodicity Fields') %></strong>
+    <strong><%= t(:periodicity_fields) %></strong>
     <ul>
       <% @periodicity_fields.each do |@field| %>
         <%= render :partial => 'field_display' %>
@@ -260,4 +260,4 @@
 </div>
 <% end %>
 
-<%= button('edit', _('Edit'), :list, :action => 'edit') %> 
+<%= button('edit', t(:edit'),_:list,_:action_=>_'edit) %> 

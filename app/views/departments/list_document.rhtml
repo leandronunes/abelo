@@ -1,6 +1,6 @@
 <%= render :partial => 'menu' %>
 
-<%= title _('%s %s') % [@department.name, @organization.document_name] %>
+<%= title t(:%s_%s) % [@department.name, @organization.document_name] %>
 
 <%= render :partial => 'shared_document/document_list' %>
 

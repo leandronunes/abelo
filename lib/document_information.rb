@@ -53,10 +53,10 @@ module DocumentInformation
       if params[:model_id]
         model = @organization.documents.find(params[:model_id])
         @document = model.dclone
-        @title = _('New Document from model %s') % model.name
+        @title = t(:new_document_from_model)
       else
         @document = Document.new
-        @title =  _('New Blank Document')
+        @title =  t(:new_blank_document)
       end
       @departments = @organization.departments
     end
@@ -66,7 +66,7 @@ module DocumentInformation
       @document.organization = @organization
       @document.owner = @organization.send(config[:model].pluralize).find(params[:id])
       if @document.save
-        flash[:notice] = _('The document was successfully created.')
+        flash[:notice] = t(:the_document_was_successfully_created)
         redirect_to :action => 'list_document', :actor => params[:actor], :id => params[:id]
       else
         @departments = @organization.departments
@@ -108,9 +108,9 @@ module DocumentInformation
       [
         form_tag({:action => 'list_document'}.merge(params), :class => 'search_itens'),
           display_autocomplete(object, method, params),
-          button('search', _('Search Document'), :search),
+          button('search', t(:search_document), :search),
           button('add', _("Add New Document"), :new, {:action => 'choose_document'}.merge(params) ),
-          button('reset', _('Reset document search'), :list, {:action => 'list_document'}.merge(params)),
+          button('reset', t(:reset_document_search), :list, {:action => 'list_document'}.merge(params)),
         '</form>'
       ].join("\n")
 
@@ -133,10 +133,10 @@ module DocumentInformation
     def display_document_collection_options(item, params = {}, html_options = {})
       content_tag(:div,
         [
-          button('view_small', _('Show'), :show, {:action => 'show_document', :document_id => item.id}.merge(params)),
-          button('edit_small', _('Edit'), :edit, {:action => 'edit_document', :document_id => item.id}.merge(params)),
-          button('del_small', _('Destroy'), :destroy, {:action => 'destroy_document', :document_id => item.id}.merge(params),
-                 :method => 'post', :confirm => _('Are you sure?'))
+          button('view_small', t(:show), :show, {:action => 'show_document', :document_id => item.id}.merge(params)),
+          button('edit_small', t(:edit), :edit, {:action => 'edit_document', :document_id => item.id}.merge(params)),
+          button('del_small', t(:destroy), :destroy, {:action => 'destroy_document', :document_id => item.id}.merge(params),
+                 :method => 'post', :confirm => t(:are_you_sure))
         ].join("\n"),
         :class => 'list_item_button'
       )
@@ -144,8 +144,8 @@ module DocumentInformation
     def display_show_info_documents_options(object, params = {},  html_options = {})
       content_tag(:div,
         [
-          button('back', _('Back'), :back, {:action => 'list_document'}.merge(params)),
-          button('edit', _('Edit'), :edit, {:action => 'edit_document', :document_id => object.id}.merge(params))
+          button('back', t(:back), :back, {:action => 'list_document'}.merge(params)),
+          button('edit', t(:edit), :edit, {:action => 'edit_document', :document_id => object.id}.merge(params))
         ].join("\n"),
         html_options
       )

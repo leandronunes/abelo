@@ -5,37 +5,37 @@
 <% display_edit_info @entry, :class => 'view_data' do |item | %>
  
   <%= display_field_edit( item, 'supplier',
-        :title => _('Supplier'),
+        :title => t(:supplier),
         :content => select( 'entry', 'supplier_id', @suppliers.map { |s| [ s.name, s.id] } ) 
     )
   %>
 
   <%= display_field_edit( item, 'amount',
-        :title => _('Amount'),
+        :title => t(:amount),
         :content => text_field( 'entry', 'amount' )
     )
   %>
 
   <%= display_field_edit( item, 'price',
-        :title => _('Buy Price'),
+        :title => t(:buy_price),
         :content => text_field( 'entry', 'price' )
     )
   %>
 
   <%= display_field_edit( item, 'date',
-        :title => _('Date'),
+        :title => t(:date),
         :content => date_select( 'entry', 'date' )
     )
   %>
 
   <%= display_field_edit( item, 'validity',
-        :title => _('Validity'),
+        :title => t(:validity),
         :content => date_select( 'entry', 'validity', :include_blank => true )
     )
   %>
 
   <%= display_field_edit( item, 'payment_status',
-        :title => _('Payment status ok?'),
+        :title => t(:payment_status_ok?),
         :content => check_box( 'entry', 'payment_status' )
     )
   %>

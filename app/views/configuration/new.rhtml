@@ -1,4 +1,4 @@
-<%= title _('Adding Organization Profile') %>
+<%= title t(:adding_organization_profile) %>
 
 <% form_tag :action => 'create' do %>
 
@@ -7,12 +7,12 @@
   <% display_form_info @configuration do |item| %>
 
     <%= display_field_form(item, 'name',
-        :title => _('Name'),
+        :title => t(:name),
         :content => text_field('configuration', 'name')
       )
     %>
     <%= display_field_form(item, 'description',
-        :title => _('Description'),
+        :title => t(:description),
         :content => text_field('configuration', 'description')
       )
     %>

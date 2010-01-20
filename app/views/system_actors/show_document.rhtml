@@ -1,6 +1,6 @@
 
 <%= render :partial => 'menu' %>
 
-<%= title _('%s %s') % [@system_actor.name, @document.name] %>
+<%= title t(:%s_%s) % [@system_actor.name, @document.name] %>
 
 <%= render :partial => 'shared_document/document_show', :locals => { :parameters => {:actor => @actor} } %>

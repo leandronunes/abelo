@@ -11,7 +11,7 @@ class StockDown < Stock
     if self.product && self.amount
       total = self.product.amount_in_stock || 0
       if self.amount.abs > total
-        self.errors.add('amount', _('%{fn} must not be larger than the total amount of this product in stock (which is %d).') % total)
+        self.errors.add('amount', t(:must_not_be_larger_than_the_total_amount_of_this_product_in_stock))
       end
     end
   end

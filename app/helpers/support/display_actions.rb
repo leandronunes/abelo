@@ -10,9 +10,9 @@
     [
       form_tag({:action => 'list'}.merge(params), :class => 'search_itens'),
         display_autocomplete(object, method, params),
-        button('search', _('Search'), :search),
+        button('search', t(:search), :search),
         button('add', _("Add New"), :new, {:action => 'new'}.merge(params) ),
-        button('reset', _('Reset search'), :list, {:action => 'list'}.merge(params)),
+        button('reset', t(:reset_search), :list, {:action => 'list'}.merge(params)),
       '</form>'
     ].join("\n")
     
@@ -185,8 +185,8 @@
   def display_show_info_options(object, params = {},  html_options = {})
     content_tag(:div,
       [
-        button('back', _('Back'), :back, {:action => 'list'}.merge(params)),
-        button('edit', _('Edit'), :edit, {:action => 'edit', :id => object.id}.merge(params))
+        button('back', t(:back), :back, {:action => 'list'}.merge(params)),
+        button('edit', t(:edit), :edit, {:action => 'edit', :id => object.id}.merge(params))
       ].join("\n"),
       html_options
     )
@@ -213,9 +213,9 @@
   def display_edit_info_options(object, params = {}, html_options = {})
     content_tag(:div,
       [
-        button('back', _('Back'), :back, {:action => 'list'}.merge(params)),
-        button('save', _('Save'), :save),
-        button('reset', _('Reset'), :reset, {}, {:type => 'reset'} ),
+        button('back', t(:back), :back, {:action => 'list'}.merge(params)),
+        button('save', t(:save), :save),
+        button('reset', t(:reset), :reset, {}, {:type => 'reset'} ),
       ].join("\n"),
       html_options
     )
@@ -264,14 +264,14 @@
   # Display a field of false type.
   # EX:
   #
-  #   When +false+ is passed. It returns +_('False')+
+  #   When +false+ is passed. It returns +t(:false)+
   #
   def display_field_type_false_class(content=nil)
-    _('False')
+    t(:false)
   end
 
   def display_field_type_true_class(content=nil)
-    _('True')
+    t(:true)
   end
 
   def display_field_type_nil_class(content=nil)
@@ -309,10 +309,10 @@
   def display_collection_options(item, params = {}, html_options = {})
     content_tag(:div,
       [
-        button('view_small', _('Show'), :show, {:action => 'show', :id => item.id}.merge(params)),
-        button('edit_small', _('Edit'), :edit, {:action => 'edit', :id => item.id}.merge(params)),
-        button('del_small', _('Destroy'), :destroy, {:action => 'destroy', :id => item.id}.merge(params),
-               :method => 'post', :confirm => _('Are you sure?'))
+        button('view_small', t(:show), :show, {:action => 'show', :id => item.id}.merge(params)),
+        button('edit_small', t(:edit), :edit, {:action => 'edit', :id => item.id}.merge(params)),
+        button('del_small', t(:destroy), :destroy, {:action => 'destroy', :id => item.id}.merge(params),
+               :method => 'post', :confirm => t(:are_you_sure?))
       ].join("\n"),
       :class => 'list_item_button'
     )
@@ -323,8 +323,8 @@
   def display_stock_options(item, params ={})
     content_tag(:div,
       [
-        button('new_entry', _('New entry'), :new_entry, {:action => 'new', :id => item.id}.merge(params)),
-        button('history', _('History'), :history, {:action => 'history', :id => item.id}.merge(params))
+        button('new_entry', t(:new_entry), :new_entry, {:action => 'new', :id => item.id}.merge(params)),
+        button('history', t(:history), :history, {:action => 'history', :id => item.id}.merge(params))
       ].join("\n"),
       :class => 'list_item_button'
     )

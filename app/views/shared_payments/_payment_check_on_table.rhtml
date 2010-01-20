@@ -1,12 +1,12 @@
 <table>
   <tr>
-    <th colspan='5' > <%= _('Check Informations') %> </th>
+    <th colspan='5' > <%= t(:check_informations) %> </th>
   </tr>
   <tr>
-    <th colspan=2> <%= _('Bank') %> </th>
-    <th> <%= _('Agency') %> </th>
-    <th> <%= _('Account') %> </th>
-    <th> <%= _('Check Number') %> </th>
+    <th colspan=2> <%= t(:bank) %> </th>
+    <th> <%= t(:agency) %> </th>
+    <th> <%= t(:account) %> </th>
+    <th> <%= t(:check_number) %> </th>
   </tr>
   <tr>
     <td colspan=2> <%= select_item('ledger', 'check_bank_id', @banks) %> </td>
@@ -15,10 +15,10 @@
     <td> <%= text_field('ledger', 'check_number') %> </td>
   </tr>
   <tr>
-    <th colspan=2 > <%= _('Name') %> </th>
-    <th> <%= _('RG') %> </th>
-    <th> <%= _('CPF') %> </th>
-    <th> <%= _('Contact Phone') %> </th>
+    <th colspan=2 > <%= t(:name) %> </th>
+    <th> <%= t(:rg) %> </th>
+    <th> <%= t(:cpf) %> </th>
+    <th> <%= t(:contact_phone) %> </th>
   </tr>
   <tr>
     <td colspan=2> <%= text_field('ledger', 'check_owner_name') %> </td>

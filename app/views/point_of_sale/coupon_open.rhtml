@@ -1,11 +1,11 @@
 
 <%= notice_box flash[:notice] %>
 
-<%= title _('Open Coupon') %>
+<%= title t(:open_coupon) %>
 
   <div id="cumpom_bar">
-    <%= link_to content_tag('span', _('Cancel sale')), {:controller => 'point_of_sale', :action => 'cancel'}, :accesskey => 'c', :class => 'button bt_big cancel_sale with_text' %>
-    <%= link_to content_tag('span', _('Payment')), {:controller => 'point_of_sale', :action => 'add_payment'}, :accesskey => 'p', :class => 'button bt_big currency_plus with_text' %>
+    <%= link_to content_tag('span', t(:cancel_sale)), {:controller => 'point_of_sale', :action => 'cancel'}, :accesskey => 'c', :class => 'button bt_big cancel_sale with_text' %>
+    <%= link_to content_tag('span', t(:payment)), {:controller => 'point_of_sale', :action => 'add_payment'}, :accesskey => 'p', :class => 'button bt_big currency_plus with_text' %>
   </div>
 
 <div id="abelo_sale">

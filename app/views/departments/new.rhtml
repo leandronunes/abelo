@@ -1,4 +1,4 @@
-<%= title _('New %s') % @organization.camel_department_name %>
+<%= title t(:new_%s) % @organization.camel_department_name %>
 
 <% form_tag :action => 'create' do %>
   <%= render :partial => 'form' %>

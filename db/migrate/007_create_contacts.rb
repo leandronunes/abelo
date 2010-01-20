@@ -1,13 +1,15 @@
 class CreateContacts < ActiveRecord::Migration
   def self.up
     create_table :contacts do |t|
-      t.column :name,             :string, :null => false
+      t.column :name,             :string
       t.column :phone,            :string
+      t.column :cell_phone,       :string
+      t.column :fax,              :string
       t.column :email,            :string
-      t.column :description,      :text
-      t.column :system_actor_id,  :integer, :null => false
-      t.column :category_id,      :integer, :null => false
-      t.column :info,             :text
+      t.column :category_id,      :integer
+      t.column :owner_type,       :string
+      t.column :owner_id,         :integer
+      t.text :info, :description
     end
   end
 

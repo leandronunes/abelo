@@ -6,11 +6,11 @@
 
 <% form_tag do %>
 
-<p><label for="login"> <%= _("Login") %> </label><br />
+<p><label for="login"> <%= t(:login) %> </label><br />
 <span><%= text_field_tag 'login' %></span>
 </p>
 
-<p><label for="password"><%= _("Password") %> </label><br />
+<p><label for="password"><%= t(:password) %> </label><br />
 <span><%= password_field_tag 'password' %></span>
 </p>
 
@@ -20,10 +20,10 @@
 
 <div class="button_bar">
  <div class="beault_button">
-  <%= button 'password', '&nbsp;&nbsp;&nbsp;&nbsp;' + _('Log in'), :save, {}, {:class => 'with_text'} %>
+  <%= button 'password', '&nbsp;&nbsp;&nbsp;&nbsp;' + t(:log_in), :save, {}, {:class => 'with_text'} %>
  </div>
  <div class="beault_button">
-  <%= button 'add', _('Sign up'), :add, {:action => 'signup'}, {:class => 'with_text'} %>
+  <%= button 'add', t(:sign_up), :add, {:action => 'signup'}, {:class => 'with_text'} %>
  </div>
 </div>
 

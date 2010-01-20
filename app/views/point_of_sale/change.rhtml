@@ -1,10 +1,10 @@
 
-<%= title _('Change') %>
+<%= title t(:change) %>
 
 <div class="change_sale">
   <p><%= _("Total: %s") % num_to_currency(@sale.total_value) %> </p>
   <p><%= _("Total Payment: %s") % num_to_currency(@sale.total_payment) %></p>
   <p><%= _("Change: %s") % num_to_currency(@sale.change_value, false) %></p>
-  <p><%= link_to '<span>'+_('End Sale')+'</span>', :action => 'create_close_sale', :sale_id => @sale %> </p>
+  <p><%= link_to '<span>'+t(:end_sale)+'</span>', :action => 'create_close_sale', :sale_id => @sale %> </p>
 </div>
 

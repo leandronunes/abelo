@@ -2,14 +2,14 @@
 
   <%= error_messages_for 'cash' %>
 
-  <p><label name="cash_value"> <%= _('Value') %> </label>
+  <p><label name="cash_value"> <%= t(:value) %> </label>
     <%= text_field('cash', 'value') %>
   </p>
 
-  <p><label name="cash_description"> <%= _('Description') %> </label>
+  <p><label name="cash_description"> <%= t(:description) %> </label>
     <%= text_field('cash', 'description') %>
   </p>
 
 </div>
-  <%= button 'save', _('Save'), :save, {}, {:class => 'button'} %>
+  <%= button 'save', t(:save), :save, {}, {:class => 'button'} %>
 

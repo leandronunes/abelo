@@ -237,7 +237,7 @@ class PrinterCommand < ActiveRecord::Base
         msg ||= 'ble 3'
 #        self.set_error(code, msg)
       when PendingReduceZ:
-        msg ||= _('Pending Reduction Z')
+        msg ||= t(:pending_reduction_z)
         make_reduction_z
 #        self.set_error(code, msg)
       when PendingReadX:

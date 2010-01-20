@@ -7,20 +7,20 @@
 <% display_edit_info @system_actor  do |item| %>
   
   <%= display_field_edit(item, 'name',
-        :title => _('Name'),
+        :title => t(:name),
         :content => text_field('system_actor', 'name')
       )
   %>
 
   <%= display_field_edit(item, 'actor_type',
-        :title => _('Natural Person'),
+        :title => t(:natural_person),
         :content => radio_button('system_actor', 'person_type', 'natural'),
         :html_options => {:style => 'clear: left;'}
       )
   %>
 
   <%= display_field_edit(item, 'actor_type',
-        :title => _('Juristic Person'),
+        :title => t(:juristic_person),
         :content => radio_button('system_actor', 'person_type', 'juristic')
       )
   %>
@@ -47,20 +47,20 @@
   </div>
 
   <%= display_field_edit(item, 'address',
-        :title => _('Address'),
+        :title => t(:address),
         :content => text_field('system_actor', 'address'),
         :html_options => {:style => 'clear: left;'}
       )
   %>
 
   <%= display_field_edit(item, 'email',
-        :title => _('Email'),
+        :title => t(:email),
         :content => text_field('system_actor', 'email')
       )
   %>
 
   <%= display_field_edit(item, 'category',
-        :title => _('Category'),
+        :title => t(:category),
         :content => select_category('system_actor', @actor),
 	:html_options => {:class => 'break_line'}
       )

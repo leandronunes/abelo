@@ -1,4 +1,4 @@
-<%= title _('Editing Organization %s') % @organization.name %>
+<%= title t(:editing_organization_%s) % @organization.name %>
 
 <% form_tag :action => 'update', :id => @organization  do %>
 
@@ -7,13 +7,13 @@
   <% display_form_info @organization do |item| %>
   
     <%= display_field_form(item, 'name',
-          :title => _('Name'),
+          :title => t(:name),
           :content => text_field('organization', 'name')
         )
     %>
   
     <%= display_field_form(item, 'cnpj',
-          :title => _('CNPJ'),
+          :title => t(:cnpj),
           :content => text_field('organization', 'cnpj')
         )
     %>

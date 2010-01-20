@@ -8,7 +8,7 @@
 
       <div class='button_bar'>
         <%=  submit_to_remote "button_remote", _("Save"), :url => {:action => "update", :id => @system_actor, :actor => @actor}, :update => {:success => 'warp', :failure => 'form'} %>
-        <%= button _('Cancel'), :cancel, :action => 'list', :actor => @actor %>
+        <%= button t(:cancel), :cancel, :action => 'list', :actor => @actor %>
       </div>
     <% end %>
     <%= hide_item_bar("new_worker")%>

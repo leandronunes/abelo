@@ -35,21 +35,21 @@ class Payment  < ActiveRecord::Base
 
   def self.describe(item)
     {
-      'I' => _('Income'),
-      'E' => _('Expense')
+      'I' => t(:income),
+      'E' => t(:expense)
     }[item] || item
   end
 
 
   def self.describe_payment(item)
     {
-      'check' => _('Check'),
-      'credit_card' => _('Credit Card'),
-      'debit_card' => _('Debit Card'),
-      'money' => _('Money'),
-      'remove_cash' => _('Remove Cash'),
-      'add_cash' => _('Add Cash'),
-      'change' => _('Change'),
+      'check' => t(:check),
+      'credit_card' => t(:credit_card),
+      'debit_card' => t(:debit_card),
+      'money' => t(:money),
+      'remove_cash' => t(:remove_cash),
+      'add_cash' => t(:add_cash),
+      'change' => t(:change),
     }[item] || item
   end 
 

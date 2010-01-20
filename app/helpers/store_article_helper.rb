@@ -14,7 +14,8 @@ module StoreArticleHelper
       c = c.parent
     end
 
-    link_to_remote(_('Start'), :url => article_page_url(params.merge({:action => 'index' })), :failure => "$('store_content').innerHTML=request.responseText" ) + result
+    link_to_remote(t(:start), :url => article_page_url(params.merge({:action => 'index' })), :failure => "$('store_content').innerHTML=request.responseText" ) + result
+
   end
 
   def product_title(title)

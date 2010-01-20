@@ -19,7 +19,8 @@ module ApplicationHelper
   end
 
   def show_date(date)
-    _('%{year}/%{month}/%{day}') % {:day => '%02d' % date.day, :month => '%02d' % date.month, :year => '%04d' % date.year}
+    "%s %s %s" % [date.day, date.month, date.year]
+#    "%{year}/%{month}/%{day}" % {:day => '%02d' % date.day, :month => '%02d' % date.month, :year => '%04d' % date.year}
   end  
 
   def date_select_abelo(object_name, method, options ={})
@@ -51,7 +52,8 @@ module ApplicationHelper
     content_tag('div',
       [
       show_image(image) +
-      button('del_small', _('Destroy'), :destroy, {:action => 'remove_image', :image_id => image.id, :product_id => @product }, { :confirm => _('Are you sure?') })
+      button('del_small', t(:destroy), :destroy, {:action => 'remove_image', :image_id => image.id, :product_id => @product }, { :confirm => t(:are_you_sure) })
+
       ],
       html_options
     )
@@ -61,9 +63,9 @@ module ApplicationHelper
     [
       form_tag({:action => 'list'}.merge(params), :class => 'search_itens'),
         display_autocomplete(object, method, params),
-        button('search', _('Search'), :search),
+        button('search', t(:search), :search),
         button('add', _("Add New"), :new, params.merge({:action => 'new', :id => nil})),
-        button('reset', _('Reset search'), :list, params.merge({:action => 'list'})),
+        button('reset', t(:reset_search), :list, params.merge({:action => 'list'})),
       '</form>'
     ].join("\n")
     
@@ -138,7 +140,7 @@ module ApplicationHelper
           :class => 'control_header'
         ),
         (@organization.nil? or current_user.administrator) ? 
-              link_to(_('Abelo'), :controller => 'organizations') : 
+              link_to(t(:abelo), :controller => 'organizations') : 
               (can(:controller => 'organization') ? 
                  link_to_organization(@organization) : 
                  link_to(@organization.name, :controller => 'public') 
@@ -265,7 +267,7 @@ module ApplicationHelper
 
       value = (!display_obj.nil? and display_obj.break_line?) ? {:checked => 'checked'} : {}
       checkbox_fields << content_tag('input', 
-        _('Break Line'), 
+        t(:break_line), 
         {
           :name => "#{object}[#{"Set#{display_class}".tableize}][#{item}][break_line]", 
           :type => 'checkbox', :value => true
@@ -274,7 +276,7 @@ module ApplicationHelper
 
       value = (!display_obj.nil?  and display_obj.display_in_list?) ? {:checked => 'checked'} : {}
       checkbox_fields << content_tag('input', 
-        _('Display in List?'), 
+        t(:display_in_list?), 
         {
           :name => "#{object}[#{"Set#{display_class}".tableize}][#{item}][display_in_list]", 
           :type => 'checkbox', :value => true
@@ -284,7 +286,7 @@ module ApplicationHelper
 
       value = (!display_obj.nil?  and display_obj.display_title?) ? {:checked => 'checked'} : {}
       checkbox_fields << content_tag('input', 
-        _('Display Title?'), 
+        t(:display_title?), 
         {
           :name => "#{object}[#{"Set#{display_class}".tableize}][#{item}][display_title]", 
           :type => 'checkbox', :value => true
@@ -333,7 +335,7 @@ module ApplicationHelper
 
       value = (!display_obj.nil? and display_obj.break_line?) ? {:checked => 'checked'} : {}
       checkbox_fields << content_tag('input', 
-        _('Break Line'), 
+        t(:break_line), 
         {
           :name => "#{object}[#{"Set#{display_class}".tableize}][#{display_obj.field}][break_line]", 
           :type => 'checkbox', :value => true
@@ -342,7 +344,7 @@ module ApplicationHelper
 
       value = (!display_obj.nil?  and display_obj.display_in_list?) ? {:checked => 'checked'} : {}
       checkbox_fields << content_tag('input', 
-        _('Display in List?'), 
+        t(:display_in_list?), 
         {
           :name => "#{object}[#{"Set#{display_class}".tableize}][#{display_obj.field}][display_in_list]", 
           :type => 'checkbox', :value => true
@@ -352,7 +354,7 @@ module ApplicationHelper
 
       value = (!display_obj.nil?  and display_obj.display_title?) ? {:checked => 'checked'} : {}
       checkbox_fields << content_tag('input', 
-        _('Display Title?'), 
+        t(:display_title?), 
         {
           :name => "#{object}[#{"Set#{display_class}".tableize}][#{display_obj.field}][display_title]", 
           :type => 'checkbox', :value => true
@@ -392,7 +394,7 @@ module ApplicationHelper
   end
 
 #  <p><input type="radio" id="mass_mail_dest_1" name="mass_mail[dest]" value="all_customers" />
-#  <label for='mass_mail_dest_1'><%= _('All customers') %></label></p>
+#  <label for='mass_mail_dest_1'><%= t(:all_customers) %></label></p>
 #select_recipients('mass_mail', 'recipients', 'customers', @options_for_recipients),
 
   def select_recipients(object, method, collection=[], title="", text_method=:name, value_method=:id )
@@ -443,7 +445,7 @@ module ApplicationHelper
   end
 
   def footer
-    _("Abelo %s - Copyrigth &copy; 2007 %s. This software is under %s") % [Abelo::VERSION, link_to(_('Colivre'), 'http://www.colivre.coop.br', :alt => 'Cooperativa de Tecnologias Livres'), link_to(_('GPLv3'), 'http://www.gnu.org/licenses/gpl-3.0.html')]
+    t("abelo_footer", :version => Abelo::VERSION, :link_to_colivre => link_to('Colivre', 'http://www.colivre.coop.br', :alt => 'Cooperativa de Tecnologias Livres'), :link_to_gnu =>link_to('GPLv3', 'http://www.gnu.org/licenses/gpl-3.0.html'))
   end
 
   def select_item(object, method, collection=[], text_method=:name, value_method=:id )
@@ -455,9 +457,9 @@ module ApplicationHelper
 
   def select_status(object, method, options = {}, html_options = {})
     collection = [
-      [_('Pending'), Status::STATUS_PENDING],
-      [_('Cancelled'), Status::STATUS_CANCELLED],
-      [_('Done'), Status::STATUS_DONE],
+      [t(:pending), Status::STATUS_PENDING],
+      [t(:cancelled), Status::STATUS_CANCELLED],
+      [t(:done), Status::STATUS_DONE],
     ]
     select(object, method,collection, options, html_options)   
   end
@@ -632,23 +634,23 @@ module ApplicationHelper
   end
 
   def display_edit_button(location)
-    button('edit', _('Edit'), :edit, location)
+    button('edit', t(:edit), :edit, location)
   end
 
   def display_back_button(location)
-    button('back', _('Back'), :back, location)
+    button('back', t(:back), :back, location)
   end
 
   def display_image_button(location)
-    button('image', _('Save'), :image, location)
+    button('image', t(:save), :image, location)
   end
 
   def display_save_button
-    button('save', _('Save'), :save)
+    button('save', t(:save), :save)
   end
 
   def display_reset_button
-    button('reset', _('Reset'), :reset, {}, {:type => 'reset'} )
+    button('reset', t(:reset), :reset, {}, {:type => 'reset'} )
   end
 
   def display_form_info(object, html_options = {}, &block)
@@ -722,10 +724,10 @@ module ApplicationHelper
   # Display a field of false type.
   # EX:
   #
-  #   When +false+ is passed. It returns +_('False')+
+  #   When +false+ is passed. It returns +t(:false)+
   #
   def display_field_type_false_class(content=nil)
-    _('False')
+    t(:false)
   end
 
   def display_field_type_time(content=nil)
@@ -733,7 +735,7 @@ module ApplicationHelper
   end
 
   def display_field_type_true_class(content=nil)
-    _('True')
+    t(:true)
   end
 
   def display_field_type_nil_class(content=nil)
@@ -776,10 +778,10 @@ module ApplicationHelper
   def display_collection_options(item, params = {}, html_options = {})
     content_tag(:div,
       [
-        button('view_small', _('Show'), :show, {:action => 'show', :id => item.id}.merge(params)),
-        button('edit_small', _('Edit'), :edit, {:action => 'edit', :id => item.id}.merge(params)),
-        button('del_small', _('Destroy'), :destroy, {:action => 'destroy', :id => item.id}.merge(params),
-               :method => 'post', :confirm => _('Are you sure?'))
+        button('view_small', t(:show), :show, {:action => 'show', :id => item.id}.merge(params)),
+        button('edit_small', t(:edit), :edit, {:action => 'edit', :id => item.id}.merge(params)),
+        button('del_small', t(:destroy), :destroy, {:action => 'destroy', :id => item.id}.merge(params),
+               :method => 'post', :confirm => t(:are_you_sure?))
       ].join("\n"),
       :class => 'list_item_button'
     )
@@ -790,8 +792,8 @@ module ApplicationHelper
   def display_stock_options(item, params ={})
     content_tag(:div,
       [
-        button('new_entry', _('New entry'), :new_entry, {:action => 'new', :id => item.id}.merge(params)),
-        button('history', _('History'), :history, {:action => 'history', :id => item.id}.merge(params))
+        button('new_entry', t(:new_entry), :new_entry, {:action => 'new', :id => item.id}.merge(params)),
+        button('history', t(:history), :history, {:action => 'history', :id => item.id}.merge(params))
       ].join("\n"),
       :class => 'list_item_button'
     )
@@ -825,7 +827,7 @@ module ApplicationHelper
     [
       content_tag(:ul,
         [
-        content_tag(:label, _('Tags:')),
+        content_tag(:label, t(:tags)),
         tags.map do |t|
             content_tag(:li, link_to_remote(t, :url => {:action => 'find_by_tag', :tag => t, :collection => collection.collect {|item| item.id }.join(',')}, :update => 'content_list') )
         end
@@ -843,8 +845,8 @@ module ApplicationHelper
   end
 
   def parse_date(date, show_time = true)
-    show_time == true ? date.strftime(_('%d/%m/%Y: %T')) : date.strftime(_('%d/%m/%Y'))
-   
+    "%s %s %s" % [date.day, date.month, date.year]
+#    show_time == true ? date.strftime(t(:%d/%m/%y:_%t'))_:_date.strftime(_('%d/%m/%y))
   end
 
   #########################################

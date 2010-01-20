@@ -7,10 +7,10 @@ module OrganizationsHelper
   def display_collection_options(item, params = {}, html_options = {})
     content_tag(:div,
       [
-        button('view_small', _('Show'), :show, {:action => 'show', :organization_id => item.id}.merge(params)),
-        button('edit_small', _('Edit'), :edit, {:action => 'edit', :organization_id => item.id}.merge(params)),
-        button('del_small', _('Destroy'), :destroy, {:action => 'destroy', :organization_id => item.id}.merge(params),
-               :method => 'post', :confirm => _('Are you sure?'))
+        button('view_small', t(:show), :show, {:action => 'show', :organization_id => item.id}.merge(params)),
+        button('edit_small', t(:edit), :edit, {:action => 'edit', :organization_id => item.id}.merge(params)),
+        button('del_small', t(:destroy), :destroy, {:action => 'destroy', :organization_id => item.id}.merge(params),
+               :method => 'post', :confirm => t(:are_you_sure?))
       ].join("\n"),
       :class => 'list_item_button'
     )

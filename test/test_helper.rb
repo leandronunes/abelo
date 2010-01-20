@@ -1,7 +1,6 @@
 ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'test_help'
-require 'mocha'
 
 class Test::Unit::TestCase
   # Transactional fixtures accelerate your tests by wrapping each test method
@@ -67,8 +66,13 @@ class Test::Unit::TestCase
   def create_organization(params = {})
     create_place
     organization = new_organization(params)
+    organization.address = Address.new(address_params)
     organization.save!
     organization
+  end
+
+  def address_params(params= {})
+    {:city_id => 1, :state_id => 1, :country_id => 1}.merge(params)
   end
 
   def create_environment(params={})
@@ -85,11 +89,13 @@ class Test::Unit::TestCase
      a = Article.find_by_slug(params[:identifier] || 'some')
      a.destroy unless a.nil?
      o = Organization.find_by_identifier(params[:identifier] || 'some')
-     o || Organization.new({:name => 'some organization', :identifier => 'some', 
+     o ||= Organization.new({:name => 'some organization', :identifier => 'some', 
                      :country_id => BSC::Country.find(:first).id,
                      :state_id => BSC::State.find(:first).id, 
                      :city_id => BSC::City.find(:first).id, 
      }.merge(params))
+     o.contact_name='some contact'
+     o
   end
 
   def create_bank

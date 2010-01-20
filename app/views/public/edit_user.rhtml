@@ -1,5 +1,5 @@
 
-<%= title(_('Editing user')) %>
+<%= title(t(:editing_user)) %>
 <% form_tag :action => 'update_user' do %>
   <%= error_messages_for 'user' %>
 
@@ -7,21 +7,21 @@
   <div id='info_form'>
   
     <div class='info_field'>
-      <label> <%= _('Login') %></label>
+      <label> <%= t(:login) %></label>
       <span class='field'> <%= text_field('user', 'login') %> </span>
     </div>
   
     <div class='info_field'>
-      <label> <%=  _('E-mail') %></label>
+      <label> <%=  t(:e-mail) %></label>
       <span class='field'> <%= text_field('user', 'email') %> </span>
     </div>
     <div class='info_field'>
-      <label> <%= _('Password') %></label>
+      <label> <%= t(:password) %></label>
       <span class='field'> <%= password_field('user', 'password') %> </span>
     </div>
   
     <div class='info_field'>
-      <label> <%= _('Confirm Password') %></label>
+      <label> <%= t(:confirm_password) %></label>
       <span class='field'> <%= password_field('user', 'password_confirmation') %> </span>
     </div>
   

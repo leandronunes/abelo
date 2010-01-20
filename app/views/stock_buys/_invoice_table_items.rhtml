@@ -1,10 +1,10 @@
 <tr>
-  <th> <%= _('Product') %> </th>
-  <th> <%= _('Buy Unit Price') %> </th>
-  <th> <%= _('Amount') %> </th>
-  <th> <%= _('Total') %> </th>
-  <th> <%= _('Validity') %> </th>
-  <th> <%= _('Options') %> </th>
+  <th> <%= t(:product) %> </th>
+  <th> <%= t(:buy_unit_price) %> </th>
+  <th> <%= t(:amount) %> </th>
+  <th> <%= t(:total) %> </th>
+  <th> <%= t(:validity) %> </th>
+  <th> <%= t(:options) %> </th>
 </tr>
 <% @stocks.each do |stock| %>
   <tr>
@@ -12,7 +12,7 @@
     <td> <%= num_to_currency(stock.price) %> </td>
     <td> <%= stock.amount %> </td>
     <td> <%= stock.total_cost %> </td>
-    <td> <%= stock.validity || _('None') %> </td>
-    <td> <%= button_remote 'edit', _('Edit'), :edit, :url => {:action => 'edit_item', :stock_id => stock, :id => @invoice } , :update => 'abelo_invoice_items'%> </td>
+    <td> <%= stock.validity || t(:none) %> </td>
+    <td> <%= button_remote 'edit', t(:edit), :edit, :url => {:action => 'edit_item', :stock_id => stock, :id => @invoice } , :update => 'abelo_invoice_items'%> </td>
   </tr>
 <% end %>

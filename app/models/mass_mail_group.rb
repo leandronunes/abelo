@@ -20,10 +20,10 @@ class MassMailGroup < ActiveRecord::Base
 
   def self.describe(name)
     {
-      'worker' => _('Worker'),
-      'workers' => _('Workers'),
-      'customer' => _('Customer'),
-      'customers' => _('Customers'),
+      'worker' => t(:worker),
+      'workers' => t(:workers),
+      'customer' => t(:customer),
+      'customers' => t(:customers),
 
     }[name] || name
   end

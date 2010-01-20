@@ -6,9 +6,9 @@ class PrinterDisplay < DisplayConfiguration
 
   def self.describe(field)
     {
-      'name' => _('Name'),
-      'serial' => _('Serial'),
-      'computer_id' =>  _('Computer'),
+      'name' => t(:name),
+      'serial' => t(:serial),
+      'computer_id' =>  t(:computer),
     }[field] || field
   end
 

@@ -50,13 +50,16 @@ class ContentTypeController < ActionController::Base
   def rescue_action(e) raise end
 end
 
-class ContentTypeTest < ActionController::TestCase
-  tests ContentTypeController
-
+class ContentTypeTest < Test::Unit::TestCase
   def setup
+    @controller = ContentTypeController.new
+
     # enable a logger so that (e.g.) the benchmarking stuff runs, so we can get
     # a more accurate simulation of what happens in "real life".
     @controller.logger = Logger.new(nil)
+
+    @request    = ActionController::TestRequest.new
+    @response   = ActionController::TestResponse.new
   end
 
   def test_render_defaults

@@ -5,13 +5,13 @@
 <% display_form_info @document do |item| %>
 
   <%= display_field_form(item, 'name', 
-        :title => _('Name'),
+        :title => t(:name),
         :content => text_field('document', 'name')
       )
   %>
 
   <%= display_field_form(item, 'departments', 
-        :title => _('Departments'),
+        :title => t(:departments),
         :content => multiple_select('document', 'department_ids', @departments),
         :html_options => {:class => 'break_line'}
       )
@@ -20,20 +20,20 @@
 <% unless (params[:models_list] and not params[:document_model_id]) %>
 
   <%= display_field_form(item, 'owner', 
-        :title => _('Customer'),
+        :title => t(:customer),
         :content => radio_button('document', 'document_owner_type', 'customer'),
         :html_options => {:class => 'break_line'}
       )
   %>
 
   <%= display_field_form(item, 'owner', 
-        :title => _('Supplier'),
+        :title => t(:supplier),
         :content => radio_button('document', 'document_owner_type', 'supplier')
       )
   %>
 
   <%= display_field_form(item, 'owner', 
-        :title => _('Worker'),
+        :title => t(:worker),
         :content => radio_button('document', 'document_owner_type', 'worker')
       )
   %>
@@ -71,7 +71,7 @@
 <% end %>
 
   <%= display_field_form(item, 'tag_list',
-        :title => _('Tags (separated by comma):'),
+        :title => t(:tags_(separated_by_comma):),
         :content => text_field('document', 'tag_list'),
         :html_options => {:class => 'break_line'}
       )

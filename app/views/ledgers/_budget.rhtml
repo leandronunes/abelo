@@ -12,9 +12,9 @@
     </div></th>
   </tr>
   <tr>
-    <th class="frist_col"> <%= _('Name') %> </th>
-    <th> <%= _('Forecast') %> </th>
-    <th> <%= _('Real') %></th>
+    <th class="frist_col"> <%= t(:name) %> </th>
+    <th> <%= t(:forecast) %> </th>
+    <th> <%= t(:real) %></th>
   </tr>
   <tbody>
     <% i = 0 %>
@@ -34,12 +34,12 @@
     <% end %>
   </tbody>
   <tr>
-    <th class="frist_col"> <%= _('Total') %> </th>
+    <th class="frist_col"> <%= t(:total) %> </th>
     <th> <%= @organization.sum_foreseen_value_by_date(@organization.default_bank_account,@date) %> </th>
     <th> <%= @organization.sum_effective_value_by_date(@organization.default_bank_account,@date) %> </th>
   </tr>
   <tr class="table_footer">
-    <th class="frist_col"> <%= _('Balance') %> </th>
+    <th class="frist_col"> <%= t(:balance) %> </th>
     <th class="balance" colspan="2"> <%= @organization.sum_foreseen_value_by_date(@organization.default_bank_account,@date) - @organization.sum_effective_value_by_date(@organization.default_bank_account,@date) %> 
     </th>
   </tr>

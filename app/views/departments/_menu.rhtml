@@ -1,4 +1,4 @@
 <ul class="content_menu">
   <li> <%= button "departments", _("%s Data") % @organization.department_name, :show, { :action => 'show', :actor => params[:actor], :id => params[:id]} %> </li>
-  <li> <%= button "documents", _('Documents'), :list, { :action => 'list_document', :id => params[:id] }%> </li>
+  <li> <%= button "documents", t(:documents), :list, { :action => 'list_document', :id => params[:id] }%> </li>
 </ul>

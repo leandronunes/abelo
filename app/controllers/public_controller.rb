@@ -21,7 +21,7 @@ class PublicController < ApplicationController
   def update_user
     @user = current_user
     if @user.update_attributes(params[:user])
-      flash[:notice] = _('User was successfully updated.')
+      flash[:notice] = t(:user_was_successfully_updated)
       redirect_to :action => 'index'
     else
       render :action => 'edit_user'

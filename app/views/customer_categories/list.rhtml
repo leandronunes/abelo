@@ -2,7 +2,7 @@
 
 <table>
   <tr>
-    <th><%= _('Name') %></th>
+    <th><%= t(:name) %></th>
   </tr>
   
 <% for customer_category in @customer_categories.select { |c| c.top_level? } %>

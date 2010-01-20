@@ -1,10 +1,10 @@
-<%= title _('Tracker of %s') % @organization.name %>
+<%= title t(:tracker_of_%s) % @organization.name %>
 
 <% form_tag :action => 'update', :organization_id => @organization do %>
 
   <%= render :partial => 'form' %>
   <div class="display_info_options">
-    <%= button('back', _('Back'), :back, :action => 'show', :id => @tracker, :organization_id => @organization) %> 
+    <%= button('back', t(:back), :back, :action => 'show', :id => @tracker, :organization_id => @organization) %> 
     <%= display_save_button %>
     <%= display_reset_button %>
   </div>

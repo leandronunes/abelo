@@ -6,8 +6,8 @@ class MassMailDisplay < DisplayConfiguration
 
   def self.describe(field)
     {
-      'subject' => _('Subject'),
-      'body' =>    _('Body'),
+      'subject' => t(:subject),
+      'body' =>    t(:body),
     } [field] || field
   end
 

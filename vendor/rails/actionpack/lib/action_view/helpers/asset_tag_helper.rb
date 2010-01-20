@@ -6,70 +6,54 @@ module ActionView
   module Helpers #:nodoc:
     # This module provides methods for generating HTML that links views to assets such
     # as images, javascripts, stylesheets, and feeds. These methods do not verify
-    # the assets exist before linking to them:
-    #
-    #   image_tag("rails.png")
-    #   # => <img alt="Rails src="/images/rails.png?1230601161" />
-    #   stylesheet_link_tag("application")
-    #   # => <link href="/stylesheets/application.css?1232285206" media="screen" rel="stylesheet" type="text/css" />
+    # the assets exist before linking to them.
     #
     # === Using asset hosts
-    #
     # By default, Rails links to these assets on the current host in the public
-    # folder, but you can direct Rails to link to assets from a dedicated asset
-    # server by setting ActionController::Base.asset_host in the application
-    # configuration, typically in <tt>config/environments/production.rb</tt>.
-    # For example, you'd define <tt>assets.example.com</tt> to be your asset
-    # host this way:
+    # folder, but you can direct Rails to link to assets from a dedicated assets server by
+    # setting ActionController::Base.asset_host in your <tt>config/environment.rb</tt>.  For example,
+    # let's say your asset host is <tt>assets.example.com</tt>.
     #
     #   ActionController::Base.asset_host = "assets.example.com"
+    #   image_tag("rails.png")
+    #     => <img src="http://assets.example.com/images/rails.png" alt="Rails" />
+    #   stylesheet_link_tag("application")
+    #     => <link href="http://assets.example.com/stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
     #
-    # Helpers take that into account:
+    # This is useful since browsers typically open at most two connections to a single host,
+    # which means your assets often wait in single file for their turn to load.  You can
+    # alleviate this by using a <tt>%d</tt> wildcard in <tt>asset_host</tt> (for example, "assets%d.example.com")
+    # to automatically distribute asset requests among four hosts (e.g., "assets0.example.com" through "assets3.example.com")
+    # so browsers will open eight connections rather than two.
     #
     #   image_tag("rails.png")
-    #   # => <img alt="Rails" src="http://assets.example.com/images/rails.png?1230601161" />
+    #     => <img src="http://assets0.example.com/images/rails.png" alt="Rails" />
     #   stylesheet_link_tag("application")
-    #   # => <link href="http://assets.example.com/stylesheets/application.css?1232285206" media="screen" rel="stylesheet" type="text/css" />
+    #     => <link href="http://assets3.example.com/stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
     #
-    # Browsers typically open at most two simultaneous connections to a single
-    # host, which means your assets often have to wait for other assets to finish
-    # downloading. You can alleviate this by using a <tt>%d</tt> wildcard in the
-    # +asset_host+. For example, "assets%d.example.com". If that wildcard is
-    # present Rails distributes asset requests among the corresponding four hosts
-    # "assets0.example.com", ..., "assets3.example.com". With this trick browsers
-    # will open eight simultaneous connections rather than two.
-    #
-    #   image_tag("rails.png")
-    #   # => <img alt="Rails" src="http://assets0.example.com/images/rails.png?1230601161" />
-    #   stylesheet_link_tag("application")
-    #   # => <link href="http://assets2.example.com/stylesheets/application.css?1232285206" media="screen" rel="stylesheet" type="text/css" />
-    #
-    # To do this, you can either setup four actual hosts, or you can use wildcard
-    # DNS to CNAME the wildcard to a single asset host. You can read more about
-    # setting up your DNS CNAME records from your ISP.
+    # To do this, you can either setup 4 actual hosts, or you can use wildcard DNS to CNAME
+    # the wildcard to a single asset host.  You can read more about setting up your DNS CNAME records from
+    # your ISP.
     #
     # Note: This is purely a browser performance optimization and is not meant
     # for server load balancing. See http://www.die.net/musings/page_load_time/
     # for background.
     #
-    # Alternatively, you can exert more control over the asset host by setting
-    # +asset_host+ to a proc like this:
+    # Alternatively, you can exert more control over the asset host by setting <tt>asset_host</tt> to a proc
+    # that takes a single source argument. This is useful if you are unable to setup 4 actual hosts or have
+    # fewer/more than 4 hosts. The example proc below generates http://assets1.example.com and
+    # http://assets2.example.com randomly.
     #
-    #   ActionController::Base.asset_host = Proc.new { |source|
-    #     "http://assets#{rand(2) + 1}.example.com"
-    #   }
+    #   ActionController::Base.asset_host = Proc.new { |source| "http://assets#{rand(2) + 1}.example.com" }
     #   image_tag("rails.png")
-    #   # => <img alt="Rails" src="http://assets0.example.com/images/rails.png?1230601161" />
+    #     => <img src="http://assets2.example.com/images/rails.png" alt="Rails" />
     #   stylesheet_link_tag("application")
-    #   # => <link href="http://assets1.example.com/stylesheets/application.css?1232285206" media="screen" rel="stylesheet" type="text/css" />
+    #     => <link href="http://assets1.example.com/stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
     #
-    # The example above generates "http://assets1.example.com" and
-    # "http://assets2.example.com" randomly. This option is useful for example if
-    # you need fewer/more than four hosts, custom host names, etc.
-    #
-    # As you see the proc takes a +source+ parameter. That's a string with the
-    # absolute path of the asset with any extensions and timestamps in place,
-    # for example "/images/rails.png?1230601161".
+    # The proc takes a <tt>source</tt> parameter (which is the path of the source asset) and an optional
+    # <tt>request</tt> parameter (which is an entire instance of an <tt>ActionController::AbstractRequest</tt>
+    # subclass). This can be used to generate a particular asset host depending on the asset path and the particular
+    # request.
     #
     #    ActionController::Base.asset_host = Proc.new { |source|
     #      if source.starts_with?('/images')
@@ -79,16 +63,14 @@ module ActionView
     #      end
     #    }
     #   image_tag("rails.png")
-    #   # => <img alt="Rails" src="http://images.example.com/images/rails.png?1230601161" />
+    #     => <img src="http://images.example.com/images/rails.png" alt="Rails" />
     #   stylesheet_link_tag("application")
-    #   # => <link href="http://assets.example.com/stylesheets/application.css?1232285206" media="screen" rel="stylesheet" type="text/css" />
+    #     => <link href="http://assets.example.com/stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
     #
-    # Alternatively you may ask for a second parameter +request+. That one is
-    # particularly useful for serving assets from an SSL-protected page. The
-    # example proc below disables asset hosting for HTTPS connections, while
-    # still sending assets for plain HTTP requests from asset hosts. If you don't
-    # have SSL certificates for each of the asset hosts this technique allows you
-    # to avoid warnings in the client about mixed media.
+    # The optional <tt>request</tt> parameter to the proc is useful in particular for serving assets from an
+    # SSL-protected page. The example proc below disables asset hosting for HTTPS connections, while still sending
+    # assets for plain HTTP requests from asset hosts. This is useful for avoiding mixed media warnings when serving
+    # non-HTTP assets from HTTPS web pages when you don't have an SSL certificate for each of the asset hosts.
     #
     #   ActionController::Base.asset_host = Proc.new { |source, request|
     #     if request.ssl?
@@ -98,38 +80,26 @@ module ActionView
     #     end
     #   }
     #
-    # You can also implement a custom asset host object that responds to +call+
-    # and takes either one or two parameters just like the proc.
-    #
-    #   config.action_controller.asset_host = AssetHostingWithMinimumSsl.new(
-    #     "http://asset%d.example.com", "https://asset1.example.com"
-    #   )
-    #
     # === Using asset timestamps
     #
-    # By default, Rails appends asset's timestamps to all asset paths. This allows
-    # you to set a cache-expiration date for the asset far into the future, but
-    # still be able to instantly invalidate it by simply updating the file (and
-    # hence updating the timestamp, which then updates the URL as the timestamp
-    # is part of that, which in turn busts the cache).
+    # By default, Rails will append all asset paths with that asset's timestamp. This allows you to set a cache-expiration date for the
+    # asset far into the future, but still be able to instantly invalidate it by simply updating the file (and hence updating the timestamp,
+    # which then updates the URL as the timestamp is part of that, which in turn busts the cache).
     #
-    # It's the responsibility of the web server you use to set the far-future
-    # expiration date on cache assets that you need to take advantage of this
-    # feature. Here's an example for Apache:
+    # It's the responsibility of the web server you use to set the far-future expiration date on cache assets that you need to take
+    # advantage of this feature. Here's an example for Apache:
     #
-    #   # Asset Expiration
-    #   ExpiresActive On
-    #   <FilesMatch "\.(ico|gif|jpe?g|png|js|css)$">
-    #     ExpiresDefault "access plus 1 year"
-    #   </FilesMatch>
+    # # Asset Expiration
+    # ExpiresActive On
+    # <FilesMatch "\.(ico|gif|jpe?g|png|js|css)$">
+    #   ExpiresDefault "access plus 1 year"
+    # </FilesMatch>
     #
-    # Also note that in order for this to work, all your application servers must
-    # return the same timestamps. This means that they must have their clocks
-    # synchronized. If one of them drifts out of sync, you'll see different
-    # timestamps at random and the cache won't work. In that case the browser
-    # will request the same assets over and over again even thought they didn't
-    # change. You can use something like Live HTTP Headers for Firefox to verify
-    # that the cache is indeed working.
+    # Also note that in order for this to work, all your application servers must return the same timestamps. This means that they must
+    # have their clocks synchronized. If one of them drift out of sync, you'll see different timestamps at random and the cache won't
+    # work. Which means that the browser will request the same assets over and over again even thought they didn't change. You can use
+    # something like Live HTTP Headers for Firefox to verify that the cache is indeed working (and that the assets are not being
+    # requested over and over).
     module AssetTagHelper
       ASSETS_DIR      = defined?(Rails.public_path) ? Rails.public_path : "public"
       JAVASCRIPTS_DIR = "#{ASSETS_DIR}/javascripts"
@@ -141,7 +111,7 @@ module ActionView
       # <tt>:atom</tt>. Control the link options in url_for format using the
       # +url_options+. You can modify the LINK tag itself in +tag_options+.
       #
-      # ==== Options
+      # ==== Options:
       # * <tt>:rel</tt>  - Specify the relation of this link, defaults to "alternate"
       # * <tt>:type</tt>  - Override the auto-generated mime type
       # * <tt>:title</tt>  - Specify the title of the link, defaults to the +type+
@@ -181,7 +151,7 @@ module ActionView
       #   javascript_path "http://www.railsapplication.com/js/xmlhr" # => http://www.railsapplication.com/js/xmlhr.js
       #   javascript_path "http://www.railsapplication.com/js/xmlhr.js" # => http://www.railsapplication.com/js/xmlhr.js
       def javascript_path(source)
-        compute_public_path(source, 'javascripts', 'js')
+        JavaScriptTag.new(self, @controller, source).public_path
       end
       alias_method :path_to_javascript, :javascript_path # aliased to avoid conflicts with a javascript_path named route
 
@@ -279,14 +249,16 @@ module ActionView
           joined_javascript_name = (cache == true ? "all" : cache) + ".js"
           joined_javascript_path = File.join(JAVASCRIPTS_DIR, joined_javascript_name)
 
-          write_asset_file_contents(joined_javascript_path, compute_javascript_paths(sources, recursive)) unless File.exists?(joined_javascript_path)
+          unless File.exists?(joined_javascript_path)
+            JavaScriptSources.create(self, @controller, sources, recursive).write_asset_file_contents(joined_javascript_path)
+          end
           javascript_src_tag(joined_javascript_name, options)
         else
-          expand_javascript_sources(sources, recursive).collect { |source| javascript_src_tag(source, options) }.join("\n")
+          JavaScriptSources.create(self, @controller, sources, recursive).expand_sources.collect { |source|
+            javascript_src_tag(source, options)
+          }.join("\n")
         end
       end
-
-      @@javascript_expansions = { :defaults => JAVASCRIPT_DEFAULT_SOURCES.dup }
 
       # Register one or more javascript files to be included when <tt>symbol</tt>
       # is passed to <tt>javascript_include_tag</tt>. This method is typically intended
@@ -300,10 +272,8 @@ module ActionView
       #     <script type="text/javascript" src="/javascripts/body.js"></script>
       #     <script type="text/javascript" src="/javascripts/tail.js"></script>
       def self.register_javascript_expansion(expansions)
-        @@javascript_expansions.merge!(expansions)
+        JavaScriptSources.expansions.merge!(expansions)
       end
-
-      @@stylesheet_expansions = {}
 
       # Register one or more stylesheet files to be included when <tt>symbol</tt>
       # is passed to <tt>stylesheet_link_tag</tt>. This method is typically intended
@@ -317,7 +287,7 @@ module ActionView
       #     <link href="/stylesheets/body.css"  media="screen" rel="stylesheet" type="text/css" />
       #     <link href="/stylesheets/tail.css"  media="screen" rel="stylesheet" type="text/css" />
       def self.register_stylesheet_expansion(expansions)
-        @@stylesheet_expansions.merge!(expansions)
+        StylesheetSources.expansions.merge!(expansions)
       end
 
       # Register one or more additional JavaScript files to be included when
@@ -325,11 +295,11 @@ module ActionView
       # typically intended to be called from plugin initialization to register additional
       # .js files that the plugin installed in <tt>public/javascripts</tt>.
       def self.register_javascript_include_default(*sources)
-        @@javascript_expansions[:defaults].concat(sources)
+        JavaScriptSources.expansions[:defaults].concat(sources)
       end
 
       def self.reset_javascript_include_default #:nodoc:
-        @@javascript_expansions[:defaults] = JAVASCRIPT_DEFAULT_SOURCES.dup
+        JavaScriptSources.expansions[:defaults] = JAVASCRIPT_DEFAULT_SOURCES.dup
       end
 
       # Computes the path to a stylesheet asset in the public stylesheets directory.
@@ -344,7 +314,7 @@ module ActionView
       #   stylesheet_path "http://www.railsapplication.com/css/style" # => http://www.railsapplication.com/css/style.css
       #   stylesheet_path "http://www.railsapplication.com/css/style.js" # => http://www.railsapplication.com/css/style.css
       def stylesheet_path(source)
-        compute_public_path(source, 'stylesheets', 'css')
+        StylesheetTag.new(self, @controller, source).public_path
       end
       alias_method :path_to_stylesheet, :stylesheet_path # aliased to avoid conflicts with a stylesheet_path named route
 
@@ -419,10 +389,14 @@ module ActionView
           joined_stylesheet_name = (cache == true ? "all" : cache) + ".css"
           joined_stylesheet_path = File.join(STYLESHEETS_DIR, joined_stylesheet_name)
 
-          write_asset_file_contents(joined_stylesheet_path, compute_stylesheet_paths(sources, recursive)) unless File.exists?(joined_stylesheet_path)
+          unless File.exists?(joined_stylesheet_path)
+            StylesheetSources.create(self, @controller, sources, recursive).write_asset_file_contents(joined_stylesheet_path)
+          end
           stylesheet_tag(joined_stylesheet_name, options)
         else
-          expand_stylesheet_sources(sources, recursive).collect { |source| stylesheet_tag(source, options) }.join("\n")
+          StylesheetSources.create(self, @controller, sources, recursive).expand_sources.collect { |source|
+            stylesheet_tag(source, options)
+          }.join("\n")
         end
       end
 
@@ -437,7 +411,7 @@ module ActionView
       #   image_path("/icons/edit.png")                              # => /icons/edit.png
       #   image_path("http://www.railsapplication.com/img/edit.png") # => http://www.railsapplication.com/img/edit.png
       def image_path(source)
-        compute_public_path(source, 'images')
+        ImageTag.new(self, @controller, source).public_path
       end
       alias_method :path_to_image, :image_path # aliased to avoid conflicts with an image_path named route
 
@@ -492,118 +466,7 @@ module ActionView
         tag("img", options)
       end
 
-      def self.cache_asset_timestamps
-        @@cache_asset_timestamps
-      end
-
-      # You can enable or disable the asset tag timestamps cache.
-      # With the cache enabled, the asset tag helper methods will make fewer
-      # expense file system calls. However this prevents you from modifying
-      # any asset files while the server is running.
-      #
-      #   ActionView::Helpers::AssetTagHelper.cache_asset_timestamps = false
-      def self.cache_asset_timestamps=(value)
-        @@cache_asset_timestamps = value
-      end
-
-      @@cache_asset_timestamps = true
-
       private
-        # Add the the extension +ext+ if not present. Return full URLs otherwise untouched.
-        # Prefix with <tt>/dir/</tt> if lacking a leading +/+. Account for relative URL
-        # roots. Rewrite the asset path for cache-busting asset ids. Include
-        # asset host, if configured, with the correct request protocol.
-        def compute_public_path(source, dir, ext = nil, include_host = true)
-          has_request = @controller.respond_to?(:request)
-
-          source_ext = File.extname(source)[1..-1]
-          if ext && (source_ext.blank? || (ext != source_ext && File.exist?(File.join(ASSETS_DIR, dir, "#{source}.#{ext}"))))
-            source += ".#{ext}"
-          end
-
-          unless source =~ %r{^[-a-z]+://}
-            source = "/#{dir}/#{source}" unless source[0] == ?/
-
-            source = rewrite_asset_path(source)
-
-            if has_request && include_host
-              unless source =~ %r{^#{ActionController::Base.relative_url_root}/}
-                source = "#{ActionController::Base.relative_url_root}#{source}"
-              end
-            end
-          end
-
-          if include_host && source !~ %r{^[-a-z]+://}
-            host = compute_asset_host(source)
-
-            if has_request && !host.blank? && host !~ %r{^[-a-z]+://}
-              host = "#{@controller.request.protocol}#{host}"
-            end
-
-            "#{host}#{source}"
-          else
-            source
-          end
-        end
-
-        # Pick an asset host for this source. Returns +nil+ if no host is set,
-        # the host if no wildcard is set, the host interpolated with the
-        # numbers 0-3 if it contains <tt>%d</tt> (the number is the source hash mod 4),
-        # or the value returned from invoking the proc if it's a proc or the value from
-        # invoking call if it's an object responding to call.
-        def compute_asset_host(source)
-          if host = ActionController::Base.asset_host
-            if host.is_a?(Proc) || host.respond_to?(:call)
-              case host.is_a?(Proc) ? host.arity : host.method(:call).arity
-              when 2
-                request = @controller.respond_to?(:request) && @controller.request
-                host.call(source, request)
-              else
-                host.call(source)
-              end
-            else
-              (host =~ /%d/) ? host % (source.hash % 4) : host
-            end
-          end
-        end
-
-        @@asset_timestamps_cache = {}
-        @@asset_timestamps_cache_guard = Mutex.new
-
-        # Use the RAILS_ASSET_ID environment variable or the source's
-        # modification time as its cache-busting asset id.
-        def rails_asset_id(source)
-          if asset_id = ENV["RAILS_ASSET_ID"]
-            asset_id
-          else
-            if @@cache_asset_timestamps && (asset_id = @@asset_timestamps_cache[source])
-              asset_id
-            else
-              path = File.join(ASSETS_DIR, source)
-              asset_id = File.exist?(path) ? File.mtime(path).to_i.to_s : ''
-
-              if @@cache_asset_timestamps
-                @@asset_timestamps_cache_guard.synchronize do
-                  @@asset_timestamps_cache[source] = asset_id
-                end
-              end
-
-              asset_id
-            end
-          end
-        end
-
-        # Break out the asset path rewrite in case plugins wish to put the asset id
-        # someplace other than the query string.
-        def rewrite_asset_path(source)
-          asset_id = rails_asset_id(source)
-          if asset_id.blank?
-            source
-          else
-            source + "?#{asset_id}"
-          end
-        end
-
         def javascript_src_tag(source, options)
           content_tag("script", "", { "type" => Mime::JS, "src" => path_to_javascript(source) }.merge(options))
         end
@@ -612,70 +475,342 @@ module ActionView
           tag("link", { "rel" => "stylesheet", "type" => Mime::CSS, "media" => "screen", "href" => html_escape(path_to_stylesheet(source)) }.merge(options), false, false)
         end
 
-        def compute_javascript_paths(*args)
-          expand_javascript_sources(*args).collect { |source| compute_public_path(source, 'javascripts', 'js', false) }
-        end
+        module ImageAsset
+          DIRECTORY = 'images'.freeze
 
-        def compute_stylesheet_paths(*args)
-          expand_stylesheet_sources(*args).collect { |source| compute_public_path(source, 'stylesheets', 'css', false) }
-        end
+          def directory
+            DIRECTORY
+          end
 
-        def expand_javascript_sources(sources, recursive = false)
-          if sources.include?(:all)
-            all_javascript_files = collect_asset_files(JAVASCRIPTS_DIR, ('**' if recursive), '*.js')
-            ((determine_source(:defaults, @@javascript_expansions).dup & all_javascript_files) + all_javascript_files).uniq
-          else
-            expanded_sources = sources.collect do |source|
-              determine_source(source, @@javascript_expansions)
-            end.flatten
-            expanded_sources << "application" if sources.include?(:defaults) && File.exist?(File.join(JAVASCRIPTS_DIR, "application.js"))
-            expanded_sources
+          def extension
+            nil
           end
         end
 
-        def expand_stylesheet_sources(sources, recursive)
-          if sources.first == :all
-            collect_asset_files(STYLESHEETS_DIR, ('**' if recursive), '*.css')
-          else
-            sources.collect do |source|
-              determine_source(source, @@stylesheet_expansions)
-            end.flatten
+        module JavaScriptAsset
+          DIRECTORY = 'javascripts'.freeze
+          EXTENSION = 'js'.freeze
+
+          def public_directory
+            JAVASCRIPTS_DIR
+          end
+
+          def directory
+            DIRECTORY
+          end
+
+          def extension
+            EXTENSION
           end
         end
 
-        def determine_source(source, collection)
-          case source
-          when Symbol
-            collection[source] || raise(ArgumentError, "No expansion found for #{source.inspect}")
-          else
-            source
+        module StylesheetAsset
+          DIRECTORY = 'stylesheets'.freeze
+          EXTENSION = 'css'.freeze
+
+          def public_directory
+            STYLESHEETS_DIR
+          end
+
+          def directory
+            DIRECTORY
+          end
+
+          def extension
+            EXTENSION
           end
         end
 
-        def join_asset_file_contents(paths)
-          paths.collect { |path| File.read(asset_file_path(path)) }.join("\n\n")
+        class AssetTag
+          extend ActiveSupport::Memoizable
+
+          Cache = {}
+          CacheGuard = Mutex.new
+
+          ProtocolRegexp = %r{^[-a-z]+://}.freeze
+
+          def initialize(template, controller, source, include_host = true)
+            # NOTE: The template arg is temporarily needed for a legacy plugin
+            # hook that is expected to call rewrite_asset_path on the
+            # template. This should eventually be removed.
+            @template = template
+            @controller = controller
+            @source = source
+            @include_host = include_host
+            @cache_key = if controller.respond_to?(:request)
+              [self.class.name,controller.request.protocol,
+               ActionController::Base.asset_host,
+               ActionController::Base.relative_url_root,
+               source, include_host]
+            else
+              [self.class.name,ActionController::Base.asset_host, source, include_host]
+            end
+          end
+          
+          def public_path
+            compute_public_path(@source)
+          end
+          memoize :public_path
+
+          def asset_file_path
+            File.join(ASSETS_DIR, public_path.split('?').first)
+          end
+          memoize :asset_file_path
+
+          def contents
+            File.read(asset_file_path)
+          end
+
+          def mtime
+            File.mtime(asset_file_path)
+          end
+
+          private
+            def request
+              @controller.request
+            end
+
+            def request?
+              @controller.respond_to?(:request)
+            end
+
+            # Add the the extension +ext+ if not present. Return full URLs otherwise untouched.
+            # Prefix with <tt>/dir/</tt> if lacking a leading +/+. Account for relative URL
+            # roots. Rewrite the asset path for cache-busting asset ids. Include
+            # asset host, if configured, with the correct request protocol.
+            def compute_public_path(source)
+              if source =~ ProtocolRegexp
+                source += ".#{extension}" if missing_extension?(source)
+                source = prepend_asset_host(source)
+                source
+              else
+                CacheGuard.synchronize do
+                  Cache[@cache_key] ||= begin
+                    source += ".#{extension}" if missing_extension?(source) || file_exists_with_extension?(source)
+                    source = "/#{directory}/#{source}" unless source[0] == ?/
+                    source = rewrite_asset_path(source)
+                    source = prepend_relative_url_root(source)                
+                    source = prepend_asset_host(source)
+                    source
+                  end
+                end
+              end
+            end
+            
+            def missing_extension?(source)
+              extension && File.extname(source).blank?
+            end
+            
+            def file_exists_with_extension?(source)
+              extension && File.exist?(File.join(ASSETS_DIR, directory, "#{source}.#{extension}"))
+            end
+            
+            def prepend_relative_url_root(source)
+              relative_url_root = ActionController::Base.relative_url_root
+              if request? && @include_host && source !~ %r{^#{relative_url_root}/}
+                "#{relative_url_root}#{source}"
+              else
+                source
+              end
+            end
+
+            def prepend_asset_host(source)
+              if @include_host && source !~ ProtocolRegexp
+                host = compute_asset_host(source)
+                if request? && !host.blank? && host !~ ProtocolRegexp
+                  host = "#{request.protocol}#{host}"
+                end
+                "#{host}#{source}"
+              else
+                source
+              end
+            end
+
+            # Pick an asset host for this source. Returns +nil+ if no host is set,
+            # the host if no wildcard is set, the host interpolated with the
+            # numbers 0-3 if it contains <tt>%d</tt> (the number is the source hash mod 4),
+            # or the value returned from invoking the proc if it's a proc.
+            def compute_asset_host(source)
+              if host = ActionController::Base.asset_host
+                if host.is_a?(Proc)
+                  case host.arity
+                  when 2
+                    host.call(source, request)
+                  else
+                    host.call(source)
+                  end
+                else
+                  (host =~ /%d/) ? host % (source.hash % 4) : host
+                end
+              end
+            end
+
+            # Use the RAILS_ASSET_ID environment variable or the source's
+            # modification time as its cache-busting asset id.
+            def rails_asset_id(source)
+              if asset_id = ENV["RAILS_ASSET_ID"]
+                asset_id
+              else
+                path = File.join(ASSETS_DIR, source)
+
+                if File.exist?(path)
+                  File.mtime(path).to_i.to_s
+                else
+                  ''
+                end
+              end
+            end
+
+            # Break out the asset path rewrite in case plugins wish to put the asset id
+            # someplace other than the query string.
+            def rewrite_asset_path(source)
+              if @template.respond_to?(:rewrite_asset_path)
+                # DEPRECATE: This way to override rewrite_asset_path
+                @template.send(:rewrite_asset_path, source)
+              else
+                asset_id = rails_asset_id(source)
+                if asset_id.blank?
+                  source
+                else
+                  "#{source}?#{asset_id}"
+                end
+              end
+            end
         end
 
-        def write_asset_file_contents(joined_asset_path, asset_paths)
-          FileUtils.mkdir_p(File.dirname(joined_asset_path))
-          File.open(joined_asset_path, "w+") { |cache| cache.write(join_asset_file_contents(asset_paths)) }
-
-          # Set mtime to the latest of the combined files to allow for
-          # consistent ETag without a shared filesystem.
-          mt = asset_paths.map { |p| File.mtime(asset_file_path(p)) }.max
-          File.utime(mt, mt, joined_asset_path)
+        class ImageTag < AssetTag
+          include ImageAsset
         end
 
-        def asset_file_path(path)
-          File.join(ASSETS_DIR, path.split('?').first)
+        class JavaScriptTag < AssetTag
+          include JavaScriptAsset
         end
 
-        def collect_asset_files(*path)
-          dir = path.first
+        class StylesheetTag < AssetTag
+          include StylesheetAsset
+        end
 
-          Dir[File.join(*path.compact)].collect do |file|
-            file[-(file.size - dir.size - 1)..-1].sub(/\.\w+$/, '')
-          end.sort
+        class AssetCollection
+          extend ActiveSupport::Memoizable
+
+          Cache = {}
+          CacheGuard = Mutex.new
+
+          def self.create(template, controller, sources, recursive)
+            CacheGuard.synchronize do
+              key = [self, sources, recursive]
+              Cache[key] ||= new(template, controller, sources, recursive).freeze
+            end
+          end
+
+          def initialize(template, controller, sources, recursive)
+            # NOTE: The template arg is temporarily needed for a legacy plugin
+            # hook. See NOTE under AssetTag#initialize for more details
+            @template = template
+            @controller = controller
+            @sources = sources
+            @recursive = recursive
+          end
+
+          def write_asset_file_contents(joined_asset_path)
+            FileUtils.mkdir_p(File.dirname(joined_asset_path))
+            File.open(joined_asset_path, "w+") { |cache| cache.write(joined_contents) }
+            mt = latest_mtime
+            File.utime(mt, mt, joined_asset_path)
+          end
+
+          private
+            def determine_source(source, collection)
+              case source
+              when Symbol
+                collection[source] || raise(ArgumentError, "No expansion found for #{source.inspect}")
+              else
+                source
+              end
+            end
+
+            def validate_sources!
+              @sources.collect { |source| determine_source(source, self.class.expansions) }.flatten
+            end
+
+            def all_asset_files
+              path = [public_directory, ('**' if @recursive), "*.#{extension}"].compact
+              Dir[File.join(*path)].collect { |file|
+                file[-(file.size - public_directory.size - 1)..-1].sub(/\.\w+$/, '')
+              }.sort
+            end
+
+            def tag_sources
+              expand_sources.collect { |source| tag_class.new(@template, @controller, source, false) }
+            end
+
+            def joined_contents
+              tag_sources.collect { |source| source.contents }.join("\n\n")
+            end
+
+            # Set mtime to the latest of the combined files to allow for
+            # consistent ETag without a shared filesystem.
+            def latest_mtime
+              tag_sources.map { |source| source.mtime }.max
+            end
+        end
+
+        class JavaScriptSources < AssetCollection
+          include JavaScriptAsset
+
+          EXPANSIONS = { :defaults => JAVASCRIPT_DEFAULT_SOURCES.dup }
+
+          def self.expansions
+            EXPANSIONS
+          end
+
+          APPLICATION_JS = "application".freeze
+          APPLICATION_FILE = "application.js".freeze
+
+          def expand_sources
+            if @sources.include?(:all)
+              assets = all_asset_files
+              ((defaults.dup & assets) + assets).uniq!
+            else
+              expanded_sources = validate_sources!
+              expanded_sources << APPLICATION_JS if include_application?
+              expanded_sources
+            end
+          end
+          memoize :expand_sources
+
+          private
+            def tag_class
+              JavaScriptTag
+            end
+
+            def defaults
+              determine_source(:defaults, self.class.expansions)
+            end
+
+            def include_application?
+              @sources.include?(:defaults) && File.exist?(File.join(JAVASCRIPTS_DIR, APPLICATION_FILE))
+            end
+        end
+
+        class StylesheetSources < AssetCollection
+          include StylesheetAsset
+
+          EXPANSIONS = {}
+
+          def self.expansions
+            EXPANSIONS
+          end
+
+          def expand_sources
+            @sources.first == :all ? all_asset_files : validate_sources!
+          end
+          memoize :expand_sources
+
+          private
+            def tag_class
+              StylesheetTag
+            end
         end
     end
   end

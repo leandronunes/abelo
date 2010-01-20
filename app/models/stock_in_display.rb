@@ -7,9 +7,9 @@ class StockInDisplay < StockDisplay
   def self.describe(field)
      field = super(field)
     {
-     'supplier' => _('Supplier'),
-     'validity' => _('Validity'),
-     'price' => _('Buy Price')
+     'supplier' => t(:supplier),
+     'validity' => t(:validity),
+     'price' => t(:buy_price)
     }[field] || field
   end
 

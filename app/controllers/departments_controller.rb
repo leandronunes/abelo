@@ -48,7 +48,7 @@ class DepartmentsController < ApplicationController
     @department = Department.new(params[:department])
     @department.organization = @organization
     if @department.save
-      flash[:notice] = _('Department was successfully created.')
+      flash[:notice] = t(:department_was_successfully_created)
       redirect_to :action => 'list'
     else
       render :action => 'new'
@@ -62,7 +62,7 @@ class DepartmentsController < ApplicationController
   def update
     @department = @organization.departments.find(params[:id])
     if @department.update_attributes(params[:department])
-      flash[:notice] = _('Department was successfully updated.')
+      flash[:notice] = t(:department_was_successfully_updated)
       redirect_to :action => 'list'
     else
       render :action => 'edit'

@@ -1,10 +1,10 @@
 <%= error_messages_for 'category' %>
 
 <!--[form:product_category]-->
-<p><label for="category_name"> <%= _('Name') %> </label>
+<p><label for="category_name"> <%= t(:name) %> </label>
 <%= text_field 'category', 'name'  %></p>
 
-<p><label for="category_type"><%= _('Subcategory of') %></label>
+<p><label for="category_type"><%= t(:subcategory_of) %></label>
 <%= select_parent_category('category', @category_type) %>
 
 <!--[eoform:product_category]-->

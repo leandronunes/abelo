@@ -1,5 +1,5 @@
 
-<%= title(_('Editing user')) %>
+<%= title(t(:editing_user)) %>
 <% form_tag :action => 'update', :id => @user, :organization_id => @organization.id do %>
   <%= render :partial => 'permissions_base/form' %>   
   <%= display_edit_info_options(@user, :organization_id => @organization.id) %>

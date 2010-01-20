@@ -10,9 +10,9 @@ class BankDisplay < DisplayConfiguration
 
   def self.describe(field)
     {
-      'name' =>  _('Name'),
-      'code' => _('Code'),
-      'site' => _('Web Site'),
+      'name' =>  t(:name),
+      'code' => t(:code),
+      'site' => t(:web_site),
     }[field] || field
   end
 

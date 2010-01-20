@@ -7,11 +7,11 @@ class ContactDisplay < DisplayConfiguration
 
   def self.describe(field)
     {
-      'name' =>  _('Name'),
-      'email' =>  _('Email'),
-      'phone' =>  _('Phone'),
-      'description' =>  _('Description'),
-      'fax' =>  _('Fax'),
+      'name' =>  t(:name),
+      'email' =>  t(:email),
+      'phone' =>  t(:phone),
+      'description' =>  t(:description),
+      'fax' =>  t(:fax),
     }[field] || field
   end
 

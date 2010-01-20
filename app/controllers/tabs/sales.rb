@@ -5,13 +5,13 @@ def create_sales_tabs
     in_set 'first'
     highlights_on :controller => 'sales'
   end
-  t.named _('Sales')
+  t.named t(:sales)
 
   t = add_tab do
     links_to :controller => 'sintegra'
     in_set 'first'
     highlights_on :controller => 'sintegra'
   end
-  t.named _('Sintegra')
+  t.named t(:sintegra)
 
 end

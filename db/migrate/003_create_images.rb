@@ -1,9 +1,10 @@
 class CreateImages < ActiveRecord::Migration
   def self.up
     create_table :images do |t|
-      t.column :description, :string, :null => false
-      t.column :picture, :string, :null => false
-      t.column :product_id, :integer, :null => false
+      t.string :content_type, :filename, :thumbnail, :image_hash
+      t.integer :size, :width, :height, :product_id, :parent_id
+      t.text :description
+      t.timestamps
     end
   end
 

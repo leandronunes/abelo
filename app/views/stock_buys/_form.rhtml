@@ -6,30 +6,30 @@
 <% display_form_info @invoice do |item | %>
 
   <%= display_field_form( item, 'number',
-        :title => _('Invoice Number'),
+        :title => t(:invoice_number),
         :content => text_field( 'invoice', 'number' )
     )
   %>
 
   <%= display_field_form( item, 'serie',
-        :title => _('Invoice Serie'),
+        :title => t(:invoice_serie),
         :content => text_field( 'invoice', 'serie' )
     )
   %>
 
   <%= display_field_form( item, 'supplier_id',
-        :title => _('Supplier'),
+        :title => t(:supplier),
         :content => select( 'invoice', 'supplier_id', @suppliers.map { |s| [ s.name, s.id] } ) 
     )
   %>
   <%= display_field_form( item, 'issue_date',
-        :title => _('Date'),
+        :title => t(:date),
         :content => date_select_abelo( 'invoice', 'issue_date' )
     )
   %>
 
   <%= display_field_form( item, 'status',
-        :title => _('Status'),
+        :title => t(:status),
         :content => select_status( 'invoice', 'status')
     )
   %>

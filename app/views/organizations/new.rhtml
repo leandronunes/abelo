@@ -1,4 +1,4 @@
-<%= title _('Adding Organization') %>
+<%= title t(:adding_organization) %>
 
 <% form_tag :action => 'create' do %>
 
@@ -7,25 +7,25 @@
   <% display_form_info @organization do |item| %>
 
     <%= display_field_form(item, 'name',
-          :title => _('Name'),
+          :title => t(:name),
           :content => text_field('organization', 'name')
         )
     %>
 
     <%= display_field_form(item, 'identifier',
-          :title => _('Nickname'),
+          :title => t(:nickname),
           :content => text_field('organization', 'identifier'),
           :html_options => {:class => 'break_line'}
         )
     %>
     <%= display_field_form(item, 'cnpj',
-          :title => _('CNPJ'),
+          :title => t(:cnpj),
           :content => text_field('organization', 'cnpj')
         )
     %>
 
   <%= display_field_form(item, 'country',
-        :title => _('Country'),
+        :title => t(:country),
         :content => select_country('organization', 'country_id'),
         :html_options => {:class => 'break_line'}
       )

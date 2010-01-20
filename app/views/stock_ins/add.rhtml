@@ -1,5 +1,5 @@
 
-<%= title _('Stock Replenishment of Product %s') % @stock.product.name %>
+<%= title t(:stock_replenishment_of_product_%s) % @stock.product.name %>
 
 <% form_tag( :action => 'create', :product_id => @stock.product  )  do %>
 

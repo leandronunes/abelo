@@ -6,11 +6,11 @@ class UserDisplay < DisplayConfiguration
 
   def self.describe(field)
     {
-      'login' => _('Login'),
-      'email' => _('E-mail'),
-      'password' => _('Password'),
-      'password_confirmation' => _('Password Confirmation'),
-      'template_description' => _('Template')
+      'login' => t(:login),
+      'email' => t(:e-mail),
+      'password' => t(:password),
+      'password_confirmation' => t(:password_confirmation),
+      'template_description' => t(:template)
     }[field] || field
   end
 

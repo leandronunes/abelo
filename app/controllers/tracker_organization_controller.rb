@@ -25,7 +25,7 @@ class TrackerOrganizationController < ApplicationController
     g.marker_font_size=18
     g.has_left_labels=true
     g.data(_("Used Points"), tracker.total_points)
-    g.labels = {0 => _('Used Points')}
+    g.labels = {0 => t(:used_points)}
 
     send_data(g.to_blob,
       :disposition => 'inline',

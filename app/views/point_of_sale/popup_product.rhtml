@@ -1,11 +1,11 @@
 <h2>
-  <%= _('Search Product') %>
-  <%= link_to_close_popup _('Close'), {:class => 'button_close'}%>
+  <%= t(:search_product) %>
+  <%= link_to_close_popup t(:close), {:class => 'button_close'}%>
 </h2>
 
 <% form_remote_tag :url => params.merge({ :action => 'search_product'}), :update => 'product_search' do %>
   <%= text_field_tag('search') %>
-  <%= submit_tag _('Search') %>
+  <%= submit_tag t(:search) %>
 <% end %> 
 
 <div id='product_search'>

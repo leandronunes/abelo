@@ -1,11 +1,11 @@
 
 <%= title @organization.name %>
 
-<p> <b><%= _('Name') %>:</b> <%= @organization.name %></p>
-<p> <b><%= _('CNPJ') %>:</b> <%= @organization.cnpj %></p>
-<p> <b><%= _('Nickname') %>:</b> <%= @organization.identifier %></p>
+<p> <b><%= t(:name) %>:</b> <%= @organization.name %></p>
+<p> <b><%= t(:cnpj) %>:</b> <%= @organization.cnpj %></p>
+<p> <b><%= t(:nickname) %>:</b> <%= @organization.identifier %></p>
 
 <div class="display_info_options">
-  <%= button('back', _('Back'), :list, :action => 'list' ) %>
-  <%= button('edit', _('Edit'), :list, :action => 'edit', :organization_id => @organization) %> 
+  <%= button('back', t(:back), :list, :action => 'list' ) %>
+  <%= button('edit', t(:edit), :list, :action => 'edit', :organization_id => @organization) %> 
 </div>

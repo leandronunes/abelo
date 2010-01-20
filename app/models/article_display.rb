@@ -6,8 +6,8 @@ class ArticleDisplay < DisplayConfiguration
 
   def self.describe(field)
     {
-      'name' =>  _('Name'),
-      'body' => _('Body'),
+      'name' =>  t(:name),
+      'body' => t(:body),
     }[field] || field
   end
 

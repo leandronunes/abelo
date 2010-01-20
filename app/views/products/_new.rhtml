@@ -5,7 +5,7 @@
     <% form_tag :action => 'create' do %>
     <%= render :partial => 'form' %>
     <div class='button_bar'>
-      <%= submit_to_remote "button_remote", _('Create'), :url => {:action =>'create'}, :update => {:success => 'warp', :failure => 'sidebar'} %>
+      <%= submit_to_remote "button_remote", t(:create), :url => {:action =>'create'}, :update => {:success => 'warp', :failure => 'sidebar'} %>
       <%= link_to_remote _("Reset"), :update => 'sidebar', :url => {:action =>'reset'}%>
     </div>
     <% end %>

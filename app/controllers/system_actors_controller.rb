@@ -108,7 +108,7 @@ class SystemActorsController < ApplicationController
     @system_actor = @actor.camelize.constantize.new(params[:system_actor])
     @system_actor.organization = @organization
     if @system_actor.save
-      flash[:notice] = _('%s was successfully created.') % @actor
+      flash[:notice] = t(:was_successfully_created)
       redirect_to :action => 'list', :actor => @actor
     else
       render :action => 'new'
@@ -126,7 +126,7 @@ class SystemActorsController < ApplicationController
     @system_actor = @organization.send("#{@actor.pluralize}").find(params[:id])
 
     if @system_actor.update_attributes(params[:system_actor])
-      flash[:notice] = _('%s was successfully updated.') % SystemActor.describe(@actor)
+      flash[:notice] = t(:was_successfully_updated)
       redirect_to :action => 'list', :actor => @actor
     else
       render :action => 'edit'

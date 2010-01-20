@@ -162,11 +162,13 @@ class RespondToController < ActionController::Base
     end
 end
 
-class MimeControllerTest < ActionController::TestCase
-  tests RespondToController
-
+class MimeControllerTest < Test::Unit::TestCase
   def setup
     ActionController::Base.use_accept_header = true
+    @request    = ActionController::TestRequest.new
+    @response   = ActionController::TestResponse.new
+
+    @controller = RespondToController.new
     @request.host = "www.example.com"
   end
 
@@ -469,7 +471,7 @@ class MimeControllerTest < ActionController::TestCase
     assert_equal '<html><div id="html_missing">Hello future from Firefox!</div></html>', @response.body
 
     @request.accept = "text/iphone"
-    assert_raise(ActionView::MissingTemplate) { get :iphone_with_html_response_type_without_layout }
+    assert_raises(ActionView::MissingTemplate) { get :iphone_with_html_response_type_without_layout }
   end
 end
 
@@ -507,10 +509,12 @@ class SuperPostController < PostController
   end
 end
 
-class MimeControllerLayoutsTest < ActionController::TestCase
-  tests PostController
-
+class MimeControllerLayoutsTest < Test::Unit::TestCase
   def setup
+    @request    = ActionController::TestRequest.new
+    @response   = ActionController::TestResponse.new
+
+    @controller   = PostController.new
     @request.host = "www.example.com"
   end
 

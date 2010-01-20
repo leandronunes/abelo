@@ -55,7 +55,7 @@ class PermissionsBaseController < ApplicationController
     end
     
     if @user.update_attributes(params[:user])
-      flash[:notice] = _('User successfully created.')
+      flash[:notice] = t(:user_successfully_created)
       redirect_to :action => 'list', :organization_id => @organization
     else
       render :template => 'permissions_base/new'
@@ -81,7 +81,7 @@ class PermissionsBaseController < ApplicationController
     
     @user.profile_organization = @organization
     if @user.update_attributes(params[:user])
-      flash[:notice] = _('User was successfully upated.')
+      flash[:notice] = t(:user_was_successfully_upated)
       redirect_to :action => 'list', :organization_id => @organization
     else
       render :template => 'permissions_base/edit'

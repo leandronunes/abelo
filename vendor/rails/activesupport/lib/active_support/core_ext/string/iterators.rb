@@ -13,9 +13,7 @@ module ActiveSupport #:nodoc:
         # When $KCODE = 'UTF8', multi-byte characters are yielded appropriately.
         def each_char
           scanner, char = StringScanner.new(self), /./mu
-          while c = scanner.scan(char)
-            yield c
-          end
+          loop { yield(scanner.scan(char) || break) }
         end
       end
     end

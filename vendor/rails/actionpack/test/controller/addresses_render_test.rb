@@ -19,13 +19,16 @@ class AddressesTestController < ActionController::Base
   def self.controller_path; "addresses"; end
 end
 
-class AddressesTest < ActionController::TestCase
-  tests AddressesTestController
-
+class AddressesTest < Test::Unit::TestCase
   def setup
+    @controller = AddressesTestController.new
+
     # enable a logger so that (e.g.) the benchmarking stuff runs, so we can get
     # a more accurate simulation of what happens in "real life".
     @controller.logger = Logger.new(nil)
+
+    @request    = ActionController::TestRequest.new
+    @response   = ActionController::TestResponse.new
 
     @request.host = "www.nextangle.com"
   end

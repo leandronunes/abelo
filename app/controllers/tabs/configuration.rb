@@ -8,7 +8,7 @@ def create_configurations_tabs
     in_set 'first'
     highlights_on :controller => 'categories'
   end
-  t.named _('Categories')
+  t.named t(:categories)
 
   t = add_tab do
     links_to :controller => 'interface'
@@ -17,14 +17,14 @@ def create_configurations_tabs
     highlights_on :controller => 'interface', :action => 'design_editor_change_icon_theme'
     highlights_on :controller => 'interface', :action => 'design_editor_change_theme'
   end
-  t.named _('Manage Interface')
+  t.named t(:manage_interface)
 
   t = add_tab do
     links_to :controller => 'interface', :action => 'design_editor'
     in_set 'first'
     highlights_on :controller => 'interface', :action => 'design_editor'
   end
-  t.named _('Manage Content')
+  t.named t(:manage_content)
 
 #TODO put it to works
 #  t = add_tab do
@@ -32,27 +32,27 @@ def create_configurations_tabs
 #    in_set 'first'
 #    highlights_on :controller => 'organization_configuration'
 #  end
-#  t.named _('Fields Configurations')
+#  t.named t(:fields_configurations)
 
   t = add_tab do
     links_to :controller => 'periodicities'
     in_set 'first'
     highlights_on :controller => 'periodicities'
   end
-  t.named _('Periodicities')
+  t.named t(:periodicities)
 
   t = add_tab do
     links_to :controller => 'units'
     in_set 'first'
     highlights_on :controller => 'units'
   end
-  t.named _('Units')
+  t.named t(:units)
 
   t = add_tab do
     links_to :controller => 'fiscal_printer'
     in_set 'first'
     highlights_on :controller => 'fiscal_printer'
   end
-  t.named _('Fiscal Printers')
+  t.named t(:fiscal_printers)
 
 end

@@ -3,21 +3,21 @@ module DescribeMenu
   # maps a template code (a key in TEMPLATES) to an human-readable string
   def describe(item)
     {
-      'register' => _('Register'),
-      'configurations' => _('Configurations'),
-      'financial' => _('Financial'),
-      'stock' => _('Stock'),
-      'mass_mail' => _('Mass mail'),
-      'project' => _('Project'),
-      'education' => _('Education'),
-      'web' => _('Web'),
-      'commercial_proposals' => _('Commercial proposals'),
-      'users' => _('Users'),
-      'store' => _('Store'),
-      'administration' => _('Administration of users'),
-      'point_of_sale' => _('Point of sale'),
-      'departments' => _('Departments'),
-      'organizations' => _('Organizations'),
+      'register' => t(:register),
+      'configurations' => t(:configurations),
+      'financial' => t(:financial),
+      'stock' => t(:stock),
+      'mass_mail' => t(:mass_mail),
+      'project' => t(:project),
+      'education' => t(:education),
+      'web' => t(:web),
+      'commercial_proposals' => t(:commercial_proposals),
+      'users' => t(:users),
+      'store' => t(:store),
+      'administration' => t(:administration_of_users),
+      'point_of_sale' => t(:point_of_sale),
+      'departments' => t(:departments),
+      'organizations' => t(:organizations),
     }[item] || item
   end
 

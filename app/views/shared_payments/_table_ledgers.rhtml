@@ -1,12 +1,12 @@
 
 <table>
   <tr>
-    <th> <%= _('Date') %> </th>
-    <th> <%= _('Payment Method') %> </th>
-    <th> <%= _('Category') %> </th>
-    <th> <%= _('Description') %> </th>
-    <th> <%= _('Value') %> </th>
-    <th> <%= _('Options') %> </th>
+    <th> <%= t(:date) %> </th>
+    <th> <%= t(:payment_method) %> </th>
+    <th> <%= t(:category) %> </th>
+    <th> <%= t(:description) %> </th>
+    <th> <%= t(:value) %> </th>
+    <th> <%= t(:options) %> </th>
   </tr>
   <% @ledgers.each do |l|%>
     <tr>
@@ -23,7 +23,7 @@
     <td id='abelo_payment_category' > <%= select_item('ledger', 'category_id', @ledger_categories, @hide_sign == true ? 'name' : 'name_with_sign' ) %> </td>
     <td><%=  text_field('ledger', 'description') %> </td>
     <td><%=  text_field('ledger', 'value') %> </td>
-    <td rowspan=13> <%= button 'add', _('Add'), :save, {}, :name => 'add_item' %> </td>
+    <td rowspan=13> <%= button 'add', t(:add), :save, {}, :name => 'add_item' %> </td>
     <%= render :partial => 'shared_payments/payment_details'%>
   </tr>
 </table>

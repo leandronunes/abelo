@@ -40,7 +40,6 @@ module Rails
         # Replay action manifest.  RewindBase subclass rewinds manifest.
         def invoke!
           manifest.replay(self)
-          after_generate
         end
 
         def dependency(generator_name, args, runtime_options = {})
@@ -182,19 +181,15 @@ HELP
             nesting = class_name.split('::')
             name = nesting.pop
 
-            # Hack to limit const_defined? to non-inherited on 1.9.
-            extra = []
-            extra << false unless Object.method(:const_defined?).arity == 1
-
             # Extract the last Module in the nesting.
             last = nesting.inject(Object) { |last, nest|
-              break unless last.const_defined?(nest, *extra)
+              break unless last.const_defined?(nest)
               last.const_get(nest)
             }
 
             # If the last Module exists, check whether the given
             # class exists and raise a collision if so.
-            if last and last.const_defined?(name.camelize, *extra)
+            if last and last.const_defined?(name.camelize)
               raise_class_collision(class_name)
             end
           end
@@ -298,7 +293,7 @@ HELP
           file(relative_source, relative_destination, template_options) do |file|
             # Evaluate any assignments in a temporary, throwaway binding.
             vars = template_options[:assigns] || {}
-            b = template_options[:binding] || binding
+            b = binding
             vars.each { |k,v| eval "#{k} = vars[:#{k}] || vars['#{k}']", b }
 
             # Render the source file with the temporary binding.

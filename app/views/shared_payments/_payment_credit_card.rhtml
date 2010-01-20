@@ -1,32 +1,32 @@
 
 <%= display_field_form(@ledger, 'payment_method',
-      :title => _('Credit Card Number'),
+      :title => t(:credit_card_number),
       :content => text_field('ledger', 'credit_card_number'),
       :html_options => {:class => 'break_line'}
     )
 %>
 
 <%= display_field_form(@ledger, 'payment_method',
-      :title => _('Security Code'),
+      :title => t(:security_code),
       :content => text_field('ledger', 'credit_card_secutiry_code')
     )
 %>
 
 <%= display_field_form(@ledger, 'payment_method',
-      :title => _('Credit Card Validity'),
+      :title => t(:credit_card_validity),
       :content => date_select_abelo('ledger', 'credit_card_validity')
     )
 %>
 
 <%= display_field_form(@ledger, 'payment_method',
-      :title => _('Name'),
+      :title => t(:name),
       :content => text_field('ledger', 'credit_card_owner_name'),
       :html_options => {:class => 'break_line'}
     )
 %>
 
 <%= display_field_form(@ledger, 'payment_method',
-      :title => _('CPF'),
+      :title => t(:cpf),
       :content => text_field('ledger', 'credit_card_cpf')
     )
 %>

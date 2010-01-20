@@ -5,7 +5,7 @@
 <% display_edit_info @category do |item| %>
 
   <%= display_field_edit(item, 'type_of',
-        :title => _('Type')
+        :title => t(:type)
       )
   %>
 
@@ -23,20 +23,20 @@
   %>
  
   <%= display_field_edit(item, 'is_sale',
-        :title => _('Is operation of sale?'),
+        :title => t(:is_operation_of_sale?),
         :content => check_box('category', 'is_sale', {}, 'true', 'false'),
         :html_options => {:style => 'clear: left;'}
       )
   %>
 
   <%= display_field_edit(item, 'is_stock',
-        :title => _('Is operation of stock?'),
+        :title => t(:is_operation_of_stock?),
         :content => check_box('category', 'is_stock', {}, 'true', 'false')
       )
   %>
  
   <%= display_field_edit(item, 'payment_methods',
-        :title => _('Payment Methods'),
+        :title => t(:payment_methods),
         :content =>  select_payments('category', 'payment_methods'),
         :html_options => {:style => 'clear: left;'}
       )
@@ -44,32 +44,32 @@
 
   
   <%= display_field_edit(item, 'name',
-        :title => _('Name'),
+        :title => t(:name),
         :content => text_field('category', 'name'),
         :html_options => {:style => 'clear: left;'}
       )
   %>
 
   <%= display_field_edit(item, 'interests',
-        :title => _('Interests'),
+        :title => t(:interests),
         :content => text_field('category', 'interests')
       )
   %>
 
   <%= display_field_edit(item, 'interests_days',
-        :title => _('Interests days'),
+        :title => t(:interests_days),
         :content => text_field('category', 'interests_days')
       )
   %>
 
   <%= display_field_edit(item, 'periodicity',
-        :title => _('Periodicity'),
+        :title => t(:periodicity),
         :content => select_item('category', 'periodicity_id', @periodicities)
       )
   %>
 
   <%= display_field_edit(item, 'number_of_parcels',
-        :title => _('Number of parcels'),
+        :title => t(:number_of_parcels),
         :content => text_field('category', 'number_of_parcels')
       )
   %>

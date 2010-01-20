@@ -34,12 +34,12 @@ class DocumentsController < ApplicationController
     if params[:document_model_id]
       model = Document.find(params[:document_model_id])
       @documents = @query.blank? ? @organization.documents_by_model(model) : @organization.documents_by_model(model).full_text_search(@query)
-      @title = _('Listing Documents from Model %s') % model.name
+      @title = t(:listing_documents_from_model)
     elsif params[:models_list]
-      @title = _('Listing Document Models')
+      @title = t(:listing_document_models)
       @documents = @query.blank? ? @organization.documents_model : @organization.documents_model.full_text_search(@query)
     else
-      @title = _('Listing Documents without Models')
+      @title = t(:listing_documents_without_models)
       @documents = @query.blank? ? @organization.documents_without_model : @organization.documents_without_model.full_text_search(@query)
     end
     @document_pages, @documents = paginate_by_collection @documents
@@ -53,9 +53,9 @@ class DocumentsController < ApplicationController
     begin
       model = @organization.documents.find(params[:document_model_id])
       @document = model.dclone
-      @title = _('New Document from model %s') % model.name
+      @title = t(:new_document_from_model_%s) % model.name
     rescue
-      params[:models_list] ? @title = _('New Document Model') : @title = _('New Blank Document')
+      @title = params[:models_list] ?  t(:new_document_model) : t(:new_blank_document)
       @document = Document.new
     end
     @departments = @organization.departments
@@ -70,7 +70,7 @@ class DocumentsController < ApplicationController
     @document.document_model_id = params[:document_model_id] if params[:document_model_id]
     @document.is_model = true if params[:models_list] and !params[:document_model_id]
     if @document.save
-      flash[:notice] = _('The document was successfully created.')
+      flash[:notice] = t(:the_document_was_successfully_created)
       redirect_to :action => 'list', :models_list => params[:models_list], :document_model_id => params[:document_model_id]
     else
       @departments = @organization.departments
@@ -92,16 +92,16 @@ class DocumentsController < ApplicationController
     end
 
     if params[:models_list] and params[:document_model_id].nil?
-      @title = _('Editing Model Document')
+      @title = t(:editing_model_document)
     else
-      @title = _('Editing Document')
+      @title = t(:editing_document)
     end
   end
 
   def update
     @document = Document.find(params[:id])
     if @document.update_attributes(params[:document])
-      flash[:notice] = _('Document was successfully updated.')
+      flash[:notice] = t(:document_was_successfully_updated)
       redirect_to :action => 'show', :id => @document, :models_list => params[:models_list], :document_model_id => params[:document_model_id]
     else
       @departments = @organization.departments
@@ -131,7 +131,7 @@ class DocumentsController < ApplicationController
       highlights_on :controller => 'documents'
       highlights_off :controller => 'documents', :models_list => 'true'
     end
-    t.named _('Documents')
+    t.named t(:documents)
   end
 
   def list_owners

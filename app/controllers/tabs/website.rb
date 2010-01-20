@@ -8,14 +8,14 @@ def create_website_tabs
     in_set 'first'
     highlights_on :controller => 'cms'
   end
-  t.named _('Manage Content')
+  t.named t(:manage_content)
 
   t = add_tab do
     links_to :controller => 'organization_website_interface'
     in_set 'first'
     highlights_on :controller => 'organization_website_interface'
   end
-  t.named _('Manage Layout')
+  t.named t(:manage_layout)
 
 end
 

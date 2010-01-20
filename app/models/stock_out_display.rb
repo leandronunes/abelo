@@ -6,9 +6,9 @@ class StockOutDisplay < StockDisplay
 
   def self.describe(field)
   {
-    'date' => _('Date'),
-    'amount' => _('Amount'),
-    'price' => _('Sell Price')
+    'date' => t(:date),
+    'amount' => t(:amount),
+    'price' => t(:sell_price)
   }[field] || field
   end
 

@@ -1,0 +1,21 @@
+---
+en:
+  validates_uniqueness_of_name: "The name %{fn} for customer category was already taken."
+  uniqueness_of_customer_name: "The name for customer group was already taken."
+  domain_format_name: 'The domain name must be composed only of lowercase latters (a to z), numbers (0 to 9) and "_"'
+  all: 'All'
+  groups: 'Groups'
+  validates_cnpj: 'The CNPJ is not valid.' 
+  product_associated_to_organization: 'Products must be associated to an organization'
+  product_belongs_to_category: 'Every product must belong to a category'
+  uniqueness_of_name: 'The name was already taken.'
+  insufficient_product_in_stock: "You don't have sufficient product in stock"
+  amount_must_be_positive: "The amount must be a positive number"
+  login: "Login"
+  password: "Password"
+  abelo_footer: "Abelo {{version}} - Copyrigth &copy; 2007 {{link_to_colivre}}. This software is under {{link_to_gnu}}"
+  log_in: "Login"
+  sign_up: "Sign Up"
+  log_in: "Login"
+  logged_successfully:  "Logged in successfully"
+  minor_price: "The price should be at least 0.01"

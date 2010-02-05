@@ -121,7 +121,6 @@ ActiveRecord::Schema.define(:version => 100) do
     t.integer "category_id"
     t.string  "owner_type"
     t.integer "owner_id"
-    t.integer "system_actor_id"
     t.text    "info"
     t.text    "description"
   end
@@ -417,6 +416,7 @@ ActiveRecord::Schema.define(:version => 100) do
 
   create_table "schedule_ledgers", :force => true do |t|
     t.integer  "periodicity_id"
+    t.datetime "start_date"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "interval"

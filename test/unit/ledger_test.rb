@@ -497,9 +497,11 @@ class LedgerTest < Test::Unit::TestCase
     assert_not_nil l.find_balance_of_month
     assert_equal 1, Balance.find(:all).length
 
-    l = create_ledger(:organization => @organization, :date => (Date.today - 40), :status => STATUS_DONE)
+    l = create_ledger(:organization => @organization)
+    l = create_ledger(:organization => @organization, :status => STATUS_DONE)
+
     assert_not_nil l.find_balance_of_month
-    assert_equal 2, Balance.find(:all).length
+    assert_equal 1, Balance.find(:all).length
   end
 
   def test_dont_create_balance_when_save_the_ledgers_of_a_month

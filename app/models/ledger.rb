@@ -85,7 +85,7 @@ class Ledger < ActiveRecord::Base
   delegate :fiscal_payment_type, :to => :payment_strategy 
 
   def validate
-    if (self.date.to_datetime != Date.today.to_datetime) and (self.is_add_cash? or self.is_remove_cash? or self.is_change?)
+    if (self.date.nil? ? false : (self.date.to_datetime != Date.today.to_datetime)) and (self.is_add_cash? or self.is_remove_cash? or self.is_change?)
       self.errors.add(:date, t(:you_cannot_schedule_this_kind_of_ledger))
     end
 
@@ -105,20 +105,20 @@ class Ledger < ActiveRecord::Base
       self.errors.add(t(:you_cannot_realize_money_operations_whithout_create_the_printer_command))
     end
 
-    self.errors.add(:value, _("The value should be at least 0.01" )) if !self.expense? and (value.nil? || value <= 0.00)
+    self.errors.add(:value, t(:minor_price)) if !self.expense? and (value.nil? || value <= 0.00)
 
-    self.errors.add(:date, _("Date cannot be set" )) unless self[:date].nil?
+    self.errors.add(:date, t(:date_cannot_be_set)) unless self[:date].nil?
 
     if !self.category.nil? and !self.category.payment_methods.include?(self.payment_method)
-      self.errors.add(:payment_method, _("You can't have a payment method not include in payment category list.")) 
+      self.errors.add(:payment_method, t(:payment_is_not_in_the_list)) 
     end
 
     if(!self.date.nil? and (self.date.to_datetime > DateTime.now) and self.done? )
-      self.errors.add(:status, _("You can't set this ledger as a effective ledger because the date of the ledger is in the future.")) 
+      self.errors.add(:status, t(:ledger_date_is_in_the_future)) 
     end
 
     if self.owner.kind_of?(Sale) and self.is_change? and (self.owner.change != self)
-      self.errors.add(_("You can't have two changes for the same sale")) unless self.owner.change.nil?
+      self.errors.add(t(:ledger_only_one_change_for_same_sale)) unless self.owner.change.nil?
     end
   end
 

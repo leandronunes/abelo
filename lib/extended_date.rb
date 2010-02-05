@@ -24,9 +24,9 @@ class Date
 
   end
 
-  def to_datetime
-    DateTime.new(self.year, self.month,self.day)
-  end
+#  def to_datetime
+#    DateTime.new(self.year, self.month,self.day)
+#  end
 
   # Returns the date of the first day of the month 
   # of a given date pass as parameter

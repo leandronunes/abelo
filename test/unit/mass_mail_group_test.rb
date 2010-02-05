@@ -3,6 +3,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 class MassMailGroupTest < Test::Unit::TestCase
 
   def setup
+    Worker.delete_all
     @organization = create_organization
   end
 

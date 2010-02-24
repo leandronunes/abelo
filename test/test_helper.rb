@@ -357,10 +357,16 @@ class Test::Unit::TestCase
 
   def create_image(options = {})
     image_path = generate_image_data
-    image = Image.new({ :uploaded_data => ActionController::TestUploadedFile.new(image_path, 'image/png') }.merge(options))
+    image = Image.new(image_params(options))
     image.save!
     image
   end
+
+  def image_params(options = {})
+    image_path = generate_image_data
+    {:uploaded_data => ActionController::TestUploadedFile.new(image_path, 'image/png'), :description => "some description" }.merge(options)
+  end
+  
 
   class ActionController::TestRequest
     def user_agent

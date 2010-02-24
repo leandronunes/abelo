@@ -8,7 +8,7 @@ class ProductDisplayTest < Test::Unit::TestCase
       size
       color
       sell_price 
-      unit
+      unit_measure
       category
       suppliers
       amount_in_stock

@@ -18,18 +18,7 @@ class ProductCategoryTest < Test::Unit::TestCase
   def test_relation_with_images
     cat_prod = create_product_category
     product = create_product(:category => cat_prod)
-    img = Image.new 
-    stream = StringIO.new(File.read("#{RAILS_ROOT}/public/images/rails.png"))
-    def stream.original_filename
-      'rails.png'
-    end
-    def stream.content_type
-      'image/png'
-    end
-    img.description = ('Image for testing')
-    img.picture = stream
-    img.product = product
-    img.save
+    img = create_image(:product => product)
 
     assert cat_prod.images.include?(img)
   end
@@ -45,18 +34,7 @@ class ProductCategoryTest < Test::Unit::TestCase
     cat_prod_2 = ProductCategory.create(:name => 'Category for testing 2', :organization_id => @organization.id, :parent_id => cat_prod_1.id)
 
     product = create_product(:category => cat_prod_2)
-    img = Image.new 
-    stream = StringIO.new(File.read("#{RAILS_ROOT}/public/images/rails.png"))
-    def stream.original_filename
-      'rails.png'
-    end
-    def stream.content_type
-      'image/png'
-    end
-    img.description = ('Image for testing')
-    img.picture = stream
-    img.product = product
-    img.save
+    img = create_image(:product => product)
 
     assert cat_prod_1.category_images.include?(img)
     assert cat_prod_2.category_images.include?(img)

@@ -5,6 +5,10 @@ class Change < PaymentBase
     true
   end
 
+  def set_as_done_on_save?
+    true
+  end
+
   def require_category?
     false
   end

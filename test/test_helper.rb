@@ -339,6 +339,29 @@ class Test::Unit::TestCase
 
   end
 
+  def generate_random_string
+    chars = ('a'..'z').to_a
+    Array.new(30, '').collect{chars[rand(chars.size)]}.join
+  end
+
+  def generate_image_data(content = generate_random_string)
+    image_path = File.join(RAILS_ROOT, 'tmp', generate_random_string + '.png')
+    test_image = Magick::Image.new(300, 300, Magick::HatchFill.new('white','black'))
+    gc = Magick::Draw.new
+    gc.stroke('transparent').fill('black')
+    gc.text(10,10,content)
+    gc.draw(test_image)
+    test_image.write(image_path)
+    return image_path
+  end
+
+  def create_image(options = {})
+    image_path = generate_image_data
+    image = Image.new({ :uploaded_data => ActionController::TestUploadedFile.new(image_path, 'image/png') }.merge(options))
+    image.save!
+    image
+  end
+
   class ActionController::TestRequest
     def user_agent
       'firefox'

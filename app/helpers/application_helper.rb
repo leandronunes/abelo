@@ -64,7 +64,7 @@ module ApplicationHelper
       form_tag({:action => 'list'}.merge(params), :class => 'search_itens'),
         display_autocomplete(object, method, params),
         button('search', t(:search), :search),
-        button('add', _("Add New"), :new, params.merge({:action => 'new', :id => nil})),
+        button('add', t(:add_new), :new, params.merge({:action => 'new', :id => nil})),
         button('reset', t(:reset_search), :list, params.merge({:action => 'list'})),
       '</form>'
     ].join("\n")

@@ -26,7 +26,7 @@ class Test::Unit::TestCase
 
   # Add more helper methods to be used by all tests here...
   include AuthenticatedTestHelper
-  fixtures :people, :profiles, :organizations, :roles, :role_assignments, :configurations
+#  fixtures :people, :profiles, :organizations, :roles, :role_assignments, :configurations
 
   def self.extra_parameters
     @extra_parameters
@@ -90,10 +90,10 @@ class Test::Unit::TestCase
   end
 
   def new_organization(params = {})
-     a = Article.find_by_slug(params[:identifier] || 'some')
+     a = Article.find_by_slug(params[:identifier] || 'one')
      a.destroy unless a.nil?
-     o = Organization.find_by_identifier(params[:identifier] || 'some')
-     o ||= Organization.new({:name => 'some organization', :identifier => 'some', 
+     o = Organization.find_by_identifier(params[:identifier] || 'one')
+     o ||= Organization.new({:name => 'one organization', :identifier => 'one', 
                      :country_id => BSC::Country.find(:first).id,
                      :state_id => BSC::State.find(:first).id, 
                      :city_id => BSC::City.find(:first).id, 

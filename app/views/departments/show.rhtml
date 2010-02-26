@@ -1,7 +1,7 @@
 
 <%= render :partial => 'menu' %>
 
-<%= title _("Department %s") % @department.name %>
+<%= title t(:department_name, :name => @department.name) %>
 
 <%= display_show_info @department, :class => 'view_data'%>
 

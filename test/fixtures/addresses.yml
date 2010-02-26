@@ -1,9 +1,0 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-one:
-  id: 1
-  owner_type: 'Organization'
-  owner_id: 1
-  city_id: 1
-  state_id: 1
-  country_id: 1
-  

@@ -41,3 +41,7 @@ en:
   editing_organization_name: "Editing Organization {{name}}"
   exit_from_system: "Exit from system?"
   my_account: "My Account"
+  listing_name: "Listing {{name}}"
+  add_new: "Add New"
+  department_name: "Department {{name}}"
+  new_name: "New {{name}}"

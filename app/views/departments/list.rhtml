@@ -1,8 +1,8 @@
 
-<%= title t(:listing_%s) % @organization.department_name_pl %>
+<%= title t(:listing_name,:name =>  @organization.department_name_pl) %>
 
 <%= display_list_options 'department', 'name' %>
 
 <%= display_collection @departments %> 
 
-<%= pagination_links(@department_pages, :params => {:query => @query}) %>
+<%= will_paginate @departments, :params => {:query => @query} %>

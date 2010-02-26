@@ -4,18 +4,17 @@ require 'departments_controller'
 # Re-raise errors caught by the controller.
 class DepartmentsController; def rescue_action(e) raise e end; end
 
-class DepartmentsControllerTest < Test::Unit::TestCase
+class DepartmentsControllerTest < ActionController::TestCase
+
   under_organization :one
 
-  fixtures :departments, :organizations, :configurations
+#  fixtures :departments, :organizations, :configurations
 
   def setup
-    @controller = DepartmentsController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-    login_as("quentin")
-    @user = User.find_by_login('quentin')
+    @user = create_user(:login => 'admin', :administrator => true)
+    login_as("admin")
     @organization = Organization.find_by_identifier('one')
+    @environment = create_environment(:is_default => true)
   end
 
   def create_department(params)
@@ -53,34 +52,32 @@ class DepartmentsControllerTest < Test::Unit::TestCase
   end
 
   def test_list_when_query_param_is_nil
+    create_department(:organization => @organization)
     get :list
 
     assert_nil assigns(:query)
     assert_not_nil assigns(:departments)
     assert_kind_of Array, assigns(:departments)
-    assert_not_nil assigns(:department_pages)
-    assert_kind_of ActionController::Pagination::Paginator, assigns(:department_pages)
   end
 
   def test_list_when_query_param_not_nil
     Department.delete_all
-    Department.create!(:name => 'Some Department', :organization_id => 1)
-    Department.create!(:name => 'Another Some Department', :organization_id => 1)
-    Department.create!(:name => 'Department', :organization_id => 1)
+    create_department(:organization => @organization, :name => 'Some Department')
+    create_department(:organization => @organization, :name => 'Another Some Department')
+    create_department(:organization => @organization, :name => 'Department')
     get :list, :query => 'Another*'
 
     assert_not_nil assigns(:query)
     assert_not_nil assigns(:departments)
     assert_kind_of Array, assigns(:departments)
-    assert_not_nil assigns(:department_pages)
-    assert_kind_of ActionController::Pagination::Paginator, assigns(:department_pages)
 
     assert_equal 1, assigns(:departments).size
 
   end
 
   def test_show
-    get :show, :id => 1
+    department = create_department(:organization => @organization)
+    get :show, :id => department.id
 
     assert_response :success
     assert_template 'show'
@@ -123,7 +120,8 @@ class DepartmentsControllerTest < Test::Unit::TestCase
 
 
   def test_edit
-    get :edit, :id => 1
+    department = create_department(:organization => @organization)
+    get :edit, :id => department.id
 
     assert_response :success
     assert_template 'edit'
@@ -133,7 +131,8 @@ class DepartmentsControllerTest < Test::Unit::TestCase
   end
 
   def test_update
-    post :update, :id => 1
+    department = create_department(:organization => @organization)
+    post :update, :id => department.id
     assert_response :redirect
     assert_redirected_to :action => 'list'
   end
@@ -152,14 +151,16 @@ class DepartmentsControllerTest < Test::Unit::TestCase
   end
 
   def test_destroy
-    assert_not_nil Department.find(1)
+    department = create_department(:organization => @organization)
+    department_id = department.id
+    assert_not_nil Department.find(department_id)
 
-    post :destroy, :id => 1
+    post :destroy, :id => department_id
     assert_response :redirect
     assert_redirected_to :action => 'list'
 
     assert_raise(ActiveRecord::RecordNotFound) {
-      Department.find(1)
+      Department.find(department_id)
     }
   end
 

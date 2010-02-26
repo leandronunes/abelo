@@ -28,11 +28,9 @@ class DepartmentsController < ApplicationController
     @query ||= params[:department][:name] if params[:department]
 
     if @query.nil?
-      @departments = @organization.departments
-      @department_pages, @departments = paginate_by_collection @departments
+      @departments = @organization.departments.paginate(:per_page => 10,:page => params[:page] )
     else
-      @departments = @organization.departments.full_text_search(@query)
-      @department_pages, @departments = paginate_by_collection @departments
+      @departments = @organization.departments.full_text_search(@query).paginate(:per_page => 10,:page => params[:page] )
     end
   end
 

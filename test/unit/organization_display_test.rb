@@ -16,7 +16,8 @@ class OrganizationDisplayTest < Test::Unit::TestCase
   end
 
   def test_available_fields
-    assert_equal AVAILABLE_FIELDS_TEST, OrganizationDisplay.available_fields
+    assert_equal [], OrganizationDisplay.available_fields - AVAILABLE_FIELDS_TEST
+    assert_equal [], AVAILABLE_FIELDS_TEST - OrganizationDisplay.available_fields
   end
 
   def test_inlist_available_fields

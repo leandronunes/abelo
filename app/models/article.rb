@@ -20,8 +20,8 @@ class Article < ActiveRecord::Base
   #Nt(:tag_list)
 
   acts_as_filesystem
-
-  acts_as_versioned
+#FIXME make the version control
+#  acts_as_versioned
 
   acts_as_searchable :fields => [:name, :abstract, :body, :tag_list ]
 

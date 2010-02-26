@@ -37,8 +37,8 @@ class CreateArticles < ActiveRecord::Migration
       t.column :height,       :integer  # in pixels
       t.column :width,        :integer  # in pixels
     end
-
-    Article.create_versioned_table
+#FIXME Make the version works
+#    Article.create_versioned_table
   end
 
   def self.down

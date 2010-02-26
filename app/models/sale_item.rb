@@ -46,7 +46,7 @@ class SaleItem < ActiveRecord::Base
     end
 
     if !self.sale.nil? and !self.sale.organization.products.include?(self.product)
-      self.errors.add(:product_id, _("You cannot add a item with the product code %s") % self.product_code)
+      self.errors.add(:product_id, I18n.t("cannot_add_item_with_product_code", :code => self.product_code))
     end
 
     if !self.sale.nil? and self.has_fiscal_printer? and (self.printer_command.nil? or !PrinterCommand.pending_command(self.till).nil?)
@@ -165,13 +165,6 @@ class SaleItem < ActiveRecord::Base
       item.product
     end 
     products.uniq
-  end
-
-  private
-
-  # FIXME make this test
-  def unitary_price= price
-    raise "You cannot access this method"
   end
 
 end

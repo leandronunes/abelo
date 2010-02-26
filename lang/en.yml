@@ -23,3 +23,5 @@ en:
   payment_is_not_in_the_list: "You can't have a payment method not include in payment category list."
   ledger_date_is_in_the_future: "You can't set this ledger as a effective ledger because the date of the ledger is in the future."
   ledger_only_one_change_for_same_sale: "You can't have two changes for the same sale"
+  cannot_add_item_with_product_code: "You cannot add a item with the product code {{code}}"
+

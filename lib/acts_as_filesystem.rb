@@ -1,3 +1,4 @@
+require 'abelo/core_ext/string'
 module ActsAsFileSystem
   #FIXME make this test
 

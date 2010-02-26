@@ -24,28 +24,6 @@ ActiveRecord::Schema.define(:version => 100) do
     t.string  "zip_code"
   end
 
-  create_table "article_versions", :force => true do |t|
-    t.integer  "article_id"
-    t.integer  "version"
-    t.string   "name"
-    t.string   "slug"
-    t.text     "path",               :default => ""
-    t.integer  "parent_id"
-    t.integer  "position"
-    t.text     "body"
-    t.text     "abstract"
-    t.integer  "environment_id"
-    t.datetime "updated_on"
-    t.datetime "created_on"
-    t.integer  "last_changed_by_id"
-    t.integer  "size"
-    t.string   "content_type"
-    t.string   "filename"
-    t.integer  "height"
-    t.integer  "width"
-    t.string   "versioned_type"
-  end
-
   create_table "articles", :force => true do |t|
     t.string   "name"
     t.string   "slug"
@@ -119,6 +97,7 @@ ActiveRecord::Schema.define(:version => 100) do
     t.string  "fax"
     t.string  "email"
     t.integer "category_id"
+    t.integer "system_actor_id"
     t.string  "owner_type"
     t.integer "owner_id"
     t.text    "info"

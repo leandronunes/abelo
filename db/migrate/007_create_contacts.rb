@@ -7,6 +7,7 @@ class CreateContacts < ActiveRecord::Migration
       t.column :fax,              :string
       t.column :email,            :string
       t.column :category_id,      :integer
+      t.column :system_actor_id,  :integer
       t.column :owner_type,       :string
       t.column :owner_id,         :integer
       t.text :info, :description

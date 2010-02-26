@@ -112,7 +112,7 @@ class Organization < ActiveRecord::Base
     address.state = organization.state_obj
     address.city = organization.city_obj
 
-#    organization.address = address
+    organization.address = address
 
     #FIXME make this test
     if organization.contact.nil?

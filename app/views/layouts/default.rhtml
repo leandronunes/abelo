@@ -35,7 +35,7 @@
               <% if current_user.administrator %>
                 <%= design_display_function_button( 'go-jump', t(:go_to),visual_effect(:toggle_slide, 'menu', :duration => 0.6), {:id => "goto", :accesskey => "g"}) %>
               <% end %>
-              <%= design_display_button('edit_small' , _('My Account'), {:controller => 'public', :action => 'edit_user', :id => self.current_user}, :id => "edit_profile", :accesskey => "e") %> 
+              <%= design_display_button('edit_small' , t(:my_account), {:controller => 'public', :action => 'edit_user', :id => self.current_user}, :id => "edit_profile", :accesskey => "e") %> 
               <%= design_display_button( 'system-log-out', t(:logout), {:organization_nickname => nil, :controller => 'users', :action => 'logout'}, :id => "logout", :accesskey => "q", :confirm => t(:exit_from_system), :method => 'post') %>
             </div>
         

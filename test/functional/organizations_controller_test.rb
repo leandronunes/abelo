@@ -4,20 +4,19 @@ require 'organizations_controller'
 # Re-raise errors caught by the controller.
 class OrganizationsController; def rescue_action(e) raise e end; end
 
-class OrganizationsControllerTest < Test::Unit::TestCase
+class OrganizationsControllerTest < ActionController::TestCase
 
-  under_organization :admin #TODO see the better way to do that. This are admin controllers
+#  under_organization :admin #TODO see the better way to do that. This are admin controllers
  
-
   def setup
-    @controller = OrganizationsController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
+    Organization.destroy_all
+    Environment.destroy_all
     login_as('admin')
+    @environment = create_environment(:is_default => true)
     @country = BSC::Country.create!(:name => 'A Country')
     @state = BSC::State.create!(:name => 'Some State', :country => @country, :code => 'SS')
     @city = BSC::City.create!(:state => @state, :name => 'Some City', :zip_code => '40000')
-    @organization = create_organization
+#    @organization = create_organization(:name => 'my organization')
   end
 
   def test_setup
@@ -196,7 +195,6 @@ class OrganizationsControllerTest < Test::Unit::TestCase
   end
 
   def test_unsuccessfully_update
-    Organization.destroy_all
     create_organization(:name => 'Another Some Organization', :identifier => 'another_testing_org', :cnpj => '62.370.998/0001-73')
     o = create_organization(:name => 'Some Organization', :identifier => 'testing_org', :cnpj => '78048802000169')
     num_organizations = Organization.count

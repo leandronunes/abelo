@@ -26,7 +26,7 @@ class Test::Unit::TestCase
 
   # Add more helper methods to be used by all tests here...
   include AuthenticatedTestHelper
-  fixtures :people, :profiles, :organizations, :environments, :roles, :role_assignments, :configurations
+  fixtures :people, :profiles, :organizations, :roles, :role_assignments, :configurations
 
   def self.extra_parameters
     @extra_parameters
@@ -76,8 +76,12 @@ class Test::Unit::TestCase
   end
 
   def create_environment(params={})
-    organization = params[:organization] || @organization ||create_organization(:name => params[:name])
-    Environment.create!({:name => 'some_name', :owner => organization}.merge(params))
+    @organization = params[:organization] || @organization ||create_organization(:name => params[:name])
+    Environment.create!({
+                         :name => 'some_name', 
+                         :owner => @organization,
+                         :design_data => { :template => "default", :theme => "default", :icon_theme => "default" }
+                        }.merge(params))
   end
 
   def create_article(params = {})
@@ -94,6 +98,7 @@ class Test::Unit::TestCase
                      :state_id => BSC::State.find(:first).id, 
                      :city_id => BSC::City.find(:first).id, 
      }.merge(params))
+     o.name ||= 'some organization'
      o.contact_name='some contact'
      o
   end

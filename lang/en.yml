@@ -40,3 +40,4 @@ en:
   new_system_actor: "New {{name}}"
   editing_organization_name: "Editing Organization {{name}}"
   exit_from_system: "Exit from system?"
+  my_account: "My Account"

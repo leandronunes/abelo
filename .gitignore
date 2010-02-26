@@ -7,3 +7,4 @@ log/development.log
 index/
 log/ferret_index.log
 tmp/*
+public/abelo_images

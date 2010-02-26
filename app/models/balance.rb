@@ -9,7 +9,7 @@ class Balance < ActiveRecord::Base
   def validate
     start_date = Date.beginning_of_month(self.date)
     end_date = Date.end_of_month(self.date)
-    self.errors.add(:date, _("You can't have two balances created for a month")) if self.new_record? and Balance.exists?(:date => (start_date..end_date), :bank_account_id => self.bank_account)
+    self.errors.add(:date, t(:you_cant_have_two_balances_created_for_a_month)) if self.new_record? and Balance.exists?(:date => (start_date..end_date), :bank_account_id => self.bank_account)
   end
 
   def display_class

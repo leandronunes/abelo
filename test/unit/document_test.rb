@@ -82,7 +82,7 @@ class DocumentTest < Test::Unit::TestCase
   def test_owner_class
     doc = Document.new
     doc.owner = Customer.find(:first)
-    assert_equal 'Consumidor', doc.owner_class
+    assert_equal t(:customer), doc.owner_class
   end
 
   def test_document_owner_type

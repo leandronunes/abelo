@@ -28,15 +28,15 @@ class LedgerCategory < ActiveRecord::Base
     end
 
     if self.is_sale? and !self.income?
-      self.errors.add(:is_sale, _("The sale operations must be type of income"))
+      self.errors.add(:is_sale, t(:the_sale_operations_must_be_type_of_income))
     end
 
     if self.is_stock? and !self.expense?
-      self.errors.add(:is_stock, _("The stock operations must be type of expense"))
+      self.errors.add(:is_stock, t(:the_stock_operations_must_be_type_of_expense))
     end
 
     if self.is_stock? and self.is_sale?
-      self.errors.add(:is_stock, _("You canno't have a payment category sale an stock at the same time"))
+      self.errors.add(:is_stock, t(:you_can_not_have_a_payment_category_sale_an_stock_at_the_same_time))
     end
 
   end
@@ -78,7 +78,7 @@ class LedgerCategory < ActiveRecord::Base
   end
 
   def name_with_sign
-    Payment.income?(self.type_of) ? _("(+) %s") % self.name :  _("(-) %s") % self.name
+    Payment.income?(self.type_of) ? I18n.t(:name_with_plus_sign, :name => self.name) :  I18n.t(:name_with_minus_sign, :name => self.name)
   end
 
   def count_ledgers

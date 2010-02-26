@@ -276,7 +276,7 @@ ActiveRecord::Schema.define(:version => 100) do
   create_table "mass_mails", :force => true do |t|
     t.string  "subject"
     t.text    "body"
-    t.integer "organization_id", :null => false
+    t.integer "organization_id"
   end
 
   create_table "organizations", :force => true do |t|

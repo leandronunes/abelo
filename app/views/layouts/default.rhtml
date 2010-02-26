@@ -36,7 +36,7 @@
                 <%= design_display_function_button( 'go-jump', t(:go_to),visual_effect(:toggle_slide, 'menu', :duration => 0.6), {:id => "goto", :accesskey => "g"}) %>
               <% end %>
               <%= design_display_button('edit_small' , _('My Account'), {:controller => 'public', :action => 'edit_user', :id => self.current_user}, :id => "edit_profile", :accesskey => "e") %> 
-              <%= design_display_button( 'system-log-out', t(:logout'),_{:organization_nickname_=>_nil,_:controller_=>_'users',_:action_=>_'logout'},_:id_=>_"logout",_:accesskey_=>_"q",_:confirm_=>__('exit_from_system?'),_:method_=>_'post) %>
+              <%= design_display_button( 'system-log-out', t(:logout), {:organization_nickname => nil, :controller => 'users', :action => 'logout'}, :id => "logout", :accesskey => "q", :confirm => t(:exit_from_system), :method => 'post') %>
             </div>
         
 	</div>

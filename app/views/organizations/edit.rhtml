@@ -1,4 +1,4 @@
-<%= title t(:editing_organization_%s) % @organization.name %>
+<%= title t(:editing_organization_name, :name => @organization.name) %>
 
 <% form_tag :action => 'update', :id => @organization  do %>
 

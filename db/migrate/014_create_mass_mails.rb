@@ -3,7 +3,7 @@ class CreateMassMails < ActiveRecord::Migration
     create_table :mass_mails do |t|
       t.column :subject,         :string
       t.column :body,            :text
-      t.column :organization_id, :integer, :null => false
+      t.column :organization_id, :integer
     end
   end
 

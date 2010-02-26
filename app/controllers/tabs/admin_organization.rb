@@ -42,7 +42,7 @@ def create_admin_organization_tabs
     links_to :controller => 'organizations', :action => 'list'
      highlights_on :controller => 'organizations'
   end
-  t.named _("Organizations") 
+  t.named t(:organizations) 
   t.show_if "params[:organization_id].nil?"
 
   t = add_tab do

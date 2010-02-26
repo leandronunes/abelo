@@ -48,6 +48,7 @@ class ArticleTest < Test::Unit::TestCase
   end
 
   def test_uniqueness_of_slug
+    Article.delete_all
     a1 = create_article(:slug => 'another_slug', :environment => @environment)
     a2 = Article.new
     a2.slug = 'another_slug'

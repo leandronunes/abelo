@@ -1,4 +1,4 @@
-<%= title t(:new_%s) % SystemActor.describe(@actor) %>
+<%= title t(:new_system_actor, :name => SystemActor.describe(@actor)) %>
 
 <% form_tag :action => 'create' do %>
   <%= render :partial => 'form' %>

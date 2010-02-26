@@ -36,3 +36,7 @@ en:
   change_me: "Change me"
   person_organization_name: "Person/Organization name"
   person_organization_function: "Person/Organization function"
+  editing_system_actor: "Editing {{name}}"
+  new_system_actor: "New {{name}}"
+  editing_organization_name: "Editing Organization {{name}}"
+  exit_from_system: "Exit from system?"

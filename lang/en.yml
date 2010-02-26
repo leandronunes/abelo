@@ -34,3 +34,5 @@ en:
   you_can_not_associate_a_person_organization_to_a_document_model: "You can't associate a person/organization to a document model"
   you_can_not_destroy_this_model_exist_at_least_a_document_that_references_it: "You can't destroy this model: Exist at least a document that references it."
   change_me: "Change me"
+  person_organization_name: "Person/Organization name"
+  person_organization_function: "Person/Organization function"

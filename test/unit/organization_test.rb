@@ -56,7 +56,7 @@ class OrganizationTest < Test::Unit::TestCase
   end
 
   def test_relation_with_mass_mails
-    mail = MassMail.create(:subject => "Email subject", :body => "Email body", :organization_id => @organization.id)
+    mail = MassMail.create!(:subject => "Email subject", :body => "Email body", :organization => @organization)
     @organization.mass_mails.concat(mail)
     assert @organization.mass_mails.include?(mail)
   end

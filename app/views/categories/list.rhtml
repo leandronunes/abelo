@@ -1,10 +1,10 @@
 <%= render :partial => 'menu' %>
 
-<%= title t(:listing_%s) % Category.describe(@category_type.pluralize) %>
+<%= title t(:listing_name, :name => Category.describe(@category_type.pluralize)) %>
 
 <%= display_list_options 'category', 'name', :category_type => @category_type %>
 
 <%= display_collection @categories, {:category_type => @category_type} %>
 
-<%= pagination_links(@category_pages, :params => {:query => @query}) %>
+<%= will_paginate @categories, :params => {:query => @query} %>
 

@@ -42,7 +42,7 @@ class DocumentsController < ApplicationController
       @title = t(:listing_documents_without_models)
       @documents = @query.blank? ? @organization.documents_without_model : @organization.documents_without_model.full_text_search(@query)
     end
-    @document_pages, @documents = paginate_by_collection @documents
+    @documents = @documents.paginate(:per_page => 10,:page => params[:page] )
   end
 
   def show
@@ -123,7 +123,7 @@ class DocumentsController < ApplicationController
       in_set 'first'
       highlights_on :controller => 'documents', :models_list => 'true'
     end
-    t.named _("Models")
+    t.named t(:models)
    
     t = add_tab do      
       links_to :controller => 'documents', :action => 'list'
@@ -145,8 +145,7 @@ class DocumentsController < ApplicationController
 
   def find_by_tag
     @collection = params[:collection].split(',').map{|id| Document.find(id)}
-    @documents = Document.find_tagged_with(params[:tag]) & @collection
-    @document_pages, @documents = paginate_by_collection @documents
+    @documents = (Document.find_tagged_with(params[:tag]) & @collection).paginate(:per_page => 10,:page => params[:page] )
     @model = true if @collection.first.is_model? 
     render :partial => 'documents_list'
   end

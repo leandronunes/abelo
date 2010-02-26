@@ -4,5 +4,4 @@
 
 <%= display_collection @categories %>
 
-<%= pagination_links(@category_pages, :params => {:query => @query}) %>
-
+<%= will_paginate @categories, :params => {:query => @query} %>

@@ -4,5 +4,5 @@
 
 <%= display_collection @bank_accounts %>
 
-<%= pagination_links(@bank_account_pages, :params => {:query => @query}) %> 
+<%= will_paginate @bank_accounts, :params => {:query => @query} %>
 

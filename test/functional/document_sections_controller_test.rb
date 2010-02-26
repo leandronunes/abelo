@@ -4,21 +4,20 @@ require 'document_sections_controller'
 # Re-raise errors caught by the controller.
 class DocumentSectionsController; def rescue_action(e) raise e end; end
 
-class DocumentSectionsControllerTest < Test::Unit::TestCase
+class DocumentSectionsControllerTest < ActionController::TestCase
 
-  fixtures :documents, :document_sections
   under_organization :one
 
-  #TODO make this tests works
-  def test_true
-    assert true
+  def test_index
+    flunk 'make it works'
   end
-  
+
 #  def setup
-#    @controller = DocumentSectionsController.new
-#    @request    = ActionController::TestRequest.new
-#    @response   = ActionController::TestResponse.new
-#    login_as("quentin")
+#    @user = create_user(:login => 'admin', :administrator => true)
+#    login_as("admin")
+#    @organization = Organization.find_by_identifier('one')
+#    @environment = create_environment(:is_default => true)
+#    create
 #  end
 #
 #  def test_new

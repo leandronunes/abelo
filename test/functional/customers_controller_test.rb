@@ -4,21 +4,18 @@ require 'system_actors_controller'
 # Re-raise errors caught by the controller.
 class SystemActorsController; def rescue_action(e) raise e end; end
 
-class CustomersControllerTest < Test::Unit::TestCase
+class SystemActorsControllerTest < ActionController::TestCase
 
   under_organization :one
 
-  fixtures :organizations, :system_actors, :categories, :configurations
-
   def setup
-    @controller = SystemActorsController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
+    @user = create_user(:login => 'admin', :administrator => true)
+    login_as("admin")
     @organization = Organization.find_by_identifier('one')
-    login_as("quentin")
-    @customer_category = CustomerCategory.find(:first)
-    @system_actor = Customer.create!(:name => "Another Name to Test", :cpf => '874.923.844-24', 
-                   :category => @customer_category, :email => 'test@test.com', :organization => @organization)
+    @environment = create_environment(:is_default => true)
+
+    @customer_category = create_customer_category(:organization => @organization)
+    @system_actor = create_customer(:category => @customer_category, :organization => @organization)
   end
 
   def test_setup
@@ -62,7 +59,6 @@ class CustomersControllerTest < Test::Unit::TestCase
     assert_response :success
     assert_template 'list'
 
-    assert_not_nil assigns(:system_actor_pages)
     assert_not_nil assigns(:system_actors)
     assert_kind_of Array, assigns(:system_actors)
     assigns(:system_actors).each  do |s|

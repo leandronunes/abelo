@@ -4,16 +4,15 @@ require 'fiscal_printer_controller'
 # Re-raise errors caught by the controller.
 class FiscalPrinterController; def rescue_action(e) raise e end; end
 
-class FiscalPrinterControllerTest < Test::Unit::TestCase
+class FiscalPrinterControllerTest < ActionController::TestCase
 
-  under_organization :some
+  under_organization :one
 
   def setup
-    @controller = FiscalPrinterController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-    @organization = create_organization(:identifier => 'some')
-    login_as("quentin")
+    @user = create_user(:login => 'admin', :administrator => true)
+    login_as("admin")
+    @organization = Organization.find_by_identifier('one')
+    @environment = create_environment(:is_default => true)
   end
 
   def create_printer(params= {})
@@ -47,7 +46,6 @@ class FiscalPrinterControllerTest < Test::Unit::TestCase
     assert_response :success
     assert_template 'list'
 
-    assert_not_nil assigns(:printer_pages)
     assert_not_nil assigns(:printers)
     assert_kind_of Array, assigns(:printers)
   end
@@ -63,8 +61,6 @@ class FiscalPrinterControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:query)
     assert_not_nil assigns(:printers)
     assert_kind_of Array, assigns(:printers)
-    assert_not_nil assigns(:printer_pages)
-    assert_kind_of ActionController::Pagination::Paginator, assigns(:printer_pages)
   end
 
   def test_new

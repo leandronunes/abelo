@@ -20,11 +20,9 @@ class FiscalPrinterController < ApplicationController
     @query ||= params[:printer][:serial] if params[:printer]
 
     if @query.nil?
-      @printers = @organization.printers
-      @printer_pages, @printers = paginate_by_collection @printers
+      @printers = @organization.printers.paginate(:per_page => 10,:page => params[:page] )
     else
-      @printers = @organization.printers.full_text_search(@query)
-      @printer_pages, @printers = paginate_by_collection @printers
+      @printers = @organization.printers.full_text_search(@query).paginate(:per_page => 10,:page => params[:page] )
     end
   end
 

@@ -20,7 +20,7 @@ class BanksController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @bank_pages, @banks = paginate :banks, :per_page => 10  
+    @banks = Bank.paginate(:per_page => 10, :page => params[:page])
   end
 
   def show
@@ -66,7 +66,7 @@ class BanksController < ApplicationController
       in_set 'first'
       highlights_on :controller => 'banks'
     end
-    t.named _("Banks")
+    t.named t(:banks)
   end
 
 end

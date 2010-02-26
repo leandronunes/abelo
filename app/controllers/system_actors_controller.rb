@@ -38,11 +38,9 @@ class SystemActorsController < ApplicationController
     @query ||= params[:system_actor][:name] if params[:system_actor]
 
     if @query.nil?
-      @system_actors = @organization.system_actors.find(:all, :conditions => ["type = ?", @actor.camelize])
-      @system_actor_pages, @system_actors = paginate_by_collection @system_actors
+      @system_actors = @organization.system_actors.find(:all, :conditions => ["type = ?", @actor.camelize]).paginate(:per_page => 10,:page => params[:page] )
     else
-      @system_actors = @actor.camelize.constantize.full_text_search(@query)
-      @system_actor_pages, @system_actors = paginate_by_collection @system_actors
+      @system_actors = @actor.camelize.constantize.full_text_search(@query).paginate(:per_page => 10,:page => params[:page] )
     end
   end
 
@@ -61,8 +59,7 @@ class SystemActorsController < ApplicationController
       @ledger_categories = @organization.sale_ledger_categories
     end
 
-    ledgers = @system_actor.ledgers_by_all(@chosen_accounts, @chosen_tags, @chosen_categories, @start_date, @end_date, @query)
-    @ledger_pages, @ledgers = paginate_by_collection ledgers
+    @ledgers = @system_actor.ledgers_by_all(@chosen_accounts, @chosen_tags, @chosen_categories, @start_date, @end_date, @query).paginate(:per_page => 10,:page => params[:page] )
     @total_income = Ledger.total_income(@ledgers)
     @total_expense = Ledger.total_expense(@ledgers)
     @geral_total_income = Ledger.total_income(ledgers)
@@ -77,8 +74,7 @@ class SystemActorsController < ApplicationController
     else
       @ledger_categories = @organization.sale_ledger_categories
     end
-    ledgers = system_actor.ledgers_by_all(@chosen_accounts, @chosen_tags, @chosen_categories, @start_date, @end_date, @query)
-    @ledger_pages, @ledgers = paginate_by_collection ledgers
+    @ledgers = system_actor.ledgers_by_all(@chosen_accounts, @chosen_tags, @chosen_categories, @start_date, @end_date, @query).paginate(:per_page => 10,:page => params[:page] )
     @total_income = Ledger.total_income(@ledgers)
     @total_expense = Ledger.total_expense(@ledgers)
     @geral_total_income = Ledger.total_income(ledgers)

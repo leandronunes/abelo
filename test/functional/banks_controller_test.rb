@@ -4,17 +4,15 @@ require 'banks_controller'
 # Re-raise errors caught by the controller.
 class BanksController; def rescue_action(e) raise e end; end
 
-class BanksControllerTest < Test::Unit::TestCase
-  fixtures :banks
+class BanksControllerTest < ActionController::TestCase
 
-
-  under_organization :admin #TODO see the better way to do that. This are admin controllers
+  under_organization :one
 
   def setup
-    @controller = BanksController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
+    @user = create_user(:login => 'admin', :administrator => true)
     login_as('admin')
+    @organization = Organization.find_by_identifier('one')
+    @environment = create_environment(:is_default => true)
     @bank = Bank.create!(:name => 'The Name', :code => 'The Code')
   end
 

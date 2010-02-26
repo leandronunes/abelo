@@ -4,18 +4,16 @@ require 'categories_controller'
 # Re-raise errors caught by the controller.
 class CategoriesController; def rescue_action(e) raise e end; end
 
-class CustomerCategoriesControllerTest < Test::Unit::TestCase
+class CategoriesControllerTest < ActionController::TestCase
 
-  under_organization :some
+  under_organization :one
 
   def setup
-    @controller = CategoriesController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-
-    @organization = create_organization(:identifier => 'some')
-    @customer_category ||= create_customer_category
-    login_as("quentin")
+    @user = create_user(:login => 'admin', :administrator => true)
+    login_as("admin")
+    @organization = Organization.find_by_identifier('one')
+    @environment = create_environment(:is_default => true)
+    @customer_category ||= create_customer_category(:organization => @organization)
   end
 
   def test_index

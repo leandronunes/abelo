@@ -8,8 +8,6 @@ class DepartmentsControllerTest < ActionController::TestCase
 
   under_organization :one
 
-#  fixtures :departments, :organizations, :configurations
-
   def setup
     @user = create_user(:login => 'admin', :administrator => true)
     login_as("admin")

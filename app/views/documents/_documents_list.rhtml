@@ -5,6 +5,6 @@
 <% else %>
   <%= display_collection @documents, :document_model_id => params[:document_model_id], :models_list => params[:models_list] %>
 <% end %>
-<%= pagination_links(@document_pages, :params => {:query => @query, :document_model_id => params[:document_model_id], :models_list => params[:models_list] } ) %>
+<%= will_paginate @documents, :params => {:query => @query, :document_model_id => params[:document_model_id], :models_list => params[:models_list] }  %>
 
 </div>

@@ -4,19 +4,17 @@ require 'bank_accounts_controller'
 # Re-raise errors caught by the controller.
 class BankAccountsController; def rescue_action(e) raise e end; end
 
-class BankAccountsControllerTest < Test::Unit::TestCase
-  fixtures :bank_accounts, :banks, :configurations, :organizations
+class BankAccountsControllerTest < ActionController::TestCase
 
-  under_organization :some
+  under_organization :one
 
   def setup
-    @controller = BankAccountsController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-    login_as("quentin")
-    @organization = create_organization(:identifier => 'some')
+    @user = create_user(:login => 'admin', :administrator => true)
+    login_as("admin")
+    @organization = Organization.find_by_identifier('one')
+    @environment = create_environment(:is_default => true)
     @bank = create_bank
-    @bank_account = create_bank_account
+    @bank_account = create_bank_account(:organization => @organization)
   end
 
   def test_setup
@@ -58,7 +56,7 @@ class BankAccountsControllerTest < Test::Unit::TestCase
 
     assert_nil assigns(:query)
     assert_not_nil assigns(:bank_accounts)
-    assert_not_nil assigns(:bank_account_pages)
+    assert_kind_of Array, assigns(:bank_accounts)
   end
 
   def test_list_when_query_param_is_nil

@@ -4,21 +4,20 @@ require 'documents_controller'
 # Re-raise errors caught by the controller.
 class DocumentsController; def rescue_action(e) raise e end; end
 
-class DocumentsControllerTest < Test::Unit::TestCase
+class DocumentsControllerTest < ActionController::TestCase
 
-  under_organization :some
+  under_organization :one
 
   def setup
-    @controller = DocumentsController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-
-    @organization = create_organization(:identifier => 'some')
-    @department = create_department
-    @customer = create_customer
+    @user = create_user(:login => 'admin', :administrator => true)
+    login_as("admin")
+    @organization = Organization.find_by_identifier('one')
+    @environment = create_environment(:is_default => true)
+    @department = create_department(:organization => @organization)
+    @customer_category = create_customer_category(:organization => @organization)
+    @customer = create_customer(:organization => @organization)
     @document = create_document(:is_model => false)
     @document_model = create_document(:is_model => true, :name => 'another')
-    login_as("quentin")
   end
 
   def test_setup
@@ -71,7 +70,6 @@ class DocumentsControllerTest < Test::Unit::TestCase
     assert_template 'list', :document_model_id => model.id
 
     assert_not_nil assigns(:documents)
-    assert_not_nil assigns(:document_pages)
     assert_not_nil assigns(:title)
     assert @organization.documents_by_model(model).include?(document_with_model)
 #   assert assigns(:documents).include?(document_with_model)
@@ -84,7 +82,6 @@ class DocumentsControllerTest < Test::Unit::TestCase
     assert_template 'list'
 
     assert_not_nil assigns(:documents)
-    assert_not_nil assigns(:document_pages)
     assert_not_nil assigns(:title)
   end
 
@@ -95,7 +92,6 @@ class DocumentsControllerTest < Test::Unit::TestCase
     assert_template 'list'
 
     assert_not_nil assigns(:documents)
-    assert_not_nil assigns(:document_pages)
     assert_not_nil assigns(:title)
   end
 
@@ -289,38 +285,21 @@ class DocumentsControllerTest < Test::Unit::TestCase
   end
   
   def test_update_document_model
-    model = Document.create(:name => 'Model', :is_model => true, :organization_id => 1, :department_ids => [1])
-    document = Document.create(:name => 'document', :is_model => false, :organization_id => 1, :department_ids => [1], :document_model_id => model.id)
-
-    post :update, :id => document.id, :document => {:organization_id => 1, :name => 'Any Name', :department_ids => [1,2], :document_model_id => model.id}, :document_model_id => model.id, :models_list => true
+    post :update, :id => @document_model.id, :document => {:organization_id => @organization.id, :name => 'Any Name', :department_ids => [@department.id] }, :models_list => true
 
     assert_response :redirect
-    assert_redirected_to :action => 'show', :id => document.id, :document_model_id => model.id, :models_list => true
-  end
-
-  def test_update_document_model
-    post :update, :id => 1, :document => {:organization_id => 1, :name => 'Any Name', :department_ids => [1,2] }, :models_list => true
-
-    assert_response :redirect
-    assert_redirected_to :action => 'show', :id => 1, :models_list => true
+    assert_redirected_to :action => 'show', :id => @document_model.id, :models_list => true
   end
 
   def test_update_document_without_model
-    post :update, :id => 1, :document => {:organization_id => 1, :name => 'Any Name', :department_ids => [1,2] }
+    post :update, :id => @document.id, :document => {:organization_id => @organization.id, :name => 'Any Name', :department_ids => [@department.id] }
 
     assert_response :redirect
-    assert_redirected_to :action => 'show', :id => 1
+    assert_redirected_to :action => 'show', :id => @document.id
   end
 
   def test_update_wrong_params
-    count = Document.count
-    cp = Document.new
-    cp.name = "Any Name"
-    cp.organization_id=2
-    cp.is_model = true
-    assert cp.save
-    assert_equal count + 1, Document.count
-    post :update, :id => cp.id, :document => {:organization_id => 1}
+    post :update, :id => @document_model.id, :document => {:organization_id => nil}
 
     assert_response :success
     assert_template 'edit'
@@ -345,7 +324,7 @@ class DocumentsControllerTest < Test::Unit::TestCase
   end
 
   def test_list_owners_customers
-    get :list_owners, :document => {:organization_id => 1, :name => 'Any Name', :department_ids => [1,2] }, :value => 'supplier', :models_list => true
+    get :list_owners, :document => {:organization_id => @organization.id, :name => 'Any Name', :department_ids => [@department.id] }, :value => 'supplier', :models_list => true
     assert_not_nil assigns(:document)
     assert_not_nil assigns(:owner_type)
     assert_not_nil assigns(:customers)

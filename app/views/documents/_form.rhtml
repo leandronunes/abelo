@@ -71,7 +71,7 @@
 <% end %>
 
   <%= display_field_form(item, 'tag_list',
-        :title => t(:tags_(separated_by_comma):),
+        :title => t(:tags_separated_by_comma),
         :content => text_field('document', 'tag_list'),
         :html_options => {:class => 'break_line'}
       )

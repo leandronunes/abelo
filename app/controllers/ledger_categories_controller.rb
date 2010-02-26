@@ -21,8 +21,7 @@ class LedgerCategoriesController < ApplicationController
   post_only [ :create, :update, :autocomplete_name ]
 
   def list
-    categories = @organization.ledger_categories
-    @category_pages, @categories = paginate_by_collection categories
+    @categories = @organization.ledger_categories.paginate(:per_page => 10,:page => params[:page] )
   end
 
   def show

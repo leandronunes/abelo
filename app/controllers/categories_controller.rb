@@ -35,11 +35,9 @@ class CategoriesController < ApplicationController
     @category_type = params[:category_type]    
     if CATEGORY_TYPES.include?(@category_type)
       if @query.nil?
-        @categories = @organization.send("#{@category_type}_categories")
-        @category_pages, @categories = paginate_by_collection @categories
+        @categories = @organization.send("#{@category_type}_categories").paginate(:per_page => 10,:page => params[:page] )
       else
-        @categories = @organization.send("#{@category_type}_categories").full_text_search(@query)
-        @category_pages, @categories = paginate_by_collection @categories
+        @categories = @organization.send("#{@category_type}_categories").full_text_search(@query).paginate(:per_page => 10,:page => params[:page] )
       end
     else
       render_error(_("This type didn't exist"))

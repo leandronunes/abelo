@@ -129,8 +129,8 @@ class Test::Unit::TestCase
   end
 
   def new_ledger(params = {})
-    ledger_category = params[:category] || @ledger_category || create_ledger_category
-    bank_account = params[:bank_account] || @bank_account || create_bank_account
+    ledger_category = params[:category] || @ledger_category 
+    bank_account = params[:bank_account] || @bank_account
     owner = params[:owner] || @organization
     organization = params[:organization] || @organization
     date = params[:date] || Date.today
@@ -192,16 +192,16 @@ class Test::Unit::TestCase
                      :email => 'supplier@colivre.coop.br')
   end
 
-  def create_supplier_category
-    SupplierCategory.create!(:name => 'some', :organization => @organization)
+  def create_supplier_category(options = {})
+    SupplierCategory.create!({:name => 'some', :organization => @organization}.merge(options))
   end
 
-  def create_customer_category
-    CustomerCategory.create!(:name => 'some', :organization => @organization)
+  def create_customer_category(options = {})
+    CustomerCategory.create!({:name => 'some', :organization => @organization}.merge(options))
   end
 
-  def create_worker_category
-    WorkerCategory.create!(:name => 'some', :organization => @organization)
+  def create_worker_category(options = {})
+    WorkerCategory.create!({:name => 'some', :organization => @organization}.merge(options))
   end
 
   def create_invoice(params = {})
@@ -245,21 +245,18 @@ class Test::Unit::TestCase
   end
 
   def create_customer(params = {})
-    @customer_category ||= create_customer_category
     Customer.create!({:name => 'some', :organization => @organization, 
                      :cpf => '642.229.464-60', :category => @customer_category,
                      :email => 'customer@colivre.coop.br'}.merge(params))
   end
 
   def create_supplier(params = {})
-    @supplier_category ||= create_supplier_category
     Supplier.create!({:name => 'some supplier', :organization => @organization, 
                      :cpf => '642.229.464-60', :category => @supplier_category,
                      :email => 'supplier@colivre.coop.br'}.merge(params))
   end
 
   def create_worker(params = {})
-    @worker_category ||= create_worker_category
     Worker.create!({:name => 'some worker', :organization => @organization,
                    :cpf => '642.229.464-60', :category => @worker_category,
                    :email => 'worker@colivre.coop.br'}.merge(params))
@@ -267,9 +264,6 @@ class Test::Unit::TestCase
 
 
   def create_document(params = {})
-    @organization ||= create_organization
-    @department ||= create_department
-    @customer ||= create_customer
     Document.create!({
       :name => 'Some Name', :is_model => false,
       :organization => @organization, :departments => [@department],

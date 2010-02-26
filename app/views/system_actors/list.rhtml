@@ -1,8 +1,8 @@
 
-<%= title (t(:listing_%s) % SystemActor.describe(@actor).downcase) %>
+<%= title (t(:listing_name , :name => SystemActor.describe(@actor).downcase)) %>
 
 <%= display_list_options 'system_actor', 'name', :actor => @actor %>
 
 <%= display_collection @system_actors, {:actor => @actor} %>
 
-<%= pagination_links(@system_actor_pages, :params => {:actor => @actor}) %>
+<%= will_paginate @system_actors, :params => {:actor => @actor} %>

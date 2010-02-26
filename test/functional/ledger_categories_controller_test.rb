@@ -4,19 +4,17 @@ require 'ledger_categories_controller'
 # Re-raise errors caught by the controller.
 class LedgerCategoriesController; def rescue_action(e) raise e end; end
 
-class LedgerCategoriesControllerTest < Test::Unit::TestCase
+class LedgerCategoriesControllerTest < ActionController::TestCase
 
-  under_organization :some
+  under_organization :one
   
-  fixtures :ledger_categories , :organizations, :configurations
-
   def setup
-    @controller = LedgerCategoriesController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-    @organization = create_organization(:name => 'some', :identifier => 'some')
+    @user = create_user(:login => 'admin', :administrator => true)
+    login_as("admin")
+    @organization = Organization.find_by_identifier('one')
+    @environment = create_environment(:is_default => true)
     @ledger_category = create_ledger_category
-    login_as('quentin')
+    @bank_account = create_bank_account
   end
 
   def test_setup
@@ -168,7 +166,7 @@ class LedgerCategoriesControllerTest < Test::Unit::TestCase
 
   def test_destroy_unsuccessfully
     Ledger.delete_all
-    Ledger.create!(:owner => @organization, :value => 10, :date => Date.today, :category => @ledger_category, :bank_account_id => BankAccount.find(:first), :payment_method => Payment::MONEY)
+    Ledger.create!(:owner => @organization, :value => 10, :date => Date.today, :category => @ledger_category, :bank_account_id => @bank_account.id, :payment_method => Payment::MONEY)
 
     get :destroy, :id => @ledger_category.id
 

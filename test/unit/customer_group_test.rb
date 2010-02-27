@@ -5,6 +5,7 @@ class CustomerGroupTest < Test::Unit::TestCase
   def setup
     @organization = create_organization
     @customer_group = create_customer_group
+    @customer_category = create_customer_category
     @customer = create_customer
   end
 

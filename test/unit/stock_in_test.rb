@@ -2,16 +2,15 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class StockInTest < Test::Unit::TestCase
 
-  fixtures :ledger_categories, :bank_accounts, :organizations, :configurations
-
   def setup
     @organization = create_organization
-    @bank_account = BankAccount.find(:first)
+    @bank = create_bank
+    @bank_account = create_bank_account
+    @unit = create_unit
     @product_category = create_product_category
     @product = create_product
-    cat_supp = SupplierCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
-    @supplier = Supplier.create!(:name => 'Hering', :cnpj => '58178734000145', :organization_id => @organization.id, :email => 'contato@hering.com', :category_id => cat_supp.id)
-
+    @supplier_category = create_supplier_category
+    @supplier = create_supplier
     @ledger_category = create_ledger_category(:type_of => Payment::TYPE_OF_EXPENSE, :is_stock => true)
     @ledger = create_ledger
   end

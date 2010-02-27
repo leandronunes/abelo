@@ -1,14 +1,13 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class StockOutTest < Test::Unit::TestCase
-  fixtures :system_actors, :categories
 
-  #FIXME make more test of the kind of stock
   def setup
-    UnitMeasure.destroy_all
     @organization = create_organization
+    @unit = create_unit
     @product_category = create_product_category
-    @supplier = Supplier.find(:first)
+    @supplier_category = create_supplier_category
+    @supplier = create_supplier
     @invoice  = create_invoice
   end
 

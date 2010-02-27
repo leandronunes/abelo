@@ -2,10 +2,9 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class ProductCategoryTest < Test::Unit::TestCase
 
-  fixtures :organizations
-
   def setup
     @organization = create_organization
+    @unit = create_unit
   end
 
   def test_relation_with_products

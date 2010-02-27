@@ -2,10 +2,8 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class MassMailDisplayTest < Test::Unit::TestCase
 
-  fixtures :organizations
-
   def setup
-    @org = Organization.find_by_identifier('six') 
+    @organization = create_organization
   end
 
   AVAILABLE_FIELDS_TEST = %w[
@@ -14,7 +12,7 @@ class MassMailDisplayTest < Test::Unit::TestCase
   ]
  
   def test_available_fields_are_valids
-    mass_mail = MassMail.new(:subject => 'Mass Mail for testing', :organization_id => @org.id, :body => 'testing mass mail')
+    mass_mail = MassMail.new(:subject => 'Mass Mail for testing', :organization_id => @organization.id, :body => 'testing mass mail')
     assert_kind_of Array, MassMailDisplay.available_fields
     MassMailDisplay.available_fields.each do |field|
       assert_nothing_raised { mass_mail.send("#{field}")}

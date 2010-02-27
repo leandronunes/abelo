@@ -1,7 +1,10 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class DocumentItemTest < Test::Unit::TestCase
-  fixtures :document_items, :products
+
+  def setup
+    @document_item = create_document_item
+  end
 
   def test_mandatory_fields
     count = DocumentItem.count
@@ -37,12 +40,13 @@ class DocumentItemTest < Test::Unit::TestCase
 
   def test_destroy
     count = DocumentItem.count
-    cpi = DocumentItem.find(1)
+    document_item_id = @document_item.id
+    cpi = @document_item
     assert_not_nil cpi
     cpi.destroy
     assert_equal count - 1, DocumentItem.count
     assert_raise(ActiveRecord::RecordNotFound) {
-      DocumentItem.find(1)
+      DocumentItem.find(document_item_id)
     }
 
   end
@@ -51,16 +55,6 @@ class DocumentItemTest < Test::Unit::TestCase
     DocumentItem.find(:all).each do |cpi|
       assert cpi.valid?
     end
-  end
-
-  def test_total_value
-    cpi = DocumentItem.find(1)
-    assert_equal 50, cpi.total_value
-  end
-
-  def test_description
-    cpi = DocumentItem.find(1)
-    assert_equal 'Ice Cream', cpi.description
   end
 
   def test_validate

@@ -7,7 +7,7 @@ class ChangeCashTest < Test::Unit::TestCase
 
   def setup
     @organization = create_organization
-    @user = User.find(:first)
+    @user = create_user
     @till = create_till
   end
 

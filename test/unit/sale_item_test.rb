@@ -2,13 +2,13 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class SaleItemTest < Test::Unit::TestCase
 
-  fixtures :system_actors
-
   def setup
     @organization = create_organization
     @product_category = create_product_category
-    @user = User.create!("salt"=>"7e3041ebc2fc05a40c60028e2c4901a81035d3cd", "updated_at"=>nil, "crypted_password"=>"00742970dc9e6319f8019fd54864d3ea740f04b1", "type"=>"User", "remember_token_expires_at"=>nil, "id"=>"1", "administrator"=>false, "remember_token"=>nil, "login"=>"new_user", "email"=>"new_user@example.com", "created_at"=>"2007-07-14 18:03:29")
-    @supplier = Supplier.find(:first)
+    @user = create_user
+    @unit = create_unit   
+    @supplier_category = create_supplier_category
+    @supplier = create_supplier
     @invoice = create_invoice
   end
 
@@ -65,7 +65,7 @@ class SaleItemTest < Test::Unit::TestCase
   def test_unitary_price_with_product
     Product.any_instance.stubs(:amount_in_stock).returns(342)
     product = create_product()
-    sale = create_sale
+    sale = create_sale(:user_id => 1)
     item = create_item(:sale => sale, :product => product, :amount => 2)
     assert_equal(product.sell_price, item.unitary_price)
   end

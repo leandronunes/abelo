@@ -4,12 +4,11 @@ require 'payment_strategy/payment_strategy'
 include PaymentStrategy
 
 class CheckTest < Test::Unit::TestCase
-  fixtures :banks, :ledgers, :ledger_categories
 
   def setup
     create_place
     @organization = create_organization
-    @user = User.find(:first)
+    @user = create_user
     @till = create_till
   end
 

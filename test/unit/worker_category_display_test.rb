@@ -2,10 +2,8 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class WorkerCategoryDisplayTest < Test::Unit::TestCase
 
-  fixtures :organizations
-
   def setup
-    @org = Organization.find_by_identifier('six') 
+    @org = create_organization
   end
 
   def test_available_fields_are_valids

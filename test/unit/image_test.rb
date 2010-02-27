@@ -2,10 +2,10 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class ImageTest < Test::Unit::TestCase
 
-  fixtures :images, :products, :organizations
-
   def setup
     @organization = create_organization
+    @product_category = create_product_category
+    @unit = create_unit
   end
 
 #TODO Uncoment this test

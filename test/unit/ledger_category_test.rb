@@ -1,13 +1,13 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class LedgerCategoryTest < Test::Unit::TestCase
-  fixtures :ledger_categories, :bank_accounts
 
   include Status
 
   def setup
     @organization = create_organization
     @ledger_category = create_ledger_category(:organization => @organization)
+    @bank = create_bank
     @bank_account = create_bank_account(:organization => @organization)
   end
 

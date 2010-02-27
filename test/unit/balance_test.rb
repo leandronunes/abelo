@@ -4,6 +4,8 @@ class BalanceTest < Test::Unit::TestCase
 
   def setup
     @organization = create_organization
+    @bank = create_bank
+    @bank_account = create_bank_account
     @ledger_category = create_ledger_category
   end
 

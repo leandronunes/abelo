@@ -2,10 +2,9 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class CustomerTest < Test::Unit::TestCase
   
-  fixtures :organizations
-
   def setup
     @organization = create_organization
+    @customer_category = create_customer_category
     @customer = create_customer
     @category = CustomerCategory.create(:name => 'Category for testing', :organization => @organization)
   end
@@ -166,7 +165,7 @@ class CustomerTest < Test::Unit::TestCase
   def test_add_new_customer_on_tracker_customer_points
     customer_points = @organization.tracker.customer_points
     create_customer(:cpf => '96628353265')
-    assert_equal customer_points + 1, Organization.find_by_identifier('some').tracker.customer_points
+    assert_equal customer_points + 1, Organization.find_by_identifier('one').tracker.customer_points
   end
 
   def test_add_first_customer_on_tracker_customer_points
@@ -179,7 +178,7 @@ class CustomerTest < Test::Unit::TestCase
   def test_remove_customer_on_tracker_customer_points
     customer_points = @organization.tracker.customer_points
     @organization.customers.first.destroy
-    assert_equal customer_points - 1, Organization.find_by_identifier('some').tracker.customer_points
+    assert_equal customer_points - 1, Organization.find_by_identifier('one').tracker.customer_points
   end
 
   def test_remove_uniq_customer_on_tracker_customer_points

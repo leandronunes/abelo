@@ -80,10 +80,10 @@ class UnitMeasureMeasureTest < Test::Unit::TestCase
   def test_full_text_search
     UnitMeasure.destroy_all
     unit1 = create_unit(:name => 'some unit', :abbreviation => 'su')
-    unit2 = create_unit(:name => 'another unit', :abbreviation => 'au')
+    unit2 = create_unit(:name => 'bli unit', :abbreviation => 'bu')
     unit3 = create_unit(:name => 'unit three', :abbreviation => 'ut')
 
-    units = UnitMeasure.full_text_search('another*')
+    units = UnitMeasure.full_text_search('bli*')
     assert_equal 1, units.length
     assert units.include?(unit2)
   end 

@@ -4,6 +4,9 @@ class SystemActorMassMailGroupTest < Test::Unit::TestCase
 
   def setup
     @organization = create_organization
+    @worker_category = create_worker_category
+    @customer_category = create_customer_category
+    @supplier_category = create_supplier_category
   end
 
   def test_absence_of_system_actor
@@ -26,7 +29,8 @@ class SystemActorMassMailGroupTest < Test::Unit::TestCase
     s.valid?
     assert s.errors.invalid?(:system_actor_id)
 
-    s = SystemActorMassMailGroup.new(:system_actor_id => 1)
+    customer = create_customer
+    s = SystemActorMassMailGroup.new(:system_actor_id => customer.id)
     s.valid?
     assert !s.errors.invalid?(:system_actor_id)
   end

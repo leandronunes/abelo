@@ -2,14 +2,13 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class InvoiceTest < Test::Unit::TestCase
 
-  fixtures :system_actors, :products
-
   def setup
     @organization = create_organization
-    @supplier = Supplier.find(:first)
+    @supplier_category = create_supplier_category
+    @supplier = create_supplier
     @product_category = create_product_category
+    @unit = create_unit
     @product = create_product
-
   end
 
   def test_setup
@@ -156,6 +155,9 @@ class InvoiceTest < Test::Unit::TestCase
 
   def test_total_payment
     i = create_invoice
+    @bank = create_bank
+    @bank_account = create_bank_account(:organization => @organization)
+    @ledger_category = create_ledger_category(:organization => @organization)
     create_ledger(:value => 23, :owner => i, :category => create_ledger_category(:name => 'another name'))
     create_ledger(:value => 7, :owner => i)
     i.reload

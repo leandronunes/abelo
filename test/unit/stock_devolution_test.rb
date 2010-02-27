@@ -4,14 +4,15 @@ class StockDevolutionTest < Test::Unit::TestCase
 
   def setup
     @organization = create_organization
-    @category = create_product_category
+    @product_category = create_product_category
+    @supplier_category = create_supplier_category
     @supplier = create_supplier
     @invoice  = create_invoice
   end
 
   def test_setup
     assert @organization.valid?
-    assert @category.valid?
+    assert @product_category.valid?
     assert @supplier.valid?
     assert @invoice.valid?
   end

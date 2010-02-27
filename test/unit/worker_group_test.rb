@@ -4,6 +4,7 @@ class WorkerGroupTest < Test::Unit::TestCase
 
   def setup
     @organization = create_organization
+    @worker_category = create_worker_category
     @worker_group = create_worker_group
     @worker = create_worker
   end

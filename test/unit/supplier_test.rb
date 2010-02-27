@@ -2,10 +2,9 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class SupplierTest < Test::Unit::TestCase
 
-  fixtures :organizations
-
   def setup
     @organization = create_organization
+    @supplier_category = create_supplier_category
     @supplier = create_supplier
     @category = SupplierCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
   end
@@ -166,7 +165,7 @@ class SupplierTest < Test::Unit::TestCase
   def test_add_new_supplier_on_tracker_supplier_points
     supplier_points = @organization.tracker.supplier_points
     create_supplier(:cpf => '96628353265')
-    assert_equal supplier_points + 1, Organization.find_by_identifier('some').tracker.supplier_points
+    assert_equal supplier_points + 1, Organization.find_by_identifier('one').tracker.supplier_points
   end
 
   def test_add_first_supplier_on_tracker_supplier_points
@@ -179,7 +178,7 @@ class SupplierTest < Test::Unit::TestCase
   def test_remove_supplier_on_tracker_supplier_points
     supplier_points = @organization.tracker.supplier_points
     @organization.suppliers.first.destroy
-    assert_equal supplier_points - 1, Organization.find_by_identifier('some').tracker.supplier_points
+    assert_equal supplier_points - 1, Organization.find_by_identifier('one').tracker.supplier_points
   end
 
   def test_remove_uniq_supplier_on_tracker_supplier_points

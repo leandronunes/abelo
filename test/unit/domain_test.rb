@@ -1,7 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class DomainTest < Test::Unit::TestCase
-  fixtures :domains, :environments, :profiles
 
   # Replace this with your real tests.
   def test_domain_name_format
@@ -66,7 +65,9 @@ class DomainTest < Test::Unit::TestCase
 
   def test_environment
     # domain directly linked to Environment
-    domain = Domain.find_by_name('colivre.net')
+    domain = create_domain(:name => 'colivre.net')
+    e = create_environment
+    domain.owner=e
     assert_kind_of Environment, domain.owner
     assert_kind_of Environment, domain.environment
   end

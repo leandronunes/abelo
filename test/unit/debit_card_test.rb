@@ -10,7 +10,7 @@ class DebitCardTest < Test::Unit::TestCase
   def setup
     create_place
     @organization = create_organization
-    @user = User.find(:first)
+    @user = create_user
     @till = create_till
   end
 

@@ -4,8 +4,8 @@ class WorkerTest < Test::Unit::TestCase
  
   def setup
     @organization = create_organization
+    @worker_category = create_worker_category
     @worker = create_worker
-    @worker_category = WorkerCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
   end
 
   def test_setup
@@ -164,7 +164,7 @@ class WorkerTest < Test::Unit::TestCase
   def test_add_new_worker_on_tracker_worker_points
     worker_points = @organization.tracker.worker_points
     create_worker(:cpf => '96628353265')
-    assert_equal worker_points + 1, Organization.find_by_identifier('some').tracker.worker_points
+    assert_equal worker_points + 1, Organization.find_by_identifier('one').tracker.worker_points
   end
 
   def test_add_first_worker_on_tracker_worker_points
@@ -177,7 +177,7 @@ class WorkerTest < Test::Unit::TestCase
   def test_remove_worker_on_tracker_worker_points
     worker_points = @organization.tracker.worker_points
     @organization.workers.first.destroy
-    assert_equal worker_points - 1, Organization.find_by_identifier('some').tracker.worker_points
+    assert_equal worker_points - 1, Organization.find_by_identifier('one').tracker.worker_points
   end
 
   def test_remove_uniq_worker_on_tracker_worker_points

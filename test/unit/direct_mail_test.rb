@@ -12,14 +12,14 @@ class DirectMailTest < Test::Unit::TestCase
     ActionMailer::Base.perform_deliveries = true
     ActionMailer::Base.deliveries = []
 
-    @org = Organization.find_by_identifier('six') 
+    @organization = create_organization
     @expected = TMail::Mail.new
     @expected.set_content_type "text", "plain", { "charset" => CHARSET }
   end
 
   def test_mail_to
-    customer = Customer.new(:name => 'Customer for testing', :organization_id => @org.id, :email => 'testing@email', :cpf => '65870844274')
-    mass_mail = MassMail.create(:body => 'Body for testing', :subject => 'Subject for testing', :organization_id => @org.id)
+    customer = Customer.new(:name => 'Customer for testing', :organization_id => @organization.id, :email => 'testing@email', :cpf => '65870844274')
+    mass_mail = MassMail.create(:body => 'Body for testing', :subject => 'Subject for testing', :organization_id => @organization.id)
     emails = Array.new
     emails.push(customer.email)
     mail = DirectMail.deliver_mail_to(emails, mass_mail)

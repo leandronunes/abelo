@@ -7,12 +7,10 @@ class AddCashTest < Test::Unit::TestCase
 
   def setup
     @organization = create_organization
-    @user = User.find(:first)
   end
 
   def test_setup
     assert @organization.valid?
-    assert @user.valid?
   end   
 
   def test_is_money?

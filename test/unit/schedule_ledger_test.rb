@@ -1,13 +1,13 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class ScheduleLedgerTest < Test::Unit::TestCase
-  fixtures :periodicities, :ledger_categories, :bank_accounts
 
   def setup
-    @periodicity = Periodicity.find(:first)
     @organization = create_organization
+    @periodicity = create_periodicity
+    @bank = create_bank
     @bank_account = create_bank_account
-    @ledger_category = LedgerCategory.find(:first)
+    @ledger_category = create_ledger_category
   end
 
   def create_schedule

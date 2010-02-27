@@ -2,19 +2,21 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class OrganizationTest < Test::Unit::TestCase
 
-  fixtures :bank_accounts, :banks, :system_actors, :departments
-
   def setup
     create_place
     @organization = create_organization
-    @customer = Customer.find(:first)
-    @department = Department.find(:first)
-    @cat_prod = ProductCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
-    @cat_cust = CustomerCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
-    @cat_worker = WorkerCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
-    @cat_supp = SupplierCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
+    @customer_category = create_customer_category
+    @customer = create_customer
+    @department = create_department
+    @product_category = create_product_category
+    @worker_category = create_worker_category
+    @supplier_category = create_supplier_category
     @ledger_category = create_ledger_category
-    @user = User.create!("salt"=>"7e3041ebc2fc05a40c60028e2c4901a81035d3cd", "updated_at"=>nil, "crypted_password"=>"00742970dc9e6319f8019fd54864d3ea740f04b1", "type"=>"User", "remember_token_expires_at"=>nil, "id"=>"1", "administrator"=>false, "remember_token"=>nil, "login"=>"new_user", "email"=>"new_user@example.com", "created_at"=>"2007-07-14 18:03:29")
+    @user = create_user
+    @bank = create_bank
+    @bank_account = create_bank_account
+#FIXME remove this
+#User.create!("salt"=>"7e3041ebc2fc05a40c60028e2c4901a81035d3cd", "updated_at"=>nil, "crypted_password"=>"00742970dc9e6319f8019fd54864d3ea740f04b1", "type"=>"User", "remember_token_expires_at"=>nil, "id"=>"1", "administrator"=>false, "remember_token"=>nil, "login"=>"new_user", "email"=>"new_user@example.com", "created_at"=>"2007-07-14 18:03:29")
   end
 
   def create_document(params = {})
@@ -30,10 +32,10 @@ class OrganizationTest < Test::Unit::TestCase
 
   def test_setup
     assert @organization.valid?
-    assert @cat_prod.valid?
-    assert @cat_cust.valid?
-    assert @cat_worker.valid?
-    assert @cat_supp.valid?
+    assert @product_category.valid?
+    assert @customer_category.valid?
+    assert @worker_category.valid?
+    assert @supplier_category.valid?
   end
 
 
@@ -44,13 +46,13 @@ class OrganizationTest < Test::Unit::TestCase
   end
 
   def test_relation_with_products
-    product = create_product
+    product = create_product(:unit_measure => create_unit)
     @organization.products.concat(product)
     assert @organization.products.include?(product)
   end
 
   def test_relation_with_sales
-    sale = create_sale()
+    sale = create_sale(:user_id => 1)
     @organization.sales.concat(sale)
     assert @organization.sales.include?(sale)
   end
@@ -62,41 +64,41 @@ class OrganizationTest < Test::Unit::TestCase
   end
 
   def test_relation_with_product_categories
-    assert @organization.product_categories.include?(@cat_prod)
+    assert @organization.product_categories.include?(@product_category)
   end
 
   def test_relation_with_customer_categories
-    assert @organization.customer_categories.include?(@cat_cust)
+    assert @organization.customer_categories.include?(@customer_category)
   end
 
   def test_relation_with_worker_categories
-    assert @organization.worker_categories.include?(@cat_worker)
+    assert @organization.worker_categories.include?(@worker_category)
   end
 
   def test_relation_with_supplier_categories
-    assert @organization.supplier_categories.include?(@cat_supp)
+    assert @organization.supplier_categories.include?(@supplier_category)
   end
 
   def test_relation_with_system_actors
     num_actors = @organization.system_actors.length
-    supplier = Supplier.create!(:name => 'Hering', :cnpj => '58178734000145', :organization_id => @organization.id, :email => 'contato@hering.com', :category_id => @cat_supp.id)
-    customer = Customer.create!(:name => 'João da Silva', :email => 'joao@softwarelivre.org', :cpf => '74676743920', :organization_id => @organization.id, :email => 'joao@softwarelivre.org', :category_id => @cat_cust.id)
-    worker = Worker.create!(:name => 'José Fernandes', :cpf => '63358421813', :category_id => @cat_worker.id, :organization_id => @organization.id , :email => 'jose@toca.com')
+    supplier = Supplier.create!(:name => 'Hering', :cnpj => '58178734000145', :organization_id => @organization.id, :email => 'contato@hering.com', :category_id => @supplier_category.id)
+    customer = Customer.create!(:name => 'João da Silva', :email => 'joao@softwarelivre.org', :cpf => '74676743920', :organization_id => @organization.id, :email => 'joao@softwarelivre.org', :category_id => @customer_category.id)
+    worker = Worker.create!(:name => 'José Fernandes', :cpf => '63358421813', :category_id => @worker_category.id, :organization_id => @organization.id , :email => 'jose@toca.com')
     assert_equal num_actors + 3, @organization.system_actors.count
   end
 
   def test_relation_with_suppliers
-    supplier = Supplier.create!(:name => 'Hering', :cnpj => '58178734000145', :organization_id => @organization.id, :email => 'contato@hering.com', :category_id => @cat_prod.id)
+    supplier = Supplier.create!(:name => 'Hering', :cnpj => '58178734000145', :organization_id => @organization.id, :email => 'contato@hering.com', :category_id => @product_category.id)
     assert @organization.suppliers.include?(supplier)
   end
 
   def test_relation_with_customers
-    customer = Customer.create!(:name => 'João da Silva', :email => 'joao@softwarelivre.org', :cpf => '74676743920', :organization_id => @organization.id, :email => 'joao@softwarelivre.org', :category_id => @cat_supp.id)
+    customer = Customer.create!(:name => 'João da Silva', :email => 'joao@softwarelivre.org', :cpf => '74676743920', :organization_id => @organization.id, :email => 'joao@softwarelivre.org', :category_id => @supplier_category.id)
     assert @organization.customers.include?(customer)
   end
 
   def test_relation_with_workers
-    worker = Worker.create!(:name => 'José Fernandes', :cpf => '63358421813', :category_id => @cat_worker.id, :organization_id => @organization.id , :email => 'jose@toca.com')
+    worker = Worker.create!(:name => 'José Fernandes', :cpf => '63358421813', :category_id => @worker_category.id, :organization_id => @organization.id , :email => 'jose@toca.com')
     assert @organization.workers.include?(worker)
   end
 
@@ -112,8 +114,8 @@ class OrganizationTest < Test::Unit::TestCase
 
 #FIXME See the better way to make the association between contacts and organization
 #  def test_relation_with_contact
-#    customer= Customer.create!(:name => 'Hering', :cnpj => '58178734000145', :organization_id => @organization.id, :email => 'contato@hering.com', :category_id => @cat_cust.id)
-#    contact = Contact.create(:name => 'Contact for testing', :system_actor_id => customer.id, :category_id => @cat_cust)
+#    customer= Customer.create!(:name => 'Hering', :cnpj => '58178734000145', :organization_id => @organization.id, :email => 'contato@hering.com', :category_id => @customer_category.id)
+#    contact = Contact.create(:name => 'Contact for testing', :system_actor_id => customer.id, :category_id => @customer_category)
 #    assert @organization.contact == contact
 #  end
 
@@ -175,19 +177,19 @@ class OrganizationTest < Test::Unit::TestCase
   end
 
   def test_top_level_product_categories
-    assert @organization.top_level_product_categories.include?(@cat_prod)
+    assert @organization.top_level_product_categories.include?(@product_category)
   end
 
   def test_top_level_supplier_categories
-    assert @organization.top_level_supplier_categories.include?(@cat_supp)
+    assert @organization.top_level_supplier_categories.include?(@supplier_category)
   end
 
   def test_top_level_worker_categories
-    assert @organization.top_level_worker_categories.include?(@cat_worker)
+    assert @organization.top_level_worker_categories.include?(@worker_category)
   end
   
   def test_top_level_customer_categories
-    assert @organization.top_level_customer_categories.include?(@cat_cust)
+    assert @organization.top_level_customer_categories.include?(@customer_category)
   end
 
   def test_documents_model
@@ -231,8 +233,11 @@ class OrganizationTest < Test::Unit::TestCase
     assert o.errors.invalid?(:address), "City cannot be nil"
 
     country = BSC::Country.find(:first)
+    assert_not_nil country.nil?
     state = country.states.find(:first)
+    assert_not_nil state.nil?
     city = state.cities.find(:first)
+    assert_not_nil city.nil?
     o = new_organization(:country_id => country.id, :state_id => state.id, :city_id => city.id)
     count = Address.count
     assert o.save!
@@ -298,6 +303,7 @@ class OrganizationTest < Test::Unit::TestCase
 
   def test_ledgers_by_search
     o = create_organization(:identifier => 'some_id', :name =>'some name')
+    
     account = create_bank_account(:organization => o)
 
     create_ledger(:owner => o, :description =>'test description')

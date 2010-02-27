@@ -1,12 +1,13 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class DocumentTest < Test::Unit::TestCase
-  fixtures :documents, :departments_documents, :document_sections, :organizations, :departments, :system_actors
 
   def setup
     @organization = create_organization
+    @department = create_department
+    @customer_category = create_customer_category
+    @customer = create_customer
     @document = create_document
-    @department = Department.find(:first)
   end
 
   def test_setup
@@ -48,18 +49,20 @@ class DocumentTest < Test::Unit::TestCase
   end
 
   def test_document_sections
-    cp = Document.find(1)
+    cp = @document
     count = cp.document_sections.count
 
-    cps = DocumentSection.find(1)
+    cps = create_document_section
     assert_valid cps
     cp.document_sections.concat(cps)
     assert count + 1, cp.document_sections.count
   end
 
   def test_departments
-    d = Document.find(1)
-    assert_equal 2, d.departments.count
+    d = @document
+    count = d.departments.count
+    d.departments<< create_department(:name => 'department 1')
+    assert_equal count + 1, d.departments.count
   end
 
   def test_owner
@@ -72,11 +75,6 @@ class DocumentTest < Test::Unit::TestCase
   def test_organization
     d = Document.find(1)
     assert_equal d.organization, Organization.find(1)
-  end
-
-  def test_document_model
-    d = Document.find(3)
-    assert_equal Document.find(1), d.document_model
   end
 
   def test_owner_class
@@ -163,7 +161,7 @@ class DocumentTest < Test::Unit::TestCase
     document_points = @organization.tracker.document_points
     c = Document.count
     create_document(:name => 'Another document')
-    assert_equal document_points + 1, Organization.find_by_identifier('some').tracker.document_points
+    assert_equal document_points + 1, Organization.find_by_identifier('one').tracker.document_points
   end
 
   def test_add_first_document_on_tracker_document_points
@@ -177,7 +175,7 @@ class DocumentTest < Test::Unit::TestCase
   def test_remove_document_on_tracker_document_points
     document_points = @organization.tracker.document_points
     @organization.documents.first.destroy
-    assert_equal document_points - 1, Organization.find_by_identifier('some').tracker.document_points
+    assert_equal document_points - 1, Organization.find_by_identifier('one').tracker.document_points
   end
 
   def test_remove_uniq_document_on_tracker_document_points

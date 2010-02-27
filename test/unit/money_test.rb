@@ -4,22 +4,16 @@ include PaymentStrategy
 
 class MoneyTest < Test::Unit::TestCase
 
-  fixtures :configurations
-
   def setup
     create_place
     @organization = create_organization
     @organization.configuration.fiscal_printer= true
-    @user = User.find(:first)
-    @till = create_till
   end
 
   def test_setup
     assert_not_nil @organization.configuration
-    assert @till.valid?
     assert @organization.valid?
     assert @organization.has_fiscal_printer?
-    assert @user.valid?
   end   
 
   def test_is_money?
@@ -77,7 +71,7 @@ class MoneyTest < Test::Unit::TestCase
 
   def test_create_printer_cmd_whith_fiscal_printer
     Ledger.any_instance.expects(:is_fiscal_operation?).returns(true)
-    l = Ledger.new(:payment_method => Payment::MONEY, :owner => @till, :organization => @organization)
+    l = Ledger.new(:payment_method => Payment::MONEY, :owner => create_till, :organization => @organization)
     m  = Money.new
     m.create_printer_cmd!(l)
     assert_not_nil l.printer_command

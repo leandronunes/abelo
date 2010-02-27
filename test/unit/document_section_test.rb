@@ -1,7 +1,15 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class DocumentSectionTest < Test::Unit::TestCase
-  fixtures :document_sections, :documents, :document_items
+
+  def setup
+    @organization = create_organization
+    @department = create_department
+    @customer_category = create_customer_category
+    @customer = create_customer
+    @document = create_document
+    @document_section = create_document_section(:document_id => @document.id)
+  end
 
   def test_create
     count = DocumentSection.count
@@ -26,7 +34,7 @@ class DocumentSectionTest < Test::Unit::TestCase
 
   def test_uniqueness_of_name
     cps = DocumentSection.new
-    cps.name = "Section one" 
+    cps.name = @document_section.name
     cps.document_id = 1
     assert !cps.save
 
@@ -36,27 +44,29 @@ class DocumentSectionTest < Test::Unit::TestCase
   end
 
   def test_relation_with_commercial_propsal_item
-    cps = DocumentSection.find(1)
+    cps = @document_section
     assert_valid cps
     
     count = cps.document_items.count
-    cpi = DocumentItem.find(3)
+    cpi = create_document_item
     cps.document_items.concat(cpi)
 
     assert_equal count+1, cps.document_items.count
   end
 
   def test_relation_with_document    
-    cps = DocumentSection.find(1)
-    assert_valid cps
+    cps = @document_section
+    assert_equal cps.document_id, @document.id
 
-    cps.document = Document.find(2)
-
-    assert_equal 2, cps.document_id
+    document = create_document(:name => 'another name')
+    cps.document = document
+    cps.save
+    assert_equal document.id, cps.document_id
   end
 
   def test_before_destroy
-    s = DocumentSection.find(1)
+    s = @document_section
+    s.document_items = [create_document_item]
     assert !s.document_items.empty?
     items = s.document_items
     s.destroy

@@ -2,15 +2,13 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class SupplierCategoryDisplayTest < Test::Unit::TestCase
 
-  fixtures :organizations
-
   def setup
-    @org = Organization.find_by_identifier('six') 
+    @organization = create_organization
   end
 
   def test_available_fields_are_valids
-    parent = SupplierCategory.new(:name => 'Category for testing', :organization_id => @org)
-    cat_supp = SupplierCategory.new(:name => 'Category for testing', :organization_id => @org.id, :parent => parent)
+    parent = SupplierCategory.new(:name => 'Category for testing', :organization_id => @organization)
+    cat_supp = SupplierCategory.new(:name => 'Category for testing', :organization_id => @organization.id, :parent => parent)
     assert_kind_of Array, SupplierCategoryDisplay.available_fields
     SupplierCategoryDisplay.available_fields.each do |field|
       assert_nothing_raised { cat_supp.send("#{field}")}

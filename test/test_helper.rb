@@ -26,7 +26,6 @@ class Test::Unit::TestCase
 
   # Add more helper methods to be used by all tests here...
   include AuthenticatedTestHelper
-#  fixtures :people, :profiles, :organizations, :roles, :role_assignments, :configurations
 
   def self.extra_parameters
     @extra_parameters
@@ -57,7 +56,7 @@ class Test::Unit::TestCase
   def create_till(params = {})
     params[:organization] ||= @organization
     params[:user] ||= @user
-    params[:printer] ||= create_printer
+    params[:printer] ||= @printer
     till = Till.new(params)
     till.save
     till
@@ -76,7 +75,7 @@ class Test::Unit::TestCase
   end
 
   def create_environment(params={})
-    @organization = params[:organization] || @organization ||create_organization(:name => params[:name])
+    @organization = params[:organization] || @organization
     Environment.create!({
                          :name => 'some_name', 
                          :owner => @organization,
@@ -85,7 +84,7 @@ class Test::Unit::TestCase
   end
 
   def create_article(params = {})
-    environment = params[:environment] || @environment || create_environment
+    environment = params[:environment] || @environment
     Article.create!({:name => 'some article', :environment => environment}.merge(params))
   end
 
@@ -110,7 +109,7 @@ class Test::Unit::TestCase
 
   def create_bank_account(params = {})
     bank = params[:bank] || @bank
-    organization = params[:organization] || @organization || create_organization
+    organization = params[:organization] || @organization
     @bank_account = BankAccount.create!({:bank => bank, :organization => organization, 
                   :agency => 23434, :account => 33434, :is_default => true}.merge(params))
     @bank_account
@@ -141,7 +140,7 @@ class Test::Unit::TestCase
   end
 
   def create_balance(params = {})
-    bank_account = params[:bank_account] || @bank_account || create_bank_account
+    bank_account = params[:bank_account] || @bank_account
     Balance.create!({:value => 45, :date => Date.today,  :bank_account => bank_account}.merge(params))
   end
 
@@ -160,9 +159,13 @@ class Test::Unit::TestCase
   def create_ledger_category(params = {})
     organization = params[:organization] || @organization
     category = LedgerCategory.find_by_name(params[:name] || 'some')
-    category ||= LedgerCategory.create!({:name => 'some', :is_operational => false,
+    if category.nil?
+      category ||= LedgerCategory.create!({:name => 'some', :is_operational => false,
            :organization => organization, :type_of => Payment::TYPE_OF_INCOME,
            :payment_methods => ['money']}.merge(params))
+    else
+      category.update_attributes(params)
+    end
     category
   end
 
@@ -173,20 +176,18 @@ class Test::Unit::TestCase
   end
 
   def create_product_category(params = {})
-    organization = params[:organization] || @organization || create_organization
-#    ProductCategory.find_by_name('some') || ProductCategory.create!({:name => 'some', :organization => organization}.merge(params))
+    organization = params[:organization] || @organization
     ProductCategory.create!({:name => 'some', :organization => organization}.merge(params))
   end
 
   def create_product(params = {})
-    product_category = params[:category] || @product_category || ProductCategory.find(:first) || create_product_category
-    unit = params[:unit] || @unit || create_unit
+    product_category = params[:category] || @product_category
+    unit = params[:unit_measure] || @unit
     p = Product.create!({:name => 'product', :sell_price => 2.0, :organization => @organization, :unit_measure => unit, :category => product_category}.merge(params))
     p
   end
 
   def create_supplier
-    @supplier_category ||= create_supplier_category
     Supplier.create!(:name => 'some', :organization => @organization, 
                      :cnpj => '62.670.579/0001-57', :category => @supplier_category,
                      :email => 'supplier@colivre.coop.br')
@@ -230,10 +231,18 @@ class Test::Unit::TestCase
   end
 
   def create_user(params = {})
-    u = User.create!({ :login => 'quire', :email => (params[:login].nil? ? 'quire@example.com' : params[:login]+'colivre.coop.br'),
-                    :password => 'quire', :password_confirmation => 'quire' }.merge(params))
+    u = User.create!(user_params(params))
     create_profile(:user => u)
     u
+  end
+
+  def user_params(params = {})
+    { 
+      :login => 'quire', 
+      :email => (params[:login].nil? ? 'quire@example.com' : params[:login]+'colivre.coop.br'),
+      :password => 'test', 
+      :password_confirmation => 'test' 
+    }.merge(params)
   end
 
   def create_profile(params = {})
@@ -272,28 +281,51 @@ class Test::Unit::TestCase
     }.merge(params))
   end
 
+  def create_document_item(params = {})
+    DocumentItem.create!({
+      :quantity => 10,
+      :number => 5,
+      :unitary_value => 5.0,
+      :document_section_id => 1,
+      :product_id => 1
+    }.merge(params))
+  end
+
+  def create_document_section(params = {})
+    DocumentSection.create!({
+      :name => 'some document item',
+      :document_id => 1
+    }.merge(params))
+  end
+
   def create_sale(params = {})
     sale = new_sale(params)
-    sale.save
+    sale.save!
     sale
   end
 
   def new_sale(params = {})
-    params[:till] ||= create_till 
+    params[:till] ||= @till
+    params[:organization] ||= @organization
+    params[:user_id] = @user.id unless @user.nil?
     Sale.new(params)    
   end
  
   def create_item(params = {})
-    sale = params[:sale] || create_sale
+    sale = params[:sale] || @sale
     item = SaleItem.new(params.merge(:sale => sale))
     item.save!
     item
   end
 
   def create_unit(params= {})
-    organization = params[:organization] || @organization || create_organization
+    organization = params[:organization] || @organization
     u = UnitMeasure.find_by_abbreviation('au')
-    u ||= UnitMeasure.create!({:name => 'a unit', :abbreviation => 'au', :organization => organization}.merge(params))
+    if u.nil?
+      u = UnitMeasure.create!({:name => 'a unit', :abbreviation => 'au', :organization => organization}.merge(params))
+    else
+      u.update_attributes(params)
+    end
     u
   end
 

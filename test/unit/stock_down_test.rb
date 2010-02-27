@@ -2,17 +2,16 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class StockDownTest < Test::Unit::TestCase
 
-  fixtures :system_actors, :categories
-
   def setup
     @organization = create_organization
-    @category = ProductCategory.find(:first)
-    @supplier = Supplier.find(:first)
+    @product_category = create_product_category
+    @supplier_category = create_supplier_category
+    @supplier = create_supplier
   end
 
   def test_setup
     assert @organization.valid?
-    assert @category.valid?
+    assert @product_category.valid?
     assert @supplier.valid?
   end
 

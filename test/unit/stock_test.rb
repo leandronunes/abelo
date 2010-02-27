@@ -4,10 +4,11 @@ class StockTest < Test::Unit::TestCase
 
   def setup
     @organization = create_organization
+    @unit = create_unit
     @product_category = create_product_category
     @product = create_product
-    cat_supp = SupplierCategory.create(:name => 'Category for testing', :organization_id => @organization.id)
-    @supplier = Supplier.create!(:name => 'Hering', :cnpj => '58178734000145', :organization_id => @organization.id, :email => 'contato@hering.com', :category_id => cat_supp.id)
+    @supplier_category = create_supplier_category
+    @supplier = create_supplier
   end
 
   def test_relation_with_product

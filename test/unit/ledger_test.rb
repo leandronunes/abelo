@@ -2,17 +2,16 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class LedgerTest < Test::Unit::TestCase
 
-  fixtures :bank_accounts, :categories, :ledger_categories, :sales, :sale_items
-
   include Status
 
   def setup
     create_place
     @organization = create_organization
+    @bank = create_bank
+    @bank_account = create_bank_account
     @periodicity = create_periodicity
-    @ledger_category = LedgerCategory.find(:first)
+    @ledger_category = create_ledger_category
     @ledger = create_ledger
-    @sale = Sale.find(:first)
   end
 
   def test_setup
@@ -20,7 +19,6 @@ class LedgerTest < Test::Unit::TestCase
     assert @organization.valid?
     assert @periodicity.valid?
     assert @ledger_category.valid?
-    assert @sale.valid?
   end
 
   def test_money_payment_is_associated_to_a_ledger_category_with_money
@@ -566,9 +564,9 @@ class LedgerTest < Test::Unit::TestCase
     
     l = Ledger.new(:owner => @organization)
     assert_equal @organization, l.organization
-
-    l = Ledger.new(:owner => @sale)
-    assert_not_equal @sale, l.organization, "Only organization owner can be the organization of a ledger"
+    sale = create_sale(:organization => @organization, :user_id => 1 )
+    l = Ledger.new(:owner => sale)
+    assert_not_equal sale, l.organization, "Only organization owner can be the organization of a ledger"
     assert_nil l.organization, "Only organization owner can be the organization of a ledger"
 
     o = create_organization(:identifier => 'another_some', :name => 'another name')
@@ -647,7 +645,7 @@ class LedgerTest < Test::Unit::TestCase
   def test_add_new_ledger_on_tracker_ledger_points
     ledger_points = @organization.tracker.ledger_points
     create_ledger
-    assert_equal ledger_points + 1, Organization.find_by_identifier('some').tracker.ledger_points
+    assert_equal ledger_points + 1, Organization.find_by_identifier('one').tracker.ledger_points
   end
 
   def test_add_first_ledger_on_tracker_ledger_points
@@ -660,7 +658,7 @@ class LedgerTest < Test::Unit::TestCase
   def test_remove_ledger_on_tracker_ledger_points
     ledger_points = @organization.tracker.ledger_points
     @organization.ledgers.first.destroy
-    assert_equal ledger_points - 1, Organization.find_by_identifier('some').tracker.ledger_points
+    assert_equal ledger_points - 1, Organization.find_by_identifier('one').tracker.ledger_points
   end
 
   def test_remove_uniq_ledger_on_tracker_ledger_points

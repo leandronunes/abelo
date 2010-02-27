@@ -22,7 +22,7 @@ class BankAccount < ActiveRecord::Base
   acts_as_ferret :remote => true
 
   def name 
-    _("AG: #{self.agency} / CC: #{self.account}")
+    I18n.t(:bank_account_name, {:agency => self.agency, :account => self.account})
   end
 
   def self.full_text_search(q, options = {})

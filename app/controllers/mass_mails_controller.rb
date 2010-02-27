@@ -27,11 +27,9 @@ class MassMailsController < ApplicationController
     @query ||= params[:mass_mail][:subject] if params[:mass_mail]
 
     if @query.nil?
-      @mass_mails = @organization.mass_mails
-      @mass_mail_pages, @mass_mails = paginate_by_collection @mass_mails
+      @mass_mails = @organization.mass_mails.paginate(:per_page => 10,:page => params[:page] )
     else
-      @mass_mails = @organization.mass_mails.full_text_search(@query)
-      @mass_mail_pages, @mass_mails = paginate_by_collection @mass_mails
+      @mass_mails = @organization.mass_mails.full_text_search(@query).paginate(:per_page => 10,:page => params[:page] )
     end
 
   end
@@ -113,6 +111,11 @@ class MassMailsController < ApplicationController
     end  
     render :action => 'select_article_type', :layout => false
   end
+
+  def filter_categories
+    @mass_mail = @organization.mass_mails.find(params[:id])
+  end
+
 
   def send_emails
     @mass_mail = @organization.mass_mails.find(params[:id])

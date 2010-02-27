@@ -1,9 +1,8 @@
-
 <% form_tag :action => 'filter_customers', :id => @mass_mail.id do %>
-<br><p><label for="categories"><%= _("Categories") %></label>
+<br><p><label for="categories"><%= t(:categories) %></label>
 <%= select_categories @mass_mail  %></p>
-<br><p><label for="consumed_products"><%= _("Consumed Products") %></label>
+<br><p><label for="consumed_products"><%= t(:consumed_products) %></label>
 <%= select_products @mass_mail  %></p>
-<%= button 'save', _("Filter"), :save %>
-<%= button 'back', _("Back"), :cancel, :action => "show", :id => @mass_mail.id %>
+<%= button 'save', t(:filter), :save %>
+<%= button 'back', t(:back), :cancel, :action => "show", :id => @mass_mail.id %>
 <% end %>

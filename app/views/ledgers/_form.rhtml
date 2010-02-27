@@ -10,7 +10,7 @@
   %>
 
   <%= display_field_form(item, 'date',
-        :title => t(:date:),
+        :title => t(:date),
         :content => date_select('ledger', 'date', :order => [:day, :month, :year])
       )
   %>
@@ -69,7 +69,7 @@
       %>
 
       <%= display_field_edit(@ledger, 'schedule_interval',
-            :title => t(:interval:),
+            :title => t(:interval),
             :content => (text_field 'ledger', 'schedule_interval'),
             :html_options => {:class => 'line_item'}
           )
@@ -78,14 +78,14 @@
   <% end %>
   
   <%= display_field_form(item, 'tag_list',
-        :title => t(:tags_(separated_by_comma):),
+        :title => t(:tags_separated_by_comma),
         :content => text_field('ledger', 'tag_list'),
         :html_options => {:class => 'break_line'}
       )
   %>
 
   <%= display_field_form(item, 'value',
-        :title => t(:value:),
+        :title => t(:value),
         :content => text_field('ledger', 'value'),
         :html_options => {:class => 'break_line'}
       )
@@ -98,7 +98,7 @@
   %>
   <% if @ledger.scheduled? %>
     <%= display_field_form(item, 'schedule_repeat',
-          :title => t(:this_ledger_is_scheduled_for_%s._schedule_associated_with_this:) % [parse_date(item.date, false)],
+          :title => t(:this_ledger_is_scheduled_for__schedule_associated_with_this, :date => parse_date(item.date, false)),
           :content => content_tag(:div,  (render :partial => 'schedule_ledgers'), :id => 'abelo_schedule_ledger'),
           :html_options => {:style => 'clear: left;'}
         )

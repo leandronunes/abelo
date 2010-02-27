@@ -4,20 +4,19 @@ require 'mass_mails_controller'
 # Re-raise errors caught by the controller.
 class MassMailsController; def rescue_action(e) raise e end; end
 
-class MassMailsControllerTest < Test::Unit::TestCase
+class MassMailsControllerTest < ActionController::TestCase
 
-# fixtures :mass_mails, :organizations, :products
-
-  under_organization :some
+  under_organization :one
 
   def setup
-    Organization.destroy_all
-    @controller = MassMailsController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-    login_as("quentin")
-    @organization = create_organization(:identifier => 'some')
+    @user = create_user(:login => 'admin', :administrator => true)
+    login_as("admin")
+    @organization = Organization.find_by_identifier('one')
+    @environment = create_environment(:is_default => true)
     @mass_mail = create_mass_mail
+    @customer_category = create_customer_category
+    @customer_1 = create_customer(:cpf => '022.779.766-36')
+    @customer_2 = create_customer(:cpf => '622.783.368-19')
   
     ActionMailer::Base.delivery_method = :test
     ActionMailer::Base.perform_deliveries = true
@@ -45,13 +44,12 @@ class MassMailsControllerTest < Test::Unit::TestCase
   end
 
   def test_show
-    get :show, :id => 1
+    get :show, :id => @mass_mail.id
 
     assert_response :success
     assert_template 'show'
 
     assert_not_nil assigns(:mass_mail)
-    assert assigns(:mass_mail).valid?
   end
 
   def test_new
@@ -86,7 +84,7 @@ class MassMailsControllerTest < Test::Unit::TestCase
   end
 
   def test_update
-    post :update, :id => 1
+    post :update, :id => @mass_mail.id
     assert_response :redirect
     assert_redirected_to :action => 'list'
   end
@@ -104,7 +102,7 @@ class MassMailsControllerTest < Test::Unit::TestCase
   end
 
   def test_filter_categories
-    get :filter_categories, :id => 1
+    get :filter_categories, :id => @mass_mail.id
 
     assert_response :success
     assert_template 'filter_categories'
@@ -120,7 +118,7 @@ class MassMailsControllerTest < Test::Unit::TestCase
 
   def test_send_emails
     num_deliveries = ActionMailer::Base.deliveries.size
-    post :send_emails, :id => 1, :customers => {1 => "1", 2 => "1"}
+    post :send_emails, :id => @mass_mail, :customers => {@customer_1.id => "1", @customer_2.id => "1"}
     assert_equal num_deliveries+1, ActionMailer::Base.deliveries.size
     assert_equal 2, assigns(:emails).length
   end

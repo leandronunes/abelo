@@ -2,24 +2,24 @@
   <table>
     <tr class='page'>
       <th>
-        <% if @ledger_pages.current.previous%>
-          <%= button_remote( 'previous_page', t(:previous),:back, :update => 'abelo_financial_table', :url => @common_financial_parameters.merge({:action => 'display_financial_table', :page => @ledger_pages.current.previous})) %>
+        <% if @ledgers.current_page - 1 < 1 %>
+          <%= button_remote( 'previous_page', t(:previous),:back, :update => 'abelo_financial_table', :url => @common_financial_parameters.merge({:action => 'display_financial_table', :page => @ledgers.current_page - 1 })) %>
         <% end %>
       </th>
       <th colspan='4'>
-        <%= t(:page_%s_of_%s) % [@ledger_pages.current.number, @ledger_pages.length] %> 
-        <%= link_to_remote t(:show_all'),_:update_=>_'abelo_financial_table',_:url_=>_@common_financial_parameters.merge(:action_=>_'display_financial_table',_:show_=>_'all'),_:failure_=>_"$('abelo_financial_table).innerHTML= request.responseText" %> 
+        <%= t(:page_number, {:page_current => @ledgers.current_page, :page_total => @ledgers.length}) %> 
+        <%= link_to_remote t(:show_all), :update => 'abelo_financial_table', :url => @common_financial_parameters.merge(:action => 'display_financial_table', :show => 'all'), :failure => "$('abelo_financial_table').innerHTML= request.responseText" %> 
         <% unless @query.nil? and @tag.nil? %>
 teste query <%= @query.inspect %>
 tag: 
 <%= @tag.inspect %>
-          <%= t(:[%s]')_%_link_to(_('clean), :url => {:action => 'list', :accounts => @chosen_accounts.ids}) %> 
+          <%= t(:brackets, :value => link_to( t(:clean), :url => {:action => 'list', :accounts => @chosen_accounts.ids})) %> 
         <% end %>
       </th>
       <th>
-        <% if @ledger_pages.current.next %>
+        <% if @ledgers.current_page + 1 < @ledgers.length %>
           <%= button_remote('next_page', t(:next), :next, :update => 'abelo_financial_table', 
-           :url => @common_financial_parameters.merge({:action => 'display_financial_table', :page => @ledger_pages.current.next})
+           :url => @common_financial_parameters.merge({:action => 'display_financial_table', :page => @ledgers.current_page + 1})
           ) %>
 
         <% end %>
@@ -164,8 +164,8 @@ tag:
       <th> <%= t(:date) %> </th>
       <th> <%= t(:category) %> </th>
       <th> <%= t(:description) %> </th>
-      <th> <%= t(:income_(r$)) %></th>
-      <th><%= t(:expense_(r$)) %></th>
+      <th> <%= t(:income_money) %></th>
+      <th><%= t(:expense_money) %></th>
       <th> <%= t(:operation) %></th>
     </tr>
 
@@ -175,7 +175,7 @@ tag:
         <%= show_date(Date.end_of_month(@start_date<<1)) %>
       </td>
       <td> <%= t(:last_balance) %></td>
-      <td> <%= t(:month_%s) % (@start_date<<1).month %></td>
+      <td> <%= t(:month_date, :date => (@start_date<<1).month) %></td>
       <td><%= (!@last_balance.nil? and @last_balance.income?) ? @last_balance.value : '-' %></td>
       <td><%= (!@last_balance.nil? and @last_balance.expense?) ? @last_balance.value : '-' %></td>
       <td> - </td>
@@ -194,13 +194,13 @@ tag:
           <%= ledger.date.strftime('%d/%m/%Y') %>
         </td>
         <% if ledger.payment_method == Payment::CHANGE %>
-          <td> <%= t(:point_of_sale:_change) %></td>
+          <td> <%= t(:point_of_sale_change) %></td>
         <% elsif ledger.owner.kind_of?(Sale) %>
-          <td> <%= t(:point_of_sale:_sale_%s) % (ledger.category.name unless ledger.category.nil?) %></td>
+          <td> <%= t(:point_of_sale_sale_category, :name => (ledger.category.name unless ledger.category.nil?)) %></td>
         <% elsif ledger.payment_method == Payment::ADD_CASH %>
-          <td> <%= t(:point_of_sale:_money_added_to_cash) %></td>
+          <td> <%= t(:point_of_sale_money_added_to_cash) %></td>
         <% elsif ledger.payment_method == Payment::REMOVE_CASH %>
-           <td> <%= t(:point_of_sale:_money_removed_to_cash) %></td>
+           <td> <%= t(:point_of_sale_money_removed_to_cash) %></td>
         <% else %>
           <td> <%= (ledger.category.name unless ledger.category.nil?) %></td>
         <% end %>
@@ -220,13 +220,13 @@ tag:
       <th colspan=3> <b><%= t(:partial_total) %> </b></th>
       <td> <b class="income" ><%= @total_income %> </b></td>
       <td> <b class="expense" ><%= @total_expense %> </b></td>
-      <td> <b><%= t(:balance:_%s) % (@total_income + @total_expense) %> </b></td>
+      <td> <b><%= t(:balance_value, :value => (@total_income + @total_expense)) %> </b></td>
     </tr>
     <tr>
       <th colspan=3> <b><%= t(:geral_total) %> </b></th>
       <td> <b class="income" ><%= @geral_total_income %> </b></td>
       <td> <b class= "expense" ><%= @geral_total_expense %> </b></td>
-      <td> <b><%= t(:balance:_%s) % (@geral_total_income + @geral_total_expense) %> </b></td>
+      <td> <b><%= t(:balance_value, :value => (@geral_total_income + @geral_total_expense)) %> </b></td>
     </tr>
   </table>
 </div> 

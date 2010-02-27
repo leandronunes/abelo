@@ -4,5 +4,5 @@
 
 <%= display_collection @mass_mails %>
 
-<%= pagination_links(@mass_mail_pages, :params => {:query => @query}) %>
+<%= will_paginate @mass_mails, :params => {:query => @query} %>
 

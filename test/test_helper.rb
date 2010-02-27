@@ -109,7 +109,7 @@ class Test::Unit::TestCase
   end
 
   def create_bank_account(params = {})
-    bank = params[:bank] || @bank || create_bank
+    bank = params[:bank] || @bank
     organization = params[:organization] || @organization || create_organization
     @bank_account = BankAccount.create!({:bank => bank, :organization => organization, 
                   :agency => 23434, :account => 33434, :is_default => true}.merge(params))
@@ -302,7 +302,7 @@ class Test::Unit::TestCase
   end
 
   def create_mass_mail(params = {})
-    organization = params[:organization] || @organization || create_organization
+    organization = params[:organization] || @organization
     m = MassMail.create!({:subject => "Some subject", :body => "Some body", :organization => organization}.merge(params))
     m
   end

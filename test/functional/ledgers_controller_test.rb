@@ -4,21 +4,19 @@ require 'ledgers_controller'
 # Re-raise errors caught by the controller.
 class LedgersController; def rescue_action(e) raise e end; end
 
-class LedgersControllerTest < Test::Unit::TestCase
-  fixtures :ledgers, :ledger_categories, :configurations, :bank_accounts, :environments
+class LedgersControllerTest < ActionController::TestCase
  
   include Status
 
-  under_organization :some
+  under_organization :one
 
   def setup
-    @controller = LedgersController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-    login_as("quentin")
-    @user = User.find_by_login('quentin')
-    @organization = create_organization(:identifier => 'some', :name => 'some')
+    @user = create_user(:login => 'admin', :administrator => true)
+    login_as("admin")
+    @organization = Organization.find_by_identifier('one')
+    @environment = create_environment(:is_default => true)
     @ledger_category = create_ledger_category(:name => 'Some Category', :type_of => 'I', :organization => @organization , :payment_methods => ['money'])
+    @bank = create_bank
     @another_bank_account = create_bank_account
     @default_bank_account = create_bank_account(:is_default => true, :bank => @another_bank_account.bank)
   end
@@ -30,7 +28,7 @@ class LedgersControllerTest < Test::Unit::TestCase
     assert @organization.valid?
     assert @organization.bank_accounts.include?(@default_bank_account)
     assert @organization.bank_accounts.include?(@another_bank_account)
-    assert_equal 'some', @organization.identifier
+    assert_equal 'one', @organization.identifier
   end
 
   def test_index
@@ -46,7 +44,6 @@ class LedgersControllerTest < Test::Unit::TestCase
     assert_template 'list'
 
     assert_not_nil assigns(:ledgers)
-    assert_not_nil assigns(:ledger_pages)
     assert_not_nil assigns(:tags)
     assert_not_nil assigns(:chosen_accounts)
     assert_not_nil assigns(:chosen_categories)
@@ -126,7 +123,6 @@ class LedgersControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:bank_accounts)
     assert_not_nil assigns(:ledger_categories)
     assert_not_nil assigns(:tags)
-    assert_not_nil assigns(:ledger_pages)
     assert_not_nil assigns(:ledgers)
     assert_not_nil assigns(:total_income)
     assert_not_nil assigns(:total_expense)
@@ -147,7 +143,6 @@ class LedgersControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:bank_accounts)
     assert_not_nil assigns(:ledger_categories)
     assert_not_nil assigns(:tags)
-    assert_not_nil assigns(:ledger_pages)
     assert_not_nil assigns(:ledgers)
     assert_not_nil assigns(:total_income)
     assert_not_nil assigns(:total_expense)
@@ -365,7 +360,6 @@ class LedgersControllerTest < Test::Unit::TestCase
     assert assigns(:ledger_categories)
     assert assigns(:tags)
     assert assigns(:ledgers)
-    assert assigns(:ledger_pages)
        
     assert_raise(ActiveRecord::RecordNotFound) {
       Ledger.find(l.id)

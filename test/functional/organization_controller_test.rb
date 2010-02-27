@@ -4,17 +4,15 @@ require 'organization_controller'
 # Re-raise errors caught by the controller.
 class OrganizationController; def rescue_action(e) raise e end; end
 
-class OrganizationControllerTest < Test::Unit::TestCase
-  fixtures :addresses
+class OrganizationControllerTest < ActionController::TestCase
 
   under_organization :one
 
   def setup
-    @controller = OrganizationController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-    @organization = Organization.find_by_identifier 'one'
-    login_as("quentin")
+    @user = create_user(:login => 'admin', :administrator => true)
+    login_as("admin")
+    @organization = Organization.find_by_identifier('one')
+    @environment = create_environment(:is_default => true)
   end
 
   def test_index
@@ -27,7 +25,6 @@ class OrganizationControllerTest < Test::Unit::TestCase
 
   def test_update
     @organization.presentation = nil
-    @organization.save
     presentation = 'something'
     post :update, :organization => {:presentation => presentation}
     assert_response :redirect

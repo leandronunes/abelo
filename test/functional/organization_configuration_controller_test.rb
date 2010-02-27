@@ -4,15 +4,19 @@ require 'organization_configuration_controller'
 # Re-raise errors caught by the controller.
 class OrganizationConfigurationController; def rescue_action(e) raise e end; end
 
-class OrganizationConfigurationControllerTest < Test::Unit::TestCase
+class OrganizationConfigurationControllerTest < ActionController::TestCase
+
+  under_organization :one
+
   def setup
-    @controller = OrganizationConfigurationController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
+    @user = create_user(:login => 'admin', :administrator => true)
+    login_as("admin")
+    @organization = Organization.find_by_identifier('one')
+    @environment = create_environment(:is_default => true)
   end
 
   # Replace this with your real tests.
-  def test_truth
-    assert true
+  def test_flunk
+    flunk "Make these tests"
   end
 end

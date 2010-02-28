@@ -1,4 +1,4 @@
-<%= title t(:tracker_of_%s) % @organization.name %>
+<%= title t(:tracker_name, :name => @organization.name) %>
 
 <% form_tag :action => 'update', :organization_id => @organization do %>
 

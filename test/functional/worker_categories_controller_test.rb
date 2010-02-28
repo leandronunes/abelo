@@ -9,11 +9,12 @@ class CategoriesControllerTest < ActionController::TestCase
   under_organization :one
 
   def setup
+    User.delete_all
     @user = create_user(:login => 'admin', :administrator => true)
     login_as("admin")
-    @organization = Organization.find_by_identifier('one')
+    @organization = create_organization(:identifier => 'one')
     @environment = create_environment(:is_default => true)
-    @worker_cat = create_worker_category(:organization => @organization)
+    @worker_category = create_worker_category(:organization => @organization)
   end
 
   def test_index
@@ -24,7 +25,7 @@ class CategoriesControllerTest < ActionController::TestCase
 
   def test_autocomplete_category_name
     WorkerCategory.delete_all
-    worker_cat = WorkerCategory.create(:name => 'Category for testing', :organization => @organization)
+    worker_category = WorkerCategory.create(:name => 'Category for testing', :organization => @organization)
     get :autocomplete_category_name, :category => { :name => 'test'}, :category_type => 'worker'
     assert_not_nil assigns(:categories)
     assert_kind_of Array, assigns(:categories)
@@ -64,7 +65,7 @@ class CategoriesControllerTest < ActionController::TestCase
   end
 
   def test_show
-    get :show, :id => @worker_cat.id, :category_type => 'worker'
+    get :show, :id => @worker_category.id, :category_type => 'worker'
     assert_response :success
     assert_template 'show'
     assert_not_nil assigns(:category)
@@ -109,7 +110,7 @@ class CategoriesControllerTest < ActionController::TestCase
   end
 
   def test_edit
-    get :edit, :id => @worker_cat.id, :category_type => 'worker'
+    get :edit, :id => @worker_category.id, :category_type => 'worker'
 
     assert_response :success
     assert_template 'edit'
@@ -120,17 +121,17 @@ class CategoriesControllerTest < ActionController::TestCase
   end
 
   def test_update
-    post :update, :id => @worker_cat.id
+    post :update, :id => @worker_category.id
     assert_response :redirect
     assert_redirected_to :action => 'list'
   end
 
   def test_update_fails
-    worker_cat = WorkerCategory.new
-    worker_cat.name = 'Category for testing'
-    worker_cat.organization = @organization
-    assert worker_cat.save
-    post :update, :id => worker_cat.id, :category => {:name => ''}, :category_type => 'worker'
+    worker_category = WorkerCategory.new
+    worker_category.name = 'Category for testing'
+    worker_category.organization = @organization
+    assert worker_category.save
+    post :update, :id => worker_category.id, :category => {:name => ''}, :category_type => 'worker'
     assert_response :success
     assert_template 'edit'
   end
@@ -138,13 +139,14 @@ class CategoriesControllerTest < ActionController::TestCase
   def test_destroy
     category_destroy = @organization.worker_categories.find(:first)
     assert_not_nil category_destroy
+    category_destroy_id = category_destroy.id
 
     post :destroy, :id => category_destroy.id
     assert_response :redirect
     assert_redirected_to :action => 'list'
 
     assert_raise(ActiveRecord::RecordNotFound) {
-      @organization.worker_categories.find(1)
+      @organization.worker_categories.find(category_destroy_id)
     }
   end
 end

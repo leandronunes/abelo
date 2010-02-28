@@ -8,6 +8,6 @@
   </tr>
 <% end %>
 
-<tr> <td colspan="5" class="cell_tot"> <%= _("Total: %s" ) % num_to_currency(@total) %> </td></tr>
+<tr> <td colspan="5" class="cell_tot"> <%= t(:total_value, :value => num_to_currency(@total)) %> </td></tr>
 
 

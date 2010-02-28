@@ -9,10 +9,11 @@ class DepartmentsControllerTest < ActionController::TestCase
   under_organization :one
 
   def setup
-    @user = create_user(:login => 'admin', :administrator => true)
-    login_as("admin")
-    @organization = Organization.find_by_identifier('one')
+    User.delete_all
+    @organization = create_organization(:identifier => 'one')
     @environment = create_environment(:is_default => true)
+    @user = create_user
+    login_as(@user.login)
   end
 
   def create_department(params)

@@ -16,7 +16,7 @@
     </table>
 
     <table id="payments_tb_list">
-      <tr> <th colspan="2"> <%= _("Payments" ) %> </th></tr>
+      <tr> <th colspan="2"> <%= t(:payments) %> </th></tr>
       <% @payments.each do |p| %>
         <tr> 
           <td class="cell_payment_type"> <%= Payment.describe_payment(p.payment_method) %> </td>
@@ -24,11 +24,11 @@
         </tr>
       <% end %>
       <tr>
-        <td class="cell_payment_tot_tit"> <%= _("Total") %>: </td>
+        <td class="cell_payment_tot_tit"> <%= t(:total) %>: </td>
         <td class="cell_payment_tot_val cell_number"> <%= num_to_currency(@total_payment) %> </td>
       </tr>
       <tr>
-        <td class="cell_balance_tit"> <%= _("Balance") %>: </td>
+        <td class="cell_balance_tit"> <%= t(:balance) %>: </td>
         <td class="cell_balance_val cell_number"> <%= num_to_currency(@sale.balance) %> </td>
       </tr>
     </table>

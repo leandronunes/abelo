@@ -4,27 +4,28 @@ require 'point_of_sale_controller'
 # Re-raise errors caught by the controller.
 class PointOfSaleController; def rescue_action(e) raise e end; end
 
-class PointOfSaleWithPrinterControllerTest < Test::Unit::TestCase
+class PointOfSaleControllerTest < ActionController::TestCase
 
-  fixtures :system_actors, :people, :products, :ledger_categories, :bank_accounts, :configurations
-
-  under_organization :some
+  under_organization :one
 
   def setup
     Till.destroy_all
     Sale.destroy_all
     Printer.destroy_all
-    @controller = PointOfSaleController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-    @user = User.find_by_login('quentin')
-    @organization = create_organization(:identifier => 'some')
+    User.delete_all
+    @organization = create_organization(:identifier => 'one')
+    @environment = create_environment(:is_default => true)
+    @user = create_user
+    login_as(@user.login)
+
     @organization.configuration.fiscal_printer = true
     @organization.configuration.save
+    @bank = create_bank
     @bank_account = create_bank_account
+    @unit = create_unit
+    @product_category = create_product_category
     @product = create_product
     @ledger_category = create_ledger_category(:is_sale => true)
-    login_as('quentin')
     @printer = create_printer
     @till = create_till(:printer => @printer)
     @sale = Sale.new(:till => @till) 

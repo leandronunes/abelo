@@ -4,19 +4,17 @@ require 'periodicities_controller'
 # Re-raise errors caught by the controller.
 class PeriodicitiesController; def rescue_action(e) raise e end; end
 
-class PeriodicitiesControllerTest < Test::Unit::TestCase
-  fixtures :periodicities, :configurations, :organizations
+class PeriodicitiesControllerTest < ActionController::TestCase
 
-  under_organization :some
+  under_organization :one
 
   def setup
-    @controller = PeriodicitiesController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-    @organization = create_organization(:identifier => 'some', :name => 'some')
-    @another_organization = create_organization(:identifier => 'another_org')
+    User.delete_all 
+    @user = create_user(:login => 'admin', :administrator => true)
+    login_as('admin')
+    @organization = create_organization(:identifier => 'one')
+    @another_organization = create_organization(:identifier => 'org2', :name => 'org2')
     @periodicity = create_periodicity
-    login_as("quentin")
   end
 
   def create_periodicity(params = {})

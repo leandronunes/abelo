@@ -21,11 +21,9 @@ class UnitsController < ApplicationController
     @query ||= params[:unit][:name] if params[:unit]
 
     if @query.nil?
-      @units = @organization.unit_measures
-      @unit_pages, @units = paginate_by_collection @units
+      @units = @organization.unit_measures.paginate(:per_page => 10,:page => params[:page] )
     else
-      @units = @organization.unit_measures.full_text_search(@query)
-      @unit_pages, @units = paginate_by_collection @units
+      @units = @organization.unit_measures.full_text_search(@query).paginate(:per_page => 10,:page => params[:page] )
     end
   end
 

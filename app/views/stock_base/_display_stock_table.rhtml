@@ -5,7 +5,7 @@
       <th> <%= t(:invoice) %></th>
       <th> <%= t(:product) %></th>
       <th> <%= t(:amount) %> </th>
-      <th> <%= t(:price_(r$)_) %> </th>
+      <th> <%= t(:price) %> </th>
       <th> <%= t(:date) %> </th>
       <th> <%= t(:operation) %></th>
     </tr>
@@ -21,7 +21,7 @@
         <td>
           <%= button 'view_small', t(:show), :show, {:controller => item.class.name.tableize, :action => 'show', :id => item, :product_id => @product, :invoice_id => (item.invoice.id if item.respond_to?(:invoice))} %>
           <%= button('edit_small', t(:edit), :edit, {:controller => item.class.name.tableize, :action => 'edit', :id => item, :product_id => @product,:invoice_id => (item.invoice.id if item.respond_to?(:invoice))}) %>
-          <%= button('del_small', t(:destroy'),_:destroy,_{:controller_=>_item.class.name.tableize,:action_=>_'destroy',_:id_=>_item,_:product_id_=>_@product,_:invoice_id_=>_(item.invoice.id_if_item.respond_to?(:invoice))},_:confirm_=>__('are_you_sure?)) %>
+          <%= button('del_small', t(:destroy), :destroy, {:controller => item.class.name.tableize,:action => 'destroy', :id => item, :product_id => @product, :invoice_id => (item.invoice.id if item.respond_to?(:invoice))}, :confirm => t(:are_you_sure)) %>
         </td>
       </tr>
     <% end %>

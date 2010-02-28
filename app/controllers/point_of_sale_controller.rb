@@ -28,7 +28,7 @@ class PointOfSaleController < ApplicationController
     supervisor = User.authenticate(params[:user][:login], params[:user][:password])
     supervisor ||= current_user
     if !supervisor.allowed_to?(:controller => 'point_of_sale', :action => 'create_coupon_cancel')
-      flash[:notice] = _("The user %s don't have permissions to cancel a coupon." % supervisor.login )
+      flash[:notice] = t(:the_user_do_not_have_permissions_to_cancel_a_coupon, :name => supervisor.login )
       flash.keep(:notice)
       redirect_to :action => 'cancel'
     end
@@ -54,7 +54,7 @@ class PointOfSaleController < ApplicationController
   def index
     printer = load_printer 
     if @organization.has_fiscal_printer? and printer.nil?
-      flash[:notice] = _("You don't have a printer configured")
+      flash[:notice] = t(:you_do_not_have_a_printer_configured)
     else
       @till = load_current_till
     end
@@ -191,7 +191,7 @@ class PointOfSaleController < ApplicationController
     @product = @organization.products.find_by_code(code)
     if @product.nil?
       render :update do |page|
-        page.replace_html('abelo_product_identification', t(:invalid_product_code_%s) % code)
+        page.replace_html('abelo_product_identification', t(:invalid_product_code_name, :name => code))
       end
     else
       render :update do |page|
@@ -332,7 +332,7 @@ class PointOfSaleController < ApplicationController
   def load_current_till
     printer = load_printer 
     if @organization.has_fiscal_printer? and printer.nil?
-      flash[:notice] = _("You don't have a printer configured")
+      flash[:notice] = t(:you_do_not_have_a_printer_configured)
       redirect_to :action => 'index'
     else
       @till = Till.load(@organization, current_user, printer)

@@ -4,16 +4,16 @@ require 'users_controller'
 # Re-raise errors caught by the controller.
 class UsersController; def rescue_action(e) raise e end; end
 
-class UsersControllerTest < Test::Unit::TestCase
+class UsersControllerTest < ActionController::TestCase
 
-  fixtures :people
+  under_organization :admin
 
   def setup
-    @controller = UsersController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
+    User.delete_all
+    @user = create_user(:login => 'admin', :administrator => true)
     login_as("admin")
-
+    @organization = create_organization(:identifier => 'one')
+    @environment = create_environment(:is_default => true)
     ActionMailer::Base.delivery_method = :test
     ActionMailer::Base.perform_deliveries = true
     ActionMailer::Base.deliveries = []
@@ -32,14 +32,14 @@ class UsersControllerTest < Test::Unit::TestCase
   end
 
   def test_should_allow_signup
-    assert_difference User, :count do
+    assert_difference 'User.count' do
       create_user
       assert_response :redirect
     end
   end
 
   def test_should_require_login_on_signup
-    assert_no_difference User, :count do
+    assert_no_difference 'User.count' do
       create_user(:login => nil)
       assert assigns(:user).errors.on(:login)
       assert_response :success
@@ -47,7 +47,7 @@ class UsersControllerTest < Test::Unit::TestCase
   end
 
   def test_should_require_password_on_signup
-    assert_no_difference User, :count do
+    assert_no_difference 'User.count' do
       create_user(:password => nil)
       assert assigns(:user).errors.on(:password)
       assert_response :success
@@ -55,7 +55,7 @@ class UsersControllerTest < Test::Unit::TestCase
   end
 
   def test_should_require_password_confirmation_on_signup
-    assert_no_difference User, :count do
+    assert_no_difference 'User.count' do
       create_user(:password_confirmation => nil)
       assert assigns(:user).errors.on(:password_confirmation)
       assert_response :success
@@ -63,7 +63,7 @@ class UsersControllerTest < Test::Unit::TestCase
   end
 
   def test_should_require_email_on_signup
-    assert_no_difference User, :count do
+    assert_no_difference 'User.count' do
       create_user(:email => nil)
       assert assigns(:user).errors.on(:email)
       assert_response :success

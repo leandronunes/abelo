@@ -64,7 +64,7 @@ class UsersController < ApplicationController
     @user.save!
     self.current_user = @user
     redirect_back_or_default(:controller => 'public')
-    flash[:notice] = _("Thanks for signing up!")
+    flash[:notice] = t(:signing_up_message)
 #TODO see a better way to sent email
 #    Notifier::deliver_signup_thanks(@user)
     rescue ActiveRecord::RecordInvalid
@@ -75,7 +75,7 @@ class UsersController < ApplicationController
     self.current_user.forget_me if logged_in?
     cookies.delete :auth_token
     reset_session
-    flash[:notice] = _("You have been logged out.")
+    flash[:notice] = t(:you_have_been_logged_out)
     redirect_back_or_default(:controller => '/users', :action => 'index')
   end
 

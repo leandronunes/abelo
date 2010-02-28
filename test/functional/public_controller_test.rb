@@ -4,19 +4,14 @@ require 'public_controller'
 # Re-raise errors caught by the controller.
 class PublicController; def rescue_action(e) raise e end; end
 
-class PublicControllerTest < Test::Unit::TestCase
+class PublicControllerTest < ActionController::TestCase
 
   def setup
-    @controller = PublicController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-    @user  = User.find_by_login('quentin')
-    login_as('quentin')
-  end
-
-  def test_setup
-    assert @user.valid?
-    assert_equal 'quentin', @user.login
+    User.delete_all
+    @organization = create_organization(:identifier => 'one')
+    @environment = create_environment(:is_default => true)
+    @user = create_user
+    login_as(@user.login)
   end
 
   def test_index

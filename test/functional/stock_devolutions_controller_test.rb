@@ -4,18 +4,20 @@ require 'stock_devolutions_controller'
 # Re-raise errors caught by the controller.
 class StockDevolutionsController; def rescue_action(e) raise e end; end
 
-class StockDevolutionsControllerTest < Test::Unit::TestCase
+class StockDevolutionsControllerTest < ActionController::TestCase
 
-  under_organization :some
+  under_organization :one
 
   def setup
-    Organization.destroy_all
-    @controller = StockDevolutionsController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-    @organization = create_organization(:identifier => 'some')
+    User.delete_all
+    @organization = create_organization(:identifier => 'one')
+    @environment = create_environment(:is_default => true)
+    @user = create_user
+    login_as(@user.login)
+    @product_category = create_product_category
+    @supplier_category = create_supplier_category
+    @unit = create_unit
     @product = create_product
-    login_as("quentin")
   end
 
   def test_setup
@@ -61,7 +63,6 @@ class StockDevolutionsControllerTest < Test::Unit::TestCase
     assert_template 'stock_base/list'
     assert_not_nil assigns(:stocks)
     assert_not_nil assigns(:title)
-    assert_not_nil assigns(:stock_pages)
   end
 
   def test_list_when_query_param_is_nil
@@ -70,8 +71,6 @@ class StockDevolutionsControllerTest < Test::Unit::TestCase
     assert_nil assigns(:query)
     assert_not_nil assigns(:stocks)
     assert_kind_of Array, assigns(:stocks)
-    assert_not_nil assigns(:stock_pages)
-    assert_kind_of ActionController::Pagination::Paginator, assigns(:stock_pages)
   end
 
   def test_list_when_query_param_not_nil
@@ -84,8 +83,6 @@ class StockDevolutionsControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:query)
     assert_not_nil assigns(:stocks)
     assert_kind_of Array, assigns(:stocks)
-    assert_not_nil assigns(:stock_pages)
-    assert_kind_of ActionController::Pagination::Paginator, assigns(:stock_pages)
 
     assert_equal 2, assigns(:stocks).length
   end
@@ -210,8 +207,9 @@ class StockDevolutionsControllerTest < Test::Unit::TestCase
 
   def test_update_date
     stock = create_stock_devolution
-    stock.date = DateTime.now
-    new_date = DateTime.now + 1
+    stock.date = DateTime.parse('01-01-2010')
+    stock.save
+    new_date = stock.date.next_month
     
     post :update, :id => stock.id, :stock => { :date => new_date }
 

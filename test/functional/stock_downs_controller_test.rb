@@ -4,18 +4,20 @@ require 'stock_downs_controller'
 # Re-raise errors caught by the controller.
 class StockDownsController; def rescue_action(e) raise e end; end
 
-class StockDownsControllerTest < Test::Unit::TestCase
+class StockDownsControllerTest < ActionController::TestCase
 
-  under_organization :some
+  under_organization :one
 
   def setup
-    Organization.destroy_all
-    @controller = StockDownsController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-    @organization = create_organization(:identifier => 'some')
+    User.delete_all
+    @organization = create_organization(:identifier => 'one')
+    @environment = create_environment(:is_default => true)
+    @user = create_user
+    login_as(@user.login)
+    @product_category = create_product_category
+    @unit = create_unit
     @product = create_product
-    login_as("quentin")
+    @supplier_category = create_supplier_category
   end
 
   def test_setup

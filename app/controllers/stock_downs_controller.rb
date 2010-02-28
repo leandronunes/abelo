@@ -31,8 +31,7 @@ class StockDownsController < ApplicationController
     @query = params[:query]
     @query ||= params[:product][:name] if params[:product]
 
-    @stocks = @organization.stock_virtual_downs(@query)
-    @stock_pages, @stocks = paginate_by_collection @stocks
+    @stocks = @organization.stock_virtual_downs(@query).paginate(:per_page => 10,:page => params[:page] )
     @title = t(:stock_down_control)
     render :template => 'stock_base/list'
   end

@@ -9,9 +9,10 @@ class BankAccountsControllerTest < ActionController::TestCase
   under_organization :one
 
   def setup
+    User.delete_all
     @user = create_user(:login => 'admin', :administrator => true)
     login_as("admin")
-    @organization = Organization.find_by_identifier('one')
+    @organization = create_organization
     @environment = create_environment(:is_default => true)
     @bank = create_bank
     @bank_account = create_bank_account(:organization => @organization)

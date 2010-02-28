@@ -37,8 +37,7 @@ class StockInsController < ApplicationController
     @query = params[:query]
     @query ||= params[:product][:name] if params[:product]
 
-    @stocks = @organization.stock_virtual_ins(@query)
-    @stock_pages, @stocks = paginate_by_collection @stocks
+    @stocks = @organization.stock_virtual_ins(@query).paginate(:per_page => 10,:page => params[:page] )
     @title = t(:stock_replenishment_control)
     render :template => 'stock_base/list'
   end

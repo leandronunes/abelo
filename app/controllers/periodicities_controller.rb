@@ -29,11 +29,9 @@ class PeriodicitiesController < ApplicationController
     @query ||= params[:periodicity][:name] if params[:periodicity]
 
     if @query.nil?
-      @periodicities  = @organization.periodicities
-      @periodicity_pages, @periodicities = paginate_by_collection @periodicities 
+      @periodicities  = @organization.periodicities.paginate(:per_page => 10,:page => params[:page] )
     else
-      @periodicities = @organization.periodicities.full_text_search(@query)
-      @periodicity_pages, @periodicities = paginate_by_collection @periodicities 
+      @periodicities = @organization.periodicities.full_text_search(@query).paginate(:per_page => 10,:page => params[:page] )
     end
 
   end

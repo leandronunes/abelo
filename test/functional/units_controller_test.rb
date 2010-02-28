@@ -58,8 +58,6 @@ class UnitsControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:query)
     assert_not_nil assigns(:units)
     assert_kind_of Array, assigns(:units)
-    assert_not_nil assigns(:unit_pages)
-    assert_kind_of ActionController::Pagination::Paginator, assigns(:unit_pages)
   end
 
   def test_show

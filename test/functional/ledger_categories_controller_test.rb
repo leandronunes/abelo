@@ -9,9 +9,11 @@ class LedgerCategoriesControllerTest < ActionController::TestCase
   under_organization :one
   
   def setup
+    User.delete_all
     @user = create_user(:login => 'admin', :administrator => true)
-    login_as("admin")
-    @organization = Organization.find_by_identifier('one')
+    login_as('admin')
+    @organization = create_organization(:identifier => 'one')
+    @bank = create_bank
     @environment = create_environment(:is_default => true)
     @ledger_category = create_ledger_category
     @bank_account = create_bank_account

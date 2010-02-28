@@ -53,7 +53,7 @@ class User < Person
   def validate
 
     if !self.template_valid? and self.validates_profile?
-      self.errors.add(_("You don't have permissions to create a user with template %s. This template ") % self.template)
+      self.errors.add(I18n.t(:you_do_not_have_permissions_to_create_a_user_with_template_name, :name => self.template))
     end
   end
 

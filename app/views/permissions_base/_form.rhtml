@@ -13,7 +13,7 @@
   <%= link_to_popup content_tag('span', t(:search_user)), {:action => 'popup_user', :organization_id => @organization}, {:accesskey => 'p', :class => 'button bt_big search_user with_text'}, 'select_customer', 'abelo_payment_customer'  %>
 
   <%= display_field_edit(item, 'email',
-        :title => t(:e-mail),
+        :title => t(:email),
         :content => text_field('user', 'email'),
         :html_options => {:class => 'break_line' }
       )

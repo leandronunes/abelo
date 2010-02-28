@@ -28,8 +28,7 @@ class StockController < ApplicationController
     @query = params[:query]
     @query ||= params[:product][:name] if params[:product]
 
-    @stocks = @organization.stock_virtuals(@query)
-    @stock_pages, @stocks = paginate_by_collection @stocks
+    @stocks = @organization.stock_virtuals(@query).paginate(:per_page => 10,:page => params[:page] )
     render :template => 'stock_base/list'
   end
 

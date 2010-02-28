@@ -26,11 +26,11 @@ class PermissionsBaseController < ApplicationController
     if @query.nil?
       @users = @organization.users
       @users.map{|u| u.profile_organization = @organization }
-      @user_pages, @users = paginate_by_collection @users
+      @users = @users.paginate(:per_page => 10,:page => params[:page] )
     else
       @users = @organization.users.full_text_search(@query)
       @users.map{|u| u.profile_organization = @organization }
-      @user_pages, @users = paginate_by_collection @users
+      @users = @users.paginate(:per_page => 10,:page => params[:page] )
     end
 
     render :template => 'permissions_base/list'

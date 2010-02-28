@@ -9,11 +9,12 @@ class CategoriesControllerTest < ActionController::TestCase
   under_organization :one
 
   def setup
+    User.delete_all
     @user = create_user(:login => 'admin', :administrator => true)
     login_as("admin")
-    @organization = Organization.find_by_identifier('one')
+    @organization = create_organization
     @environment = create_environment(:is_default => true)
-    @supp_cat = create_supplier_category(:organization => @organization)
+    @supplier_category = create_supplier_category(:organization => @organization)
   end
 
   def test_index
@@ -24,7 +25,7 @@ class CategoriesControllerTest < ActionController::TestCase
 
   def test_autocomplete_category_name
     SupplierCategory.delete_all
-    supp_cat = SupplierCategory.create(:name => 'Category for testing', :organization => @organization)
+    supplier_category = SupplierCategory.create(:name => 'Category for testing', :organization => @organization)
     get :autocomplete_category_name, :category => { :name => 'test'}, :category_type => 'supplier'
     assert_not_nil assigns(:categories)
     assert_kind_of Array, assigns(:categories)
@@ -62,7 +63,7 @@ class CategoriesControllerTest < ActionController::TestCase
   end
 
   def test_show
-    get :show, :id => @supp_cat.id, :category_type => 'supplier'
+    get :show, :id => @supplier_category.id, :category_type => 'supplier'
     assert_response :success
     assert_template 'show'
     assert_not_nil assigns(:category)
@@ -107,7 +108,7 @@ class CategoriesControllerTest < ActionController::TestCase
   end
 
   def test_edit
-    get :edit, :id => @supp_cat.id, :category_type => 'supplier'
+    get :edit, :id => @supplier_category.id, :category_type => 'supplier'
 
     assert_response :success
     assert_template 'edit'
@@ -118,17 +119,17 @@ class CategoriesControllerTest < ActionController::TestCase
   end
 
   def test_update
-    post :update, :id => @supp_cat.id
+    post :update, :id => @supplier_category.id
     assert_response :redirect
     assert_redirected_to :action => 'list'
   end
 
   def test_update_fails
-    supp_cat = SupplierCategory.new
-    supp_cat.name = 'Category for testing'
-    supp_cat.organization = @organization
-    assert supp_cat.save
-    post :update, :id => supp_cat.id, :category => {:name => ''}, :category_type => 'supplier'
+    supplier_category = SupplierCategory.new
+    supplier_category.name = 'Category for testing'
+    supplier_category.organization = @organization
+    assert supplier_category.save
+    post :update, :id => supplier_category.id, :category => {:name => ''}, :category_type => 'supplier'
     assert_response :success
     assert_template 'edit'
   end

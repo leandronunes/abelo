@@ -30,11 +30,9 @@ class StockBuysController < ApplicationController
     @query ||= params[:invoice][:number] if params[:invoice]
     
     if @query.nil?
-      @invoices = @organization.invoices
-      @invoice_pages, @invoices = paginate_by_collection @invoices
+      @invoices = @organization.invoices.paginate(:per_page => 10,:page => params[:page] )
     else
-      @invoices = @organization.invoices.full_text_search(@query)
-      @invoice_pages, @invoices = paginate_by_collection @invoices
+      @invoices = @organization.invoices.full_text_search(@query).paginate(:per_page => 10,:page => params[:page] )
     end
   end
 

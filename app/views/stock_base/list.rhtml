@@ -4,4 +4,4 @@
 
 <%= display_stock_collection @stocks %>
 
-<%= pagination_links(@stock_pages, :params => {:query => @query}) %>
+<%= will_paginate @stocks, :params => {:query => @query} %>

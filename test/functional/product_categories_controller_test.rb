@@ -4,17 +4,17 @@ require 'categories_controller'
 # Re-raise errors caught by the controller.
 class CategoriesController; def rescue_action(e) raise e end; end
 
-class ProductCategoriesControllerTest < Test::Unit::TestCase
+class CategoriesControllerTest < ActionController::TestCase
 
-  under_organization :some
+  under_organization :one
 
   def setup
-    @controller = CategoriesController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-    @organization = create_organization(:identifier => 'some')
+    User.delete_all
+    @organization = create_organization(:identifier => 'one')
+    @environment = create_environment(:is_default => true)
+    @user = create_user
+    login_as(@user.login)
     @product_category = create_product_category(:organization => @organization)
-    login_as("quentin")
   end
 
   def test_index
@@ -137,13 +137,14 @@ class ProductCategoriesControllerTest < Test::Unit::TestCase
   def test_destroy
     category_destroy = create_product_category(:name => 'another category')
     assert_not_nil category_destroy
+    category_destroy_id = category_destroy.id
 
     post :destroy, :id => category_destroy.id
     assert_response :redirect
     assert_redirected_to :action => 'list'
 
     assert_raise(ActiveRecord::RecordNotFound) {
-      @organization.product_categories.find(1)
+      @organization.product_categories.find(category_destroy_id)
     }
   end
 end

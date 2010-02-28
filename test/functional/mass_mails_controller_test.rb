@@ -9,9 +9,11 @@ class MassMailsControllerTest < ActionController::TestCase
   under_organization :one
 
   def setup
+    User.delete_all
     @user = create_user(:login => 'admin', :administrator => true)
-    login_as("admin")
-    @organization = Organization.find_by_identifier('one')
+    login_as('admin')
+    @organization = create_organization(:identifier => 'one')
+
     @environment = create_environment(:is_default => true)
     @mass_mail = create_mass_mail
     @customer_category = create_customer_category

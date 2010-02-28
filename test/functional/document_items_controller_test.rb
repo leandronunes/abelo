@@ -6,7 +6,6 @@ class DocumentItemsController; def rescue_action(e) raise e end; end
 
 class DocumentItemsControllerTest < Test::Unit::TestCase
 
-  fixtures :document_items, :documents, :document_sections
   under_organization :one
 
   #TODO make this test works

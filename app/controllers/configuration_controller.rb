@@ -23,8 +23,7 @@ class ConfigurationController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @configurations = Configuration.models
-    @configuration_pages, @configurations = paginate_by_collection @configurations
+    @configurations = Configuration.models.paginate(:per_page => 10,:page => params[:page] )
   end
 
   def show

@@ -1,4 +1,4 @@
-<%= title  t(:hello,_%s!) % @current_user.login  %>
+<%= title  t(:hello_name, :name => @current_user.login)  %>
 
 <% if current_user.administrator? %>
   <%= link_to t(:manage_organizations), :controller => 'organizations' %>

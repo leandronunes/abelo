@@ -1,4 +1,4 @@
-<%= title _("%s of %s on %s") % [@title, @stock.product.name, show_date(@stock.date)] %>
+<%= title t(:title_product_date, {:title => @title, :product => @stock.product.name, :date => show_date(@stock.date)}) %>
 
 <%= display_show_info @stock %>
 

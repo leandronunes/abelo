@@ -9,13 +9,13 @@
 
 <% end %>
 
-<%= subtitle t(:invoice_items:) %>
+<%= subtitle t(:invoice_items) %>
 
 <div id="abelo_invoice_items">
   <%= render :partial => 'invoice_new_items' %>
 </div>
 
-<%= subtitle _("Invoice Payments: ") %>
+<%= subtitle t(:invoice_payments) %>
 
 <div id="abelo_payment">
   <%= render :partial => 'shared_payments/new_payment'%>

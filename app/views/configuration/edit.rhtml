@@ -1,7 +1,7 @@
 <% if @organization.nil? %>
-  <%= title t(:editing_configuration_%s) % @configuration.name %>
+  <%= title t(:editing_configuration, :name => @configuration.name) %>
 <% else %>
-  <%= title t(:editing_configuration_of_organization_%s) % @organization.name %>
+  <%= title t(:editing_configuration_of_organization, :name => @organization.name) %>
 <% end %>
 
 

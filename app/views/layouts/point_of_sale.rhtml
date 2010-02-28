@@ -18,13 +18,13 @@
   <div id="user_bar">
 
     <div id="login_bar">
-      <%= button( 'edit_small' , _('Edit prederences'), :edit_small, {:controller => 'public', :action => 'edit_user', :id => self.current_user}, :id => "edit_profile", :accesskey => "e", :addclass => "bt_small") %>
-      <%= button( 'system-log-out', _('Logout'), :logout, {:organization_nickname => nil, :controller => 'users', :action => 'logout'}, :id => "logout", :accesskey => "q", :confirm => _('Exit from system?'), :method => 'post', :addclass => "bt_small") %>
+      <%= button( 'edit_small' , t(:edit_preferences), :edit_small, {:controller => 'public', :action => 'edit_user', :id => self.current_user}, :id => "edit_profile", :accesskey => "e", :addclass => "bt_small") %>
+      <%= button( 'system-log-out', t(:logout), :logout, {:organization_nickname => nil, :controller => 'users', :action => 'logout'}, :id => "logout", :accesskey => "q", :confirm => t(:exit_from_system), :method => 'post', :addclass => "bt_small") %>
     </div> <!-- login_bar -->
     
     <div id="org_bar">
       <div id="org_link"> <%= link_to_organization @organization %> </div>
-      <div id="salesman"> <%= t(:salesman:_<i>%s</i>) % self.current_user.login %> </div>
+      <div id="salesman"> <%= t(:salesman_name, :name => self.current_user.login) %> </div>
     </div> <!-- org_bar -->
 
   </div><!-- user_bar -->
@@ -43,7 +43,7 @@
   <div id="banner_bottom"><span> <%= t(:abelo) %> </span></div>
 </div><!-- footer -->
 
-<%= link_to_function content_tag(:span,t(:access_keys_help')),_"showaccesskeys({intro:_'#{_('this_are_the_access_keys_on_this_page:)}'})", :id => 'show_access_keys', :class => 'button help', :accesskey => 'h' %> 
+<%= link_to_function content_tag(:span,t(:access_keys_help)), "showaccesskeys({intro: '#{t(:this_are_the_access_keys_on_this_page)}'})", :id => 'show_access_keys', :class => 'button help', :accesskey => 'h' %> 
 
 </body>
 </html>

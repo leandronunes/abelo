@@ -4,25 +4,25 @@ require 'point_of_sale_controller'
 # Re-raise errors caught by the controller.
 class PointOfSaleController; def rescue_action(e) raise e end; end
 
-class PointOfSaleControllerTest < Test::Unit::TestCase
+class PointOfSaleControllerTest < ActionController::TestCase
 
-  fixtures :system_actors, :people, :products, :ledger_categories, :bank_accounts, :configurations
-
-  under_organization :some
+  under_organization :one
 
   def setup
     Organization.destroy_all
     Till.destroy_all
     Sale.destroy_all
-    @controller = PointOfSaleController.new
-#  ActionController::TestRequest.any_instance.stubs(:user_agent).returns('firefox')
-
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
     Printer.destroy_all
-    @user = User.find_by_login('quentin')
-    @organization = create_organization(:identifier => 'some')
+    User.delete_all
+    @organization = create_organization(:identifier => 'one')
+    @environment = create_environment(:is_default => true)
+    @user = create_user
+    login_as(@user.login)
+    
+    @bank = create_bank
     @bank_account = create_bank_account
+    @product_category = create_product_category
+    @unit = create_unit
     @product = create_product
 #    @supplier = create_supplier
 #    @customer = create_customer
@@ -33,7 +33,6 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
     @till = create_till(:printer => @printer)
     @sale = Sale.new(:till => @till) 
     @sale.save!
-    login_as('quentin')
   end
 
 
@@ -59,7 +58,7 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   def test_index_with_existing_till_open
     till = mock
     till.stubs(:nil?).returns(false)
-    Till.expects(:load).returns(till)
+    Till.stubs(:load).returns(till)
     get :index
     assert_response :redirect
     assert_redirected_to :action => 'till_open'
@@ -83,7 +82,7 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   def test_open_till_with_existing_till
     till = mock()
     till.stubs(:nil?).returns(false)
-    Till.expects(:load).returns(till)
+    Till.stubs(:load).returns(till)
     get :open_till
     assert_response :redirect
     assert_redirected_to :action => 'till_open'
@@ -99,7 +98,7 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   end
   
   def test_create_till_open_with_existing_till
-    Till.expects(:load).returns(@till)
+    Till.stubs(:load).returns(@till)
     post :create_till_open
     assert_response :redirect
     assert_redirected_to :action => 'till_open'
@@ -115,7 +114,7 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
 
   def test_create_till_open_with_cash
     Ledger.destroy_all
-    Till.expects(:load).returns(@till)
+    Till.stubs(:load).returns(@till)
     post :create_till_open, :cash => {:value => 12}
     assert_response :redirect
     assert_redirected_to :action => 'till_open'
@@ -138,7 +137,7 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   end
 
   def test_create_add_cash_successfully
-    Till.expects(:load).returns(@till)
+    Till.stubs(:load).returns(@till)
     PrinterCommand.destroy_all
     get :create_add_cash, :cash => {:value => 12}
     assert_response :redirect
@@ -149,7 +148,7 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   end
 
   def test_create_add_cash_unsuccessfully
-    Till.expects(:load).returns(@till)
+    Till.stubs(:load).returns(@till)
     # The method expect a value different of nil
     get :create_add_cash, :cash => {:value => nil}
     assert_response :success
@@ -164,7 +163,7 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   end
 
   def test_create_remove_cash_successfully
-    Till.expects(:load).returns(@till)
+    Till.stubs(:load).returns(@till)
     PrinterCommand.destroy_all
     get :create_remove_cash, :cash => {:value => 12}
     assert_response :redirect
@@ -175,7 +174,7 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   end
 
   def test_create_remove_cash_unsuccessfully
-    Till.expects(:load).returns(@till)
+    Till.stubs(:load).returns(@till)
     # The method expect a value different of nil
     get :create_remove_cash, :cash => {:value => nil}
     assert_response :success
@@ -183,7 +182,7 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   end
 
   def test_create_close_till
-    Till.expects(:load).returns(@till)
+    Till.stubs(:load).returns(@till)
     PrinterCommand.destroy_all
     get :create_close_till
     assert_response :redirect
@@ -192,7 +191,7 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   end
 
   def test_create_coupon_open_sucessfully
-    Till.expects(:load).returns(@till)
+    Till.stubs(:load).returns(@till)
     Sale.destroy_all
     get :create_coupon_open
     assert_response :redirect
@@ -201,7 +200,7 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   end
 
   def test_create_coupon_open_unsucessfully
-    PrinterCommand.expects(:get_computer_id).returns(@printer.computer_id)
+    PrinterCommand.stubs(:get_computer_id).returns(@printer.computer_id)
     get :create_coupon_open
     assert_response :success
     assert_template 'till_open'
@@ -209,7 +208,7 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   end
 
   def test_coupon_open
-    Till.expects(:load).returns(@till)
+    Till.stubs(:load).returns(@till)
     get :coupon_open
     assert_response :success
     assert_template 'coupon_open'
@@ -273,7 +272,7 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   end
 
   def test_coupon_cancel_without_permissions
-    Till.expects(:load).returns(@till)
+    Till.stubs(:load).returns(@till)
     User.create!("administrator"=>false, "login"=>"any_login", "email"=>"any_login@example.com", :password => 'test', :password_confirmation => 'test')
     post :create_coupon_cancel, :id => @sale.id, :user => {:login => 'any_login', :password => 'test'}
 
@@ -283,7 +282,7 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   end
 
   def test_cancel_open_coupon_with_supervisor_permissions
-    Till.expects(:load).returns(@till)
+    Till.stubs(:load).returns(@till)
     User.any_instance.stubs(:allowed_to?).returns(true)
     post :create_coupon_cancel, :id => @sale.id, :user => {:login => 'some', :password => 'some'}
 
@@ -390,7 +389,7 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   def test_coupon_add_payment_without_complete_the_sale_value
     num_payments = @sale.ledgers.length
     Sale.any_instance.stubs(:balance).returns(10)
-    Till.expects(:load).returns(@till)
+    Till.stubs(:load).returns(@till)
     post :create_coupon_add_payment, :id => @sale.id, :ledger => {:payment_method => 'money', :category_id => @ledger_category, :value => (@sale.balance - 1) }
     assert_response :success
     assert_template 'add_payment'
@@ -402,7 +401,7 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   end
 
   def test_coupon_add_payment_kind_of_check
-    Till.expects(:load).returns(@till)
+    Till.stubs(:load).returns(@till)
     post :create_coupon_add_payment, :id => @sale.id, :ledger => {:payment_method => 'check', :category_id => @ledger_category, :value => (@sale.balance - 1) }
     assert_not_nil assigns(:banks)
   end
@@ -410,7 +409,7 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   def test_coupon_add_payment_where_balance_equal_to_zero
     num_payments = @sale.ledgers.length
     Sale.any_instance.stubs(:balance).returns(0)
-    Till.expects(:load).returns(@till)
+    Till.stubs(:load).returns(@till)
     post :create_coupon_add_payment, :id => @sale.id, :ledger => {:payment_method => 'money', :category_id => @ledger_category, :value => 10 }
     assert_response :redirect
     assert_redirected_to :action => 'till_open'
@@ -419,7 +418,7 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
 
   def test_coupon_add_payment_greater_than_balance_value
     num_payments = @sale.ledgers.length
-    Till.expects(:load).returns(@till)
+    Till.stubs(:load).returns(@till)
     post :create_coupon_add_payment, :id => @sale.id, :ledger => {:payment_method => 'money', :category_id => @ledger_category, :value => (@sale.balance + 1) }
     assert_response :redirect
     assert_redirected_to :action => 'change'
@@ -428,7 +427,7 @@ class PointOfSaleControllerTest < Test::Unit::TestCase
   def test_coupon_add_payment_with_wrong_parameters
     num_payments = @sale.ledgers.length
     Sale.any_instance.stubs(:balance).returns(10)
-    Till.expects(:load).returns(@till)
+    Till.stubs(:load).returns(@till)
     post :create_coupon_add_payment, :id => @sale.id, :ledger => {:payment_method => 'money', :category_id => @category, :value => nil }
     assert_response :success
     assert_template 'add_payment'

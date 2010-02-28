@@ -1,4 +1,4 @@
-<%= title t(:new_stock_entry_for_%s) % content_tag(:b, @stock.product.name) %>
+<%= title t(:new_stock_entry_for_name, :name => content_tag(:b, @stock.product.name)) %>
 
 <% form_tag( :action => 'create', :product_id => @stock.product, :invoice_id => @invoice )  do %>
 

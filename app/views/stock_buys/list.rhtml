@@ -4,4 +4,4 @@
 
 <%= display_collection @invoices  %>
 
-<%= pagination_links(@invoice_pages, :params => {:query => @query}) %>
+<%= will_paginate @invoices, :params => {:query => @query} %>

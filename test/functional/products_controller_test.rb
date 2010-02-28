@@ -4,21 +4,21 @@ require 'products_controller'
 # Re-raise errors caught by the controller.
 class ProductsController; def rescue_action(e) raise e end; end
 
-class ProductsControllerTest < Test::Unit::TestCase
+class ProductsControllerTest < ActionController::TestCase
 
-  under_organization :some
+  under_organization :one
 
   def setup
     Organization.destroy_all
-    @controller = ProductsController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-
-    @organization = create_organization(:identifier => 'some')
+    User.delete_all
+    @organization = create_organization(:identifier => 'one')
+    @environment = create_environment(:is_default => true)
+    @user = create_user
+    login_as(@user.login)
     @product_category ||= create_product_category(:organization => @organization)
+    @supplier_category ||= create_supplier_category(:organization => @organization)
     @unit = create_unit
     @product = create_product
-    login_as("quentin")
   end
 
   def test_setup
@@ -63,8 +63,6 @@ class ProductsControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:query)
     assert_not_nil assigns(:products)
     assert_kind_of Array, assigns(:products)
-    assert_not_nil assigns(:product_pages)
-    assert_kind_of ActionController::Pagination::Paginator, assigns(:product_pages)
   end
 
   def test_show
@@ -123,7 +121,7 @@ class ProductsControllerTest < Test::Unit::TestCase
   def test_edit_product_not_found
     Product.delete_all
     create_product(:name => 'Some Product')
-    get :edit, :id => 2
+    get :edit, :id => 200
 
     assert_response :success
     assert_template 'shared/not_found'
@@ -191,7 +189,8 @@ class ProductsControllerTest < Test::Unit::TestCase
   def test_add_images
     images_count = @organization.products.find(@product.id).images.size
 
-    post :add_image, :id => @product.id, :image => { :description => 'a test image', :picture => File.open(File.join(RAILS_ROOT,'public/images/rails.png')) }
+    post :add_image, :id => @product.id, :image => { :description => 'a test image', :uploaded_data => ActionController::TestUploadedFile.new(generate_image_data, 'image/png') }
+
 
     assert_redirected_to :action => 'images'
     assert_equal images_count + 1, @organization.products.find(@product.id).images.size
@@ -206,7 +205,8 @@ class ProductsControllerTest < Test::Unit::TestCase
   end
 
   def test_remove_image
-    post :add_image, :id => @product.id, :image => { :description => 'a test image', :picture => File.open(File.join(RAILS_ROOT,'public/images/rails.png')) }
+    post :add_image, :id => @product.id, :image => { :description => 'a test image', :uploaded_data => ActionController::TestUploadedFile.new(generate_image_data, 'image/png') }
+
     images_count = @organization.products.find(@product.id).images.size
 
     post :remove_image, :image_id => @organization.products.find(@product.id).image.id

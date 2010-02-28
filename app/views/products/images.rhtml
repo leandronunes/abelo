@@ -1,4 +1,4 @@
-<%= title t(:managing_images_for_%s) % @product.name %>
+<%= title t(:managing_images_for_name, :name => @product.name) %>
 
 <%= error_messages_for 'product' %>
 
@@ -20,7 +20,8 @@
   </p>
   <P>
     <label for='image_picture'><%= t(:image_file) %></label>
-  <%= file_column_field 'image', 'picture' %>
+  <%= file_field 'image', 'uploaded_data' %>
+
   </p>
 
   <%= display_edit_info_options(@image) %>

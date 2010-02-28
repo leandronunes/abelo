@@ -63,7 +63,6 @@ class StockDownsControllerTest < ActionController::TestCase
     assert_template 'stock_base/list'
     assert_not_nil assigns(:stocks)
     assert_not_nil assigns(:title)
-    assert_not_nil assigns(:stock_pages)
   end
 
   def test_list_when_query_param_is_nil
@@ -72,8 +71,6 @@ class StockDownsControllerTest < ActionController::TestCase
     assert_nil assigns(:query)
     assert_not_nil assigns(:stocks)
     assert_kind_of Array, assigns(:stocks)
-    assert_not_nil assigns(:stock_pages)
-    assert_kind_of ActionController::Pagination::Paginator, assigns(:stock_pages)
   end
 
   def test_list_when_query_param_not_nil
@@ -86,8 +83,6 @@ class StockDownsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:query)
     assert_not_nil assigns(:stocks)
     assert_kind_of Array, assigns(:stocks)
-    assert_not_nil assigns(:stock_pages)
-    assert_kind_of ActionController::Pagination::Paginator, assigns(:stock_pages)
 
     assert_equal 2, assigns(:stocks).length
   end
@@ -219,8 +214,8 @@ class StockDownsControllerTest < ActionController::TestCase
   def test_update_date
     Product.any_instance.stubs(:amount_in_stock).returns(3334)
     stock = create_stock_down
-    stock.date = DateTime.now
-    new_date = DateTime.now + 1
+    stock.date = DateTime.parse('01-01-2010')
+    new_date = stock.date.next_month
     
     post :update, :id => stock.id, :stock => { :date => new_date }
 

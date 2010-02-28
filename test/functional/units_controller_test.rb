@@ -4,19 +4,19 @@ require 'units_controller'
 # Re-raise errors caught by the controller.
 class UnitsController; def rescue_action(e) raise e end; end
 
-class UnitsControllerTest < Test::Unit::TestCase
+class UnitsControllerTest < ActionController::TestCase
 
-  under_organization :some
+  under_organization :one
 
   def setup  
     Organization.destroy_all
     UnitMeasure.destroy_all
-    @controller = UnitsController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-    @organization = create_organization(:identifier => 'some')
-    @unit = create_unit(:name => 'some name', :abbreviation => 'sn')
-    login_as("quentin")
+    User.delete_all
+    @organization = create_organization(:identifier => 'one')
+    @environment = create_environment(:is_default => true)
+    @user = create_user
+    login_as(@user.login)
+    @unit = create_unit
   end
 
   def test_setup

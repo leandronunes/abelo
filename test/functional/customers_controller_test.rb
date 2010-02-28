@@ -20,11 +20,6 @@ class SystemActorsControllerTest < ActionController::TestCase
     @system_actor = create_customer(:category => @customer_category, :organization => @organization)
   end
 
-  def test_setup
-    assert @system_actor.valid?
-    assert @customer_category.valid?
-  end
-
   def test_system_actors_fixtures 
     SystemActor.find(:all).each do |item|
       assert item.valid?

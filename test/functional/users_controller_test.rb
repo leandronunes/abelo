@@ -6,22 +6,22 @@ class UsersController; def rescue_action(e) raise e end; end
 
 class UsersControllerTest < ActionController::TestCase
 
-  under_organization :admin
+#  under_organization :admin
 
   def setup
     User.delete_all
-    @user = create_user(:login => 'admin', :administrator => true)
-    login_as("admin")
+    @user = create_user(:login => 'admin', :administrator => true, :password => 'test', :password_confirmation => 'test')
+#    login_as("admin")
     @organization = create_organization(:identifier => 'one')
     @environment = create_environment(:is_default => true)
-    ActionMailer::Base.delivery_method = :test
-    ActionMailer::Base.perform_deliveries = true
-    ActionMailer::Base.deliveries = []
+#    ActionMailer::Base.delivery_method = :test
+#    ActionMailer::Base.perform_deliveries = true
+#    ActionMailer::Base.deliveries = []
   end
 
   def test_should_login_and_redirect
-    post :login, :login => 'quentin', :password => 'test'
-    assert session[:user]
+    post :login, :login => 'admin', :password => 'test'
+    assert session[:user_id]
     assert_response :redirect
   end
 
@@ -32,53 +32,58 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   def test_should_allow_signup
+    login_as('admin')
     assert_difference 'User.count' do
-      create_user
+      post_user
       assert_response :redirect
     end
   end
 
   def test_should_require_login_on_signup
+    login_as('admin')
     assert_no_difference 'User.count' do
-      create_user(:login => nil)
+      post_user(:login => nil)
       assert assigns(:user).errors.on(:login)
       assert_response :success
     end
   end
 
   def test_should_require_password_on_signup
+    login_as('admin')
     assert_no_difference 'User.count' do
-      create_user(:password => nil)
+      post_user(:password => nil)
       assert assigns(:user).errors.on(:password)
       assert_response :success
     end
   end
 
   def test_should_require_password_confirmation_on_signup
+    login_as('admin')
     assert_no_difference 'User.count' do
-      create_user(:password_confirmation => nil)
+      post_user(:password_confirmation => nil)
       assert assigns(:user).errors.on(:password_confirmation)
       assert_response :success
     end
   end
 
   def test_should_require_email_on_signup
+    login_as('admin')
     assert_no_difference 'User.count' do
-      create_user(:email => nil)
+      post_user(:email => nil)
       assert assigns(:user).errors.on(:email)
       assert_response :success
     end
   end
 
   def test_should_logout
-    login_as :quentin
+    login_as('admin')
     get :logout
     assert_nil session[:user]
     assert_response :redirect
   end
 
   def test_should_remember_me
-    post :login, :login => 'quentin', :password => 'test', :remember_me => "1"
+    post :login, {:login => @user.login, :password => 'test', :remember_me => "1"}
     assert_not_nil @response.cookies["auth_token"]
   end
 
@@ -88,21 +93,21 @@ class UsersControllerTest < ActionController::TestCase
   end
   
   def test_should_delete_token_on_logout
-    login_as :quentin
+    login_as('admin')
     get :logout
     assert_equal @response.cookies["auth_token"], []
   end
 
   # an administrator must be granted access to the user listing
   def test_index
-    login_as :quentin
+    login_as('admin')
     get :index
     assert_response :redirect
     assert_redirected_to :controller => 'public'
   end
 
   def test_list
-    login_as :admin
+    login_as('admin')
     get :list
     assert_response :success
     assert_template 'list'
@@ -111,7 +116,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   def test_new
-    login_as :admin
+    login_as('admin')
     get :new
     assert_response :success
     assert_template 'new'
@@ -121,7 +126,7 @@ class UsersControllerTest < ActionController::TestCase
 
   def test_create
     count = User.count
-    login_as :admin
+    login_as('admin')
     post :create, :user => { :login => 'testing_create', :password => 'test', :password_confirmation => 'test', :email => 'testing_create@example.com' }
     assert_response :redirect
     assert_redirected_to :action => 'list'
@@ -129,14 +134,14 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   def test_create_fail
-    login_as :admin
+    login_as('admin')
     post :create, :user => {  }
     assert_response :success
     assert_template 'new'
   end
 
   def test_edit
-    login_as :admin
+    login_as('admin')
     get :edit, :id => 1
     assert_response :success
     assert_template 'edit'
@@ -145,15 +150,15 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   def test_update
-    login_as :admin
-    post :update, :id => 5, :user => { :login => 'larissa_updated'  } # larissa
+    login_as('admin')
+    post :update, :id => @user.id, :user => { :login => 'larissa_updated'  } # larissa
     assert_response :redirect
     assert_redirected_to :action => 'list'
   end
 
   def test_update_fail
-    login_as :admin
-    post :update, :id => 5, :user => { :login => '' } # larissa
+    login_as('admin')
+    post :update, :id => @user.id, :user => { :login => '' } # larissa
     assert_response :success
     assert_template 'edit'
   end
@@ -190,11 +195,12 @@ class UsersControllerTest < ActionController::TestCase
 #  end
 
   protected
-    def create_user(options = {})
-      post :signup, :user => { :login => 'quire', :email => 'quire@example.com', 
-        :password => 'quire', :password_confirmation => 'quire' }.merge(options)
+
+    def post_user(options = {})
+      post :create, :user => { :login => 'quire', :email => 'quire@example.com',
+        :password => 'quire69', :password_confirmation => 'quire69' }.merge(options)
     end
-    
+
     def auth_token(token)
       CGI::Cookie.new('name' => 'auth_token', 'value' => token)
     end

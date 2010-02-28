@@ -113,15 +113,12 @@ class Organization < ActiveRecord::Base
 
     organization.address = address unless organization.address.valid?
 
-    #FIXME make this test
-    if organization.contact.nil?
-      contact = Contact.new
-      contact.phone = organization.contact_phone
-      contact.name = organization.contact_name
-      contact.email = organization.contact_email
-      contact.fax = organization.contact_fax_number
-      organization.contact = contact
-    end
+    contact = Contact.new
+    contact.phone = organization.contact_phone
+    contact.name = organization.contact_name
+    contact.email = organization.contact_email
+    contact.fax = organization.contact_fax_number
+    organization.contact = contact unless organization.contact.valid?
 
     if organization.tracker.nil?
       tracker = Tracker.new
@@ -169,6 +166,7 @@ class Organization < ActiveRecord::Base
   def initialize(*args)
     super(*args)
     self.address = Address.new
+    self.contact = Contact.new
   end
 
   def update_tracker(point_type, points)

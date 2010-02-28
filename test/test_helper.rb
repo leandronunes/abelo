@@ -102,6 +102,18 @@ class Test::Unit::TestCase
      o
   end
 
+  def organization_params(options= {})
+    {
+      :name => 'Some Organization', 
+      :identifier => 'testing_org', 
+      :cnpj => '78048802000169', 
+      :country_id => @country.id, 
+      :state_id => @state.id, 
+      :contact_name => 'contact name', 
+      :city_id => @city.id
+    }.merge(options)
+  end
+
   def create_bank
     bank ||= Bank.find_by_code('3234') || Bank.create!(:name => 'some', :code => 3234, :site => 'http://www.some.com')
     bank

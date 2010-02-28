@@ -31,11 +31,6 @@ class OrganizationsControllerTest < ActionController::TestCase
     assert @organization.valid?
   end
 
-  def organization_params
-    {
-     :name => 'Some Organization', :identifier => 'testing_org', :cnpj => '78048802000169', 
-     :country => @country.id, :state => @state.id, :city => @city.id}
-  end
 #FIXME Make this test works
 #  def test_only_admin_has_access
 #    login_as('aaron')

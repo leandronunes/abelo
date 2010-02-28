@@ -39,7 +39,9 @@ class UsersController < ApplicationController
         cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }
       end
       flash[:notice] = t(:logged_successfully)
-      if self.current_user.organizations.count == 1
+      if self.current_user.administrator
+        redirect_to admin_organizations_path
+      elsif self.current_user.organizations.count == 1
          if can(:controller => 'organization')
            redirect_to :controller => 'organization', :organization_nickname => self.current_user.organization.identifier
          elsif(can(:controller => 'ledgers'))
@@ -49,8 +51,6 @@ class UsersController < ApplicationController
          else
            redirect_to :controller => 'point_of_sale', :action => 'cancel', :organization_nickname => self.current_user.organization.identifier
          end
-      elsif self.current_user.administrator
-        redirect_to :controller => 'organizations'
       else
         redirect_to :controller => 'public'
       end

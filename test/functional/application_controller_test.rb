@@ -4,15 +4,16 @@ require 'test_controller'
 # Re-raise errors caught by the controller.
 class TestController; def rescue_action(e) raise e end; end
 
-class ApplicationControllerTest < Test::Unit::TestCase
+class TestControllerTest < ActionController::TestCase
 
   under_organization :one
 
   def setup
-    @controller = TestController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-    login_as('quentin')
+    User.delete_all
+    @organization = create_organization(:identifier => 'one')
+    @environment = create_environment(:is_default => true)
+    @user = create_user
+    login_as(@user.login)
   end
 
   def test_num_to_currency_with_signal

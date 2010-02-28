@@ -13,7 +13,7 @@ class LedgersControllerTest < ActionController::TestCase
   def setup
     @user = create_user(:login => 'admin', :administrator => true)
     login_as("admin")
-    @organization = Organization.find_by_identifier('one')
+    @organization =  create_organization
     @environment = create_environment(:is_default => true)
     @ledger_category = create_ledger_category(:name => 'Some Category', :type_of => 'I', :organization => @organization , :payment_methods => ['money'])
     @bank = create_bank

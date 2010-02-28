@@ -112,5 +112,5 @@ en:
   unit_name: "Unit {{name}}"
   signing_up_message: "Thanks for signing up!"
   you_have_been_logged_out: "You have been logged out."
-
+  product_field_name: "Product Name"
 

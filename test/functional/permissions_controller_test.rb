@@ -4,18 +4,16 @@ require 'permissions_controller'
 # Re-raise errors caught by the controller.
 class PermissionsController; def rescue_action(e) raise e end; end
 
-class PermissionsControllerTest < Test::Unit::TestCase
+class PermissionsControllerTest < ActionController::TestCase
 
-  under_organization :some
+  under_organization :one
 
   def setup
-    @controller = PermissionsController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-
-    @organization = create_organization(:identifier => 'some')
+    User.delete_all
+    @organization = create_organization(:identifier => 'one')
+    @environment = create_environment(:is_default => true)
     @user = create_user
-    login_as('quentin')
+    login_as(@user.login)
   end
 
   def test_setup
@@ -45,8 +43,6 @@ class PermissionsControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:organization)
     assert_not_nil assigns(:users)
     assert_kind_of Array, assigns(:users)
-    assert_not_nil assigns(:user_pages)
-    assert_kind_of ActionController::Pagination::Paginator, assigns(:user_pages)
   end
 
   def test_list_when_query_param_not_nil
@@ -58,8 +54,6 @@ class PermissionsControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:query)
     assert_not_nil assigns(:users)
     assert_kind_of Array, assigns(:users)
-    assert_not_nil assigns(:user_pages)
-    assert_kind_of ActionController::Pagination::Paginator, assigns(:user_pages)
 
     assert_equal 1, assigns(:users).size
   end

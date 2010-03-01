@@ -1,6 +1,6 @@
   <%= display_field_form(@organization, 'state',
-        :title => t(:state)
-
+        :title => t(:state),
+        :content => select_state(@country,'organization', 'state')
       )
   %>
 
@@ -13,6 +13,7 @@
 
   <%= display_field_form(@organization, 'city',
         :title => t(:city),
+        :content => content_tag(:div, select_city(@state,'organization', 'city'), :id => 'city_option'),
         :html_options => {:class => 'break_line'}
       )
   %>

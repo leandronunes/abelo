@@ -31,9 +31,8 @@
       )
   %>
 
-  <%= observe_field('organization_country',
+  <%= observe_field('organization_country_id',
      :url => select_state_admin_organizations_path,
-#     :url => 'select_state',
      :update => 'state_option',
      :with => "'country_id=' + escape(value)"
    )%>

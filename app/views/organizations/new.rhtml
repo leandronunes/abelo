@@ -24,6 +24,13 @@
         )
     %>
 
+    <%= display_field_form(item, 'contact_name',
+          :title => t(:contact_name),
+          :content => text_field('organization', 'contact_name'),
+          :html_options => {:class => 'break_line'}
+        )
+    %>
+
   <%= display_field_form(item, 'country',
         :title => t(:country),
         :content => select_country('organization', 'country_id'),

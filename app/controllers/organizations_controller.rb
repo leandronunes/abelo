@@ -70,7 +70,7 @@ class OrganizationsController < ApplicationController
 
   def select_city
     @state = BSC::State.find(params[:state_id])
-    render :inline => "<%= select_city(@state, 'organization', 'city' ) %>"
+    render :inline => "<%= select_city(@state, 'organization', 'city_id' ) %>"
   end
 
 

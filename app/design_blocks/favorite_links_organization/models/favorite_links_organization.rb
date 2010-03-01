@@ -1,7 +1,7 @@
 class FavoriteLinksOrganization < FavoriteLinks
 
   def self.description
-    _('Favorite Links')
+    t(:favorite_links)
   end
 
 end

@@ -9,7 +9,7 @@ class FinancialForecasting < Design::Block
   #   end
 
   def self.description
-    _('Financial Forecasting')
+    t(:financial_forecasting)
   end
 
 end

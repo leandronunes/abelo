@@ -1,0 +1,36 @@
+#!/usr/bin/ruby
+
+require 'fileutils'
+
+PATHS = [
+  'app/*/*/*',
+#  'app/controllers/*',
+#  'app/helpers/*',
+#  'app/models/*',
+#  'app/views/*',
+#  'app/controllers/payment/*',
+#  'app/controllers/tabs/*',
+  'lib/*'
+]
+
+PATHS.map do |path|
+  Dir.glob(path).map do |file_path|
+puts file_path
+    next if File.directory?(file_path)
+    old_file_path = file_path + '_old'
+    FileUtils.mv(file_path, old_file_path)
+    file = File.open(old_file_path, 'r')
+    new_file = File.open(file_path, 'w+')
+    file.readlines.map do |line|
+      line_match = line.scan(/_\(['"](.*)['"]\)/)
+      unless line_match.nil?
+        line_match.map do |match|
+          line.gsub!("_('" + match[0] + "')", 't(:' + match[0].downcase.gsub(' ', '_') + ')')
+        end
+      end
+
+      new_file.write(line)
+    end
+    FileUtils.rm(old_file_path)
+  end
+end

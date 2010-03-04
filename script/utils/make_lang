@@ -1,0 +1,29 @@
+#!/usr/bin/ruby
+require File.dirname(__FILE__) + '/config/environment'
+
+require 'fileutils'
+
+PATHS = [
+  "#{File.dirname(__FILE__)}/lang/*"
+]
+
+PATHS.map do |path|
+  Dir.glob(path).map do |file_path|
+    next if File.directory?(file_path)
+    old_file_path = file_path + '_old'
+    FileUtils.mv(file_path, old_file_path)
+    file = File.open(old_file_path, 'r')
+    new_file = File.open(file_path, 'w+')
+    file.readlines.map do |line|
+      line_match = line.scan(/(.*): (.*)/)
+      unless line_match.nil?
+        line_match.map do |match|
+          line.gsub!(match[1], match[1].titleize)
+        end
+      end
+
+      new_file.write(line)
+    end
+    FileUtils.rm(old_file_path)
+  end
+end

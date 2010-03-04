@@ -14,6 +14,8 @@ test:
   timeout: 5000
 
 production:
-  adapter: sqlite3
-  database: db/production.sqlite3
+  adapter: mysql
+  database: abelo
+  username: safernet
+  password: safernet
   timeout: 5000

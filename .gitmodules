@@ -25,3 +25,6 @@
 [submodule "vendor/plugins/auto_complete"]
 	path = vendor/plugins/auto_complete
 	url = git://github.com/leandronunes/auto_complete.git
+[submodule "vendor/plugins/doc_browser"]
+	path = vendor/plugins/doc_browser
+	url = git://github.com/leandronunes/doc_browser.git

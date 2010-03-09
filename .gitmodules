@@ -13,3 +13,6 @@
 [submodule "vendor/plugins/access_control"]
 	path = vendor/plugins/access_control
 	url = git://github.com/leandronunes/access_control.git
+[submodule "vendor/plugins/acts_as_taggable_on_steroids"]
+	path = vendor/plugins/acts_as_taggable_on_steroids
+	url = git://github.com/leandronunes/acts_as_taggable_on_steroids.git

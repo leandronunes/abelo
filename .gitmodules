@@ -9,4 +9,4 @@
 	url = git@github.com:leandronunes/i18n_parser.git
 [submodule "vendor/plugins/will_paginate"]
 	path = vendor/plugins/will_paginate
-	url = gitosis@projects.safernet.org.br:will_paginate.git
+	url = git@github.com:leandronunes/will_paginate.git

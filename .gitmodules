@@ -16,3 +16,6 @@
 [submodule "vendor/plugins/acts_as_taggable_on_steroids"]
 	path = vendor/plugins/acts_as_taggable_on_steroids
 	url = git://github.com/leandronunes/acts_as_taggable_on_steroids.git
+[submodule "vendor/plugins/acts_as_tree"]
+	path = vendor/plugins/acts_as_tree
+	url = git://github.com/leandronunes/acts_as_tree.git

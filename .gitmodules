@@ -10,3 +10,6 @@
 [submodule "vendor/plugins/design"]
 	path = vendor/plugins/design
 	url = git://github.com/leandronunes/design.git
+[submodule "vendor/plugins/access_control"]
+	path = vendor/plugins/access_control
+	url = git://github.com/leandronunes/access_control.git

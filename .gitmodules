@@ -7,3 +7,6 @@
 [submodule "vendor/plugins/will_paginate"]
 	path = vendor/plugins/will_paginate
 	url = git://github.com/leandronunes/will_paginate.git
+[submodule "vendor/plugins/design"]
+	path = vendor/plugins/design
+	url = git://github.com/leandronunes/design.git

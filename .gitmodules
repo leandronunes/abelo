@@ -3,7 +3,7 @@
 	url = git://github.com/leandronunes/bsc_plugin.git
 [submodule "vendor/plugins/i18n_parser"]
 	path = vendor/plugins/i18n_parser
-	url = git@github.com:leandronunes/i18n_parser.git
+	url = git://github.com/leandronunes/i18n_parser.git
 [submodule "vendor/plugins/will_paginate"]
 	path = vendor/plugins/will_paginate
-	url = git@github.com:leandronunes/will_paginate.git
+	url = git://github.com/leandronunes/will_paginate.git

@@ -31,3 +31,6 @@
 [submodule "vendor/plugins/fckeditor"]
 	path = vendor/plugins/fckeditor
 	url = git://github.com/leandronunes/fckeditor.git
+[submodule "vendor/plugins/popup_plugin"]
+	path = vendor/plugins/popup_plugin
+	url = git://github.com/leandronunes/popup_plugin.git

@@ -37,3 +37,6 @@
 [submodule "vendor/plugins/rails_rcov"]
 	path = vendor/plugins/rails_rcov
 	url = git://github.com/leandronunes/rails_rcov.git
+[submodule "vendor/plugins/tabbed_navigation"]
+	path = vendor/plugins/tabbed_navigation
+	url = git://github.com/leandronunes/tabbed_navigation.git

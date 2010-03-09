@@ -28,3 +28,6 @@
 [submodule "vendor/plugins/doc_browser"]
 	path = vendor/plugins/doc_browser
 	url = git://github.com/leandronunes/doc_browser.git
+[submodule "vendor/plugins/fckeditor"]
+	path = vendor/plugins/fckeditor
+	url = git://github.com/leandronunes/fckeditor.git

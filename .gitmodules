@@ -40,6 +40,3 @@
 [submodule "vendor/plugins/tabbed_navigation"]
 	path = vendor/plugins/tabbed_navigation
 	url = git://github.com/leandronunes/tabbed_navigation.git
-[submodule "vendor/plugins/validates_as_cpf"]
-	path = vendor/plugins/validates_as_cpf
-	url = git://github.com/leandronunes/validates_as_cpf.git

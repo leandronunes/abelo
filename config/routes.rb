@@ -21,7 +21,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect '', :controller => 'users'
   map.connect 'public', :controller => 'public'
 
-
+  map.design_plugin
 
 #FIXME se if it's needed
 #  # content administration 

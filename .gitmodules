@@ -46,3 +46,6 @@
 [submodule "vendor/plugins/acts_as_ferret"]
 	path = vendor/plugins/acts_as_ferret
 	url = git://github.com/leandronunes/acts_as_ferret.git
+[submodule "vendor/plugins/acts_as_taggable_on_steroids"]
+	path = vendor/plugins/acts_as_taggable_on_steroids
+	url = git://github.com/leandronunes/acts_as_taggable_on_steroids.git

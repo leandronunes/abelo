@@ -36,7 +36,7 @@ class LedgersController < ApplicationController
     @query ||= params[:ledger][:description] unless params[:ledger].nil?
     ledgers = @organization.ledgers_by_all(@chosen_accounts, @chosen_tags, @chosen_categories, @start_date, @end_date, @query)
 
-    @ledgers = ledgers.paginate(:per_page => 1000,:page => params[:page] )
+    @ledgers = ledgers.paginate(:per_page => 20,:page => params[:page] )
 
     balance_value = @last_balance.nil? ? 0 : @last_balance.value
     @total_income = Ledger.total_income(@ledgers, (balance_value if balance_value >= 0)) 
@@ -56,9 +56,9 @@ class LedgersController < ApplicationController
     ledgers = @organization.ledgers_by_all(@chosen_accounts, @chosen_tags, @chosen_categories, @start_date, @end_date, @query)
    
     if params[:show]  == 'all'
-      @ledgers = ledgers.paginate(:per_page => 1000,:page => params[:page] )
+      @ledgers = ledgers.paginate
     else
-      @ledgers = ledgers.paginate(:per_page => 1000,:page => params[:page] )
+      @ledgers = ledgers.paginate(:per_page => 20,:page => params[:page])
     end
 
     balance_value = @last_balance.nil? ? 0 : @last_balance.value
@@ -138,9 +138,9 @@ class LedgersController < ApplicationController
   end
 
   def unschedule_ledger
-    ledger = @organization.ledgers.find(params[:ledger_id])    
-    ledger.unschedule!
     @ledger = @organization.ledgers.find(params[:id])
+    ledger = @organization.ledgers.find(params[:ledger_id])    
+    @ledger.unschedule!(ledger)
     render :partial => 'schedule_ledgers'
   end
 
@@ -157,7 +157,7 @@ class LedgersController < ApplicationController
     @ledger_categories = @organization.common_ledger_categories
     ledgers = @organization.ledgers_by_all(@chosen_accounts, @chosen_tags, @chosen_categories, @start_date, @end_date, @query)
 
-    @ledgers = ledgers.paginate(:per_page => 1000,:page => params[:page] )
+    @ledgers = ledgers.paginate(:per_page => 20,:page => params[:page] )
 
     @total_income = Ledger.total_income(@ledgers) 
     @total_expense = Ledger.total_expense(@ledgers) 

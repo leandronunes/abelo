@@ -90,34 +90,6 @@ class ScheduleLedgerTest < Test::Unit::TestCase
     assert_raise(ActiveRecord::RecordNotFound){ ScheduleLedger.find(schedule_id)}
   end
 
-  def test_remove_ledgers_when_unscheduled
-    s = create_schedule
-    assert s.valid?
-    count =  Ledger.count
-    for i in 1..10 do
-      l = create_ledger
-      s.ledgers << l
-    end
-    assert_equal count + 10, count + s.ledgers.length
-    s.destroy
-    assert_equal count, Ledger.count
-  end
-
-  def test_remove_only_pending_ledgers_when_unscheduled
-    s = create_schedule
-    assert s.valid?
-    count =  Ledger.count
-    for i in 1..10 do
-      l = create_ledger
-      s.ledgers << l
-    end
-    l.done!
-    l.save
-    assert_equal count + 10, count + s.ledgers.length
-    s.destroy
-    assert_equal count + 1, Ledger.count
-  end
-
   def test_pending_legers
     s = create_schedule
     assert s.valid?

@@ -6,7 +6,7 @@
     </th>
   </tr>
   <tr> 
-    <th> <%= t(:date) %>  </th>
+    <th> <%= t(:date_str) %>  </th>
     <th> <%= t(:description) %>  </th>
     <th> <%= t(:options) %>  </th>
   </tr>
@@ -14,7 +14,15 @@
   <tr>
     <td> <%= parse_date(ledger.date, false) %> </td>
     <td> <%= ledger.description %> </td>
-    <td> <%= link_to_remote t(:unschedule), :update => 'abelo_schedule_ledger', :url => {:action => 'unschedule_ledger', :ledger_id => ledger, :id => @ledger}, :failure => "$('abelo_schedule_ledger).inneHTML= request.responseText" %> </td>
+    <td> 
+         <%= link_to_remote( t(:unschedule), 
+             {
+               :update => 'abelo_schedule_ledger', 
+               :url => {:action => 'unschedule_ledger', :ledger_id => ledger, :id => @ledger}, 
+               :failure => "$('abelo_schedule_ledger').innerHTML= request.responseText" 
+             }
+         )%> 
+    </td>
   </tr>
   <% end %>
   

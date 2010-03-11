@@ -250,7 +250,7 @@ class Organization < ActiveRecord::Base
   # Return the organization ledgers between the start and end dates passed as arguments
   def ledgers_by_dates(start_date, end_date, accounts = [])
     return [] if start_date.nil? or end_date.nil? or !accounts.all?{|a| self.bank_accounts.include?(a)}
-    Ledger.find(:all, :conditions => ['(effective_date IS ? AND foreseen_date BETWEEN ? AND ? AND bank_account_id IN (?)) OR (effective_date  BETWEEN ? AND ? AND bank_account_id IN (?) )', nil, start_date, end_date, accounts, start_date, end_date, accounts ])
+    ledgers = Ledger.find(:all, :conditions => ['(effective_date IS ? AND foreseen_date BETWEEN ? AND ? AND bank_account_id IN (?)) OR (effective_date  BETWEEN ? AND ? AND bank_account_id IN (?) )', nil, start_date, end_date, accounts, start_date, end_date, accounts ])
 
 # FIXME see if rails support OR sql clause and use somethig like that:
 #    foressen_ledgers = Ledger.find(:all, :conditions => [{:effective_date => nil, :foreseen_date => (start_date..end_date), :bank_account_id => accounts}, {:effective_date => (start_date..end_date), :bank_account_id => accounts}])

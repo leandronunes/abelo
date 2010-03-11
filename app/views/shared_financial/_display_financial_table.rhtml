@@ -2,24 +2,21 @@
   <table>
     <tr class='page'>
       <th>
-        <% if @ledgers.current_page - 1 < 1 %>
-          <%= button_remote( 'previous_page', t(:previous),:back, :update => 'abelo_financial_table', :url => @common_financial_parameters.merge({:action => 'display_financial_table', :page => @ledgers.current_page - 1 })) %>
+        <% unless @ledgers.previous_page.nil? %>
+          <%= button_remote( 'previous_page', t(:previous),:back, :update => 'abelo_financial_table', :url => @common_financial_parameters.merge({:action => 'display_financial_table', :page => @ledgers.previous_page })) %>
         <% end %>
       </th>
       <th colspan='4'>
-        <%= t(:page_number, {:page_current => @ledgers.current_page, :page_total => @ledgers.length}) %> 
+        <%= t(:page_number, {:page_current => @ledgers.current_page, :page_total => @ledgers.total_pages}) %> 
         <%= link_to_remote t(:show_all), :update => 'abelo_financial_table', :url => @common_financial_parameters.merge(:action => 'display_financial_table', :show => 'all'), :failure => "$('abelo_financial_table').innerHTML= request.responseText" %> 
         <% unless @query.nil? and @tag.nil? %>
-teste query <%= @query.inspect %>
-tag: 
-<%= @tag.inspect %>
           <%= t(:brackets, :value => link_to( t(:clean), :url => {:action => 'list', :accounts => @chosen_accounts.ids})) %> 
         <% end %>
       </th>
       <th>
-        <% if @ledgers.current_page + 1 < @ledgers.length %>
+        <% unless @ledgers.next_page.nil? %>
           <%= button_remote('next_page', t(:next), :next, :update => 'abelo_financial_table', 
-           :url => @common_financial_parameters.merge({:action => 'display_financial_table', :page => @ledgers.current_page + 1})
+           :url => @common_financial_parameters.merge({:action => 'display_financial_table', :page => @ledgers.next_page})
           ) %>
 
         <% end %>
@@ -161,7 +158,7 @@ tag:
     </tr>
   
     <tr>
-      <th> <%= t(:date) %> </th>
+      <th> <%= t(:date_str) %> </th>
       <th> <%= t(:category) %> </th>
       <th> <%= t(:description) %> </th>
       <th> <%= t(:income_money) %></th>

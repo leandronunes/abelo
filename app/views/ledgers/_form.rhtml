@@ -10,7 +10,7 @@
   %>
 
   <%= display_field_form(item, 'date',
-        :title => t(:date),
+        :title => t(:date_str),
         :content => date_select('ledger', 'date', :order => [:day, :month, :year])
       )
   %>
@@ -42,13 +42,13 @@
   %>
 
   <%= display_field_edit(item, 'status',
-        :title => t(:yes),
+        :title => t(:yes_str),
         :content => radio_button('ledger', 'status', Status::STATUS_PENDING)
       )
   %>
 
   <%= display_field_edit(item, 'status',
-        :title => t(:no),
+        :title => t(:no_str),
         :content => radio_button('ledger', 'status', Status::STATUS_DONE)
       )
   %>

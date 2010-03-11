@@ -7,10 +7,10 @@ class ScheduleLedger < ActiveRecord::Base
   validates_presence_of :interval
 
   validates_numericality_of :interval, :only_interger => true
-
-  before_destroy do |schedule|
-    Ledger.destroy_all(:status => Status::STATUS_PENDING, :schedule_ledger_id => schedule)
-  end
+#FIXME remove this
+#  before_destroy do |schedule|
+#    Ledger.destroy_all(:status => Status::STATUS_PENDING, :schedule_ledger_id => schedule)
+#  end
 
   def pending_ledgers
     Ledger.find(:all, :conditions => {:status => Status::STATUS_PENDING, :schedule_ledger_id => self})

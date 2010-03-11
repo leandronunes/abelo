@@ -123,7 +123,7 @@ class Ledger < ActiveRecord::Base
   end
 
   before_validation do |l|
-#    l.value = ((l.value > 0) ? (l.value * -1) : l.value) if l.is_remove_cash? or l.is_change?
+    l.value = ((l.value > 0) ? (l.value * -1) : l.value) if l.is_remove_cash? or l.is_change?
     l.change_signal
     l.type_of = l.category.type_of unless l.category.nil?
     l[:effective_value] ||= l.foreseen_value if l.done?
@@ -277,15 +277,22 @@ class Ledger < ActiveRecord::Base
     self.schedule_ledger.ledgers.select{|l| l != self}
   end
 
-  def unschedule!
+  #FIXME Make this test
+  def unschedule!(ledger)
     return nil if self.schedule_ledger.nil?
-    self.schedule_ledger.ledgers.delete(self)
+    removed = self.schedule_ledger.ledgers.destroy(ledger)
+    if self.schedule_ledger.ledgers.one? and self.schedule_ledger.ledgers.include?(self)
+      self.schedule_ledger.destroy
+    end
+    removed
   end
 
+  #FIXME Make this test
   def unschedule_all!
     s = self.schedule_ledger
-    self.unschedule!
-    s.destroy
+    self.ledgers_scheduled.map do |ledger|
+      self.unschedule!(ledger)
+    end
   end
 
   def payment_type

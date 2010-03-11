@@ -43,13 +43,13 @@ class Payment  < ActiveRecord::Base
 
   def self.describe_payment(item)
     {
-      'check' => t(:check),
-      'credit_card' => t(:credit_card),
-      'debit_card' => t(:debit_card),
-      'money' => t(:money),
-      'remove_cash' => t(:remove_cash),
-      'add_cash' => t(:add_cash),
-      'change' => t(:change),
+      'check' => I18n.t(:check),
+      'credit_card' => I18n.t(:credit_card),
+      'debit_card' => I18n.t(:debit_card),
+      'money' => I18n.t(:money),
+      'remove_cash' => I18n.t(:remove_cash),
+      'add_cash' => I18n.t(:add_cash),
+      'change' => I18n.t(:change),
     }[item] || item
   end 
 

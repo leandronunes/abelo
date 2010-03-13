@@ -34,14 +34,14 @@ class Category < ActiveRecord::Base
 
   def self.describe(name)
     {
-      'product' => t(:product),
-      'products' => t(:products),
-      'supplier' => t(:supplier),
-      'suppliers' => t(:suppliers),
-      'worker' => t(:worker),
-      'workers' => t(:workers),
-      'customer' => t(:customer),
-      'customers' => t(:customers),
+      'product' => I18n.t(:product),
+      'products' => I18n.t(:products),
+      'supplier' => I18n.t(:supplier),
+      'suppliers' => I18n.t(:suppliers),
+      'worker' => I18n.t(:worker),
+      'workers' => I18n.t(:workers),
+      'customer' => I18n.t(:customer),
+      'customers' => I18n.t(:customers),
 
     }[name] || name
   end

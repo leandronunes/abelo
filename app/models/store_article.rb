@@ -1,10 +1,10 @@
 class StoreArticle < Article
 
   def self.short_description
-    t(:store_page)
+    I18n.t(:store_page)
   end
 
   def self.description
-    t(:page_that_generates_the_organization_store)
+    I18n.t(:page_that_generates_the_organization_store)
   end
 end

@@ -6,14 +6,14 @@ class AddressDisplay < DisplayConfiguration
 
   def self.describe(field)
     {
-      'city' => t(:city),
-      'state' =>  t(:state),
-      'country' => t(:country),
-      'street' => t(:street),
-      'number' => t(:number),
-      'complement' => t(:complement),
-      'district' => t(:district),
-      'zip_code' => t(:zip_code),
+      'city' => I18n.t(:city),
+      'state' =>  I18n.t(:state),
+      'country' => I18n.t(:country),
+      'street' => I18n.t(:street),
+      'number' => I18n.t(:number),
+      'complement' => I18n.t(:complement),
+      'district' => I18n.t(:district),
+      'zip_code' => I18n.t(:zip_code),
     }[field] || field
   end
 

@@ -35,8 +35,8 @@ class Payment  < ActiveRecord::Base
 
   def self.describe(item)
     {
-      'I' => t(:income),
-      'E' => t(:expense)
+      'I' => I18n.t(:income),
+      'E' => I18n.t(:expense)
     }[item] || item
   end
 

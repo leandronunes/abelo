@@ -5,9 +5,9 @@ class ProfileDisplay < DisplayConfiguration
 
   def self.describe(field)
     {
-      'name' => t(:name),
-      'permission' => t(:permission),
-      'user' => t(:user),
+      'name' => I18n.t(:name),
+      'permission' => I18n.t(:permission),
+      'user' => I18n.t(:user),
     }[field] || field
   end
 end

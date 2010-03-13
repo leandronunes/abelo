@@ -6,8 +6,8 @@ class CategoryDisplay < DisplayConfiguration
 
   def self.describe(field)
     {
-      'name' =>  t(:name),
-      'parent' => t(:related_category),
+      'name' =>  I18n.t(:name),
+      'parent' => I18n.t(:related_category),
     }[field] || field
   end
 

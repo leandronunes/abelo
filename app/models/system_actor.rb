@@ -17,18 +17,18 @@ class SystemActor < ActiveRecord::Base
   validates_presence_of :name, :organization_id, :category_id, :email    
   validates_as_cnpj :cnpj
   validates_as_cpf :cpf
-  validates_presence_of :cpf, :scope => :organization_id, :if  => lambda { |actor| actor.person_type == 'natural' }, :message => t(:validates_presence_of_cpf)
-  validates_uniqueness_of :cnpj, :scope => :organization_id, :if => lambda { |user| ! user.cnpj.blank? }, :message => t(:validates_uniqueness_of_cnpj)
-  validates_uniqueness_of :cpf, :scope => :organization_id, :if => lambda { |user| ! user.cpf.blank? }, :message => t(:validates_uniqueness_of_cpf)
+  validates_presence_of :cpf, :scope => :organization_id, :if  => lambda { |actor| actor.person_type == 'natural' }, :message => I18n.t(:validates_presence_of_cpf)
+  validates_uniqueness_of :cnpj, :scope => :organization_id, :if => lambda { |user| ! user.cnpj.blank? }, :message => I18n.t(:validates_uniqueness_of_cnpj)
+  validates_uniqueness_of :cpf, :scope => :organization_id, :if => lambda { |user| ! user.cpf.blank? }, :message => I18n.t(:validates_uniqueness_of_cpf)
 
   SYSTEM_ACTORS = {
-    'customer' => t(:customer),
-    'worker' => t(:workers),
-    'supplier' => t(:supplier),
+    'customer' => I18n.t(:customer),
+    'worker' => I18n.t(:workers),
+    'supplier' => I18n.t(:supplier),
   }
 
   def actor_type
-    self.type_person ||= self.cnpj.nil? ? t(:natural_person) : t(:juristic_person)
+    self.type_person ||= self.cnpj.nil? ? I18n.t(:natural_person) : I18n.t(:juristic_person)
   end
 
   def person_type 
@@ -53,9 +53,9 @@ class SystemActor < ActiveRecord::Base
   # maps an actor to an human-readable string
   def self.describe(actor)
     return {
-      'customer' => t(:customer),
-      'worker' => t(:worker),
-      'supplier' => t(:supplier)
+      'customer' => I18n.t(:customer),
+      'worker' => I18n.t(:worker),
+      'supplier' => I18n.t(:supplier)
     }[actor]
   end
 

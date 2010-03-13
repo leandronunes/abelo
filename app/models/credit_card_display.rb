@@ -14,12 +14,12 @@ class CreditCardDisplay < LedgerDisplay
 
   def self.describe(field)
     {
-      'credit_card_number' => t(:credit_card_number),
-      'credit_card_validity' => t(:validity),
-      'credit_card_secutiry_code' => t(:security_code),
-      'credit_card_owner_name' => t(:name),
-      'credit_card_cnpj' => t(:cnpj),
-      'credit_card_cpf' => t(:cpf),
+      'credit_card_number' => I18n.t(:credit_card_number),
+      'credit_card_validity' => I18n.t(:validity),
+      'credit_card_secutiry_code' => I18n.t(:security_code),
+      'credit_card_owner_name' => I18n.t(:name),
+      'credit_card_cnpj' => I18n.t(:cnpj),
+      'credit_card_cpf' => I18n.t(:cpf),
     }.merge(self.superclass::DESCRIBE_AVAILABLE_FIELDS)[field] || field
   end
 

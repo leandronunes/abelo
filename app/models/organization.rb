@@ -96,7 +96,7 @@ class Organization < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name
   validates_uniqueness_of :cnpj, :if => lambda{|organization| not organization.cnpj.blank?}
-  validates_as_cnpj :cnpj, :message => t(:validate_cnpj)
+  validates_as_cnpj :cnpj, :message => I18n.t(:validate_cnpj)
   validates_presence_of :identifier, :name
   validates_uniqueness_of :identifier
   validates_format_of :identifier, :with => IDENTIFIER_FORMAT
@@ -132,16 +132,16 @@ class Organization < ActiveRecord::Base
       configuration = Configuration.new
       configuration.organization = organization
       organization.configuration = configuration
-      configuration.organization_name = t(:organization)
-      configuration.product_name = t(:product)
-      configuration.department_name = t(:department)
-      configuration.customer_name = t(:customer)
-      configuration.document_name = t(:commercial_proposal)
-      configuration.organization_name_on_plural = t(:organizations)
-      configuration.product_name_on_plural = t(:products)
-      configuration.department_name_on_plural = t(:departments)
-      configuration.customer_name_on_plural = t(:customers)
-      configuration.document_name_on_plural = t(:commercial_proposals)
+      configuration.organization_name = I18n.t(:organization)
+      configuration.product_name = I18n.t(:product)
+      configuration.department_name = I18n.t(:department)
+      configuration.customer_name = I18n.t(:customer)
+      configuration.document_name = I18n.t(:commercial_proposal)
+      configuration.organization_name_on_plural = I18n.t(:organizations)
+      configuration.product_name_on_plural = I18n.t(:products)
+      configuration.department_name_on_plural = I18n.t(:departments)
+      configuration.customer_name_on_plural = I18n.t(:customers)
+      configuration.document_name_on_plural = I18n.t(:commercial_proposals)
       configuration.is_model = false
       configuration.save!
 

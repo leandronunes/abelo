@@ -12,7 +12,7 @@ class DisplayConfiguration < ActiveRecord::Base
   end
 
   def validate
-    self.errors.add(:field, t(:the_field_is_not_valid)) unless self.class.available_fields.include?(self.field)
+    self.errors.add(:field, I18n.t(:the_field_is_not_valid)) unless self.class.available_fields.include?(self.field)
   end
 
   serialize :settings
@@ -62,7 +62,7 @@ class DisplayConfiguration < ActiveRecord::Base
   end
 
   def display_in_list
-    settings['display_in_list'].to_s == 'true' ? t(:yes) : t(:no)
+    settings['display_in_list'].to_s == 'true' ? I18n.t(:yes) : I18n.t(:no)
   end
 
   def display_in_list= value
@@ -74,7 +74,7 @@ class DisplayConfiguration < ActiveRecord::Base
   end
 
   def break_line
-    settings['break_line'].to_s == 'true' ? t(:yes) : t(:no)
+    settings['break_line'].to_s == 'true' ? I18n.t(:yes) : I18n.t(:no)
   end
 
   def break_line= value
@@ -86,7 +86,7 @@ class DisplayConfiguration < ActiveRecord::Base
   end
 
   def display_title
-    settings['display_title'].to_s == 'true' ? t(:yes) : t(:no)
+    settings['display_title'].to_s == 'true' ? I18n.t(:yes) : I18n.t(:no)
   end
 
   def display_title= value

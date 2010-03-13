@@ -86,35 +86,35 @@ class Ledger < ActiveRecord::Base
 
   def validate
     if (self.date.nil? ? false : (self.date.to_datetime != Date.today.to_datetime)) and (self.is_add_cash? or self.is_remove_cash? or self.is_change?)
-      self.errors.add(:date, t(:you_cannot_schedule_this_kind_of_ledger))
+      self.errors.add(:date, I18n.t(:you_cannot_schedule_this_kind_of_ledger))
     end
 
     if (self.value >= 0) and self.expense?
-      self.errors.add(:value, t(:the_value_must_be_minor_than_zero))
+      self.errors.add(:value, I18n.t(:the_value_must_be_minor_than_zero))
     end
 
     if (self.expense?) and (self.type_of != Payment::TYPE_OF_EXPENSE)
-      self.errors.add(:type_of, t(:you_cannot_have_an_remove_cash_with_type_different_of_expense))
+      self.errors.add(:type_of, I18n.t(:you_cannot_have_an_remove_cash_with_type_different_of_expense))
     end
 
     if self.is_add_cash? and ( self.type_of != Payment::TYPE_OF_INCOME)
-      self.errors.add(:type_of, t(:you_cannot_have_an_add_cash_with_type_different_of_income))
+      self.errors.add(:type_of, I18n.t(:you_cannot_have_an_add_cash_with_type_different_of_income))
     end
 
     if self.printer_command.nil? and self.needs_fiscal_command?
       self.errors.add(t(:you_cannot_realize_money_operations_whithout_create_the_printer_command))
     end
 
-    self.errors.add(:value, t(:minor_price)) if !self.expense? and (value.nil? || value <= 0.00)
+    self.errors.add(:value, I18n.t(:minor_price)) if !self.expense? and (value.nil? || value <= 0.00)
 
-    self.errors.add(:date, t(:date_cannot_be_set)) unless self[:date].nil?
+    self.errors.add(:date, I18n.t(:date_cannot_be_set)) unless self[:date].nil?
 
     if !self.category.nil? and !self.category.payment_methods.include?(self.payment_method)
-      self.errors.add(:payment_method, t(:payment_is_not_in_the_list)) 
+      self.errors.add(:payment_method, I18n.t(:payment_is_not_in_the_list)) 
     end
 
     if(!self.date.nil? and (self.date.to_datetime > DateTime.now) and self.done? )
-      self.errors.add(:status, t(:ledger_date_is_in_the_future)) 
+      self.errors.add(:status, I18n.t(:ledger_date_is_in_the_future)) 
     end
 
     if self.owner.kind_of?(Sale) and self.is_change? and (self.owner.change != self)
@@ -139,7 +139,7 @@ class Ledger < ActiveRecord::Base
     ledger.update_balance
     ledger.organization.update_tracker('ledger_points', ledger.organization.ledgers.count) unless ledger.organization.nil?
 #FIXME see a way to stop this
-#    raise t(:you_cannot_destroy_sale_ledgers) if ledger.owner.kind_of? Sale
+#    raise I18n.t(:you_cannot_destroy_sale_ledgers) if ledger.owner.kind_of? Sale
   end
 
   before_save do |ledger|
@@ -468,28 +468,28 @@ class Ledger < ActiveRecord::Base
 #  #You have to access the date method and this method
 #  #set the correct value of foreseen_date attribute
   def foreseen_date= date
-    raise t(:this_function_cannot_be_accessed_directly)
+    raise I18n.t(:this_function_cannot_be_accessed_directly)
   end
 
 #  #This method cannot be access directly. 
 #  #You have to access the value method and this method
 #  #set the correct value of foreseen_value attribute
   def foreseen_value= value
-    raise t(:this_function_cannot_be_accessed_directly)
+    raise I18n.t(:this_function_cannot_be_accessed_directly)
   end
 
 #  #This method cannot be access directly. 
 #  #You have to access the date method and this method
 #  #set the correct value of effective_date attribute
   def effective_date= date
-    raise t(:this_function_cannot_be_accessed_directly)
+    raise I18n.t(:this_function_cannot_be_accessed_directly)
   end
 
 #  #This method cannot be access directly. 
 #  #You have to access the value method and this method
 #  #set the correct value of effective_value attribute
   def effective_value= value
-    raise t(:this_function_cannot_be_accessed_directly)
+    raise I18n.t(:this_function_cannot_be_accessed_directly)
   end
 
 end

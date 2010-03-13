@@ -1,11 +1,11 @@
 class Size < ActiveRecord::Base
 
   SIZE = {
-    'P' => t(:extra_small),
-    'S' => t(:small),
-    'M' => t(:medium),
-    'L' => t(:large),
-    'X' => t(:extra_large)
+    'P' => I18n.t(:extra_small),
+    'S' => I18n.t(:small),
+    'M' => I18n.t(:medium),
+    'L' => I18n.t(:large),
+    'X' => I18n.t(:extra_large)
   }
 
   def self.find(*args)

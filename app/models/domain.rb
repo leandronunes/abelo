@@ -17,7 +17,7 @@ class Domain < ActiveRecord::Base
   # * <tt>name</tt> must not start with 'www.'
   def validate
     if self.name =~ /^www\./
-      self.errors.add(:name, t(:name_must_not_start_with_www))
+      self.errors.add(:name, I18n.t(:name_must_not_start_with_www))
     end
   end
 

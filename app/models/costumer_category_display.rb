@@ -5,11 +5,11 @@ class CostumerCategoryDisplay < CategoryDisplay
   end
 
   def self.title_name
-    t(:name)
+    I18n.t(:name)
   end
 
   def self.title_parent
-    t(:related_category)
+    I18n.t(:related_category)
   end
 
 end

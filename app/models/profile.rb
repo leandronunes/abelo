@@ -161,12 +161,12 @@ class Profile < ActiveRecord::Base
   # maps a template code (a key in TEMPLATES) to an human-readable string
   def self.describe(template)
     return {
-      'sales_person' => t(:sales_person),
-      'sales_supervisor' => t(:sales_supervisor), 
-      'financial' => t(:financial), 
-      'organization_management' => t(:organization_management), 
-      'administration' => t(:administration), 
-      'other' => t(:other)
+      'sales_person' => I18n.t(:sales_person),
+      'sales_supervisor' => I18n.t(:sales_supervisor), 
+      'financial' => I18n.t(:financial), 
+      'organization_management' => I18n.t(:organization_management), 
+      'administration' => I18n.t(:administration), 
+      'other' => I18n.t(:other)
     }[template]
   end
   

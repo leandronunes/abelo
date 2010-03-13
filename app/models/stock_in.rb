@@ -3,7 +3,7 @@ class StockIn < Stock
   validates_presence_of :supplier_id
   validates_presence_of :price
   validates_numericality_of :price
-  validates_inclusion_of :amount, :in => InfiniteSet::POSITIVES, :if => lambda { |s| !s.amount.nil? } , :message => t(:the_amount_must_be_a_positive_number)
+  validates_inclusion_of :amount, :in => InfiniteSet::POSITIVES, :if => lambda { |s| !s.amount.nil? } , :message => I18n.t(:the_amount_must_be_a_positive_number)
   has_many :ledgers, :as => :owner
 
   belongs_to :supplier
@@ -30,7 +30,7 @@ class StockIn < Stock
   end
 
   def validate
-    self.errors.add(:price, t(:minor_price)) if self.price.nil? || self.price <= 0.00
+    self.errors.add(:price, I18n.t(:minor_price)) if self.price.nil? || self.price <= 0.00
 
     if !self.validity.nil? and ((self.validity.kind_of?(Time) ? self.validity.to_datetime : self.validity) < (self.date.kind_of?(Time) ? self.date.to_datetime : self.date))
       self.errors.add('validity', '%{fn} is before this entry date. A invalid product cannot enter the stock.')

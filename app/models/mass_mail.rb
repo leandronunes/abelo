@@ -7,8 +7,8 @@ class MassMail < ActiveRecord::Base
   validates_associated :organization
 
   OPTIONS_FOR_RECIPIENTS = [
-    t(:all),
-    t(:groups)
+    I18n.t(:all),
+    I18n.t(:groups)
   ]
   
   acts_as_ferret :remote => true

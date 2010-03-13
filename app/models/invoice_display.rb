@@ -6,11 +6,11 @@ class InvoiceDisplay < DisplayConfiguration
 
   def self.describe(field)
   {
-   'number' => t(:invoice_number),
-   'serie' => t(:serie), 
-   'supplier_id' => t(:supplier),
-   'issue_date' => t(:invoice_issue_date),
-   'status' => t(:situação)
+   'number' => I18n.t(:invoice_number),
+   'serie' => I18n.t(:serie), 
+   'supplier_id' => I18n.t(:supplier),
+   'issue_date' => I18n.t(:invoice_issue_date),
+   'status' => I18n.t(:situação)
   }[field] || field
   end
 

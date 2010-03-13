@@ -41,28 +41,28 @@ class Configuration < ActiveRecord::Base
  
   def validate
     if self.is_model? and !self.organization.nil?
-      self.errors.add('organization_id', t(:you_cannot_associate_a_template_to_an_organization) )   
+      self.errors.add('organization_id', I18n.t(:you_cannot_associate_a_template_to_an_organization) )   
     end
 
     if self.organization_name.blank?
-      self.errors.add( 'organization_name', t(:organization_name_cannot_be_blank) )  
+      self.errors.add( 'organization_name', I18n.t(:organization_name_cannot_be_blank) )  
     end
 
     if self.organization_name_on_plural.blank?
-      self.errors.add( 'organization_name_on_plural', t(:organization_name_on_plural_cannot_be_blank) )  
+      self.errors.add( 'organization_name_on_plural', I18n.t(:organization_name_on_plural_cannot_be_blank) )  
     end
 
-    self.errors.add( 'product_name', t(:product_name_cannot_be_blank) )  if self.product_name.blank?
-    self.errors.add( 'product_name_on_plural', t(:product_name_on_plural_cannot_be_blank) )  if self.product_name_on_plural.blank?
+    self.errors.add( 'product_name', I18n.t(:product_name_cannot_be_blank) )  if self.product_name.blank?
+    self.errors.add( 'product_name_on_plural', I18n.t(:product_name_on_plural_cannot_be_blank) )  if self.product_name_on_plural.blank?
 
-    self.errors.add( 'department_name', t(:department_name_cannot_be_blank) )  if self.department_name.blank?
-    self.errors.add( 'department_name_on_plural', t(:department_name_on_plural_cannot_be_blank) )  if self.department_name_on_plural.blank?
+    self.errors.add( 'department_name', I18n.t(:department_name_cannot_be_blank) )  if self.department_name.blank?
+    self.errors.add( 'department_name_on_plural', I18n.t(:department_name_on_plural_cannot_be_blank) )  if self.department_name_on_plural.blank?
 
-    self.errors.add( 'customer_name', t(:customer_name_cannot_be_blank) )  if self.customer_name.blank?
-    self.errors.add( 'customer_name_on_plural', t(:customer_name_on_plural_cannot_be_blank) )  if self.customer_name_on_plural.blank?
+    self.errors.add( 'customer_name', I18n.t(:customer_name_cannot_be_blank) )  if self.customer_name.blank?
+    self.errors.add( 'customer_name_on_plural', I18n.t(:customer_name_on_plural_cannot_be_blank) )  if self.customer_name_on_plural.blank?
 
-    self.errors.add( 'document_name', t(:document_name_cannot_be_blank) )  if self.document_name.blank?
-    self.errors.add( 'document_name_on_plural', t(:document_name_on_plural_cannot_be_blank) )  if self.document_name_on_plural.blank?
+    self.errors.add( 'document_name', I18n.t(:document_name_cannot_be_blank) )  if self.document_name.blank?
+    self.errors.add( 'document_name_on_plural', I18n.t(:document_name_on_plural_cannot_be_blank) )  if self.document_name_on_plural.blank?
   end
 
   def settings

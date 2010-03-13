@@ -12,18 +12,18 @@ class ProductDisplay < DisplayConfiguration
 
   def self.describe(field)
     {
-      'image' => t(:image),
-      'name' =>  t(:name),
-      'size' => t(:size),
-      'color' => t(:color),
-      'sell_price' => t(:sell_price),
-      'unit_measure' => t(:unit),
-      'category' => t(:category),
-      'suppliers' => t(:suppliers),
-      'amount_in_stock' => t(:amount_in_stock) ,
-      'minimum_amount' => t(:minimum_amount) ,
-      'info' => t(:additional_information),
-      'code' => t(:code),
+      'image' => I18n.t(:image),
+      'name' =>  I18n.t(:name),
+      'size' => I18n.t(:size),
+      'color' => I18n.t(:color),
+      'sell_price' => I18n.t(:sell_price),
+      'unit_measure' => I18n.t(:unit),
+      'category' => I18n.t(:category),
+      'suppliers' => I18n.t(:suppliers),
+      'amount_in_stock' => I18n.t(:amount_in_stock) ,
+      'minimum_amount' => I18n.t(:minimum_amount) ,
+      'info' => I18n.t(:additional_information),
+      'code' => I18n.t(:code),
     }[field] || field
   end
 

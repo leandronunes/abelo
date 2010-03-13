@@ -6,8 +6,8 @@ class ArticleDisplay < DisplayConfiguration
 
   def self.describe(field)
     {
-      'name' =>  t(:name),
-      'body' => t(:body),
+      'name' =>  I18n.t(:name),
+      'body' => I18n.t(:body),
     }[field] || field
   end
 

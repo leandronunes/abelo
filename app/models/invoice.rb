@@ -58,9 +58,9 @@ class Invoice < ActiveRecord::Base
     case field
       when 'status':
         description = {
-          '0' => t(:pending),
-          '1' => t(:done),
-          '2' => t(:cancelled),
+          '0' => I18n.t(:pending),
+          '1' => I18n.t(:done),
+          '2' => I18n.t(:cancelled),
         }[value.to_s]
       else
         description = nil

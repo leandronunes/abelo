@@ -227,6 +227,14 @@ class LedgersControllerTest < ActionController::TestCase
     assert_redirected_to :action => 'list'
   end
 
+  def test_update_with_repeat_ledger_defined
+    l = create_ledger
+    post :update, :id => l.id, :ledger => {:schedule_repeat => true}
+
+    assert_not_nil assigns(:ledger)
+    assert_equal 3, assigns(:ledger).ledgers_scheduled.count
+  end
+
   def test_update_unsuccessfully
     # Pass not category
     l = create_ledger

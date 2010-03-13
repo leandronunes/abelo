@@ -293,6 +293,10 @@ class Test::Unit::TestCase
     }.merge(params))
   end
 
+  def create_schedule_ledger(params = {})
+    ScheduleLedger.create!({:periodicity_id => 1, :start_date => DateTime.now, :interval => 3}.merge(params))
+  end
+
   def create_document_item(params = {})
     DocumentItem.create!({
       :quantity => 10,

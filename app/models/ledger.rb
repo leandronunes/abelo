@@ -152,6 +152,22 @@ class Ledger < ActiveRecord::Base
     ledger.update_balance
   end
 
+  after_update do |l|
+    if l.schedule_repeat? and !l.scheduled?
+      sl = ScheduleLedger.create(:periodicity => l.schedule_periodicity, :start_date => l.date, :interval => l.schedule_interval)
+      for n in 1..l.schedule_interval.to_i do
+        ledger_schedule = l.dclone
+        ledger_schedule.pending!
+        ledger_schedule.date = (l.date.kind_of?(Time) ? l.date.to_datetime : l.date) + l.schedule_periodicity.number_of_days * n
+        ledger_schedule.schedule_ledger = sl
+        ledger_schedule.payment_method = l.payment_method
+        ledger_schedule.save
+      end
+      l.schedule_ledger = sl
+      l.save
+    end
+  end
+
   def create_balance_of_month
     Balance.create_balance(:date => self.date, :bank_account => self.bank_account)
   end
@@ -273,7 +289,7 @@ class Ledger < ActiveRecord::Base
   end
 
   def ledgers_scheduled
-    return nil if self.schedule_ledger.nil?
+    return [] if self.schedule_ledger.nil?
     self.schedule_ledger.ledgers.select{|l| l != self}
   end
 

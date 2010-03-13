@@ -726,4 +726,14 @@ class LedgerTest < Test::Unit::TestCase
     assert_not_nil l.effective_date
   end
 
+  should "always return an array on scheduled ledgers" do
+    l = create_ledger
+    assert_equal [], l.ledgers_scheduled
+    sl = create_schedule_ledger
+    l.schedule_ledger = sl
+    l.save!
+    l.reload
+    assert_kind_of Array, l.ledgers_scheduled
+  end
+
 end

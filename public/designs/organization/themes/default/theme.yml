@@ -1,4 +1,4 @@
 title: "Default"
 description: "The default Abelo theme"
-js: [prototype, application, effects, controls, dragdrop, lightbox, main]
+js: [prototype, effects, controls, main, dragdrop, application, lightbox]
 

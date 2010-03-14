@@ -232,6 +232,8 @@ module ApplicationHelper
   
   # Display a set of display configurations to be choosed by user
   def select_display_configuration(object, display_class, collection=[])
+    chars = ('a'..'z').to_a
+    rand_id = Array.new(10, '').collect{chars[rand(chars.size)]}.join
     selected_options = controller.instance_variable_get("@#{object}").send(display_class.tableize)
     content_tag('div', 
       content_tag(:ul, 
@@ -242,8 +244,8 @@ module ApplicationHelper
               set_of_display_configuration(object, display_class, c,selected_display_obj)
             )  
           end
-        ].join("\n")
-      )
+        ].join("\n"),
+      :id => rand_id) + toggle_checkboxes(rand_id)
     )
   end
 
@@ -875,5 +877,23 @@ module ApplicationHelper
     content_tag('div', link_to(image_tag(icon, :alt => title, :title => title) + content_tag('div', title), url), :class => 'file-manager-button')
   end 
 
+  # Toggle all checkboxes inside element#element_id
+  def toggle_checkboxes(element_id)
+    js_stuff = "<script type=\"text/javascript\">
+      function toggleCheckboxes(container) {
+        if ($(container).hasClassName('checkboxes-checked')) {
+          $(container).addClassName('checkboxes-unchecked');
+          $(container).removeClassName('checkboxes-checked');
+          $$('#' + container + ' input[type=checkbox]').each( function(c) { c.checked = false; } );
+        } else {
+          $(container).addClassName('checkboxes-checked');
+          $(container).removeClassName('checkboxes-unchecked');
+          $$('#' + container + ' input[type=checkbox]').each( function(c) { c.checked = true; } );
+        }
+      }
+    </script>"
+    content_tag(:script, js_stuff, :type => 'text/javascript') +
+    content_tag(:a, t(:label_toggle_checkboxes), :href => "#", :onclick => "toggleCheckboxes('#{element_id}'); return false")
+  end
 
 end

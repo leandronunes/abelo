@@ -167,6 +167,7 @@ en:
   user_administration: "User Administration"
   debit_card_display_configuration: "Debit Card Display Configuration"
   display_title: "Display Title"
+  display_title?: "Display Title"
   juristic_person: "Juristic Person"
   point_of_sale_money_added_to_cash: "Point of sale: Money Added To Cash"
   validates_uniqueness_of_cnpj: "Validates Uniqueness Of Cnpj"
@@ -811,6 +812,7 @@ en:
   contacts: "Contacts"
   slate_gray: "Slate Gray"
   display_in_list: "Display In List"
+  display_in_list?: "Display In List"
   invoice: "Invoice"
   light_sea_green: "Light Sea Green"
   sandy_brown: "Sandy Brown"
@@ -820,6 +822,11 @@ en:
   use_as_homepage: "Use As Homepage"
   credit_card_informations: "Credit Card Informations"
   organization_was_successfully_created: "Organization Was Successfully Created"
+  label_toggle_checkboxes: "Toggle checkboxes"
+  product_name_str: "Product name"
+  department_name_str: "Department name"
+  customer_name_str: "Customer name"
+  document_name_str: "Document name"
   date:
     formats:
       default: "%Y-%m-%d"  

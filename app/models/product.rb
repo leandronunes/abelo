@@ -36,7 +36,7 @@ class Product < ActiveRecord::Base
 
   has_many :sale_items
 
-  acts_as_ferret :remote => true
+#  acts_as_ferret :remote => true
 
   def suggest_code
     (Product.maximum(:code, :conditions => {:organization_id => self.organization}) || 0).to_i + 1

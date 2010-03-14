@@ -11,7 +11,7 @@ class Invoice < ActiveRecord::Base
   has_many :stock_buys, :dependent => :destroy
   has_many :ledgers, :as => :owner, :dependent => :destroy
 
-  acts_as_ferret :remote => true, :fields => ['number', 'serie']
+#  acts_as_ferret :remote => true, :fields => ['number', 'serie']
 
   before_save do |invoice|
     invoice.stock_buys.each do |s|

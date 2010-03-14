@@ -8,7 +8,7 @@ class UnitMeasure < ActiveRecord::Base
   validates_uniqueness_of :abbreviation, :scope => :organization_id
   validates_length_of :abbreviation, :maximum => 2
 
-  acts_as_ferret :remote => true
+#  acts_as_ferret :remote => true
 
   def self.full_text_search(q, options = {})
     default_options = {:limit => :all, :offset => 0}

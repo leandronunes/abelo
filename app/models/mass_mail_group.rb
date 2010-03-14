@@ -9,7 +9,7 @@ class MassMailGroup < ActiveRecord::Base
   has_many :system_actor_mass_mail_groups, :dependent => :destroy
   has_many :system_actors, :through => :system_actor_mass_mail_groups
   
-  acts_as_ferret :remote => true
+#  acts_as_ferret :remote => true
 
   def self.full_text_search(q, options = {})
     default_options = {:limit => :all, :offset => 0}

@@ -11,7 +11,7 @@ class MassMail < ActiveRecord::Base
     I18n.t(:groups)
   ]
   
-  acts_as_ferret :remote => true
+#  acts_as_ferret :remote => true
 
   def self.full_text_search(q, options = {})
     default_options = {:limit => :all, :offset => 0}

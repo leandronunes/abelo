@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(:version => 100) do
   create_table "articles", :force => true do |t|
     t.string   "name"
     t.string   "slug"
-    t.text     "path"
+    t.text     "path",               :default => ""
     t.integer  "parent_id"
     t.integer  "position"
     t.text     "body"

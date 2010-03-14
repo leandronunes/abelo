@@ -1,6 +1,6 @@
 class Printer < ActiveRecord::Base
 
-  acts_as_ferret :fields => [:serial, :computer_id], :remote => true
+#  acts_as_ferret :fields => [:serial, :computer_id], :remote => true
 
   belongs_to :organization
 

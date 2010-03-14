@@ -19,7 +19,7 @@ class BankAccount < ActiveRecord::Base
     end
   end
 
-  acts_as_ferret :remote => true
+#  acts_as_ferret :remote => true
 
   def name 
     I18n.t(:bank_account_name, {:agency => self.agency, :account => self.account})

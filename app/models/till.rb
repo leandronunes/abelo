@@ -38,11 +38,11 @@ class Till < ActiveRecord::Base
     pendings.delete(self)
 
     if(!pendings.blank?)
-      self.errors.add(t(:you_already_have_a_till_open))
+      self.errors.add(I18n.t(:you_already_have_a_till_open))
     end
 
     if self.printer_command.nil? and self.has_fiscal_printer?
-      self.errors.add(t(:you_cannot_open_a_till_whithout_the_printer_command))
+      self.errors.add(I18n.t(:you_cannot_open_a_till_whithout_the_printer_command))
     end
   end
 

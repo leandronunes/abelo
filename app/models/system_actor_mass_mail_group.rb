@@ -11,7 +11,7 @@ class SystemActorMassMailGroup < ActiveRecord::Base
 
   def validate
     self.errors.add('system_actor_id', I18n.t(:this_type_of_system_actor_cannot_be_in_a_group)) if !SYSTEM_ACTORS.include?(self.system_actor.class.to_s)
-    self.errors.add(t(:this_type_of_system_actor_cannot_be_in_this_type_of_group)) if self.system_actor.class.to_s != self.mass_mail_group.class.to_s.gsub('Group','')
+    self.errors.add(I18n.t(:this_type_of_system_actor_cannot_be_in_this_type_of_group)) if self.system_actor.class.to_s != self.mass_mail_group.class.to_s.gsub('Group','')
   end
 
 end

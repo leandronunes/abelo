@@ -16,13 +16,13 @@ class CheckDisplay < LedgerDisplay
 
   def self.describe(field)
     {
-      'check_owner_name' => t(:name),
-      'check_bank_id' => t(:bank),
-      'check_account_agency' => t(:agency),
-      'check_account_number' => t(:account),
-      'check_number' => t(:check_number),
-      'check_cpf' => t(:cpf),
-      'check_cnpj' => t(:cnpj),
+      'check_owner_name' => I18n.t(:name),
+      'check_bank_id' => I18n.t(:bank),
+      'check_account_agency' => I18n.t(:agency),
+      'check_account_number' => I18n.t(:account),
+      'check_number' => I18n.t(:check_number),
+      'check_cpf' => I18n.t(:cpf),
+      'check_cnpj' => I18n.t(:cnpj),
     }.merge(self.superclass::DESCRIBE_AVAILABLE_FIELDS)[field] || field
   end
 

@@ -40,7 +40,7 @@ class Document < ActiveRecord::Base
   def validate
     self.errors.add(:document_model_id, I18n.t(:you_cannot_have_a_document_model_in_a_model_document)) if self.is_model? and not self.document_model.nil?
     self.errors.add( I18n.t(:you_have_to_choose_almost_an_department_to_the_document)) if  (not self.organization.nil?) and (not self.organization.departments.empty?) and (self.departments.empty?)
-    self.errors.add(t(:you_can_not_associate_a_person_organization_to_a_document_model)) if self.is_model? and not self.owner.nil?
+    self.errors.add(I18n.t(:you_can_not_associate_a_person_organization_to_a_document_model)) if self.is_model? and not self.owner.nil?
     self.errors.add(:owner, I18n.t(:you_cannot_have_a_non_document_model_whitout_a_customer_supplier_or_worker_associated_to_him)) if !self.is_model? and (self.owner_type.nil? or self.owner_id.nil?)
   end
 

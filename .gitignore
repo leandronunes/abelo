@@ -1,6 +1,5 @@
 public/images/localist/
 public/javascripts/fckeditor/
-config_abelo_old/
 db/development.sqlite3
 db/test.sqlite3
 log
